@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 397555283914091779}
   - component: {fileID: 35990855443869147}
   - component: {fileID: 3455771150058328581}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CrewMember
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &35990855443869147
 MonoBehaviour:
   m_ObjectHideFlags: 0
