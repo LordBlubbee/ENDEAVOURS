@@ -37,6 +37,8 @@ public class CREW : NetworkBehaviour
     private NetworkVariable<float> CurHealth = new();
     private NetworkVariable<float> CurStamina = new();
 
+    public SPACE space { get; set; }
+
     bool hasInitialized = false;
     private void Start()
     {
@@ -86,6 +88,17 @@ public class CREW : NetworkBehaviour
     private Vector3 LookTowards;
     private bool isMoving = false;
     private bool isLooking = false;
+
+    [Rpc(SendTo.Server)]
+    public void SetMoveInputRpc(Vector3 mov)
+    {
+        SetMoveInput(mov);
+    }
+    [Rpc(SendTo.Server)]
+    public void SetLookTowardsRpc(Vector2 mov)
+    {
+        SetLookTowards(mov);
+    }
     public void SetMoveInput(Vector3 mov)
     {
         MoveInput = mov;
@@ -304,7 +317,7 @@ public class CREW : NetworkBehaviour
     }
     public float AngleToTurnTarget()
     {
-        return AngleBetween(LookTowards);
+        return AngleBetweenPoints(LookTowards);
     }
     public Vector3 getPos()
     {
@@ -314,11 +327,11 @@ public class CREW : NetworkBehaviour
     {
         return Vector2.SignedAngle(getLookVector(), towards);
     }
-    protected float AngleBetween(Vector3 towards)
+    public float AngleBetweenPoints(Vector3 towards)
     {
-        return AngleBetween(getPos(), towards);
+        return AngleBetweenPoints(getPos(), towards);
     }
-    protected float AngleBetween(Vector3 from, Vector3 towards)
+    protected float AngleBetweenPoints(Vector3 from, Vector3 towards)
     {
         return Vector2.SignedAngle(getLookVector(), towards - from);
     }

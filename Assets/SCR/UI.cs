@@ -5,7 +5,7 @@ public class UI : MonoBehaviour
     public static UI ui;
     public GameObject CurrentlySelectedScreen;
     public GameObject CharacterCreationUI;
-    public GameObject MainGameplayUI;
+    public Screen_GameUI MainGameplayUI;
     private GameObject PreviousScreen;
     public void SelectScreen(GameObject ob)
     {

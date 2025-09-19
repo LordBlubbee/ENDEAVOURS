@@ -1600,7 +1600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentlySelectedScreen: {fileID: 1816750263}
   CharacterCreationUI: {fileID: 765343996}
-  MainGameplayUI: {fileID: 1128064760}
+  MainGameplayUI: {fileID: 1128064762}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2132,7 +2132,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126800b5e6d5ad446a2f756de5c5cc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   Interior: {fileID: 795431759}
+  Spr: {fileID: 795431751}
+  Faction: 0
+  MaxHealth: 100
+  MovementSpeed: 7
+  AccelerationSpeedMod: 0.5
+  RotationBaseSpeed: 90
 --- !u!70 &795431755
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2272,6 +2279,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d61542ab70315a40accaa1f292e778e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  Drifter: {fileID: 795431754}
+  StartingModuleList:
+  - {fileID: 6313021248617021957, guid: 444c5c76f86db5c4a8b595cabd2ca5d4, type: 3}
+  StartingModuleLocations:
+  - {x: 0, y: 48, z: 0}
 --- !u!1 &809825168
 GameObject:
   m_ObjectHideFlags: 0
@@ -3042,6 +3055,7 @@ MonoBehaviour:
   StaminaSlider: {fileID: 300303178}
   StaminaTex: {fileID: 1981784394}
   StaminaColor: {fileID: 1042415207}
+  InteractTex: {fileID: 0}
 --- !u!4 &1250731541 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8275802106101149911, guid: 42163fbd9a450704f94c2a9b0518c784, type: 3}

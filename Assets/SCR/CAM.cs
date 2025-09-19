@@ -4,16 +4,21 @@ public class CAM : MonoBehaviour
 {
     public static CAM cam;
     public Camera camob;
+    private Transform FollowObject;
     private void Awake()
     {
         cam = this;
     }
-
+    public void SetCameraMode(Transform followTarget, float mod)
+    {
+        FollowObject = followTarget;
+        camob.orthographicSize = mod;
+    }
     Vector3 CameraPosMain;
     private void Update()
     {
         if (LOCALCO.local == null) return;
-        if (LOCALCO.local.GetPlayer() == null) return;
+        if (FollowObject == null) return;
 
         CameraPosMain = LOCALCO.local.GetPlayer().transform.position;
         Vector3 Offset = (camob.ScreenToViewportPoint(Input.mousePosition) - new Vector3(0.5f, 0.5f));

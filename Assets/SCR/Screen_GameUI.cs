@@ -11,6 +11,7 @@ public class Screen_GameUI : MonoBehaviour
     public Slider StaminaSlider;
     public TextMeshProUGUI StaminaTex;
     public Image StaminaColor;
+    public TextMeshProUGUI InteractTex;
     void Update()
     {
         if (!LOCALCO.local)
@@ -32,5 +33,25 @@ public class Screen_GameUI : MonoBehaviour
         StaminaTex.text = player.GetStamina().ToString("0");
         HealthColor.color = new Color(1f - player.GetHealthRelative(), player.GetHealthRelative(), 0);
         StaminaColor.color = new Color(1f - player.GetStamina(), player.GetStamina(), player.GetStamina());
+
+        if (InteractActive)
+        {
+            InteractTex.color = new Color(1, 1, 1, InteractTex.color.a + Time.deltaTime*2f);
+        } else
+        {
+            InteractTex.color = new Color(1, 1, 1, InteractTex.color.a - Time.deltaTime * 2f);
+        }
+    }
+
+    private bool InteractActive = false;
+    public void SetInteractTex(string tex)
+    {
+        if (tex == "")
+        {
+            InteractActive = false;
+            return;
+        }
+        InteractActive = true;
+        InteractTex.text = tex;
     }
 }
