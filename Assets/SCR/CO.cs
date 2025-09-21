@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -6,7 +7,9 @@ public class CO : NetworkBehaviour
 {
     public static CO co;
 
-    private void Awake()
+    [NonSerialized] public NetworkVariable<bool> HasShipBeenLaunched = new();
+    [NonSerialized] public DRIFTER PlayerMainDrifter;
+    private void Start()
     {
         co = this;
     }
@@ -67,5 +70,18 @@ public class CO : NetworkBehaviour
     public void UnregisterCrew(CREW crew)
     {
         RegisteredCREW.Remove(crew);
+    }
+    List<MapPoint> RegisteredMapPoints = new();
+    public List<MapPoint> GetMapPoints()
+    {
+        return RegisteredMapPoints;
+    }
+    public void RegisterMapPoint(MapPoint crew)
+    {
+        RegisteredMapPoints.Add(crew);
+    }
+    public void UnregisterMapPoint(MapPoint crew)
+    {
+        RegisteredMapPoints.Remove(crew);
     }
 }

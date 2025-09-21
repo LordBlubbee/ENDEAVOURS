@@ -6,6 +6,7 @@ public class UI : MonoBehaviour
     public GameObject CurrentlySelectedScreen;
     public GameObject CharacterCreationUI;
     public Screen_GameUI MainGameplayUI;
+    public Screen_ShipSelector ShipSelectionUI;
     private GameObject PreviousScreen;
     public void SelectScreen(GameObject ob)
     {

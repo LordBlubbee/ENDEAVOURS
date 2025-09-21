@@ -28,4 +28,16 @@ public class CO_SPAWNER : NetworkBehaviour
             i++;
         }
     }
+
+    [Rpc(SendTo.Server)]
+    public void SpawnPlayerShipRpc(int ID)
+    {
+        if (CO.co.HasShipBeenLaunched.Value) return;
+        DRIFTER driftPrefab = UI.ui.ShipSelectionUI.SpawnableShips[ID].Prefab;
+        CO.co.HasShipBeenLaunched.Value = true;
+        DRIFTER drifter = Instantiate(driftPrefab,Vector3.zero,Quaternion.identity);
+        drifter.NetworkObject.Spawn();
+        drifter.Init();
+        CO.co.PlayerMainDrifter = drifter;
+    }
 }

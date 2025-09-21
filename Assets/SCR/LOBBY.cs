@@ -208,7 +208,7 @@ public class LOBBY : MonoBehaviour
 
     void OpenGameInterface()
     {
-        UI.ui.SelectScreen(UI.ui.CharacterCreationUI);
+        UI.ui.SelectScreen(UI.ui.ShipSelectionUI.gameObject);
     }
     void OnApplicationQuit()
     {
