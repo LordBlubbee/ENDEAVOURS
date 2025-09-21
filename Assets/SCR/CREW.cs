@@ -140,6 +140,7 @@ public class CREW : NetworkBehaviour
         if (isDashing) return;
         if (!ConsumeStamina(30f)) return;
         StartCoroutine(DashNumerator());
+        setAnimationRpc(ANIM.AnimationState.MI_DASH);
     }
 
     bool isDashing = false;
@@ -150,7 +151,11 @@ public class CREW : NetworkBehaviour
         Vector3 dir = MoveInput;
         while (Speed > 0f)
         {
-            transform.position += 6f * MovementSpeed * Speed * CO.co.GetWorldSpeedDeltaFixed() * dir;
+            float mov = 6f * MovementSpeed * Speed * CO.co.GetWorldSpeedDeltaFixed();
+
+            transform.position += mov * dir;
+            Rigid.MovePosition(transform.position);
+
             Speed -= CO.co.GetWorldSpeedDeltaFixed() * 3f;
             yield return new WaitForFixedUpdate();
         }
@@ -166,6 +171,7 @@ public class CREW : NetworkBehaviour
         while (Speed > 0f && !isDashing)
         {
             transform.position += 2f * Power * Speed * CO.co.GetWorldSpeedDeltaFixed() * dir;
+            Rigid.MovePosition(transform.position);
             Speed -= CO.co.GetWorldSpeedDeltaFixed() / Duration;
             yield return new WaitForFixedUpdate();
         }
