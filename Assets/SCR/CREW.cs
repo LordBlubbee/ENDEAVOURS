@@ -170,15 +170,32 @@ public class CREW : NetworkBehaviour
             yield return new WaitForFixedUpdate();
         }
     }
+
+    int AnimationComboWeapon1 = 0;
+    int AnimationComboWeapon2 = 0;
     public void UseItem1()
     {
         if (EquippedToolObject == null) return;
-        setAnimationRpc(EquippedToolObject.attackAnimations1[0]);
+        if (AnimationComboWeapon1 >= EquippedToolObject.attackAnimations1.Count)
+        {
+            AnimationComboWeapon1 = 0;
+        }
+        AnimationComboWeapon2 = 0;
+        setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations1[AnimationComboWeapon1]);
+        if (!setAnimationLocally(EquippedToolObject.attackAnimations1[AnimationComboWeapon1])) return;
+        AnimationComboWeapon1++;
     }
     public void UseItem2()
     {
         if (EquippedToolObject == null) return;
-        setAnimationRpc(EquippedToolObject.attackAnimations2[0]);
+        if (AnimationComboWeapon2 >= EquippedToolObject.attackAnimations2.Count)
+        {
+            AnimationComboWeapon2 = 0;
+        }
+        AnimationComboWeapon1 = 0;
+        setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations2[AnimationComboWeapon2]);
+        if (setAnimationLocally(EquippedToolObject.attackAnimations2[AnimationComboWeapon2])) return;
+        AnimationComboWeapon2++;
     }
 
     private float LastStaminaUsed = 0f;
@@ -212,14 +229,18 @@ public class CREW : NetworkBehaviour
             }
         }
     }
-    public void setAnimation(ANIM.AnimationState stat, int pr = 99)
+    public bool setAnimationLocally(ANIM.AnimationState stat, int pr = 99)
     {
-        AnimationController.setAnimation(stat, pr);
-        setAnimationRpc(stat, pr);
+        return AnimationController.setAnimation(stat, pr);
     }
 
     [Rpc(SendTo.ClientsAndHost)]
     public void setAnimationRpc(ANIM.AnimationState stat, int pr = 99)
+    {
+        AnimationController.setAnimation(stat, pr);
+    }
+    [Rpc(SendTo.NotServer)]
+    public void setAnimationToClientsOnlyRpc(ANIM.AnimationState stat, int pr = 99)
     {
         AnimationController.setAnimation(stat, pr);
     }
