@@ -9,6 +9,7 @@ public class SelectShip : MonoBehaviour
     public Image Icon;
     public void Init(SpawnableShip ship)
     {
+        Ship = ship;
         Title.text = ship.Name;
         Icon.sprite = ship.Icon;
     }

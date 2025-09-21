@@ -14,8 +14,8 @@ public class DRIFTER : NetworkBehaviour
     [Header("STATS")]
     public float MaxHealth = 100f;
     public float MovementSpeed = 5;
-    public float AccelerationSpeedMod = 0.5f;
-    public float RotationBaseSpeed = 45f;
+    public float AccelerationSpeedMod = 0.25f;
+    public float RotationBaseSpeed = 30f;
 
     private Vector3 CurrentMovement;
     private float CurrentRotation;
@@ -47,7 +47,7 @@ public class DRIFTER : NetworkBehaviour
     }
 
     private Vector3 MoveInput;
-    private Vector3 LookTowards;
+    private Vector3 LookTowards = new Vector3(1,0);
 
     [Rpc(SendTo.Server)]
     public void SetMoveInputRpc(Vector3 mov)
@@ -63,15 +63,16 @@ public class DRIFTER : NetworkBehaviour
     {
         MoveInput = mov;
     }
-    public void SetLookTowards(Vector2 mov)
+    public void SetLookTowards(Vector3 mov)
     {
-        LookTowards = mov;
+        LookTowards = (mov-transform.position).normalized;
     }
-    private void FixedUpdate()
+
+    void UpdateTurn()
     {
-        if (!IsServer) return;
         float ang = AngleToTurnTarget();
         float rotGoal = 0f;
+        float accelSpeed = RotationBaseSpeed * 0.5f;
         if (ang > 1f)
         {
             rotGoal = RotationBaseSpeed;
@@ -82,41 +83,43 @@ public class DRIFTER : NetworkBehaviour
         }
         if (rotGoal > CurrentRotation)
         {
-            float Factor = 1;
-            if (CurrentRotation < 0) Factor = 2;
-            CurrentRotation += Factor * RotationBaseSpeed * CO.co.GetWorldSpeedDelta();
-        } else if (rotGoal < CurrentRotation)
-        {
-            float Factor = 1;
-            if (CurrentRotation > 0) Factor = 2;
-            CurrentRotation -= Factor * RotationBaseSpeed * CO.co.GetWorldSpeedDelta();
+            CurrentRotation += accelSpeed * CO.co.GetWorldSpeedDeltaFixed();
         }
+        else if (rotGoal < CurrentRotation)
+        {
+            CurrentRotation -= accelSpeed * CO.co.GetWorldSpeedDeltaFixed();
+        }
+        float maxRot = Mathf.Min(RotationBaseSpeed, Mathf.Abs(ang)*2f);
+        CurrentRotation = Mathf.Clamp(CurrentRotation, -maxRot, maxRot);
+        transform.Rotate(Vector3.forward,CurrentRotation * CO.co.GetWorldSpeedDeltaFixed());
+    }
 
-        transform.Rotate(Vector3.forward,CurrentRotation * CO.co.GetWorldSpeedDelta());
-        if (AngleToTurnTarget() > 0f)
-        {
-            transform.Rotate(Vector3.forward, ang);
-        }
+    private void FixedUpdate()
+    {
+        if (!IsServer) return;
+        
+        UpdateTurn();
 
         if (MoveInput == Vector3.zero)
         {
             bool XPOS = CurrentMovement.x > 0;
             bool YPOS = CurrentMovement.y > 0;
-            CurrentMovement -= CurrentMovement.normalized * AccelerationSpeedMod * MovementSpeed;
+            CurrentMovement -= CurrentMovement.normalized * AccelerationSpeedMod * MovementSpeed * CO.co.GetWorldSpeedDeltaFixed();
             if (XPOS != CurrentMovement.x > 0 || YPOS != CurrentMovement.y > 0 || CurrentMovement.magnitude < 0.1f) CurrentMovement = Vector3.zero;
         } else
         {
-            CurrentMovement += MoveInput * AccelerationSpeedMod * MovementSpeed;
+            CurrentMovement += MoveInput * AccelerationSpeedMod * MovementSpeed * CO.co.GetWorldSpeedDeltaFixed();
             if (CurrentMovement.magnitude > MovementSpeed) CurrentMovement = CurrentMovement.normalized * MovementSpeed;
         }
 
         float towardsang = Mathf.Abs(AngleTowards(CurrentMovement));
-        float towardsfactor = 1.1f - Mathf.Clamp((towardsang - 70f) * 0.005f, 0, 0.5f); //The more you look in the correct direction, the faster you move!
-        Rigid.MovePosition(transform.position + CurrentMovement * towardsfactor * CO.co.GetWorldSpeedDelta());
+        float towardsfactor = 1.2f - Mathf.Clamp((towardsang - 60f) * 0.006f, 0, 0.4f); //The more you look in the correct direction, the faster you move!
+        transform.position += CurrentMovement * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
+        Rigid.MovePosition(transform.position);
     }
     public float AngleToTurnTarget()
     {
-        return AngleBetweenPoints(LookTowards);
+        return AngleTowards(LookTowards);
     }
     public Vector3 getPos()
     {

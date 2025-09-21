@@ -44,7 +44,7 @@ public class Screen_CharacterCreator : MonoBehaviour
 
     public void PressCreateCharacter()
     {
-        LOCALCO.local.CreatePlayerRpc();
+        LOCALCO.local.CreatePlayerRpc(GO.g.localUsername, GO.g.localColor);
         UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
     }
 }

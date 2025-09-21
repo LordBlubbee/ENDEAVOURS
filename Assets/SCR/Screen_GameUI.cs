@@ -36,10 +36,10 @@ public class Screen_GameUI : MonoBehaviour
 
         if (InteractActive)
         {
-            InteractTex.color = new Color(1, 1, 1, InteractTex.color.a + Time.deltaTime*2f);
+            InteractTex.color = new Color(1, 1, 1, Mathf.Clamp01(InteractTex.color.a + Time.deltaTime * 2f));
         } else
         {
-            InteractTex.color = new Color(1, 1, 1, InteractTex.color.a - Time.deltaTime * 2f);
+            InteractTex.color = new Color(1, 1, 1, Mathf.Clamp01(InteractTex.color.a - Time.deltaTime * 2f));
         }
     }
 

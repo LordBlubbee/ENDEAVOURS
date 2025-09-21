@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -28,9 +29,13 @@ public class CREW : NetworkBehaviour
     [Header("ITEMS")]
     public CO_SPAWNER.ToolType StartingTool;
 
-    [NonSerialized]
-    public NetworkVariable<CO_SPAWNER.ToolType> EquippedTool = new NetworkVariable<CO_SPAWNER.ToolType>(
+    [NonSerialized] public NetworkVariable<CO_SPAWNER.ToolType> EquippedTool = new NetworkVariable<CO_SPAWNER.ToolType>(
         CO_SPAWNER.ToolType.NONE, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+    [NonSerialized] public NetworkVariable<FixedString64Bytes> CharacterName = new();
+    [NonSerialized] public NetworkVariable<Vector3> CharacterNameColor = new();
+
+    private GamerTag CharacterNameTag;
 
     protected TOOL EquippedToolObject;
 
@@ -40,6 +45,7 @@ public class CREW : NetworkBehaviour
     public SPACE space { get; set; }
 
     bool hasInitialized = false;
+
     private void Start()
     {
         Init();
@@ -57,6 +63,9 @@ public class CREW : NetworkBehaviour
         AnimTransforms.Add(new AnimTransform());
 
         AnimationController = new ANIM(AnimTransforms);
+
+        CharacterNameTag = Instantiate(CO_SPAWNER.co.PrefabGamerTag);
+        CharacterNameTag.SetPlayerAndName(transform, CharacterName.Value.ToString(), new Color(CharacterNameColor.Value.x, CharacterNameColor.Value.y, CharacterNameColor.Value.z));
         //
         if (IsServer) {
 
@@ -141,11 +150,25 @@ public class CREW : NetworkBehaviour
         Vector3 dir = MoveInput;
         while (Speed > 0f)
         {
-            transform.position += 4f * MovementSpeed * Speed * CO.co.GetWorldSpeedDelta() * dir;
-            Speed -= CO.co.GetWorldSpeedDelta() * 3f;
-            yield return null;
+            transform.position += 6f * MovementSpeed * Speed * CO.co.GetWorldSpeedDeltaFixed() * dir;
+            Speed -= CO.co.GetWorldSpeedDeltaFixed() * 3f;
+            yield return new WaitForFixedUpdate();
         }
         isDashing = false;
+    }
+    public void Push(float Power, float Duration, Vector3 dir)
+    {
+        StartCoroutine(PushNumerator(Power,Duration,dir));
+    }
+    IEnumerator PushNumerator(float Power, float Duration, Vector3 dir)
+    {
+        float Speed = 1f;
+        while (Speed > 0f && !isDashing)
+        {
+            transform.position += 2f * Power * Speed * CO.co.GetWorldSpeedDeltaFixed() * dir;
+            Speed -= CO.co.GetWorldSpeedDeltaFixed() / Duration;
+            yield return new WaitForFixedUpdate();
+        }
     }
     public void UseItem1()
     {
@@ -181,6 +204,13 @@ public class CREW : NetworkBehaviour
     private void AnimationUpdate()
     {
         AnimationController.animationFrame();
+        if (IsServer)
+        {
+            if (AnimationController.getAnimationMoveForward() != 0)
+            {
+                transform.position += AnimationController.getAnimationMoveForward() * getLookVector() * CO.co.GetWorldSpeedDelta();
+            }
+        }
     }
     public void setAnimation(ANIM.AnimationState stat, int pr = 99)
     {
@@ -201,7 +231,7 @@ public class CREW : NetworkBehaviour
             float ang = AngleToTurnTarget();
             if (ang > 1f)
             {
-                transform.Rotate(Vector3.forward, (Mathf.Abs(ang) * RotationDistanceFactor + RotationBaseSpeed) * CO.co.GetWorldSpeedDelta());
+                transform.Rotate(Vector3.forward, (Mathf.Abs(ang) * RotationDistanceFactor + RotationBaseSpeed) * CO.co.GetWorldSpeedDeltaFixed());
                 ang = AngleToTurnTarget();
                 if (AngleToTurnTarget() < 0f)
                 {
@@ -211,7 +241,7 @@ public class CREW : NetworkBehaviour
             }
             else if (ang < -1f)
             {
-                transform.Rotate(Vector3.forward, -(Mathf.Abs(ang) * RotationDistanceFactor + RotationBaseSpeed) * CO.co.GetWorldSpeedDelta());
+                transform.Rotate(Vector3.forward, -(Mathf.Abs(ang) * RotationDistanceFactor + RotationBaseSpeed) * CO.co.GetWorldSpeedDeltaFixed());
                 ang = AngleToTurnTarget();
                 if (AngleToTurnTarget() > 0f)
                 {
@@ -228,7 +258,9 @@ public class CREW : NetworkBehaviour
             setAnimationRpc(animDefaultMove, 1);
             float towardsang = Mathf.Abs(AngleTowards(MoveInput));
             float towardsfactor = 1.1f - Mathf.Clamp((towardsang-70f)*0.005f,0,0.5f); //The more you look in the correct direction, the faster you move!
-            Rigid.MovePosition(transform.position + MoveInput * GetSpeed() * towardsfactor * CO.co.GetWorldSpeedDelta());
+            transform.position += MoveInput * GetSpeed() * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
+            Rigid.MovePosition(transform.position);
+            //Rigid.MovePosition(transform.position + MoveInput * GetSpeed() * towardsfactor * CO.co.GetWorldSpeedDelta());
         } else
         {
             setAnimationRpc(animDefaultIdle, 1);

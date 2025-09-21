@@ -30,6 +30,13 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
         if (currentFrame >= state.Frames.Count) return 1f;
         return state.Frames[currentFrame].AnimationMoveFactor;
     }
+    public float getAnimationMoveForward()
+    {
+        if (state == null) return 0f;
+        if (currentFrame < 0) return 0f;
+        if (currentFrame >= state.Frames.Count) return 0f;
+        return state.Frames[currentFrame].moveForward;
+    }
     public int getCurrentPriority()
     {
         if (state == null) return 0;
@@ -333,6 +340,7 @@ public class AnimFrame //A single frame in an animation which tells each AnimTra
 {
     public float minDuration;
     public float maxDuration;
+    public float moveForward;
     public int nextFrame;
     public bool isStriking;
     public bool isCurve;

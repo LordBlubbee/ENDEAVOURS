@@ -7,7 +7,7 @@ public class SPACE : NetworkBehaviour
 {
     public DRIFTER Drifter;
     [NonSerialized] public List<CREW> CrewInSpace = new();
-    private List<Module> Modules;
+    private List<Module> Modules = new();
     public List<Module> StartingModuleList;
     public List<Vector3> StartingModuleLocations;
 
@@ -26,7 +26,7 @@ public class SPACE : NetworkBehaviour
         for (int i = 0; i < StartingModuleList.Count; i++)
         {
             Module mod = Instantiate(StartingModuleList[i], StartingModuleLocations[i], Quaternion.identity);
-            //mod.NetworkObject.Spawn();
+            mod.NetworkObject.Spawn();
             mod.transform.SetParent(transform);
             mod.Init();
             Modules.Add(mod);

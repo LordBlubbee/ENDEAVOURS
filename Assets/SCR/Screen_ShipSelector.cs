@@ -20,7 +20,7 @@ public class Screen_ShipSelector : MonoBehaviour
 
     private void Start()
     {
-        SelectedShip = SpawnableShips[0];
+        PressShipButton(SpawnableShips[0]);
         foreach (SpawnableShip ship in SpawnableShips)
         {
             Instantiate(SpawnShipButton, ShipList).Init(ship);

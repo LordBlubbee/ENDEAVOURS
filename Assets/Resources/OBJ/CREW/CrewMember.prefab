@@ -81,7 +81,7 @@ MonoBehaviour:
   MaxHealth: 100
   NaturalHealthRegen: 0.1
   NaturalStaminaRegen: 50
-  MovementSpeed: 6
+  MovementSpeed: 7
   RotationDistanceFactor: 4
   RotationBaseSpeed: 90
   StartingTool: 1

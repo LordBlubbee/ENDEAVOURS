@@ -88,4 +88,5 @@ MonoBehaviour:
   ToolPrefabInstances:
   - {fileID: 0}
   - {fileID: 8311341897716400573, guid: 8df09dd9598f1c249adae05d82cffc4e, type: 3}
+  PrefabGamerTag: {fileID: 7664399197578832526, guid: 13763fc837ffb9840b9462900a539937, type: 3}
   PlayerPrefab: {fileID: 5867427934140877094, guid: e0e5452e1cb9d2a419680a1f263400a1, type: 3}

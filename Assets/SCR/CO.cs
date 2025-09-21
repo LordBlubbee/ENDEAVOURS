@@ -25,6 +25,10 @@ public class CO : NetworkBehaviour
     {
         return Time.deltaTime;
     }
+    public float GetWorldSpeedDeltaFixed()
+    {
+        return Time.fixedDeltaTime;
+    }
 
     public LOCALCO GetLOCALCO(int ID)
     {

@@ -7,6 +7,7 @@ public class CO_SPAWNER : NetworkBehaviour
 {
     [SerializeField] private List<TOOL> ToolPrefabInstances;
     public Dictionary<ToolType, TOOL> ToolPrefabs = new();
+    public GamerTag PrefabGamerTag;
     public enum ToolType
     {
         NONE,
