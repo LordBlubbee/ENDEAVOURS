@@ -213,22 +213,16 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
             case AnimationState.MI_DASH:
                 Priority = 4;
                 curFrame = new AnimFrame(1, 0.1f);
-                curFrame.AnimationMoveFactor = 0.3f;
-                curFrame.addMovement(new Vector3(0, 0), new Vector3(0, 0)); //Body
-                curFrame.addMovement(new Vector3(0, 0)); //Tool Right
-                curFrame.addMovement(new Vector3(0, 0)); //Tool Left
-                Frames.Add(curFrame);
-                curFrame = new AnimFrame(2, 0.1f);
                 curFrame.AnimationMoveFactor = 1.1f;
-                curFrame.addMovement(new Vector3(0, 0), new Vector3(0.03f, 0.03f)); //Body
-                curFrame.addMovement(new Vector3(0.03f, 0), new Vector3(0.03f, 0.03f)); //Tool Right
-                curFrame.addMovement(new Vector3(0.03f, 0), new Vector3(0.03f, 0.03f)); //Tool Left
+                curFrame.addMovement(new Vector3(0, 0), new Vector3(0.1f, 0.1f)); //Body
+                curFrame.addMovement(new Vector3(0.05f, 0), new Vector3(0.1f, 0.1f)); //Tool Right
+                curFrame.addMovement(new Vector3(0.05f, 0), new Vector3(0.1f, 0.1f)); //Tool Left
                 Frames.Add(curFrame);
-                curFrame = new AnimFrame(3, 0.1f);
+                curFrame = new AnimFrame(2, 0.2f);
                 curFrame.AnimationMoveFactor = 0.8f;
                 curFrame.addMovement(new Vector3(0, 0), new Vector3(-0.03f, -0.03f)); //Body
                 curFrame.addMovement(new Vector3(-0.02f, -0.02f), new Vector3(-0.03f, -0.03f)); //Tool Right
-                curFrame.addMovement(new Vector3(-0.02f, 0.02f), new Vector3(-0.03f, -0.03f)); //Tool Left
+                curFrame.addMovement(new Vector3(-0.02f, -0.02f), new Vector3(-0.03f, -0.03f)); //Tool Left
                 Frames.Add(curFrame);
                 break;
             case AnimationState.ATTACK_SPEAR1:
