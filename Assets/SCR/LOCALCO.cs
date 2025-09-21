@@ -127,7 +127,7 @@ public class LOCALCO : NetworkBehaviour
                             case Module.ModuleTypes.NAVIGATION:
                                 Drifter = Player.space.Drifter;
                                 CurrentControlMode = ControlModes.DRIFTER;
-                                CAM.cam.SetCameraMode(Drifter.transform, 200f);
+                                CAM.cam.SetCameraMode(Drifter.transform, 250f);
                                 break;
                         }
                     }

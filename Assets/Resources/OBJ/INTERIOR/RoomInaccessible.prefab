@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6555163656901737279}
   - component: {fileID: 4511574632909210950}
   - component: {fileID: 6981213055278704175}
-  - component: {fileID: 8640081488559993403}
   m_Layer: 7
   m_Name: RoomInaccessible
   m_TagString: Untagged
@@ -79,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: 7d2335f3512b5444ca5d33e27754e95e, type: 3}
-  m_Color: {r: 0.4811321, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.49019608, g: 0.49019608, b: 0.49019608, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -135,16 +134,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 8, y: 8}
   m_EdgeRadius: 0
---- !u!114 &8640081488559993403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8986802024713289282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9382fcd031484c43b2e309a451b8231, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spr: {fileID: 4511574632909210950}
