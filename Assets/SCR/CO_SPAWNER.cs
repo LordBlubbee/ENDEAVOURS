@@ -8,6 +8,7 @@ public class CO_SPAWNER : NetworkBehaviour
     [SerializeField] private List<TOOL> ToolPrefabInstances;
     public Dictionary<ToolType, TOOL> ToolPrefabs = new();
     public GamerTag PrefabGamerTag;
+    public DMG PrefabDMG;
     public enum ToolType
     {
         NONE,
@@ -40,5 +41,13 @@ public class CO_SPAWNER : NetworkBehaviour
         drifter.NetworkObject.Spawn();
         drifter.Init();
         CO.co.PlayerMainDrifter = drifter;
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnDMGRpc(float dm, Vector3 pos)
+    {
+        if (CO.co.HasShipBeenLaunched.Value) return;
+        DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
+        dmg.InitDamage(dm, 1f);
     }
 }

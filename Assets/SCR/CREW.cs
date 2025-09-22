@@ -26,6 +26,33 @@ public class CREW : NetworkBehaviour
     public float RotationDistanceFactor = 4;
     public float RotationBaseSpeed = 90;
 
+    [Header("ATTRIBUTES")]
+    public int ATT_PHYSIQUE = 2; //Buffs maximum health, melee damage
+    public int ATT_ARMS = 2; //Buffs ranged damage, reload (+gunnery)
+    public int ATT_DEXTERITY = 2; //Buffs movement speed, stamina
+    public int ATT_COMMUNOPATHY = 2; //Buffs magic damage, camera range, senses
+    public int ATT_PILOTING = 2; //Buffs piloting maneuverability, dodge chance
+    public int ATT_ENGINEERING = 2; //Buffs repair speed
+    public int ATT_GUNNERY = 2; //Buffs usage of large heavy weapons
+    public int ATT_MEDICAL = 2; //Buffs healing abilities (+regeneration)
+
+    [Rpc(SendTo.Server)]
+    public void UpdateAttributesRpc(int phys, int arms, int dex, int comm, int pil, int eng, int gun, int med)
+    {
+        UpdateAttributes(phys,arms,dex,comm,pil,eng,gun,med);
+    }
+    public void UpdateAttributes(int phys, int arms, int dex, int comm, int pil, int eng, int gun, int med)
+    {
+        ATT_PHYSIQUE = phys;
+        ATT_ARMS = arms;
+        ATT_DEXTERITY = dex; //Buffs movement speed, stamina
+        ATT_COMMUNOPATHY = comm; //Buffs magic damage, camera range, senses
+        ATT_PILOTING = pil; //Buffs piloting maneuverability, dodge chance
+        ATT_ENGINEERING = eng; //Buffs repair speed
+        ATT_GUNNERY = gun; //Buffs usage of large heavy weapons
+        ATT_MEDICAL = med; //Buffs healing abilities (+regeneration)
+    }
+
     [Header("ITEMS")]
     public CO_SPAWNER.ToolType StartingTool;
 
@@ -45,6 +72,32 @@ public class CREW : NetworkBehaviour
     public SPACE space { get; set; }
 
     bool hasInitialized = false;
+
+    /*
+    How does the AI work? 
+        -A separate module attached to CREW gives it orders by deciding its inputs
+    
+    How does enemy crew AI work?
+        -Ship AI diverts tasks by issuing a directive to each enemy CREW member with a LOCATION
+        -Each CREW MEMBER does its best with the location they have.
+            >Man
+            >
+            >
+            >If told to man a Loon, the crew member will wait on other crew members, then launch
+        -
+
+    How does boarding and ship entry work?
+        -
+        -
+        -
+
+    How does enemy creature AI work?
+        -
+        -
+        -
+     
+     */
+
 
     private void Start()
     {
@@ -138,7 +191,7 @@ public class CREW : NetworkBehaviour
     {
         if (!isMoving) return;
         if (isDashing) return;
-        if (!ConsumeStamina(30f)) return;
+        if (!ConsumeStamina(GetDashCost())) return;
         StartCoroutine(DashNumerator());
         setAnimationRpc(ANIM.AnimationState.MI_DASH);
     }
@@ -151,7 +204,7 @@ public class CREW : NetworkBehaviour
         Vector3 dir = MoveInput;
         while (Speed > 0f)
         {
-            float mov = 6f * MovementSpeed * Speed * CO.co.GetWorldSpeedDeltaFixed();
+            float mov = (5f+ATT_DEXTERITY*0.3f) * MovementSpeed * Speed * CO.co.GetWorldSpeedDeltaFixed();
 
             transform.position += mov * dir;
             Rigid.MovePosition(transform.position);
@@ -177,15 +230,18 @@ public class CREW : NetworkBehaviour
         }
     }
 
+    int SelectedWeaponAbility = 0;
     int AnimationComboWeapon1 = 0;
     int AnimationComboWeapon2 = 0;
     public void UseItem1()
     {
         if (EquippedToolObject == null) return;
+        SelectedWeaponAbility = 0;
         if (AnimationComboWeapon1 >= EquippedToolObject.attackAnimations1.Count)
         {
             AnimationComboWeapon1 = 0;
         }
+        if (EquippedToolObject.ActionUse1 != TOOL.ToolActionType.MELEE_ATTACK && !canStrike) return;
         AnimationComboWeapon2 = 0;
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations1[AnimationComboWeapon1]);
         if (!setAnimationLocally(EquippedToolObject.attackAnimations1[AnimationComboWeapon1])) return;
@@ -194,10 +250,12 @@ public class CREW : NetworkBehaviour
     public void UseItem2()
     {
         if (EquippedToolObject == null) return;
+        SelectedWeaponAbility = 1;
         if (AnimationComboWeapon2 >= EquippedToolObject.attackAnimations2.Count)
         {
             AnimationComboWeapon2 = 0;
         }
+        if (EquippedToolObject.ActionUse2 != TOOL.ToolActionType.MELEE_ATTACK && !canStrike) return;
         AnimationComboWeapon1 = 0;
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations2[AnimationComboWeapon2]);
         if (setAnimationLocally(EquippedToolObject.attackAnimations2[AnimationComboWeapon2])) return;
@@ -209,6 +267,7 @@ public class CREW : NetworkBehaviour
     {
         AnimationUpdate();
         if (!IsServer) return;
+        StrikeUpdate();
         if (GetStamina() < 100)
         {
             float StaminaFactor = isMoving ? 1 : 2;
@@ -216,13 +275,42 @@ public class CREW : NetworkBehaviour
            
             if (LastStaminaUsed > 2f)
             {
-                AddStamina(CO.co.GetWorldSpeedDelta() * NaturalStaminaRegen * StaminaFactor);
+                AddStamina(CO.co.GetWorldSpeedDelta() * GetStaminaRegen() * StaminaFactor);
             }
         }
-        if (GetHealth() < MaxHealth)
+
+        DamageHealingUpdate();
+    }
+    private void StrikeUpdate()
+    {
+        if (EquippedToolObject == null) return;
+        if (EquippedToolObject.strikePoints.Count == 0) return;
+        if (AnimationController.isCurrentlyStriking())
         {
-            Heal(CO.co.GetWorldSpeedDelta() * NaturalHealthRegen);
+            foreach (Collider2D col in Physics2D.OverlapCircleAll(EquippedToolObject.strikePoints[0].position,0.3f))
+            {
+                CREW crew = col.GetComponent<CREW>();
+                if (crew)
+                {
+                    if (crew.Faction == Faction) continue;
+                    crew.TakeDamage(SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2);
+                    StartCoroutine(AttackCooldown(0.3f));
+                    return;
+                }
+            }
         }
+    }
+
+    bool canStrike = true;
+    IEnumerator AttackCooldown(float col)
+    {
+        canStrike = false;
+        while (col > 0f)
+        {
+            col -= CO.co.GetWorldSpeedDelta();
+            yield return null;
+        }
+        canStrike = true;
     }
     private void AnimationUpdate()
     {
@@ -329,14 +417,29 @@ public class CREW : NetworkBehaviour
     }
 
     /*GETTERS AND SETTERS*/
-
     public float GetHealth()
     {
         return CurHealth.Value;
     }
+    public float GetMaxHealth()
+    {
+        return MaxHealth * (0.8f + 0.1f * ATT_PHYSIQUE);
+    }
+    public float GetHealthRegen()
+    {
+        return NaturalHealthRegen * (0.8f + 0.1f * ATT_MEDICAL);
+    }
+    public float GetStaminaRegen()
+    {
+        return NaturalStaminaRegen * (0.8f + 0.1f * ATT_DEXTERITY);
+    }
+    public float GetDashCost()
+    {
+        return UnityEngine.Random.Range(27f, 37f)-ATT_DEXTERITY;
+    }
     public float GetHealthRelative()
     {
-        return CurHealth.Value / MaxHealth;
+        return GetHealth() / GetMaxHealth();
     }
     public float GetStamina()
     {
@@ -349,18 +452,35 @@ public class CREW : NetworkBehaviour
         CurStamina.Value -= fl;
         return true;
     }
+
+    private float lastDamageTime = 0f;
+
+    private void DamageHealingUpdate()
+    {
+        if (lastDamageTime > 0f)
+        {
+            lastDamageTime -= CO.co.GetWorldSpeedDelta();
+            return;
+        }
+        if (GetHealth() < GetMaxHealth())
+        {
+            Heal(GetHealthRegen() * CO.co.GetWorldSpeedDelta());
+        }
+    }
     public void Heal(float fl)
     {
-        CurHealth.Value = Mathf.Min(MaxHealth, CurHealth.Value + fl);
+        CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
     }
     public void TakeDamage(float fl)
     {
+        lastDamageTime = 7f;
         CurHealth.Value -= fl;
         if (CurHealth.Value < 0.1f)
         {
             CurHealth.Value = 0f;
             //Death
         }
+        CO_SPAWNER.co.SpawnDMGRpc(fl, transform.position);
     }
     public void AddStamina(float fl)
     {
@@ -372,7 +492,7 @@ public class CREW : NetworkBehaviour
     }
     public float GetSpeed()
     {
-        return MovementSpeed;
+        return MovementSpeed * (0.7f+ATT_DEXTERITY*0.1f);
     }
     public float AngleToTurnTarget()
     {

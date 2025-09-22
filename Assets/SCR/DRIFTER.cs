@@ -46,40 +46,56 @@ public class DRIFTER : NetworkBehaviour
 
     }
 
+    float PilotingEfficiency = 1f;
     private Vector3 MoveInput;
     private Vector3 LookTowards = new Vector3(1,0);
 
     [Rpc(SendTo.Server)]
-    public void SetMoveInputRpc(Vector3 mov)
+    public void SetMoveInputRpc(Vector3 mov, float eff)
     {
-        SetMoveInput(mov);
+        SetMoveInput(mov, eff);
     }
     [Rpc(SendTo.Server)]
     public void SetLookTowardsRpc(Vector2 mov)
     {
         SetLookTowards(mov);
     }
-    public void SetMoveInput(Vector3 mov)
+    public void SetMoveInput(Vector3 mov, float eff)
     {
         MoveInput = mov;
+        PilotingEfficiency = eff;
     }
     public void SetLookTowards(Vector3 mov)
     {
         LookTowards = (mov-transform.position).normalized;
     }
 
+    public float GetRotation()
+    {
+        return RotationBaseSpeed * PilotingEfficiency;
+    }
+
+    public float GetMovementSpeed()
+    {
+        return MovementSpeed;
+    }
+
+    public float GetMovementAccel()
+    {
+        return AccelerationSpeedMod * PilotingEfficiency * 1.1f;
+    }
     void UpdateTurn()
     {
         float ang = AngleToTurnTarget();
         float rotGoal = 0f;
-        float accelSpeed = RotationBaseSpeed * 0.5f;
+        float accelSpeed = GetRotation() * 0.5f;
         if (ang > 1f)
         {
-            rotGoal = RotationBaseSpeed;
+            rotGoal = GetRotation();
         }
         else if (ang < -1f)
         {
-            rotGoal = -RotationBaseSpeed;
+            rotGoal = -GetRotation();
         }
         if (rotGoal > CurrentRotation)
         {
@@ -89,7 +105,7 @@ public class DRIFTER : NetworkBehaviour
         {
             CurrentRotation -= accelSpeed * CO.co.GetWorldSpeedDeltaFixed();
         }
-        float maxRot = Mathf.Min(RotationBaseSpeed, Mathf.Abs(ang)*2f);
+        float maxRot = Mathf.Min(GetRotation(), Mathf.Abs(ang)*2f);
         CurrentRotation = Mathf.Clamp(CurrentRotation, -maxRot, maxRot);
         transform.Rotate(Vector3.forward,CurrentRotation * CO.co.GetWorldSpeedDeltaFixed());
     }
@@ -104,11 +120,11 @@ public class DRIFTER : NetworkBehaviour
         {
             bool XPOS = CurrentMovement.x > 0;
             bool YPOS = CurrentMovement.y > 0;
-            CurrentMovement -= CurrentMovement.normalized * AccelerationSpeedMod * MovementSpeed * CO.co.GetWorldSpeedDeltaFixed();
+            CurrentMovement -= CurrentMovement.normalized * GetMovementAccel() * MovementSpeed * CO.co.GetWorldSpeedDeltaFixed();
             if (XPOS != CurrentMovement.x > 0 || YPOS != CurrentMovement.y > 0 || CurrentMovement.magnitude < 0.1f) CurrentMovement = Vector3.zero;
         } else
         {
-            CurrentMovement += MoveInput * AccelerationSpeedMod * MovementSpeed * CO.co.GetWorldSpeedDeltaFixed();
+            CurrentMovement += MoveInput * GetMovementAccel() * MovementSpeed * CO.co.GetWorldSpeedDeltaFixed();
             if (CurrentMovement.magnitude > MovementSpeed) CurrentMovement = CurrentMovement.normalized * MovementSpeed;
         }
 

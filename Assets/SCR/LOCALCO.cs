@@ -63,7 +63,7 @@ public class LOCALCO : NetworkBehaviour
                     if (Input.GetKey(KeyCode.S)) mov += new Vector3(0, -1);
                     if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
                     if (Input.GetKey(KeyCode.D)) mov += new Vector3(1, 0);
-                    Drifter.SetMoveInputRpc(mov);
+                    Drifter.SetMoveInputRpc(mov,0.8f+GetPlayer().ATT_PILOTING*0.1f);
                     Drifter.SetLookTowardsRpc(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                     break;
 
@@ -91,7 +91,7 @@ public class LOCALCO : NetworkBehaviour
     }
 
     [Rpc(SendTo.Server)]
-    public void CreatePlayerRpc(string name, Color col)
+    public void CreatePlayerRpc(string name, Color col, int[] attributes)
     {
         CREW crew = Instantiate(CO_SPAWNER.co.PlayerPrefab, CO.co.PlayerMainDrifter.Interior.StartingModuleLocations[0], Quaternion.identity);
         crew.NetworkObject.Spawn();
@@ -99,6 +99,16 @@ public class LOCALCO : NetworkBehaviour
         crew.PlayerController.Value = GetPlayerID();
         crew.CharacterName.Value = name;
         crew.CharacterNameColor.Value = new Vector3(col.r, col.g, col.b);
+        crew.UpdateAttributes(
+            attributes[0],
+            attributes[1],
+            attributes[2],
+            attributes[3],
+            attributes[4],
+            attributes[5],
+            attributes[6],
+            attributes[7]
+            );
         crew.Init();
         crew.RegisterPlayerOnLOCALCORpc();
         CO.co.PlayerMainDrifter.Interior.AddCrew(crew);
@@ -106,7 +116,7 @@ public class LOCALCO : NetworkBehaviour
     public void SetCameraToPlayer()
     {
         CurrentControlMode = ControlModes.PLAYER;
-        CAM.cam.SetCameraMode(Player.transform, 15f);
+        CAM.cam.SetCameraMode(Player.transform, 13f+ Player.ATT_COMMUNOPATHY);
     }
     IEnumerator CheckInteraction()
     {
@@ -127,7 +137,7 @@ public class LOCALCO : NetworkBehaviour
                             case Module.ModuleTypes.NAVIGATION:
                                 Drifter = Player.space.Drifter;
                                 CurrentControlMode = ControlModes.DRIFTER;
-                                CAM.cam.SetCameraMode(Drifter.transform, 250f);
+                                CAM.cam.SetCameraMode(Drifter.transform, 230f + Player.ATT_COMMUNOPATHY*10f);
                                 break;
                         }
                     }
