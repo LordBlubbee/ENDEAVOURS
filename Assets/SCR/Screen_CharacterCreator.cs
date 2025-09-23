@@ -10,6 +10,10 @@ public class Screen_CharacterCreator : MonoBehaviour
     public Slider UsernameG;
     public Slider UsernameB;
 
+    public GameObject Screen_Appearance;
+    public GameObject Screen_Background;
+    public GameObject Screen_Skillpoints;
+
     private int SkillPoints = 20;
     public TextMeshProUGUI SkillPointTex;
     private int[] SkillPower = new int[8];
@@ -162,10 +166,16 @@ public class Screen_CharacterCreator : MonoBehaviour
         UsernameTex.color = GO.g.localColor;
         GO.g.saveSettings();
     }
-
     public void PressCreateCharacter()
     {
         LOCALCO.local.CreatePlayerRpc(GO.g.localUsername, GO.g.localColor, SkillPower);
         UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
+    }
+    public void OpenSubscreen(GameObject ob)
+    {
+        Screen_Appearance.SetActive(false);
+        Screen_Background.SetActive(false);
+        Screen_Skillpoints.SetActive(false);
+        ob.SetActive(true);
     }
 }
