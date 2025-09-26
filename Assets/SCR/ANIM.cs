@@ -18,9 +18,13 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
 
     public bool isCurrentlyStriking()
     {
-        if (state == null) return false;
-        if (currentFrame < 0) return false;
-        if (currentFrame >= state.Frames.Count) return false;
+        return CurrentStrikePower() > 0;
+    }
+    public float CurrentStrikePower()
+    {
+        if (state == null) return 0;
+        if (currentFrame < 0) return 0;
+        if (currentFrame >= state.Frames.Count) return 0;
         return state.Frames[currentFrame].isStriking;
     }
     public float getAnimationMoveFactor()
@@ -237,7 +241,7 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame = new AnimFrame(2, 0.1f);
                 curFrame.moveForward = 6f;
                 curFrame.AnimationMoveFactor = 0.6f; //STRIKE forward
-                curFrame.isStriking = true;
+                curFrame.isStriking = 1f;
                 curFrame.addMovement(new Vector3(0.3f, 0), new Vector3(0.05f, 0.05f),8); //Body
                 curFrame.addMovement(new Vector3(3.2f, 0.1f),-4); //Tool Right
                 curFrame.addMovement(new Vector3(0.2f, -0.05f),-14); //Tool Left
@@ -245,7 +249,7 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame = new AnimFrame(3, 0.1f);
                 curFrame.moveForward = 6f;
                 curFrame.AnimationMoveFactor = 0.4f;
-                curFrame.isStriking = true;
+                curFrame.isStriking = 1f;
                 curFrame.addMovement(new Vector3(0.1f, 0f), new Vector3(-0.05f, -0.05f)); //Body
                 curFrame.addMovement(new Vector3(0.3f, 0.1f),8); //Tool Right
                 curFrame.addMovement(new Vector3(0.15f, 0f),-12); //Tool Left
@@ -274,7 +278,7 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 Frames.Add(curFrame);
                 curFrame = new AnimFrame(3, 0.9f);
                 curFrame.AnimationMoveFactor = 0.3f;
-                curFrame.isStriking = true;
+                curFrame.isStriking = 1f;
                 curFrame.addMovement(new Vector3(0.1f, 0f), new Vector3(-0.05f, -0.05f)); //Body
                 curFrame.addMovement(new Vector3(0.5f, 0.1f), 35,25); //Tool Right
                 curFrame.addMovement(new Vector3(0.05f, 0f), -12); //Tool Left
@@ -308,13 +312,13 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 Frames.Add(curFrame);
                 curFrame = new AnimFrame(3, 0.3f);
                 curFrame.AnimationMoveFactor = 0.6f;
-                curFrame.isStriking = true;
+                curFrame.isStriking = 1f;
                 curFrame.addMovement(new Vector3(0.1f, 0f), new Vector3(-0.05f, -0.05f)); //Body
                 curFrame.addMovement(new Vector3(0.8f, 0.2f), 32,36); //Tool Right
                 curFrame.addMovement(new Vector3(0.15f, 0f), -12); //Tool Left
                 Frames.Add(curFrame);
                 curFrame = new AnimFrame(4, 0.2f);
-                curFrame.isStriking = true;
+                curFrame.isStriking = 1f;
                 curFrame.AnimationMoveFactor = 0.4f;
                 curFrame.addMovement(new Vector3(-0.06f, 0f), new Vector3(0.05f, 0.05f), 7); //Body
                 curFrame.addMovement(new Vector3(0.15f, -0.22f),-26); //Tool Right
@@ -362,7 +366,7 @@ public class AnimFrame //A single frame in an animation which tells each AnimTra
     public float maxDuration;
     public float moveForward;
     public int nextFrame;
-    public bool isStriking;
+    public float isStriking;
     public bool isCurve;
     public float AnimationMoveFactor = 1f;
     public List<AnimFramePart> Frames = new List<AnimFramePart>();

@@ -253,6 +253,8 @@ public class CREW : NetworkBehaviour
     {
         if (GetGrappleCooldown() > 0f) return;
         if (space) space.RemoveCrew(this);
+        AnimationComboWeapon1 = 0;
+        AnimationComboWeapon2 = 0;
         newSpace.AddCrew(this);
         CurGrappleCooldown.Value = GrappleCooldown / 0.8f + (ATT_ARMS * 0.1f);
         StartCoroutine(GrappleNum(newSpace.GetNearestGridTransformToPoint(transform.position).transform));
@@ -277,6 +279,8 @@ public class CREW : NetworkBehaviour
         if (isDashing) return;
         if (!CanFunction()) return;
         if (!ConsumeStamina(GetDashCost())) return;
+        AnimationComboWeapon1 = 0;
+        AnimationComboWeapon2 = 0;
         StartCoroutine(DashNumerator());
         setAnimationRpc(ANIM.AnimationState.MI_DASH);
     }
@@ -386,6 +390,7 @@ public class CREW : NetworkBehaviour
                     if (crew.space != space) continue;
                     if (crew.isDead()) continue;
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
+                    dmg *= AnimationController.CurrentStrikePower();
                     crew.TakeDamage(dmg, checkHit);
                     canStrikeMelee = false;
                     return;

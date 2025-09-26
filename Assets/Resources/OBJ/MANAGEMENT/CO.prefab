@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8346390910565258559}
   - component: {fileID: -2324009814894716111}
   - component: {fileID: 5031945110435053922}
+  - component: {fileID: 794797818192831452}
   m_Layer: 0
   m_Name: CO
   m_TagString: Untagged
@@ -94,3 +95,16 @@ MonoBehaviour:
   PrefabLooncrab: {fileID: 5867427934140877094, guid: 86f046a72cbd10a4eb1d9f606f946a03, type: 3}
   PrefabAIGROUP: {fileID: 3831634758814928319, guid: cb606a21fdafac54faa6d61495604d6e, type: 3}
   PlayerPrefab: {fileID: 5867427934140877094, guid: e0e5452e1cb9d2a419680a1f263400a1, type: 3}
+--- !u!114 &794797818192831452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657527151062671822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd437ff0bec1cc94eab6136773f21685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1

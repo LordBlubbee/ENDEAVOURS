@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Collections;
 using Unity.Netcode;
@@ -7,6 +8,8 @@ public class LOCALCO : NetworkBehaviour
 {
     public static LOCALCO local;
     private NetworkVariable<int> PlayerID = new NetworkVariable<int>();
+
+    [NonSerialized] public NetworkVariable<int> CurrentDialogVote = new NetworkVariable<int>(-1, writePerm:NetworkVariableWritePermission.Owner);
 
     private CREW Player;
     private DRIFTER Drifter;

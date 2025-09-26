@@ -22,7 +22,7 @@ public class CO_SPAWNER : NetworkBehaviour
     //This one saves all the prefabs!
     public static CO_SPAWNER co;
 
-    private void Awake()
+    private void Start()
     {
         co = this;
 

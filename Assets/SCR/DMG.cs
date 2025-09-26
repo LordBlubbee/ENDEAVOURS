@@ -15,7 +15,7 @@ public class DMG : MonoBehaviour
         texto.text = dmg.ToString("0");
         texto.color = Color.red;
         transform.localScale = new Vector3(scale, scale, 1);
-        MovementDir = new Vector3(Random.Range(-0.6f,0.6f), Random.Range(0.7f, 0.9f));
+        MovementDir = new Vector3(Random.Range(-0.3f,0.3f), Random.Range(0.2f, 0.3f));
     }
     public void InitWords(string str, float dur, Color col)
     {

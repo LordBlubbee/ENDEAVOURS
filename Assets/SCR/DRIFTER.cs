@@ -131,7 +131,7 @@ public class DRIFTER : NetworkBehaviour
         float towardsang = Mathf.Abs(AngleTowards(CurrentMovement));
         float towardsfactor = 1.2f - Mathf.Clamp((towardsang - 60f) * 0.006f, 0, 0.4f); //The more you look in the correct direction, the faster you move!
         transform.position += CurrentMovement * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
-        Rigid.MovePosition(transform.position);
+        //Rigid.MovePosition(transform.position);
     }
     public float AngleToTurnTarget()
     {
