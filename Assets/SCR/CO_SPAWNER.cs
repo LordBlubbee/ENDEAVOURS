@@ -9,6 +9,9 @@ public class CO_SPAWNER : NetworkBehaviour
     public Dictionary<ToolType, TOOL> ToolPrefabs = new();
     public GamerTag PrefabGamerTag;
     public DMG PrefabDMG;
+    public MapPoint PrefabMapPoint;
+    public CREW PrefabLooncrab;
+    public AI_GROUP PrefabAIGROUP;
     public enum ToolType
     {
         NONE,
@@ -35,19 +38,54 @@ public class CO_SPAWNER : NetworkBehaviour
     public void SpawnPlayerShipRpc(int ID)
     {
         if (CO.co.HasShipBeenLaunched.Value) return;
-        DRIFTER driftPrefab = UI.ui.ShipSelectionUI.SpawnableShips[ID].Prefab;
         CO.co.HasShipBeenLaunched.Value = true;
+
+        DRIFTER driftPrefab = UI.ui.ShipSelectionUI.SpawnableShips[ID].Prefab;
         DRIFTER drifter = Instantiate(driftPrefab,Vector3.zero,Quaternion.identity);
         drifter.NetworkObject.Spawn();
         drifter.Init();
         CO.co.PlayerMainDrifter = drifter;
+
+        //TEST
+        driftPrefab = UI.ui.ShipSelectionUI.SpawnableShips[ID].Prefab;
+        drifter = Instantiate(driftPrefab, new Vector3(200,0), Quaternion.identity);
+        drifter.NetworkObject.Spawn();
+        drifter.Init();
+        drifter.transform.Rotate(Vector3.forward,135f);
+
+        CO.co.GenerateMap(25f,25);
+
+        SpawnLooncrabsAggressive(new Vector3(0, 200), 6);
+    }
+    public void SpawnLooncrabsAggressive(Vector3 pos, int Amount)
+    {
+        float Degrees = UnityEngine.Random.Range(0, 360);   
+        float Radius = 5f;
+        AI_GROUP group = Instantiate(PrefabAIGROUP);
+        List<AI_UNIT> members = new();
+        for (int i = 0; i < Amount; i++)
+        {
+            Vector3 tryPos = pos + new Vector3(UnityEngine.Random.Range(-Radius, Radius), UnityEngine.Random.Range(-Radius, Radius));
+            CREW looncrab = Instantiate(PrefabLooncrab, tryPos, Quaternion.identity);
+            looncrab.NetworkObject.Spawn();
+            looncrab.transform.Rotate(Vector3.forward, Degrees + UnityEngine.Random.Range(-30f, 30f));
+            looncrab.Init();
+            members.Add(looncrab.GetComponent<AI_UNIT>());
+        }
+        group.SetAI(AI_GROUP.AI_TYPES.LOONCRAB_SWARM,AI_GROUP.AI_OBJECTIVES.BOARD, members);
     }
 
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnDMGRpc(float dm, Vector3 pos)
     {
-        if (CO.co.HasShipBeenLaunched.Value) return;
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
         dmg.InitDamage(dm, 1f);
+    }
+
+    public MapPoint CreateMapPoint(Vector3 pos)
+    {
+        MapPoint mapPoint = Instantiate(PrefabMapPoint, pos, Quaternion.identity);
+        mapPoint.NetworkObject.Spawn();
+        return mapPoint;
     }
 }

@@ -89,4 +89,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 8311341897716400573, guid: 8df09dd9598f1c249adae05d82cffc4e, type: 3}
   PrefabGamerTag: {fileID: 7664399197578832526, guid: 13763fc837ffb9840b9462900a539937, type: 3}
+  PrefabDMG: {fileID: 7984331047920370264, guid: d7c770080f1bbd74896728c8e86423ca, type: 3}
+  PrefabMapPoint: {fileID: 3321087299976624134, guid: dc2158057d660e74e8c4d97661c8c919, type: 3}
+  PrefabLooncrab: {fileID: 5867427934140877094, guid: 86f046a72cbd10a4eb1d9f606f946a03, type: 3}
+  PrefabAIGROUP: {fileID: 3831634758814928319, guid: cb606a21fdafac54faa6d61495604d6e, type: 3}
   PlayerPrefab: {fileID: 5867427934140877094, guid: e0e5452e1cb9d2a419680a1f263400a1, type: 3}

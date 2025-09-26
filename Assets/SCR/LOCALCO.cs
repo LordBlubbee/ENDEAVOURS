@@ -44,9 +44,16 @@ public class LOCALCO : NetworkBehaviour
         if (GetPlayer())
         {
             Vector3 mov = Vector3.zero;
+            UI.ui.SetCrosshair(UI.CrosshairModes.NONE);
+            if (UI.ui.CurrentlySelectedScreen != UI.ui.MainGameplayUI.gameObject)
+            {
+                GetPlayer().SetMoveInputRpc(Vector3.zero);
+                return;
+            }
             switch (CurrentControlMode)
             {
                 case ControlModes.PLAYER:
+                    
                     if (Input.GetKey(KeyCode.W)) mov += new Vector3(0, 1);
                     if (Input.GetKey(KeyCode.S)) mov += new Vector3(0, -1);
                     if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
@@ -56,6 +63,18 @@ public class LOCALCO : NetworkBehaviour
                     if (Input.GetKeyDown(KeyCode.LeftShift)) GetPlayer().DashRpc();
                     if (Input.GetMouseButtonDown(0)) GetPlayer().UseItem1Rpc();
                     if (Input.GetMouseButtonDown(1)) GetPlayer().UseItem2Rpc();
+                    if (Input.GetKey(KeyCode.G) && Player.GetGrappleCooldown() <= 0)
+                    {
+                        if (HasGrappleTarget()) UI.ui.SetCrosshair(UI.CrosshairModes.GRAPPLE_SUCCESS);
+                        else UI.ui.SetCrosshair(UI.CrosshairModes.GRAPPLE);
+                    }
+                    if (Input.GetKeyUp(KeyCode.G))
+                    {
+                        GetPlayer().UseGrappleRpc(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                    }
+                    if (Input.GetKeyDown(KeyCode.Alpha1)) GetPlayer().EquipWeapon1Rpc();
+                    if (Input.GetKeyDown(KeyCode.Alpha2)) GetPlayer().EquipWeapon2Rpc();
+                    if (Input.GetKeyDown(KeyCode.Alpha3)) GetPlayer().EquipWeapon3Rpc();
                     break;
                 case ControlModes.DRIFTER:
                     GetPlayer().SetMoveInputRpc(Vector3.zero);
@@ -66,11 +85,26 @@ public class LOCALCO : NetworkBehaviour
                     Drifter.SetMoveInputRpc(mov,0.8f+GetPlayer().ATT_PILOTING*0.1f);
                     Drifter.SetLookTowardsRpc(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                     break;
-
+                case ControlModes.WEAPON:
+                    GetPlayer().SetMoveInputRpc(Vector3.zero);
+                    break;
             }
-            
         }
     }
+    public bool HasGrappleTarget()
+    {
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition),0.1f))
+        {
+            WalkableTile tile = col.GetComponent<WalkableTile>();
+            if (tile && tile.Space != Player.space)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Module CurrentInteractionModule = null;
     public int GetPlayerID()
     {
         return PlayerID.Value;
@@ -116,7 +150,7 @@ public class LOCALCO : NetworkBehaviour
     public void SetCameraToPlayer()
     {
         CurrentControlMode = ControlModes.PLAYER;
-        CAM.cam.SetCameraMode(Player.transform, 13f+ Player.ATT_COMMUNOPATHY);
+        CAM.cam.SetCameraMode(Player.transform, 13f+ Player.ATT_COMMUNOPATHY, 8f, 16f+Player.ATT_COMMUNOPATHY);
     }
     IEnumerator CheckInteraction()
     {
@@ -137,16 +171,27 @@ public class LOCALCO : NetworkBehaviour
                             case Module.ModuleTypes.NAVIGATION:
                                 Drifter = Player.space.Drifter;
                                 CurrentControlMode = ControlModes.DRIFTER;
-                                CAM.cam.SetCameraMode(Drifter.transform, 230f + Player.ATT_COMMUNOPATHY*10f);
+                                CAM.cam.SetCameraMode(Drifter.transform, 230f + Player.ATT_COMMUNOPATHY*10f, 100f, 250f);
+                                CurrentInteractionModule = mod;
                                 break;
                         }
                     }
                 }
-            } else if (Input.GetKeyDown(KeyCode.F))
+            } else if (Input.GetKeyDown(KeyCode.F) || LeftModule())
             {
+                CurrentInteractionModule = null;
                 SetCameraToPlayer();
             }
             yield return null;
         }
+    }
+
+    private bool LeftModule()
+    {
+        if (CurrentInteractionModule != null)
+        {
+            if ((CurrentInteractionModule.transform.position - Player.transform.position).magnitude > 6f || Player.isDead()) return true;
+        }
+        return false;
     }
 }

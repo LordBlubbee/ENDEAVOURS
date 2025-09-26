@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5389950984852586996}
   - component: {fileID: 7919595410850716874}
-  - component: {fileID: 5867427934140877094}
   - component: {fileID: 5953424789757948568}
   - component: {fileID: 397555283914091779}
   - component: {fileID: 35990855443869147}
   - component: {fileID: 3455771150058328581}
+  - component: {fileID: 5867427934140877094}
   m_Layer: 7
-  m_Name: CrewMember
+  m_Name: PlayerCrew
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,28 +63,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &5867427934140877094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2147099674879425539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c41da212fce25864190f577848dbf4f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  Spr: {fileID: 5632965166791697770}
-  Faction: 0
-  MaxHealth: 100
-  NaturalHealthRegen: 0.1
-  NaturalStaminaRegen: 50
-  MovementSpeed: 7
-  RotationDistanceFactor: 4
-  RotationBaseSpeed: 90
-  StartingTool: 1
 --- !u!58 &5953424789757948568
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -129,7 +107,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2147099674879425539}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -211,6 +189,37 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
+--- !u!114 &5867427934140877094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147099674879425539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c41da212fce25864190f577848dbf4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  Spr: {fileID: 5632965166791697770}
+  Faction: 1
+  MaxHealth: 100
+  NaturalHealthRegen: 0.1
+  NaturalStaminaRegen: 50
+  MovementSpeed: 7
+  RotationDistanceFactor: 4
+  RotationBaseSpeed: 90
+  GrappleCooldown: 10
+  ATT_PHYSIQUE: 2
+  ATT_ARMS: 2
+  ATT_DEXTERITY: 2
+  ATT_COMMUNOPATHY: 2
+  ATT_PILOTING: 2
+  ATT_ENGINEERING: 2
+  ATT_GUNNERY: 2
+  ATT_MEDICAL: 2
+  StartingTool: 1
 --- !u!1 &3085451406788945022
 GameObject:
   m_ObjectHideFlags: 0

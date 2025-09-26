@@ -28,7 +28,7 @@ public class PROJ : NetworkBehaviour
         if (crew != null)
         {
             if (crew.Faction == Faction) return;
-            crew.TakeDamage(AttackDamage);
+            crew.TakeDamage(AttackDamage,transform.position);
             BulletImpact();
             return;
         }

@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CREW : NetworkBehaviour
 {
     private Rigidbody2D Rigid;
+    private Collider2D Col;
     public SpriteRenderer Spr;
 
     private ANIM AnimationController;
@@ -25,6 +27,7 @@ public class CREW : NetworkBehaviour
     public float MovementSpeed = 7;
     public float RotationDistanceFactor = 4;
     public float RotationBaseSpeed = 90;
+    public float GrappleCooldown = 10f;
 
     [Header("ATTRIBUTES")]
     public int ATT_PHYSIQUE = 2; //Buffs maximum health, melee damage
@@ -44,7 +47,7 @@ public class CREW : NetworkBehaviour
     public void UpdateAttributes(int phys, int arms, int dex, int comm, int pil, int eng, int gun, int med)
     {
         ATT_PHYSIQUE = phys;
-        ATT_ARMS = arms;
+        ATT_ARMS = arms; //Ranged attack
         ATT_DEXTERITY = dex; //Buffs movement speed, stamina
         ATT_COMMUNOPATHY = comm; //Buffs magic damage, camera range, senses
         ATT_PILOTING = pil; //Buffs piloting maneuverability, dodge chance
@@ -68,7 +71,22 @@ public class CREW : NetworkBehaviour
 
     private NetworkVariable<float> CurHealth = new();
     private NetworkVariable<float> CurStamina = new();
+    private NetworkVariable<float> CurGrappleCooldown = new();
 
+    private NetworkVariable<bool> Alive = new();
+
+    public bool isDead()
+    {
+        return !Alive.Value;
+    }
+    public bool CanFunction()
+    {
+        return !isDead();
+    }
+    public float GetGrappleCooldown()
+    {
+        return CurGrappleCooldown.Value;
+    }
     public SPACE space { get; set; }
 
     bool hasInitialized = false;
@@ -109,7 +127,9 @@ public class CREW : NetworkBehaviour
         hasInitialized = true;
         CO.co.RegisterCrew(this);
 
+        Alive.Value = true;
         Rigid = GetComponent<Rigidbody2D>();
+        Col = GetComponent<Collider2D>();
 
         AnimTransforms.Add(new AnimTransform(Spr.transform));
         AnimTransforms.Add(new AnimTransform());
@@ -186,11 +206,76 @@ public class CREW : NetworkBehaviour
     {
         UseItem2();
     }
+    [Rpc(SendTo.Server)]
+    public void UseGrappleRpc(Vector3 trt)
+    {
+        UseGrapple(trt);
+    }
+    [Rpc(SendTo.Server)]
+    public void EquipWeapon1Rpc()
+    {
+    }
+    [Rpc(SendTo.Server)]
+    public void EquipWeapon2Rpc()
+    {
+    }
+    [Rpc(SendTo.Server)]
+    public void EquipWeapon3Rpc()
+    {
+    }
+
+    private bool IsGrappling = false;
+    public bool UsePhysics()
+    {
+        return !IsGrappling;
+    }
+
+    IEnumerator GrappleNum(Transform trt)
+    {
+        Col.enabled = false;
+        IsGrappling = true;
+        Vector3 moveAdd = new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-3f, 3f));
+        while ((trt.position+ moveAdd - transform.position).magnitude > 0.5f)
+        {
+            transform.position += (trt.position+ moveAdd - transform.position).normalized * ((MovementSpeed + (trt.position+ moveAdd - transform.position).magnitude) * 2f * CO.co.GetWorldSpeedDelta());
+            yield return null;
+        }
+        IsGrappling = false;
+        Col.enabled = true;
+        while (CurGrappleCooldown.Value > 0f)
+        {
+            CurGrappleCooldown.Value -= CO.co.GetWorldSpeedDelta();
+            yield return null;
+        }
+    }
+
+    public void UseGrapple(SPACE newSpace)
+    {
+        if (GetGrappleCooldown() > 0f) return;
+        if (space) space.RemoveCrew(this);
+        newSpace.AddCrew(this);
+        CurGrappleCooldown.Value = GrappleCooldown / 0.8f + (ATT_ARMS * 0.1f);
+        StartCoroutine(GrappleNum(newSpace.GetNearestGridTransformToPoint(transform.position).transform));
+    }
+    public void UseGrapple(Vector3 trt)
+    {
+        if (GetGrappleCooldown() > 0f) return;
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.1f))
+        {
+            WalkableTile tile = col.GetComponent<WalkableTile>();
+            if (tile && tile.Space != space)
+            {
+                UseGrapple(tile.Space);
+                return;
+            }
+        }
+    }
     /*Use Inputs*/
     public void Dash()
     {
         if (!isMoving) return;
         if (isDashing) return;
+        if (!CanFunction()) return;
         if (!ConsumeStamina(GetDashCost())) return;
         StartCoroutine(DashNumerator());
         setAnimationRpc(ANIM.AnimationState.MI_DASH);
@@ -202,7 +287,7 @@ public class CREW : NetworkBehaviour
         isDashing = true;
         float Speed = 1f;
         Vector3 dir = MoveInput;
-        while (Speed > 0f)
+        while (Speed > 0f && UsePhysics())
         {
             float mov = (5f+ATT_DEXTERITY*0.3f) * MovementSpeed * Speed * CO.co.GetWorldSpeedDeltaFixed();
 
@@ -221,7 +306,7 @@ public class CREW : NetworkBehaviour
     IEnumerator PushNumerator(float Power, float Duration, Vector3 dir)
     {
         float Speed = 1f;
-        while (Speed > 0f && !isDashing)
+        while (Speed > 0f && !isDashing && UsePhysics())
         {
             transform.position += 2f * Power * Speed * CO.co.GetWorldSpeedDeltaFixed() * dir;
             Rigid.MovePosition(transform.position);
@@ -229,12 +314,12 @@ public class CREW : NetworkBehaviour
             yield return new WaitForFixedUpdate();
         }
     }
-
     int SelectedWeaponAbility = 0;
     int AnimationComboWeapon1 = 0;
     int AnimationComboWeapon2 = 0;
     public void UseItem1()
     {
+        if (!CanFunction()) return;
         if (EquippedToolObject == null) return;
         SelectedWeaponAbility = 0;
         if (AnimationComboWeapon1 >= EquippedToolObject.attackAnimations1.Count)
@@ -245,10 +330,12 @@ public class CREW : NetworkBehaviour
         AnimationComboWeapon2 = 0;
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations1[AnimationComboWeapon1]);
         if (!setAnimationLocally(EquippedToolObject.attackAnimations1[AnimationComboWeapon1])) return;
+        canStrikeMelee = true;
         AnimationComboWeapon1++;
     }
     public void UseItem2()
     {
+        if (!CanFunction()) return;
         if (EquippedToolObject == null) return;
         SelectedWeaponAbility = 1;
         if (AnimationComboWeapon2 >= EquippedToolObject.attackAnimations2.Count)
@@ -259,6 +346,7 @@ public class CREW : NetworkBehaviour
         AnimationComboWeapon1 = 0;
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations2[AnimationComboWeapon2]);
         if (setAnimationLocally(EquippedToolObject.attackAnimations2[AnimationComboWeapon2])) return;
+        canStrikeMelee = true;
         AnimationComboWeapon2++;
     }
 
@@ -285,22 +373,28 @@ public class CREW : NetworkBehaviour
     {
         if (EquippedToolObject == null) return;
         if (EquippedToolObject.strikePoints.Count == 0) return;
+        if (!canStrikeMelee) return;
         if (AnimationController.isCurrentlyStriking())
         {
-            foreach (Collider2D col in Physics2D.OverlapCircleAll(EquippedToolObject.strikePoints[0].position,0.3f))
+            Vector3 checkHit = EquippedToolObject.strikePoints[0].position;
+            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.3f))
             {
                 CREW crew = col.GetComponent<CREW>();
                 if (crew)
                 {
-                    if (crew.Faction == Faction) continue;
-                    crew.TakeDamage(SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2);
-                    StartCoroutine(AttackCooldown(0.3f));
+                    if (crew.Faction == Faction || crew.Faction == 0) continue;
+                    if (crew.space != space) continue;
+                    if (crew.isDead()) continue;
+                    float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
+                    crew.TakeDamage(dmg, checkHit);
+                    canStrikeMelee = false;
                     return;
                 }
             }
         }
     }
 
+    bool canStrikeMelee = true;
     bool canStrike = true;
     IEnumerator AttackCooldown(float col)
     {
@@ -341,6 +435,7 @@ public class CREW : NetworkBehaviour
     private void FixedUpdate()
     {
         if (!IsServer) return;
+        if (!CanFunction()) return;
         if (isLooking)
         {
             float ang = AngleToTurnTarget();
@@ -368,6 +463,7 @@ public class CREW : NetworkBehaviour
                 isLooking = false;
             }
         }
+        if (!UsePhysics()) return;
         if (isMoving)
         {
             setAnimationRpc(animDefaultMove, 1);
@@ -471,16 +567,24 @@ public class CREW : NetworkBehaviour
     {
         CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
     }
-    public void TakeDamage(float fl)
+    public void TakeDamage(float fl, Vector3 src)
     {
+        if (isDashing) return;
         lastDamageTime = 7f;
         CurHealth.Value -= fl;
         if (CurHealth.Value < 0.1f)
         {
             CurHealth.Value = 0f;
+            Die();
             //Death
         }
-        CO_SPAWNER.co.SpawnDMGRpc(fl, transform.position);
+        CO_SPAWNER.co.SpawnDMGRpc(fl, src);
+    }
+
+    public void Die()
+    {
+        Alive.Value = false;
+        setAnimationRpc(ANIM.AnimationState.MI_DEAD1, 1);
     }
     public void AddStamina(float fl)
     {

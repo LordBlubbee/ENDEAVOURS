@@ -8,7 +8,7 @@ public class SPACE : NetworkBehaviour
     public DRIFTER Drifter;
     [NonSerialized] public List<CREW> CrewInSpace = new();
     private List<Module> Modules = new();
-    public List<Transform> RoomTiles;
+    public List<WalkableTile> RoomTiles;
     private List<Vector2> RoomLocations = new();
     public List<Module> StartingModuleList;
     public List<Vector3> StartingModuleLocations;
@@ -28,12 +28,15 @@ public class SPACE : NetworkBehaviour
         if (hasInitialized) return;
         hasInitialized = true;
 
-        foreach (Transform trans in RoomTiles)
+        foreach (WalkableTile tile in RoomTiles)
         {
+            Transform trans = tile.transform;
+            tile.Space = this;
             RoomLocations.Add(new Vector2(trans.localPosition.x / 8f, trans.localPosition.y / 8f));
         }
-        foreach (Transform trans in RoomTiles)
+        foreach (WalkableTile tile in RoomTiles)
         {
+            Transform trans = tile.transform;
             Vector2 here = new Vector2(trans.localPosition.x / 8f, trans.localPosition.y / 8f);
             for (int ix = -1; ix < 2; ix++)
             {
@@ -66,20 +69,72 @@ public class SPACE : NetworkBehaviour
         }
 
         if (!IsServer) return;
+
+        CO.co.RegisterSpace(this);
+
         for (int i = 0; i < StartingModuleList.Count; i++)
         {
-            Module mod = Instantiate(StartingModuleList[i], StartingModuleLocations[i], Quaternion.identity);
+            Module mod = Instantiate(StartingModuleList[i], Vector3.zero, Quaternion.identity);
             mod.NetworkObject.Spawn();
             mod.transform.SetParent(transform);
+            mod.transform.localPosition = StartingModuleLocations[i];
             mod.Init();
             Modules.Add(mod);
         }
+    }
+    public Vector2 ConvertWorldToGrid(Vector3 pos)
+    {
+        Vector3 local = transform.InverseTransformPoint(pos);
+        return new Vector2(local.x / 8f, local.y / 8f);
+    }
+    public Vector3 ConvertGridToWorld(Vector2 grid)
+    {
+        return transform.TransformPoint(new Vector3(grid.x * 8f, grid.y * 8f));
+    }
+
+    public Vector3 GetNearestGridToPoint(Vector3 point)
+    {
+        Vector2 grid = ConvertWorldToGrid(point);
+        if (RoomLocations.Contains(grid)) return ConvertGridToWorld(grid);
+        float minDist = 9999f;
+        Vector2 trt = grid;
+        foreach (Vector2 loc in GetGrid())
+        {
+            float dist = (ConvertGridToWorld(loc) - point).magnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                trt = loc;
+            }
+        }
+        return ConvertGridToWorld(trt);
+    }
+    public WalkableTile GetNearestGridTransformToPoint(Vector3 point)
+    {
+        WalkableTile nearestTile = null;
+        float minDist = float.MaxValue;
+        foreach (var tile in RoomTiles)
+        {
+            float dist = (tile.transform.position - point).magnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                nearestTile = tile;
+            }
+        }
+        return nearestTile;
+    }
+
+    public List<Vector2> GetGrid()
+    {
+        return RoomLocations;
     }
     public void AddCrew(CREW crew)
     {
         CrewInSpace.Add(crew);
         crew.space = this;
         crew.transform.SetParent(transform);
+        crew.transform.localPosition = new Vector3(crew.transform.localPosition.x, crew.transform.localPosition.y, -0.5f);
     }
 
     public void RemoveCrew(CREW crew)
