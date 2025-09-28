@@ -46,16 +46,7 @@ public class CO_SPAWNER : NetworkBehaviour
         drifter.Init();
         CO.co.PlayerMainDrifter = drifter;
 
-        //TEST
-        driftPrefab = UI.ui.ShipSelectionUI.SpawnableShips[ID].Prefab;
-        drifter = Instantiate(driftPrefab, new Vector3(200,0), Quaternion.identity);
-        drifter.NetworkObject.Spawn();
-        drifter.Init();
-        drifter.transform.Rotate(Vector3.forward,135f);
-
-        CO.co.GenerateMap(25f,25);
-
-        SpawnLooncrabsAggressive(new Vector3(0, 200), 6);
+        CO.co.StartGame();
     }
     public void SpawnLooncrabsAggressive(Vector3 pos, int Amount)
     {

@@ -29,6 +29,7 @@ public class Screen_ShipSelector : MonoBehaviour
 
     private void Update()
     {
+        if (CO.co == null) return;
         if (CO.co.HasShipBeenLaunched.Value)
         {
             UI.ui.SelectScreen(UI.ui.CharacterCreationUI);
@@ -46,6 +47,7 @@ public class Screen_ShipSelector : MonoBehaviour
 
     public void PressLaunch()
     {
+        if (CO.co == null) return;
         if (CO.co.HasShipBeenLaunched.Value) return;
         if (SelectedShip == null) return;
         for (int i = 0; i < SpawnableShips.Count; i++)

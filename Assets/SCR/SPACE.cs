@@ -109,12 +109,33 @@ public class SPACE : NetworkBehaviour
         }
         return ConvertGridToWorld(trt);
     }
-    public WalkableTile GetNearestGridTransformToPoint(Vector3 point)
+
+    public WalkableTile GetCurrentGrid(Vector3 here)
+    {
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(here, 0.1f))
+        {
+            WalkableTile tile = col.GetComponent<WalkableTile>();
+            if (tile)
+            {
+                return tile;
+            }
+        }
+        return null;
+    }
+
+    public bool isCurrentGridBoardable(Vector3 here)
+    {
+        WalkableTile tile = GetCurrentGrid(here);
+        if (tile == null) return false;
+        return tile.canBeBoarded;
+    }
+    public WalkableTile GetNearestBoardingGridTransformToPoint(Vector3 point)
     {
         WalkableTile nearestTile = null;
         float minDist = float.MaxValue;
         foreach (var tile in RoomTiles)
         {
+            if (!tile.canBeBoarded) continue;
             float dist = (tile.transform.position - point).magnitude;
             if (dist < minDist)
             {

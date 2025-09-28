@@ -7,19 +7,20 @@ public class Module : NetworkBehaviour
 
     [Header("MAIN")]
     public ModuleTypes ModuleType;
-    public string ModuleTag;
     public enum ModuleTypes
     {
         NAVIGATION,
         WEAPON,
-        CRAFTER,
+        INVENTORY,
+        MAPCOMMS,
         GENERATOR,
-        HULL_STATION
+        ARMOR_MODULE,
+        LOON_NAVIGATION
     }
 
     [Header("STATS")]
     public float MaxHealth = 100f;
-    public float HitboxRadius = 3f;
+    public float HitboxRadius = 16f;
 
     private NetworkVariable<float> CurHealth = new();
 

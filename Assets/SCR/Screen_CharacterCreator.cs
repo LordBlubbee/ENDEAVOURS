@@ -10,9 +10,9 @@ public class Screen_CharacterCreator : MonoBehaviour
     public Slider UsernameG;
     public Slider UsernameB;
 
-    public GameObject Screen_Appearance;
-    public GameObject Screen_Background;
-    public GameObject Screen_Skillpoints;
+    public GameObject[] Subscreens;
+    public Image[] BackgroundCategories;
+    public Image[] AllBackgrounds;
 
     private int SkillPoints = 20;
     public TextMeshProUGUI SkillPointTex;
@@ -173,9 +173,30 @@ public class Screen_CharacterCreator : MonoBehaviour
     }
     public void OpenSubscreen(GameObject ob)
     {
-        Screen_Appearance.SetActive(false);
-        Screen_Background.SetActive(false);
-        Screen_Skillpoints.SetActive(false);
+        foreach (GameObject sub in Subscreens)
+        {
+            sub.SetActive(false);
+        }
         ob.SetActive(true);
+    }
+    public void ChooseBackgroundFaction(Image ob)
+    {
+        foreach (Image sub in BackgroundCategories)
+        {
+            sub.color = Color.gray;
+        }
+        ob.color = Color.cyan;
+    }
+    public void ChooseBackgroundExact(Image ob)
+    {
+        foreach (Image sub in AllBackgrounds)
+        {
+            sub.color = Color.gray;
+        }
+        ob.color = Color.cyan;
+    }
+    public void ChooseBackground(string back)
+    {
+
     }
 }

@@ -73,6 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  CurrentBiome: {fileID: 11400000, guid: 2952fa9bb31474b47bc4bd36f4de4224, type: 2}
 --- !u!114 &5031945110435053922
 MonoBehaviour:
   m_ObjectHideFlags: 0

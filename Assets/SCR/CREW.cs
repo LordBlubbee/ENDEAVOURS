@@ -17,6 +17,10 @@ public class CREW : NetworkBehaviour
     private ANIM.AnimationState animDefaultIdle = ANIM.AnimationState.MI_IDLE;
     private ANIM.AnimationState animDefaultMove = ANIM.AnimationState.MI_MOVE;
 
+    private bool UseItem1_Input = false;
+    private bool UseItem2_Input = false;
+    private float NextDashCost = 30;
+
     [NonSerialized] public NetworkVariable<int> PlayerController = new(); //0 = No Player Controller
     public int Faction = 0;
 
@@ -38,6 +42,11 @@ public class CREW : NetworkBehaviour
     public int ATT_ENGINEERING = 2; //Buffs repair speed
     public int ATT_GUNNERY = 2; //Buffs usage of large heavy weapons
     public int ATT_MEDICAL = 2; //Buffs healing abilities (+regeneration)
+    public CharacterBackgrounds CharacterBackground;
+    public enum CharacterBackgrounds
+    {
+        NONE
+    }
 
     [Rpc(SendTo.Server)]
     public void UpdateAttributesRpc(int phys, int arms, int dex, int comm, int pil, int eng, int gun, int med)
@@ -142,7 +151,7 @@ public class CREW : NetworkBehaviour
         //
         if (IsServer) {
 
-            CurHealth.Value = MaxHealth;
+            CurHealth.Value = GetMaxHealth();
             CurStamina.Value = 100;
 
             EquipTool(StartingTool);
@@ -199,12 +208,22 @@ public class CREW : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void UseItem1Rpc()
     {
-        UseItem1();
+        UseItem1_Input = true;
     }
     [Rpc(SendTo.Server)]
     public void UseItem2Rpc()
     {
-        UseItem2();
+        UseItem1_Input = true;
+    }
+    [Rpc(SendTo.Server)]
+    public void StopItem1Rpc()
+    {
+        UseItem1_Input = false;
+    }
+    [Rpc(SendTo.Server)]
+    public void StopItem2Rpc()
+    {
+        UseItem1_Input = false;
     }
     [Rpc(SendTo.Server)]
     public void UseGrappleRpc(Vector3 trt)
@@ -257,7 +276,7 @@ public class CREW : NetworkBehaviour
         AnimationComboWeapon2 = 0;
         newSpace.AddCrew(this);
         CurGrappleCooldown.Value = GrappleCooldown / 0.8f + (ATT_ARMS * 0.1f);
-        StartCoroutine(GrappleNum(newSpace.GetNearestGridTransformToPoint(transform.position).transform));
+        StartCoroutine(GrappleNum(newSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform));
     }
     public void UseGrapple(Vector3 trt)
     {
@@ -278,7 +297,8 @@ public class CREW : NetworkBehaviour
         if (!isMoving) return;
         if (isDashing) return;
         if (!CanFunction()) return;
-        if (!ConsumeStamina(GetDashCost())) return;
+        if (!ConsumeStamina(NextDashCost)) return;
+        NextDashCost = GetDashCost();
         AnimationComboWeapon1 = 0;
         AnimationComboWeapon2 = 0;
         StartCoroutine(DashNumerator());
@@ -333,8 +353,9 @@ public class CREW : NetworkBehaviour
         if (EquippedToolObject.ActionUse1 != TOOL.ToolActionType.MELEE_ATTACK && !canStrike) return;
         AnimationComboWeapon2 = 0;
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations1[AnimationComboWeapon1]);
-        if (!setAnimationLocally(EquippedToolObject.attackAnimations1[AnimationComboWeapon1])) return;
+        if (!setAnimationLocally(EquippedToolObject.attackAnimations1[AnimationComboWeapon1], 3)) return;
         canStrikeMelee = true;
+        ConsumeStamina(2f);
         AnimationComboWeapon1++;
     }
     public void UseItem2()
@@ -349,8 +370,9 @@ public class CREW : NetworkBehaviour
         if (EquippedToolObject.ActionUse2 != TOOL.ToolActionType.MELEE_ATTACK && !canStrike) return;
         AnimationComboWeapon1 = 0;
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations2[AnimationComboWeapon2]);
-        if (setAnimationLocally(EquippedToolObject.attackAnimations2[AnimationComboWeapon2])) return;
+        if (setAnimationLocally(EquippedToolObject.attackAnimations2[AnimationComboWeapon2],3)) return;
         canStrikeMelee = true;
+        ConsumeStamina(2f);
         AnimationComboWeapon2++;
     }
 
@@ -370,6 +392,8 @@ public class CREW : NetworkBehaviour
                 AddStamina(CO.co.GetWorldSpeedDelta() * GetStaminaRegen() * StaminaFactor);
             }
         }
+        if (UseItem1_Input) UseItem1();
+        if (UseItem2_Input) UseItem2();
 
         DamageHealingUpdate();
     }
@@ -380,22 +404,26 @@ public class CREW : NetworkBehaviour
         if (!canStrikeMelee) return;
         if (AnimationController.isCurrentlyStriking())
         {
-            Vector3 checkHit = EquippedToolObject.strikePoints[0].position;
-            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.3f))
+            foreach (Transform hitTrans in EquippedToolObject.strikePoints)
             {
-                CREW crew = col.GetComponent<CREW>();
-                if (crew)
+                Vector3 checkHit = hitTrans.position;
+                foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.3f))
                 {
-                    if (crew.Faction == Faction || crew.Faction == 0) continue;
-                    if (crew.space != space) continue;
-                    if (crew.isDead()) continue;
-                    float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
-                    dmg *= AnimationController.CurrentStrikePower();
-                    crew.TakeDamage(dmg, checkHit);
-                    canStrikeMelee = false;
-                    return;
+                    CREW crew = col.GetComponent<CREW>();
+                    if (crew)
+                    {
+                        if (crew.Faction == Faction || crew.Faction == 0) continue;
+                        if (crew.space != space) continue;
+                        if (crew.isDead()) continue;
+                        float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
+                        dmg *= AnimationController.CurrentStrikePower();
+                        crew.TakeDamage(dmg, checkHit);
+                        canStrikeMelee = false;
+                        return;
+                    }
                 }
             }
+            
         }
     }
 
@@ -430,6 +458,7 @@ public class CREW : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     public void setAnimationRpc(ANIM.AnimationState stat, int pr = 99)
     {
+        if (!hasInitialized) return;
         AnimationController.setAnimation(stat, pr);
     }
     [Rpc(SendTo.NotServer)]

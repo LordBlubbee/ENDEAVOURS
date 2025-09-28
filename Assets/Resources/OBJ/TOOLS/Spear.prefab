@@ -106,8 +106,8 @@ MonoBehaviour:
   localRot: 0
   strikePoints:
   - {fileID: 8362816068341079287}
-  attackAnimations1: 03000000
-  attackAnimations2: 08000000
+  attackAnimations1: 03000000040000000500000006000000
+  attackAnimations2: 0a000000
   ActionUse1: 0
   ActionUse2: 0
   attackDamage1: 10

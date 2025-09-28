@@ -6,6 +6,7 @@ public class DRIFTER : NetworkBehaviour
 {
     [Header("REFERENCES")]
     public SPACE Interior;
+    public DrifterCollider DrifterCollider;
 
     private Rigidbody2D Rigid;
     public SpriteRenderer Spr;
@@ -28,6 +29,12 @@ public class DRIFTER : NetworkBehaviour
     }
 
     private bool hasInitialized = false;
+    private bool canReceiveInput = true;
+
+    public void SetCanReceiveInput(bool can)
+    {
+        canReceiveInput = can;
+    }
 
     public void Init()
     {
@@ -41,9 +48,8 @@ public class DRIFTER : NetworkBehaviour
         if (IsServer)
         {
             CurHealth.Value = MaxHealth;
+            DrifterCollider.gameObject.SetActive(true);
         }
-
-
     }
 
     float PilotingEfficiency = 1f;
@@ -62,11 +68,13 @@ public class DRIFTER : NetworkBehaviour
     }
     public void SetMoveInput(Vector3 mov, float eff)
     {
+        if (!canReceiveInput) return;
         MoveInput = mov;
         PilotingEfficiency = eff;
     }
     public void SetLookTowards(Vector3 mov)
     {
+        if (!canReceiveInput) return;
         LookTowards = (mov-transform.position).normalized;
     }
 
@@ -78,6 +86,11 @@ public class DRIFTER : NetworkBehaviour
     public float GetMovementSpeed()
     {
         return MovementSpeed;
+    }
+
+    public float GetCurrentMovement()
+    {
+        return CurrentMovement.magnitude;
     }
 
     public float GetMovementAccel()

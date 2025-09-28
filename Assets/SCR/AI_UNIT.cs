@@ -167,7 +167,6 @@ public class AI_UNIT : NetworkBehaviour
     public void SetPath(Vector3 trt)
     {
         path = Pathfinder.FindPath(getSpace().ConvertWorldToGrid(transform.position), getSpace().ConvertWorldToGrid(trt), getSpace().GetGrid());
-        Debug.Log($"Path set to {path}");
         pathTravelIndex = 0;
     }
     public void DeletePath()

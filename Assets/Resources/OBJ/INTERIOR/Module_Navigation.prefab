@@ -130,4 +130,4 @@ MonoBehaviour:
   ModuleType: 0
   ModuleTag: '[F] NAVIGATE'
   MaxHealth: 100
-  HitboxRadius: 3
+  HitboxRadius: 16

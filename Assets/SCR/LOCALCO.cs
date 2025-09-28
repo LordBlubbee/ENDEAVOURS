@@ -3,13 +3,15 @@ using System.Collections;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class LOCALCO : NetworkBehaviour
 {
     public static LOCALCO local;
     private NetworkVariable<int> PlayerID = new NetworkVariable<int>();
 
-    [NonSerialized] public NetworkVariable<int> CurrentDialogVote = new NetworkVariable<int>(-1, writePerm:NetworkVariableWritePermission.Owner);
+    [NonSerialized] public NetworkVariable<int> CurrentDialogVote = new NetworkVariable<int>(-1);
+    [NonSerialized] public NetworkVariable<int> CurrentMapVote = new NetworkVariable<int>(-1);
 
     private CREW Player;
     private DRIFTER Drifter;
@@ -47,7 +49,8 @@ public class LOCALCO : NetworkBehaviour
         if (GetPlayer())
         {
             Vector3 mov = Vector3.zero;
-            UI.ui.SetCrosshair(UI.CrosshairModes.NONE);
+            Vector3 Mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UI.ui.SetCrosshair(Mouse, UI.CrosshairModes.NONE);
             if (UI.ui.CurrentlySelectedScreen != UI.ui.MainGameplayUI.gameObject)
             {
                 GetPlayer().SetMoveInputRpc(Vector3.zero);
@@ -62,18 +65,23 @@ public class LOCALCO : NetworkBehaviour
                     if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
                     if (Input.GetKey(KeyCode.D)) mov += new Vector3(1, 0);
                     GetPlayer().SetMoveInputRpc(mov);
-                    GetPlayer().SetLookTowardsRpc(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                    GetPlayer().SetLookTowardsRpc(Mouse);
                     if (Input.GetKeyDown(KeyCode.LeftShift)) GetPlayer().DashRpc();
                     if (Input.GetMouseButtonDown(0)) GetPlayer().UseItem1Rpc();
                     if (Input.GetMouseButtonDown(1)) GetPlayer().UseItem2Rpc();
-                    if (Input.GetKey(KeyCode.G) && Player.GetGrappleCooldown() <= 0)
+                    if (Input.GetMouseButtonUp(0)) GetPlayer().StopItem1Rpc();
+                    if (Input.GetMouseButtonUp(1)) GetPlayer().StopItem2Rpc();
+                    if (Player.space.isCurrentGridBoardable(Player.transform.position))
                     {
-                        if (HasGrappleTarget()) UI.ui.SetCrosshair(UI.CrosshairModes.GRAPPLE_SUCCESS);
-                        else UI.ui.SetCrosshair(UI.CrosshairModes.GRAPPLE);
+                        if (Input.GetKey(KeyCode.G) && Player.GetGrappleCooldown() <= 0)
+                        {
+                            if (HasGrappleTarget()) UI.ui.SetCrosshair(GetGrappleTarget(Mouse), UI.CrosshairModes.GRAPPLE_SUCCESS);
+                            else UI.ui.SetCrosshair(Mouse, UI.CrosshairModes.GRAPPLE);
+                        }
                     }
                     if (Input.GetKeyUp(KeyCode.G))
                     {
-                        GetPlayer().UseGrappleRpc(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                        GetPlayer().UseGrappleRpc(Mouse);
                     }
                     if (Input.GetKeyDown(KeyCode.Alpha1)) GetPlayer().EquipWeapon1Rpc();
                     if (Input.GetKeyDown(KeyCode.Alpha2)) GetPlayer().EquipWeapon2Rpc();
@@ -86,7 +94,7 @@ public class LOCALCO : NetworkBehaviour
                     if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
                     if (Input.GetKey(KeyCode.D)) mov += new Vector3(1, 0);
                     Drifter.SetMoveInputRpc(mov,0.8f+GetPlayer().ATT_PILOTING*0.1f);
-                    Drifter.SetLookTowardsRpc(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                    Drifter.SetLookTowardsRpc(Mouse);
                     break;
                 case ControlModes.WEAPON:
                     GetPlayer().SetMoveInputRpc(Vector3.zero);
@@ -105,6 +113,12 @@ public class LOCALCO : NetworkBehaviour
             }
         }
         return false;
+    }
+    public Vector3 GetGrappleTarget(Vector3 def)
+    {
+        WalkableTile tile = Player.space.GetNearestBoardingGridTransformToPoint(Player.transform.position);
+        if (tile == null) return def;
+        return tile.transform.position;
     }
 
     private Module CurrentInteractionModule = null;
@@ -159,26 +173,78 @@ public class LOCALCO : NetworkBehaviour
     {
         while (true)
         {
-            UI.ui.MainGameplayUI.SetInteractTex("");
+            UI.ui.MainGameplayUI.SetInteractTex("", Color.white);
             if (CurrentControlMode == ControlModes.PLAYER && Player.space != null)
             {
                 Module mod = Player.space.NearestModule(Player.transform.position);
                 if ((mod.transform.position-Player.transform.position).magnitude < 5f && Mathf.Abs(Player.AngleBetweenPoints(mod.transform.position)) < 45f)
                 {
-                    UI.ui.MainGameplayUI.SetInteractTex(mod.ModuleTag);
-                    if (Input.GetKeyDown(KeyCode.F))
+                    switch (mod.ModuleType)
                     {
-                        //Interact
-                        switch (mod.ModuleType)
-                        {
-                            case Module.ModuleTypes.NAVIGATION:
+                        case Module.ModuleTypes.NAVIGATION:
+                            UI.ui.MainGameplayUI.SetInteractTex("[F] NAVIGATE", Color.green);
+                            if (Input.GetKeyDown(KeyCode.F))
+                            {
+                                //Interact
                                 Drifter = Player.space.Drifter;
                                 CurrentControlMode = ControlModes.DRIFTER;
-                                CAM.cam.SetCameraMode(Drifter.transform, 230f + Player.ATT_COMMUNOPATHY*10f, 100f, 250f);
+                                CAM.cam.SetCameraMode(Drifter.transform, 230f + Player.ATT_COMMUNOPATHY * 10f, 100f, 250f);
                                 CurrentInteractionModule = mod;
-                                break;
-                        }
+                            }
+                           
+                            break;
+                        case Module.ModuleTypes.WEAPON:
+                            UI.ui.MainGameplayUI.SetInteractTex("[F] USE WEAPON", Color.green);
+                            if (Input.GetKeyDown(KeyCode.F))
+                            {
+
+                            }
+                            break;
+                        case Module.ModuleTypes.INVENTORY:
+                            UI.ui.MainGameplayUI.SetInteractTex("[F] INVENTORY", Color.green);
+                            if (Input.GetKeyDown(KeyCode.F))
+                                UI.ui.SelectScreen(UI.ui.InventoryUI.gameObject);
+                            break;
+                        case Module.ModuleTypes.MAPCOMMS:
+                            if (!CO.co.AreWeInDanger.Value)
+                            {
+                                if (CO_STORY.co.IsCommsActive())
+                                {
+                                    UI.ui.MainGameplayUI.SetInteractTex("[F] OPEN COMMS", Color.cyan);
+                                    if (Input.GetKeyDown(KeyCode.F))
+                                    {
+                                        UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
+                                    }
+                                }
+                                else
+                                {
+                                    UI.ui.MainGameplayUI.SetInteractTex("[F] OPEN MAP", Color.cyan);
+                                    if (Input.GetKeyDown(KeyCode.F))
+                                    {
+                                        UI.ui.SelectScreen(UI.ui.MapUI.gameObject);
+                                    }
+                                }
+                            } else
+                            {
+                                UI.ui.MainGameplayUI.SetInteractTex("[DANGER]", Color.red);
+                            }
+                            break;
+                        case Module.ModuleTypes.GENERATOR:
+                            UI.ui.MainGameplayUI.SetInteractTex("[F] MANAGE", Color.green);
+                            if (Input.GetKeyDown(KeyCode.F))
+                            {
+
+                            }
+                            break;
+                        case Module.ModuleTypes.ARMOR_MODULE:
+                            UI.ui.MainGameplayUI.SetInteractTex("[F] MANAGE", Color.green);
+                            if (Input.GetKeyDown(KeyCode.F))
+                            {
+
+                            }
+                            break;
                     }
+                   
                 }
             } else if (Input.GetKeyDown(KeyCode.F) || LeftModule())
             {
@@ -188,7 +254,6 @@ public class LOCALCO : NetworkBehaviour
             yield return null;
         }
     }
-
     private bool LeftModule()
     {
         if (CurrentInteractionModule != null)
@@ -196,5 +261,23 @@ public class LOCALCO : NetworkBehaviour
             if ((CurrentInteractionModule.transform.position - Player.transform.position).magnitude > 6f || Player.isDead()) return true;
         }
         return false;
+    }
+
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void ShipTransportFadeAwayRpc(string str)
+    {
+        UI.ui.FadeToBlack(1f,1f);
+        UI.ui.SetCinematicTex(str, Color.green, 4f, 1f);
+        CAM.cam.SetCameraCinematic(200f);
+        UI.ui.SelectScreen(null);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void ShipTransportFadeInRpc()
+    {
+        UI.ui.FadeFromBlack(2f);
+        UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
+        LOCALCO.local.SetCameraToPlayer();
     }
 }

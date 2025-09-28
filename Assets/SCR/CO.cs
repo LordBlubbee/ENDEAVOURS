@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
@@ -9,15 +10,143 @@ public class CO : NetworkBehaviour
     public static CO co;
 
     [NonSerialized] public NetworkVariable<bool> HasShipBeenLaunched = new();
+    [NonSerialized] public NetworkVariable<bool> AreWeInDanger = new();
     [NonSerialized] public DRIFTER PlayerMainDrifter;
     [NonSerialized] public MapPoint PlayerMapPoint;
+    public ScriptableBiome CurrentBiome;
     private void Start()
     {
         co = this;
+        if (IsServer)
+        {
+        } else
+        {
+            RequestPlayerMapPointRpc();
+        }
     }
 
+    public void StartGame()
+    {
+        GenerateMap(25, 20);
+    }
+    public override void OnNetworkSpawn()
+    {
+        co = this;
+    }
+    /*CHOOSE MAP*/
+    private void Update()
+    {
+        /*
+         TO DO
+         
+            -Get players to see CHOOSE LEVEL once the seas are safe
+            -Get players to see an ANIMATION when the SHIP MOVES
+            -Get the map to regenerate when the ship moves
+            -Switch players to the comms screen after they move with the new event ready immediately
+            -Make choosing an option work
+         
+         */
+        if (!IsServer) return;
+        if (HasVoteResult() != -1)
+        {
+            Debug.Log("Moving to point!");
+            MapPoint destination = PlayerMapPoint.ConnectedPoints[HasVoteResult()];
+            CO_STORY.co.SetStory(destination.AssociatedPoint.InitialDialog);
+            StartCoroutine(MoveToPoint(destination));
+            PlayerMapPoint = destination;
+            ResetMapVotes();
+        }
+    }
+
+    IEnumerator MoveToPoint(MapPoint destination)
+    {
+        Vector3 moveDirection = destination.transform.position - PlayerMapPoint.transform.position;
+        PlayerMainDrifter.SetLookTowards(moveDirection);
+        PlayerMainDrifter.SetMoveInput(moveDirection, 1f);
+        PlayerMainDrifter.SetCanReceiveInput(false);
+        foreach (LOCALCO local in GetLOCALCO())
+        {
+            local.ShipTransportFadeAwayRpc(destination.GetName());
+        }
+        yield return new WaitForSeconds(2.5f);
+        PlayerMainDrifter.transform.position = Vector3.zero;
+        PlayerMainDrifter.transform.Rotate(Vector3.forward, PlayerMainDrifter.AngleToTurnTarget());
+        PlayerMainDrifter.SetMoveInput(Vector3.zero,1f);
+        UpdatePlayerMapPointRpc(destination.transform.position);
+        foreach (LOCALCO local in GetLOCALCO())
+        {
+            local.ShipTransportFadeInRpc();
+        }
+        //Generate Area here
+
+
+        yield return new WaitForSeconds(1f);
+        PlayerMainDrifter.SetCanReceiveInput(true);
+    }
+
+    [Rpc(SendTo.Server)]
+    private void RequestPlayerMapPointRpc()
+    {
+        UpdatePlayerMapPointRpc(PlayerMapPoint.transform.position);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void UpdatePlayerMapPointRpc(Vector3 vec)
+    {
+        MapPoint nearest = null;
+        float minDist = float.MaxValue;
+
+        foreach (MapPoint mp in GetMapPoints())
+        {
+            float dist = (mp.transform.position - vec).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                nearest = mp;
+            }
+        }
+
+        PlayerMapPoint = nearest;
+        UI.ui.MapUI.UpdateMap();
+    }
+    private int HasVoteResult()
+    {
+        int num = -1;
+        foreach (LOCALCO local in GetLOCALCO())
+        {
+            if (local.CurrentMapVote.Value != -1)
+            {
+                if (num == -1) num = local.CurrentMapVote.Value;
+                else if (num != local.CurrentMapVote.Value) return -1; //No consensus
+            }
+            else return -1; //Not everyone has voted
+        }
+        return num;
+    }
+    public int VoteResultAmount(int num)
+    {
+        int count = 0;
+        foreach (LOCALCO local in GetLOCALCO())
+        {
+            if (local.CurrentMapVote.Value == num) count++;
+        }
+        return count;
+    }
     /*MAP GENERATION*/
 
+    public void ResetMapVotes()
+    {
+        foreach (LOCALCO local in CO.co.GetLOCALCO())
+        {
+            local.CurrentMapVote.Value = -1;
+        }
+    }
+    [Rpc(SendTo.Server)]
+    public void VoteForMapRpc(int ID)
+    {
+        if (LOCALCO.local.CurrentMapVote.Value == ID) LOCALCO.local.CurrentMapVote.Value = -1;
+        else LOCALCO.local.CurrentMapVote.Value = ID;
+    }
     public void GenerateMap(float mapSize, int PointAmount)
     {
         foreach (MapPoint map in GetMapPoints())
@@ -48,6 +177,17 @@ public class CO : NetworkBehaviour
         foreach (MapPoint map in GetMapPoints())
         {
             map.ConnectedPoints = GetConnectedPoints(map.transform.position, map);
+            map.Init(CurrentBiome.PossiblePointsRandom[UnityEngine.Random.Range(0,CurrentBiome.PossiblePointsRandom.Count)]);
+        }
+        foreach (MapPoint map in GetMapPoints())
+        {
+            foreach (MapPoint map2 in map.ConnectedPoints)
+            {
+                if (!map2.ConnectedPoints.Contains(map))
+                {
+                    map2.ConnectedPoints.Add(map);
+                }
+            }
         }
     }
     private bool IsPointLegal(Vector3 center)
@@ -79,6 +219,7 @@ public class CO : NetworkBehaviour
         foreach (MapPoint map in GetMapPoints())
         {
             if (map == us) continue;
+            if (list.Count > 4) break;
             float dist = (map.transform.position - center).magnitude;
             if (dist < Closest1Dist)
             {

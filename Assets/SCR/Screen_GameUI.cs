@@ -12,6 +12,7 @@ public class Screen_GameUI : MonoBehaviour
     public TextMeshProUGUI StaminaTex;
     public Image StaminaColor;
     public TextMeshProUGUI InteractTex;
+    public GameObject PauseMenu;
     void Update()
     {
         if (!LOCALCO.local)
@@ -36,15 +37,20 @@ public class Screen_GameUI : MonoBehaviour
 
         if (InteractActive)
         {
-            InteractTex.color = new Color(1, 1, 1, Mathf.Clamp01(InteractTex.color.a + Time.deltaTime * 2f));
+            InteractTex.color = new Color(InteractTex.color.r, InteractTex.color.g, InteractTex.color.b, Mathf.Clamp01(InteractTex.color.a + Time.deltaTime * 2f));
         } else
         {
-            InteractTex.color = new Color(1, 1, 1, Mathf.Clamp01(InteractTex.color.a - Time.deltaTime * 2f));
+            InteractTex.color = new Color(InteractTex.color.r, InteractTex.color.g, InteractTex.color.b, Mathf.Clamp01(InteractTex.color.a - Time.deltaTime * 2f));
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseMenu.SetActive(!PauseMenu.activeSelf);
         }
     }
 
     private bool InteractActive = false;
-    public void SetInteractTex(string tex)
+    public void SetInteractTex(string tex, Color col)
     {
         if (tex == "")
         {
@@ -53,5 +59,6 @@ public class Screen_GameUI : MonoBehaviour
         }
         InteractActive = true;
         InteractTex.text = tex;
+        InteractTex.color = col;
     }
 }

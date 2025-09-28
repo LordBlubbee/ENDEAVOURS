@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,11 +10,36 @@ public class Screen_Map : MonoBehaviour
     public Image PrefabLineRenderer; // Add this in the inspector
     private List<MapPointButton> MapScreenPoints = new();
     private List<Image> MapLines = new(); // Track created lines
-    public Transform Map;
+    public Transform Map; 
+    public GameObject[] ChoiceButton;
+    public TextMeshProUGUI[] ChoiceButtonVotes;
+    public TextMeshProUGUI[] ChoiceTex;
 
     private void OnEnable()
     {
         // Clean up old points and lines
+        UpdateMap();
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i < ChoiceTex.Length; i++)
+        {
+            if (ChoiceButton[i].gameObject.activeSelf)
+            {
+                int Votes = CO.co.VoteResultAmount(i);
+                ChoiceButtonVotes[i].text = Votes.ToString();
+                ChoiceButtonVotes[i].color = (LOCALCO.local.CurrentMapVote.Value == i) ? Color.cyan : Color.white;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
+        }
+    }
+    public void UpdateMap()
+    {
+        if (!gameObject.activeSelf) return;
         foreach (MapPointButton points in MapScreenPoints)
         {
             Destroy(points.gameObject);
@@ -28,19 +54,31 @@ public class Screen_Map : MonoBehaviour
         // Spawn map points
         foreach (MapPoint map in CO.co.GetMapPoints())
         {
-            float Dist = (map.transform.position - CO.co.PlayerMapPoint.transform.position).magnitude;
+            //float Dist = (map.transform.position - CO.co.PlayerMapPoint.transform.position).magnitude;
             if (Mathf.Abs(map.transform.position.x - CO.co.PlayerMapPoint.transform.position.x) > 30f) continue;
             if (Mathf.Abs(map.transform.position.y - CO.co.PlayerMapPoint.transform.position.y) > 18f) continue;
             Vector3 spawnPos = Map.transform.position + (map.transform.position - CO.co.PlayerMapPoint.transform.position) * 0.5f;
             MapPointButton mpb = Instantiate(PrefabMapScreenPoint, spawnPos, Quaternion.identity, Map);
-            mpb.Image.color = Color.white;
+
+            mpb.SetDefaultColor(Color.gray);
             if (map == CO.co.PlayerMapPoint)
             {
-                mpb.Image.color = Color.green;
+                mpb.Init(map, -1, true);
+                mpb.SetDefaultColor(Color.cyan);
             }
             else if (CO.co.PlayerMapPoint.ConnectedPoints.Contains(map))
             {
-                mpb.Image.color = Color.yellow;
+                int ID = 0;
+                for (int i = 0; i < CO.co.PlayerMapPoint.ConnectedPoints.Count; i++)
+                {
+                    if (CO.co.PlayerMapPoint.ConnectedPoints[i] == map)
+                    {
+                        ID = i;
+                        break;
+                    }
+                }
+                mpb.Init(map, ID, true);
+                mpb.SetDefaultColor(Color.white);
 
                 // Draw UI line from center to yellow point
                 Vector3 startPos = Map.transform.position;
@@ -64,13 +102,25 @@ public class Screen_Map : MonoBehaviour
                 lineRect.anchoredPosition = localStart;
                 lineRect.rotation = Quaternion.Euler(0, 0, angle);
 
-                line.color = Color.yellow;
+                line.color = Color.white;
                 // Ensure the line renders under other objects
                 line.transform.SetSiblingIndex(0);
 
                 MapLines.Add(line);
             }
+            else
+            {
+                mpb.Init(map, -1, false);
+            }
             MapScreenPoints.Add(mpb);
+        }
+        for (int i = 0; i < ChoiceTex.Length; i++)
+        {
+            if (i < CO.co.PlayerMapPoint.ConnectedPoints.Count) {
+                ChoiceButton[i].gameObject.SetActive(true);
+                ChoiceTex[i].text = CO.co.PlayerMapPoint.ConnectedPoints[i].GetName();
+            }
+            else ChoiceButton[i].gameObject.SetActive(false);
         }
     }
 }
