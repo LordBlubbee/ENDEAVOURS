@@ -1,3 +1,4 @@
+using NUnit;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,9 @@ public class Screen_GameUI : MonoBehaviour
     public Image StaminaColor;
     public TextMeshProUGUI InteractTex;
     public GameObject PauseMenu;
+    public InventorySlot[] InventoryWeaponSlots;
+    public InventorySlot InventoryGrappleSlot;
+    public InventorySlot InventoryToolsSlot;
     void Update()
     {
         if (!LOCALCO.local)
@@ -46,6 +50,14 @@ public class Screen_GameUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseMenu.SetActive(!PauseMenu.activeSelf);
+        }
+    }
+
+    public void EquipWeaponUI(int ID)
+    {
+        for (int i = 0; i < InventoryWeaponSlots.Length; i++)
+        {
+            InventoryWeaponSlots[i].SetEquipState(ID == i ? InventorySlot.EquipStates.SUCCESS : InventorySlot.EquipStates.NONE);
         }
     }
 

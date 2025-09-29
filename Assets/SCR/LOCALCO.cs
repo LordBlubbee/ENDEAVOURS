@@ -42,7 +42,6 @@ public class LOCALCO : NetworkBehaviour
 
         CO.co.RegisterLOCALCO(this);
     }
-
     private void Update()
     {
         //Controls
@@ -71,18 +70,33 @@ public class LOCALCO : NetworkBehaviour
                     if (Input.GetMouseButtonDown(1)) GetPlayer().UseItem2Rpc();
                     if (Input.GetMouseButtonUp(0)) GetPlayer().StopItem1Rpc();
                     if (Input.GetMouseButtonUp(1)) GetPlayer().StopItem2Rpc();
+                    UI.ui.MainGameplayUI.InventoryGrappleSlot.SetEquipState(InventorySlot.EquipStates.NONE);
                     if (Player.space.isCurrentGridBoardable(Player.transform.position))
                     {
-                        if (Input.GetKey(KeyCode.G) && Player.GetGrappleCooldown() <= 0)
+                        if (Input.GetKey(KeyCode.G))
                         {
-                            if (HasGrappleTarget()) UI.ui.SetCrosshair(GetGrappleTarget(Mouse), UI.CrosshairModes.GRAPPLE_SUCCESS);
-                            else UI.ui.SetCrosshair(Mouse, UI.CrosshairModes.GRAPPLE);
+                            UI.ui.MainGameplayUI.InventoryGrappleSlot.SetEquipState(InventorySlot.EquipStates.SUCCESS);
+                            if (Player.GetGrappleCooldown() <= 0 && HasGrappleTarget())
+                            {
+                                UI.ui.SetCrosshair(GetGrappleTarget(Mouse), UI.CrosshairModes.GRAPPLE_SUCCESS);
+                                if (Input.GetKeyUp(KeyCode.G))
+                                {
+                                    GetPlayer().UseGrappleRpc(Mouse);
+                                }
+                            }
+                            else
+                            {
+                                UI.ui.SetCrosshair(Mouse, UI.CrosshairModes.GRAPPLE);
+                            }
+                        }
+                    } else
+                    {
+                        if (Input.GetKey(KeyCode.G))
+                        {
+                            UI.ui.MainGameplayUI.InventoryGrappleSlot.SetEquipState(InventorySlot.EquipStates.FAIL);
                         }
                     }
-                    if (Input.GetKeyUp(KeyCode.G))
-                    {
-                        GetPlayer().UseGrappleRpc(Mouse);
-                    }
+                   
                     if (Input.GetKeyDown(KeyCode.Alpha1)) GetPlayer().EquipWeapon1Rpc();
                     if (Input.GetKeyDown(KeyCode.Alpha2)) GetPlayer().EquipWeapon2Rpc();
                     if (Input.GetKeyDown(KeyCode.Alpha3)) GetPlayer().EquipWeapon3Rpc();
@@ -142,8 +156,9 @@ public class LOCALCO : NetworkBehaviour
     }
 
     [Rpc(SendTo.Server)]
-    public void CreatePlayerRpc(string name, Color col, int[] attributes)
+    public void CreatePlayerRpc(string name, Color col, int[] attributes, string backTex)
     {
+        //SpawnPlayer Spawn Player
         CREW crew = Instantiate(CO_SPAWNER.co.PlayerPrefab, CO.co.PlayerMainDrifter.Interior.StartingModuleLocations[0], Quaternion.identity);
         crew.NetworkObject.Spawn();
         Debug.Log($"We are player: {GetPlayerID()}");
@@ -160,8 +175,12 @@ public class LOCALCO : NetworkBehaviour
             attributes[6],
             attributes[7]
             );
+        ScriptableBackground back = Resources.Load<ScriptableBackground>(backTex);
+        crew.CharacterBackground = back;
         crew.Init();
         crew.RegisterPlayerOnLOCALCORpc();
+        Player.EquipWeapon(0, back.Background_StartingWeapon);
+        Player.EquipWeaponPrefab(0);
         CO.co.PlayerMainDrifter.Interior.AddCrew(crew);
     }
     public void SetCameraToPlayer()

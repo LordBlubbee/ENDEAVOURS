@@ -13,6 +13,28 @@ public class CO : NetworkBehaviour
     [NonSerialized] public NetworkVariable<bool> AreWeInDanger = new();
     [NonSerialized] public DRIFTER PlayerMainDrifter;
     [NonSerialized] public MapPoint PlayerMapPoint;
+
+    [NonSerialized] public int Resource_Materials;
+    [NonSerialized] public int Resource_Supplies;
+    [NonSerialized] public int Resource_Ammo;
+    [NonSerialized] public int Resource_Tech;
+    [NonSerialized] public Dictionary<Faction, int> Resource_Reputation;
+    public enum Faction
+    {
+        LOGIPEDES_INVICTUS,
+        LOGIPEDES_PRAGMATICUS,
+        LOGIPEDES_STELLAE,
+        EPHEMERAL_EYE,
+        ORDER_OF_THE_STORM,
+        DEMOCRATIC_CATALI,
+        NOMADEN_COALITION,
+        NOMADEN_CLANS,
+        NOMADEN_INSURRECTION,
+        THEM
+    }
+
+    [NonSerialized] public List<ScriptableEquippable> Drifter_Inventory = new();
+
     public ScriptableBiome CurrentBiome;
     private void Start()
     {

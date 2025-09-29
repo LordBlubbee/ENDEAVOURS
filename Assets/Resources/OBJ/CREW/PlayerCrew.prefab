@@ -219,7 +219,17 @@ MonoBehaviour:
   ATT_ENGINEERING: 2
   ATT_GUNNERY: 2
   ATT_MEDICAL: 2
-  StartingTool: 1
+  CharacterBackground: {fileID: 0}
+  EquippedWeapons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  EquippedArmor: {fileID: 0}
+  EquippedArtifacts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  StartingTool: 0
 --- !u!1 &3085451406788945022
 GameObject:
   m_ObjectHideFlags: 0

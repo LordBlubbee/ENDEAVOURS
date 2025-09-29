@@ -1,6 +1,8 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using WebSocketSharp;
 
 public class Screen_CharacterCreator : MonoBehaviour
 {
@@ -11,16 +13,20 @@ public class Screen_CharacterCreator : MonoBehaviour
     public Slider UsernameB;
 
     public GameObject[] Subscreens;
+    public TextMeshProUGUI CompleteGivePoints;
+    public TextMeshProUGUI CompleteBackground;
+    public TextMeshProUGUI CompleteName;
     public Image[] BackgroundCategories;
     public Image[] AllBackgrounds;
 
-    private int SkillPoints = 20;
+    private int SkillPoints = 15;
     public TextMeshProUGUI SkillPointTex;
     private int[] SkillPower = new int[8];
     public string[] SkillName;
     public TextMeshProUGUI[] SkillTex;
     public Image[] SkillLevelButton;
     public TextMeshProUGUI[] SkillLevelTex;
+    private ScriptableBackground SelectedBackground = null;
     public void LevelSkill(int ID)
     {
         int LevelNeed;
@@ -70,8 +76,23 @@ public class Screen_CharacterCreator : MonoBehaviour
         SkillPointTex.text = $"SKILL POINTS: ({SkillPoints})";
         for (int i = 0; i < SkillPower.Length; i++)
         {
-            SkillTex[i].text = $"{SkillName[i]} ({SkillPower[i]})";
-            int LevelNeed;
+            if (SelectedBackground)
+            {
+                if (SelectedBackground.Background_ATT_BONUS[i] > 0)
+                {
+                    SkillTex[i].text = $"{SkillName[i]} <color=green>({SkillPower[i]+ SelectedBackground.Background_ATT_BONUS[i]})";
+                } else if (SelectedBackground.Background_ATT_BONUS[i] < 0)
+                {
+                    SkillTex[i].text = $"{SkillName[i]} <color=red> ({SkillPower[i]+ SelectedBackground.Background_ATT_BONUS[i]})";
+                } else
+                {
+                    SkillTex[i].text = $"{SkillName[i]} ({SkillPower[i]})";
+                }
+            } else
+            {
+                SkillTex[i].text = $"{SkillName[i]} ({SkillPower[i]})";
+            }
+                int LevelNeed;
             switch (SkillPower[i])
             {
                 case 0:
@@ -141,6 +162,36 @@ public class Screen_CharacterCreator : MonoBehaviour
             SkillPower[i] = 1;
         }
         SkillRefresh();
+        UpdateCompletionStatus();
+    }
+
+    private void Update()
+    {
+        UpdateCompletionStatus();
+    }
+
+    private void UpdateCompletionStatus()
+    {
+        CompleteName.color = !UsernameTex.text.IsNullOrEmpty() ? Color.green : Color.red;
+        CompleteBackground.color = SelectedBackground ? Color.green : Color.red;
+        CompleteGivePoints.color = SkillPoints < 1 ? Color.green : Color.red;
+    }
+
+    private bool ReadyToMoveOn()
+    {
+        if (UsernameTex.text.IsNullOrEmpty())
+        {
+            return false;
+        }
+        if (!SelectedBackground)
+        {
+            return false;
+        }
+        if (SkillPoints > 0)
+        {
+            return false;
+        }
+        return true;
     }
     public void EditUsername()
     {
@@ -168,7 +219,9 @@ public class Screen_CharacterCreator : MonoBehaviour
     }
     public void PressCreateCharacter()
     {
-        LOCALCO.local.CreatePlayerRpc(GO.g.localUsername, GO.g.localColor, SkillPower);
+        if (!SelectedBackground) return;
+        Debug.Log($"{SelectedBackground.ResourcePath}");
+        LOCALCO.local.CreatePlayerRpc(GO.g.localUsername, GO.g.localColor, SkillPower, SelectedBackground.ResourcePath);
         UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
     }
     public void OpenSubscreen(GameObject ob)
@@ -195,8 +248,9 @@ public class Screen_CharacterCreator : MonoBehaviour
         }
         ob.color = Color.cyan;
     }
-    public void ChooseBackground(string back)
+    public void ChooseBackground(ScriptableBackground back)
     {
-
+        SelectedBackground = back;
+        SkillRefresh();
     }
 }

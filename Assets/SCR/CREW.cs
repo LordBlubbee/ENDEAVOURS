@@ -42,11 +42,10 @@ public class CREW : NetworkBehaviour
     public int ATT_ENGINEERING = 2; //Buffs repair speed
     public int ATT_GUNNERY = 2; //Buffs usage of large heavy weapons
     public int ATT_MEDICAL = 2; //Buffs healing abilities (+regeneration)
-    public CharacterBackgrounds CharacterBackground;
-    public enum CharacterBackgrounds
-    {
-        NONE
-    }
+    [NonSerialized] public ScriptableBackground CharacterBackground;
+    public ScriptableEquippableWeapon[] EquippedWeapons = new ScriptableEquippableWeapon[3];
+    public ScriptableEquippableArtifact EquippedArmor = null;
+    public ScriptableEquippableArtifact[] EquippedArtifacts = new ScriptableEquippableArtifact[3];
 
     [Rpc(SendTo.Server)]
     public void UpdateAttributesRpc(int phys, int arms, int dex, int comm, int pil, int eng, int gun, int med)
@@ -233,14 +232,17 @@ public class CREW : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void EquipWeapon1Rpc()
     {
+        EquipWeaponPrefab(0);
     }
     [Rpc(SendTo.Server)]
     public void EquipWeapon2Rpc()
     {
+        EquipWeaponPrefab(1);
     }
     [Rpc(SendTo.Server)]
     public void EquipWeapon3Rpc()
     {
+        EquipWeaponPrefab(2);
     }
 
     private bool IsGrappling = false;
@@ -513,7 +515,20 @@ public class CREW : NetworkBehaviour
     }
 
     /*WEAPONS*/
+    public void EquipWeaponPrefab(int ID)
+    {
+        //Works on Server
+        if (EquippedWeapons[ID]) EquipTool(EquippedWeapons[ID].ToolPrefab);
+        else EquipTool(CO_SPAWNER.ToolType.NONE);
+        EquipWeaponUpdateUIRpc(ID);
+    }
 
+    [Rpc(SendTo.Owner)]
+    public void EquipWeaponUpdateUIRpc(int ID)
+    {
+        //Works on Owner
+        UI.ui.MainGameplayUI.EquipWeaponUI(ID);
+    }
     public void EquipTool(CO_SPAWNER.ToolType tol)
     {
         //Works on Server
@@ -533,7 +548,7 @@ public class CREW : NetworkBehaviour
         //Works on Client
         if (EquippedToolObject)
         {
-            Destroy(EquippedToolObject);
+            Destroy(EquippedToolObject.gameObject);
         }
         if (tol == CO_SPAWNER.ToolType.NONE)
         {
@@ -544,6 +559,7 @@ public class CREW : NetworkBehaviour
         EquippedToolObject.transform.localPosition = new Vector3(EquippedToolObject.localX, EquippedToolObject.localY, -0.0002f);
         EquippedToolObject.transform.Rotate(Vector3.forward, EquippedToolObject.localRot);
         AnimTransforms[1].setTransform(EquippedToolObject.transform);
+        Debug.Log(EquippedToolObject);
     }
 
     /*GETTERS AND SETTERS*/
@@ -615,6 +631,37 @@ public class CREW : NetworkBehaviour
         CO_SPAWNER.co.SpawnDMGRpc(fl, src);
     }
 
+    public void EquipWeapon(int slot, ScriptableEquippableWeapon wep)
+    {
+        Debug.Log($"Equipped weapon is now {wep.ItemName}");
+        EquippedWeapons[slot] = wep;
+        if (IsServer) EquipWeaponLocallyRpc(slot, wep.ItemResourceID);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void EquipWeaponLocallyRpc(int slot, string wep)
+    {
+        if (IsServer) return;
+        EquipWeapon(slot, Resources.Load<ScriptableEquippableWeapon>(wep));
+    }
+    public void EquipArmor(ScriptableEquippableArtifact wep)
+    {
+        EquippedArmor = wep;
+        if (IsServer) EquipArmorLocallyRpc(wep.ItemResourceID);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void EquipArmorLocallyRpc(string wep)
+    {
+        EquipArmor(Resources.Load<ScriptableEquippableArtifact>(wep));
+    }
+    public void EquipArtifact(int slot, ScriptableEquippableArtifact wep)
+    {
+        EquippedArtifacts[slot] = wep;
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void EquipArtifactLocallyRpc(int slot, string wep)
+    {
+        EquipArtifact(slot, Resources.Load<ScriptableEquippableArtifact>(wep));
+    }
     public void Die()
     {
         Alive.Value = false;
