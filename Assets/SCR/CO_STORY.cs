@@ -151,16 +151,28 @@ public class CO_STORY : NetworkBehaviour
         List<string> StoryList = new();
         foreach (DialogPart line in Dialog.StoryTexts)
         {
-            StoryList.Add(line.BaseText);
+            StoryList.Add(ReturnDialogPart(line));
         }
         SetMainStoryText(StoryList);
         StoryList = new();
-        foreach (DialogPart line in Dialog.ChoiceTexts)
+        foreach (PossibleNextDialog line in Dialog.ChoicePathDialogs)
         {
-            StoryList.Add(line.BaseText);
+            DialogPart showChoice = line.ChoiceText;
+            StoryList.Add(ReturnDialogPart(showChoice));
         }
         SetCurrentChoices(StoryList);
         ForceUpdateRpc();
+    }
+    string ReturnDialogPart(DialogPart showChoice)
+    {
+        foreach (AlternativeDialogPart alternatives in showChoice.Alternatives)
+        {
+            if (alternatives.ArePrerequisitesMet())
+            {
+                return alternatives.AlternativeText;
+            }
+        }
+        return showChoice.BaseText;
     }
 
     [Rpc(SendTo.Server)]
@@ -187,16 +199,23 @@ public class CO_STORY : NetworkBehaviour
             {
                 local.CurrentDialogVote.Value = -1;
             }
-            if (CurrentDialog.ChoicePathDialogs.Length > result)
-            {
-                if (CurrentDialog.ChoicePathDialogs[result] != null)
-                {
-                    SetStory(CurrentDialog.ChoicePathDialogs[result]);
-                }
-            }
+            SetNextStory(result);
             PerformEvent(CurrentDialog.TriggerEvent);
             SetStoryEnd();
         }
+    }
+
+    private void SetNextStory(int result)
+    {
+        foreach (AlternativeDialog alternatives in CurrentDialog.ChoicePathDialogs[result].AlternativeResults)
+        {
+            if (alternatives.ArePrerequisitesMet())
+            {
+                SetStory(alternatives.ReplaceDialog);
+                return;
+            }
+        }
+        SetStory(CurrentDialog.ChoicePathDialogs[result].DialogResult);
     }
 
     private void PerformEvent(string str)

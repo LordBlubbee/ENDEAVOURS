@@ -123,8 +123,6 @@ public class CREW : NetworkBehaviour
         -
      
      */
-
-
     private void Start()
     {
         Init();
@@ -135,7 +133,6 @@ public class CREW : NetworkBehaviour
         hasInitialized = true;
         CO.co.RegisterCrew(this);
 
-        Alive.Value = true;
         Rigid = GetComponent<Rigidbody2D>();
         Col = GetComponent<Collider2D>();
 
@@ -150,6 +147,7 @@ public class CREW : NetworkBehaviour
         //
         if (IsServer) {
 
+            Alive.Value = true;
             CurHealth.Value = GetMaxHealth();
             CurStamina.Value = 100;
 
@@ -158,6 +156,11 @@ public class CREW : NetworkBehaviour
         {
             LocallyEquip(EquippedTool.Value);
         }
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        Init();
     }
 
     [Rpc(SendTo.ClientsAndHost)]
