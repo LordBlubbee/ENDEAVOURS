@@ -107,7 +107,7 @@ public class LOCALCO : NetworkBehaviour
                     if (Input.GetKey(KeyCode.S)) mov += new Vector3(0, -1);
                     if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
                     if (Input.GetKey(KeyCode.D)) mov += new Vector3(1, 0);
-                    Drifter.SetMoveInputRpc(mov,0.8f+GetPlayer().ATT_PILOTING*0.1f);
+                    Drifter.SetMoveInputRpc(mov,0.8f+GetPlayer().GetATT_PILOTING()*0.1f);
                     Drifter.SetLookTowardsRpc(Mouse);
                     break;
                 case ControlModes.WEAPON:
@@ -176,7 +176,7 @@ public class LOCALCO : NetworkBehaviour
             attributes[7]
             );
         ScriptableBackground back = Resources.Load<ScriptableBackground>(backTex);
-        crew.CharacterBackground = back;
+        crew.SetCharacterBackground(back);
         crew.Init();
         crew.RegisterPlayerOnLOCALCORpc();
         Player.EquipWeapon(0, back.Background_StartingWeapon);
@@ -186,7 +186,7 @@ public class LOCALCO : NetworkBehaviour
     public void SetCameraToPlayer()
     {
         CurrentControlMode = ControlModes.PLAYER;
-        CAM.cam.SetCameraMode(Player.transform, 13f+ Player.ATT_COMMUNOPATHY, 8f, 16f+Player.ATT_COMMUNOPATHY);
+        CAM.cam.SetCameraMode(Player.transform, 13f+ Player.GetATT_COMMUNOPATHY(), 8f, 16f+Player.GetATT_COMMUNOPATHY());
     }
     IEnumerator CheckInteraction()
     {
@@ -207,7 +207,7 @@ public class LOCALCO : NetworkBehaviour
                                 //Interact
                                 Drifter = Player.space.Drifter;
                                 CurrentControlMode = ControlModes.DRIFTER;
-                                CAM.cam.SetCameraMode(Drifter.transform, 230f + Player.ATT_COMMUNOPATHY * 10f, 100f, 250f);
+                                CAM.cam.SetCameraMode(Drifter.transform, 230f + Player.GetATT_COMMUNOPATHY() * 10f, 100f, 250f);
                                 CurrentInteractionModule = mod;
                             }
                            

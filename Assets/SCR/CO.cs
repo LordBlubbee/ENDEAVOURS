@@ -30,9 +30,10 @@ public class CO : NetworkBehaviour
         NOMADEN_COALITION,
         NOMADEN_CLANS,
         NOMADEN_INSURRECTION,
-        THEM
+        AESPERIANS,
+        PHOS,
+        SEEKERS
     }
-
     [NonSerialized] public List<ScriptableEquippable> Drifter_Inventory = new();
 
     public ScriptableBiome CurrentBiome;
@@ -356,9 +357,11 @@ public class CO : NetworkBehaviour
     public void UnregisterSpace(SPACE space)
     {
         RegisteredSPACES.Remove(space);
-
-        SpaceCount--;
     }
-    int SpaceCount = 0;
 
+    [Rpc(SendTo.ClientsAndHost)]
+    public void UpdateATTUIRpc()
+    {
+        UI.ui.InventoryUI.SkillRefresh();
+    }
 }

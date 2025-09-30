@@ -34,14 +34,15 @@ public class CREW : NetworkBehaviour
     public float GrappleCooldown = 10f;
 
     [Header("ATTRIBUTES")]
-    public int ATT_PHYSIQUE = 2; //Buffs maximum health, melee damage
-    public int ATT_ARMS = 2; //Buffs ranged damage, reload (+gunnery)
-    public int ATT_DEXTERITY = 2; //Buffs movement speed, stamina
-    public int ATT_COMMUNOPATHY = 2; //Buffs magic damage, camera range, senses
-    public int ATT_PILOTING = 2; //Buffs piloting maneuverability, dodge chance
-    public int ATT_ENGINEERING = 2; //Buffs repair speed
-    public int ATT_GUNNERY = 2; //Buffs usage of large heavy weapons
-    public int ATT_MEDICAL = 2; //Buffs healing abilities (+regeneration)
+    public NetworkVariable<int> SkillPoints = new NetworkVariable<int>(15); //Buffs maximum health, melee damage
+    public NetworkVariable<int> ATT_PHYSIQUE = new NetworkVariable<int>(2); //Buffs maximum health, melee damage
+    public NetworkVariable<int> ATT_ARMS = new NetworkVariable<int>(2); //Buffs ranged damage, reload (+gunnery)
+    public NetworkVariable<int> ATT_DEXTERITY = new NetworkVariable<int>(2);//Buffs movement speed, stamina
+    public NetworkVariable<int> ATT_COMMUNOPATHY = new NetworkVariable<int>(2);//Buffs magic damage, camera range, senses
+    public NetworkVariable<int> ATT_PILOTING = new NetworkVariable<int>(2); //Buffs piloting maneuverability, dodge chance
+    public NetworkVariable<int> ATT_ENGINEERING = new NetworkVariable<int>(2); //Buffs repair speed
+    public NetworkVariable<int> ATT_GUNNERY = new NetworkVariable<int>(2); //Buffs usage of large heavy weapons
+    public NetworkVariable<int> ATT_MEDICAL = new NetworkVariable<int>(2); //Buffs healing abilities (+regeneration)
     [NonSerialized] public ScriptableBackground CharacterBackground;
     public ScriptableEquippableWeapon[] EquippedWeapons = new ScriptableEquippableWeapon[3];
     public ScriptableEquippableArtifact EquippedArmor = null;
@@ -54,15 +55,128 @@ public class CREW : NetworkBehaviour
     }
     public void UpdateAttributes(int phys, int arms, int dex, int comm, int pil, int eng, int gun, int med)
     {
-        ATT_PHYSIQUE = phys;
-        ATT_ARMS = arms; //Ranged attack
-        ATT_DEXTERITY = dex; //Buffs movement speed, stamina
-        ATT_COMMUNOPATHY = comm; //Buffs magic damage, camera range, senses
-        ATT_PILOTING = pil; //Buffs piloting maneuverability, dodge chance
-        ATT_ENGINEERING = eng; //Buffs repair speed
-        ATT_GUNNERY = gun; //Buffs usage of large heavy weapons
-        ATT_MEDICAL = med; //Buffs healing abilities (+regeneration)
+        ATT_PHYSIQUE.Value = phys;
+        ATT_ARMS.Value = arms; //Ranged attack
+        ATT_DEXTERITY.Value = dex; //Buffs movement speed, stamina
+        ATT_COMMUNOPATHY.Value = comm; //Buffs magic damage, camera range, senses
+        ATT_PILOTING.Value = pil; //Buffs piloting maneuverability, dodge chance
+        ATT_ENGINEERING.Value = eng; //Buffs repair speed
+        ATT_GUNNERY.Value = gun; //Buffs usage of large heavy weapons
+        ATT_MEDICAL.Value = med; //Buffs healing abilities (+regeneration)
     }
+    // ==========================
+    // GET FUNCTIONS
+    // ==========================
+    public void SetCharacterBackground(ScriptableBackground back)
+    {
+        CharacterBackground = back;
+
+        ATT_PHYSIQUE.Value += back.Background_ATT_BONUS[0];
+        ATT_ARMS.Value += back.Background_ATT_BONUS[1];
+        ATT_DEXTERITY.Value += back.Background_ATT_BONUS[2];
+        ATT_COMMUNOPATHY.Value += back.Background_ATT_BONUS[3];
+        ATT_PILOTING.Value += back.Background_ATT_BONUS[4];
+        ATT_ENGINEERING.Value += back.Background_ATT_BONUS[5];
+        ATT_GUNNERY.Value += back.Background_ATT_BONUS[6];
+        ATT_MEDICAL.Value += back.Background_ATT_BONUS[7];
+    }
+    public int GetATT_PHYSIQUE()
+    {
+        return ATT_PHYSIQUE.Value;
+    }
+
+    public int GetATT_ARMS()
+    {
+        return ATT_ARMS.Value;
+    }
+
+    public int GetATT_DEXTERITY()
+    {
+        return ATT_DEXTERITY.Value;
+    }
+
+    public int GetATT_COMMUNOPATHY()
+    {
+        return ATT_COMMUNOPATHY.Value;
+    }
+
+    public int GetATT_PILOTING()
+    {
+        return ATT_PILOTING.Value;
+    }
+
+    public int GetATT_ENGINEERING()
+    {
+        return ATT_ENGINEERING.Value;
+    }
+
+    public int GetATT_GUNNERY()
+    {
+        return ATT_GUNNERY.Value;
+    }
+
+    public int GetATT_MEDICAL()
+    {
+        return ATT_MEDICAL.Value;
+    }
+
+    // ==========================
+    // INCREASE FUNCTIONS (RPC only increments by +1)
+    // ==========================
+
+    [Rpc(SendTo.Server)]
+    public void IncreaseATTRpc(int ID)
+    {
+        NetworkVariable<int> ATT;
+        switch (ID)
+        {
+            case 0: ATT = ATT_PHYSIQUE; break;
+            case 1: ATT = ATT_ARMS; break;
+            case 2: ATT = ATT_DEXTERITY; break;
+            case 3: ATT = ATT_COMMUNOPATHY; break;
+            case 4: ATT = ATT_PILOTING; break;
+            case 5: ATT = ATT_ENGINEERING; break;
+            case 6: ATT = ATT_GUNNERY; break;
+            case 7: ATT = ATT_MEDICAL; break;
+            default: return; // Invalid ID, do nothing
+        }
+        int LevelNeed = 1;
+        switch (ATT.Value)
+        {
+            case < 3:
+                LevelNeed = 1;
+                break;
+            case 3:
+                LevelNeed = 2;
+                break;
+            case 4:
+                LevelNeed = 3;
+                break;
+            case 5:
+                LevelNeed = 4;
+                break;
+            case 6:
+                LevelNeed = 5;
+                break;
+            case 7:
+                LevelNeed = 6;
+                break;
+            case 8:
+                LevelNeed = 7;
+                break;
+            case 9:
+                LevelNeed = 8;
+                break;
+            default:
+                LevelNeed = 999;
+                break;
+        }
+        if (SkillPoints.Value < LevelNeed) return;
+        SkillPoints.Value--;
+        ATT.Value++;
+        CO.co.UpdateATTUIRpc();
+    }
+
 
     [Header("ITEMS")]
     public CO_SPAWNER.ToolType StartingTool;
@@ -280,7 +394,7 @@ public class CREW : NetworkBehaviour
         AnimationComboWeapon1 = 0;
         AnimationComboWeapon2 = 0;
         newSpace.AddCrew(this);
-        CurGrappleCooldown.Value = GrappleCooldown / 0.8f + (ATT_ARMS * 0.1f);
+        CurGrappleCooldown.Value = GrappleCooldown / 0.8f + (GetATT_ARMS() * 0.1f);
         StartCoroutine(GrappleNum(newSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform));
     }
     public void UseGrapple(Vector3 trt)
@@ -318,7 +432,7 @@ public class CREW : NetworkBehaviour
         Vector3 dir = MoveInput;
         while (Speed > 0f && UsePhysics())
         {
-            float mov = (5f+ATT_DEXTERITY*0.3f) * MovementSpeed * Speed * CO.co.GetWorldSpeedDeltaFixed();
+            float mov = (5f+ GetATT_DEXTERITY() * 0.3f) * MovementSpeed * Speed * CO.co.GetWorldSpeedDeltaFixed();
 
             transform.position += mov * dir;
             Rigid.MovePosition(transform.position);
@@ -572,19 +686,19 @@ public class CREW : NetworkBehaviour
     }
     public float GetMaxHealth()
     {
-        return MaxHealth * (0.8f + 0.1f * ATT_PHYSIQUE);
+        return MaxHealth * (0.8f + 0.1f * GetATT_PHYSIQUE());
     }
     public float GetHealthRegen()
     {
-        return NaturalHealthRegen * (0.8f + 0.1f * ATT_MEDICAL);
+        return NaturalHealthRegen * (0.8f + 0.1f * GetATT_MEDICAL());
     }
     public float GetStaminaRegen()
     {
-        return NaturalStaminaRegen * (0.8f + 0.1f * ATT_DEXTERITY);
+        return NaturalStaminaRegen * (0.8f + 0.1f * GetATT_DEXTERITY());
     }
     public float GetDashCost()
     {
-        return UnityEngine.Random.Range(27f, 37f)-ATT_DEXTERITY;
+        return UnityEngine.Random.Range(27f, 37f)-GetATT_DEXTERITY();
     }
     public float GetHealthRelative()
     {
@@ -680,7 +794,7 @@ public class CREW : NetworkBehaviour
     }
     public float GetSpeed()
     {
-        return MovementSpeed * (0.7f+ATT_DEXTERITY*0.1f);
+        return MovementSpeed * (0.7f+GetATT_DEXTERITY()*0.1f);
     }
     public float AngleToTurnTarget()
     {

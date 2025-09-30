@@ -14,6 +14,7 @@ public class Screen_GameUI : MonoBehaviour
     public Image StaminaColor;
     public TextMeshProUGUI InteractTex;
     public GameObject PauseMenu;
+    public GameObject SafeMenu;
     public InventorySlot[] InventoryWeaponSlots;
     public InventorySlot InventoryGrappleSlot;
     public InventorySlot InventoryToolsSlot;
@@ -29,6 +30,13 @@ public class Screen_GameUI : MonoBehaviour
         {
             ActiveUI.gameObject.SetActive(false);
             return;
+        }
+        if (CO.co.AreWeInDanger.Value)
+        {
+            SafeMenu.gameObject.SetActive(false);
+        } else
+        {
+            SafeMenu.gameObject.SetActive(true);
         }
         ActiveUI.gameObject.SetActive(true);
 
@@ -53,6 +61,11 @@ public class Screen_GameUI : MonoBehaviour
         }
     }
 
+    public void OpenMissionScreen()
+    {
+        if (CO_STORY.co.IsCommsActive()) UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
+        else UI.ui.SelectScreen(UI.ui.MapUI.gameObject);
+    }
     public void EquipWeaponUI(int ID)
     {
         for (int i = 0; i < InventoryWeaponSlots.Length; i++)

@@ -141,7 +141,7 @@ public class AI_UNIT : NetworkBehaviour
     {
         if (trt.space != getSpace())
         {
-            if (Dist(trt.space.GetNearestGridToPoint(transform.position)) < 25f+Unit.ATT_COMMUNOPATHY)
+            if (Dist(trt.space.GetNearestGridToPoint(transform.position)) < 25f+Unit.GetATT_COMMUNOPATHY())
             {
                 Unit.UseGrapple(trt.space);
             }

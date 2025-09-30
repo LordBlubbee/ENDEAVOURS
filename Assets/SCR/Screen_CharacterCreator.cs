@@ -19,6 +19,7 @@ public class Screen_CharacterCreator : MonoBehaviour
     public Image[] BackgroundCategories;
     public Image[] AllBackgrounds;
 
+    private ScriptableBackground SelectedBackground = null;
     private int SkillPoints = 15;
     public TextMeshProUGUI SkillPointTex;
     private int[] SkillPower = new int[8];
@@ -26,7 +27,6 @@ public class Screen_CharacterCreator : MonoBehaviour
     public TextMeshProUGUI[] SkillTex;
     public Image[] SkillLevelButton;
     public TextMeshProUGUI[] SkillLevelTex;
-    private ScriptableBackground SelectedBackground = null;
     public void LevelSkill(int ID)
     {
         int LevelNeed;
