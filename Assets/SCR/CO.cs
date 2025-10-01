@@ -1,7 +1,9 @@
+using Mono.Cecil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -36,21 +38,82 @@ public class CO : NetworkBehaviour
     }
     [NonSerialized] public List<ScriptableEquippable> Drifter_Inventory = new();
 
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SetDrifterInventoryForClientsRpc(FixedString64Bytes[] strings)
+    {
+        Drifter_Inventory = new();
+        foreach (FixedString64Bytes str in strings)
+        {
+            if (str == "") Drifter_Inventory.Add(null);
+            else Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>(str.ToString()));
+        }
+    }
+
+    [Rpc(SendTo.Server)]
+    public void SetDrifterInventoryItemRpc(int slot, string str)
+    {
+        while (slot >= Drifter_Inventory.Count) Drifter_Inventory.Add(null);
+        if (str == null) Drifter_Inventory[slot] = null;
+        else Drifter_Inventory[slot] = Resources.Load<ScriptableEquippable>(str.ToString());
+    }
+
     public ScriptableBiome CurrentBiome;
     private void Start()
     {
         co = this;
         if (IsServer)
         {
+            StartCoroutine(PeriodicUpdates());
         } else
         {
             RequestPlayerMapPointRpc();
         }
     }
 
+    IEnumerator PeriodicUpdates()
+    {
+        while (true)
+        {
+            foreach (LOCALCO local in GetLOCALCO())
+            {
+                if (local.GetPlayer() != null)
+                {
+                    local.GetPlayer().EquipArmorLocallyRpc(local.GetPlayer().EquippedArmor ? local.GetPlayer().EquippedArmor.ItemResourceID : null);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        local.GetPlayer().EquipWeaponLocallyRpc(i, local.GetPlayer().EquippedWeapons[i] ? local.GetPlayer().EquippedWeapons[i].ItemResourceID : null);
+                        local.GetPlayer().EquipArtifactLocallyRpc(i, local.GetPlayer().EquippedArtifacts[i] ? local.GetPlayer().EquippedArtifacts[i].ItemResourceID : null);
+                    }
+                }
+                SendPeriodicInventoryUpdate();
+            }
+            yield return new WaitForSeconds(2f);
+        }
+    }
+
+    [Rpc(SendTo.Server)]
+    public void RequestPeriodicInventoryUpdateRpc()
+    {
+        SendPeriodicInventoryUpdate();
+    }
+    public void SendPeriodicInventoryUpdate()
+    {
+        if (PlayerMainDrifter == null) return;
+        List<FixedString64Bytes> strings = new();
+        for (int i = 0; i < CO.co.Drifter_Inventory.Count; i++)
+        {
+            if (CO.co.Drifter_Inventory[i]) strings.Add(CO.co.Drifter_Inventory[i].ItemResourceID);
+            else strings.Add("");
+        }
+        CO.co.SetDrifterInventoryForClientsRpc(strings.ToArray());
+    }
+
     public void StartGame()
     {
         GenerateMap(25, 20);
+
+        co.Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Weapons/Spear"));
+        co.Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Weapons/Spear"));
     }
     public override void OnNetworkSpawn()
     {

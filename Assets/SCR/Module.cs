@@ -22,7 +22,7 @@ public class Module : NetworkBehaviour
     public float MaxHealth = 100f;
     public float HitboxRadius = 16f;
 
-    private NetworkVariable<float> CurHealth = new();
+    protected NetworkVariable<float> CurHealth = new();
 
     private void Start()
     {
@@ -31,9 +31,9 @@ public class Module : NetworkBehaviour
         Init();
     }
 
-    private bool hasInitialized = false;
+    protected bool hasInitialized = false;
 
-    public void Init()
+    public virtual void Init()
     {
         if (hasInitialized) return;
         hasInitialized = true;

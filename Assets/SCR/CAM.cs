@@ -36,7 +36,7 @@ public class CAM : MonoBehaviour
             CameraPosMain = FollowObject.transform.position;
             Vector3 Offset = camob.ScreenToViewportPoint(Input.mousePosition) - new Vector3(0.5f, 0.5f);
             transform.position = CameraPosMain + new Vector3(Offset.x * 3f * camob.orthographicSize, Offset.y * 2f * camob.orthographicSize);
-            transform.position = CameraPosMain;
+            //transform.position = CameraPosMain;
             transform.position = new Vector3(transform.position.x, transform.position.y, -1000);
         }
         if (canScroll)

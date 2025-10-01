@@ -34,7 +34,7 @@ public class CREW : NetworkBehaviour
     public float GrappleCooldown = 10f;
 
     [Header("ATTRIBUTES")]
-    public NetworkVariable<int> SkillPoints = new NetworkVariable<int>(15); //Buffs maximum health, melee damage
+    [NonSerialized] public NetworkVariable<int> SkillPoints = new NetworkVariable<int>(0); //Not used in initial character creation
     public NetworkVariable<int> ATT_PHYSIQUE = new NetworkVariable<int>(2); //Buffs maximum health, melee damage
     public NetworkVariable<int> ATT_ARMS = new NetworkVariable<int>(2); //Buffs ranged damage, reload (+gunnery)
     public NetworkVariable<int> ATT_DEXTERITY = new NetworkVariable<int>(2);//Buffs movement speed, stamina
@@ -63,6 +63,7 @@ public class CREW : NetworkBehaviour
         ATT_ENGINEERING.Value = eng; //Buffs repair speed
         ATT_GUNNERY.Value = gun; //Buffs usage of large heavy weapons
         ATT_MEDICAL.Value = med; //Buffs healing abilities (+regeneration)
+        CurHealth.Value = GetMaxHealth();
     }
     // ==========================
     // GET FUNCTIONS
@@ -70,54 +71,71 @@ public class CREW : NetworkBehaviour
     public void SetCharacterBackground(ScriptableBackground back)
     {
         CharacterBackground = back;
-
-        ATT_PHYSIQUE.Value += back.Background_ATT_BONUS[0];
-        ATT_ARMS.Value += back.Background_ATT_BONUS[1];
-        ATT_DEXTERITY.Value += back.Background_ATT_BONUS[2];
-        ATT_COMMUNOPATHY.Value += back.Background_ATT_BONUS[3];
-        ATT_PILOTING.Value += back.Background_ATT_BONUS[4];
-        ATT_ENGINEERING.Value += back.Background_ATT_BONUS[5];
-        ATT_GUNNERY.Value += back.Background_ATT_BONUS[6];
-        ATT_MEDICAL.Value += back.Background_ATT_BONUS[7];
     }
     public int GetATT_PHYSIQUE()
     {
+        if (CharacterBackground) return ATT_PHYSIQUE.Value + CharacterBackground.Background_ATT_BONUS[0];
         return ATT_PHYSIQUE.Value;
     }
 
     public int GetATT_ARMS()
     {
+        if (CharacterBackground) return ATT_ARMS.Value + CharacterBackground.Background_ATT_BONUS[1];
         return ATT_ARMS.Value;
     }
 
     public int GetATT_DEXTERITY()
     {
+        if (CharacterBackground) return ATT_DEXTERITY.Value + CharacterBackground.Background_ATT_BONUS[2];
         return ATT_DEXTERITY.Value;
     }
 
     public int GetATT_COMMUNOPATHY()
     {
+        if (CharacterBackground) return ATT_COMMUNOPATHY.Value + CharacterBackground.Background_ATT_BONUS[3];
         return ATT_COMMUNOPATHY.Value;
     }
 
     public int GetATT_PILOTING()
     {
+        if (CharacterBackground) return ATT_PILOTING.Value + CharacterBackground.Background_ATT_BONUS[4];
         return ATT_PILOTING.Value;
     }
 
     public int GetATT_ENGINEERING()
     {
+        if (CharacterBackground) return ATT_ENGINEERING.Value + CharacterBackground.Background_ATT_BONUS[5];
         return ATT_ENGINEERING.Value;
     }
 
     public int GetATT_GUNNERY()
     {
+        if (CharacterBackground) return ATT_GUNNERY.Value + CharacterBackground.Background_ATT_BONUS[6];
         return ATT_GUNNERY.Value;
     }
 
     public int GetATT_MEDICAL()
     {
+        if (CharacterBackground) return ATT_MEDICAL.Value + CharacterBackground.Background_ATT_BONUS[7];
         return ATT_MEDICAL.Value;
+    }
+
+    public int GetATT(int ID)
+    {
+        NetworkVariable<int> ATT;
+        switch (ID)
+        {
+            case 0: ATT = ATT_PHYSIQUE; break;
+            case 1: ATT = ATT_ARMS; break;
+            case 2: ATT = ATT_DEXTERITY; break;
+            case 3: ATT = ATT_COMMUNOPATHY; break;
+            case 4: ATT = ATT_PILOTING; break;
+            case 5: ATT = ATT_ENGINEERING; break;
+            case 6: ATT = ATT_GUNNERY; break;
+            case 7: ATT = ATT_MEDICAL; break;
+            default: return 0; // Invalid ID, do nothing
+        }
+        return ATT.Value;
     }
 
     // ==========================
@@ -277,7 +295,7 @@ public class CREW : NetworkBehaviour
         Init();
     }
 
-    [Rpc(SendTo.ClientsAndHost)]
+    [Rpc(SendTo.Everyone)]
     public void RegisterPlayerOnLOCALCORpc()
     {
         if (!IsPlayerControlled()) Debug.Log("Error: Is not player controlled");
@@ -750,34 +768,70 @@ public class CREW : NetworkBehaviour
 
     public void EquipWeapon(int slot, ScriptableEquippableWeapon wep)
     {
-        Debug.Log($"Equipped weapon is now {wep.ItemName}");
         EquippedWeapons[slot] = wep;
-        if (IsServer) EquipWeaponLocallyRpc(slot, wep.ItemResourceID);
+        if (IsServer)
+        {
+            if (wep == null) EquipWeaponLocallyRpc(slot, "");
+            else EquipWeaponLocallyRpc(slot, wep.ItemResourceID);
+        }
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void EquipWeaponLocallyRpc(int slot, string wep)
     {
         if (IsServer) return;
+        if (wep == null) EquipWeapon(slot, null);
+        else EquipWeapon(slot, Resources.Load<ScriptableEquippableWeapon>(wep));
+    }
+    [Rpc(SendTo.Server)]
+    public void EquipWeaponRpc(int slot, string wep)
+    {
+        if (wep == null) EquipWeapon(slot, null);
         EquipWeapon(slot, Resources.Load<ScriptableEquippableWeapon>(wep));
     }
     public void EquipArmor(ScriptableEquippableArtifact wep)
     {
         EquippedArmor = wep;
-        if (IsServer) EquipArmorLocallyRpc(wep.ItemResourceID);
+        if (IsServer)
+        {
+            if (wep == null) EquipArmorLocallyRpc("");
+            else EquipArmorLocallyRpc(wep.ItemResourceID);
+        }
+    }
+
+    [Rpc(SendTo.Server)]
+    public void EquipArmorRpc(string wep)
+    {
+        if (wep == null) EquipArmor(null);
+        EquipArmor(Resources.Load<ScriptableEquippableArtifact>(wep));
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void EquipArmorLocallyRpc(string wep)
     {
-        EquipArmor(Resources.Load<ScriptableEquippableArtifact>(wep));
+        if (IsServer) return;
+        if (wep == null) EquipArmor(null);
+        else EquipArmor(Resources.Load<ScriptableEquippableArtifact>(wep));
     }
     public void EquipArtifact(int slot, ScriptableEquippableArtifact wep)
     {
         EquippedArtifacts[slot] = wep;
+        if (IsServer)
+        {
+            if (wep == null) EquipArtifactLocallyRpc(slot, "");
+            else EquipArtifactLocallyRpc(slot, wep.ItemResourceID);
+        }
+    }
+    [Rpc(SendTo.Server)]
+    public void EquipArtifactRpc(int slot, string wep)
+    {
+        if (wep == null) EquipArtifact(slot, null);
+        EquipArtifact(slot, Resources.Load<ScriptableEquippableArtifact>(wep));
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void EquipArtifactLocallyRpc(int slot, string wep)
     {
-        EquipArtifact(slot, Resources.Load<ScriptableEquippableArtifact>(wep));
+        if (IsServer) return;
+        if (wep == null) EquipArtifact(slot, null);
+        else EquipArtifact(slot, Resources.Load<ScriptableEquippableArtifact>(wep));
     }
     public void Die()
     {

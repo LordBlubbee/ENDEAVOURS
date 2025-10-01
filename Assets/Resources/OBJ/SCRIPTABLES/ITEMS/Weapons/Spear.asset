@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Spear
   ItemDesc: Pointy stick.
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: 6108012597462862368, guid: 7a8afd92a09096b4a88bb4600e976998, type: 3}
   ItemResourceID: OBJ/SCRIPTABLES/ITEMS/Weapons/Spear
   ToolPrefab: 1

@@ -329,10 +329,12 @@ MonoBehaviour:
   - {fileID: 6313021248617021957, guid: 444c5c76f86db5c4a8b595cabd2ca5d4, type: 3}
   - {fileID: 6313021248617021957, guid: 695f221402cdb6e4ca8f4e8a1c491cfc, type: 3}
   - {fileID: 6313021248617021957, guid: 10052423c64acaf4ca2b78de834a409b, type: 3}
+  - {fileID: 2733437315669949757, guid: f82b2799c1dc99b478404365e2526da3, type: 3}
   StartingModuleLocations:
   - {x: 52, y: 0, z: 0}
   - {x: 52, y: 16, z: 0}
   - {x: -36, y: 24, z: 0}
+  - {x: 12, y: -32, z: 0}
   PrefabWall: {fileID: 9019574874123161817, guid: b50d1ee3a96087846b72c40f9c11f28b, type: 3}
   PrefabCorner: {fileID: 5844972831535844615, guid: cbfb38767837270468660a6e7cb3ecbb, type: 3}
   PrefabEmpty: {fileID: 8986802024713289282, guid: ddf8d1bce74a9fd4bae3dc20715d2bdb, type: 3}

@@ -61,6 +61,10 @@ public class Screen_GameUI : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        RefreshWeaponUI();
+    }
     public void OpenMissionScreen()
     {
         if (CO_STORY.co.IsCommsActive()) UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
@@ -71,6 +75,14 @@ public class Screen_GameUI : MonoBehaviour
         for (int i = 0; i < InventoryWeaponSlots.Length; i++)
         {
             InventoryWeaponSlots[i].SetEquipState(ID == i ? InventorySlot.EquipStates.SUCCESS : InventorySlot.EquipStates.NONE);
+        }
+    }
+
+    public void RefreshWeaponUI()
+    {
+        for (int i = 0; i < InventoryWeaponSlots.Length; i++)
+        {
+            InventoryWeaponSlots[i].SetInventoryItem(LOCALCO.local.GetPlayer().EquippedWeapons[i]);
         }
     }
 

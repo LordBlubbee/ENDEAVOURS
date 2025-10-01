@@ -45,6 +45,9 @@ public class UI : MonoBehaviour
             case CrosshairModes.NONE:
                 Crosshair.color = new Color(1, 1, 1, 0);
                 break;
+            case CrosshairModes.WEAPONS:
+                Crosshair.color = new Color(1, 1, 1, 0);
+                break;
             case CrosshairModes.GRAPPLE:
                 Crosshair.color = new Color(1, 0, 0, 0.5f);
                 break;
@@ -52,6 +55,14 @@ public class UI : MonoBehaviour
                 Crosshair.color = new Color(0, 1, 0, 0.5f);
                 break;
         }
+    }
+    [Header("CrosshairSprites")]
+    public Sprite CrosshairSpriteGeneric;
+    public Sprite CrosshairSpriteGrapple;
+    public Sprite CrosshairSpriteBallista;
+    public void SetCrosshairTexture(Sprite img)
+    {
+        Crosshair.sprite = img;
     }
     public void GoBackToPreviousScreen()
     {

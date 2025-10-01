@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -33,8 +34,12 @@ public class LOCALCO : NetworkBehaviour
     private void Start()
     {
         StartCoroutine(Register());
-        if (IsOwner) local = this;
+        if (IsOwner)
+        {
+            local = this;
+        }
     }
+
 
     private IEnumerator Register()
     {
@@ -49,6 +54,7 @@ public class LOCALCO : NetworkBehaviour
         {
             Vector3 mov = Vector3.zero;
             Vector3 Mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Mouse = new Vector3(Mouse.x, Mouse.y);
             UI.ui.SetCrosshair(Mouse, UI.CrosshairModes.NONE);
             if (UI.ui.CurrentlySelectedScreen != UI.ui.MainGameplayUI.gameObject)
             {
@@ -111,7 +117,10 @@ public class LOCALCO : NetworkBehaviour
                     Drifter.SetLookTowardsRpc(Mouse);
                     break;
                 case ControlModes.WEAPON:
+                    UI.ui.SetCrosshair(Mouse, UI.CrosshairModes.WEAPONS);
                     GetPlayer().SetMoveInputRpc(Vector3.zero);
+                    UsingWeapon.SetLookTowardsRpc(Mouse);
+                    if (Input.GetMouseButtonDown(0)) UsingWeapon.FireRpc(Mouse);
                     break;
             }
         }
@@ -188,6 +197,8 @@ public class LOCALCO : NetworkBehaviour
         CurrentControlMode = ControlModes.PLAYER;
         CAM.cam.SetCameraMode(Player.transform, 13f+ Player.GetATT_COMMUNOPATHY(), 8f, 16f+Player.GetATT_COMMUNOPATHY());
     }
+
+    ModuleWeapon UsingWeapon;
     IEnumerator CheckInteraction()
     {
         while (true)
@@ -207,7 +218,7 @@ public class LOCALCO : NetworkBehaviour
                                 //Interact
                                 Drifter = Player.space.Drifter;
                                 CurrentControlMode = ControlModes.DRIFTER;
-                                CAM.cam.SetCameraMode(Drifter.transform, 230f + Player.GetATT_COMMUNOPATHY() * 10f, 100f, 250f);
+                                CAM.cam.SetCameraMode(Drifter.transform, 230f + Player.GetATT_COMMUNOPATHY() * 10f, 50f, 250f + Player.GetATT_COMMUNOPATHY() * 10f);
                                 CurrentInteractionModule = mod;
                             }
                            
@@ -216,7 +227,10 @@ public class LOCALCO : NetworkBehaviour
                             UI.ui.MainGameplayUI.SetInteractTex("[F] USE WEAPON", Color.green);
                             if (Input.GetKeyDown(KeyCode.F))
                             {
-
+                                UsingWeapon = (ModuleWeapon)mod;
+                                CurrentControlMode = ControlModes.WEAPON;
+                                CAM.cam.SetCameraMode(mod.transform, 230f + Player.GetATT_COMMUNOPATHY() * 10f, 50f, 250f + Player.GetATT_COMMUNOPATHY() * 10f);
+                                CurrentInteractionModule = mod;
                             }
                             break;
                         case Module.ModuleTypes.INVENTORY:
