@@ -43,7 +43,7 @@ public class ModuleWeapon : Module
 
         CurHealth.Value = MaxHealth;
 
-        Platform.transform.SetParent(null);
+        Platform.transform.SetParent(transform.parent);
     }
     private void FixedUpdate()
     {

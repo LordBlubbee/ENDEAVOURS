@@ -219,8 +219,7 @@ public class Screen_CharacterCreator : MonoBehaviour
     }
     public void PressCreateCharacter()
     {
-        if (!SelectedBackground) return;
-        Debug.Log($"{SelectedBackground.ResourcePath}");
+        //if (!ReadyToMoveOn()) return;
         LOCALCO.local.CreatePlayerRpc(GO.g.localUsername, GO.g.localColor, SkillPower, SelectedBackground.ResourcePath);
         UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
     }

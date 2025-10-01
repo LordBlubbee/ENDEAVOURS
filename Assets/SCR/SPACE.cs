@@ -6,6 +6,7 @@ using UnityEngine;
 public class SPACE : NetworkBehaviour
 {
     public DRIFTER Drifter;
+    [NonSerialized] public NetworkVariable<int> SpaceID = new();
     [NonSerialized] public List<CREW> CrewInSpace = new();
     private List<Module> Modules = new();
     public List<WalkableTile> RoomTiles;
@@ -67,10 +68,10 @@ public class SPACE : NetworkBehaviour
                 }
             }
         }
+        CO.co.RegisterSpace(this);
 
         if (!IsServer) return;
 
-        CO.co.RegisterSpace(this);
 
         for (int i = 0; i < StartingModuleList.Count; i++)
         {
@@ -78,6 +79,7 @@ public class SPACE : NetworkBehaviour
             mod.NetworkObject.Spawn();
             mod.transform.SetParent(transform);
             mod.transform.localPosition = StartingModuleLocations[i];
+            mod.SpaceID.Value = SpaceID.Value;
             mod.Init();
             Modules.Add(mod);
         }
@@ -123,6 +125,8 @@ public class SPACE : NetworkBehaviour
         return null;
     }
 
+    //[NonSerialized] public NetworkVariable<bool> IsOnBoardableTile = new();
+    //[NonSerialized] public NetworkVariable<bool> IsTargetedTileBoardable = new();
     public bool isCurrentGridBoardable(Vector3 here)
     {
         WalkableTile tile = GetCurrentGrid(here);
@@ -152,16 +156,16 @@ public class SPACE : NetworkBehaviour
     }
     public void AddCrew(CREW crew)
     {
+        if (CrewInSpace.Contains(crew)) return;
         CrewInSpace.Add(crew);
-        crew.space = this;
+        crew.Space = this;
         crew.transform.SetParent(transform);
         crew.transform.localPosition = new Vector3(crew.transform.localPosition.x, crew.transform.localPosition.y, -0.5f);
     }
-
     public void RemoveCrew(CREW crew)
     {
         CrewInSpace.Remove(crew);
-        crew.space = null;
+        crew.Space = null;
         crew.transform.SetParent(null);
     }
 
@@ -175,6 +179,7 @@ public class SPACE : NetworkBehaviour
         float maxrange = 9999f;
         foreach (Module mod in Modules)
         {
+            Debug.Log(mod.name);
             float dist = (mod.transform.position - vec).magnitude;
             if (dist < maxrange)
             {

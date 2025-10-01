@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 public class LOCALCO : NetworkBehaviour
 {
     public static LOCALCO local;
-    private NetworkVariable<int> PlayerID = new NetworkVariable<int>();
+    public NetworkVariable<int> PlayerID = new NetworkVariable<int>();
 
     [NonSerialized] public NetworkVariable<int> CurrentDialogVote = new NetworkVariable<int>(-1);
     [NonSerialized] public NetworkVariable<int> CurrentMapVote = new NetworkVariable<int>(-1);
@@ -40,6 +40,10 @@ public class LOCALCO : NetworkBehaviour
         }
     }
 
+    public override void OnNetworkSpawn()
+    {
+        StartCoroutine(Register());
+    }
 
     private IEnumerator Register()
     {
@@ -58,6 +62,7 @@ public class LOCALCO : NetworkBehaviour
             UI.ui.SetCrosshair(Mouse, UI.CrosshairModes.NONE);
             if (UI.ui.CurrentlySelectedScreen != UI.ui.MainGameplayUI.gameObject)
             {
+                GetPlayer().SetMoveInput(mov);
                 GetPlayer().SetMoveInputRpc(Vector3.zero);
                 return;
             }
@@ -69,15 +74,17 @@ public class LOCALCO : NetworkBehaviour
                     if (Input.GetKey(KeyCode.S)) mov += new Vector3(0, -1);
                     if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
                     if (Input.GetKey(KeyCode.D)) mov += new Vector3(1, 0);
-                    GetPlayer().SetMoveInputRpc(mov);
-                    GetPlayer().SetLookTowardsRpc(Mouse);
+                    if (!IsServer) GetPlayer().SetMoveInputRpc(mov);
+                    if (!IsServer) GetPlayer().SetLookTowardsRpc(Mouse);
+                    GetPlayer().SetMoveInput(mov);
+                    GetPlayer().SetLookTowards(Mouse);
                     if (Input.GetKeyDown(KeyCode.LeftShift)) GetPlayer().DashRpc();
                     if (Input.GetMouseButtonDown(0)) GetPlayer().UseItem1Rpc();
                     if (Input.GetMouseButtonDown(1)) GetPlayer().UseItem2Rpc();
                     if (Input.GetMouseButtonUp(0)) GetPlayer().StopItem1Rpc();
                     if (Input.GetMouseButtonUp(1)) GetPlayer().StopItem2Rpc();
                     UI.ui.MainGameplayUI.InventoryGrappleSlot.SetEquipState(InventorySlot.EquipStates.NONE);
-                    if (Player.space.isCurrentGridBoardable(Player.transform.position))
+                    /*if (Player.Space.isCurrentGridBoardable(Player.transform.position))
                     {
                         if (Input.GetKey(KeyCode.G))
                         {
@@ -101,25 +108,33 @@ public class LOCALCO : NetworkBehaviour
                         {
                             UI.ui.MainGameplayUI.InventoryGrappleSlot.SetEquipState(InventorySlot.EquipStates.FAIL);
                         }
-                    }
-                   
+                    }*/
+
                     if (Input.GetKeyDown(KeyCode.Alpha1)) GetPlayer().EquipWeapon1Rpc();
                     if (Input.GetKeyDown(KeyCode.Alpha2)) GetPlayer().EquipWeapon2Rpc();
                     if (Input.GetKeyDown(KeyCode.Alpha3)) GetPlayer().EquipWeapon3Rpc();
                     break;
                 case ControlModes.DRIFTER:
-                    GetPlayer().SetMoveInputRpc(Vector3.zero);
+                    GetPlayer().SetMoveInput(mov);
+                    if (!IsServer) GetPlayer().SetMoveInputRpc(Vector3.zero);
                     if (Input.GetKey(KeyCode.W)) mov += new Vector3(0, 1);
                     if (Input.GetKey(KeyCode.S)) mov += new Vector3(0, -1);
                     if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
                     if (Input.GetKey(KeyCode.D)) mov += new Vector3(1, 0);
-                    Drifter.SetMoveInputRpc(mov,0.8f+GetPlayer().GetATT_PILOTING()*0.1f);
-                    Drifter.SetLookTowardsRpc(Mouse);
+                    Drifter.SetMoveInput(mov, 0.8f + GetPlayer().GetATT_PILOTING() * 0.1f);
+                    Drifter.SetLookTowards(Mouse);
+                    if (!IsServer)
+                    {
+                        Drifter.SetMoveInputRpc(mov, 0.8f + GetPlayer().GetATT_PILOTING() * 0.1f);
+                        Drifter.SetLookTowardsRpc(Mouse);
+                    }
                     break;
                 case ControlModes.WEAPON:
                     UI.ui.SetCrosshair(Mouse, UI.CrosshairModes.WEAPONS);
-                    GetPlayer().SetMoveInputRpc(Vector3.zero);
-                    UsingWeapon.SetLookTowardsRpc(Mouse);
+                    GetPlayer().SetMoveInput(mov);
+                    if (!IsServer) GetPlayer().SetMoveInputRpc(Vector3.zero);
+                    if (!IsServer) UsingWeapon.SetLookTowardsRpc(Mouse);
+                    UsingWeapon.SetLookTowards(Mouse);
                     if (Input.GetMouseButtonDown(0)) UsingWeapon.FireRpc(Mouse);
                     break;
             }
@@ -130,7 +145,7 @@ public class LOCALCO : NetworkBehaviour
         foreach (Collider2D col in Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition),0.1f))
         {
             WalkableTile tile = col.GetComponent<WalkableTile>();
-            if (tile && tile.Space != Player.space)
+            if (tile && tile.Space != Player.Space)
             {
                 return true;
             }
@@ -139,7 +154,7 @@ public class LOCALCO : NetworkBehaviour
     }
     public Vector3 GetGrappleTarget(Vector3 def)
     {
-        WalkableTile tile = Player.space.GetNearestBoardingGridTransformToPoint(Player.transform.position);
+        WalkableTile tile = Player.Space.GetNearestBoardingGridTransformToPoint(Player.transform.position);
         if (tile == null) return def;
         return tile.transform.position;
     }
@@ -168,7 +183,7 @@ public class LOCALCO : NetworkBehaviour
     public void CreatePlayerRpc(string name, Color col, int[] attributes, string backTex)
     {
         //SpawnPlayer Spawn Player
-        CREW crew = Instantiate(CO_SPAWNER.co.PlayerPrefab, CO.co.PlayerMainDrifter.Interior.StartingModuleLocations[0], Quaternion.identity);
+        CREW crew = Instantiate(CO_SPAWNER.co.PlayerPrefab, CO.co.PlayerMainDrifter.transform.TransformPoint(CO.co.PlayerMainDrifter.Interior.StartingModuleLocations[0]), Quaternion.identity);
         crew.NetworkObject.Spawn();
         Debug.Log($"We are player: {GetPlayerID()}");
         crew.PlayerController.Value = GetPlayerID();
@@ -201,14 +216,36 @@ public class LOCALCO : NetworkBehaviour
     ModuleWeapon UsingWeapon;
     IEnumerator CheckInteraction()
     {
+        float Timer = 0f;
+        //Collider2D[] ColliderList = null;
+        Module mod = null;
         while (true)
         {
             UI.ui.MainGameplayUI.SetInteractTex("", Color.white);
-            if (CurrentControlMode == ControlModes.PLAYER && Player.space != null)
+            if (CurrentControlMode == ControlModes.PLAYER && Player.Space != null)
             {
-                Module mod = Player.space.NearestModule(Player.transform.position);
-                if ((mod.transform.position-Player.transform.position).magnitude < 5f && Mathf.Abs(Player.AngleBetweenPoints(mod.transform.position)) < 45f)
+                Timer -= CO.co.GetWorldSpeedDelta();
+                if (Timer < 0f)
                 {
+                    Timer = 0.25f;
+                    mod = Player.Space.NearestModule(Player.transform.position);
+                    /*ColliderList = Physics2D.OverlapCircleAll(Player.transform.position + Player.getLookVector() * 2.5f, 2.5f);
+                    mod = null;
+                    foreach (Collider2D col in ColliderList)
+                    {
+                        Module ol = col.GetComponent<Module>();
+                        if (ol)
+                        {
+                            mod = ol;
+                            break;
+                        }
+                    }*/
+                    Debug.Log("Setting nearest module " + mod);
+                }
+
+                if (mod && (mod.transform.position-Player.transform.position).magnitude < 5f && Mathf.Abs(Player.AngleBetweenPoints(mod.transform.position)) < 45f)
+                {
+                    Debug.Log("MOD DETECTED");
                     switch (mod.ModuleType)
                     {
                         case Module.ModuleTypes.NAVIGATION:
@@ -216,7 +253,7 @@ public class LOCALCO : NetworkBehaviour
                             if (Input.GetKeyDown(KeyCode.F))
                             {
                                 //Interact
-                                Drifter = Player.space.Drifter;
+                                Drifter = Player.Space.Drifter;
                                 CurrentControlMode = ControlModes.DRIFTER;
                                 CAM.cam.SetCameraMode(Drifter.transform, 230f + Player.GetATT_COMMUNOPATHY() * 10f, 50f, 250f + Player.GetATT_COMMUNOPATHY() * 10f);
                                 CurrentInteractionModule = mod;

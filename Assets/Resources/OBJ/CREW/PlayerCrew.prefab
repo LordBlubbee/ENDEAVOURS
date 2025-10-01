@@ -141,13 +141,13 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   NetworkTransformExpanded: 0
   AutoOwnerAuthorityTickOffset: 1
-  PositionInterpolationType: 0
-  RotationInterpolationType: 0
+  PositionInterpolationType: 1
+  RotationInterpolationType: 1
   ScaleInterpolationType: 0
   PositionLerpSmoothing: 1
-  PositionMaxInterpolationTime: 0.1
+  PositionMaxInterpolationTime: 0.05
   RotationLerpSmoothing: 1
-  RotationMaxInterpolationTime: 0.1
+  RotationMaxInterpolationTime: 0.05
   ScaleLerpSmoothing: 1
   ScaleMaxInterpolationTime: 0.1
   AuthorityMode: 0
@@ -171,7 +171,7 @@ MonoBehaviour:
   InLocalSpace: 0
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
-  SlerpPosition: 0
+  SlerpPosition: 1
 --- !u!114 &3455771150058328581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,15 +211,22 @@ MonoBehaviour:
   RotationDistanceFactor: 4
   RotationBaseSpeed: 90
   GrappleCooldown: 10
-  ATT_PHYSIQUE: 2
-  ATT_ARMS: 2
-  ATT_DEXTERITY: 2
-  ATT_COMMUNOPATHY: 2
-  ATT_PILOTING: 2
-  ATT_ENGINEERING: 2
-  ATT_GUNNERY: 2
-  ATT_MEDICAL: 2
-  CharacterBackground: {fileID: 0}
+  ATT_PHYSIQUE:
+    m_InternalValue: 2
+  ATT_ARMS:
+    m_InternalValue: 2
+  ATT_DEXTERITY:
+    m_InternalValue: 2
+  ATT_COMMUNOPATHY:
+    m_InternalValue: 2
+  ATT_PILOTING:
+    m_InternalValue: 2
+  ATT_ENGINEERING:
+    m_InternalValue: 2
+  ATT_GUNNERY:
+    m_InternalValue: 2
+  ATT_MEDICAL:
+    m_InternalValue: 2
   EquippedWeapons:
   - {fileID: 0}
   - {fileID: 0}

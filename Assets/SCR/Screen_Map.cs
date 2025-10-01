@@ -52,26 +52,27 @@ public class Screen_Map : MonoBehaviour
         MapLines = new();
 
         // Spawn map points
+        MapPoint PlayerPoint = CO.co.GetPlayerMapPoint();
         foreach (MapPoint map in CO.co.GetMapPoints())
         {
             //float Dist = (map.transform.position - CO.co.PlayerMapPoint.transform.position).magnitude;
-            if (Mathf.Abs(map.transform.position.x - CO.co.PlayerMapPoint.transform.position.x) > 30f) continue;
-            if (Mathf.Abs(map.transform.position.y - CO.co.PlayerMapPoint.transform.position.y) > 18f) continue;
-            Vector3 spawnPos = Map.transform.position + (map.transform.position - CO.co.PlayerMapPoint.transform.position) * 0.5f;
+            if (Mathf.Abs(map.transform.position.x - PlayerPoint.transform.position.x) > 30f) continue;
+            if (Mathf.Abs(map.transform.position.y - PlayerPoint.transform.position.y) > 18f) continue;
+            Vector3 spawnPos = Map.transform.position + (map.transform.position - CO.co.GetPlayerMapPoint().transform.position) * 0.5f;
             MapPointButton mpb = Instantiate(PrefabMapScreenPoint, spawnPos, Quaternion.identity, Map);
 
             mpb.SetDefaultColor(Color.gray);
-            if (map == CO.co.PlayerMapPoint)
+            if (map == PlayerPoint)
             {
                 mpb.Init(map, -1, true);
                 mpb.SetDefaultColor(Color.cyan);
             }
-            else if (CO.co.PlayerMapPoint.ConnectedPoints.Contains(map))
+            else if (PlayerPoint.ConnectedPoints.Contains(map))
             {
                 int ID = 0;
-                for (int i = 0; i < CO.co.PlayerMapPoint.ConnectedPoints.Count; i++)
+                for (int i = 0; i < PlayerPoint.ConnectedPoints.Count; i++)
                 {
-                    if (CO.co.PlayerMapPoint.ConnectedPoints[i] == map)
+                    if (PlayerPoint.ConnectedPoints[i] == map)
                     {
                         ID = i;
                         break;
@@ -116,9 +117,9 @@ public class Screen_Map : MonoBehaviour
         }
         for (int i = 0; i < ChoiceTex.Length; i++)
         {
-            if (i < CO.co.PlayerMapPoint.ConnectedPoints.Count) {
+            if (i < PlayerPoint.ConnectedPoints.Count) {
                 ChoiceButton[i].gameObject.SetActive(true);
-                ChoiceTex[i].text = CO.co.PlayerMapPoint.ConnectedPoints[i].GetName();
+                ChoiceTex[i].text = PlayerPoint.ConnectedPoints[i].GetName();
             }
             else ChoiceButton[i].gameObject.SetActive(false);
         }

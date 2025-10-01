@@ -6,7 +6,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CREW : NetworkBehaviour
+public class CREW : NetworkBehaviour, iDamageable
 {
     private Rigidbody2D Rigid;
     private Collider2D Col;
@@ -227,7 +227,7 @@ public class CREW : NetworkBehaviour
     {
         return CurGrappleCooldown.Value;
     }
-    public SPACE space { get; set; }
+    public SPACE Space { get; set; }
 
     bool hasInitialized = false;
 
@@ -277,6 +277,7 @@ public class CREW : NetworkBehaviour
         CharacterNameTag = Instantiate(CO_SPAWNER.co.PrefabGamerTag);
         CharacterNameTag.SetPlayerAndName(transform, CharacterName.Value.ToString(), new Color(CharacterNameColor.Value.x, CharacterNameColor.Value.y, CharacterNameColor.Value.z));
         //
+        StartCoroutine(PeriodicUpdates());
         if (IsServer) {
 
             Alive.Value = true;
@@ -290,16 +291,29 @@ public class CREW : NetworkBehaviour
         }
     }
 
-    public override void OnNetworkSpawn()
+    IEnumerator PeriodicUpdates()
     {
-        Init();
+        while (true)
+        {
+            CharacterNameTag.SetPlayerAndName(transform, CharacterName.Value.ToString(), new Color(CharacterNameColor.Value.x, CharacterNameColor.Value.y, CharacterNameColor.Value.z));
+            yield return new WaitForSeconds(2);
+        }
     }
-
     [Rpc(SendTo.Everyone)]
     public void RegisterPlayerOnLOCALCORpc()
     {
-        if (!IsPlayerControlled()) Debug.Log("Error: Is not player controlled");
-        else CO.co.GetLOCALCO(PlayerController.Value).SetPlayerObject(this);
+        StartCoroutine(RegisterPlayerWait());
+        /*if (!IsPlayerControlled()) Debug.Log("Error: Is not player controlled");
+        else CO.co.GetLOCALCO(PlayerController.Value).SetPlayerObject(this);*/
+    }
+
+    IEnumerator RegisterPlayerWait()
+    {
+        while (PlayerController.Value == 0)
+        {
+            yield return null;
+        }
+        CO.co.GetLOCALCO(PlayerController.Value).SetPlayerObject(this);
     }
     public void DespawnAndUnregister()
     {
@@ -405,13 +419,24 @@ public class CREW : NetworkBehaviour
         }
     }
 
+    public void AddToSpace(SPACE newSpace)
+    {
+        newSpace.AddCrew(this);
+        AddToSpaceRpc(newSpace.SpaceID.Value);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void AddToSpaceRpc(int spaceID)
+    {
+        CO.co.GetSpace(spaceID).AddCrew(this);
+    }
     public void UseGrapple(SPACE newSpace)
     {
         if (GetGrappleCooldown() > 0f) return;
-        if (space) space.RemoveCrew(this);
+        if (Space) Space.RemoveCrew(this);
         AnimationComboWeapon1 = 0;
         AnimationComboWeapon2 = 0;
-        newSpace.AddCrew(this);
+        AddToSpace(newSpace);
         CurGrappleCooldown.Value = GrappleCooldown / 0.8f + (GetATT_ARMS() * 0.1f);
         StartCoroutine(GrappleNum(newSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform));
     }
@@ -421,7 +446,7 @@ public class CREW : NetworkBehaviour
         foreach (Collider2D col in Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.1f))
         {
             WalkableTile tile = col.GetComponent<WalkableTile>();
-            if (tile && tile.Space != space)
+            if (tile && tile.Space != Space)
             {
                 UseGrapple(tile.Space);
                 return;
@@ -488,6 +513,7 @@ public class CREW : NetworkBehaviour
             AnimationComboWeapon1 = 0;
         }
         if (EquippedToolObject.ActionUse1 != TOOL.ToolActionType.MELEE_ATTACK && !canStrike) return;
+        if (GetStamina() < 2) return;
         AnimationComboWeapon2 = 0;
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations1[AnimationComboWeapon1]);
         if (!setAnimationLocally(EquippedToolObject.attackAnimations1[AnimationComboWeapon1], 3)) return;
@@ -505,6 +531,7 @@ public class CREW : NetworkBehaviour
             AnimationComboWeapon2 = 0;
         }
         if (EquippedToolObject.ActionUse2 != TOOL.ToolActionType.MELEE_ATTACK && !canStrike) return;
+        if (GetStamina() < 2) return;
         AnimationComboWeapon1 = 0;
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations2[AnimationComboWeapon2]);
         if (setAnimationLocally(EquippedToolObject.attackAnimations2[AnimationComboWeapon2],3)) return;
@@ -546,12 +573,12 @@ public class CREW : NetworkBehaviour
                 Vector3 checkHit = hitTrans.position;
                 foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.3f))
                 {
-                    CREW crew = col.GetComponent<CREW>();
-                    if (crew)
+                    iDamageable crew = col.GetComponent<iDamageable>();
+                    if (crew != null)
                     {
-                        if (crew.Faction == Faction || crew.Faction == 0) continue;
-                        if (crew.space != space) continue;
-                        if (crew.isDead()) continue;
+                        if (crew.GetFaction() == Faction) return;
+                        if (crew.Space != Space) return; 
+                        if (!crew.CanBeTargeted()) return;
                         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                         dmg *= AnimationController.CurrentStrikePower();
                         crew.TakeDamage(dmg, checkHit);
@@ -605,7 +632,7 @@ public class CREW : NetworkBehaviour
     }
     private void FixedUpdate()
     {
-        if (!IsServer) return;
+        //if (!IsServer) return;
         if (!CanFunction()) return;
         if (isLooking)
         {
@@ -637,7 +664,7 @@ public class CREW : NetworkBehaviour
         if (!UsePhysics()) return;
         if (isMoving)
         {
-            setAnimationRpc(animDefaultMove, 1);
+            if (IsServer) setAnimationRpc(animDefaultMove, 1);
             float towardsang = Mathf.Abs(AngleTowards(MoveInput));
             float towardsfactor = 1.1f - Mathf.Clamp((towardsang-70f)*0.005f,0,0.5f); //The more you look in the correct direction, the faster you move!
             transform.position += MoveInput * GetSpeed() * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
@@ -645,7 +672,7 @@ public class CREW : NetworkBehaviour
             //Rigid.MovePosition(transform.position + MoveInput * GetSpeed() * towardsfactor * CO.co.GetWorldSpeedDelta());
         } else
         {
-            setAnimationRpc(animDefaultIdle, 1);
+            if (IsServer) setAnimationRpc(animDefaultIdle, 1);
         }
     }
 
@@ -658,10 +685,11 @@ public class CREW : NetworkBehaviour
         EquipWeaponUpdateUIRpc(ID);
     }
 
-    [Rpc(SendTo.Owner)]
+    [Rpc(SendTo.ClientsAndHost)]
     public void EquipWeaponUpdateUIRpc(int ID)
     {
         //Works on Owner
+        if (LOCALCO.local.GetPlayer() != this) return;
         UI.ui.MainGameplayUI.EquipWeaponUI(ID);
     }
     public void EquipTool(CO_SPAWNER.ToolType tol)
@@ -681,6 +709,11 @@ public class CREW : NetworkBehaviour
     private void LocallyEquip(CO_SPAWNER.ToolType tol)
     {
         //Works on Client
+        if (!hasInitialized)
+        {
+            Init();
+            return;
+        }
         if (EquippedToolObject)
         {
             Destroy(EquippedToolObject.gameObject);
@@ -771,8 +804,16 @@ public class CREW : NetworkBehaviour
         EquippedWeapons[slot] = wep;
         if (IsServer)
         {
-            if (wep == null) EquipWeaponLocallyRpc(slot, "");
-            else EquipWeaponLocallyRpc(slot, wep.ItemResourceID);
+            if (wep == null)
+            {
+                EquipWeaponLocallyRpc(slot, ""); 
+                EquipTool(CO_SPAWNER.ToolType.NONE);
+            }
+            else
+            {
+                EquipWeaponLocallyRpc(slot, wep.ItemResourceID);
+                EquipTool(wep.ToolPrefab);
+            }
         }
     }
     [Rpc(SendTo.ClientsAndHost)]
@@ -880,5 +921,14 @@ public class CREW : NetworkBehaviour
         float dxf = Mathf.Cos(rot);
         float dyf = Mathf.Sin(rot);
         return new Vector3(dxf, dyf, 0);
+    }
+
+    public int GetFaction()
+    {
+        return Faction;
+    }
+    public bool CanBeTargeted()
+    {
+        return !isDead();
     }
 }

@@ -139,11 +139,11 @@ public class AI_UNIT : NetworkBehaviour
     }
     private void AttemptBoard(CREW trt)
     {
-        if (trt.space != getSpace())
+        if (trt.Space != getSpace())
         {
-            if (Dist(trt.space.GetNearestGridToPoint(transform.position)) < 25f+Unit.GetATT_COMMUNOPATHY())
+            if (Dist(trt.Space.GetNearestGridToPoint(transform.position)) < 25f+Unit.GetATT_COMMUNOPATHY())
             {
-                Unit.UseGrapple(trt.space);
+                Unit.UseGrapple(trt.Space);
             }
         }
     }
@@ -176,11 +176,11 @@ public class AI_UNIT : NetworkBehaviour
     }
     public SPACE getSpace()
     {
-        return Unit.space;
+        return Unit.Space;
     }
     public List<CREW> CrewInSpace()
     {
-        if (getSpace()) return Unit.space.CrewInSpace;
+        if (getSpace()) return Unit.Space.CrewInSpace;
         return CO.co.GetAllCrews();
     }
     public List<CREW> EnemiesInSpace()

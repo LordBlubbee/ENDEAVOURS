@@ -5,6 +5,8 @@ public class Screen_Loading : MonoBehaviour
     private void Update()
     {
         if (CO.co == null) return;
+        if (LOCALCO.local == null) return;
+        if (!CO.co.GetLOCALCO().Contains(LOCALCO.local)) return;
         if (CO.co.HasShipBeenLaunched.Value)
         {
             UI.ui.SelectScreen(UI.ui.CharacterCreationUI);

@@ -13,7 +13,20 @@ public class CO : NetworkBehaviour
     [NonSerialized] public NetworkVariable<bool> HasShipBeenLaunched = new();
     [NonSerialized] public NetworkVariable<bool> AreWeInDanger = new();
     [NonSerialized] public DRIFTER PlayerMainDrifter;
-    [NonSerialized] public MapPoint PlayerMapPoint;
+    [NonSerialized] public NetworkVariable<int> PlayerMapPointID = new();
+
+    public MapPoint GetMapPoint(int ID)
+    {
+        foreach (MapPoint point in GetMapPoints())
+        {
+            if (point.PointID.Value == ID) return point;
+        }
+        return GetMapPoints()[0];
+    }
+    public MapPoint GetPlayerMapPoint()
+    {
+        return GetMapPoint(PlayerMapPointID.Value);
+    }
 
     [NonSerialized] public int Resource_Materials;
     [NonSerialized] public int Resource_Supplies;
@@ -59,13 +72,20 @@ public class CO : NetworkBehaviour
     public ScriptableBiome CurrentBiome;
     private void Start()
     {
-        co = this;
+        co = this; 
+        StartCoroutine(PeriodicClientUpdates());
         if (IsServer)
         {
             StartCoroutine(PeriodicUpdates());
-        } else
+        }
+    }
+
+    IEnumerator PeriodicClientUpdates()
+    {
+        while (true)
         {
-            RequestPlayerMapPointRpc();
+            UpdateMapConnections();
+            yield return new WaitForSeconds(2f);
         }
     }
 
@@ -86,7 +106,7 @@ public class CO : NetworkBehaviour
                 }
                 SendPeriodicInventoryUpdate();
             }
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(5f);
         }
     }
 
@@ -135,17 +155,17 @@ public class CO : NetworkBehaviour
         if (HasVoteResult() != -1)
         {
             Debug.Log("Moving to point!");
-            MapPoint destination = PlayerMapPoint.ConnectedPoints[HasVoteResult()];
+            MapPoint destination = GetPlayerMapPoint().ConnectedPoints[HasVoteResult()];
             CO_STORY.co.SetStory(destination.AssociatedPoint.InitialDialog);
             StartCoroutine(MoveToPoint(destination));
-            PlayerMapPoint = destination;
+            PlayerMapPointID.Value = destination.PointID.Value;
             ResetMapVotes();
         }
     }
 
     IEnumerator MoveToPoint(MapPoint destination)
     {
-        Vector3 moveDirection = destination.transform.position - PlayerMapPoint.transform.position;
+        Vector3 moveDirection = destination.transform.position - GetPlayerMapPoint().transform.position;
         PlayerMainDrifter.SetLookTowards(moveDirection);
         PlayerMainDrifter.SetMoveInput(moveDirection, 1f);
         PlayerMainDrifter.SetCanReceiveInput(false);
@@ -157,7 +177,7 @@ public class CO : NetworkBehaviour
         PlayerMainDrifter.transform.position = Vector3.zero;
         PlayerMainDrifter.transform.Rotate(Vector3.forward, PlayerMainDrifter.AngleToTurnTarget());
         PlayerMainDrifter.SetMoveInput(Vector3.zero,1f);
-        UpdatePlayerMapPointRpc(destination.transform.position);
+        //UpdatePlayerMapPointRpc(destination.transform.position);
         foreach (LOCALCO local in GetLOCALCO())
         {
             local.ShipTransportFadeInRpc();
@@ -168,11 +188,12 @@ public class CO : NetworkBehaviour
         yield return new WaitForSeconds(1f);
         PlayerMainDrifter.SetCanReceiveInput(true);
     }
-
+    /*
     [Rpc(SendTo.Server)]
     private void RequestPlayerMapPointRpc()
     {
-        UpdatePlayerMapPointRpc(PlayerMapPoint.transform.position);
+        if (!GetPlayerMapPoint()) return;
+        UpdatePlayerMapPointRpc(GetPlayerMapPoint().transform.position);
     }
 
     [Rpc(SendTo.ClientsAndHost)]
@@ -193,7 +214,7 @@ public class CO : NetworkBehaviour
 
         PlayerMapPoint = nearest;
         UI.ui.MapUI.UpdateMap();
-    }
+    }*/
     private int HasVoteResult()
     {
         int num = -1;
@@ -227,10 +248,11 @@ public class CO : NetworkBehaviour
         }
     }
     [Rpc(SendTo.Server)]
-    public void VoteForMapRpc(int ID)
+    public void VoteForMapRpc(int localID, int ID)
     {
-        if (LOCALCO.local.CurrentMapVote.Value == ID) LOCALCO.local.CurrentMapVote.Value = -1;
-        else LOCALCO.local.CurrentMapVote.Value = ID;
+        LOCALCO local = GetLOCALCO(localID);
+        if (local.CurrentMapVote.Value == ID) local.CurrentMapVote.Value = -1;
+        else local.CurrentMapVote.Value = ID;
     }
     public void GenerateMap(float mapSize, int PointAmount)
     {
@@ -241,7 +263,7 @@ public class CO : NetworkBehaviour
         RegisteredMapPoints = new();
         MapPoint mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3(-mapSize, UnityEngine.Random.Range(-mapSize * 0.7f, mapSize * 0.7f)));
         //StartPoint
-        PlayerMapPoint = mapPoint;
+        PlayerMapPointID.Value = 0;
         RegisterMapPoint(mapPoint);
         int Tries = 50;
 
@@ -259,10 +281,31 @@ public class CO : NetworkBehaviour
                 Tries--;
             }
         }
+        Debug.Log("Generating map");
+        int ID = 0;
         foreach (MapPoint map in GetMapPoints())
         {
             map.ConnectedPoints = GetConnectedPoints(map.transform.position, map);
-            map.Init(CurrentBiome.PossiblePointsRandom[UnityEngine.Random.Range(0,CurrentBiome.PossiblePointsRandom.Count)]);
+            map.Init(CurrentBiome.PossiblePointsRandom[UnityEngine.Random.Range(0, CurrentBiome.PossiblePointsRandom.Count)], ID);
+            ID++;
+        }
+        foreach (MapPoint map in GetMapPoints())
+        {
+            foreach (MapPoint map2 in map.ConnectedPoints)
+            {
+                if (!map2.ConnectedPoints.Contains(map))
+                {
+                    map2.ConnectedPoints.Add(map);
+                }
+            }
+        }
+    }
+
+    private void UpdateMapConnections()
+    {
+        foreach (MapPoint map in GetMapPoints())
+        {
+            map.ConnectedPoints = GetConnectedPoints(map.transform.position, map);
         }
         foreach (MapPoint map in GetMapPoints())
         {
@@ -356,6 +399,7 @@ public class CO : NetworkBehaviour
     }
     public void RegisterLOCALCO(LOCALCO loc)
     {
+        if (RegisteredLOCALCO.Contains(loc)) return;
         RegisteredLOCALCO.Add(loc);
         if (IsServer)
         {
@@ -406,19 +450,33 @@ public class CO : NetworkBehaviour
     }
 
     List<SPACE> RegisteredSPACES = new();
+    int SpaceID = 0;
     public List<SPACE> GetAllSpaces()
     {
         //Server Only
         return RegisteredSPACES;
     }
-    public void RegisterSpace(SPACE space)
+    public SPACE GetSpace(int ID)
     {
-        if (RegisteredSPACES.Contains(space)) return;
-        RegisteredSPACES.Add(space);
+        foreach (SPACE space in GetAllSpaces())
+        {
+            if (space.SpaceID.Value == ID) return space;
+        }
+        return null;
     }
-    public void UnregisterSpace(SPACE space)
+    public void RegisterSpace(SPACE Space)
     {
-        RegisteredSPACES.Remove(space);
+        if (RegisteredSPACES.Contains(Space)) return;
+        RegisteredSPACES.Add(Space);
+        if (IsServer)
+        {
+            SpaceID++;
+            Space.SpaceID.Value = SpaceID;
+        }
+    }
+    public void UnregisterSpace(SPACE Space)
+    {
+        RegisteredSPACES.Remove(Space);
     }
 
     [Rpc(SendTo.ClientsAndHost)]

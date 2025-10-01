@@ -24,7 +24,6 @@ public class Screen_Talk : MonoBehaviour
         {
             CO_STORY.co.ShouldUpdate = false; 
             CurrentPage = 0;
-            LOCALCO.local.CurrentDialogVote.Value = -1;
             UpdateData();
         }
         for (int i = 0; i < ChoiceTex.Length; i++)

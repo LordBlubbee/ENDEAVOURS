@@ -19,6 +19,7 @@ public class TOOL : MonoBehaviour
     {
         MELEE_ATTACK,
         RANGED_ATTACK,
-        BLOCK
+        BLOCK,
+        REPAIR
     }
 }

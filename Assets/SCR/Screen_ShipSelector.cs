@@ -26,6 +26,13 @@ public class Screen_ShipSelector : MonoBehaviour
             Instantiate(SpawnShipButton, ShipList).Init(ship);
         }
     }
+    private void Update()
+    {
+        if (CO.co.HasShipBeenLaunched.Value)
+        {
+            UI.ui.SelectScreen(UI.ui.CharacterCreationUI);
+        }
+    }
     public void PressShipButton(SpawnableShip ship)
     {
         SelectedShip = ship;

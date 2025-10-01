@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Unity.Collections;
 using Unity.Netcode;
+using Unity.VisualScripting;
 
 public class CO_STORY : NetworkBehaviour
 {
@@ -140,6 +141,10 @@ public class CO_STORY : NetworkBehaviour
         CommsActive.Value = false;
         SetCurrentChoices(new());
         SetMainStoryText(new());
+        foreach (LOCALCO local in CO.co.GetLOCALCO())
+        {
+            local.CurrentDialogVote.Value = -1;
+        }
         ForceUpdateRpc();
     }
 
@@ -160,7 +165,11 @@ public class CO_STORY : NetworkBehaviour
             DialogPart showChoice = line.ChoiceText;
             StoryList.Add(ReturnDialogPart(showChoice));
         }
-        SetCurrentChoices(StoryList);
+        SetCurrentChoices(StoryList); 
+        foreach (LOCALCO local in CO.co.GetLOCALCO())
+        {
+            local.CurrentDialogVote.Value = -1;
+        }
         ForceUpdateRpc();
     }
     string ReturnDialogPart(DialogPart showChoice)
@@ -176,11 +185,12 @@ public class CO_STORY : NetworkBehaviour
     }
 
     [Rpc(SendTo.Server)]
-    public void SubmitClientChoiceRpc(int choiceIndex)
+    public void SubmitClientChoiceRpc(int localID, int choiceIndex)
     {
         //Client only
-        if (LOCALCO.local.CurrentDialogVote.Value == choiceIndex) LOCALCO.local.CurrentDialogVote.Value = -1;
-        else LOCALCO.local.CurrentDialogVote.Value = choiceIndex;
+        LOCALCO local = CO.co.GetLOCALCO(localID);
+        if (local.CurrentDialogVote.Value == choiceIndex) local.CurrentDialogVote.Value = -1;
+        else local.CurrentDialogVote.Value = choiceIndex;
     }
 
     [Rpc(SendTo.ClientsAndHost)]
@@ -199,9 +209,15 @@ public class CO_STORY : NetworkBehaviour
             {
                 local.CurrentDialogVote.Value = -1;
             }
-            SetNextStory(result);
-            PerformEvent(CurrentDialog.TriggerEvent);
-            SetStoryEnd();
+            if (CurrentDialog.TriggerEvent != null)
+            {
+                PerformEvent(CurrentDialog.TriggerEvent);
+                SetStoryEnd();
+            } else
+            {
+                SetNextStory(result);
+            }
+           
         }
     }
 

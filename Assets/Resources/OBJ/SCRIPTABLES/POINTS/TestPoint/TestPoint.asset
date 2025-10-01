@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6713958396d342478460fae2111cc58, type: 3}
   m_Name: TestPoint
   m_EditorClassIdentifier: 
+  ResourceLink: OBJ/SCRIPTABLES/POINTS/TestPoint/TestPoint
   InitialSoundtrack: {fileID: 0}
   CombatSoundtrack: {fileID: 0}
   InitialMapData: 

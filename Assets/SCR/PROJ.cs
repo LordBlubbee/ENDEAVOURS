@@ -57,11 +57,21 @@ public class PROJ : NetworkBehaviour
 
     private void PotentialHitTarget(Collider2D collision)
     {
-        CREW crew = collision.GetComponent<CREW>();
+        iDamageable crew = collision.GetComponent<iDamageable>();
+        if (crew != null)
+        {
+            if (crew.GetFaction() == Faction) return;
+            if (crew.Space != Space) return;
+            if (!crew.CanBeTargeted()) return;
+            crew.TakeDamage(AttackDamage, transform.position);
+            BulletImpact();
+            return;
+        }
+        /*CREW crew = collision.GetComponent<CREW>();
         if (crew != null)
         {
             if (crew.Faction == Faction) return;
-            if (crew.space != Space) return;
+            if (crew.Space != Space) return;
             crew.TakeDamage(AttackDamage, transform.position);
             BulletImpact();
             return;
@@ -77,7 +87,7 @@ public class PROJ : NetworkBehaviour
                 BulletImpact();
                 return;
             }
-        }
+        }*/
     }
 
     private void BulletImpact()

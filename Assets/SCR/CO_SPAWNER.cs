@@ -26,6 +26,12 @@ public class CO_SPAWNER : NetworkBehaviour
     {
         co = this;
 
+    }
+
+    private void Awake()
+    {
+        co = this;
+
         int i = 0;
         foreach (ToolType type in Enum.GetValues(typeof(ToolType)))
         {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class DRIFTER : NetworkBehaviour
+public class DRIFTER : NetworkBehaviour, iDamageable
 {
     [Header("REFERENCES")]
     public SPACE Interior;
@@ -55,6 +55,8 @@ public class DRIFTER : NetworkBehaviour
     float PilotingEfficiency = 1f;
     private Vector3 MoveInput;
     private Vector3 LookTowards = new Vector3(1,0);
+
+    public SPACE Space { get; set; }
 
     [Rpc(SendTo.Server)]
     public void SetMoveInputRpc(Vector3 mov, float eff)
@@ -194,8 +196,16 @@ public class DRIFTER : NetworkBehaviour
         {
             if ((nearest.transform.position-ImpactArea).magnitude < nearest.HitboxRadius)
             {
-                nearest.TakeDamage(fl);
+                nearest.TakeDamage(fl, ImpactArea);
             }
         }
+    }
+    public int GetFaction()
+    {
+        return Faction;
+    }
+    public bool CanBeTargeted()
+    {
+        return true;
     }
 }

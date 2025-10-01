@@ -33,6 +33,6 @@ public class MapPointButton : MonoBehaviour
     }
     public void Pressed()
     {
-        CO.co.VoteForMapRpc(DestinationID);
+        CO.co.VoteForMapRpc(LOCALCO.local.PlayerID.Value, DestinationID);
     }
 }

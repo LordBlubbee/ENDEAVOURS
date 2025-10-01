@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
   m_Name: TestDialog
   m_EditorClassIdentifier: 
-  InitialSoundtrack: {fileID: 0}
-  InitialMapData: 
   StoryTexts:
   - BaseText: We are the EPHEMERAL EYE.
     Speaker: {fileID: 0}
@@ -25,15 +23,10 @@ MonoBehaviour:
     Speaker: {fileID: 0}
     Alternatives: []
   TriggerEvent: 
-  ChoiceTexts:
-  - BaseText: Woah woah there let's all calm down
-    Speaker: {fileID: 0}
-    Alternatives: []
-  - BaseText: What the fuck man
-    Speaker: {fileID: 0}
-    Alternatives: []
-  - BaseText: Can you just shut up
-    Speaker: {fileID: 0}
-    Alternatives: []
-  ChoicePathDialogs: []
-  AlternativeDialogs: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: '[Close Dialog]'
+      Speaker: {fileID: 0}
+      Alternatives: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []

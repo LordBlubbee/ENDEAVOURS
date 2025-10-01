@@ -1,4 +1,5 @@
 using NUnit;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -63,7 +64,19 @@ public class Screen_GameUI : MonoBehaviour
 
     private void OnEnable()
     {
+        StartCoroutine(RefreshWeaponUINum());
+    }
+
+    IEnumerator RefreshWeaponUINum()
+    {
         RefreshWeaponUI();
+        yield return new WaitForSeconds(0.1f);
+        RefreshWeaponUI();
+        while (true)
+        {
+            RefreshWeaponUI();
+            yield return new WaitForSeconds(2f);
+        }
     }
     public void OpenMissionScreen()
     {
