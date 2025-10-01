@@ -8,6 +8,7 @@ public class UI : MonoBehaviour
     public static UI ui;
     public GameObject CurrentlySelectedScreen;
     public GameObject CharacterCreationUI;
+    public GameObject LoadingStartGameUI;
     public Screen_GameUI MainGameplayUI;
     public Screen_ShipSelector ShipSelectionUI;
     public Screen_Inventory InventoryUI;

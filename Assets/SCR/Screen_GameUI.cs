@@ -77,9 +77,12 @@ public class Screen_GameUI : MonoBehaviour
             InventoryWeaponSlots[i].SetEquipState(ID == i ? InventorySlot.EquipStates.SUCCESS : InventorySlot.EquipStates.NONE);
         }
     }
-
     public void RefreshWeaponUI()
     {
+        if (!LOCALCO.local.GetPlayer())
+        {
+            return;
+        }
         for (int i = 0; i < InventoryWeaponSlots.Length; i++)
         {
             InventoryWeaponSlots[i].SetInventoryItem(LOCALCO.local.GetPlayer().EquippedWeapons[i]);
