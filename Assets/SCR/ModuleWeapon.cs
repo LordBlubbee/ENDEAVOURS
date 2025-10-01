@@ -45,6 +45,12 @@ public class ModuleWeapon : Module
 
         Platform.transform.SetParent(transform.parent);
     }
+
+    private void Update()
+    {
+        if (!IsServer) return;
+        if (isUsing) Fire(ShootTowards);
+    }
     private void FixedUpdate()
     {
         if (!IsServer) return;
@@ -76,12 +82,6 @@ public class ModuleWeapon : Module
                 isLooking = false;
             }
         }
-    }
-
-    [Rpc(SendTo.Server)]
-    public void FireRpc(Vector3 mouse)
-    {
-        Fire(mouse);
     }
     private void Fire(Vector3 mouse)
     {
@@ -139,5 +139,21 @@ public class ModuleWeapon : Module
         float dxf = Mathf.Cos(rot);
         float dyf = Mathf.Sin(rot);
         return new Vector3(dxf, dyf, 0);
+    }
+
+    private Vector3 ShootTowards = Vector3.zero;
+    private bool isUsing = false;
+
+    [Rpc(SendTo.Server)]
+    public void UseRpc(Vector3 vec)
+    {
+        isUsing = true;
+        ShootTowards = vec;
+    }
+
+    [Rpc(SendTo.Server)]
+    public void StopRpc()
+    {
+        isUsing = false;
     }
 }

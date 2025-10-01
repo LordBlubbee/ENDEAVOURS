@@ -227,7 +227,9 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         return CurGrappleCooldown.Value;
     }
-    public SPACE Space { get; set; }
+    
+    [NonSerialized] public NetworkVariable<int> SpaceID = new();
+    public SPACE Space { get { return CO.co.GetSpace(SpaceID.Value); } set { } }
 
     bool hasInitialized = false;
 

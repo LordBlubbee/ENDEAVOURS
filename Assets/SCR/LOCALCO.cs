@@ -80,8 +80,8 @@ public class LOCALCO : NetworkBehaviour
                     GetPlayer().SetLookTowards(Mouse);
                     if (Input.GetKeyDown(KeyCode.LeftShift)) GetPlayer().DashRpc();
                     if (Input.GetMouseButtonDown(0)) GetPlayer().UseItem1Rpc();
-                    if (Input.GetMouseButtonDown(1)) GetPlayer().UseItem2Rpc();
                     if (Input.GetMouseButtonUp(0)) GetPlayer().StopItem1Rpc();
+                    if (Input.GetMouseButtonDown(1)) GetPlayer().UseItem2Rpc();
                     if (Input.GetMouseButtonUp(1)) GetPlayer().StopItem2Rpc();
                     UI.ui.MainGameplayUI.InventoryGrappleSlot.SetEquipState(InventorySlot.EquipStates.NONE);
                     /*if (Player.Space.isCurrentGridBoardable(Player.transform.position))
@@ -135,7 +135,8 @@ public class LOCALCO : NetworkBehaviour
                     if (!IsServer) GetPlayer().SetMoveInputRpc(Vector3.zero);
                     if (!IsServer) UsingWeapon.SetLookTowardsRpc(Mouse);
                     UsingWeapon.SetLookTowards(Mouse);
-                    if (Input.GetMouseButtonDown(0)) UsingWeapon.FireRpc(Mouse);
+                    if (Input.GetMouseButtonDown(0)) UsingWeapon.UseRpc(Mouse);
+                    if (Input.GetMouseButtonUp(0)) UsingWeapon.StopRpc();
                     break;
             }
         }
@@ -219,9 +220,10 @@ public class LOCALCO : NetworkBehaviour
         float Timer = 0f;
         //Collider2D[] ColliderList = null;
         Module mod = null;
+        Debug.Log("Starting CheckInteraction");
         while (true)
         {
-            UI.ui.MainGameplayUI.SetInteractTex("", Color.white);
+            UI.ui.MainGameplayUI.SetInteractTex("", Color.white); Debug.Log(Player.Space);
             if (CurrentControlMode == ControlModes.PLAYER && Player.Space != null)
             {
                 Timer -= CO.co.GetWorldSpeedDelta();
@@ -318,6 +320,15 @@ public class LOCALCO : NetworkBehaviour
                 }
             } else if (Input.GetKeyDown(KeyCode.F) || LeftModule())
             {
+                if (CurrentInteractionModule)
+                {
+                    switch (CurrentInteractionModule.ModuleType)
+                    {
+                        case Module.ModuleTypes.WEAPON:
+                            UsingWeapon.StopRpc();
+                            break;
+                    }
+                }
                 CurrentInteractionModule = null;
                 SetCameraToPlayer();
             }

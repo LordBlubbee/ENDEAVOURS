@@ -159,6 +159,7 @@ public class SPACE : NetworkBehaviour
         if (CrewInSpace.Contains(crew)) return;
         CrewInSpace.Add(crew);
         crew.Space = this;
+        crew.SpaceID.Value = SpaceID.Value;
         crew.transform.SetParent(transform);
         crew.transform.localPosition = new Vector3(crew.transform.localPosition.x, crew.transform.localPosition.y, -0.5f);
     }
@@ -166,6 +167,7 @@ public class SPACE : NetworkBehaviour
     {
         CrewInSpace.Remove(crew);
         crew.Space = null;
+        crew.SpaceID.Value = 0;
         crew.transform.SetParent(null);
     }
 

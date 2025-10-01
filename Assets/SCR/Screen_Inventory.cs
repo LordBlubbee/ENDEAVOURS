@@ -224,8 +224,6 @@ public class Screen_Inventory : MonoBehaviour
             UpdateEquipmentBasedOnItem(slot);
             CurrentDraggingSlot.SetInventoryItem(slotSwap);
             UpdateEquipmentBasedOnItem(CurrentDraggingSlot);
-            Debug.Log(slot.GetEquippedItem());
-            Debug.Log(CurrentDraggingSlot.GetEquippedItem());
             CO.co.RequestPeriodicInventoryUpdateRpc();
         }
         StopHoldingItem();

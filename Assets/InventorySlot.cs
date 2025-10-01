@@ -25,7 +25,20 @@ public class InventorySlot : MonoBehaviour
         EquipItem = equippable;
         if (equippable) InnerIconImage.sprite = equippable.ItemIcon;
         else InnerIconImage.sprite = null;
-        SetEquipState(DefaultEquipState);
+        if (DefaultEquipState == EquipStates.INVENTORY_SWITCH)
+        {
+            if (equippable is ScriptableEquippableArtifact)
+            {
+                if (((ScriptableEquippableArtifact)equippable).EquipType == ScriptableEquippableArtifact.EquipTypes.ARMOR) SetEquipState(EquipStates.INVENTORY_ARMOR);
+                else SetEquipState(EquipStates.INVENTORY_ARTIFACT);
+            }
+            else if (equippable is ScriptableEquippableWeapon)
+            {
+                SetEquipState(EquipStates.INVENTORY_WEAPON);
+            }
+            else SetEquipState(DefaultEquipState);
+        }
+        else SetEquipState(DefaultEquipState);
     }
 
     public enum EquipStates
@@ -36,7 +49,8 @@ public class InventorySlot : MonoBehaviour
         INVENTORY_WEAPON,
         INVENTORY_ARTIFACT,
         INVENTORY_ARMOR,
-        INVENTORY_MODULE
+        INVENTORY_MODULE,
+        INVENTORY_SWITCH
     }
     public void SetEquipState(EquipStates bol)
     {
@@ -62,6 +76,9 @@ public class InventorySlot : MonoBehaviour
                 break;
             case EquipStates.INVENTORY_MODULE:
                 ImageBorder.color = new Color(0.7f, 0.7f, 0.2f);
+                break;
+            case EquipStates.INVENTORY_SWITCH:
+                ImageBorder.color = Color.black;
                 break;
         }
     }
