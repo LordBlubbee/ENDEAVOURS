@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7d2335f3512b5444ca5d33e27754e95e
+guid: 6dcc73ea065e8b649a99b9affad328eb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5372845963467657672
-    second: RoomTile_0
+      213: 4179829319953415928
+    second: Logipes1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -98,7 +98,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: Android
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RoomTile_0
+      name: Logipes1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 610
-        height: 610
+        x: 5
+        y: 1
+        width: 11
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 83e6e921011df65b0800000000000000
-      internalID: -5372845963467657672
+      spriteID: 8fef59dee9cb10a30800000000000000
+      internalID: 4179829319953415928
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      RoomTile_0: -5372845963467657672
+      Logipes1_0: 4179829319953415928
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

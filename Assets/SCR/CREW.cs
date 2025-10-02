@@ -207,7 +207,7 @@ public class CREW : NetworkBehaviour, iDamageable
 
     private GamerTag CharacterNameTag;
 
-    protected TOOL EquippedToolObject;
+    public TOOL EquippedToolObject { protected set; get; }
 
     private NetworkVariable<float> CurHealth = new();
     private NetworkVariable<float> CurStamina = new();
