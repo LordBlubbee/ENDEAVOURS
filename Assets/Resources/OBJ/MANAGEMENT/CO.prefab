@@ -87,10 +87,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  ToolPrefabInstances:
-  - {fileID: 0}
-  - {fileID: 8311341897716400573, guid: 8df09dd9598f1c249adae05d82cffc4e, type: 3}
   PrefabGamerTag: {fileID: 7664399197578832526, guid: 13763fc837ffb9840b9462900a539937, type: 3}
+  DefaultInventorySprite: {fileID: 2347656569888133005, guid: f23f2b3fa89b0774e9b2ad1ceda60890, type: 3}
+  PrefabWrenchLogipedes: {fileID: 8311341897716400573, guid: 2c40e2d5cca7e6244b812f2d75dce46b, type: 3}
+  PrefabGrappleLogipedes: {fileID: 8311341897716400573, guid: 8df09dd9598f1c249adae05d82cffc4e, type: 3}
   PrefabDMG: {fileID: 7984331047920370264, guid: d7c770080f1bbd74896728c8e86423ca, type: 3}
   PrefabMapPoint: {fileID: 3321087299976624134, guid: dc2158057d660e74e8c4d97661c8c919, type: 3}
   PrefabLooncrab: {fileID: 5867427934140877094, guid: 86f046a72cbd10a4eb1d9f606f946a03, type: 3}

@@ -89,6 +89,8 @@ public class Screen_GameUI : MonoBehaviour
         {
             InventoryWeaponSlots[i].SetEquipState(ID == i ? InventorySlot.EquipStates.SUCCESS : InventorySlot.EquipStates.NONE);
         }
+        InventoryGrappleSlot.SetEquipState(ID == -1 ? InventorySlot.EquipStates.SUCCESS : InventorySlot.EquipStates.NONE);
+        InventoryToolsSlot.SetEquipState(ID == -2 ? InventorySlot.EquipStates.SUCCESS : InventorySlot.EquipStates.NONE);
     }
     public void RefreshWeaponUI()
     {

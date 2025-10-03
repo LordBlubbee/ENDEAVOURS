@@ -44,6 +44,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public NetworkVariable<int> ATT_GUNNERY = new NetworkVariable<int>(2); //Buffs usage of large heavy weapons
     public NetworkVariable<int> ATT_MEDICAL = new NetworkVariable<int>(2); //Buffs healing abilities (+regeneration)
     [NonSerialized] public ScriptableBackground CharacterBackground;
+    public CO_SPAWNER.DefaultEquipmentSet DefaultToolset;
     public ScriptableEquippableWeapon[] EquippedWeapons = new ScriptableEquippableWeapon[3];
     public ScriptableEquippableArtifact EquippedArmor = null;
     public ScriptableEquippableArtifact[] EquippedArtifacts = new ScriptableEquippableArtifact[3];
@@ -196,12 +197,6 @@ public class CREW : NetworkBehaviour, iDamageable
     }
 
 
-    [Header("ITEMS")]
-    public CO_SPAWNER.ToolType StartingTool;
-
-    [NonSerialized] public NetworkVariable<CO_SPAWNER.ToolType> EquippedTool = new NetworkVariable<CO_SPAWNER.ToolType>(
-        CO_SPAWNER.ToolType.NONE, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-
     [NonSerialized] public NetworkVariable<FixedString64Bytes> CharacterName = new();
     [NonSerialized] public NetworkVariable<Vector3> CharacterNameColor = new();
 
@@ -285,11 +280,6 @@ public class CREW : NetworkBehaviour, iDamageable
             Alive.Value = true;
             CurHealth.Value = GetMaxHealth();
             CurStamina.Value = 100;
-
-            EquipTool(StartingTool);
-        } else
-        {
-            LocallyEquip(EquippedTool.Value);
         }
     }
 
@@ -379,6 +369,12 @@ public class CREW : NetworkBehaviour, iDamageable
     public void UseGrappleRpc(Vector3 trt)
     {
         UseGrapple(trt);
+    }
+    [Rpc(SendTo.Server)]
+    public void EquipWrenchRpc()
+    {
+        EquipTool(CO_SPAWNER.co.GetPrefabWrench(DefaultToolset), -2);
+        EquipWeaponUpdateUIRpc(-2);
     }
     [Rpc(SendTo.Server)]
     public void EquipWeapon1Rpc()
@@ -682,8 +678,8 @@ public class CREW : NetworkBehaviour, iDamageable
     public void EquipWeaponPrefab(int ID)
     {
         //Works on Server
-        if (EquippedWeapons[ID]) EquipTool(EquippedWeapons[ID].ToolPrefab);
-        else EquipTool(CO_SPAWNER.ToolType.NONE);
+        if (EquippedWeapons[ID]) EquipTool(EquippedWeapons[ID].ToolPrefab, ID);
+        else EquipTool(null, ID);
         EquipWeaponUpdateUIRpc(ID);
     }
 
@@ -694,21 +690,31 @@ public class CREW : NetworkBehaviour, iDamageable
         if (LOCALCO.local.GetPlayer() != this) return;
         UI.ui.MainGameplayUI.EquipWeaponUI(ID);
     }
-    public void EquipTool(CO_SPAWNER.ToolType tol)
+    public void EquipTool(TOOL tol, int ID)
     {
         //Works on Server
-        EquippedTool.Value = tol;
-
-        EquipToolLocallyRpc(tol); //Send to Clients
+        EquipToolLocallyRpc(ID); //Send to Clients
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    public void EquipToolLocallyRpc(CO_SPAWNER.ToolType tol)
+    public void EquipToolLocallyRpc(int ID)
     {
-        LocallyEquip(tol);
+        switch (ID)
+        {
+            default:
+                if (EquippedWeapons[ID]) LocallyEquip(EquippedWeapons[ID].ToolPrefab);
+                else LocallyEquip(null);
+                break;
+            case -1:
+                LocallyEquip(CO_SPAWNER.co.GetPrefabGrapple(DefaultToolset));
+                break;
+            case -2:
+                LocallyEquip(CO_SPAWNER.co.GetPrefabWrench(DefaultToolset));
+                break;
+        }
     }
 
-    private void LocallyEquip(CO_SPAWNER.ToolType tol)
+    private void LocallyEquip(TOOL tol)
     {
         //Works on Client
         if (!hasInitialized)
@@ -720,12 +726,12 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             Destroy(EquippedToolObject.gameObject);
         }
-        if (tol == CO_SPAWNER.ToolType.NONE)
+        if (tol == null)
         {
             EquippedToolObject = null;
             return;
         }
-        EquippedToolObject = Instantiate(CO_SPAWNER.co.ToolPrefabs[tol], transform);
+        EquippedToolObject = Instantiate(tol, transform);
         EquippedToolObject.transform.localPosition = new Vector3(EquippedToolObject.localX, EquippedToolObject.localY, -0.0002f);
         EquippedToolObject.transform.Rotate(Vector3.forward, EquippedToolObject.localRot);
         AnimTransforms[1].setTransform(EquippedToolObject.transform);
@@ -803,18 +809,19 @@ public class CREW : NetworkBehaviour, iDamageable
 
     public void EquipWeapon(int slot, ScriptableEquippableWeapon wep)
     {
+        if (EquippedWeapons[slot] == wep) return;
         EquippedWeapons[slot] = wep;
         if (IsServer)
         {
             if (wep == null)
             {
                 EquipWeaponLocallyRpc(slot, ""); 
-                EquipTool(CO_SPAWNER.ToolType.NONE);
+                EquipTool(null, slot);
             }
             else
             {
                 EquipWeaponLocallyRpc(slot, wep.ItemResourceID);
-                EquipTool(wep.ToolPrefab);
+                EquipTool(wep.ToolPrefab, slot);
             }
         }
     }
@@ -833,6 +840,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public void EquipArmor(ScriptableEquippableArtifact wep)
     {
+        if (EquippedArmor == wep) return;
         EquippedArmor = wep;
         if (IsServer)
         {
@@ -856,6 +864,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public void EquipArtifact(int slot, ScriptableEquippableArtifact wep)
     {
+        if (EquippedArtifacts[slot] == wep) return;
         EquippedArtifacts[slot] = wep;
         if (IsServer)
         {

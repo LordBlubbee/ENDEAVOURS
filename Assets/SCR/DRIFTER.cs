@@ -18,8 +18,8 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     public float AccelerationSpeedMod = 0.25f;
     public float RotationBaseSpeed = 30f;
 
-    private Vector3 CurrentMovement;
-    private float CurrentRotation;
+    private NetworkVariable<Vector3> CurrentMovement = new();
+    private NetworkVariable<float> CurrentRotation = new();
 
     private NetworkVariable<float> CurHealth = new();
 
@@ -89,10 +89,22 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         return MovementSpeed;
     }
+    public float GetRelativeSpeed()
+    {
+        return GetCurrentMovement() / GetMovementSpeed();
+    }
+    public float GetRelativeRotation()
+    {
+        return Mathf.Abs(CurrentRotation.Value) / RotationBaseSpeed;
+    }
 
+    public float GetRotorSpeed()
+    {
+        return Mathf.Clamp01(GetRelativeSpeed() * 0.6f + GetRelativeRotation() * 0.6f);
+    }
     public float GetCurrentMovement()
     {
-        return CurrentMovement.magnitude;
+        return CurrentMovement.Value.magnitude;
     }
 
     public float GetMovementAccel()
@@ -112,17 +124,17 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         {
             rotGoal = -GetRotation();
         }
-        if (rotGoal > CurrentRotation)
+        if (rotGoal > CurrentRotation.Value)
         {
-            CurrentRotation += accelSpeed * CO.co.GetWorldSpeedDeltaFixed();
+            CurrentRotation.Value += accelSpeed * CO.co.GetWorldSpeedDeltaFixed();
         }
-        else if (rotGoal < CurrentRotation)
+        else if (rotGoal < CurrentRotation.Value)
         {
-            CurrentRotation -= accelSpeed * CO.co.GetWorldSpeedDeltaFixed();
+            CurrentRotation.Value -= accelSpeed * CO.co.GetWorldSpeedDeltaFixed();
         }
         float maxRot = Mathf.Min(GetRotation(), Mathf.Abs(ang)*2f);
-        CurrentRotation = Mathf.Clamp(CurrentRotation, -maxRot, maxRot);
-        transform.Rotate(Vector3.forward,CurrentRotation * CO.co.GetWorldSpeedDeltaFixed());
+        CurrentRotation.Value = Mathf.Clamp(CurrentRotation.Value, -maxRot, maxRot);
+        transform.Rotate(Vector3.forward,CurrentRotation.Value * CO.co.GetWorldSpeedDeltaFixed());
     }
 
     private void FixedUpdate()
@@ -133,19 +145,19 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 
         if (MoveInput == Vector3.zero)
         {
-            bool XPOS = CurrentMovement.x > 0;
-            bool YPOS = CurrentMovement.y > 0;
-            CurrentMovement -= CurrentMovement.normalized * GetMovementAccel() * MovementSpeed * CO.co.GetWorldSpeedDeltaFixed();
-            if (XPOS != CurrentMovement.x > 0 || YPOS != CurrentMovement.y > 0 || CurrentMovement.magnitude < 0.1f) CurrentMovement = Vector3.zero;
+            bool XPOS = CurrentMovement.Value.x > 0;
+            bool YPOS = CurrentMovement.Value.y > 0;
+            CurrentMovement.Value -= CurrentMovement.Value.normalized * GetMovementAccel() * MovementSpeed * CO.co.GetWorldSpeedDeltaFixed();
+            if (XPOS != CurrentMovement.Value.x > 0 || YPOS != CurrentMovement.Value.y > 0 || CurrentMovement.Value.magnitude < 0.1f) CurrentMovement.Value = Vector3.zero;
         } else
         {
-            CurrentMovement += MoveInput * GetMovementAccel() * MovementSpeed * CO.co.GetWorldSpeedDeltaFixed();
-            if (CurrentMovement.magnitude > MovementSpeed) CurrentMovement = CurrentMovement.normalized * MovementSpeed;
+            CurrentMovement.Value += MoveInput * GetMovementAccel() * MovementSpeed * CO.co.GetWorldSpeedDeltaFixed();
+            if (CurrentMovement.Value.magnitude > MovementSpeed) CurrentMovement.Value = CurrentMovement.Value.normalized * MovementSpeed;
         }
 
-        float towardsang = Mathf.Abs(AngleTowards(CurrentMovement));
+        float towardsang = Mathf.Abs(AngleTowards(CurrentMovement.Value));
         float towardsfactor = 1.2f - Mathf.Clamp((towardsang - 60f) * 0.006f, 0, 0.4f); //The more you look in the correct direction, the faster you move!
-        transform.position += CurrentMovement * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
+        transform.position += CurrentMovement.Value * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
         //Rigid.MovePosition(transform.position);
     }
     public float AngleToTurnTarget()

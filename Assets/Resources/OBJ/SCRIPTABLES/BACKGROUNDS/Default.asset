@@ -16,5 +16,5 @@ MonoBehaviour:
   ResourcePath: OBJ/SCRIPTABLES/BACKGROUNDS/Default
   BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   Background_ATT_BONUS: 0000000001000000000000000000000000000000010000000000000000000000
-  Background_StartingWeapon: {fileID: 11400000, guid: 8c499ecd604459b4eb098890fa5a0614, type: 2}
+  Background_StartingWeapon: {fileID: 11400000, guid: 06439ec68f11da34fbafc00241024dca, type: 2}
   Background_ReputationEffect: []

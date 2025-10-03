@@ -109,7 +109,7 @@ public class LOCALCO : NetworkBehaviour
                             UI.ui.MainGameplayUI.InventoryGrappleSlot.SetEquipState(InventorySlot.EquipStates.FAIL);
                         }
                     }*/
-
+                    if (Input.GetKeyDown(KeyCode.H)) GetPlayer().EquipWrenchRpc();
                     if (Input.GetKeyDown(KeyCode.Alpha1)) GetPlayer().EquipWeapon1Rpc();
                     if (Input.GetKeyDown(KeyCode.Alpha2)) GetPlayer().EquipWeapon2Rpc();
                     if (Input.GetKeyDown(KeyCode.Alpha3)) GetPlayer().EquipWeapon3Rpc();

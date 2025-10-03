@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,6 +7,8 @@ public class Screen_Map : MonoBehaviour
 {
     public MapPointButton PrefabMapScreenPoint;
     public Image PrefabLineRenderer; // Add this in the inspector
+    public Transform Anchor1;
+    public Transform Anchor2;
     private List<MapPointButton> MapScreenPoints = new();
     private List<Image> MapLines = new(); // Track created lines
     public Transform Map; 
@@ -19,6 +20,10 @@ public class Screen_Map : MonoBehaviour
     {
         // Clean up old points and lines
         UpdateMap();
+    }
+    private float GetStandardDistanceUnit()
+    {
+        return Anchor2.position.y - Anchor1.position.y;
     }
 
     private void Update()
@@ -58,7 +63,7 @@ public class Screen_Map : MonoBehaviour
             //float Dist = (map.transform.position - CO.co.PlayerMapPoint.transform.position).magnitude;
             if (Mathf.Abs(map.transform.position.x - PlayerPoint.transform.position.x) > 30f) continue;
             if (Mathf.Abs(map.transform.position.y - PlayerPoint.transform.position.y) > 18f) continue;
-            Vector3 spawnPos = Map.transform.position + (map.transform.position - CO.co.GetPlayerMapPoint().transform.position) * 0.5f;
+            Vector3 spawnPos = Anchor1.position + (map.transform.position - CO.co.GetPlayerMapPoint().transform.position) * GetStandardDistanceUnit();
             MapPointButton mpb = Instantiate(PrefabMapScreenPoint, spawnPos, Quaternion.identity, Map);
 
             mpb.SetDefaultColor(Color.gray);

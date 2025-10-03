@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -6,10 +7,12 @@ public class PROJ : NetworkBehaviour
     public float ProjectileSpeed;
     public float InaccuracyDegrees;
     public float ProjectileDistance;
+    public bool StickToWalls;
 
     [Header("ALTITUDE")]
     public float AltitudeInacurracyFactor;
 
+    private bool isActive = false;
     private bool UseAltitude;
     SPACE Space;
     float AttackDamage;
@@ -33,6 +36,7 @@ public class PROJ : NetworkBehaviour
     private void FixedUpdate()
     {
         if (!IsServer) return;
+        if (!isActive) return;
         float step = ProjectileSpeed * CO.co.GetWorldSpeedDeltaFixed();
         transform.position += step * getLookVector();
         if (UseAltitude)
@@ -57,6 +61,8 @@ public class PROJ : NetworkBehaviour
 
     private void PotentialHitTarget(Collider2D collision)
     {
+        if (!IsServer) return;
+        if (!isActive) return;
         iDamageable crew = collision.GetComponent<iDamageable>();
         if (crew != null)
         {
@@ -65,6 +71,19 @@ public class PROJ : NetworkBehaviour
             if (!crew.CanBeTargeted()) return;
             crew.TakeDamage(AttackDamage, transform.position);
             BulletImpact();
+            return;
+        }
+        if (Space != null)
+        {
+            if (StickToWalls)
+            {
+                isActive = false;
+                transform.SetParent(collision.transform);
+                ExpireSlowlyRpc();
+            } else
+            {
+                BulletImpact();
+            }
             return;
         }
         /*CREW crew = collision.GetComponent<CREW>();
@@ -90,7 +109,22 @@ public class PROJ : NetworkBehaviour
         }*/
     }
 
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ExpireSlowlyRpc()
+    {
+        StartCoroutine(ExpireSlowlyNum());
+    }
+    IEnumerator ExpireSlowlyNum()
+    {
+        yield return new WaitForSeconds(30f);
+        if (IsServer) Kill();
+    }
     private void BulletImpact()
+    {
+        Kill();
+    }
+
+    private void Kill()
     {
         NetworkObject.Despawn();
     }

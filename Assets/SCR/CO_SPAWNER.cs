@@ -5,18 +5,40 @@ using UnityEngine;
 
 public class CO_SPAWNER : NetworkBehaviour
 {
-    [SerializeField] private List<TOOL> ToolPrefabInstances;
-    public Dictionary<ToolType, TOOL> ToolPrefabs = new();
     public GamerTag PrefabGamerTag;
+    public Sprite DefaultInventorySprite;
+    public TOOL PrefabWrenchLogipedes;
+    public TOOL PrefabGrappleLogipedes;
+    public enum DefaultEquipmentSet
+    {
+        NONE,
+        LOGIPEDES
+    }
+
+    public TOOL GetPrefabWrench(DefaultEquipmentSet set)
+    {
+        switch (set)
+        {
+            case DefaultEquipmentSet.LOGIPEDES:
+                return PrefabWrenchLogipedes;
+        }
+        return null;
+    }
+    public TOOL GetPrefabGrapple(DefaultEquipmentSet set)
+    {
+        switch (set)
+        {
+            case DefaultEquipmentSet.LOGIPEDES:
+                return PrefabGrappleLogipedes;
+        }
+        return null;
+    }
+
+
     public DMG PrefabDMG;
     public MapPoint PrefabMapPoint;
     public CREW PrefabLooncrab;
     public AI_GROUP PrefabAIGROUP;
-    public enum ToolType
-    {
-        NONE,
-        SPEAR
-    }
 
     public CREW PlayerPrefab;
     //This one saves all the prefabs!
@@ -33,11 +55,6 @@ public class CO_SPAWNER : NetworkBehaviour
         co = this;
 
         int i = 0;
-        foreach (ToolType type in Enum.GetValues(typeof(ToolType)))
-        {
-            ToolPrefabs.Add(type, ToolPrefabInstances[i]);
-            i++;
-        }
     }
 
     [Rpc(SendTo.Server)]

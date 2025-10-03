@@ -22,9 +22,10 @@ public class InventorySlot : MonoBehaviour
     }
     public void SetInventoryItem(ScriptableEquippable equippable)
     {
+        if (EquipItem == equippable) return;
         EquipItem = equippable;
         if (equippable) InnerIconImage.sprite = equippable.ItemIcon;
-        else InnerIconImage.sprite = null;
+        else InnerIconImage.sprite = CO_SPAWNER.co.DefaultInventorySprite;
         if (DefaultEquipState == EquipStates.INVENTORY_SWITCH)
         {
             if (equippable is ScriptableEquippableArtifact)

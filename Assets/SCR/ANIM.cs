@@ -152,10 +152,10 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
         MI_MOVE,
         MI_DASH,
 
-        ATTACK_SPEAR1,
-        ATTACK_SPEAR2,
-        ATTACK_SPEAR3,
-        ATTACK_SPEAR4,
+        ATTACK_HALBERD1,
+        ATTACK_HALBERD2,
+        ATTACK_HALBERD3,
+        ATTACK_HALBERD4,
         ATTACK_BOW1,
         ATTACK_BOW2,
         ATTACK_BOW3,
@@ -232,7 +232,7 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame.addMovement(new Vector3(-0.02f, -0.02f), new Vector3(-0.03f, -0.03f)); //Tool Left
                 Frames.Add(curFrame);
                 break;
-            case AnimationState.ATTACK_SPEAR1:
+            case AnimationState.ATTACK_HALBERD1:
                 Priority = 3;
                 curFrame = new AnimFrame(1, 0.1f);
                 curFrame.moveForward = 6f;
@@ -266,7 +266,7 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame.addMovement(new Vector3(0, 0)); //Tool Left
                 Frames.Add(curFrame);*/
                 break;
-            case AnimationState.ATTACK_SPEAR2:
+            case AnimationState.ATTACK_HALBERD2:
                 Priority = 3;
                 curFrame = new AnimFrame(1, 0.1f);
                 curFrame.moveForward = 3f;
@@ -298,7 +298,7 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame.addMovement(new Vector3(0, 0)); //Tool Left
                 Frames.Add(curFrame);*/
                 break;
-            case AnimationState.ATTACK_SPEAR3:
+            case AnimationState.ATTACK_HALBERD3:
                 Priority = 3;
                 curFrame = new AnimFrame(1, 0.05f);
                 curFrame.moveForward = -3f;
@@ -330,7 +330,7 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame.addMovement(new Vector3(0, 0)); //Tool Left
                 Frames.Add(curFrame); */
                 break;
-            case AnimationState.ATTACK_SPEAR4:
+            case AnimationState.ATTACK_HALBERD4:
                 Priority = 3;
                 curFrame = new AnimFrame(1, 0.1f);
                 curFrame.moveForward = -4f;
