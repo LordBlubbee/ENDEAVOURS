@@ -156,9 +156,9 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
         ATTACK_HALBERD2,
         ATTACK_HALBERD3,
         ATTACK_HALBERD4,
-        ATTACK_BOW1,
-        ATTACK_BOW2,
-        ATTACK_BOW3,
+        ATTACK_CROSSBOW1,
+        ATTACK_CROSSBOW2,
+        ATTACK_CROSSBOW3,
 
         ATTACK_AXE1,
         ATTACK_AXE2,
@@ -237,24 +237,24 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame = new AnimFrame(1, 0.1f);
                 curFrame.moveForward = 6f;
                 curFrame.AnimationMoveFactor = 0.6f;
-                curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0)); //Body
-                curFrame.addMovement(new Vector3(-0.15f, 0), 7); //Tool Right
+                curFrame.addMovement(new Vector3(-0.1f, -0.1f), -40); //Body
+                curFrame.addMovement(new Vector3(-1.8f, -2.6f), 72); //Tool Right
                 curFrame.addMovement(new Vector3(-0.03f, -0.05f),-15); //Tool Left
                 Frames.Add(curFrame);
                 curFrame = new AnimFrame(2, 0.1f);
                 curFrame.moveForward = 6f;
                 curFrame.AnimationMoveFactor = 0.6f; //STRIKE forward
-                curFrame.isStriking = 1.1f;
-                curFrame.addMovement(new Vector3(0.3f, 0), new Vector3(0.05f, 0.05f),8); //Body
-                curFrame.addMovement(new Vector3(3.2f, 0.1f),-4); //Tool Right
+                curFrame.isStriking = 0.8f;
+                curFrame.addMovement(new Vector3(0.4f, -0.1f), new Vector3(0.05f, 0.05f),-25); //Body
+                curFrame.addMovement(new Vector3(-0.6f, -2.6f),77); //Tool Right
                 curFrame.addMovement(new Vector3(0.2f, -0.05f),-14); //Tool Left
                 Frames.Add(curFrame);
                 curFrame = new AnimFrame(3, 0.1f);
                 curFrame.moveForward = 6f;
                 curFrame.AnimationMoveFactor = 0.4f;
-                curFrame.isStriking = 1.1f;
-                curFrame.addMovement(new Vector3(0.1f, 0f), new Vector3(-0.05f, -0.05f)); //Body
-                curFrame.addMovement(new Vector3(0.3f, 0.1f),8); //Tool Right
+                curFrame.isStriking = 0.8f;
+                curFrame.addMovement(new Vector3(0.1f, 0f), new Vector3(-0.05f, -0.05f),-30); //Body
+                curFrame.addMovement(new Vector3(-2f, -2.2f),57); //Tool Right
                 curFrame.addMovement(new Vector3(0.15f, 0f),-12); //Tool Left
                 Frames.Add(curFrame);
 
@@ -271,23 +271,23 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame = new AnimFrame(1, 0.1f);
                 curFrame.moveForward = 3f;
                 curFrame.AnimationMoveFactor = 0.2f;
-                curFrame.addMovement(new Vector3(-0.1f, 0.1f), new Vector3(0, 0)); //Body
-                curFrame.addMovement(new Vector3(0.2f, 1.2f), 72); //Tool Right
+                curFrame.addMovement(new Vector3(-0.1f, 0.1f), -40); //Body
+                curFrame.addMovement(new Vector3(0.45f, -0.7f), -10); //Tool Right
                 curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
                 Frames.Add(curFrame);
-                curFrame = new AnimFrame(2, 0.1f);
+                curFrame = new AnimFrame(2, 0.2f);
                 curFrame.moveForward = 3f;
                 curFrame.AnimationMoveFactor = 0.2f; //STRIKE forward
-                curFrame.addMovement(new Vector3(0.3f, 0.2f), new Vector3(0.05f, 0.05f), 8); //Body
-                curFrame.addMovement(new Vector3(0.6f, 1.5f), 69); //Tool Right
+                curFrame.isStriking = 1.25f;
+                curFrame.addMovement(new Vector3(0.3f, 0.2f), new Vector3(0.05f, 0.05f), 35); //Body
+                curFrame.addMovement(new Vector3(0.2f, -1.4f), 122); //Tool Right
                 curFrame.addMovement(new Vector3(0.2f, -0.05f), -14); //Tool Left
                 Frames.Add(curFrame);
                 curFrame = new AnimFrame(3, 0.1f);
                 curFrame.moveForward = -4f;
                 curFrame.AnimationMoveFactor = 0.3f;
-                curFrame.isStriking = 0.9f;
-                curFrame.addMovement(new Vector3(0.1f, 0.1f), new Vector3(-0.05f, -0.05f)); //Body
-                curFrame.addMovement(new Vector3(1.6f, -1.8f), -41); //Tool Right
+                curFrame.addMovement(new Vector3(0.1f, 0.1f), new Vector3(-0.05f, -0.05f),55); //Body
+                curFrame.addMovement(new Vector3(-0.8f, -1f), new Vector3(0,-2), 102); //Tool Right
                 curFrame.addMovement(new Vector3(0.15f, 0f), -12); //Tool Left
                 Frames.Add(curFrame);
                 /*curFrame = new AnimFrame(4, 0.1f);
@@ -300,26 +300,26 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 break;
             case AnimationState.ATTACK_HALBERD3:
                 Priority = 3;
-                curFrame = new AnimFrame(1, 0.05f);
+                curFrame = new AnimFrame(1, 0.15f);
                 curFrame.moveForward = -3f;
                 curFrame.AnimationMoveFactor = 0.6f;
-                curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0)); //Body
-                curFrame.addMovement(new Vector3(1.85f, -1.7f), -41); //Tool Right
+                curFrame.addMovement(new Vector3(0.2f, -0.2f), 75); //Body
+                curFrame.addMovement(new Vector3(-0.55f, -1.05f), new Vector3(0, -2), 117); //Tool Right
                 curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
                 Frames.Add(curFrame);
-                curFrame = new AnimFrame(2, 0.15f);
+                curFrame = new AnimFrame(2, 0.25f);
                 curFrame.moveForward = 1f;
                 curFrame.AnimationMoveFactor = 0.6f; //STRIKE forward
-                curFrame.addMovement(new Vector3(0.3f, 0), new Vector3(0.05f, 0.05f), 8); //Body
-                curFrame.addMovement(new Vector3(1.7f, -1.6f), -49); //Tool Right
+                curFrame.isStriking = 1.25f;
+                curFrame.addMovement(new Vector3(0f, -0.2f), new Vector3(0.05f, 0.05f), -45); //Body
+                curFrame.addMovement(new Vector3(0.12f, -1.6f), new Vector3(0, -2), -29); //Tool Right
                 curFrame.addMovement(new Vector3(0.2f, -0.05f), -14); //Tool Left
                 Frames.Add(curFrame);
                 curFrame = new AnimFrame(3, 0.2f);
                 curFrame.moveForward = 2f;
                 curFrame.AnimationMoveFactor = 0.4f;
-                curFrame.isStriking = 0.8f;
-                curFrame.addMovement(new Vector3(0.1f, 0f), new Vector3(-0.05f, -0.05f)); //Body
-                curFrame.addMovement(new Vector3(0.6f, 1.4f), 66); //Tool Right
+                curFrame.addMovement(new Vector3(0.1f, 0f), new Vector3(-0.05f, -0.05f),-62); //Body
+                curFrame.addMovement(new Vector3(-2.6f, -1.4f), 57); //Tool Right
                 curFrame.addMovement(new Vector3(0.15f, 0f), -12); //Tool Left
                 Frames.Add(curFrame);
                 /*curFrame = new AnimFrame(4, 0.1f);
@@ -335,66 +335,118 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame = new AnimFrame(1, 0.1f);
                 curFrame.moveForward = -4f;
                 curFrame.AnimationMoveFactor = 0.6f;
-                curFrame.addMovement(new Vector3(-0.4f, 0), new Vector3(0, 0)); //Body
-                curFrame.addMovement(new Vector3(-0.45f, 0), -6); //Tool Right
+                curFrame.addMovement(new Vector3(-0.1f, 0f), new Vector3(-0.05f, -0.05f),-70); //Body
+                curFrame.addMovement(new Vector3(-2.4f, -1.5f), 62); //Tool Right
                 curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
                 Frames.Add(curFrame);
                 curFrame = new AnimFrame(2, 0.1f);
                 curFrame.moveForward = -8f;
                 curFrame.AnimationMoveFactor = 0.6f; //STRIKE forward
-                curFrame.isStriking = 1.1f;
-                curFrame.addMovement(new Vector3(-0.3f, 0), new Vector3(0.05f, 0.05f), 8); //Body
-                curFrame.addMovement(new Vector3(3.3f, 0.1f), 4); //Tool Right
+                curFrame.isStriking = 1.0f;
+                curFrame.addMovement(new Vector3(0.9f, 0), new Vector3(0.05f, 0.05f), -8); //Body
+                curFrame.addMovement(new Vector3(1.95f, -2.7f), 76); //Tool Right
                 curFrame.addMovement(new Vector3(0.2f, -0.05f), -14); //Tool Left
                 Frames.Add(curFrame);
                 curFrame = new AnimFrame(3, 0.1f);
                 curFrame.moveForward = -8f;
                 curFrame.AnimationMoveFactor = 0.4f;
-                curFrame.isStriking = 1.1f;
-                curFrame.addMovement(new Vector3(-0.3f, 0f), new Vector3(-0.05f, -0.05f)); //Body
-                curFrame.addMovement(new Vector3(0.3f, 0.1f), -5); //Tool Right
+                curFrame.addMovement(new Vector3(-0.3f, 0f), new Vector3(-0.05f, -0.05f), 12); //Body
+                curFrame.addMovement(new Vector3(0.4f, -2.95f), 87); //Tool Right
                 curFrame.addMovement(new Vector3(0.15f, 0f), -12); //Tool Left
                 Frames.Add(curFrame);
                 curFrame = new AnimFrame(4, 0.5f);
                 curFrame.moveForward = -3f;
                 curFrame.AnimationMoveFactor = 0.4f;
-                curFrame.addMovement(new Vector3(-0.06f, 0f), new Vector3(0.05f, 0.05f), 7); //Body
+                curFrame.addMovement(new Vector3(-0.06f, 0f), new Vector3(0.05f, 0.05f), 3); //Body
                 curFrame.addMovement(new Vector3(0.15f, 0.02f)); //Tool Right
                 curFrame.addMovement(new Vector3(0, 0)); //Tool Left
                 Frames.Add(curFrame);
                 break;
-            case AnimationState.ATTACK_BOW1:
+            case AnimationState.ATTACK_CROSSBOW1:
                 Priority = 3;
-                curFrame = new AnimFrame(1, 0.2f, 0.6f);
+                curFrame = new AnimFrame(1, 0.1f);
+                curFrame.moveForward = -8f;
                 curFrame.AnimationMoveFactor = 0.3f;
-                curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0)); //Body
-                curFrame.addMovement(new Vector3(-0.15f, 0), 7); //Tool Right
+                curFrame.addMovement(new Vector3(-0.3f, 0), new Vector3(0, 0), -15); //Body
+                curFrame.addMovement(new Vector3(-0.6f, -1.1f), 72); //Tool Right
                 curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
                 Frames.Add(curFrame);
-                curFrame = new AnimFrame(2, 0.9f);
+                curFrame = new AnimFrame(2, 0.1f);
                 curFrame.AnimationMoveFactor = 0.4f;
-                curFrame.addMovement(new Vector3(0.3f, 0), new Vector3(0.05f, 0.05f), 8); //Body
-                curFrame.addMovement(new Vector3(0.6f, 0.1f), 35,25); //Tool Right
-                curFrame.addMovement(new Vector3(0.1f, -0.05f), -14); //Tool Left
-                Frames.Add(curFrame);
-                curFrame = new AnimFrame(3, 0.9f);
-                curFrame.AnimationMoveFactor = 0.3f;
                 curFrame.isStriking = 1f;
-                curFrame.addMovement(new Vector3(0.1f, 0f), new Vector3(-0.05f, -0.05f)); //Body
-                curFrame.addMovement(new Vector3(0.5f, 0.1f), 35,25); //Tool Right
-                curFrame.addMovement(new Vector3(0.05f, 0f), -12); //Tool Left
+                curFrame.addMovement(new Vector3(-0.4f, 0), new Vector3(0.05f, 0.05f), -18); //Body
+                curFrame.addMovement(new Vector3(-0.9f, -1.1f), 72); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
                 Frames.Add(curFrame);
-                curFrame = new AnimFrame(4, 0.7f);
-                curFrame.AnimationMoveFactor = 0.3f;
-                curFrame.addMovement(new Vector3(-0.06f, 0f), new Vector3(0.05f, 0.05f), 7); //Body
-                curFrame.addMovement(new Vector3(0.15f, 0.02f),-8); //Tool Right
-                curFrame.addMovement(new Vector3(0, 0)); //Tool Left
+                curFrame = new AnimFrame(3, 0.05f);
+                curFrame.AnimationMoveFactor = 0.4f;
+                curFrame.addMovement(new Vector3(-0.3f, 0), new Vector3(0, 0), -12); //Body
+                curFrame.addMovement(new Vector3(-0.6f, -1.1f), 70); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
                 Frames.Add(curFrame);
-                curFrame = new AnimFrame(5, 1f);
+                curFrame = new AnimFrame(4, 0.5f);
                 curFrame.AnimationMoveFactor = 0.3f;
-                curFrame.addMovement(new Vector3(0, 0), new Vector3(-0.05f, -0.05f), 3); //Body
-                curFrame.addMovement(new Vector3(0.12f, 0f)); //Tool Right
-                curFrame.addMovement(new Vector3(0, 0)); //Tool Left
+                curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(-0.05f, -0.05f), -18); //Body
+                curFrame.addMovement(new Vector3(-0.45f, -1.3f), 62); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                break;
+            case AnimationState.ATTACK_CROSSBOW2:
+                Priority = 3;
+                curFrame = new AnimFrame(1, 0.1f);
+                curFrame.moveForward = -8f;
+                curFrame.AnimationMoveFactor = 0.3f;
+                curFrame.addMovement(new Vector3(-0.3f, 0), new Vector3(0, 0), -15); //Body
+                curFrame.addMovement(new Vector3(-0.6f, -1.1f), 72); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(2, 0.1f);
+                curFrame.AnimationMoveFactor = 0.4f;
+                curFrame.isStriking = 1f;
+                curFrame.addMovement(new Vector3(-0.4f, 0), new Vector3(0.05f, 0.05f), -18); //Body
+                curFrame.addMovement(new Vector3(-0.9f, -1.1f), 72); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(3, 0.05f);
+                curFrame.AnimationMoveFactor = 0.4f;
+                curFrame.addMovement(new Vector3(-0.3f, 0), new Vector3(0, 0), -12); //Body
+                curFrame.addMovement(new Vector3(-0.6f, -1.1f), 70); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(4, 0.5f);
+                curFrame.AnimationMoveFactor = 0.3f;
+                curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(-0.05f, -0.05f), -18); //Body
+                curFrame.addMovement(new Vector3(-0.45f, -1.3f), 62); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                break;
+            case AnimationState.ATTACK_CROSSBOW3:
+                Priority = 3;
+                curFrame = new AnimFrame(1, 0.1f);
+                curFrame.moveForward = -8f;
+                curFrame.AnimationMoveFactor = 0.3f;
+                curFrame.addMovement(new Vector3(-0.3f, 0), new Vector3(0, 0), -15); //Body
+                curFrame.addMovement(new Vector3(-0.6f, -1.1f), 72); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(2, 0.1f);
+                curFrame.AnimationMoveFactor = 0.4f;
+                curFrame.isStriking = 1f;
+                curFrame.addMovement(new Vector3(-0.4f, 0), new Vector3(0.05f, 0.05f), -18); //Body
+                curFrame.addMovement(new Vector3(-0.9f, -1.1f), 72); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(3, 0.05f);
+                curFrame.AnimationMoveFactor = 0.4f;
+                curFrame.addMovement(new Vector3(-0.3f, 0), new Vector3(0, 0), -12); //Body
+                curFrame.addMovement(new Vector3(-0.6f, -1.1f), 70); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(4, 0.5f);
+                curFrame.AnimationMoveFactor = 0.3f;
+                curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(-0.05f, -0.05f), -18); //Body
+                curFrame.addMovement(new Vector3(-0.45f, -1.3f), 62); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
                 Frames.Add(curFrame);
                 break;
             case AnimationState.ATTACK_AXE1:

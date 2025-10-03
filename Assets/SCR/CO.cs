@@ -131,8 +131,8 @@ public class CO : NetworkBehaviour
     {
         GenerateMap(25, 20);
 
-        co.Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Weapons/Spear"));
-        co.Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Weapons/Spear"));
+        co.Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Items/Weapons/Logipedes_Crossbow"));
+        co.Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Items/Weapons/Logipedes_Halberd"));
     }
     public override void OnNetworkSpawn()
     {

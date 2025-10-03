@@ -17,6 +17,13 @@ public class DMG : MonoBehaviour
         transform.localScale = new Vector3(scale, scale, 1);
         MovementDir = new Vector3(Random.Range(-0.3f,0.3f), Random.Range(0.2f, 0.3f));
     }
+    public void InitHeal(float dmg, float scale)
+    {
+        texto.text = dmg.ToString("0");
+        texto.color = Color.green;
+        transform.localScale = new Vector3(scale, scale, 1);
+        MovementDir = new Vector3(Random.Range(-0.3f, 0.3f), Random.Range(0.2f, 0.3f));
+    }
     public void InitWords(string str, float dur, Color col)
     {
         texto.text = str;

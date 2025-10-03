@@ -220,4 +220,19 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         return true;
     }
+
+    public float GetHealth()
+    {
+        return CurHealth.Value;
+    }
+
+    public float GetMaxHealth()
+    {
+        return MaxHealth;
+    }
+
+    public float GetHealthRelative()
+    {
+        return GetHealth() / GetMaxHealth();
+    }
 }

@@ -83,13 +83,16 @@ public class ModuleWeapon : Module
             }
         }
     }
+
+    private bool canFire = true;
     private void Fire(Vector3 mouse)
     {
-        if (CurCooldown > 0) return;
+        if (!canFire) return;
         StartCoroutine(FireSequence(mouse));
     }
     IEnumerator FireSequence(Vector3 mouse)
     {
+        canFire = false;
         for (int i = 0; i < ProjectileCount; i++)
         {
             PROJ proj = Instantiate(FireProjectile, FirePoint.position, transform.rotation);
@@ -108,6 +111,7 @@ public class ModuleWeapon : Module
             CurCooldown -= CO.co.GetWorldSpeedDelta();
             yield return null;
         }
+        canFire = true;
     }
     public float AngleToTurnTarget()
     {
@@ -143,12 +147,14 @@ public class ModuleWeapon : Module
 
     private Vector3 ShootTowards = Vector3.zero;
     private bool isUsing = false;
+    float UserGunneryMod = 1f;
 
     [Rpc(SendTo.Server)]
-    public void UseRpc(Vector3 vec)
+    public void UseRpc(Vector3 vec, float GUNNERY)
     {
         isUsing = true;
         ShootTowards = vec;
+        UserGunneryMod = GUNNERY;
     }
 
     [Rpc(SendTo.Server)]

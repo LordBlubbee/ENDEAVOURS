@@ -31,6 +31,11 @@ public class Module : NetworkBehaviour, iDamageable
 
     private void Start()
     {
+        GamerTag CharacterNameTag = Instantiate(CO_SPAWNER.co.PrefabGamerTag);
+        CharacterNameTag.SetPlayer(this);
+        switch (ModuleType) {
+
+        }
         if (!IsServer)
         {
             if (!Space.GetModules().Contains(this)) Space.GetModules().Add(this);
@@ -54,6 +59,8 @@ public class Module : NetworkBehaviour, iDamageable
     {
         CurHealth.Value = Mathf.Min(MaxHealth, CurHealth.Value + fl);
         if (CurHealth.Value > MaxHealth * 0.5f) isDisabled = false;
+        if (fl > 1) return;
+        CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
     }
     public void TakeDamage(float fl, Vector3 src)
     {
@@ -64,6 +71,7 @@ public class Module : NetworkBehaviour, iDamageable
             isDisabled = true;
             //Death
         }
+        CO_SPAWNER.co.SpawnDMGRpc(fl, src);
     }
     public int GetFaction()
     {
@@ -72,5 +80,19 @@ public class Module : NetworkBehaviour, iDamageable
     public bool CanBeTargeted()
     {
         return !isDisabled;
+    }
+    public float GetHealth()
+    {
+        return CurHealth.Value;
+    }
+
+    public float GetMaxHealth()
+    {
+        return MaxHealth;
+    }
+
+    public float GetHealthRelative()
+    {
+        return GetHealth() / GetMaxHealth();
     }
 }

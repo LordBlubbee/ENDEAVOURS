@@ -311,7 +311,7 @@ MonoBehaviour:
   Faction: 1
   MaxHealth: 100
   NaturalHealthRegen: 0.1
-  NaturalStaminaRegen: 50
+  NaturalStaminaRegen: 25
   MovementSpeed: 7
   RotationDistanceFactor: 4
   RotationBaseSpeed: 90

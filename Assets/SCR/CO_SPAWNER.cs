@@ -95,6 +95,12 @@ public class CO_SPAWNER : NetworkBehaviour
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
         dmg.InitDamage(dm, 1f);
     }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnHealRpc(float dm, Vector3 pos)
+    {
+        DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
+        dmg.InitDamage(dm, 1f);
+    }
 
     public MapPoint CreateMapPoint(Vector3 pos)
     {

@@ -33,8 +33,8 @@ public class LOBBY : MonoBehaviour
     private bool StartedJoining = false;
     public void StartHost()
     {
-        if (StartedJoining) return;
-        StartedJoining = true;
+        //if (StartedJoining) return;
+        //StartedJoining = true;
         string hos = HostNameInput.text;
         CreateLobby(hos);
     }

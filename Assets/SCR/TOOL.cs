@@ -9,18 +9,37 @@ public class TOOL : MonoBehaviour
 
     public List<Transform> handPoints;
     public List<Transform> strikePoints;
-    public List<ANIM.AnimationState> attackAnimations1;
-    public List<ANIM.AnimationState> attackAnimations2;
+
+    [Header("ACTION 1")]
     public ToolActionType ActionUse1;
-    public ToolActionType ActionUse2;
+    public List<ANIM.AnimationState> attackAnimations1;
+    public float UsageStamina1 = 2f;
 
     public float attackDamage1 = 10f;
+    public PROJ RangedPrefab1;
+    public float Reload1 = 0f;
+
+    [Header("ACTION 2")]
+    public ToolActionType ActionUse2;
+    public List<ANIM.AnimationState> attackAnimations2;
+    public float UsageStamina2 = 2f;
+
     public float attackDamage2 = 10f;
+    public PROJ RangedPrefab2;
+    public float Reload2 = 0f;
+
+    private CREW Crew;
     public enum ToolActionType
     {
         MELEE_ATTACK,
         RANGED_ATTACK,
         BLOCK,
         REPAIR
+    }
+
+
+    public void Init(CREW crew)
+    {
+        Crew = crew;
     }
 }

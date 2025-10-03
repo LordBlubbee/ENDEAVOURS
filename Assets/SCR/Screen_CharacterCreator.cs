@@ -20,7 +20,7 @@ public class Screen_CharacterCreator : MonoBehaviour
     public Image[] AllBackgrounds;
 
     private ScriptableBackground SelectedBackground = null;
-    private int SkillPoints = 15;
+    private int SkillPoints = 12;
     public TextMeshProUGUI SkillPointTex;
     private int[] SkillPower = new int[8];
     public string[] SkillName;

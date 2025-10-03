@@ -12,7 +12,7 @@ public class PROJ : NetworkBehaviour
     [Header("ALTITUDE")]
     public float AltitudeInacurracyFactor;
 
-    private bool isActive = false;
+    private bool isActive = true;
     private bool UseAltitude;
     SPACE Space;
     float AttackDamage;
@@ -55,14 +55,13 @@ public class PROJ : NetworkBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!IsServer) return;
+        if (!isActive) return;
         if (UseAltitude) return;
         PotentialHitTarget(collision);
     }
 
     private void PotentialHitTarget(Collider2D collision)
     {
-        if (!IsServer) return;
-        if (!isActive) return;
         iDamageable crew = collision.GetComponent<iDamageable>();
         if (crew != null)
         {
@@ -75,16 +74,20 @@ public class PROJ : NetworkBehaviour
         }
         if (Space != null)
         {
-            if (StickToWalls)
+            if (collision.tag.Equals("LOSBlocker"))
             {
-                isActive = false;
-                transform.SetParent(collision.transform);
-                ExpireSlowlyRpc();
-            } else
-            {
-                BulletImpact();
+                if (StickToWalls)
+                {
+                    isActive = false;
+                    transform.SetParent(collision.transform.parent);
+                    ExpireSlowlyRpc();
+                }
+                else
+                {
+                    BulletImpact();
+                }
+                return;
             }
-            return;
         }
         /*CREW crew = collision.GetComponent<CREW>();
         if (crew != null)

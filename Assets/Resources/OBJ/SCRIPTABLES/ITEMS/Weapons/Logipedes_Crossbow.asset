@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6d31fc802706642abd802c670bd89e, type: 3}
+  m_Name: Logipedes_Crossbow
+  m_EditorClassIdentifier: 
+  ItemName: Crossbow
+  ItemDesc: Pointy stick.
+  ItemIcon: {fileID: 5857598365883991996, guid: 8069dcecba441d4488b39aa85ea59175, type: 3}
+  ItemResourceID: OBJ/SCRIPTABLES/ITEMS/Weapons/Logipedes_Crossbow
+  ToolPrefab: {fileID: 8311341897716400573, guid: b9cabbcc33d9e6e4bb51d1e635599682, type: 3}

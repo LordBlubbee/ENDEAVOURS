@@ -121,11 +121,11 @@ public class LOCALCO : NetworkBehaviour
                     if (Input.GetKey(KeyCode.S)) mov += new Vector3(0, -1);
                     if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
                     if (Input.GetKey(KeyCode.D)) mov += new Vector3(1, 0);
-                    Drifter.SetMoveInput(mov, 0.8f + GetPlayer().GetATT_PILOTING() * 0.1f);
+                    Drifter.SetMoveInput(mov, 0.6f + GetPlayer().GetATT_PILOTING() * 0.15f);
                     Drifter.SetLookTowards(Mouse);
                     if (!IsServer)
                     {
-                        Drifter.SetMoveInputRpc(mov, 0.8f + GetPlayer().GetATT_PILOTING() * 0.1f);
+                        Drifter.SetMoveInputRpc(mov, 0.6f + GetPlayer().GetATT_PILOTING() * 0.15f);
                         Drifter.SetLookTowardsRpc(Mouse);
                     }
                     break;
@@ -135,7 +135,7 @@ public class LOCALCO : NetworkBehaviour
                     if (!IsServer) GetPlayer().SetMoveInputRpc(Vector3.zero);
                     if (!IsServer) UsingWeapon.SetLookTowardsRpc(Mouse);
                     UsingWeapon.SetLookTowards(Mouse);
-                    if (Input.GetMouseButtonDown(0)) UsingWeapon.UseRpc(Mouse);
+                    if (Input.GetMouseButtonDown(0)) UsingWeapon.UseRpc(Mouse, 0.75f + GetPlayer().GetATT_GUNNERY() * 0.1f + GetPlayer().GetATT_ARMS() * 0.02f);
                     if (Input.GetMouseButtonUp(0)) UsingWeapon.StopRpc();
                     break;
             }

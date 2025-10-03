@@ -42,11 +42,11 @@ public class Screen_GameUI : MonoBehaviour
         ActiveUI.gameObject.SetActive(true);
 
         HealthSlider.value = player.GetHealthRelative();
-        StaminaSlider.value = player.GetStamina()/100f;
+        StaminaSlider.value = player.GetStaminaRelative();
         HealthTex.text = player.GetHealth().ToString("0");
         StaminaTex.text = player.GetStamina().ToString("0");
         HealthColor.color = new Color(1f - player.GetHealthRelative(), player.GetHealthRelative(), 0);
-        StaminaColor.color = new Color(1f - player.GetStamina(), player.GetStamina(), player.GetStamina());
+        StaminaColor.color = new Color(1f - player.GetStaminaRelative(), player.GetStaminaRelative(), player.GetStaminaRelative());
 
         if (InteractActive)
         {
