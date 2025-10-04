@@ -209,9 +209,9 @@ public class CO_STORY : NetworkBehaviour
             {
                 local.CurrentDialogVote.Value = -1;
             }
-            if (CurrentDialog.TriggerEvent != null)
+            if (CurrentDialog.ChoicePathDialogs[result].TriggerEvent != null)
             {
-                PerformEvent(CurrentDialog.TriggerEvent);
+                //PERFORM EVENT
                 SetStoryEnd();
             } else
             {
