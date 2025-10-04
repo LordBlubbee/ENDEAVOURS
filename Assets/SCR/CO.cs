@@ -12,7 +12,7 @@ public class CO : NetworkBehaviour
 
     [NonSerialized] public NetworkVariable<bool> HasShipBeenLaunched = new();
     [NonSerialized] public NetworkVariable<bool> AreWeInDanger = new();
-    [NonSerialized] public NetworkVariable<bool> GamePaused = new();
+    [NonSerialized] public NetworkVariable<bool> CommunicationGamePaused = new();
     [NonSerialized] public DRIFTER PlayerMainDrifter;
     [NonSerialized] public NetworkVariable<int> PlayerMapPointID = new();
 
@@ -29,10 +29,10 @@ public class CO : NetworkBehaviour
         return GetMapPoint(PlayerMapPointID.Value);
     }
 
-    [NonSerialized] public int Resource_Materials;
-    [NonSerialized] public int Resource_Supplies;
-    [NonSerialized] public int Resource_Ammo;
-    [NonSerialized] public int Resource_Tech;
+    [NonSerialized] public NetworkVariable<int> Resource_Materials = new();
+    [NonSerialized] public NetworkVariable<int> Resource_Supplies = new();
+    [NonSerialized] public NetworkVariable<int> Resource_Ammo = new();
+    [NonSerialized] public NetworkVariable<int> Resource_Tech = new();
     [NonSerialized] public Dictionary<Faction, int> Resource_Reputation;
     public enum Faction
     {
@@ -380,12 +380,12 @@ public class CO : NetworkBehaviour
 
     public float GetWorldSpeedDelta()
     {
-        if (GamePaused.Value) return 0f;
+        if (CommunicationGamePaused.Value) return 0f;
         return Time.deltaTime;
     }
     public float GetWorldSpeedDeltaFixed()
     {
-        if (GamePaused.Value) return 0f;
+        if (CommunicationGamePaused.Value) return 0f;
         return Time.fixedDeltaTime;
     }
 

@@ -3,7 +3,7 @@ using Unity.Netcode;
 using UnityEngine;
 using static CO;
 
-public class Module : NetworkBehaviour, iDamageable
+public class Module : NetworkBehaviour, iDamageable, iInteractable
 {
     // Damageable and Interactable Module
 
@@ -17,7 +17,13 @@ public class Module : NetworkBehaviour, iDamageable
         MAPCOMMS,
         GENERATOR,
         ARMOR_MODULE,
-        LOON_NAVIGATION
+        LOON_NAVIGATION,
+        DRAGGABLE
+    }
+
+    public ModuleTypes GetInteractableType()
+    {
+        return ModuleType;
     }
 
     [Header("STATS")]

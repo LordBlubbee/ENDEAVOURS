@@ -1,5 +1,7 @@
+
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -7,31 +9,33 @@ public class PROJ : NetworkBehaviour
 {
     public float ProjectileSpeed;
     public float InaccuracyDegrees;
-    public float ProjectileDistance;
+    public float MaximumRange = -1;
     public bool StickToWalls;
 
     [Header("ALTITUDE")]
+    public bool UseAltitude = false;
     public float AltitudeInacurracyFactor;
+
+    [Header("IMPACT")]
+    public float ImpactSplashRange;
+    public float ModuleDamageModifier;
+    public float CrewDamageModifier;
 
     [NonSerialized] public CREW CrewOwner;
 
+    protected List<iDamageable> Damageables = new();
+
     protected bool isActive = true;
-    protected bool UseAltitude;
     protected SPACE Space;
     protected float AttackDamage;
     protected int Faction;
     protected float AltitudeRemaining = 0f;
-    public void Init(float damage, int fac, SPACE space)
-    {
-        AttackDamage = damage;
-        Faction = fac;
-        Space = space;
-        transform.Rotate(Vector3.forward, UnityEngine.Random.Range(-InaccuracyDegrees, InaccuracyDegrees));
-    }
     public void Init(float damage, int fac, SPACE space, Vector3 trt)
     {
-        UseAltitude = true;
-        AltitudeRemaining = (trt - transform.position).magnitude * UnityEngine.Random.Range(1f- AltitudeInacurracyFactor,1f+ AltitudeInacurracyFactor);
+        if (UseAltitude)
+        {
+            AltitudeRemaining = (trt - transform.position).magnitude * UnityEngine.Random.Range(1f - AltitudeInacurracyFactor, 1f + AltitudeInacurracyFactor);
+        }
         AttackDamage = damage;
         Faction = fac;
         Space = space;
@@ -44,6 +48,14 @@ public class PROJ : NetworkBehaviour
         if (!isActive) return;
         float step = ProjectileSpeed * CO.co.GetWorldSpeedDeltaFixed();
         transform.position += step * getLookVector();
+        if (MaximumRange > 0)
+        {
+            MaximumRange -= step;
+            if (MaximumRange < 0)
+            {
+                BulletImpact();
+            }
+        }
         if (UseAltitude)
         {
             AltitudeRemaining -= step;
@@ -64,7 +76,6 @@ public class PROJ : NetworkBehaviour
         if (UseAltitude) return;
         PotentialHitTarget(collision);
     }
-
     protected virtual void PotentialHitTarget(Collider2D collision)
     {
         iDamageable crew = collision.GetComponent<iDamageable>();
@@ -72,8 +83,10 @@ public class PROJ : NetworkBehaviour
         {
             if (crew.GetFaction() == Faction) return;
             if (crew.Space != Space) return;
+            if (Damageables.Contains(crew)) return;
             if (!crew.CanBeTargeted()) return;
             crew.TakeDamage(AttackDamage, transform.position);
+            Damageables.Add(crew);
             BulletImpact();
             return;
         }

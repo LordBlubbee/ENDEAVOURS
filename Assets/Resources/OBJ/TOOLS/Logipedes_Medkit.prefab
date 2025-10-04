@@ -134,23 +134,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4af8441bd33cbf54196ce825168d3493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localX: 0.5
-  localY: 0.5
-  localRot: -72
+  localX: 0.8
+  localY: 0.2
+  localRot: 0
   handPoints:
   - {fileID: 8339970041961610142}
   - {fileID: 7081632785703404455}
   strikePoints:
   - {fileID: 8362816068341079287}
+  CrosshairSprite: {fileID: 0}
+  CrosshairMaxRange: 999
+  CrosshairMinRange: -1
   ActionUse1: 5
-  attackAnimations1: 03000000
-  UsageStamina1: 2
+  attackAnimations1: 0a000000
+  UsageStamina1: 0
   attackDamage1: 25
   RangedPrefab1: {fileID: 0}
   Reload1: 0
   ActionUse2: 6
-  attackAnimations2: 0a000000
-  UsageStamina2: 2
+  attackAnimations2: 0b000000
+  UsageStamina2: 0
   attackDamage2: 10
   RangedPrefab2: {fileID: 0}
   Reload2: 0

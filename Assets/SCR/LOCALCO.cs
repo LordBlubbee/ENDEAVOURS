@@ -1,3 +1,4 @@
+using Mono.Cecil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -59,17 +60,20 @@ public class LOCALCO : NetworkBehaviour
             Vector3 mov = Vector3.zero;
             Vector3 Mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Mouse = new Vector3(Mouse.x, Mouse.y);
-            UI.ui.SetCrosshair(Mouse, UI.CrosshairModes.NONE);
+            UI.ui.SetCrosshair(Mouse);
             if (UI.ui.CurrentlySelectedScreen != UI.ui.MainGameplayUI.gameObject)
             {
                 GetPlayer().SetMoveInput(mov);
                 GetPlayer().SetMoveInputRpc(Vector3.zero);
+                Cursor.visible = true;
                 return;
             }
+            Cursor.visible = Input.GetKey(KeyCode.LeftControl) || UI.ui.MainGameplayUI.PauseMenu.activeSelf;
             switch (CurrentControlMode)
             {
                 case ControlModes.PLAYER:
-                    
+                    UI.ui.MainGameplayUI.SetActiveGameUI(UI.ui.MainGameplayUI.ActiveUI);
+                    UI.ui.SetCrosshairTexture(GetPlayer().EquippedToolObject ? GetPlayer().EquippedToolObject.CrosshairSprite : null);
                     if (Input.GetKey(KeyCode.W)) mov += new Vector3(0, 1);
                     if (Input.GetKey(KeyCode.S)) mov += new Vector3(0, -1);
                     if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
@@ -117,6 +121,7 @@ public class LOCALCO : NetworkBehaviour
                     if (Input.GetKeyDown(KeyCode.Alpha3)) GetPlayer().EquipWeapon3Rpc();
                     break;
                 case ControlModes.DRIFTER:
+                    UI.ui.MainGameplayUI.SetActiveGameUI(null);
                     GetPlayer().SetMoveInput(mov);
                     if (!IsServer) GetPlayer().SetMoveInputRpc(Vector3.zero);
                     if (Input.GetKey(KeyCode.W)) mov += new Vector3(0, 1);
@@ -132,7 +137,8 @@ public class LOCALCO : NetworkBehaviour
                     }
                     break;
                 case ControlModes.WEAPON:
-                    UI.ui.SetCrosshair(Mouse, UI.CrosshairModes.WEAPONS);
+                    UI.ui.MainGameplayUI.SetActiveGameUI(UI.ui.MainGameplayUI.WeaponUI);
+                    UI.ui.SetCrosshairTexture(UsingWeapon.CrosshairSprite);
                     GetPlayer().SetMoveInput(mov);
                     if (!IsServer) GetPlayer().SetMoveInputRpc(Vector3.zero);
                     if (!IsServer) UsingWeapon.SetLookTowardsRpc(Mouse);
@@ -162,7 +168,7 @@ public class LOCALCO : NetworkBehaviour
         return tile.transform.position;
     }
 
-    private Module CurrentInteractionModule = null;
+    private iInteractable CurrentInteractionModule = null;
     public int GetPlayerID()
     {
         return PlayerID.Value;
@@ -216,41 +222,65 @@ public class LOCALCO : NetworkBehaviour
         CAM.cam.SetCameraMode(Player.transform, 13f+ Player.GetATT_COMMUNOPATHY(), 8f, 16f+Player.GetATT_COMMUNOPATHY());
     }
 
+    Transform DraggingObject;
     ModuleWeapon UsingWeapon;
     IEnumerator CheckInteraction()
     {
         float Timer = 0f;
         //Collider2D[] ColliderList = null;
-        Module mod = null;
-        Debug.Log("Starting CheckInteraction");
+        iInteractable mod = null;
         while (true)
         {
-            UI.ui.MainGameplayUI.SetInteractTex("", Color.white); Debug.Log(Player.Space);
-            if (CurrentControlMode == ControlModes.PLAYER && Player.Space != null)
+            UI.ui.MainGameplayUI.SetInteractTex("", Color.white);
+            if (DraggingObject)
             {
+                UI.ui.MainGameplayUI.SetInteractTex("[F] DROP", Color.white);
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    DraggingObject = null;
+                    GetPlayer().StopDragging();
+                }
+            }
+            else if (CurrentControlMode == ControlModes.PLAYER && Player.Space != null)
+            {
+               
                 Timer -= CO.co.GetWorldSpeedDelta();
                 if (Timer < 0f)
                 {
-                    Timer = 0.25f;
-                    mod = Player.Space.NearestModule(Player.transform.position);
-                    /*ColliderList = Physics2D.OverlapCircleAll(Player.transform.position + Player.getLookVector() * 2.5f, 2.5f);
+                    Timer = 0.25f; 
+                    float maxRange = 10f;
                     mod = null;
-                    foreach (Collider2D col in ColliderList)
+                    foreach (Collider2D col in Physics2D.OverlapCircleAll(Player.transform.position + Player.getLookVector()*1.5f, 2f))
                     {
-                        Module ol = col.GetComponent<Module>();
-                        if (ol)
+                        iInteractable crate = col.GetComponent<iInteractable>();
+                        float dis = (col.transform.position - Player.transform.position).magnitude;
+                        if (crate != null && dis < maxRange)
                         {
-                            mod = ol;
-                            break;
+                            maxRange = dis;
+                            mod = crate;
+                        }
+                    }
+                    /*mod = Player.Space.NearestModule(Player.transform.position);
+
+                    if (mod == null || (mod.transform.position - Player.transform.position).magnitude > 5f || Mathf.Abs(Player.AngleBetweenPoints(mod.transform.position)) > 45f)
+                    {
+                        mod = null; 
+                        float maxRange = 10f;
+                        foreach (Collider2D col in Physics2D.OverlapCircleAll(Player.transform.position + Player.getLookVector(), 1f))
+                        {
+                            iInteractable crate = col.GetComponent<iInteractable>();
+                            float dis = (col.transform.position - Player.transform.position).magnitude;
+                            if (crate != null && dis < maxRange)
+                            {
+                                maxRange = dis;
+                                mod = crate;
+                            }
                         }
                     }*/
-                    Debug.Log("Setting nearest module " + mod);
                 }
-
-                if (mod && (mod.transform.position-Player.transform.position).magnitude < 5f && Mathf.Abs(Player.AngleBetweenPoints(mod.transform.position)) < 45f)
+                if (mod != null)
                 {
-                    Debug.Log("MOD DETECTED");
-                    switch (mod.ModuleType)
+                    switch (mod.GetInteractableType())
                     {
                         case Module.ModuleTypes.NAVIGATION:
                             UI.ui.MainGameplayUI.SetInteractTex("[F] NAVIGATE", Color.green);
@@ -317,14 +347,21 @@ public class LOCALCO : NetworkBehaviour
 
                             }
                             break;
+                        case Module.ModuleTypes.DRAGGABLE:
+                            UI.ui.MainGameplayUI.SetInteractTex("[F] CARRY", Color.green);
+                            if (Input.GetKeyDown(KeyCode.F))
+                            {
+                                GetPlayer().StartDragging(mod.transform);
+                            }
+                            break;
                     }
                    
                 }
             } else if (Input.GetKeyDown(KeyCode.F) || LeftModule())
             {
-                if (CurrentInteractionModule)
+                if (CurrentInteractionModule != null)
                 {
-                    switch (CurrentInteractionModule.ModuleType)
+                    switch (CurrentInteractionModule.GetInteractableType())
                     {
                         case Module.ModuleTypes.WEAPON:
                             UsingWeapon.StopRpc();

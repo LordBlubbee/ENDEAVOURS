@@ -7,8 +7,14 @@ public class TOOL : MonoBehaviour
     public float localY;
     public float localRot;
 
+
     public List<Transform> handPoints;
     public List<Transform> strikePoints;
+
+    [Header("CROSSHAIR")]
+    public Sprite CrosshairSprite;
+    public float CrosshairMaxRange = 999;
+    public float CrosshairMinRange = -1;
 
     [Header("ACTION 1")]
     public ToolActionType ActionUse1;

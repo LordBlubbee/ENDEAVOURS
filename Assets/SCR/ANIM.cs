@@ -160,10 +160,10 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
         ATTACK_CROSSBOW2,
         ATTACK_CROSSBOW3,
 
-        ATTACK_AXE1,
-        ATTACK_AXE2,
-        ATTACK_AXE3,
-        ATTACK_AXE4,
+        USE_MEDKIT_OTHER,
+        USE_MEDKIT_SELF,
+        USE_WRENCH,
+        USE_GRAPPLE,
 
         MI_DEAD1,
         MI_DEAD2,
@@ -449,39 +449,132 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
                 Frames.Add(curFrame);
                 break;
-            case AnimationState.ATTACK_AXE1:
+            case AnimationState.USE_WRENCH:
                 Priority = 3;
-                curFrame = new AnimFrame(1, 0.2f, 0.4f);
-                curFrame.AnimationMoveFactor = 0.6f;
-                curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0)); //Body
-                curFrame.addMovement(new Vector3(-0.15f, 0), -20); //Tool Right
+                curFrame = new AnimFrame(1, 0.6f);
+                curFrame.AnimationMoveFactor = 0.3f;
+                curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0), -32); //Body
+                curFrame.addMovement(new Vector3(-0.25f, -1.2f), 96); //Tool Right
                 curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
                 Frames.Add(curFrame);
-                curFrame = new AnimFrame(2, 0.2f);
-                curFrame.AnimationMoveFactor = 0.7f;
-                curFrame.addMovement(new Vector3(0.3f, 0), new Vector3(0.05f, 0.05f), 8); //Body
-                curFrame.addMovement(new Vector3(0.3f, -0.6f), -68,-60); //Tool Right
-                curFrame.addMovement(new Vector3(0.2f, -0.05f), -14); //Tool Left
-                Frames.Add(curFrame);
-                curFrame = new AnimFrame(3, 0.3f);
-                curFrame.AnimationMoveFactor = 0.6f;
-                curFrame.isStriking = 1f;
-                curFrame.addMovement(new Vector3(0.1f, 0f), new Vector3(-0.05f, -0.05f)); //Body
-                curFrame.addMovement(new Vector3(0.8f, 0.2f), 32,36); //Tool Right
-                curFrame.addMovement(new Vector3(0.15f, 0f), -12); //Tool Left
-                Frames.Add(curFrame);
-                curFrame = new AnimFrame(4, 0.2f);
-                curFrame.isStriking = 1f;
+                curFrame = new AnimFrame(2, 0.6f);
                 curFrame.AnimationMoveFactor = 0.4f;
-                curFrame.addMovement(new Vector3(-0.06f, 0f), new Vector3(0.05f, 0.05f), 7); //Body
-                curFrame.addMovement(new Vector3(0.15f, -0.22f),-26); //Tool Right
-                curFrame.addMovement(new Vector3(0, 0)); //Tool Left
+                curFrame.isStriking = 1f;
+                curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0.05f, 0.05f), -24); //Body
+                curFrame.addMovement(new Vector3(0.1f, -1.6f), 126); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
                 Frames.Add(curFrame);
-                curFrame = new AnimFrame(5, 0.7f);
+                break;
+            case AnimationState.USE_GRAPPLE:
+                Priority = 3;
+                curFrame = new AnimFrame(1, 0.1f);
+                curFrame.moveForward = -8f;
+                curFrame.AnimationMoveFactor = 0.3f;
+                curFrame.addMovement(new Vector3(-0.3f, 0), new Vector3(0, 0), -15); //Body
+                curFrame.addMovement(new Vector3(-0.6f, -1.1f), 72); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(2, 1.1f);
                 curFrame.AnimationMoveFactor = 0.4f;
-                curFrame.addMovement(new Vector3(0, 0), new Vector3(-0.05f, -0.05f), 3); //Body
-                curFrame.addMovement(new Vector3(0.12f, 0f),-18); //Tool Right
-                curFrame.addMovement(new Vector3(0, 0)); //Tool Left
+                curFrame.addMovement(new Vector3(-0.4f, 0), new Vector3(0.05f, 0.05f), -18); //Body
+                curFrame.addMovement(new Vector3(-0.9f, -1.1f), 72); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(3, 0.1f);
+                curFrame.AnimationMoveFactor = 0.4f;
+                curFrame.isStriking = 1f;
+                curFrame.addMovement(new Vector3(-0.4f, 0), new Vector3(0.05f, 0.05f), -18); //Body
+                curFrame.addMovement(new Vector3(-0.9f, -1.1f), 72); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(4, 0.05f);
+                curFrame.AnimationMoveFactor = 0.4f;
+                curFrame.addMovement(new Vector3(-0.3f, 0), new Vector3(0, 0), -12); //Body
+                curFrame.addMovement(new Vector3(-0.6f, -1.1f), 70); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(5, 0.8f);
+                curFrame.AnimationMoveFactor = 0.3f;
+                curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(-0.05f, -0.05f), -18); //Body
+                curFrame.addMovement(new Vector3(-0.45f, -1.3f), 62); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                break;
+            case AnimationState.USE_MEDKIT_OTHER:
+                Priority = 3;
+                for (int i = 0; i < 7; i+= 2) //Goes towards 8, lasts 3.6 seconds
+                {
+                    curFrame = new AnimFrame(i+1, 0.5f);
+                    curFrame.AnimationMoveFactor = 0.3f;
+                    curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0), -30); //Body
+                    curFrame.addMovement(new Vector3(-0.55f, -0.9f), 22); //Tool Right
+                    curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                    Frames.Add(curFrame);
+                    curFrame = new AnimFrame(i+2, 0.6f);
+                    curFrame.AnimationMoveFactor = 0.4f;
+                    curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0.05f, 0.05f), -38); //Body
+                    curFrame.addMovement(new Vector3(-0.75f, -1.1f), 32); //Tool Right
+                    curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                    Frames.Add(curFrame);
+                } //Healing lasts 1 second
+                curFrame = new AnimFrame(9, 0.3f);
+                curFrame.AnimationMoveFactor = 0.4f;
+                curFrame.isStriking = 1f;
+                curFrame.addMovement(new Vector3(0.1f, 0), new Vector3(0, 0), 0); //Body
+                curFrame.addMovement(new Vector3(0.4f, 0f), new Vector3(0.05f, 0.05f), 0); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(10, 0.4f);
+                curFrame.AnimationMoveFactor = 0.3f;
+                curFrame.isStriking = 1f;
+                curFrame.addMovement(new Vector3(0.1f, 0), new Vector3(0, 0), 0); //Body
+                curFrame.addMovement(new Vector3(0.4f, 0f), new Vector3(0f, 0f), 0); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(11, 0.3f);
+                curFrame.AnimationMoveFactor = 0.4f;
+                curFrame.isStriking = 1f;
+                curFrame.addMovement(new Vector3(0.1f, 0), new Vector3(0, 0), 0); //Body
+                curFrame.addMovement(new Vector3(0.4f, 0f), new Vector3(0.05f, 0.05f), 0); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                break;
+            case AnimationState.USE_MEDKIT_SELF:
+                Priority = 3;
+                for (int i = 0; i < 7; i += 2) //Goes towards 8, lasts 3.6 seconds
+                {
+                    curFrame = new AnimFrame(i + 1, 0.5f);
+                    curFrame.AnimationMoveFactor = 0.3f;
+                    curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0), -30); //Body
+                    curFrame.addMovement(new Vector3(-0.35f, -0.9f), 22); //Tool Right
+                    curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                    Frames.Add(curFrame);
+                    curFrame = new AnimFrame(i + 2, 0.6f);
+                    curFrame.AnimationMoveFactor = 0.4f;
+                    curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0.05f, 0.05f), -38); //Body
+                    curFrame.addMovement(new Vector3(-0.55f, -1.1f), 32); //Tool Right
+                    curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                    Frames.Add(curFrame);
+                } //Healing lasts 1 second
+                curFrame = new AnimFrame(9, 0.3f);
+                curFrame.AnimationMoveFactor = 0.4f;
+                curFrame.isStriking = 1f;
+                curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0), -40); //Body
+                curFrame.addMovement(new Vector3(0.2f, -1f), new Vector3(0.05f, 0.05f), -49); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(10, 0.4f);
+                curFrame.AnimationMoveFactor = 0.3f;
+                curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0), -45); //Body
+                curFrame.addMovement(new Vector3(0.2f, -1.2f), new Vector3(0f, 0f), -47); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(11, 0.3f);
+                curFrame.AnimationMoveFactor = 0.4f;
+                curFrame.isStriking = 1f;
+                curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0), -36); //Body
+                curFrame.addMovement(new Vector3(0.2f, -0.6f), new Vector3(0.05f, 0.05f), -43); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
                 Frames.Add(curFrame);
                 break;
             case AnimationState.MI_DEAD1:

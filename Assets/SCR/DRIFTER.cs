@@ -203,14 +203,6 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             CurHealth.Value = 0f;
             //Death
         }
-        Module nearest = Interior.NearestModule(ImpactArea);
-        if (nearest != null)
-        {
-            if ((nearest.transform.position-ImpactArea).magnitude < nearest.HitboxRadius)
-            {
-                nearest.TakeDamage(fl, ImpactArea);
-            }
-        }
     }
     public int GetFaction()
     {

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Screen_GameUI : MonoBehaviour
 {
     public CanvasGroup ActiveUI;
+    public CanvasGroup WeaponUI;
     public Slider HealthSlider;
     public TextMeshProUGUI HealthTex;
     public Image HealthColor;
@@ -15,7 +16,8 @@ public class Screen_GameUI : MonoBehaviour
     public Image StaminaColor;
     public TextMeshProUGUI InteractTex;
     public GameObject PauseMenu;
-    public GameObject SafeMenu;
+    public GameObject CommsMapButton;
+    public GameObject InventoryButton;
     public InventorySlot[] InventoryWeaponSlots;
     public InventorySlot InventoryGrappleSlot;
     public InventorySlot InventoryToolsSlot;
@@ -35,10 +37,16 @@ public class Screen_GameUI : MonoBehaviour
         }
         if (CO.co.AreWeInDanger.Value)
         {
-            SafeMenu.gameObject.SetActive(false);
+            bool CommsEnabled = CO.co.CommunicationGamePaused.Value;
+            CommsMapButton.gameObject.SetActive(CommsEnabled);
+            InventoryButton.gameObject.SetActive(false);
+            if (CommsEnabled && Input.GetKeyDown(KeyCode.M)) OpenMissionScreen();
         } else
         {
-            SafeMenu.gameObject.SetActive(true);
+            CommsMapButton.gameObject.SetActive(true);
+            InventoryButton.gameObject.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.I)) UI.ui.SelectScreen(UI.ui.InventoryUI.gameObject);
+            if (Input.GetKeyDown(KeyCode.M)) OpenMissionScreen();
         }
         ActiveUI.gameObject.SetActive(true);
 
@@ -61,6 +69,12 @@ public class Screen_GameUI : MonoBehaviour
         {
             PauseMenu.SetActive(!PauseMenu.activeSelf);
         }
+    }
+
+    public void SetActiveGameUI(CanvasGroup group)
+    {
+        ActiveUI.gameObject.SetActive(group.gameObject == ActiveUI.gameObject);
+        WeaponUI.gameObject.SetActive(group.gameObject == WeaponUI.gameObject);
     }
 
     private void OnEnable()

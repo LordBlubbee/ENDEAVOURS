@@ -168,9 +168,13 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   ProjectileSpeed: 90
   InaccuracyDegrees: 4
-  ProjectileDistance: 0
+  MaximumRange: -1
   StickToWalls: 0
+  UseAltitude: 1
   AltitudeInacurracyFactor: 0.1
+  ImpactSplashRange: 0
+  ModuleDamageModifier: 0
+  CrewDamageModifier: 0
 --- !u!114 &1279859445198227217
 MonoBehaviour:
   m_ObjectHideFlags: 0

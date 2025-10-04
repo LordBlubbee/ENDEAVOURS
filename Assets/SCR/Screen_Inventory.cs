@@ -7,6 +7,7 @@ public class Screen_Inventory : MonoBehaviour
     public GameObject[] Subscreens;
     public GameObject SubscreenEquipment;
     public GameObject SubscreenInventory;
+    public GameObject SubscreenDrifter;
     public GameObject SubscreenAttributes;
     public InventorySlot[] InventoryWeapons;
     public InventorySlot InventoryArmor;
@@ -18,6 +19,7 @@ public class Screen_Inventory : MonoBehaviour
         SkillRefresh(); 
         RefreshPlayerEquipment(); 
         RefreshShipEquipment();
+        RefreshDrifterStats();
     }
     void Update()
     {
@@ -43,6 +45,10 @@ public class Screen_Inventory : MonoBehaviour
         {
             RefreshShipEquipment();
         }
+        RefreshDrifterStats();
+        if (SubscreenDrifter.activeSelf)
+        {
+        }
     }
 
     void RefreshPlayerEquipment()
@@ -60,6 +66,19 @@ public class Screen_Inventory : MonoBehaviour
             else InventoryCargo[i].SetInventoryItem(CO.co.Drifter_Inventory[i]);
         }
     }
+
+    void RefreshDrifterStats()
+    {
+        DrifterTexResources.text = $"MATERIALS: {CO.co.Resource_Materials.Value}";
+        DrifterTexSupplies.text = $"SUPPLIES: {CO.co.Resource_Supplies.Value}";
+        DrifterTexAmmunition.text = $"AMMUNITION: {CO.co.Resource_Ammo.Value}";
+        DrifterTexTechnology.text = $"TECHNOLOGY: {CO.co.Resource_Tech.Value}";
+    }
+    [Header("Drifter Inventory")]
+    public TextMeshProUGUI DrifterTexResources;
+    public TextMeshProUGUI DrifterTexSupplies;
+    public TextMeshProUGUI DrifterTexAmmunition;
+    public TextMeshProUGUI DrifterTexTechnology;
 
     [Header("Skills")]
     public TextMeshProUGUI SkillPointTex;
@@ -198,7 +217,7 @@ public class Screen_Inventory : MonoBehaviour
             sub.SetActive(false);
         }
         ob.SetActive(true);
-        if (ob == SubscreenEquipment) SubscreenInventory.SetActive(true);
+        if (ob == SubscreenEquipment || ob == SubscreenDrifter) SubscreenInventory.SetActive(true);
     }
 
     InventorySlot CurrentDraggingSlot;

@@ -107,10 +107,10 @@ public class SPACE : NetworkBehaviour
         return transform.TransformPoint(new Vector3(grid.x * 8f, grid.y * 8f));
     }
 
-    public Vector3 GetNearestGridToPoint(Vector3 point)
+    public WalkableTile GetNearestGridToPoint(Vector3 point)
     {
         Vector2 grid = ConvertWorldToGrid(point);
-        if (RoomLocations.Contains(grid)) return ConvertGridToWorld(grid);
+        if (RoomLocations.Contains(grid)) return GetCurrentGrid(point);
         float minDist = 9999f;
         Vector2 trt = grid;
         foreach (Vector2 loc in GetGrid())
@@ -122,7 +122,7 @@ public class SPACE : NetworkBehaviour
                 trt = loc;
             }
         }
-        return ConvertGridToWorld(trt);
+        return GetCurrentGrid(trt);
     }
 
     public WalkableTile GetCurrentGrid(Vector3 here)

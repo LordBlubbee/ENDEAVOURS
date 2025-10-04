@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 1898558090153098328}
   - component: {fileID: 2733437315669949757}
   - component: {fileID: -427056032657588051}
+  - component: {fileID: 5540327214154652118}
   m_Layer: 0
   m_Name: Module_HeavyBallista
   m_TagString: Untagged
@@ -254,12 +255,15 @@ MonoBehaviour:
   Platform: {fileID: 6031975965002184304}
   FirePoint: {fileID: 3676994766029858991}
   FireProjectile: {fileID: 8910635656682413825, guid: bcb2fb2362f019e4290db11af9a5f758, type: 3}
+  CrosshairSprite: {fileID: 0}
   Damage: 50
   RotationBaseSpeed: 60
   MaxAmmo: 80
-  FireCooldown: 3
+  FireCooldown: 2
+  ReloadCooldown: 5
   ProjectileCount: 1
   AdditionalProjectileDelay: 0
+  ResourceType: 2
 --- !u!114 &-427056032657588051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,3 +310,39 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!58 &5540327214154652118
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465642290706125043}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 1.5

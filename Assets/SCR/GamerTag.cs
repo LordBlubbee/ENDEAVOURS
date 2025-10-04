@@ -28,7 +28,7 @@ public class GamerTag : MonoBehaviour
         transform.position = FollowObject.transform.position + new Vector3(0, 2);
         float healthRelative = FollowObject.GetHealthRelative();
         Color col = new Color(1 - healthRelative, healthRelative, 0);
-        Health.text = $"{FollowObject.GetHealth().ToString("")}/{FollowObject.GetMaxHealth().ToString("")}";
+        Health.text = $"{FollowObject.GetHealth().ToString("0")}/{FollowObject.GetMaxHealth().ToString("0")}";
         Health.color = col;
 
         if (FarIcon)

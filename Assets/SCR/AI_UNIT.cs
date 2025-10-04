@@ -141,9 +141,10 @@ public class AI_UNIT : NetworkBehaviour
     {
         if (trt.Space != getSpace())
         {
-            if (Dist(trt.Space.GetNearestGridToPoint(transform.position)) < 25f+Unit.GetATT_COMMUNOPATHY())
+            WalkableTile boarding = trt.Space.GetNearestGridToPoint(transform.position);
+            if (Dist(boarding.transform.position) < 25f+Unit.GetATT_COMMUNOPATHY())
             {
-                Unit.UseGrapple(trt.Space);
+                Unit.UseGrapple(boarding);
             }
         }
     }

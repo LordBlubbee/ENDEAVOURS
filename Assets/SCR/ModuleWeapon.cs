@@ -5,22 +5,24 @@ using UnityEngine;
 
 public class ModuleWeapon : Module
 {
-    [NonSerialized] public int Faction;
     [Header("References")]
     public Transform Platform;
     public Transform FirePoint;
     public PROJ FireProjectile;
+    public Sprite CrosshairSprite;
 
     [Header("Offensive Stats")]
     public float Damage;
     public float RotationBaseSpeed = 30;
     public int MaxAmmo = 80;
-    public float FireCooldown = 3f;
+    public float FireCooldown = 2f;
+    public float ReloadCooldown = 5f;
     public int ProjectileCount = 1;
     public float AdditionalProjectileDelay = 0f;
+    public ResourceCrate.ResourceTypes ResourceType = ResourceCrate.ResourceTypes.AMMUNITION;
 
-    private float CurCooldown;
-    private int LoadedAmmo;
+    [NonSerialized] public NetworkVariable<float> CurCooldown = new();
+    [NonSerialized] public NetworkVariable<int> LoadedAmmo = new();
     
     private Vector3 LookTowards;
     private bool isLooking = false;
@@ -44,6 +46,24 @@ public class ModuleWeapon : Module
         CurHealth.Value = MaxHealth;
 
         Platform.transform.SetParent(transform.parent);
+    }
+
+    public void ReloadAmmo()
+    {
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position,8f))
+        {
+            ResourceCrate crate = col.GetComponent<ResourceCrate>();
+            if (crate != null)
+            {
+                if (crate.ResourceType == ResourceType)
+                {
+                    StartCoroutine(AttackReloadAmmo());
+                    LoadedAmmo.Value = Mathf.FloorToInt(MaxAmmo * crate.ResourceAmount.Value / 10f);
+                    crate.RemoveCrate();
+                    return;
+                }
+            }
+        }
     }
 
     private void Update()
@@ -87,6 +107,11 @@ public class ModuleWeapon : Module
     private bool canFire = true;
     private void Fire(Vector3 mouse)
     {
+        if (LoadedAmmo.Value < 1)
+        {
+            ReloadAmmo();
+            return;
+        }
         if (!canFire) return;
         StartCoroutine(FireSequence(mouse));
     }
@@ -98,17 +123,29 @@ public class ModuleWeapon : Module
             PROJ proj = Instantiate(FireProjectile, FirePoint.position, transform.rotation);
             proj.Init(Damage, Faction, null, mouse);
             proj.NetworkObject.Spawn();
-            CurCooldown = AdditionalProjectileDelay;
-            while (CurCooldown > 0f)
+            CurCooldown.Value = AdditionalProjectileDelay;
+            while (CurCooldown.Value > 0f)
             {
-                CurCooldown -= CO.co.GetWorldSpeedDelta();
+                CurCooldown.Value -= CO.co.GetWorldSpeedDelta();
                 yield return null;
             }
         }
-        CurCooldown = FireCooldown;
-        while (CurCooldown > 0f)
+        CurCooldown.Value = FireCooldown;
+        while (CurCooldown.Value > 0f)
         {
-            CurCooldown -= CO.co.GetWorldSpeedDelta();
+            CurCooldown.Value -= CO.co.GetWorldSpeedDelta();
+            yield return null;
+        }
+        canFire = true;
+    }
+
+    IEnumerator AttackReloadAmmo()
+    {
+        canFire = false;
+        CurCooldown.Value = ReloadCooldown;
+        while (CurCooldown.Value > 0f)
+        {
+            CurCooldown.Value -= CO.co.GetWorldSpeedDelta();
             yield return null;
         }
         canFire = true;

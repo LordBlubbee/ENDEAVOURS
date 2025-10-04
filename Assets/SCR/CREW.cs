@@ -50,6 +50,9 @@ public class CREW : NetworkBehaviour, iDamageable
     public ScriptableEquippableArtifact EquippedArmor = null;
     public ScriptableEquippableArtifact[] EquippedArtifacts = new ScriptableEquippableArtifact[3];
 
+    //Utilities
+    [NonSerialized] public Transform DraggingObject;
+
     [Rpc(SendTo.Server)]
     public void UpdateAttributesRpc(int phys, int arms, int dex, int comm, int pil, int eng, int gun, int med)
     {
@@ -354,7 +357,7 @@ public class CREW : NetworkBehaviour, iDamageable
     [Rpc(SendTo.Server)]
     public void UseItem2Rpc()
     {
-        UseItem1_Input = true;
+        UseItem2_Input = true;
     }
     [Rpc(SendTo.Server)]
     public void StopItem1Rpc()
@@ -364,7 +367,7 @@ public class CREW : NetworkBehaviour, iDamageable
     [Rpc(SendTo.Server)]
     public void StopItem2Rpc()
     {
-        UseItem1_Input = false;
+        UseItem2_Input = false;
     }
     [Rpc(SendTo.Server)]
     public void EquipWrenchRpc()
@@ -406,8 +409,19 @@ public class CREW : NetworkBehaviour, iDamageable
         return !IsGrappling;
     }
 
+    public void StopDragging()
+    {
+
+        DraggingObject = null;
+    }
+    public void StartDragging(Transform trans)
+    {
+        DraggingObject = trans;
+    }
+
     IEnumerator GrappleNum(Transform trt)
     {
+        StopDragging();
         Col.enabled = false;
         IsGrappling = true;
         Vector3 moveAdd = new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-3f, 3f));
@@ -570,7 +584,7 @@ public class CREW : NetworkBehaviour, iDamageable
                     StrikeMelee();
                     break;
                 case TOOL.ToolActionType.RANGED_ATTACK:
-                    StrikeRanged();
+                    StrikeRanged(LookTowards);
                     break;
                 case TOOL.ToolActionType.REPAIR:
                     StrikeRepair();
@@ -608,13 +622,13 @@ public class CREW : NetworkBehaviour, iDamageable
         }
     }
 
-    private void StrikeRanged()
+    private void StrikeRanged(Vector3 trt)
     {
         PROJ proj = Instantiate(SelectedWeaponAbility == 0 ? EquippedToolObject.RangedPrefab1 : EquippedToolObject.RangedPrefab2, EquippedToolObject.strikePoints[0].position, EquippedToolObject.transform.rotation);
         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
         dmg *= AnimationController.CurrentStrikePower();
         dmg *= 0.7f + 0.1f * GetATT_ARMS();
-        proj.Init(dmg, Faction, Space);
+        proj.Init(dmg, Faction, Space, trt);
         proj.CrewOwner = this;
         proj.NetworkObject.Spawn();
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
@@ -626,14 +640,13 @@ public class CREW : NetworkBehaviour, iDamageable
         foreach (Transform hitTrans in EquippedToolObject.strikePoints)
         {
             Vector3 checkHit = hitTrans.position;
-            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.3f))
+            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.5f))
             {
                 iDamageable crew = col.GetComponent<iDamageable>();
                 if (crew != null)
                 {
-                    if (crew.GetFaction() != Faction) return;
+                    //if (crew.GetFaction() != Faction) return;
                     if (crew.Space != Space) return;
-                    if (!crew.CanBeTargeted()) return;
                     if (!(crew is Module)) return;
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
@@ -650,14 +663,13 @@ public class CREW : NetworkBehaviour, iDamageable
         foreach (Transform hitTrans in EquippedToolObject.strikePoints)
         {
             Vector3 checkHit = hitTrans.position;
-            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.3f))
+            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.5f))
             {
                 iDamageable crew = col.GetComponent<iDamageable>();
                 if (crew != null)
                 {
-                    if (crew.GetFaction() != Faction) return;
+                    //if (crew.GetFaction() != Faction) return;
                     if (crew.Space != Space) return;
-                    if (!crew.CanBeTargeted()) return;
                     if (crew is Module) return;
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
@@ -759,6 +771,11 @@ public class CREW : NetworkBehaviour, iDamageable
             transform.position += MoveInput * GetSpeed() * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
             Rigid.MovePosition(transform.position);
             //Rigid.MovePosition(transform.position + MoveInput * GetSpeed() * towardsfactor * CO.co.GetWorldSpeedDelta());
+            if (DraggingObject)
+            {
+                float Dist = (DraggingObject.transform.position - transform.position).magnitude;
+                DraggingObject.transform.position = transform.position + (DraggingObject.transform.position - transform.position).normalized * Mathf.Min(Dist,2.75f);
+            }
         } else
         {
             if (IsServer) setAnimationRpc(animDefaultIdle, 1);
@@ -801,6 +818,9 @@ public class CREW : NetworkBehaviour, iDamageable
                 break;
             case -2:
                 LocallyEquip(CO_SPAWNER.co.GetPrefabWrench(DefaultToolset));
+                break;
+            case -3:
+                LocallyEquip(CO_SPAWNER.co.GetPrefabMedkit(DefaultToolset));
                 break;
         }
     }
@@ -882,8 +902,10 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public void Heal(float fl)
     {
+        float Diff = CurHealth.Value;
         CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
-        if (fl > 1) return;
+        Diff -= CurHealth.Value;
+        if (Diff < -1) return;
         CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
     }
     public void TakeDamage(float fl, Vector3 src)

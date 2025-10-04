@@ -142,14 +142,17 @@ MonoBehaviour:
   - {fileID: 7081632785703404455}
   strikePoints:
   - {fileID: 8362816068341079287}
+  CrosshairSprite: {fileID: 0}
+  CrosshairMaxRange: 999
+  CrosshairMinRange: -1
   ActionUse1: 4
-  attackAnimations1: 03000000040000000500000006000000
+  attackAnimations1: 0c000000
   UsageStamina1: 10
   attackDamage1: 5
   RangedPrefab1: {fileID: 0}
   Reload1: 0
   ActionUse2: 0
-  attackAnimations2: 0a000000
+  attackAnimations2: 
   UsageStamina2: 2
   attackDamage2: 5
   RangedPrefab2: {fileID: 0}

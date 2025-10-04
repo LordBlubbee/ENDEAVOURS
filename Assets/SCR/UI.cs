@@ -29,41 +29,14 @@ public class UI : MonoBehaviour
         CurrentlySelectedScreen = ob;
         if (ob) ob.SetActive(true);
     }
-
-    public enum CrosshairModes
-    {
-        NONE,
-        GRAPPLE,
-        GRAPPLE_SUCCESS,
-        RANGED,
-        WEAPONS
-    }
-    public void SetCrosshair(Vector3 pos, CrosshairModes mod)
+    public void SetCrosshair(Vector3 pos)
     {
         Crosshair.transform.position = new Vector3(pos.x, pos.y);
-        switch (mod)
-        {
-            case CrosshairModes.NONE:
-                Crosshair.color = new Color(1, 1, 1, 0);
-                break;
-            case CrosshairModes.WEAPONS:
-                Crosshair.color = new Color(1, 1, 1, 0);
-                break;
-            case CrosshairModes.GRAPPLE:
-                Crosshair.color = new Color(1, 0, 0, 0.5f);
-                break;
-            case CrosshairModes.GRAPPLE_SUCCESS:
-                Crosshair.color = new Color(0, 1, 0, 0.5f);
-                break;
-        }
     }
-    [Header("CrosshairSprites")]
     public Sprite CrosshairSpriteGeneric;
-    public Sprite CrosshairSpriteGrapple;
-    public Sprite CrosshairSpriteBallista;
     public void SetCrosshairTexture(Sprite img)
     {
-        Crosshair.sprite = img;
+        Crosshair.sprite = img == null ? CrosshairSpriteGeneric : img;
     }
     public void GoBackToPreviousScreen()
     {

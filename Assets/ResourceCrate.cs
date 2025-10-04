@@ -1,14 +1,19 @@
 using Unity.Netcode;
 using UnityEngine;
 using static CO;
+using static Module;
 
-public class ResourceCrate : NetworkBehaviour, iDamageable
+public class ResourceCrate : NetworkBehaviour, iDamageable, iInteractable
 {
     public float MaxHealth = 100;
     public ResourceTypes ResourceType;
     public NetworkVariable<int> ResourceAmount = new();
     public NetworkVariable<float> CurHealth = new();
     public SPACE Space { get; set; }
+    public ModuleTypes GetInteractableType()
+    {
+        return ModuleTypes.DRAGGABLE;
+    }
     public void Heal(float fl)
     {
     }
@@ -16,7 +21,6 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
     public void TakeDamage(float fl, Vector3 src)
     {
     }
-
     public enum ResourceTypes
     {
         MATERIALS,
@@ -45,5 +49,10 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
     public float GetHealthRelative()
     {
         return GetHealth() / GetMaxHealth();
+    }
+
+    public void RemoveCrate()
+    {
+        NetworkObject.Despawn();
     }
 }
