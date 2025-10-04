@@ -11,6 +11,9 @@ public class ScriptableEvent : ScriptableObject
     public AudioClip BeginEventOST; //OST played when this event begins.
     public string EventController; //ID for the EventController which runs the proper code.
 
+    public ScriptableEnemyGroup EnemyWave;
+
     public List<ScriptableDialog> AdditionalDialogs; //Additional dialogs that could be played.
+    public ScriptableLootTable LootTable;
     public ScriptableDialog DebriefDialog; //Dialog usually played at the end of the event.
 }

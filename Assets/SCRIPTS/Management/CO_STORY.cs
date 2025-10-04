@@ -234,11 +234,4 @@ public class CO_STORY : NetworkBehaviour
         SetStory(CurrentDialog.ChoicePathDialogs[result].DialogResult);
     }
 
-    private void PerformEvent(string str)
-    {
-        //LOOOOOOOOOOOOOOOOOOOOOOOOONG LIST
-        switch (str)
-        {
-        }
-    }
 }

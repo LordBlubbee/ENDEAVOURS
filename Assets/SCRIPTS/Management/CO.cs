@@ -410,6 +410,18 @@ public class CO : NetworkBehaviour
             LOCALCO_IDCOUNT++;
         }
     }
+    public List<CREW> GetEnemyCrew(int fac = 1)
+    {
+        List<CREW> list = new();
+        foreach (CREW loc in GetAllCrews())
+        {
+            if (loc.GetFaction() > 0 && loc.GetFaction() != fac)
+            {
+                list.Add(loc);
+            }
+        }
+        return list;
+    }
 
     List<CREW> RegisteredCREW = new();
     public List<CREW> GetAllCrews()
@@ -486,5 +498,28 @@ public class CO : NetworkBehaviour
     public void UpdateATTUIRpc()
     {
         UI.ui.InventoryUI.SkillRefresh();
+    }
+
+    /*GAME EVENTS*/
+    ScriptableEvent CurrentEvent = null;
+    public void PerformEvent(string str, ScriptableEvent even)
+    {
+        //LOOOOOOOOOOOOOOOOOOOOOOOOONG LIST
+        CurrentEvent = even;
+        switch (str)
+        {
+            case "GenericBattle":
+                StartCoroutine(Event_GenericBattle());
+                break;
+        }
+    }
+    IEnumerator Event_GenericBattle()
+    {
+        AreWeInDanger.Value = true;
+        while (GetEnemyCrew().Count > 0)
+        {
+            yield return new WaitForSeconds(1);
+        }
+        AreWeInDanger.Value = false;
     }
 }
