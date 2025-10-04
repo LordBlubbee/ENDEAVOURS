@@ -277,7 +277,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7d2335f3512b5444ca5d33e27754e95e, type: 3}
+  m_Sprite: {fileID: 2347656569888133005, guid: f23f2b3fa89b0774e9b2ad1ceda60890, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -380,3 +380,4 @@ MonoBehaviour:
   UseItemButton: {fileID: 7955080130105859020}
   InnerIconImage: {fileID: 2007977178686994300}
   ImageBorder: {fileID: 5490553795353642596}
+  DefaultEquipState: 0

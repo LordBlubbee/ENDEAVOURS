@@ -83,7 +83,7 @@ public class LOCALCO : NetworkBehaviour
                     if (Input.GetMouseButtonUp(0)) GetPlayer().StopItem1Rpc();
                     if (Input.GetMouseButtonDown(1)) GetPlayer().UseItem2Rpc();
                     if (Input.GetMouseButtonUp(1)) GetPlayer().StopItem2Rpc();
-                    UI.ui.MainGameplayUI.InventoryGrappleSlot.SetEquipState(InventorySlot.EquipStates.NONE);
+                   // UI.ui.MainGameplayUI.InventoryGrappleSlot.SetEquipState(InventorySlot.EquipStates.NONE);
                     /*if (Player.Space.isCurrentGridBoardable(Player.transform.position))
                     {
                         if (Input.GetKey(KeyCode.G))
@@ -109,7 +109,9 @@ public class LOCALCO : NetworkBehaviour
                             UI.ui.MainGameplayUI.InventoryGrappleSlot.SetEquipState(InventorySlot.EquipStates.FAIL);
                         }
                     }*/
-                    if (Input.GetKeyDown(KeyCode.H)) GetPlayer().EquipWrenchRpc();
+                    if (Input.GetKeyDown(KeyCode.G)) GetPlayer().EquipGrappleRpc();
+                    if (Input.GetKeyDown(KeyCode.E)) GetPlayer().EquipWrenchRpc();
+                    if (Input.GetKeyDown(KeyCode.Q)) GetPlayer().EquipMedkitRpc();
                     if (Input.GetKeyDown(KeyCode.Alpha1)) GetPlayer().EquipWeapon1Rpc();
                     if (Input.GetKeyDown(KeyCode.Alpha2)) GetPlayer().EquipWeapon2Rpc();
                     if (Input.GetKeyDown(KeyCode.Alpha3)) GetPlayer().EquipWeapon3Rpc();

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2900509096496761821}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 5726049725718902465}
   - component: {fileID: 8311341897716400573}
   m_Layer: 0
-  m_Name: Logipedes_Wrench
+  m_Name: Logipedes_Medkit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,12 +111,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: a617f0d8d0e1d8c42a9f336c1a337ab4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 75ea1b5b68c05bf4cbd54dd34119f962, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 61.3, y: 4.3}
+  m_Size: {x: 0.7, y: 0.7}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -142,16 +142,16 @@ MonoBehaviour:
   - {fileID: 7081632785703404455}
   strikePoints:
   - {fileID: 8362816068341079287}
-  ActionUse1: 4
-  attackAnimations1: 03000000040000000500000006000000
-  UsageStamina1: 10
-  attackDamage1: 5
+  ActionUse1: 5
+  attackAnimations1: 03000000
+  UsageStamina1: 2
+  attackDamage1: 25
   RangedPrefab1: {fileID: 0}
   Reload1: 0
-  ActionUse2: 0
+  ActionUse2: 6
   attackAnimations2: 0a000000
   UsageStamina2: 2
-  attackDamage2: 5
+  attackDamage2: 10
   RangedPrefab2: {fileID: 0}
   Reload2: 0
 --- !u!1 &6403120744721419714
@@ -210,7 +210,7 @@ Transform:
   m_GameObject: {fileID: 7977386767710107195}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.65, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

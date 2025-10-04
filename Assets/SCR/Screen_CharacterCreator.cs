@@ -269,6 +269,7 @@ public class Screen_CharacterCreator : MonoBehaviour
         //Handles background chosen
         SelectedBackground = CurrentlySelectedBackground.Background;
         ChooseBackgroundExact(CurrentlySelectedBackground.Border);
+        OpenSubscreen(Subscreens[2]); //Background selected
         SkillRefresh();
     }
 }

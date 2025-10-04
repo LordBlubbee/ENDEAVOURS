@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Crossbow
   ItemDesc: Pointy stick.
-  ItemIcon: {fileID: 5857598365883991996, guid: 8069dcecba441d4488b39aa85ea59175, type: 3}
+  ItemIcon: {fileID: -3121528104570643317, guid: 6145d55218492bd43a8b563804b4109f, type: 3}
   ItemResourceID: OBJ/SCRIPTABLES/ITEMS/Weapons/Logipedes_Crossbow
   ToolPrefab: {fileID: 8311341897716400573, guid: b9cabbcc33d9e6e4bb51d1e635599682, type: 3}

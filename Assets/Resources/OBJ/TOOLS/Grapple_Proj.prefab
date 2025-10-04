@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 5573374972207478105}
   - component: {fileID: 2287510546164752256}
   - component: {fileID: 6707283208356669452}
-  - component: {fileID: 8910635656682413825}
   - component: {fileID: 1279859445198227217}
-  - component: {fileID: 6044287901373122501}
+  - component: {fileID: 5697894895598499051}
+  - component: {fileID: 1533413245747138546}
   m_Layer: 0
-  m_Name: Proj_Ballista
+  m_Name: Grapple_Proj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: 21300000, guid: 280bcc65dcbabbe40823c654200a49f7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1e0e35625d3702642b7a1a62b69e5df9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -126,8 +126,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 3, y: 0}
-  m_Radius: 0.35
+  m_Offset: {x: 0.6, y: 0}
+  m_Radius: 0.25
 --- !u!114 &6707283208356669452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2260749420
+  GlobalObjectIdHash: 1846958375
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -153,24 +153,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &8910635656682413825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3001503892985889442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f47f4cee4203fdd458041c155865ff9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  ProjectileSpeed: 90
-  InaccuracyDegrees: 4
-  ProjectileDistance: 0
-  StickToWalls: 0
-  AltitudeInacurracyFactor: 0.1
 --- !u!114 &1279859445198227217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,7 +199,7 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!50 &6044287901373122501
+--- !u!50 &5697894895598499051
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -244,3 +226,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &1533413245747138546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3001503892985889442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aae843f4ecf32c148a6e1fb5470b9818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  ProjectileSpeed: 80
+  InaccuracyDegrees: 3
+  ProjectileDistance: 0
+  StickToWalls: 0
+  AltitudeInacurracyFactor: 0.05

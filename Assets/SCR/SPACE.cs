@@ -10,7 +10,9 @@ public class SPACE : NetworkBehaviour
     [NonSerialized] public List<CREW> CrewInSpace = new();
     private List<Module> Modules = new();
     public List<WalkableTile> RoomTiles;
+    public List<GameObject> EmptyTiles;
     private List<Vector2> RoomLocations = new();
+    private List<Vector2> EmptyLocations = new();
     public List<Module> StartingModuleList;
     public List<Vector3> StartingModuleLocations;
 
@@ -35,6 +37,11 @@ public class SPACE : NetworkBehaviour
             tile.Space = this;
             RoomLocations.Add(new Vector2(trans.localPosition.x / 8f, trans.localPosition.y / 8f));
         }
+        foreach (GameObject tile in EmptyTiles)
+        {
+            Transform trans = tile.transform;
+            EmptyLocations.Add(new Vector2(trans.localPosition.x / 8f, trans.localPosition.y / 8f));
+        }
         foreach (WalkableTile tile in RoomTiles)
         {
             Transform trans = tile.transform;
@@ -46,7 +53,13 @@ public class SPACE : NetworkBehaviour
                     Vector2 check = here + new Vector2(ix, iy);
                     if (!RoomLocations.Contains(check))
                     {
-                        Instantiate(PrefabEmpty, transform).transform.localPosition = trans.localPosition + new Vector3(ix * 8, iy * 8);
+                        if (!EmptyLocations.Contains(check))
+                        {
+                            GameObject ob = Instantiate(PrefabEmpty, transform);
+                            ob.transform.localPosition = trans.localPosition + new Vector3(ix * 8, iy * 8);
+                            EmptyTiles.Add(ob);
+                            EmptyLocations.Add(check);
+                        }
                         if (Mathf.Abs(ix)+Mathf.Abs(iy) < 2)
                         {
                             GameObject wall = Instantiate(PrefabWall, transform);

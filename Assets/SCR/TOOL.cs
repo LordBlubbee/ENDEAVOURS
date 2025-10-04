@@ -31,10 +31,13 @@ public class TOOL : MonoBehaviour
     private CREW Crew;
     public enum ToolActionType
     {
+        NONE,
         MELEE_ATTACK,
         RANGED_ATTACK,
         BLOCK,
-        REPAIR
+        REPAIR,
+        HEAL_OTHERS,
+        HEAL_SELF
     }
 
 

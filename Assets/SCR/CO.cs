@@ -12,6 +12,7 @@ public class CO : NetworkBehaviour
 
     [NonSerialized] public NetworkVariable<bool> HasShipBeenLaunched = new();
     [NonSerialized] public NetworkVariable<bool> AreWeInDanger = new();
+    [NonSerialized] public NetworkVariable<bool> GamePaused = new();
     [NonSerialized] public DRIFTER PlayerMainDrifter;
     [NonSerialized] public NetworkVariable<int> PlayerMapPointID = new();
 
@@ -379,10 +380,12 @@ public class CO : NetworkBehaviour
 
     public float GetWorldSpeedDelta()
     {
+        if (GamePaused.Value) return 0f;
         return Time.deltaTime;
     }
     public float GetWorldSpeedDeltaFixed()
     {
+        if (GamePaused.Value) return 0f;
         return Time.fixedDeltaTime;
     }
 

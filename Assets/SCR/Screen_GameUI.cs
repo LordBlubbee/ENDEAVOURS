@@ -19,6 +19,7 @@ public class Screen_GameUI : MonoBehaviour
     public InventorySlot[] InventoryWeaponSlots;
     public InventorySlot InventoryGrappleSlot;
     public InventorySlot InventoryToolsSlot;
+    public InventorySlot InventoryHealsSlot;
     void Update()
     {
         if (!LOCALCO.local)
@@ -91,6 +92,7 @@ public class Screen_GameUI : MonoBehaviour
         }
         InventoryGrappleSlot.SetEquipState(ID == -1 ? InventorySlot.EquipStates.SUCCESS : InventorySlot.EquipStates.NONE);
         InventoryToolsSlot.SetEquipState(ID == -2 ? InventorySlot.EquipStates.SUCCESS : InventorySlot.EquipStates.NONE);
+        InventoryHealsSlot.SetEquipState(ID == -3 ? InventorySlot.EquipStates.SUCCESS : InventorySlot.EquipStates.NONE);
     }
     public void RefreshWeaponUI()
     {

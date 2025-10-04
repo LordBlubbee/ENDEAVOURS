@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5f693a3b0f961cf478163c8ea5ad2d04
+guid: 75ea1b5b68c05bf4cbd54dd34119f962
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9221236000796306717
-    second: RoomCorner_0
+      213: -3826845409251182802
+    second: Medkit_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -98,7 +98,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: Android
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RoomCorner_0
+      name: Medkit_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 210
-        height: 210
+        width: 7
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d1de189594968ff70800000000000000
-      internalID: 9221236000796306717
+      spriteID: e27bf33306054eac0800000000000000
+      internalID: -3826845409251182802
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      RoomCorner_0: 9221236000796306717
+      Medkit_0: -3826845409251182802
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

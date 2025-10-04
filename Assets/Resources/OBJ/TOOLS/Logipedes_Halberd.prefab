@@ -175,12 +175,18 @@ MonoBehaviour:
   strikePoints:
   - {fileID: 8362816068341079287}
   - {fileID: 5158618258877860477}
+  ActionUse1: 1
   attackAnimations1: 03000000040000000500000006000000
-  attackAnimations2: 0a000000
-  ActionUse1: 0
-  ActionUse2: 0
+  UsageStamina1: 2
   attackDamage1: 10
+  RangedPrefab1: {fileID: 0}
+  Reload1: 0
+  ActionUse2: 1
+  attackAnimations2: 0a000000
+  UsageStamina2: 2
   attackDamage2: 10
+  RangedPrefab2: {fileID: 0}
+  Reload2: 0
 --- !u!1 &6403120744721419714
 GameObject:
   m_ObjectHideFlags: 0

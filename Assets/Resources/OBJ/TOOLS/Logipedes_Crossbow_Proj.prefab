@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  ProjectileSpeed: 40
+  ProjectileSpeed: 60
   InaccuracyDegrees: 5
   ProjectileDistance: 0
   StickToWalls: 1

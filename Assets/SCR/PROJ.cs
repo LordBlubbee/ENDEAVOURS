@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -12,25 +13,29 @@ public class PROJ : NetworkBehaviour
     [Header("ALTITUDE")]
     public float AltitudeInacurracyFactor;
 
-    private bool isActive = true;
-    private bool UseAltitude;
-    SPACE Space;
-    float AttackDamage;
-    int Faction;
-    float AltitudeRemaining = 0f;
+    [NonSerialized] public CREW CrewOwner;
+
+    protected bool isActive = true;
+    protected bool UseAltitude;
+    protected SPACE Space;
+    protected float AttackDamage;
+    protected int Faction;
+    protected float AltitudeRemaining = 0f;
     public void Init(float damage, int fac, SPACE space)
     {
         AttackDamage = damage;
         Faction = fac;
         Space = space;
+        transform.Rotate(Vector3.forward, UnityEngine.Random.Range(-InaccuracyDegrees, InaccuracyDegrees));
     }
     public void Init(float damage, int fac, SPACE space, Vector3 trt)
     {
         UseAltitude = true;
-        AltitudeRemaining = (trt - transform.position).magnitude * Random.Range(1f- AltitudeInacurracyFactor,1f+ AltitudeInacurracyFactor);
+        AltitudeRemaining = (trt - transform.position).magnitude * UnityEngine.Random.Range(1f- AltitudeInacurracyFactor,1f+ AltitudeInacurracyFactor);
         AttackDamage = damage;
         Faction = fac;
         Space = space;
+        transform.Rotate(Vector3.forward, UnityEngine.Random.Range(-InaccuracyDegrees, InaccuracyDegrees));
     }
 
     private void FixedUpdate()
@@ -60,7 +65,7 @@ public class PROJ : NetworkBehaviour
         PotentialHitTarget(collision);
     }
 
-    private void PotentialHitTarget(Collider2D collision)
+    protected virtual void PotentialHitTarget(Collider2D collision)
     {
         iDamageable crew = collision.GetComponent<iDamageable>();
         if (crew != null)
@@ -89,31 +94,10 @@ public class PROJ : NetworkBehaviour
                 return;
             }
         }
-        /*CREW crew = collision.GetComponent<CREW>();
-        if (crew != null)
-        {
-            if (crew.Faction == Faction) return;
-            if (crew.Space != Space) return;
-            crew.TakeDamage(AttackDamage, transform.position);
-            BulletImpact();
-            return;
-        }
-        if (Space == null)
-        {
-            DRIFTER drifter = collision.GetComponent<DRIFTER>();
-            if (drifter != null)
-            {
-                if (drifter.Faction == Faction) return;
-                if (drifter.Interior != Space) return;
-                drifter.TakeDamage(AttackDamage, transform.position);
-                BulletImpact();
-                return;
-            }
-        }*/
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    private void ExpireSlowlyRpc()
+    protected void ExpireSlowlyRpc()
     {
         StartCoroutine(ExpireSlowlyNum());
     }
@@ -122,12 +106,12 @@ public class PROJ : NetworkBehaviour
         yield return new WaitForSeconds(30f);
         if (IsServer) Kill();
     }
-    private void BulletImpact()
+    protected void BulletImpact()
     {
         Kill();
     }
 
-    private void Kill()
+    protected void Kill()
     {
         NetworkObject.Despawn();
     }

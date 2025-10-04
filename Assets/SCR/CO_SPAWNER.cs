@@ -8,6 +8,7 @@ public class CO_SPAWNER : NetworkBehaviour
     public GamerTag PrefabGamerTag;
     public Sprite DefaultInventorySprite;
     public TOOL PrefabWrenchLogipedes;
+    public TOOL PrefabMedkitLogipedes;
     public TOOL PrefabGrappleLogipedes;
     public enum DefaultEquipmentSet
     {
@@ -19,19 +20,25 @@ public class CO_SPAWNER : NetworkBehaviour
     {
         switch (set)
         {
-            case DefaultEquipmentSet.LOGIPEDES:
+            default:
                 return PrefabWrenchLogipedes;
         }
-        return null;
+    }
+    public TOOL GetPrefabMedkit(DefaultEquipmentSet set)
+    {
+        switch (set)
+        {
+            default:
+                return PrefabMedkitLogipedes;
+        }
     }
     public TOOL GetPrefabGrapple(DefaultEquipmentSet set)
     {
         switch (set)
         {
-            case DefaultEquipmentSet.LOGIPEDES:
+            default:
                 return PrefabGrappleLogipedes;
         }
-        return null;
     }
 
 
