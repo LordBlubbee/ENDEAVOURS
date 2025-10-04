@@ -239,17 +239,36 @@ public class Screen_CharacterCreator : MonoBehaviour
         }
         ob.color = Color.cyan;
     }
+
+    public GameObject SelectedBackgroundScreen;
+    public Image SelectedBackgroundScreenImage;
+    public Image SelectedBackgroundScreenImageOuter;
+    public TextMeshProUGUI SelectedBackgroundScreenTitle;
+    public TextMeshProUGUI SelectedBackgroundScreenDesc;
+    UI_OpenBackground CurrentlySelectedBackground;
+    public void OpenExactBackground(UI_OpenBackground back)
+    {
+        CurrentlySelectedBackground = back;
+        SelectedBackgroundScreenImage.sprite = back.Background.MainIcon;
+        SelectedBackgroundScreenImageOuter.color = back.Background.BackgroundColor;
+        SelectedBackgroundScreenTitle.text = back.Background.BackgroundName;
+        SelectedBackgroundScreenDesc.text = back.Background.LongDesc;
+        OpenSubscreen(SelectedBackgroundScreen);
+    }
     public void ChooseBackgroundExact(Image ob)
     {
+        //Handles texture
         foreach (Image sub in AllBackgrounds)
         {
             sub.color = Color.gray;
         }
         ob.color = Color.cyan;
     }
-    public void ChooseBackground(ScriptableBackground back)
+    public void PressChooseBackground()
     {
-        SelectedBackground = back;
+        //Handles background chosen
+        SelectedBackground = CurrentlySelectedBackground.Background;
+        ChooseBackgroundExact(CurrentlySelectedBackground.Border);
         SkillRefresh();
     }
 }

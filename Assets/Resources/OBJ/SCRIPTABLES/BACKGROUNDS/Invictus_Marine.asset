@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BackgroundName: Invictus Marine
   ResourcePath: OBJ/SCRIPTABLES/BACKGROUNDS/Invictus_Marine
-  BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  MainIcon: {fileID: 2347656569888133005, guid: f23f2b3fa89b0774e9b2ad1ceda60890, type: 3}
+  ShortDesc: You are a soldier.
+  LongDesc: The Logipedes are totally rad, you should join them.
+  BackgroundColor: {r: 1, g: 0.6850692, b: 0, a: 0}
   Background_ATT_BONUS: 0200000001000000000000000000000000000000000000000000000001000000
   Background_StartingWeapon: {fileID: 11400000, guid: 1a5ba66db25aae94794c0a02ba54b3d2, type: 2}
   Background_ReputationEffect:

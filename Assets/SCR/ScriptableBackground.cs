@@ -9,6 +9,11 @@ public class ScriptableBackground : ScriptableObject
 {
     public string BackgroundName;
     public string ResourcePath;
+    public Sprite MainIcon;
+    [TextArea(3, 10)]
+    public string ShortDesc;
+    [TextArea(5, 10)]
+    public string LongDesc;
     public Color BackgroundColor;
     [Header("PHYS, ARM, DEX, COM, HAR, ENG, GUN, MED")]
     public int[] Background_ATT_BONUS = new int[8];

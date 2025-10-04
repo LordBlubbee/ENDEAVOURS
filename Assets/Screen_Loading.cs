@@ -9,7 +9,7 @@ public class Screen_Loading : MonoBehaviour
         if (!CO.co.GetLOCALCO().Contains(LOCALCO.local)) return;
         if (CO.co.HasShipBeenLaunched.Value)
         {
-            UI.ui.SelectScreen(UI.ui.CharacterCreationUI);
+            UI.ui.SelectScreen(UI.ui.CharacterCreationUI.gameObject);
         } else
         {
             UI.ui.SelectScreen(UI.ui.ShipSelectionUI.gameObject);

@@ -30,7 +30,7 @@ public class Screen_ShipSelector : MonoBehaviour
     {
         if (CO.co.HasShipBeenLaunched.Value)
         {
-            UI.ui.SelectScreen(UI.ui.CharacterCreationUI);
+            UI.ui.SelectScreen(UI.ui.CharacterCreationUI.gameObject);
         }
     }
     public void PressShipButton(SpawnableShip ship)
