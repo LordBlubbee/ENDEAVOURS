@@ -10,6 +10,7 @@ public class CO_SPAWNER : NetworkBehaviour
     public TOOL PrefabWrenchLogipedes;
     public TOOL PrefabMedkitLogipedes;
     public TOOL PrefabGrappleLogipedes;
+    public TOOL PrefabGrappleSilent;
     public enum DefaultEquipmentSet
     {
         NONE,
@@ -36,6 +37,8 @@ public class CO_SPAWNER : NetworkBehaviour
     {
         switch (set)
         {
+            case DefaultEquipmentSet.NONE:
+                return PrefabGrappleSilent;
             default:
                 return PrefabGrappleLogipedes;
         }
@@ -62,6 +65,14 @@ public class CO_SPAWNER : NetworkBehaviour
         co = this;
 
         int i = 0;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            SpawnLooncrabsAggressive(new Vector3(0, 150), 3);
+        }
     }
 
     [Rpc(SendTo.Server)]

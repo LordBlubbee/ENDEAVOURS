@@ -112,17 +112,17 @@ public class SPACE : NetworkBehaviour
         Vector2 grid = ConvertWorldToGrid(point);
         if (RoomLocations.Contains(grid)) return GetCurrentGrid(point);
         float minDist = 9999f;
-        Vector2 trt = grid;
-        foreach (Vector2 loc in GetGrid())
+        WalkableTile trt = null;
+        foreach (WalkableTile loc in GetGridObjects())
         {
-            float dist = (ConvertGridToWorld(loc) - point).magnitude;
+            float dist = (loc.transform.position - point).magnitude;
             if (dist < minDist)
             {
                 minDist = dist;
                 trt = loc;
             }
         }
-        return GetCurrentGrid(trt);
+        return trt;
     }
 
     public WalkableTile GetCurrentGrid(Vector3 here)
@@ -166,6 +166,10 @@ public class SPACE : NetworkBehaviour
     public List<Vector2> GetGrid()
     {
         return RoomLocations;
+    }
+    public List<WalkableTile> GetGridObjects()
+    {
+        return RoomTiles;
     }
     public void AddCrew(CREW crew)
     {

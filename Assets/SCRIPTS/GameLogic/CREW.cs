@@ -27,7 +27,6 @@ public class CREW : NetworkBehaviour, iDamageable
 
     [Header("STATS")]
     public float MaxHealth = 100f;
-    public float NaturalHealthRegen = 0.1f;
     public float NaturalStaminaRegen = 25f;
     public float MovementSpeed = 7;
     public float RotationDistanceFactor = 4;
@@ -284,6 +283,11 @@ public class CREW : NetworkBehaviour, iDamageable
             Alive.Value = true;
             CurHealth.Value = GetMaxHealth();
             CurStamina.Value = GetMaxStamina();
+
+            if (EquippedWeapons[0] != null)
+            {
+                EquipWeaponPrefab(0);
+            }
         }
     }
 
@@ -321,7 +325,7 @@ public class CREW : NetworkBehaviour, iDamageable
 
     private Vector3 MoveInput;
     private Vector3 LookTowards;
-    private bool isMoving = false;
+    private NetworkVariable<bool> isMoving = new(false);
     private bool isLooking = false;
 
     [Rpc(SendTo.Server)]
@@ -337,7 +341,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public void SetMoveInput(Vector3 mov)
     {
         MoveInput = mov;
-        isMoving = mov != Vector3.zero;
+        isMoving.Value = mov != Vector3.zero;
     }
     public void SetLookTowards(Vector2 mov)
     {
@@ -463,7 +467,7 @@ public class CREW : NetworkBehaviour, iDamageable
     /*Use Inputs*/
     public void Dash()
     {
-        if (!isMoving) return;
+        if (!isMoving.Value) return;
         if (isDashing) return;
         if (!CanFunction()) return;
         if (!ConsumeStamina(NextDashCost)) return;
@@ -544,7 +548,7 @@ public class CREW : NetworkBehaviour, iDamageable
         if (GetStamina() < EquippedToolObject.UsageStamina2) return;
         AnimationComboWeapon1 = 0;
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations2[AnimationComboWeapon2]);
-        if (setAnimationLocally(EquippedToolObject.attackAnimations2[AnimationComboWeapon2],3)) return;
+        if (!setAnimationLocally(EquippedToolObject.attackAnimations2[AnimationComboWeapon2],3)) return;
         canStrikeMelee = true;
         ConsumeStamina(EquippedToolObject.UsageStamina2);
         AnimationComboWeapon2++;
@@ -560,9 +564,11 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             LastStaminaUsed += CO.co.GetWorldSpeedDelta();
 
-            if (LastStaminaUsed > 0.5f)
+            AddStamina(CO.co.GetWorldSpeedDelta() * GetStaminaRegen() * LastStaminaUsed * 0.5f);
+            if (LastStaminaUsed > 2f)
             {
-                AddStamina(CO.co.GetWorldSpeedDelta() * GetStaminaRegen());
+                AnimationComboWeapon1 = 0;
+                AnimationComboWeapon2 = 0;
             }
         }
         if (UseItem1_Input) UseItem1();
@@ -763,7 +769,7 @@ public class CREW : NetworkBehaviour, iDamageable
             }
         }
         if (!UsePhysics()) return;
-        if (isMoving)
+        if (isMoving.Value)
         {
             if (IsServer) setAnimationRpc(animDefaultMove, 1);
             float towardsang = Mathf.Abs(AngleTowards(MoveInput));
@@ -846,7 +852,12 @@ public class CREW : NetworkBehaviour, iDamageable
         EquippedToolObject.transform.localPosition = new Vector3(EquippedToolObject.localX, EquippedToolObject.localY, -0.0002f);
         EquippedToolObject.transform.Rotate(Vector3.forward, EquippedToolObject.localRot);
         AnimTransforms[1].setTransform(EquippedToolObject.transform);
-        Debug.Log(EquippedToolObject);
+        if (EquippedToolObject.Tool2)
+        {
+            EquippedToolObject.Tool2.transform.SetParent(transform);
+            EquippedToolObject.Tool2.transform.localPosition = new Vector3(EquippedToolObject.Tool2.transform.localPosition.x, EquippedToolObject.Tool2.transform.localPosition.y, -0.0002f);
+            AnimTransforms[2].setTransform(EquippedToolObject.Tool2.transform);
+        }
     }
 
     /*GETTERS AND SETTERS*/
@@ -860,7 +871,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetHealingSkill()
     {
-        return NaturalHealthRegen * (0.4f + 0.2f * GetATT_MEDICAL());
+        return (0.4f + 0.2f * GetATT_MEDICAL());
     }
     public float GetStaminaRegen()
     {
@@ -1021,6 +1032,11 @@ public class CREW : NetworkBehaviour, iDamageable
     public float GetSpeed()
     {
         return MovementSpeed * (0.8f+GetATT_DEXTERITY()*0.08f);
+    }
+    public float GetCurrentSpeed()
+    {
+        if (!isMoving.Value) return 0;
+        return MovementSpeed;
     }
     public float AngleToTurnTarget()
     {

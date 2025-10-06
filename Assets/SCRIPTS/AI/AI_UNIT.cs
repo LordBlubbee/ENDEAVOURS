@@ -111,6 +111,10 @@ public class AI_UNIT : NetworkBehaviour
                 {
                     path = null;
                     Unit.SetMoveInput((AI_MoveTarget - transform.position).normalized);
+                    if (Dist(AI_MoveTarget) < 4f)
+                    {
+                        Unit.UseItem1();
+                    }
                 }
             }
             else Unit.SetMoveInput(Vector3.zero);

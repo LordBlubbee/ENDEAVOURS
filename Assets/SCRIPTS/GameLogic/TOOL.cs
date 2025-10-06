@@ -7,7 +7,7 @@ public class TOOL : MonoBehaviour
     public float localY;
     public float localRot;
 
-
+    public Transform Tool2;
     public List<Transform> handPoints;
     public List<Transform> strikePoints;
 

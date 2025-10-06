@@ -73,8 +73,8 @@ public class Screen_GameUI : MonoBehaviour
 
     public void SetActiveGameUI(CanvasGroup group)
     {
-        ActiveUI.gameObject.SetActive(group.gameObject == ActiveUI.gameObject);
-        WeaponUI.gameObject.SetActive(group.gameObject == WeaponUI.gameObject);
+        ActiveUI.gameObject.SetActive(group == ActiveUI);
+        WeaponUI.gameObject.SetActive(group == WeaponUI);
     }
 
     private void OnEnable()

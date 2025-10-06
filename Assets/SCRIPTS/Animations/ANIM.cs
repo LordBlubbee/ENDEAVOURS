@@ -571,7 +571,6 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 Frames.Add(curFrame);
                 curFrame = new AnimFrame(11, 0.3f);
                 curFrame.AnimationMoveFactor = 0.4f;
-                curFrame.isStriking = 1f;
                 curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0), -36); //Body
                 curFrame.addMovement(new Vector3(0.2f, -0.6f), new Vector3(0.05f, 0.05f), -43); //Tool Right
                 curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left

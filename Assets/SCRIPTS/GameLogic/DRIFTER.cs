@@ -71,6 +71,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     public void SetMoveInput(Vector3 mov, float eff)
     {
         if (!canReceiveInput) return;
+        Debug.Log("Setting move input!");
         MoveInput = mov;
         PilotingEfficiency = eff;
     }
