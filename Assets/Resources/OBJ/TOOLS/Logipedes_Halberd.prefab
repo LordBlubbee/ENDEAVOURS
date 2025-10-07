@@ -169,12 +169,17 @@ MonoBehaviour:
   localX: 0.4
   localY: 1.8
   localRot: -72
+  Tool2: {fileID: 0}
   handPoints:
   - {fileID: 8339970041961610142}
   - {fileID: 7081632785703404455}
   strikePoints:
   - {fileID: 8362816068341079287}
   - {fileID: 5158618258877860477}
+  CrosshairSprite: {fileID: 21300000, guid: b2087bbfc192e8041bd4924a70def55c, type: 3}
+  CrosshairMaxRange: 5
+  CrosshairMinRange: 4
+  RotateCrosshair: 1
   ActionUse1: 1
   attackAnimations1: 03000000040000000500000006000000
   UsageStamina1: 2

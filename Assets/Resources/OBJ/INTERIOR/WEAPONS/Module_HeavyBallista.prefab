@@ -255,7 +255,7 @@ MonoBehaviour:
   Platform: {fileID: 6031975965002184304}
   FirePoint: {fileID: 3676994766029858991}
   FireProjectile: {fileID: 8910635656682413825, guid: bcb2fb2362f019e4290db11af9a5f758, type: 3}
-  CrosshairSprite: {fileID: 0}
+  CrosshairSprite: {fileID: 21300000, guid: 3d1452e5180bdf641bb60a3aadc3248a, type: 3}
   Damage: 50
   RotationBaseSpeed: 60
   MaxAmmo: 80

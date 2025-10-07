@@ -93,6 +93,7 @@ MonoBehaviour:
   PrefabMedkitLogipedes: {fileID: 8311341897716400573, guid: e24d4a4413d2ea945a81e534377d03a5, type: 3}
   PrefabGrappleLogipedes: {fileID: 8311341897716400573, guid: e11f4c2fe346a554589783eaa99827f3, type: 3}
   PrefabGrappleSilent: {fileID: 8311341897716400573, guid: f731be7339e17ee4399b86044f2ad2b7, type: 3}
+  PrefabAmmoCrate: {fileID: 5275543212453673670, guid: 8384cb1ea12c4dd46a5c2c2072f30029, type: 3}
   PrefabDMG: {fileID: 7984331047920370264, guid: d7c770080f1bbd74896728c8e86423ca, type: 3}
   PrefabMapPoint: {fileID: 3321087299976624134, guid: dc2158057d660e74e8c4d97661c8c919, type: 3}
   PrefabLooncrab: {fileID: 5867427934140877094, guid: 86f046a72cbd10a4eb1d9f606f946a03, type: 3}

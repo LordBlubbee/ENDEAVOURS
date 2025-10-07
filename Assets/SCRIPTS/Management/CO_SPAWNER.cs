@@ -11,6 +11,7 @@ public class CO_SPAWNER : NetworkBehaviour
     public TOOL PrefabMedkitLogipedes;
     public TOOL PrefabGrappleLogipedes;
     public TOOL PrefabGrappleSilent;
+    public ResourceCrate PrefabAmmoCrate;
     public enum DefaultEquipmentSet
     {
         NONE,
@@ -125,5 +126,15 @@ public class CO_SPAWNER : NetworkBehaviour
         MapPoint mapPoint = Instantiate(PrefabMapPoint, pos, Quaternion.identity);
         mapPoint.NetworkObject.Spawn();
         return mapPoint;
+    }
+
+    [Rpc(SendTo.Server)]
+    public void CreateAmmoCrateRpc(Vector3 vec)
+    {
+        if (CO.co.Resource_Ammo.Value < 10) return;
+        CO.co.Resource_Ammo.Value -= 10;
+        ResourceCrate ob = Instantiate(PrefabAmmoCrate, vec, Quaternion.identity, CO.co.PlayerMainDrifter.Space.transform);
+        ob.NetworkObject.Spawn();
+        ob.ResourceAmount.Value = 10;
     }
 }

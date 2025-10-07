@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -60,7 +61,8 @@ public class LOCALCO : NetworkBehaviour
             Vector3 mov = Vector3.zero;
             Vector3 Mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Mouse = new Vector3(Mouse.x, Mouse.y);
-            UI.ui.SetCrosshair(Mouse);
+            Vector3 CrosshairPoint = Mouse;
+     
             if (UI.ui.CurrentlySelectedScreen != UI.ui.MainGameplayUI.gameObject)
             {
                 GetPlayer().SetMoveInput(mov);
@@ -73,7 +75,31 @@ public class LOCALCO : NetworkBehaviour
             {
                 case ControlModes.PLAYER:
                     UI.ui.MainGameplayUI.SetActiveGameUI(UI.ui.MainGameplayUI.ActiveUI);
-                    UI.ui.SetCrosshairTexture(GetPlayer().EquippedToolObject ? GetPlayer().EquippedToolObject.CrosshairSprite : null);
+                    bool SpecialCrosshair = GetPlayer().EquippedToolObject;
+                    UI.ui.SetCrosshairTexture(SpecialCrosshair ? GetPlayer().EquippedToolObject.CrosshairSprite : null);
+                    if (SpecialCrosshair)
+                    {
+                        float Dist = (Mouse - GetPlayer().transform.position).magnitude;
+                        if (Dist < GetPlayer().EquippedToolObject.CrosshairMinRange)
+                        {
+                            CrosshairPoint = GetPlayer().transform.position + (Mouse-GetPlayer().transform.position).normalized * GetPlayer().EquippedToolObject.CrosshairMinRange;
+                        }
+                        else if (Dist > GetPlayer().EquippedToolObject.CrosshairMaxRange)
+                        {
+                            CrosshairPoint = GetPlayer().transform.position + (Mouse - GetPlayer().transform.position).normalized * GetPlayer().EquippedToolObject.CrosshairMaxRange;
+                        }
+                        if (GetPlayer().EquippedToolObject.RotateCrosshair)
+                        {
+                            UI.ui.SetCrosshairRotateTowards(CrosshairPoint, GetPlayer().transform.position);
+                        } else
+                        {
+                            UI.ui.SetCrosshairRotateReset();
+                        }
+                    } else
+                    {
+                        UI.ui.SetCrosshairRotateReset();
+                    }
+                    UI.ui.SetCrosshair(CrosshairPoint);
                     if (Input.GetKey(KeyCode.W)) mov += new Vector3(0, 1);
                     if (Input.GetKey(KeyCode.S)) mov += new Vector3(0, -1);
                     if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
@@ -122,6 +148,9 @@ public class LOCALCO : NetworkBehaviour
                     break;
                 case ControlModes.DRIFTER:
                     UI.ui.MainGameplayUI.SetActiveGameUI(null);
+                    UI.ui.SetCrosshairTexture(null);
+                    UI.ui.SetCrosshair(Mouse); 
+                    UI.ui.SetCrosshairRotateReset();
                     GetPlayer().SetMoveInput(mov);
                     if (!IsServer) GetPlayer().SetMoveInputRpc(Vector3.zero);
                     if (Input.GetKey(KeyCode.W)) mov += new Vector3(0, 1);
@@ -139,6 +168,9 @@ public class LOCALCO : NetworkBehaviour
                 case ControlModes.WEAPON:
                     UI.ui.MainGameplayUI.SetActiveGameUI(UI.ui.MainGameplayUI.WeaponUI);
                     UI.ui.SetCrosshairTexture(UsingWeapon.CrosshairSprite);
+                    UI.ui.SetCrosshairRotateReset();
+                    CrosshairPoint = UsingWeapon.transform.position + UsingWeapon.getLookVector() * (UsingWeapon.transform.position-Mouse).magnitude;
+                    UI.ui.SetCrosshair(CrosshairPoint);
                     GetPlayer().SetMoveInput(mov);
                     if (!IsServer) GetPlayer().SetMoveInputRpc(Vector3.zero);
                     if (!IsServer) UsingWeapon.SetLookTowardsRpc(Mouse);
@@ -232,7 +264,7 @@ public class LOCALCO : NetworkBehaviour
         while (true)
         {
             UI.ui.MainGameplayUI.SetInteractTex("", Color.white);
-            if (DraggingObject)
+            if (DraggingObject != null)
             {
                 UI.ui.MainGameplayUI.SetInteractTex("[F] DROP", Color.white);
                 if (Input.GetKeyDown(KeyCode.F))
@@ -351,6 +383,7 @@ public class LOCALCO : NetworkBehaviour
                             UI.ui.MainGameplayUI.SetInteractTex("[F] CARRY", Color.green);
                             if (Input.GetKeyDown(KeyCode.F))
                             {
+                                DraggingObject = mod.transform;
                                 GetPlayer().StartDragging(mod.transform);
                             }
                             break;

@@ -614,9 +614,9 @@ public class CREW : NetworkBehaviour, iDamageable
                 iDamageable crew = col.GetComponent<iDamageable>();
                 if (crew != null)
                 {
-                    if (crew.GetFaction() == Faction) return;
-                    if (crew.Space != Space) return;
-                    if (!crew.CanBeTargeted()) return;
+                    if (crew.GetFaction() == Faction) continue;
+                    if (crew.Space != Space) continue;
+                    if (!crew.CanBeTargeted()) continue;
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
                     dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE() + 0.02f * GetATT_PILOTING();
@@ -652,8 +652,8 @@ public class CREW : NetworkBehaviour, iDamageable
                 if (crew != null)
                 {
                     //if (crew.GetFaction() != Faction) return;
-                    if (crew.Space != Space) return;
-                    if (!(crew is Module)) return;
+                    if (crew.Space != Space) continue;
+                    if (!(crew is Module)) continue;
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
                     dmg *= 0.4f + 0.2f * GetATT_ENGINEERING();
@@ -675,8 +675,9 @@ public class CREW : NetworkBehaviour, iDamageable
                 if (crew != null)
                 {
                     //if (crew.GetFaction() != Faction) return;
-                    if (crew.Space != Space) return;
-                    if (crew is Module) return;
+                    if (crew == this) continue;
+                    if (crew.Space != Space) continue;
+                    if (crew is Module) continue;
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
                     dmg *= GetHealingSkill();
@@ -769,6 +770,11 @@ public class CREW : NetworkBehaviour, iDamageable
             }
         }
         if (!UsePhysics()) return;
+        if (DraggingObject)
+        {
+            float Dist = (DraggingObject.transform.position - transform.position).magnitude;
+            DraggingObject.transform.position = transform.position + (DraggingObject.transform.position - transform.position).normalized * Mathf.Min(Dist, 3.25f);
+        }
         if (isMoving.Value)
         {
             if (IsServer) setAnimationRpc(animDefaultMove, 1);
@@ -777,11 +783,7 @@ public class CREW : NetworkBehaviour, iDamageable
             transform.position += MoveInput * GetSpeed() * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
             Rigid.MovePosition(transform.position);
             //Rigid.MovePosition(transform.position + MoveInput * GetSpeed() * towardsfactor * CO.co.GetWorldSpeedDelta());
-            if (DraggingObject)
-            {
-                float Dist = (DraggingObject.transform.position - transform.position).magnitude;
-                DraggingObject.transform.position = transform.position + (DraggingObject.transform.position - transform.position).normalized * Mathf.Min(Dist,2.75f);
-            }
+            
         } else
         {
             if (IsServer) setAnimationRpc(animDefaultIdle, 1);

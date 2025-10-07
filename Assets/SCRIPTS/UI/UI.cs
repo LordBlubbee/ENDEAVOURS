@@ -29,8 +29,11 @@ public class UI : MonoBehaviour
         CurrentlySelectedScreen = ob;
         if (ob) ob.SetActive(true);
     }
+
+    public bool testturnoff;
     public void SetCrosshair(Vector3 pos)
     {
+        if (testturnoff) return;
         Crosshair.transform.position = new Vector3(pos.x, pos.y);
     }
     public Sprite CrosshairSpriteGeneric;
@@ -38,6 +41,27 @@ public class UI : MonoBehaviour
     {
         Crosshair.sprite = img == null ? CrosshairSpriteGeneric : img;
     }
+    public void SetCrosshairRotateTowards(Vector3 towards, Vector3 from)
+    {
+        Crosshair.transform.Rotate(Vector3.forward, AngleBetweenPoints(from, towards));
+    }
+    public void SetCrosshairRotateReset()
+    {
+        Crosshair.transform.rotation = Quaternion.identity;
+    }
+    protected float AngleBetweenPoints(Vector3 from, Vector3 towards)
+    {
+        return Vector2.SignedAngle(getLookVector(), towards - from);
+    }
+    protected Vector3 getLookVector()
+    {
+        Quaternion rotref = Crosshair.transform.rotation;
+        float rot = Mathf.Deg2Rad * rotref.eulerAngles.z;
+        float dxf = Mathf.Cos(rot);
+        float dyf = Mathf.Sin(rot);
+        return new Vector3(dxf, dyf, 0);
+    }
+
     public void GoBackToPreviousScreen()
     {
         SelectScreen(PreviousScreen);

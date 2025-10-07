@@ -56,7 +56,14 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     private Vector3 MoveInput;
     private Vector3 LookTowards = new Vector3(1,0);
 
-    public SPACE Space { get; set; }
+    public SPACE Space
+    {
+        get { return Interior; }
+        set
+        {
+
+        }
+    }
 
     [Rpc(SendTo.Server)]
     public void SetMoveInputRpc(Vector3 mov, float eff)

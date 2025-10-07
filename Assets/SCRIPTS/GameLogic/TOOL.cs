@@ -15,6 +15,7 @@ public class TOOL : MonoBehaviour
     public Sprite CrosshairSprite;
     public float CrosshairMaxRange = 999;
     public float CrosshairMinRange = -1;
+    public bool RotateCrosshair = false;
 
     [Header("ACTION 1")]
     public ToolActionType ActionUse1;

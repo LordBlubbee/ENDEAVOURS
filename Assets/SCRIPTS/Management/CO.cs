@@ -132,8 +132,14 @@ public class CO : NetworkBehaviour
     {
         GenerateMap(25, 20);
 
-        co.Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Items/Weapons/Logipedes_Crossbow"));
-        co.Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Items/Weapons/Logipedes_Halberd"));
+
+        //NEW GAME
+        Resource_Materials.Value = 50;
+        Resource_Supplies.Value = 50;
+        Resource_Ammo.Value = 50;
+        Resource_Tech.Value = 0;
+        Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Items/Weapons/Logipedes_Crossbow"));
+        Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Items/Weapons/Logipedes_Halberd"));
     }
     public override void OnNetworkSpawn()
     {

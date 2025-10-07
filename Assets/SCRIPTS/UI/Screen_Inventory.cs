@@ -13,6 +13,7 @@ public class Screen_Inventory : MonoBehaviour
     public InventorySlot InventoryArmor;
     public InventorySlot[] InventoryArtifacts;
     public InventorySlot[] InventoryCargo;
+    public TextMeshProUGUI CraftAmmoCrate;
 
     private void OnEnable()
     {
@@ -48,7 +49,15 @@ public class Screen_Inventory : MonoBehaviour
         RefreshDrifterStats();
         if (SubscreenDrifter.activeSelf)
         {
+            if (CO.co.Resource_Ammo.Value < 10) CraftAmmoCrate.color = Color.gray;
+            else CraftAmmoCrate.color = Color.white;
         }
+    }
+
+    public void PressCraftAmmo()
+    {
+        if (CO.co.Resource_Ammo.Value < 10) return;
+        CO_SPAWNER.co.CreateAmmoCrateRpc(LOCALCO.local.GetPlayer().transform.position);
     }
 
     void RefreshPlayerEquipment()
