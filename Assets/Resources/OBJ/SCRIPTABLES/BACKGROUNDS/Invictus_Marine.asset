@@ -14,11 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BackgroundName: Invictus Marine
   ResourcePath: OBJ/SCRIPTABLES/BACKGROUNDS/Invictus_Marine
-  MainIcon: {fileID: 2347656569888133005, guid: f23f2b3fa89b0774e9b2ad1ceda60890, type: 3}
-  ShortDesc: You are a soldier.
-  LongDesc: The Logipedes are totally rad, you should join them.
+  MainIcon: {fileID: 21300000, guid: 97f4b0d3c4d14f7449f47c9cafe439c5, type: 3}
+  Sprite_Player: {fileID: 21300000, guid: 6dcc73ea065e8b649a99b9affad328eb, type: 3}
+  Sprite_Stripes: {fileID: 21300000, guid: faadbe7a69dfa1649b5cbe429338c6c3, type: 3}
+  ShortDesc: The Logipedes military trains its troops with cohesion and extreme teamwork
+    in mind, relying on defensive formations and volley fire strategies to eliminate
+    threats to the Republic.
+  LongDesc: 'STARTING ITEMS: CROSSBOW
+
+    ARMS +2
+
+    PHYS +1
+
+    MED +1'
   BackgroundColor: {r: 1, g: 0.6850692, b: 0, a: 1}
-  Background_ATT_BONUS: 0200000001000000000000000000000000000000000000000000000001000000
+  Background_ATT_BONUS: 0100000002000000000000000000000000000000000000000000000001000000
   Background_StartingWeapon: {fileID: 11400000, guid: 1a5ba66db25aae94794c0a02ba54b3d2, type: 2}
   Background_ReputationEffect:
   - Fac: 0

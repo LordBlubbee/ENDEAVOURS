@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Rendering;
+using static UnityEditor.PlayerSettings;
 
 public class CO_SPAWNER : NetworkBehaviour
 {
@@ -90,7 +92,7 @@ public class CO_SPAWNER : NetworkBehaviour
 
         CO.co.StartGame();
     }
-    public void SpawnLooncrabsAggressive(Vector3 pos, int Amount)
+    public void SpawnLooncrabsAggressive(Vector3 pos, int Amount) //TEST
     {
         float Degrees = UnityEngine.Random.Range(0, 360);   
         float Radius = 5f;
@@ -106,6 +108,40 @@ public class CO_SPAWNER : NetworkBehaviour
             members.Add(looncrab.GetComponent<AI_UNIT>());
         }
         group.SetAI(AI_GROUP.AI_TYPES.LOONCRAB_SWARM,AI_GROUP.AI_OBJECTIVES.BOARD, members);
+    }
+    public void SpawnEnemyGroup(ScriptableEnemyGroup gr, float PowerLevelFactor)
+    {
+        Debug.Log("SPAWNING ENEMY GROUP");
+        float Degrees = UnityEngine.Random.Range(0, 360);
+        float Radius = gr.SpawnGroupRange;
+        float Dist = UnityEngine.Random.Range(gr.SpawnDistanceMin, gr.SpawnDistanceMax);
+        AI_GROUP group = Instantiate(PrefabAIGROUP);
+        List<AI_UNIT> members = new();
+
+        float WorthPoints = PowerLevelFactor * gr.CrewPowerLevel;
+        List<EnemyCrewWithWeight> PossibleSpawns = new();
+        ResetWeights();
+        int i = 0;
+        foreach (EnemyCrewWithWeight weight in gr.SpawnCrewList)
+        {
+            AddWeights(i, weight.Weight);
+            PossibleSpawns.Add(weight);
+        }
+        Vector3 Offset = UnityEngine.Random.insideUnitCircle.normalized * Dist;
+        Vector3 Spawn = CO.co.PlayerMainDrifter.transform.position + Offset;
+        while (WorthPoints > 0)
+        {
+            Vector3 tryPos = Spawn + new Vector3(UnityEngine.Random.Range(-Radius, Radius), UnityEngine.Random.Range(-Radius, Radius));
+            EnemyCrewWithWeight enemyType = PossibleSpawns[GetWeight()];
+            CREW enem = Instantiate(enemyType.SpawnCrew, tryPos, Quaternion.identity);
+            WorthPoints -= enemyType.Worth;
+            enem.NetworkObject.Spawn();
+            enem.transform.Rotate(Vector3.forward, Degrees + UnityEngine.Random.Range(-30f, 30f));
+            enem.Init();
+            members.Add(enem.GetComponent<AI_UNIT>());
+        }
+
+        group.SetAI(gr.AI_Type, gr.AI_Group, members);
     }
 
     [Rpc(SendTo.ClientsAndHost)]
@@ -137,4 +173,47 @@ public class CO_SPAWNER : NetworkBehaviour
         ob.NetworkObject.Spawn();
         ob.ResourceAmount.Value = 10;
     }
+    /// <summary>
+    /// Clears all weights.
+    /// </summary>
+    /// 
+    private Dictionary<int, int> weights = new();
+    private int totalWeight = 0;
+    public void ResetWeights()
+    {
+        weights.Clear();
+        totalWeight = 0;
+    }
+
+    /// <summary>
+    /// Adds weight for a given ID. If the ID already exists, its weight is increased.
+    /// </summary>
+    public void AddWeights(int id, int weight)
+    {
+        if (weight <= 0) return;
+        if (weights.ContainsKey(id))
+            weights[id] += weight;
+        else
+            weights[id] = weight;
+        totalWeight += weight;
+    }
+
+    /// <summary>
+    /// Returns a random ID based on the weights, or -1 if empty.
+    /// </summary>
+    public int GetWeight()
+    {
+        if (totalWeight == 0) return -1;
+        int rand = UnityEngine.Random.Range(1, totalWeight + 1);
+        int cumulative = 0;
+        foreach (var pair in weights)
+        {
+            cumulative += pair.Value;
+            if (rand <= cumulative)
+                return pair.Key;
+        }
+        return -1;
+    }
+
+    /**/
 }

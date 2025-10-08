@@ -132,7 +132,6 @@ public class CO : NetworkBehaviour
     {
         GenerateMap(25, 20);
 
-
         //NEW GAME
         Resource_Materials.Value = 50;
         Resource_Supplies.Value = 50;
@@ -164,13 +163,13 @@ public class CO : NetworkBehaviour
             Debug.Log("Moving to point!");
             MapPoint destination = GetPlayerMapPoint().ConnectedPoints[HasVoteResult()];
             CO_STORY.co.SetStory(destination.AssociatedPoint.InitialDialog);
-            StartCoroutine(MoveToPoint(destination));
+            StartCoroutine(Travel(destination));
             PlayerMapPointID.Value = destination.PointID.Value;
             ResetMapVotes();
         }
     }
 
-    IEnumerator MoveToPoint(MapPoint destination)
+    IEnumerator Travel(MapPoint destination)
     {
         Vector3 moveDirection = destination.transform.position - GetPlayerMapPoint().transform.position;
         PlayerMainDrifter.SetLookTowards(moveDirection);
@@ -181,9 +180,7 @@ public class CO : NetworkBehaviour
             local.ShipTransportFadeAwayRpc(destination.GetName());
         }
         yield return new WaitForSeconds(2.5f);
-        PlayerMainDrifter.transform.position = Vector3.zero;
-        PlayerMainDrifter.transform.Rotate(Vector3.forward, PlayerMainDrifter.AngleToTurnTarget());
-        PlayerMainDrifter.SetMoveInput(Vector3.zero,1f);
+        GenerateLevel();
         //UpdatePlayerMapPointRpc(destination.transform.position);
         foreach (LOCALCO local in GetLOCALCO())
         {
@@ -194,6 +191,20 @@ public class CO : NetworkBehaviour
 
         yield return new WaitForSeconds(1f);
         PlayerMainDrifter.SetCanReceiveInput(true);
+    }
+
+    private void GenerateLevel()
+    {
+        PlayerMainDrifter.transform.position = Vector3.zero;
+        PlayerMainDrifter.transform.Rotate(Vector3.forward, PlayerMainDrifter.AngleToTurnTarget());
+        PlayerMainDrifter.SetMoveInput(Vector3.zero, 1f);
+        foreach (CREW crew in new List<CREW>(GetAllCrews()))
+        {
+            if (crew.Space != PlayerMainDrifter.Space)
+            {
+                crew.DespawnAndUnregister();
+            }
+        }
     }
     /*
     [Rpc(SendTo.Server)]
@@ -508,10 +519,13 @@ public class CO : NetworkBehaviour
 
     /*GAME EVENTS*/
     ScriptableEvent CurrentEvent = null;
-    public void PerformEvent(string str, ScriptableEvent even)
+
+
+    public void PerformEvent(ScriptableEvent even)
     {
         //LOOOOOOOOOOOOOOOOOOOOOOOOONG LIST
         CurrentEvent = even;
+        string str = even.EventController;
         switch (str)
         {
             case "GenericBattle":
@@ -522,10 +536,114 @@ public class CO : NetworkBehaviour
     IEnumerator Event_GenericBattle()
     {
         AreWeInDanger.Value = true;
-        while (GetEnemyCrew().Count > 0)
+        ResetWeights();
+        int i = 0;
+        List<EnemyGroupWithWeight> Groups = new();
+        foreach (EnemyGroupWithWeight weighted in CurrentEvent.EnemyWave.SpawnEnemyGroupList)
+        {
+            Groups.Add(weighted);
+            AddWeights(i, weighted.Weight);
+            i++;
+        }
+        CO_SPAWNER.co.SpawnEnemyGroup(Groups[GetWeight()].EnemyGroup, 1f);
+        while (!IsGroupDead(GetEnemyCrew()))
         {
             yield return new WaitForSeconds(1);
         }
+        if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
         AreWeInDanger.Value = false;
     }
+
+    private bool IsGroupDead(List<CREW> crewList)
+    {
+        foreach (CREW crew in crewList)
+        {
+            if (!crew.isDead()) return false;
+        }
+        return true;
+    }
+
+    public void ProcessLootTable(ScriptableLootTable table, float LootLevelMod)
+    {
+        List<LootItem> list = new List<LootItem>();
+
+        foreach (FactionReputation rep in table.ReputationChanges)
+        {
+            Resource_Reputation[rep.Fac] += rep.Amount;
+        }
+
+        foreach (LootItem item in table.GuaranteedLoot) list.Add(item);
+        ResetWeights();
+        int i = 0;
+        List<RandomLootItem> RandomLoot = new();
+        foreach (RandomLootItem item in table.RandomLoot)
+        {
+            AddWeights(i, item.Weight);
+            RandomLoot.Add(item);
+        }
+        for (i = 0; i < RandomLoot.Count; ++i)
+        {
+            list.Add(RandomLoot[GetWeight()]);
+        }
+        int ChangeAmmo = 0;
+        int ChangeMaterials = 0;
+        int ChangeSupplies = 0;
+        int ChangeTech = 0;
+        foreach (LootItem item in list)
+        {
+            ChangeAmmo+= Mathf.RoundToInt(item.Resource_Ammunition * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
+            ChangeMaterials += Mathf.RoundToInt(item.Resource_Materials * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
+            ChangeSupplies += Mathf.RoundToInt(item.Resource_Supplies * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
+            ChangeTech += Mathf.RoundToInt(item.Resource_Technology * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
+        }
+        Resource_Ammo.Value += ChangeAmmo;
+        Resource_Materials.Value += ChangeMaterials;
+        Resource_Supplies.Value += ChangeSupplies;
+        Resource_Tech.Value += ChangeTech;
+
+        //Send report to clients with all faction rep changes
+    }
+    /// <summary>
+    /// Clears all weights.
+    /// </summary>
+    /// 
+    private Dictionary<int, int> weights = new();
+    private int totalWeight = 0;
+    public void ResetWeights()
+    {
+        weights.Clear();
+        totalWeight = 0;
+    }
+
+    /// <summary>
+    /// Adds weight for a given ID. If the ID already exists, its weight is increased.
+    /// </summary>
+    public void AddWeights(int id, int weight)
+    {
+        if (weight <= 0) return;
+        if (weights.ContainsKey(id))
+            weights[id] += weight;
+        else
+            weights[id] = weight;
+        totalWeight += weight;
+    }
+
+    /// <summary>
+    /// Returns a random ID based on the weights, or -1 if empty.
+    /// </summary>
+    public int GetWeight()
+    {
+        if (totalWeight == 0) return -1;
+        int rand = UnityEngine.Random.Range(1, totalWeight + 1);
+        int cumulative = 0;
+        foreach (var pair in weights)
+        {
+            cumulative += pair.Value;
+            if (rand <= cumulative)
+                return pair.Key;
+        }
+        return -1;
+    }
+
+    /**/
 }

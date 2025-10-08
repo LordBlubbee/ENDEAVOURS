@@ -241,7 +241,7 @@ public class LOCALCO : NetworkBehaviour
             attributes[7]
             );
         ScriptableBackground back = Resources.Load<ScriptableBackground>(backTex);
-        crew.SetCharacterBackground(back);
+        crew.SetCharacterBackground(back); //Must be called BEFORE INIT
         crew.Init();
         crew.RegisterPlayerOnLOCALCORpc();
         Player.EquipWeapon(0, back.Background_StartingWeapon);

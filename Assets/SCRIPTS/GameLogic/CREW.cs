@@ -12,6 +12,7 @@ public class CREW : NetworkBehaviour, iDamageable
     private Rigidbody2D Rigid;
     private Collider2D Col;
     public SpriteRenderer Spr;
+    public SpriteRenderer Stripes;
 
     private ANIM AnimationController;
     private List<AnimTransform> AnimTransforms = new List<AnimTransform>();
@@ -276,6 +277,17 @@ public class CREW : NetworkBehaviour, iDamageable
 
         CharacterNameTag = Instantiate(CO_SPAWNER.co.PrefabGamerTag);
         CharacterNameTag.SetPlayerAndName(this, CharacterName.Value.ToString(), new Color(CharacterNameColor.Value.x, CharacterNameColor.Value.y, CharacterNameColor.Value.z));
+        
+        if (CharacterBackground)
+        {
+            Spr.sprite = CharacterBackground.Sprite_Player;
+            if (Stripes)
+            {
+                Stripes.sprite = CharacterBackground.Sprite_Stripes;
+                Stripes.color = new Color(CharacterNameColor.Value.x, CharacterNameColor.Value.y, CharacterNameColor.Value.z);
+            }
+        }
+        
         //
         StartCoroutine(PeriodicUpdates());
         if (IsServer) {
@@ -487,7 +499,7 @@ public class CREW : NetworkBehaviour, iDamageable
         Vector3 dir = MoveInput;
         while (Speed > 0f && UsePhysics())
         {
-            float mov = (5f+ GetATT_DEXTERITY() * 0.25f) * MovementSpeed * Speed * CO.co.GetWorldSpeedDeltaFixed();
+            float mov = (5f * MovementSpeed * Speed * CO.co.GetWorldSpeedDeltaFixed());
 
             transform.position += mov * dir;
             Rigid.MovePosition(transform.position);
@@ -1071,7 +1083,6 @@ public class CREW : NetworkBehaviour, iDamageable
         float dyf = Mathf.Sin(rot);
         return new Vector3(dxf, dyf, 0);
     }
-
     public int GetFaction()
     {
         return Faction;

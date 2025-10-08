@@ -9,6 +9,7 @@ public class Screen_GameUI : MonoBehaviour
     public CanvasGroup ActiveUI;
     public CanvasGroup WeaponUI;
     public Slider HealthSlider;
+    public GameObject PauseScreen;
     public TextMeshProUGUI HealthTex;
     public Image HealthColor;
     public Slider StaminaSlider;
@@ -29,6 +30,7 @@ public class Screen_GameUI : MonoBehaviour
             ActiveUI.gameObject.SetActive(false);
             return;
         }
+        PauseScreen.SetActive(CO.co.CommunicationGamePaused.Value);
         CREW player = LOCALCO.local.GetPlayer();
         if (!player)
         {

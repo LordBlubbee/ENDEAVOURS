@@ -10,6 +10,8 @@ public class ScriptableBackground : ScriptableObject
     public string BackgroundName;
     public string ResourcePath;
     public Sprite MainIcon;
+    public Sprite Sprite_Player;
+    public Sprite Sprite_Stripes;
     [TextArea(3, 10)]
     public string ShortDesc;
     [TextArea(5, 10)]

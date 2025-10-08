@@ -22,7 +22,6 @@ MonoBehaviour:
   - BaseText: Give them to us or DIE.
     Speaker: {fileID: 0}
     Alternatives: []
-  TriggerEvent: 
   ChoicePathDialogs:
   - ChoiceText:
       BaseText: '[Close Dialog]'
@@ -30,3 +29,4 @@ MonoBehaviour:
       Alternatives: []
     DialogResult: {fileID: 0}
     AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: 9a9b8ca1b59bd4e498f4bb0adffa757a, type: 2}

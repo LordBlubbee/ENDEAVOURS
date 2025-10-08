@@ -8,6 +8,7 @@ using UnityEngine;
 public class ScriptableLootTable : ScriptableObject
 {
     public List<LootItem> GuaranteedLoot = new();
+    public List<FactionReputation> ReputationChanges = new();
 
     [Header("RANDOM LOOT")]
     public int TotalLootDrops = 1;
@@ -16,7 +17,7 @@ public class ScriptableLootTable : ScriptableObject
 [Serializable]
 public class LootItem
 {
-    public float Exactness = 1;
+    public float Randomness = 0;
     public int Resource_Materials; //Normal factor: 1:4
     public int Resource_Supplies; //Normal factor: 1:4
     public int Resource_Ammunition; //Normal factor: 1:4

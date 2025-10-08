@@ -212,6 +212,7 @@ public class CO_STORY : NetworkBehaviour
             if (CurrentDialog.ChoicePathDialogs[result].TriggerEvent != null)
             {
                 //PERFORM EVENT
+                CO.co.PerformEvent(CurrentDialog.ChoicePathDialogs[result].TriggerEvent);
                 SetStoryEnd();
             } else
             {

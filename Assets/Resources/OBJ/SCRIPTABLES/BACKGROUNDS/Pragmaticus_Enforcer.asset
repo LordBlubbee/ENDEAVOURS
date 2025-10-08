@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7e2d111c92f9ac4584f40d8399107e1, type: 3}
+  m_Name: Pragmaticus_Enforcer
+  m_EditorClassIdentifier: 
+  BackgroundName: Pragmaticus Enforcer
+  ResourcePath: OBJ/SCRIPTABLES/BACKGROUNDS/Pragmaticus_Enforcer
+  MainIcon: {fileID: 21300000, guid: 97f4b0d3c4d14f7449f47c9cafe439c5, type: 3}
+  Sprite_Player: {fileID: 21300000, guid: cc6b98cb42340c641aaebbd08b616496, type: 3}
+  Sprite_Stripes: {fileID: 21300000, guid: bf632b2086e9a4c4d865d811d1e8789c, type: 3}
+  ShortDesc: The infamous Pragmaticus' arrestation teams are heavily armored police
+    officers that operate in groups to capture enemies of the Stipulations. By enforcing
+    the One Truth, their actions require no explanation, no jury, and no evidence.
+  LongDesc: 'STARTING ITEMS: HALBERD
+
+    PHYS +2
+
+    HAR +1
+
+    MED +1'
+  BackgroundColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+  Background_ATT_BONUS: 0200000000000000000000000000000001000000000000000000000001000000
+  Background_StartingWeapon: {fileID: 11400000, guid: 06439ec68f11da34fbafc00241024dca, type: 2}
+  Background_ReputationEffect:
+  - Fac: 1
+    Amount: 2
+  - Fac: 0
+    Amount: 1
+  - Fac: 2
+    Amount: 1
+  - Fac: 8
+    Amount: -1
+  - Fac: 7
+    Amount: -1

@@ -8,7 +8,11 @@ using UnityEngine;
 public class ScriptableEnemyGroup : ScriptableObject
 {
     //This spawns a group of enemies
+    public AI_GROUP.AI_TYPES AI_Type;
+    public AI_GROUP.AI_OBJECTIVES AI_Group;
+    public int CrewPowerLevel = 100;
     public List<EnemyCrewWithWeight> SpawnCrewList;
+    public int DrifterPowerLevel = 0;
     public List<EnemyDrifterWithWeight> SpawnDrifter;
     public float SpawnGroupRange = 10f; //Area in which the group is spawned
     public float SpawnDistanceMin = 100f; //Distance away from players
@@ -20,6 +24,7 @@ public class EnemyCrewWithWeight
 {
     public CREW SpawnCrew;
     public int Weight;
+    public int Worth;
 }
 [Serializable]
 public class EnemyDrifterWithWeight

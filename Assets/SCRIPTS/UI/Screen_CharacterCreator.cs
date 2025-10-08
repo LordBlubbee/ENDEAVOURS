@@ -19,6 +19,9 @@ public class Screen_CharacterCreator : MonoBehaviour
     public Image[] BackgroundCategories;
     public Image[] AllBackgrounds;
 
+    public Image AppearanceSprite;
+    public Image AppearanceStripes;
+
     private ScriptableBackground SelectedBackground = null;
     private int SkillPoints = 12;
     public TextMeshProUGUI SkillPointTex;
@@ -172,9 +175,17 @@ public class Screen_CharacterCreator : MonoBehaviour
 
     private void UpdateCompletionStatus()
     {
-        CompleteName.color = !UsernameTex.text.IsNullOrEmpty() ? Color.green : Color.red;
         CompleteBackground.color = SelectedBackground ? Color.green : Color.red;
+        CompleteName.color = SelectedBackground ? (!UsernameTex.text.IsNullOrEmpty() ? Color.green : Color.red) : Color.gray;
         CompleteGivePoints.color = SkillPoints < 1 ? Color.green : Color.red;
+    }
+
+    public void OpenAppearance()
+    {
+        if (SelectedBackground)
+        {
+            OpenSubscreen(Subscreens[1]);
+        }
     }
 
     private bool ReadyToMoveOn()
@@ -203,18 +214,21 @@ public class Screen_CharacterCreator : MonoBehaviour
     {
         GO.g.localColor = new Color(UsernameR.value, GO.g.localColor.g, GO.g.localColor.b);
         UsernameTex.color = GO.g.localColor;
+        AppearanceStripes.color = GO.g.localColor;
         GO.g.saveSettings();
     }
     public void EditUsernameSlideG()
     {
         GO.g.localColor = new Color(GO.g.localColor.r, UsernameG.value, GO.g.localColor.b);
         UsernameTex.color = GO.g.localColor;
+        AppearanceStripes.color = GO.g.localColor;
         GO.g.saveSettings();
     }
     public void EditUsernameSlideB()
     {
         GO.g.localColor = new Color(GO.g.localColor.r, GO.g.localColor.g, UsernameB.value);
         UsernameTex.color = GO.g.localColor;
+        AppearanceStripes.color = GO.g.localColor;
         GO.g.saveSettings();
     }
     public void PressCreateCharacter()
@@ -253,6 +267,9 @@ public class Screen_CharacterCreator : MonoBehaviour
         SelectedBackgroundScreenImageOuter.color = back.Background.BackgroundColor;
         SelectedBackgroundScreenTitle.text = back.Background.BackgroundName;
         SelectedBackgroundScreenDesc.text = back.Background.LongDesc;
+
+        AppearanceSprite.sprite = back.Background.Sprite_Player;
+        AppearanceStripes.sprite = back.Background.Sprite_Stripes;
         OpenSubscreen(SelectedBackgroundScreen);
     }
     public void ChooseBackgroundExact(Image ob)
