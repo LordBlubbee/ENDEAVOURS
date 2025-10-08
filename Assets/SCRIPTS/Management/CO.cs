@@ -200,7 +200,7 @@ public class CO : NetworkBehaviour
         PlayerMainDrifter.SetMoveInput(Vector3.zero, 1f);
         foreach (CREW crew in new List<CREW>(GetAllCrews()))
         {
-            if (crew.Space != PlayerMainDrifter.Space)
+            if (crew.Space != PlayerMainDrifter.Space || crew.isDead())
             {
                 crew.DespawnAndUnregister();
             }
