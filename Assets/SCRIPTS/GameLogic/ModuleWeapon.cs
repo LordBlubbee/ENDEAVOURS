@@ -13,8 +13,14 @@ public class ModuleWeapon : Module
 
     [Header("Offensive Stats")]
     public float Damage;
+    public float HullDamageMod = 1f;
+    public float ModuleDamageMod = 1f;
+    public float CrewDamageMod = 0.5f;
+    public float CrewDamageSplash = 1f;
+    public float ArmorDamageMod = 1f;
+    public float ArmorDamageAbsorption = 1f;
     public float RotationBaseSpeed = 30;
-    public int MaxAmmo = 80;
+    public int MaxAmmo = 50;
     public float FireCooldown = 2f;
     public float ReloadCooldown = 5f;
     public int ProjectileCount = 1;
@@ -23,7 +29,16 @@ public class ModuleWeapon : Module
 
     [NonSerialized] public NetworkVariable<float> CurCooldown = new();
     [NonSerialized] public NetworkVariable<int> LoadedAmmo = new();
-    
+
+    public float GetAmmoRatio()
+    {
+        return LoadedAmmo.Value / MaxAmmo;
+    }
+    public int GetAmmo()
+    {
+        return LoadedAmmo.Value;
+    }
+
     private Vector3 LookTowards;
     private bool isLooking = false;
 
@@ -47,7 +62,6 @@ public class ModuleWeapon : Module
 
         Platform.transform.SetParent(transform.parent);
     }
-
     public void ReloadAmmo()
     {
         foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position,8f))
@@ -122,6 +136,7 @@ public class ModuleWeapon : Module
         {
             PROJ proj = Instantiate(FireProjectile, FirePoint.position, transform.rotation);
             proj.Init(Damage, Faction, null, mouse);
+            proj.InitAdvanced(HullDamageMod, ModuleDamageMod, CrewDamageMod, CrewDamageSplash, ArmorDamageMod, ArmorDamageAbsorption);
             proj.NetworkObject.Spawn();
             CurCooldown.Value = AdditionalProjectileDelay;
             while (CurCooldown.Value > 0f)

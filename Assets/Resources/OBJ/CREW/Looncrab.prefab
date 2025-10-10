@@ -204,9 +204,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   Spr: {fileID: 5632965166791697770}
+  Stripes: {fileID: 0}
   Faction: 2
   MaxHealth: 150
-  NaturalHealthRegen: 0.1
   NaturalStaminaRegen: 50
   MovementSpeed: 4.5
   RotationDistanceFactor: 4
@@ -300,7 +300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Crew: {fileID: 5867427934140877094}
   MaximumLegRot: 15
-  LegRotSpeed: 30
+  LegRotSpeed: 180
   LegRotCurrent: 0
   LegDirection: 1
 --- !u!212 &5765796471213650820
@@ -346,7 +346,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 460b97760ce22d54eb48348f56837d20, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -495,7 +495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Crew: {fileID: 5867427934140877094}
   MaximumLegRot: 15
-  LegRotSpeed: 30
+  LegRotSpeed: 180
   LegRotCurrent: 15
   LegDirection: 1
 --- !u!212 &1921450066542728920
@@ -541,7 +541,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: a8d812c4cf12d854985e851c367d88c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -600,7 +600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Crew: {fileID: 5867427934140877094}
   MaximumLegRot: 15
-  LegRotSpeed: 30
+  LegRotSpeed: 180
   LegRotCurrent: 0
   LegDirection: -1
 --- !u!212 &2640513213925169465
@@ -646,7 +646,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 460b97760ce22d54eb48348f56837d20, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

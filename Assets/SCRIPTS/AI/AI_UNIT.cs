@@ -145,7 +145,7 @@ public class AI_UNIT : NetworkBehaviour
     {
         if (trt.Space != getSpace())
         {
-            WalkableTile boarding = trt.Space.GetNearestGridToPoint(transform.position);
+            WalkableTile boarding = trt.Space.GetNearestBoardingGridTransformToPoint(transform.position);
             if (Dist(boarding.transform.position) < 25f+Unit.GetATT_COMMUNOPATHY())
             {
                 Unit.UseGrapple(boarding);

@@ -13,8 +13,16 @@ public class SPACE : NetworkBehaviour
     public List<GameObject> EmptyTiles;
     private List<Vector2> RoomLocations = new();
     private List<Vector2> EmptyLocations = new();
-    public List<Module> StartingModuleList;
-    public List<Vector3> StartingModuleLocations;
+    public Vector3 Bridge;
+    public Vector3 Storage;
+    public List<Vector3> CoreModuleLocations;
+    [NonSerialized] public List<Module> CoreModules = new();
+    public List<Vector3> WeaponModuleLocations;
+    [NonSerialized] public List<Module> WeaponModules = new();
+    public List<Vector3> SystemModuleLocations;
+    [NonSerialized] public List<Module> SystemModules = new();
+    public List<Vector3> LoonModuleLocations;
+    [NonSerialized] public List<Module> LoonModules = new();
 
     public GameObject PrefabWall;
     public GameObject PrefabCorner;
@@ -60,21 +68,24 @@ public class SPACE : NetworkBehaviour
                             EmptyTiles.Add(ob);
                             EmptyLocations.Add(check);
                         }
-                        if (Mathf.Abs(ix)+Mathf.Abs(iy) < 2)
+                        if (!tile.canBeBoarded)
                         {
-                            GameObject wall = Instantiate(PrefabWall, transform);
-                            wall.transform.localPosition = trans.localPosition + new Vector3(ix * 5, iy * 5);
-                            if (Mathf.Abs(iy) != 0) wall.transform.Rotate(Vector3.forward, 90);
-                        }
-                        else if (Mathf.Abs(ix) + Mathf.Abs(iy) == 2)
-                        {
-                            if (!RoomLocations.Contains(here + new Vector2(ix, 0)) && !RoomLocations.Contains(here + new Vector2(0, iy)))
+                            if (Mathf.Abs(ix) + Mathf.Abs(iy) < 2)
                             {
-                                GameObject wall = Instantiate(PrefabCorner, transform);
-                                wall.transform.localPosition = trans.localPosition + new Vector3(ix * 4, iy * 4);
-                                if (ix == -1 && iy == -1) wall.transform.Rotate(Vector3.forward, -90);
-                                else if (ix == -1 && iy == 1) wall.transform.Rotate(Vector3.forward, 180);
-                                else if (ix == 1 && iy == 1) wall.transform.Rotate(Vector3.forward, 90);
+                                GameObject wall = Instantiate(PrefabWall, transform);
+                                wall.transform.localPosition = trans.localPosition + new Vector3(ix * 5, iy * 5);
+                                if (Mathf.Abs(iy) != 0) wall.transform.Rotate(Vector3.forward, 90);
+                            }
+                            else if (Mathf.Abs(ix) + Mathf.Abs(iy) == 2)
+                            {
+                                if (!RoomLocations.Contains(here + new Vector2(ix, 0)) && !RoomLocations.Contains(here + new Vector2(0, iy)))
+                                {
+                                    GameObject wall = Instantiate(PrefabCorner, transform);
+                                    wall.transform.localPosition = trans.localPosition + new Vector3(ix * 4, iy * 4);
+                                    if (ix == -1 && iy == -1) wall.transform.Rotate(Vector3.forward, -90);
+                                    else if (ix == -1 && iy == 1) wall.transform.Rotate(Vector3.forward, 180);
+                                    else if (ix == 1 && iy == 1) wall.transform.Rotate(Vector3.forward, 90);
+                                }
                             }
                         }
                     }
@@ -85,7 +96,11 @@ public class SPACE : NetworkBehaviour
 
         if (!IsServer) return;
 
-
+        foreach (ScriptableEquippableModule mod in Drifter.StartingModules)
+        {
+            AddModule(mod);
+        }
+        /*
         for (int i = 0; i < StartingModuleList.Count; i++)
         {
             Module mod = Instantiate(StartingModuleList[i], Vector3.zero, Quaternion.identity);
@@ -96,6 +111,111 @@ public class SPACE : NetworkBehaviour
             mod.Init();
             Modules.Add(mod);
         }
+        */
+    }
+    public bool AddModule(ScriptableEquippableModule module)
+    {
+        Module mod = null;
+        Vector3 vec = Vector3.zero;
+        switch (module.EquipType)
+        {
+            case ScriptableEquippableModule.EquipTypes.CORE:
+                foreach (Vector3 trymod in CoreModuleLocations)
+                {
+                    bool tryLocation = true;
+                    foreach (Module modloc in CoreModules)
+                    {
+                        if ((modloc.transform.localPosition-trymod).magnitude < 0.1f)
+                        {
+                            tryLocation = false;
+                            break;
+                        }
+                    }
+                    if (tryLocation)
+                    {
+
+                    }
+                    mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
+                    vec = CoreModuleLocations[CoreModules.Count];
+                    CoreModules.Add(mod);
+                    break;
+                }
+                break;
+            case ScriptableEquippableModule.EquipTypes.WEAPON:
+                foreach (Vector3 trymod in WeaponModuleLocations)
+                {
+                    bool tryLocation = true;
+                    foreach (Module modloc in WeaponModules)
+                    {
+                        if ((modloc.transform.localPosition - trymod).magnitude < 0.1f)
+                        {
+                            tryLocation = false;
+                            break;
+                        }
+                    }
+                    if (tryLocation)
+                    {
+
+                        mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
+                        vec = WeaponModuleLocations[WeaponModules.Count];
+                        WeaponModules.Add(mod);
+                    }
+                    break;
+                }
+                break;
+            case ScriptableEquippableModule.EquipTypes.SYSTEM:
+                foreach (Vector3 trymod in SystemModuleLocations)
+                {
+                    bool tryLocation = true;
+                    foreach (Module modloc in SystemModules)
+                    {
+                        if ((modloc.transform.localPosition - trymod).magnitude < 0.1f)
+                        {
+                            tryLocation = false;
+                            break;
+                        }
+                    }
+                    if (tryLocation)
+                    {
+
+                        mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
+                        vec = SystemModuleLocations[SystemModules.Count];
+                        SystemModules.Add(mod);
+                    }
+                    break;
+                }
+                break;
+            case ScriptableEquippableModule.EquipTypes.LOON:
+                foreach (Vector3 trymod in LoonModuleLocations)
+                {
+                    bool tryLocation = true;
+                    foreach (Module modloc in LoonModules)
+                    {
+                        if ((modloc.transform.localPosition - trymod).magnitude < 0.1f)
+                        {
+                            tryLocation = false;
+                            break;
+                        }
+                    }
+                    if (tryLocation)
+                    {
+
+                        mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
+                        vec = LoonModuleLocations[LoonModules.Count];
+                        LoonModules.Add(mod);
+                    }
+                    break;
+                }
+                break;
+        }
+        if (mod == null) return false;
+        mod.NetworkObject.Spawn();
+        mod.transform.SetParent(transform);
+        mod.transform.localPosition = vec;
+        mod.SpaceID.Value = SpaceID.Value;
+        Modules.Add(mod);
+        mod.Init();
+        return true;
     }
     public Vector2 ConvertWorldToGrid(Vector3 pos)
     {
@@ -188,6 +308,10 @@ public class SPACE : NetworkBehaviour
         crew.transform.SetParent(null);
     }
 
+    public List<CREW> GetCrew()
+    {
+        return CrewInSpace;
+    }
     public List<Module> GetModules()
     {
         return Modules;

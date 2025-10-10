@@ -107,7 +107,7 @@ public class CO_SPAWNER : NetworkBehaviour
             looncrab.Init();
             members.Add(looncrab.GetComponent<AI_UNIT>());
         }
-        group.SetAI(AI_GROUP.AI_TYPES.LOONCRAB_SWARM,AI_GROUP.AI_OBJECTIVES.BOARD, members);
+        group.SetAI(AI_GROUP.AI_TYPES.SWARM,AI_GROUP.AI_OBJECTIVES.ENGAGE, members);
     }
     public void SpawnEnemyGroup(ScriptableEnemyGroup gr, float PowerLevelFactor)
     {
@@ -162,16 +162,6 @@ public class CO_SPAWNER : NetworkBehaviour
         MapPoint mapPoint = Instantiate(PrefabMapPoint, pos, Quaternion.identity);
         mapPoint.NetworkObject.Spawn();
         return mapPoint;
-    }
-
-    [Rpc(SendTo.Server)]
-    public void CreateAmmoCrateRpc(Vector3 vec)
-    {
-        if (CO.co.Resource_Ammo.Value < 10) return;
-        CO.co.Resource_Ammo.Value -= 10;
-        ResourceCrate ob = Instantiate(PrefabAmmoCrate, vec, Quaternion.identity, CO.co.PlayerMainDrifter.Space.transform);
-        ob.NetworkObject.Spawn();
-        ob.ResourceAmount.Value = 10;
     }
     /// <summary>
     /// Clears all weights.

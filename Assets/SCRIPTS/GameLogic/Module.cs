@@ -9,6 +9,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 
     [Header("MAIN")]
     public ModuleTypes ModuleType;
+    //
     public enum ModuleTypes
     {
         NAVIGATION,
@@ -16,7 +17,9 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         INVENTORY,
         MAPCOMMS,
         GENERATOR,
-        ARMOR_MODULE,
+        ARMOR,
+        ENGINES,
+        MEDICAL,
         LOON_NAVIGATION,
         DRAGGABLE
     }
@@ -37,8 +40,11 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 
     private void Start()
     {
-        GamerTag CharacterNameTag = Instantiate(CO_SPAWNER.co.PrefabGamerTag);
-        CharacterNameTag.SetPlayer(this);
+        if (MaxHealth > 0)
+        {
+            GamerTag CharacterNameTag = Instantiate(CO_SPAWNER.co.PrefabGamerTag);
+            CharacterNameTag.SetObject(this);
+        }
         switch (ModuleType) {
 
         }
@@ -70,6 +76,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     }
     public void TakeDamage(float fl, Vector3 src)
     {
+        if (MaxHealth < 1) return;
         CurHealth.Value -= fl;
         if (CurHealth.Value < 0.1f)
         {
@@ -86,6 +93,11 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public bool CanBeTargeted()
     {
         return !isDisabled;
+    }
+
+    public bool IsDisabled()
+    {
+        return isDisabled;
     }
     public float GetHealth()
     {

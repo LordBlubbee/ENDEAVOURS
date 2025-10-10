@@ -496,19 +496,43 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         isDashing = true;
         float Speed = 1f;
-        Vector3 dir = MoveInput;
+        Vector3 dir = MoveInput.normalized; // ensure direction is normalized
+
         while (Speed > 0f && UsePhysics())
         {
-            float mov = (5f * MovementSpeed * Speed * CO.co.GetWorldSpeedDeltaFixed());
+            float mov = 5f * MovementSpeed * Speed * CO.co.GetWorldSpeedDeltaFixed();
 
-            transform.position += mov * dir;
-            Rigid.MovePosition(transform.position);
+            // Predict the new position
+            Vector3 newPos = transform.position + mov * dir;
+
+            // Perform a 2D raycast in the dash direction to detect obstacles
+            RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, dir, mov, LayerMask.GetMask("InSpace"));
+            // You can change the layer mask to whatever you use for obstacles, e.g. LayerMask.GetMask("Walls")
+            bool hasMoved = false;
+            foreach (RaycastHit2D col in hit)
+            {
+                if (col.collider.gameObject == gameObject) continue;
+                // Stop the dash at the hit point (slightly before, to avoid clipping)
+                newPos = new Vector3(col.point.x, col.point.y) - dir * 0.05f;
+                transform.position = newPos;
+                Rigid.MovePosition(newPos);
+                hasMoved = true;
+                break; // stop dashing since we hit something
+            }
+            if (!hasMoved)
+            {
+                // Move normally if no obstacle was hit
+                transform.position = newPos;
+                Rigid.MovePosition(newPos);
+            }
 
             Speed -= CO.co.GetWorldSpeedDeltaFixed() * 3f;
             yield return new WaitForFixedUpdate();
         }
+
         isDashing = false;
     }
+
     public void Push(float Power, float Duration, Vector3 dir)
     {
         StartCoroutine(PushNumerator(Power,Duration,dir));
@@ -872,6 +896,9 @@ public class CREW : NetworkBehaviour, iDamageable
             EquippedToolObject.Tool2.transform.localPosition = new Vector3(EquippedToolObject.Tool2.transform.localPosition.x, EquippedToolObject.Tool2.transform.localPosition.y, -0.0002f);
             AnimTransforms[2].setTransform(EquippedToolObject.Tool2.transform);
         }
+        setAnimationRpc(ANIM.AnimationState.MI_IDLE);
+        AnimationComboWeapon1 = 0;
+        AnimationComboWeapon2 = 0;
     }
 
     /*GETTERS AND SETTERS*/

@@ -33,6 +33,11 @@ public class LOCALCO : NetworkBehaviour
         //Works only locally
         return Player;
     }
+
+    public ModuleWeapon GetWeapon()
+    {
+        return UsingWeapon;
+    }
     private void Start()
     {
         StartCoroutine(Register());
@@ -224,7 +229,7 @@ public class LOCALCO : NetworkBehaviour
     public void CreatePlayerRpc(string name, Color col, int[] attributes, string backTex)
     {
         //SpawnPlayer Spawn Player
-        CREW crew = Instantiate(CO_SPAWNER.co.PlayerPrefab, CO.co.PlayerMainDrifter.transform.TransformPoint(CO.co.PlayerMainDrifter.Interior.StartingModuleLocations[0]), Quaternion.identity);
+        CREW crew = Instantiate(CO_SPAWNER.co.PlayerPrefab, CO.co.PlayerMainDrifter.transform.TransformPoint(CO.co.PlayerMainDrifter.Interior.Bridge), Quaternion.identity);
         crew.NetworkObject.Spawn();
         Debug.Log($"We are player: {GetPlayerID()}");
         crew.PlayerController.Value = GetPlayerID();
@@ -312,83 +317,90 @@ public class LOCALCO : NetworkBehaviour
                 }
                 if (mod != null)
                 {
-                    switch (mod.GetInteractableType())
+                    if (mod.IsDisabled())
                     {
-                        case Module.ModuleTypes.NAVIGATION:
-                            UI.ui.MainGameplayUI.SetInteractTex("[F] NAVIGATE", Color.green);
-                            if (Input.GetKeyDown(KeyCode.F))
-                            {
-                                //Interact
-                                Drifter = Player.Space.Drifter;
-                                CurrentControlMode = ControlModes.DRIFTER;
-                                CAM.cam.SetCameraMode(Drifter.transform, 230f + Player.GetATT_COMMUNOPATHY() * 10f, 50f, 250f + Player.GetATT_COMMUNOPATHY() * 10f);
-                                CurrentInteractionModule = mod;
-                            }
-                           
-                            break;
-                        case Module.ModuleTypes.WEAPON:
-                            UI.ui.MainGameplayUI.SetInteractTex("[F] USE WEAPON", Color.green);
-                            if (Input.GetKeyDown(KeyCode.F))
-                            {
-                                UsingWeapon = (ModuleWeapon)mod;
-                                CurrentControlMode = ControlModes.WEAPON;
-                                CAM.cam.SetCameraMode(mod.transform, 230f + Player.GetATT_COMMUNOPATHY() * 10f, 50f, 250f + Player.GetATT_COMMUNOPATHY() * 10f);
-                                CurrentInteractionModule = mod;
-                            }
-                            break;
-                        case Module.ModuleTypes.INVENTORY:
-                            UI.ui.MainGameplayUI.SetInteractTex("[F] INVENTORY", Color.green);
-                            if (Input.GetKeyDown(KeyCode.F))
-                                UI.ui.SelectScreen(UI.ui.InventoryUI.gameObject);
-                            break;
-                        case Module.ModuleTypes.MAPCOMMS:
-                            if (!CO.co.AreWeInDanger.Value)
-                            {
-                                if (CO_STORY.co.IsCommsActive())
+                        if (mod is Module) UI.ui.MainGameplayUI.SetInteractTex("[DISABLED]", Color.red);
+                    }
+                    else
+                    {
+                        switch (mod.GetInteractableType())
+                        {
+                            case Module.ModuleTypes.NAVIGATION:
+                                UI.ui.MainGameplayUI.SetInteractTex("[F] NAVIGATE", Color.green);
+                                if (Input.GetKeyDown(KeyCode.F))
                                 {
-                                    UI.ui.MainGameplayUI.SetInteractTex("[F] OPEN COMMS", Color.cyan);
-                                    if (Input.GetKeyDown(KeyCode.F))
+                                    //Interact
+                                    Drifter = Player.Space.Drifter;
+                                    CurrentControlMode = ControlModes.DRIFTER;
+                                    CAM.cam.SetCameraMode(Drifter.transform, 100f, 50f, 150);
+                                    CurrentInteractionModule = mod;
+                                }
+
+                                break;
+                            case Module.ModuleTypes.WEAPON:
+                                UI.ui.MainGameplayUI.SetInteractTex("[F] USE WEAPON", Color.green);
+                                if (Input.GetKeyDown(KeyCode.F))
+                                {
+                                    UsingWeapon = (ModuleWeapon)mod;
+                                    CurrentControlMode = ControlModes.WEAPON;
+                                    CAM.cam.SetCameraMode(mod.transform, 100f, 50f, 150);
+                                    CurrentInteractionModule = mod;
+                                }
+                                break;
+                            case Module.ModuleTypes.INVENTORY:
+                                UI.ui.MainGameplayUI.SetInteractTex("[F] INVENTORY", Color.green);
+                                if (Input.GetKeyDown(KeyCode.F))
+                                    UI.ui.SelectScreen(UI.ui.InventoryUI.gameObject);
+                                break;
+                            case Module.ModuleTypes.MAPCOMMS:
+                                if (!CO.co.AreWeInDanger.Value)
+                                {
+                                    if (CO_STORY.co.IsCommsActive())
                                     {
-                                        UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
+                                        UI.ui.MainGameplayUI.SetInteractTex("[F] OPEN COMMS", Color.cyan);
+                                        if (Input.GetKeyDown(KeyCode.F))
+                                        {
+                                            UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        UI.ui.MainGameplayUI.SetInteractTex("[F] OPEN MAP", Color.cyan);
+                                        if (Input.GetKeyDown(KeyCode.F))
+                                        {
+                                            UI.ui.SelectScreen(UI.ui.MapUI.gameObject);
+                                        }
                                     }
                                 }
                                 else
                                 {
-                                    UI.ui.MainGameplayUI.SetInteractTex("[F] OPEN MAP", Color.cyan);
-                                    if (Input.GetKeyDown(KeyCode.F))
-                                    {
-                                        UI.ui.SelectScreen(UI.ui.MapUI.gameObject);
-                                    }
+                                    UI.ui.MainGameplayUI.SetInteractTex("[DANGER]", Color.red);
                                 }
-                            } else
-                            {
-                                UI.ui.MainGameplayUI.SetInteractTex("[DANGER]", Color.red);
-                            }
-                            break;
-                        case Module.ModuleTypes.GENERATOR:
-                            UI.ui.MainGameplayUI.SetInteractTex("[F] MANAGE", Color.green);
-                            if (Input.GetKeyDown(KeyCode.F))
-                            {
+                                break;
+                            case Module.ModuleTypes.GENERATOR:
+                                UI.ui.MainGameplayUI.SetInteractTex("[F] MANAGE", Color.green);
+                                if (Input.GetKeyDown(KeyCode.F))
+                                {
 
-                            }
-                            break;
-                        case Module.ModuleTypes.ARMOR_MODULE:
-                            UI.ui.MainGameplayUI.SetInteractTex("[F] MANAGE", Color.green);
-                            if (Input.GetKeyDown(KeyCode.F))
-                            {
+                                }
+                                break;
+                            case Module.ModuleTypes.ARMOR:
+                                UI.ui.MainGameplayUI.SetInteractTex("[F] MANAGE", Color.green);
+                                if (Input.GetKeyDown(KeyCode.F))
+                                {
 
-                            }
-                            break;
-                        case Module.ModuleTypes.DRAGGABLE:
-                            UI.ui.MainGameplayUI.SetInteractTex("[F] CARRY", Color.green);
-                            if (Input.GetKeyDown(KeyCode.F))
-                            {
-                                DraggingObject = mod.transform;
-                                GetPlayer().StartDragging(mod.transform);
-                            }
-                            break;
+                                }
+                                break;
+                            case Module.ModuleTypes.DRAGGABLE:
+                                UI.ui.MainGameplayUI.SetInteractTex("[F] CARRY", Color.green);
+                                if (Input.GetKeyDown(KeyCode.F))
+                                {
+                                    DraggingObject = mod.transform;
+                                    GetPlayer().StartDragging(mod.transform);
+                                }
+                                break;
+                        }
                     }
-                   
                 }
             } else if (Input.GetKeyDown(KeyCode.F) || LeftModule())
             {

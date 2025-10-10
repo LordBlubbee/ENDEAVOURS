@@ -250,15 +250,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   ModuleType: 1
-  MaxHealth: 100
+  MaxHealth: 200
   HitboxRadius: 16
   Platform: {fileID: 6031975965002184304}
   FirePoint: {fileID: 3676994766029858991}
   FireProjectile: {fileID: 8910635656682413825, guid: bcb2fb2362f019e4290db11af9a5f758, type: 3}
   CrosshairSprite: {fileID: 21300000, guid: 3d1452e5180bdf641bb60a3aadc3248a, type: 3}
   Damage: 50
+  HullDamageMod: 1
+  ModuleDamageMod: 1
+  CrewDamageMod: 0.5
+  CrewDamageSplash: 1
+  ArmorDamageMod: 1
+  ArmorDamageAbsorption: 1
   RotationBaseSpeed: 60
-  MaxAmmo: 80
+  MaxAmmo: 50
   FireCooldown: 2
   ReloadCooldown: 5
   ProjectileCount: 1
@@ -340,9 +346,9 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 1.5
+  m_Radius: 1

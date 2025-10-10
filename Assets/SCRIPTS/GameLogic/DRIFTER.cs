@@ -7,13 +7,13 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     [Header("REFERENCES")]
     public SPACE Interior;
     public DrifterCollider DrifterCollider;
+    public List<ScriptableEquippableModule> StartingModules;
 
-    private Rigidbody2D Rigid;
     public SpriteRenderer Spr;
     public int Faction;
 
     [Header("STATS")]
-    public float MaxHealth = 100f;
+    public float MaxHealth = 2500f;
     public float MovementSpeed = 5;
     public float AccelerationSpeedMod = 0.25f;
     public float RotationBaseSpeed = 30f;
@@ -42,8 +42,9 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 
         hasInitialized = true;
 
-        Rigid = GetComponent<Rigidbody2D>();
         Interior.Init();
+
+        CO.co.RegisterDrifter(this);
 
         if (IsServer)
         {
@@ -168,6 +169,18 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         transform.position += CurrentMovement.Value * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
         //Rigid.MovePosition(transform.position);
     }
+
+
+    [Rpc(SendTo.Server)]
+    public void CreateAmmoCrateRpc(Vector3 vec)
+    {
+        if (CO.co.Resource_Ammo.Value < 10) return;
+        CO.co.Resource_Ammo.Value -= 10;
+        ResourceCrate ob = Instantiate(CO_SPAWNER.co.PrefabAmmoCrate, vec, Quaternion.identity);
+        ob.NetworkObject.Spawn();
+        ob.transform.SetParent(transform);
+        ob.ResourceAmount.Value = 10;
+    }
     public float AngleToTurnTarget()
     {
         return AngleTowards(LookTowards);
@@ -212,6 +225,47 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             //Death
         }
     }
+    public void Impact(PROJ fl, Vector3 ImpactArea)
+    {
+        float Damage = fl.AttackDamage;
+        float AbsorbableDamage = fl.AttackDamage * fl.ArmorAbsorptionModifier;
+        Damage -= AbsorbableDamage;
+        foreach (Module mod in Interior.GetModules())
+        {
+            float Dist = (mod.transform.position - ImpactArea).magnitude;
+            if (mod is ModuleArmor && !mod.IsDisabled())
+            {
+                ModuleArmor arm = (ModuleArmor)mod;
+                if (Dist < arm.ArmorAuraSize)
+                {
+                    AbsorbableDamage *= fl.ArmorDamageModifier; //Say, we deal 80 damage with +50% modifier = 120
+                    float DamageNeeded = arm.CurArmor.Value; //Say, we need only 80 damage
+                    arm.TakeArmorDamage(AbsorbableDamage);
+                    AbsorbableDamage -= DamageNeeded; //We have 40 damage left
+                    AbsorbableDamage /= fl.ArmorDamageModifier; //27 damage is returned to main damage mod
+                    break;
+                }
+            }
+        }
+        Damage += AbsorbableDamage;
+        TakeDamage(Damage * fl.HullDamageModifier, ImpactArea);
+        foreach (Module mod in Interior.GetModules())
+        {
+            float Dist = (mod.transform.position - ImpactArea).magnitude;
+            if (Dist < mod.HitboxRadius)
+            {
+                mod.TakeDamage(Damage * fl.ModuleDamageModifier, ImpactArea);
+            }
+        }
+        foreach (CREW mod in Interior.GetCrew())
+        {
+            float Dist = (mod.transform.position - ImpactArea).magnitude;
+            if (Dist < 4f)
+            {
+                mod.TakeDamage(Damage * fl.CrewDamageSplash, ImpactArea);
+            }
+        }
+    }
     public int GetFaction()
     {
         return Faction;
@@ -235,4 +289,9 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         return GetHealth() / GetMaxHealth();
     }
+}
+public class DrifterModule
+{
+    public ScriptableEquippableModule EquippableModule;
+    public Module Module;
 }

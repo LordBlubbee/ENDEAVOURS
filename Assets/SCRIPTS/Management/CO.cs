@@ -13,6 +13,8 @@ public class CO : NetworkBehaviour
     [NonSerialized] public NetworkVariable<bool> HasShipBeenLaunched = new();
     [NonSerialized] public NetworkVariable<bool> AreWeInDanger = new();
     [NonSerialized] public NetworkVariable<bool> CommunicationGamePaused = new();
+    [NonSerialized] public NetworkVariable<float> EnemyBarRelative = new(-1);
+    [NonSerialized] public NetworkVariable<FixedString32Bytes> EnemyBarString = new("");
     [NonSerialized] public DRIFTER PlayerMainDrifter;
     [NonSerialized] public NetworkVariable<int> PlayerMapPointID = new();
 
@@ -167,6 +169,75 @@ public class CO : NetworkBehaviour
             PlayerMapPointID.Value = destination.PointID.Value;
             ResetMapVotes();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (!IsServer) return;
+        HandleRelativity();
+    }
+
+    void HandleRelativity()
+    {
+        List<Transform> Trans = new();
+        foreach (CREW ob in GetAllCrews())
+        {
+            if (ob.Space == null) Trans.Add(ob.transform);
+        }
+        List<DRIFTER> Drifters = GetAllDrifters();
+        foreach (DRIFTER ob in Drifters)
+        {
+            Trans.Add(ob.transform);
+        }
+
+        if (Trans.Count < 2) return; // not enough objects to compare
+
+        float maxDist = 0f;
+        Vector3 posA = Vector3.zero;
+        Vector3 posB = Vector3.zero;
+
+        // Find the two furthest transforms
+        for (int i = 0; i < Trans.Count; i++)
+        {
+            for (int j = i + 1; j < Trans.Count; j++)
+            {
+                float dist = Vector3.Distance(Trans[i].position, Trans[j].position);
+                if (dist > maxDist)
+                {
+                    maxDist = dist;
+                    posA = Trans[i].position;
+                    posB = Trans[j].position;
+                }
+            }
+        }
+        // Calculate midpoint between them
+        Vector3 midpoint = (posA + posB) * 0.5f;
+
+        // You can now use `midpoint` for whatever you need (debug, centering camera, etc.)
+        Debug.DrawLine(posA, posB, Color.red, 1f); // optional debug line
+        Debug.DrawRay(midpoint, Vector3.up * 2f, Color.green, 1f); // visualize midpoint
+
+        float noPullRange = 30f + Drifters.Count*10;       // distance within which no pull is applied
+        float pullStrength = 0.1f;    // base multiplier for how strongly they move per frame (tune as needed)
+
+        foreach (Transform trans in Trans)
+        {
+            Vector3 dir = (midpoint - trans.position);
+            float dist = dir.magnitude;
+            if (dist <= noPullRange) continue; // skip close ones
+
+            dir.Normalize();
+
+            // The pull grows stronger the further they are beyond 50 units
+            float pullFactor = (dist - noPullRange) * pullStrength;
+
+            // Optionally clamp it so it doesn’t yank things too hard
+            pullFactor = Mathf.Max(pullFactor, 0f);
+
+            // Apply pull
+            trans.position += dir * pullFactor * GetWorldSpeedDelta();
+        }
+
     }
 
     IEnumerator Travel(MapPoint destination)
@@ -466,6 +537,23 @@ public class CO : NetworkBehaviour
         RegisteredCREW.Remove(crew);
     }
 
+    List<DRIFTER> RegisteredDRIFTER = new();
+    public List<DRIFTER> GetAllDrifters()
+    {
+        return RegisteredDRIFTER;
+    }
+    public void RegisterDrifter(DRIFTER drifter)
+    {
+        if (RegisteredDRIFTER.Contains(drifter)) return;
+        RegisteredDRIFTER.Add(drifter);
+    }
+
+    public void UnregisterDrifter(DRIFTER drifter)
+    {
+        RegisteredDRIFTER.Remove(drifter);
+    }
+
+
     List<MapPoint> RegisteredMapPoints = new();
     public List<MapPoint> GetMapPoints()
     {
@@ -546,21 +634,29 @@ public class CO : NetworkBehaviour
             i++;
         }
         CO_SPAWNER.co.SpawnEnemyGroup(Groups[GetWeight()].EnemyGroup, 1f);
-        while (!IsGroupDead(GetEnemyCrew()))
+        float Death = 0f;
+        while (Death < 1)
         {
-            yield return new WaitForSeconds(1);
+            int DeadAmount = GroupDeathAmount(GetEnemyCrew());
+            int AliveAmount = GetEnemyCrew().Count - DeadAmount;
+            Death = DeadAmount / GetEnemyCrew().Count;
+            EnemyBarRelative.Value = 1f-Death;
+            EnemyBarString.Value = $"THREATS: ({AliveAmount})";
+            yield return new WaitForSeconds(0.25f);
         }
+        EnemyBarRelative.Value = -1;
         if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
         AreWeInDanger.Value = false;
     }
 
-    private bool IsGroupDead(List<CREW> crewList)
+    private int GroupDeathAmount(List<CREW> crewList)
     {
+        int Death = 0;
         foreach (CREW crew in crewList)
         {
-            if (!crew.isDead()) return false;
+            if (!crew.isDead()) Death += 1;
         }
-        return true;
+        return Death;
     }
 
     public void ProcessLootTable(ScriptableLootTable table, float LootLevelMod)

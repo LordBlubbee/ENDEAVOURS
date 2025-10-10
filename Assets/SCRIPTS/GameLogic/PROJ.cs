@@ -11,15 +11,19 @@ public class PROJ : NetworkBehaviour
     public float InaccuracyDegrees;
     public float MaximumRange = -1;
     public bool StickToWalls;
+    public LineRenderer Line;
 
     [Header("ALTITUDE")]
     public bool UseAltitude = false;
     public float AltitudeInacurracyFactor;
 
     [Header("IMPACT")]
-    public float ImpactSplashRange;
-    public float ModuleDamageModifier;
-    public float CrewDamageModifier;
+    [NonSerialized] public float HullDamageModifier = 1f; //Which factor of damage is done to modules
+    [NonSerialized] public float ModuleDamageModifier = 1f; //Which factor of damage is done to modules
+    [NonSerialized] public float ArmorDamageModifier = 1f; //Which factor of damage is done to armor
+    [NonSerialized] public float ArmorAbsorptionModifier = 1f; //Which factor of damage is taken by armor
+    [NonSerialized] public float CrewDamageModifier = 0.5f; //Which facotr of damage is done to nearby crew members
+    [NonSerialized] public float CrewDamageSplash = 4f; //Which facotr of damage is done to nearby crew members
 
     [NonSerialized] public CREW CrewOwner;
 
@@ -27,7 +31,7 @@ public class PROJ : NetworkBehaviour
 
     protected bool isActive = true;
     protected SPACE Space;
-    protected float AttackDamage;
+    [NonSerialized] public float AttackDamage;
     protected int Faction;
     protected float AltitudeRemaining = 0f;
     public void Init(float damage, int fac, SPACE space, Vector3 trt)
@@ -40,6 +44,15 @@ public class PROJ : NetworkBehaviour
         Faction = fac;
         Space = space;
         transform.Rotate(Vector3.forward, UnityEngine.Random.Range(-InaccuracyDegrees, InaccuracyDegrees));
+    }
+    public void InitAdvanced(float hullMod, float moduleMod,  float crewMod, float crewSplash, float armorMod, float armorAbsorb)
+    {
+        HullDamageModifier = hullMod;
+        ModuleDamageModifier = moduleMod;
+        ArmorDamageModifier = armorMod;
+        CrewDamageModifier = crewMod;
+        CrewDamageSplash = crewSplash;
+        ArmorAbsorptionModifier = armorAbsorb;
     }
 
     private void FixedUpdate()
@@ -85,8 +98,15 @@ public class PROJ : NetworkBehaviour
             if (crew.Space != Space) return;
             if (Damageables.Contains(crew)) return;
             if (!crew.CanBeTargeted()) return;
-            crew.TakeDamage(AttackDamage, transform.position);
-            Damageables.Add(crew);
+            DRIFTER drifter = collision.GetComponent<DRIFTER>();
+            if (drifter != null)
+            {
+                drifter.Impact(this, transform.position);
+            } else
+            {
+                crew.TakeDamage(AttackDamage, transform.position);
+            }
+                Damageables.Add(crew);
             BulletImpact();
             return;
         }

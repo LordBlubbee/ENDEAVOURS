@@ -57,7 +57,7 @@ public class Screen_Inventory : MonoBehaviour
     public void PressCraftAmmo()
     {
         if (CO.co.Resource_Ammo.Value < 10) return;
-        CO_SPAWNER.co.CreateAmmoCrateRpc(LOCALCO.local.GetPlayer().transform.position);
+        CO.co.PlayerMainDrifter.CreateAmmoCrateRpc(LOCALCO.local.GetPlayer().transform.position);
     }
 
     void RefreshPlayerEquipment()

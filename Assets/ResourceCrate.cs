@@ -9,6 +9,7 @@ public class ResourceCrate : NetworkBehaviour, iDamageable, iInteractable
     public ResourceTypes ResourceType;
     public NetworkVariable<int> ResourceAmount = new();
     public NetworkVariable<float> CurHealth = new();
+    public NetworkVariable<bool> IsGrabbed = new();
     public SPACE Space { get; set; }
     public ModuleTypes GetInteractableType()
     {
@@ -17,7 +18,6 @@ public class ResourceCrate : NetworkBehaviour, iDamageable, iInteractable
     public void Heal(float fl)
     {
     }
-
     public void TakeDamage(float fl, Vector3 src)
     {
     }
@@ -45,7 +45,10 @@ public class ResourceCrate : NetworkBehaviour, iDamageable, iInteractable
     {
         return MaxHealth;
     }
-
+    public bool IsDisabled()
+    {
+        return IsGrabbed.Value;
+    }
     public float GetHealthRelative()
     {
         return GetHealth() / GetMaxHealth();

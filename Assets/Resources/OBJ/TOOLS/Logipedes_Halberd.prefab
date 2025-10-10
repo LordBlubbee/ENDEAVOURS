@@ -186,8 +186,8 @@ MonoBehaviour:
   attackDamage1: 10
   RangedPrefab1: {fileID: 0}
   Reload1: 0
-  ActionUse2: 1
-  attackAnimations2: 0a000000
+  ActionUse2: 0
+  attackAnimations2: 
   UsageStamina2: 2
   attackDamage2: 10
   RangedPrefab2: {fileID: 0}

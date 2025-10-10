@@ -21,13 +21,13 @@ public class AI_GROUP : MonoBehaviour
     public enum AI_TYPES
     {
         DEFAULT_SHIP,
-        LOONCRAB_SWARM
+        SWARM
     }
     public enum AI_OBJECTIVES
     {
         WANDER,
         PATROL,
-        BOARD
+        ENGAGE
     }
 
     private void Start()
@@ -37,6 +37,10 @@ public class AI_GROUP : MonoBehaviour
 
     IEnumerator RunAI()
     {
+        /*
+         The AI here does nothing but assign each unit in the group to a specific location. There, the AI executes whatever makes sense to it.
+         
+         */
         while (true)
         {
             if (Units.Count == 0)
@@ -49,8 +53,8 @@ public class AI_GROUP : MonoBehaviour
                 case AI_TYPES.DEFAULT_SHIP:
                     ShipAI();
                     break;
-                case AI_TYPES.LOONCRAB_SWARM:
-                    LooncrabAI();
+                case AI_TYPES.SWARM:
+                    SwarmAI();
                     break;
             }
             yield return new WaitForSeconds(1f);
@@ -61,7 +65,7 @@ public class AI_GROUP : MonoBehaviour
     {
 
     }
-    private void LooncrabAI()
+    private void SwarmAI()
     {
         switch (AI_Objective)
         {
@@ -69,8 +73,7 @@ public class AI_GROUP : MonoBehaviour
                 break;
             case AI_OBJECTIVES.PATROL:
                 break;
-            case AI_OBJECTIVES.BOARD:
-                LooncrabBoard();
+            case AI_OBJECTIVES.ENGAGE:
                 break;
         }
     }

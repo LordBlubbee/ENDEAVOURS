@@ -7,17 +7,20 @@ public class GamerTag : MonoBehaviour
     public TextMeshPro Health;
     public SpriteRenderer FarIcon;
     private iDamageable FollowObject;
+    private bool UseFarIcon;
     public void SetPlayerAndName(iDamageable trans, string str, Color col)
     {
         //
         FollowObject = trans;
         Name.text = str;
         Name.color = col;
+        UseFarIcon = false;
     }
-    public void SetPlayer(iDamageable trans)
+    public void SetObject(iDamageable trans)
     {
         //
         FollowObject = trans;
+        UseFarIcon = true;
     }
     public void SetFarIcon(Sprite spr)
     {
@@ -35,7 +38,7 @@ public class GamerTag : MonoBehaviour
         {
             float far = CAM.cam.camob.orthographicSize;
             float scale = 0.5f + far * 0.01f;
-            FarIcon.color = new Color(col.r, col.g, col.b, Mathf.Clamp01(far * 0.04f - 6f));
+            FarIcon.color = new Color(col.r, col.g, col.b, Mathf.Clamp01(far * 0.04f - 2.2f));
             FarIcon.transform.localScale = new Vector3(scale, scale, 1);
         }
     }

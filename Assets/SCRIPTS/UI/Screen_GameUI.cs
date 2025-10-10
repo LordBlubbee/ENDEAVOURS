@@ -8,13 +8,36 @@ public class Screen_GameUI : MonoBehaviour
 {
     public CanvasGroup ActiveUI;
     public CanvasGroup WeaponUI;
-    public Slider HealthSlider;
+  
     public GameObject PauseScreen;
+
+    [Header("CREW STATS")]
+    public Slider HealthSlider;
     public TextMeshProUGUI HealthTex;
     public Image HealthColor;
     public Slider StaminaSlider;
     public TextMeshProUGUI StaminaTex;
     public Image StaminaColor;
+
+    [Header("WEAPON STATS")]
+    public Slider IntegritySlider;
+    public TextMeshProUGUI IntegrityTex;
+    public Image IntegrityColor;
+    public Slider AmmoSlider;
+    public TextMeshProUGUI AmmoTex;
+    public Image AmmoColor;
+    public GameObject NoAmmoOverlay;
+
+    [Header("BOSS BARS")]
+    public Slider OurDrifterIntegritySlider;
+    public TextMeshProUGUI OurDrifterIntegrityTex;
+    public Image OurDrifterIntegrityColor;
+    public Image EnemyIcon;
+    public Slider EnemySlider;
+    public TextMeshProUGUI EnemyTex;
+    public Image EnemyColor;
+
+    [Header("MISC")]
     public TextMeshProUGUI InteractTex;
     public GameObject PauseMenu;
     public GameObject CommsMapButton;
@@ -27,7 +50,6 @@ public class Screen_GameUI : MonoBehaviour
     {
         if (!LOCALCO.local)
         {
-            ActiveUI.gameObject.SetActive(false);
             return;
         }
         PauseScreen.SetActive(CO.co.CommunicationGamePaused.Value);
@@ -50,19 +72,50 @@ public class Screen_GameUI : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.I)) UI.ui.SelectScreen(UI.ui.InventoryUI.gameObject);
             if (Input.GetKeyDown(KeyCode.C)) OpenMissionScreen();
         }
-        ActiveUI.gameObject.SetActive(true);
+        if (ActiveUI.gameObject.activeSelf)
+        {
+            HealthSlider.value = player.GetHealthRelative();
+            HealthTex.text = player.GetHealth().ToString("0");
+            HealthColor.color = new Color(1f - player.GetHealthRelative(), player.GetHealthRelative(), 0);
+            StaminaSlider.value = player.GetStaminaRelative();
+            StaminaTex.text = player.GetStamina().ToString("0");
+            StaminaColor.color = new Color(1f - player.GetStaminaRelative(), player.GetStaminaRelative(), player.GetStaminaRelative());
+        }
+        else if (WeaponUI.gameObject.activeSelf)
+        {
+            ModuleWeapon wep = LOCALCO.local.GetWeapon();
+            if (wep)
+            {
+                IntegritySlider.value = wep.GetHealthRelative();
+                IntegrityTex.text = wep.GetHealth().ToString("0");
+                IntegrityColor.color = new Color(1f - wep.GetHealthRelative(), wep.GetHealthRelative(), 0);
+                AmmoSlider.value = wep.GetAmmoRatio();
+                AmmoTex.text = wep.GetAmmo().ToString("");
+                AmmoColor.color = new Color(1f - wep.GetAmmoRatio(), wep.GetAmmoRatio(), wep.GetAmmoRatio());
+            }
+            NoAmmoOverlay.SetActive(wep.LoadedAmmo.Value < 1);
+        }
+        OurDrifterIntegritySlider.value = CO.co.PlayerMainDrifter.GetHealthRelative();
+        OurDrifterIntegrityTex.text = CO.co.PlayerMainDrifter.GetHealth().ToString("0");
+        OurDrifterIntegrityColor.color = new Color(1f - CO.co.PlayerMainDrifter.GetHealthRelative(), CO.co.PlayerMainDrifter.GetHealthRelative(), 0);
 
-        HealthSlider.value = player.GetHealthRelative();
-        StaminaSlider.value = player.GetStaminaRelative();
-        HealthTex.text = player.GetHealth().ToString("0");
-        StaminaTex.text = player.GetStamina().ToString("0");
-        HealthColor.color = new Color(1f - player.GetHealthRelative(), player.GetHealthRelative(), 0);
-        StaminaColor.color = new Color(1f - player.GetStaminaRelative(), player.GetStaminaRelative(), player.GetStaminaRelative());
+        if (CO.co.EnemyBarRelative.Value > -1)
+        {
+            EnemyIcon.gameObject.SetActive(true);
+            EnemySlider.value = CO.co.EnemyBarRelative.Value;
+            EnemyTex.text = CO.co.EnemyBarString.Value.ToString();
+            EnemyColor.color = new Color(1, 0, 0);
+        }
+        else
+        {
+            EnemyIcon.gameObject.SetActive(false);
+        }
 
         if (InteractActive)
         {
             InteractTex.color = new Color(InteractTex.color.r, InteractTex.color.g, InteractTex.color.b, Mathf.Clamp01(InteractTex.color.a + Time.deltaTime * 2f));
-        } else
+        }
+        else
         {
             InteractTex.color = new Color(InteractTex.color.r, InteractTex.color.g, InteractTex.color.b, Mathf.Clamp01(InteractTex.color.a - Time.deltaTime * 2f));
         }

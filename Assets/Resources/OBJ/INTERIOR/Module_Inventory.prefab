@@ -130,8 +130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   ModuleType: 2
-  MaxHealth: 100
-  HitboxRadius: 16
+  MaxHealth: -1
+  HitboxRadius: 0
 --- !u!114 &7532573690162859283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,7 +208,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
