@@ -22,6 +22,7 @@ public class LootItem
     public int Resource_Supplies; //Normal factor: 1:4
     public int Resource_Ammunition; //Normal factor: 1:4
     public int Resource_Technology; //Normal factor: 1:1
+    public ScriptableEquippable ItemDrop;
 }
 
 [Serializable]

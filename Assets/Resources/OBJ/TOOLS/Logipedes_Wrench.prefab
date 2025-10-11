@@ -150,13 +150,13 @@ MonoBehaviour:
   ActionUse1: 4
   attackAnimations1: 0c000000
   UsageStamina1: 10
-  attackDamage1: 5
+  attackDamage1: 10
   RangedPrefab1: {fileID: 0}
   Reload1: 0
   ActionUse2: 0
   attackAnimations2: 
   UsageStamina2: 2
-  attackDamage2: 5
+  attackDamage2: 10
   RangedPrefab2: {fileID: 0}
   Reload2: 0
 --- !u!1 &6403120744721419714

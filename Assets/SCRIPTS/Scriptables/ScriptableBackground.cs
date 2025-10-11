@@ -21,6 +21,35 @@ public class ScriptableBackground : ScriptableObject
     public int[] Background_ATT_BONUS = new int[8];
     public ScriptableEquippableWeapon Background_StartingWeapon;
     public List<FactionReputation> Background_ReputationEffect;
+    public enum NameCategories
+    {
+        NONE,
+        LOGIPEDAN,
+        CATALI,
+        EPHEMERAL,
+        NOMADEN
+    }
+    public NameCategories NameCategory;
+    public string GetRandomName()
+    {
+        List<string> list = new();
+        switch (NameCategory)
+        {
+            case NameCategories.LOGIPEDAN:
+                list.Add("Logipedan");
+                break;
+            case NameCategories.CATALI:
+                list.Add("Catali");
+                break;
+            case NameCategories.EPHEMERAL:
+                list.Add("Ephemeral");
+                break;
+            case NameCategories.NOMADEN:
+                list.Add("Nomaden");
+                break;
+        }
+        return list.Count == 0 ? "" : list[UnityEngine.Random.Range(0,list.Count)];
+    }
 }
 [Serializable]
 public struct FactionReputation

@@ -117,6 +117,9 @@ GameObject:
   - component: {fileID: 4818183244430427868}
   - component: {fileID: 1453653842865150193}
   - component: {fileID: 8365398891127652454}
+  - component: {fileID: 278731945168727047}
+  - component: {fileID: 9194372623321583771}
+  - component: {fileID: 3292002700830103647}
   m_Layer: 6
   m_Name: Logipedes_ReconBlimp
   m_TagString: Untagged
@@ -385,7 +388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   Interior: {fileID: 8365398891127652454}
-  DrifterCollider: {fileID: 1655076590706715043}
+  DrifterCollider: {fileID: 278731945168727047}
   StartingModules:
   - {fileID: 11400000, guid: 038a3c5e35b859843b7c622e8c79354b, type: 2}
   - {fileID: 11400000, guid: 8a6bf186b9e338048943d374d686d7d0, type: 2}
@@ -399,8 +402,8 @@ MonoBehaviour:
   Spr: {fileID: 7590115494558501324}
   Faction: 1
   MaxHealth: 2500
-  MovementSpeed: 10
-  AccelerationSpeedMod: 0.4
+  MovementSpeed: 8
+  AccelerationSpeedMod: 0.3
   RotationBaseSpeed: 15
 --- !u!114 &8365398891127652454
 MonoBehaviour:
@@ -533,16 +536,97 @@ MonoBehaviour:
   - {x: -20, y: -24, z: 0}
   SystemModuleLocations:
   - {x: 28, y: -24, z: 0}
-  - {x: 44, y: -32, z: 0}
   - {x: -52, y: -8, z: 0}
-  - {x: -52, y: 8, z: 0}
   - {x: 12, y: 32, z: 0}
+  - {x: 44, y: -32, z: 0}
+  - {x: -52, y: 8, z: 0}
   - {x: -12, y: 0, z: 0}
   LoonModuleLocations:
   - {x: -4, y: 48, z: 0}
   PrefabWall: {fileID: 9019574874123161817, guid: b50d1ee3a96087846b72c40f9c11f28b, type: 3}
   PrefabCorner: {fileID: 5844972831535844615, guid: cbfb38767837270468660a6e7cb3ecbb, type: 3}
   PrefabEmpty: {fileID: 8986802024713289282, guid: ddf8d1bce74a9fd4bae3dc20715d2bdb, type: 3}
+--- !u!114 &278731945168727047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388606262696114643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 419118a104498094e82cdb147f253047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Collider: {fileID: 9194372623321583771}
+  Drifter: {fileID: 1453653842865150193}
+  DrifterLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!70 &9194372623321583771
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388606262696114643}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 3, y: 0}
+  m_Size: {x: 145, y: 88}
+  m_Direction: 1
+--- !u!50 &3292002700830103647
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388606262696114643}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &4799522798808969797
 GameObject:
   m_ObjectHideFlags: 0

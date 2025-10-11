@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
 {
+    public TooltipObject Tool;
     public TextMeshProUGUI UseItemButton;
     public Image InnerIconImage;
     public Image ImageBorder;
@@ -18,14 +19,28 @@ public class InventorySlot : MonoBehaviour
     }
     private void OnEnable()
     {
-        SetEquipState(DefaultEquipState);
+        SetEquipColors(EquipItem);
     }
     public void SetInventoryItem(ScriptableEquippable equippable)
     {
         if (EquipItem == equippable) return;
         EquipItem = equippable;
-        if (equippable) InnerIconImage.sprite = equippable.ItemIcon;
-        else InnerIconImage.sprite = CO_SPAWNER.co.DefaultInventorySprite;
+        if (equippable)
+        {
+            InnerIconImage.sprite = equippable.ItemIcon;
+
+            Tool.Tooltip = equippable.ItemDesc;
+        }
+        else
+        {
+            InnerIconImage.sprite = CO_SPAWNER.co.DefaultInventorySprite;
+            Tool.Tooltip = "";
+        }
+        SetEquipColors(equippable);
+    }
+
+    private void SetEquipColors(ScriptableEquippable equippable)
+    {
         if (DefaultEquipState == EquipStates.INVENTORY_SWITCH)
         {
             if (equippable is ScriptableEquippableArtifact)

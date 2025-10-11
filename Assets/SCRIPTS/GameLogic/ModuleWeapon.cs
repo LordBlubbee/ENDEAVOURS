@@ -134,6 +134,7 @@ public class ModuleWeapon : Module
         canFire = false;
         for (int i = 0; i < ProjectileCount; i++)
         {
+            LoadedAmmo.Value--;
             PROJ proj = Instantiate(FireProjectile, FirePoint.position, transform.rotation);
             proj.Init(Damage, Faction, null, mouse);
             proj.InitAdvanced(HullDamageMod, ModuleDamageMod, CrewDamageMod, CrewDamageSplash, ArmorDamageMod, ArmorDamageAbsorption);

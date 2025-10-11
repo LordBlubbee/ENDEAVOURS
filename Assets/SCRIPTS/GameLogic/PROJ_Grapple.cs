@@ -3,7 +3,7 @@ using static CO;
 
 public class PROJ_Grapple : PROJ
 {
-    protected override void PotentialHitTarget(Collider2D collision)
+    protected override void PotentialHitTarget(GameObject collision)
     {
         WalkableTile crew = collision.GetComponent<WalkableTile>();
         if (crew != null)

@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -139,8 +140,13 @@ public class CO : NetworkBehaviour
         Resource_Supplies.Value = 50;
         Resource_Ammo.Value = 50;
         Resource_Tech.Value = 0;
-        Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Items/Weapons/Logipedes_Crossbow"));
-        Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Items/Weapons/Logipedes_Halberd"));
+        AddInventoryItem(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Items/Weapons/Logipedes_Crossbow"));
+        AddInventoryItem(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Items/Weapons/Logipedes_Halberd"));
+    }
+
+    public void AddInventoryItem(ScriptableEquippable equip)
+    {
+        Drifter_Inventory.Add(equip);
     }
     public override void OnNetworkSpawn()
     {
@@ -637,16 +643,17 @@ public class CO : NetworkBehaviour
         float Death = 0f;
         while (Death < 1)
         {
+            yield return new WaitForSeconds(0.5f);
             int DeadAmount = GroupDeathAmount(GetEnemyCrew());
             int AliveAmount = GetEnemyCrew().Count - DeadAmount;
             Death = DeadAmount / GetEnemyCrew().Count;
             EnemyBarRelative.Value = 1f-Death;
             EnemyBarString.Value = $"THREATS: ({AliveAmount})";
-            yield return new WaitForSeconds(0.25f);
         }
         EnemyBarRelative.Value = -1;
         if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
         AreWeInDanger.Value = false;
+        ProcessLootTable(CurrentEvent.LootTable, 1f);
     }
 
     private int GroupDeathAmount(List<CREW> crewList)
@@ -654,18 +661,22 @@ public class CO : NetworkBehaviour
         int Death = 0;
         foreach (CREW crew in crewList)
         {
-            if (!crew.isDead()) Death += 1;
+            if (crew.isDead()) Death += 1;
         }
         return Death;
     }
 
-    public void ProcessLootTable(ScriptableLootTable table, float LootLevelMod)
+    private void ProcessLootTable(ScriptableLootTable table, float LootLevelMod)
     {
         List<LootItem> list = new List<LootItem>();
+        List<Faction> Factions = new();
+        List<int> FactionChanges = new();
 
         foreach (FactionReputation rep in table.ReputationChanges)
         {
             Resource_Reputation[rep.Fac] += rep.Amount;
+            Factions.Add(rep.Fac);
+            FactionChanges.Add(rep.Amount);
         }
 
         foreach (LootItem item in table.GuaranteedLoot) list.Add(item);
@@ -685,19 +696,39 @@ public class CO : NetworkBehaviour
         int ChangeMaterials = 0;
         int ChangeSupplies = 0;
         int ChangeTech = 0;
+        List<FixedString64Bytes> ItemTranslate = new();
         foreach (LootItem item in list)
         {
             ChangeAmmo+= Mathf.RoundToInt(item.Resource_Ammunition * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
             ChangeMaterials += Mathf.RoundToInt(item.Resource_Materials * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
             ChangeSupplies += Mathf.RoundToInt(item.Resource_Supplies * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
             ChangeTech += Mathf.RoundToInt(item.Resource_Technology * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
+            if (item.ItemDrop)
+            {
+                AddInventoryItem(item.ItemDrop);
+                ItemTranslate.Add(item.ItemDrop.ItemResourceID);
+            }
         }
         Resource_Ammo.Value += ChangeAmmo;
         Resource_Materials.Value += ChangeMaterials;
         Resource_Supplies.Value += ChangeSupplies;
         Resource_Tech.Value += ChangeTech;
 
+        OpenRewardScreenRpc(ChangeMaterials, ChangeSupplies, ChangeAmmo, ChangeTech, Factions.ToArray(), FactionChanges.ToArray(), ItemTranslate.ToArray());
         //Send report to clients with all faction rep changes
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    private void OpenRewardScreenRpc(int Materials, int Supplies, int Ammo, int Tech, Faction[] Facs, int[] FacChanges, FixedString64Bytes[] RewardItemsGained)
+    {
+        List<FactionReputation> list = new();
+        for (int i = 0; i < Facs.Length ;i++)
+        {
+            FactionReputation newfac = new FactionReputation();
+            newfac.Fac = Facs[i];
+            newfac.Amount = FacChanges[i];
+            list.Add(newfac);
+        }
+        UI.ui.TalkUI.OpenRewardScreen(Materials, Supplies, Ammo, Tech, list.ToArray(), RewardItemsGained);
     }
     /// <summary>
     /// Clears all weights.

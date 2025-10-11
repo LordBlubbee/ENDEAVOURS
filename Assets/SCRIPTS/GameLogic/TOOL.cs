@@ -10,6 +10,7 @@ public class TOOL : MonoBehaviour
     public Transform Tool2;
     public List<Transform> handPoints;
     public List<Transform> strikePoints;
+    public List<BlockAttacks> Blockers;
 
     [Header("CROSSHAIR")]
     public Sprite CrosshairSprite;
@@ -36,6 +37,11 @@ public class TOOL : MonoBehaviour
     public float Reload2 = 0f;
 
     private CREW Crew;
+
+    public CREW GetCrew()
+    {
+        return Crew;
+    }
     public enum ToolActionType
     {
         NONE,

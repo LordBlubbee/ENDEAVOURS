@@ -9,6 +9,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 
     [Header("MAIN")]
     public ModuleTypes ModuleType;
+    public Sprite IconSprite;
     //
     public enum ModuleTypes
     {
@@ -44,6 +45,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         {
             GamerTag CharacterNameTag = Instantiate(CO_SPAWNER.co.PrefabGamerTag);
             CharacterNameTag.SetObject(this);
+            CharacterNameTag.SetFarIcon(IconSprite);
         }
         switch (ModuleType) {
 

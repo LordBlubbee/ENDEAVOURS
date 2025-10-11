@@ -168,6 +168,9 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
         ATTACK_LOONCRAB1,
         ATTACK_LOONCRAB2,
 
+        BLOCK_HALBERD1,
+        BLOCK_LOONCRAB1,
+
         MI_DEAD1,
         MI_DEAD2,
         MI_DEAD3
@@ -227,12 +230,6 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame.addMovement(new Vector3(0, 0), new Vector3(0.1f, 0.1f)); //Body
                 curFrame.addMovement(new Vector3(0.05f, 0), new Vector3(0.1f, 0.1f)); //Tool Right
                 curFrame.addMovement(new Vector3(0.05f, 0), new Vector3(0.1f, 0.1f)); //Tool Left
-                Frames.Add(curFrame);
-                curFrame = new AnimFrame(2, 0.05f);
-                curFrame.AnimationMoveFactor = 0.8f;
-                curFrame.addMovement(new Vector3(0, 0), new Vector3(-0.03f, -0.03f)); //Body
-                curFrame.addMovement(new Vector3(-0.02f, -0.02f), new Vector3(-0.03f, -0.03f)); //Tool Right
-                curFrame.addMovement(new Vector3(-0.02f, -0.02f), new Vector3(-0.03f, -0.03f)); //Tool Left
                 Frames.Add(curFrame);
                 break;
             case AnimationState.ATTACK_HALBERD1:
@@ -365,6 +362,25 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame.addMovement(new Vector3(0, 0)); //Tool Left
                 Frames.Add(curFrame);
                 break;
+            case AnimationState.BLOCK_HALBERD1:
+                Priority = 3;
+                curFrame = new AnimFrame(1, 0.1f);
+                curFrame.moveForward = -6f;
+                curFrame.isStriking = 1f;
+                curFrame.AnimationMoveFactor = 0.6f;
+                curFrame.addMovement(new Vector3(-0.3f, 0f), new Vector3(-0.05f, -0.05f)); //Body
+                curFrame.addMovement(new Vector3(0.7f, 0.1f), -17); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(2, 0.3f);
+                curFrame.moveForward = 1f;
+                curFrame.isStriking = 1f;
+                curFrame.AnimationMoveFactor = 0.6f;
+                curFrame.addMovement(new Vector3(-0.3f, 0f)); //Body
+                curFrame.addMovement(new Vector3(0.5f, 0.1f), -19); //Tool Right
+                curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
+                Frames.Add(curFrame);
+                break;
             case AnimationState.ATTACK_CROSSBOW1:
                 Priority = 3;
                 curFrame = new AnimFrame(1, 0.1f);
@@ -454,13 +470,13 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 break;
             case AnimationState.USE_WRENCH:
                 Priority = 3;
-                curFrame = new AnimFrame(1, 0.6f);
+                curFrame = new AnimFrame(1, 0.7f);
                 curFrame.AnimationMoveFactor = 0.3f;
                 curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0), -32); //Body
                 curFrame.addMovement(new Vector3(-0.25f, -1.2f), 96); //Tool Right
                 curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
                 Frames.Add(curFrame);
-                curFrame = new AnimFrame(2, 0.6f);
+                curFrame = new AnimFrame(2, 0.7f);
                 curFrame.AnimationMoveFactor = 0.4f;
                 curFrame.isStriking = 1f;
                 curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0.05f, 0.05f), -24); //Body
@@ -641,6 +657,24 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame.addMovement(new Vector3(0f, 0f), new Vector3(-0.05f, -0.05f)); //Body
                 curFrame.addMovement(new Vector3(-0.3f, -0.1f), 0); //Tool Right
                 curFrame.addMovement(new Vector3(-0.3f, 0.1f), 0); //Tool Left
+                Frames.Add(curFrame);
+                break;
+            case AnimationState.BLOCK_LOONCRAB1:
+                Priority = 3;
+                curFrame = new AnimFrame(1, 0.3f);
+                curFrame.AnimationMoveFactor = 0.6f;
+                curFrame.isStriking = 1f;
+                curFrame.addMovement(new Vector3(-0.4f, 0f), new Vector3(0.05f, 0.05f)); //Body
+                curFrame.addMovement(new Vector3(-0.7f, -0.2f), 18); //Tool Right
+                curFrame.addMovement(new Vector3(-0.7f, 0.2f), -18); //Tool Left
+                Frames.Add(curFrame);
+                curFrame = new AnimFrame(2, 0.4f);
+                curFrame.moveForward = -2f;
+                curFrame.AnimationMoveFactor = 0.6f;
+                curFrame.isStriking = 1f;
+                curFrame.addMovement(new Vector3(-0.4f, 0f), new Vector3(0f, 0f)); //Body
+                curFrame.addMovement(new Vector3(-0.4f, 0f), 22); //Tool Right
+                curFrame.addMovement(new Vector3(-0.4f, 0f), -22); //Tool Left
                 Frames.Add(curFrame);
                 break;
         }

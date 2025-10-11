@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 3389265720509430013}
   - component: {fileID: 5490553795353642596}
   - component: {fileID: 6335755416172371307}
+  - component: {fileID: 1452077118431490459}
   m_Layer: 5
   m_Name: InventorySlotWeapon
   m_TagString: Untagged
@@ -377,7 +378,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d2a1b8afd194304089299960f2bbf5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Tool: {fileID: 1452077118431490459}
   UseItemButton: {fileID: 7955080130105859020}
   InnerIconImage: {fileID: 2007977178686994300}
   ImageBorder: {fileID: 5490553795353642596}
   DefaultEquipState: 0
+--- !u!114 &1452077118431490459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8765097088772549376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ff4e70a4002384795c69c08b6fe866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tooltip: 

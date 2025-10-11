@@ -34,7 +34,7 @@ public class GamerTag : MonoBehaviour
         Health.text = $"{FollowObject.GetHealth().ToString("0")}/{FollowObject.GetMaxHealth().ToString("0")}";
         Health.color = col;
 
-        if (FarIcon)
+        if (UseFarIcon)
         {
             float far = CAM.cam.camob.orthographicSize;
             float scale = 0.5f + far * 0.01f;

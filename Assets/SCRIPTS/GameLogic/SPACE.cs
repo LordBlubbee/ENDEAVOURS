@@ -134,11 +134,11 @@ public class SPACE : NetworkBehaviour
                     if (tryLocation)
                     {
 
+                        mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
+                        vec = CoreModuleLocations[CoreModules.Count];
+                        CoreModules.Add(mod);
+                        break;
                     }
-                    mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
-                    vec = CoreModuleLocations[CoreModules.Count];
-                    CoreModules.Add(mod);
-                    break;
                 }
                 break;
             case ScriptableEquippableModule.EquipTypes.WEAPON:
@@ -159,8 +159,8 @@ public class SPACE : NetworkBehaviour
                         mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
                         vec = WeaponModuleLocations[WeaponModules.Count];
                         WeaponModules.Add(mod);
+                        break;
                     }
-                    break;
                 }
                 break;
             case ScriptableEquippableModule.EquipTypes.SYSTEM:
@@ -181,8 +181,8 @@ public class SPACE : NetworkBehaviour
                         mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
                         vec = SystemModuleLocations[SystemModules.Count];
                         SystemModules.Add(mod);
+                        break;
                     }
-                    break;
                 }
                 break;
             case ScriptableEquippableModule.EquipTypes.LOON:
@@ -203,8 +203,8 @@ public class SPACE : NetworkBehaviour
                         mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
                         vec = LoonModuleLocations[LoonModules.Count];
                         LoonModules.Add(mod);
+                        break;
                     }
-                    break;
                 }
                 break;
         }
@@ -290,6 +290,14 @@ public class SPACE : NetworkBehaviour
     public List<WalkableTile> GetGridObjects()
     {
         return RoomTiles;
+    }
+    public WalkableTile GetRandomGrid()
+    {
+        if (RoomTiles == null || RoomTiles.Count == 0)
+            return null;
+
+        int index = UnityEngine.Random.Range(0, RoomTiles.Count);
+        return RoomTiles[index];
     }
     public void AddCrew(CREW crew)
     {

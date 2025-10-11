@@ -142,6 +142,7 @@ public class CO_SPAWNER : NetworkBehaviour
         }
 
         group.SetAI(gr.AI_Type, gr.AI_Group, members);
+        group.SetAIHome(Spawn);
     }
 
     [Rpc(SendTo.ClientsAndHost)]

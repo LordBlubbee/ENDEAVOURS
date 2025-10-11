@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
@@ -13,8 +14,7 @@ public class CREW : NetworkBehaviour, iDamageable
     private Collider2D Col;
     public SpriteRenderer Spr;
     public SpriteRenderer Stripes;
-
-    private ANIM AnimationController;
+    public ANIM AnimationController { get; private set; }
     private List<AnimTransform> AnimTransforms = new List<AnimTransform>();
     private ANIM.AnimationState animDefaultIdle = ANIM.AnimationState.MI_IDLE;
     private ANIM.AnimationState animDefaultMove = ANIM.AnimationState.MI_MOVE;
@@ -355,6 +355,11 @@ public class CREW : NetworkBehaviour, iDamageable
         MoveInput = mov;
         isMoving.Value = mov != Vector3.zero;
     }
+
+    public Vector3 GetMoveInput()
+    {
+        return MoveInput;
+    }
     public void SetLookTowards(Vector2 mov)
     {
         LookTowards = mov;
@@ -487,11 +492,13 @@ public class CREW : NetworkBehaviour, iDamageable
         AnimationComboWeapon1 = 0;
         AnimationComboWeapon2 = 0;
         CurrentReload = 0;
+        DashingDamageBuff = 0.6f;
         StartCoroutine(DashNumerator());
         setAnimationRpc(ANIM.AnimationState.MI_DASH);
     }
 
     bool isDashing = false;
+    float DashingDamageBuff = 0f;
     IEnumerator DashNumerator()
     {
         isDashing = true;
@@ -531,6 +538,12 @@ public class CREW : NetworkBehaviour, iDamageable
         }
 
         isDashing = false;
+
+        while (!isDashing && DashingDamageBuff > 0)
+        {
+            DashingDamageBuff -= CO.co.GetWorldSpeedDelta();
+            yield return null;
+        }
     }
 
     public void Push(float Power, float Duration, Vector3 dir)
@@ -567,6 +580,7 @@ public class CREW : NetworkBehaviour, iDamageable
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations1[AnimationComboWeapon1]);
         if (!setAnimationLocally(EquippedToolObject.attackAnimations1[AnimationComboWeapon1], 3)) return;
         canStrikeMelee = true;
+        MeleeHits = new();
         ConsumeStamina(EquippedToolObject.UsageStamina1);
         AnimationComboWeapon1++;
     }
@@ -586,6 +600,7 @@ public class CREW : NetworkBehaviour, iDamageable
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations2[AnimationComboWeapon2]);
         if (!setAnimationLocally(EquippedToolObject.attackAnimations2[AnimationComboWeapon2],3)) return;
         canStrikeMelee = true;
+        MeleeHits = new();
         ConsumeStamina(EquippedToolObject.UsageStamina2);
         AnimationComboWeapon2++;
     }
@@ -616,29 +631,60 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         if (EquippedToolObject == null) return;
         if (EquippedToolObject.strikePoints.Count == 0) return;
-        if (!canStrike) return;
-        if (!canStrikeMelee) return;
         if (AnimationController.isCurrentlyStriking())
         {
             switch (SelectedWeaponAbility == 0 ? EquippedToolObject.ActionUse1 : EquippedToolObject.ActionUse2)
             {
                 case TOOL.ToolActionType.MELEE_ATTACK:
+                    if (!canStrikeMelee) return;
                     StrikeMelee();
                     break;
                 case TOOL.ToolActionType.RANGED_ATTACK:
+
+                    if (!canStrike) return;
                     StrikeRanged(LookTowards);
                     break;
                 case TOOL.ToolActionType.REPAIR:
+
+                    if (!canStrikeMelee) return;
                     StrikeRepair();
                     break;
                 case TOOL.ToolActionType.HEAL_OTHERS:
+
+                    if (!canStrikeMelee) return;
                     StrikeHealOthers();
                     break;
                 case TOOL.ToolActionType.HEAL_SELF:
+
+                    if (!canStrikeMelee) return;
                     StrikeHealSelf();
                     break;
+                case TOOL.ToolActionType.BLOCK:
+                    foreach (BlockAttacks blocker in EquippedToolObject.Blockers)
+                    {
+                        blocker.SetActive(true);
+                    }
+                    break;
+            }
+            return;
+        }
+    }
+
+    List<GameObject> MeleeHits = new();
+
+    public bool IsEnemyInFront(float dis)
+    {
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position + getLookVector() * dis * 0.5f, dis * 0.5f))
+        {
+            iDamageable crew = col.GetComponent<iDamageable>();
+            if (crew != null)
+            {
+                if (crew.GetFaction() == Faction) continue;
+                if (!crew.CanBeTargeted()) continue;
+                return true;
             }
         }
+        return false;
     }
     private void StrikeMelee()
     {
@@ -650,18 +696,50 @@ public class CREW : NetworkBehaviour, iDamageable
                 iDamageable crew = col.GetComponent<iDamageable>();
                 if (crew != null)
                 {
-                    if (crew.GetFaction() == Faction) continue;
-                    if (crew.Space != Space) continue;
-                    if (!crew.CanBeTargeted()) continue;
-                    float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
-                    dmg *= AnimationController.CurrentStrikePower();
-                    dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE() + 0.02f * GetATT_PILOTING();
-                    crew.TakeDamage(dmg, checkHit);
-                    canStrikeMelee = false; //Turn off until animation ends
+                    if (!Melee(crew, checkHit, SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2)) continue;
                     return;
+                }
+                BlockAttacks Blocker = col.GetComponent<BlockAttacks>();
+                if (Blocker != null)
+                {
+                    Debug.Log("Melee on Blocker?");
+                    if (MeleeHits.Contains(Blocker.gameObject)) continue;
+                    if (Blocker.tool.GetCrew().GetFaction() == Faction) continue;
+                    if (Blocker.tool.GetCrew().Space != Space) continue;
+                    if (!Blocker.tool.GetCrew().CanBeTargeted()) continue;
+                    Debug.Log("Melee on Blocker!!");
+                    MeleeHits.Add(Blocker.gameObject);
+                    bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChance;
+                    if (isBlocked)
+                    {
+                        Debug.Log("Blocked!");
+                        if (Blocker.ReduceDamageMod < 1f)
+                        {
+                            Debug.Log("Damage still done!");
+                            float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
+                            Melee(Blocker.tool.GetCrew(), checkHit, dmg * (1f-Blocker.ReduceDamageMod));
+                        }
+                        canStrikeMelee = false;
+                    }
                 }
             }
         }
+    }
+    private bool Melee(iDamageable crew, Vector3 checkHit, float dmg)
+    {
+        if (crew.GetFaction() == Faction) return false;
+        if (crew.Space != Space) return false;
+        if (!crew.CanBeTargeted()) return false;
+        dmg *= AnimationController.CurrentStrikePower();
+        dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE() + 0.02f * GetATT_PILOTING();
+        if (DashingDamageBuff > 0)
+        {
+            DashingDamageBuff = 0;
+            dmg *= 2;
+        }
+        crew.TakeDamage(dmg, checkHit);
+        canStrikeMelee = false; //Turn off until animation ends
+        return true;
     }
 
     private void StrikeRanged(Vector3 trt)
@@ -682,7 +760,7 @@ public class CREW : NetworkBehaviour, iDamageable
         foreach (Transform hitTrans in EquippedToolObject.strikePoints)
         {
             Vector3 checkHit = hitTrans.position;
-            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.5f))
+            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.9f))
             {
                 iDamageable crew = col.GetComponent<iDamageable>();
                 if (crew != null)
@@ -693,6 +771,7 @@ public class CREW : NetworkBehaviour, iDamageable
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
                     dmg *= 0.4f + 0.2f * GetATT_ENGINEERING();
+                    if (!CO.co.AreWeInDanger.Value) dmg *= 5;
                     crew.Heal(dmg);
                     canStrikeMelee = false; //Turn off until animation ends
                     return;
@@ -705,7 +784,7 @@ public class CREW : NetworkBehaviour, iDamageable
         foreach (Transform hitTrans in EquippedToolObject.strikePoints)
         {
             Vector3 checkHit = hitTrans.position;
-            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.5f))
+            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.9f))
             {
                 iDamageable crew = col.GetComponent<iDamageable>();
                 if (crew != null)
@@ -717,6 +796,7 @@ public class CREW : NetworkBehaviour, iDamageable
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
                     dmg *= GetHealingSkill();
+                    if (!CO.co.AreWeInDanger.Value) dmg *= 5;
                     crew.Heal(dmg);
                     canStrikeMelee = false; //Turn off until animation ends
                     return;
@@ -730,6 +810,7 @@ public class CREW : NetworkBehaviour, iDamageable
         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
         dmg *= AnimationController.CurrentStrikePower();
         dmg *= GetHealingSkill();
+        if (!CO.co.AreWeInDanger.Value) dmg *= 5;
         Heal(dmg);
     }
 
@@ -887,6 +968,7 @@ public class CREW : NetworkBehaviour, iDamageable
             return;
         }
         EquippedToolObject = Instantiate(tol, transform);
+        EquippedToolObject.Init(this);
         EquippedToolObject.transform.localPosition = new Vector3(EquippedToolObject.localX, EquippedToolObject.localY, -0.0002f);
         EquippedToolObject.transform.Rotate(Vector3.forward, EquippedToolObject.localRot);
         AnimTransforms[1].setTransform(EquippedToolObject.transform);
@@ -963,6 +1045,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public void TakeDamage(float fl, Vector3 src)
     {
         if (isDashing) return;
+        if (DashingDamageBuff > 0f) fl *= 0.5f;
         lastDamageTime = 7f;
         CurHealth.Value -= fl;
         if (CurHealth.Value < 0.1f)
