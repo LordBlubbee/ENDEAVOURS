@@ -95,10 +95,10 @@ public class AI_GROUP : MonoBehaviour
         if (!HomeDrifter) return;
         //Defensive non-boarding playstyle
 
-        List<AI_UNIT> UsableUnits = new();
+        List<AI_UNIT> UsableUnits = new(Units);
         //Pick the closest unit
         List<Module> ManModules = new List<Module>();
-        ManModules.Add(HomeDrifter.EngineModule);
+        ManModules.Add(HomeDrifter.NavModule);
         foreach (Module mod in HomeDrifter.Space.GetModules())
         {
             if (mod.GetHealthRelative() < 1) ManModules.Add(mod);
@@ -126,7 +126,7 @@ public class AI_GROUP : MonoBehaviour
                 continue;
             }
             Closest = UsableUnits[0];
-            if (Closest.DistToObjective(Closest.transform.position) > 8) Closest.SetObjectiveTarget(HomeDrifter.Space.GetRandomGrid().transform, HomeSpace);
+            if (Closest.DistToObjective(Closest.transform.position) < 8) Closest.SetObjectiveTarget(HomeDrifter.Space.GetRandomGrid().transform, HomeSpace);
             UsableUnits.Remove(Closest);
         }
     }
@@ -160,7 +160,7 @@ public class AI_GROUP : MonoBehaviour
             case AI_OBJECTIVES.ENGAGE: //Move towards random rooms of nearest enemy drifter
                 foreach (AI_UNIT unit in Units)
                 {
-                    if (unit.GetObjectiveDistance() < 3f)
+                    if (unit.GetObjectiveDistance() < 4f)
                     {
                         DRIFTER enem = unit.GetClosestEnemyDrifter();
                         unit.SetObjectiveTarget(enem.Interior.GetRandomGrid().transform, enem.Interior);

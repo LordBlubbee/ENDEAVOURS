@@ -26,6 +26,12 @@ public class GamerTag : MonoBehaviour
     {
         FarIcon.sprite = spr;
     }
+
+    public ModuleArmor Armor;
+    public void SetArmor(ModuleArmor arm)
+    {
+        Armor = arm;
+    }
     private void Update()
     {
         if (FollowObject == null || FollowObject.transform == null)

@@ -13,6 +13,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     public List<CREW> StartingCrew;
 
     public Module EngineModule;
+    public Module NavModule;
 
     public SpriteRenderer Spr;
     public int Faction;

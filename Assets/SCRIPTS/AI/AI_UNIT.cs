@@ -75,18 +75,14 @@ public class AI_UNIT : NetworkBehaviour
     }
     private void SetMoveTowards(Vector3 trt)
     {
-        if (getSpace())
-        {
-            AI_MoveTarget = getSpace().transform.InverseTransformPoint(trt);
-        } else
-        {
-            AI_MoveTarget = trt;
-        }
+
+        AI_MoveTarget = trt;
         AI_IsMoving = true;
     }
     private bool SetMoveTowardsIfExpired(Vector3 trt, float movtimer)
     {
         if (AI_MoveTimer > 0f && DistToMoveTarget() > 1f) return false;
+
         AI_MoveTarget = trt;
         AI_IsMoving = true;
         AI_MoveTimer = movtimer;
@@ -98,14 +94,7 @@ public class AI_UNIT : NetworkBehaviour
     }
     private void SetLookTowards(Vector3 trt)
     {
-        if (getSpace())
-        {
-            AI_LookTarget = getSpace().transform.InverseTransformPoint(trt);
-        }
-        else
-        {
-            AI_LookTarget = trt;
-        }
+        AI_LookTarget = trt;
         AI_IsLooking = true;
     }
     private void StopLooking()
@@ -154,11 +143,11 @@ public class AI_UNIT : NetworkBehaviour
             {
                 if (getSpace())
                 {
-                    if (!HasLineOfSight(getSpace().transform.TransformPoint(AI_MoveTarget)))
+                    if (!HasLineOfSight(AI_MoveTarget))
                     {
                         if (path == null)
                         {
-                            SetPath(getSpace().transform.TransformPoint(AI_MoveTarget));
+                            SetPath(AI_MoveTarget);
                         }
                         if (path != null)
                         {
@@ -181,7 +170,7 @@ public class AI_UNIT : NetworkBehaviour
                     else
                     {
                         path = null;
-                        Unit.SetMoveInput((getSpace().transform.TransformPoint(AI_MoveTarget) - transform.position).normalized * AI_MoveSpeed);
+                        Unit.SetMoveInput((AI_MoveTarget - transform.position).normalized * AI_MoveSpeed);
                     }
                 }
                 else
@@ -194,7 +183,7 @@ public class AI_UNIT : NetworkBehaviour
 
             if (AI_IsLooking)
             {
-                if (getSpace()) Unit.SetLookTowards(getSpace().transform.TransformPoint(AI_LookTarget));
+                if (getSpace()) Unit.SetLookTowards(AI_MoveTarget);
                 else Unit.SetLookTowards(AI_LookTarget);
             }
             else
@@ -732,6 +721,7 @@ public class AI_UNIT : NetworkBehaviour
         foreach (var enemy in enemies)
         {
             if (enemy == Unit) continue; // skip self
+            if (enemy.Faction == 0 || enemy.Faction == Unit.GetFaction()) continue;
             float dist = (enemy.getPos() - myPos).sqrMagnitude;
             if (dist < minDist)
             {

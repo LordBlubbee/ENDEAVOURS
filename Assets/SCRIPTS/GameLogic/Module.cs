@@ -38,6 +38,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 
     protected NetworkVariable<float> CurHealth = new();
     [NonSerialized] public NetworkVariable<int> SpaceID = new();
+    [NonSerialized] public NetworkVariable<int> CurrentInteractors = new();
 
     private void Start()
     {
@@ -61,6 +62,10 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 
     protected bool hasInitialized = false;
 
+    public bool IsCurrentlyInteracted()
+    {
+        return CurrentInteractors.Value > 0;
+    }
     public SPACE Space { get { return CO.co.GetSpace(SpaceID.Value); } set { } }
     public virtual void Init()
     {
