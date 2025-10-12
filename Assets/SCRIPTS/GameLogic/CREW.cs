@@ -790,7 +790,7 @@ public class CREW : NetworkBehaviour, iDamageable
         foreach (Transform hitTrans in EquippedToolObject.strikePoints)
         {
             Vector3 checkHit = hitTrans.position;
-            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.9f))
+            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 2f))
             {
                 iDamageable crew = col.GetComponent<iDamageable>();
                 if (crew != null)
@@ -1057,7 +1057,7 @@ public class CREW : NetworkBehaviour, iDamageable
         float Diff = CurHealth.Value;
         CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
         Diff -= CurHealth.Value;
-        if (Diff < -1) return;
+        if (Diff > -1) return;
         CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
     }
     public void TakeDamage(float fl, Vector3 src)
@@ -1070,7 +1070,6 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             CurHealth.Value = 0f;
             Die();
-            //Death
         }
         CO_SPAWNER.co.SpawnDMGRpc(fl, src);
     }

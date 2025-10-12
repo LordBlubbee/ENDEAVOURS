@@ -112,7 +112,7 @@ public class AI_GROUP : MonoBehaviour
             {
                 PointOfInterest = ManModules[0].transform.position;
                 Closest = GetClosestUnitInGroup(PointOfInterest, UsableUnits);
-                Closest.SetObjectiveTarget(PointOfInterest, HomeSpace);
+                Closest.SetObjectiveTarget(Closest.getSpace().GetNearestGridToPoint(PointOfInterest).transform, HomeSpace);
                 UsableUnits.Remove(Closest);
                 ManModules.Remove(ManModules[0]);
                 continue;
@@ -121,7 +121,7 @@ public class AI_GROUP : MonoBehaviour
             {
                 PointOfInterest = Intruders[0].transform.position;
                 Closest = GetClosestUnitInGroup(PointOfInterest, UsableUnits);
-                Closest.SetObjectiveTarget(PointOfInterest, HomeSpace);
+                Closest.SetObjectiveTarget(Closest.getSpace().GetNearestGridToPoint(PointOfInterest).transform, HomeSpace);
                 UsableUnits.Remove(Closest);
                 continue;
             }

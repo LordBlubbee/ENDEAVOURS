@@ -75,7 +75,7 @@ public class AI_UNIT : NetworkBehaviour
     }
     private void SetMoveTowards(Vector3 trt)
     {
-
+        Debug.Log(trt);
         AI_MoveTarget = trt;
         AI_IsMoving = true;
     }

@@ -203,7 +203,8 @@ public class PROJ : NetworkBehaviour
     }
     protected void Kill()
     {
-        NetworkObject.Despawn();
+        if (!IsSpawned) Destroy(gameObject);
+        else NetworkObject.Despawn();
     }
     public Vector3 getLookVector()
     {
