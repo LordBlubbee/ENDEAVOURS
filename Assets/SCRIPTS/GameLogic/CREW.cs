@@ -44,7 +44,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public NetworkVariable<int> ATT_ENGINEERING = new NetworkVariable<int>(2); //Buffs repair speed
     public NetworkVariable<int> ATT_GUNNERY = new NetworkVariable<int>(2); //Buffs usage of large heavy weapons
     public NetworkVariable<int> ATT_MEDICAL = new NetworkVariable<int>(2); //Buffs healing abilities (+regeneration)
-    [NonSerialized] public ScriptableBackground CharacterBackground;
+    public ScriptableBackground CharacterBackground;
     public CO_SPAWNER.DefaultEquipmentSet DefaultToolset;
     public ScriptableEquippableWeapon[] EquippedWeapons = new ScriptableEquippableWeapon[3];
     public ScriptableEquippableArtifact EquippedArmor = null;
@@ -671,7 +671,14 @@ public class CREW : NetworkBehaviour, iDamageable
     }
 
     List<GameObject> MeleeHits = new();
-
+    public bool IsTargetEnemy(iDamageable dam)
+    {
+        return IsTargetEnemy(dam.GetFaction());
+    }
+    public bool IsTargetEnemy(int targetFac)
+    {
+        return targetFac != Faction && targetFac != 0;
+    }
     public bool IsEnemyInFront(float dis)
     {
         foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position + getLookVector() * dis * 0.5f, dis * 0.5f))
@@ -679,8 +686,8 @@ public class CREW : NetworkBehaviour, iDamageable
             iDamageable crew = col.GetComponent<iDamageable>();
             if (crew != null)
             {
-                if (crew.GetFaction() == Faction) continue;
-                if (!crew.CanBeTargeted()) continue;
+                if (!IsTargetEnemy(crew)) continue;
+                if (!crew.CanBeTargeted(Space)) continue;
                 return true;
             }
         }
@@ -704,9 +711,8 @@ public class CREW : NetworkBehaviour, iDamageable
                 {
                     Debug.Log("Melee on Blocker?");
                     if (MeleeHits.Contains(Blocker.gameObject)) continue;
-                    if (Blocker.tool.GetCrew().GetFaction() == Faction) continue;
-                    if (Blocker.tool.GetCrew().Space != Space) continue;
-                    if (!Blocker.tool.GetCrew().CanBeTargeted()) continue;
+                    if (!IsTargetEnemy(Blocker.tool.GetCrew().GetFaction())) continue;
+                    if (!Blocker.tool.GetCrew().CanBeTargeted(Space)) continue;
                     Debug.Log("Melee on Blocker!!");
                     MeleeHits.Add(Blocker.gameObject);
                     bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChance;
@@ -728,8 +734,7 @@ public class CREW : NetworkBehaviour, iDamageable
     private bool Melee(iDamageable crew, Vector3 checkHit, float dmg)
     {
         if (crew.GetFaction() == Faction) return false;
-        if (crew.Space != Space) return false;
-        if (!crew.CanBeTargeted()) return false;
+        if (!crew.CanBeTargeted(Space)) return false;
         dmg *= AnimationController.CurrentStrikePower();
         dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE() + 0.02f * GetATT_PILOTING();
         if (DashingDamageBuff > 0)
@@ -737,7 +742,8 @@ public class CREW : NetworkBehaviour, iDamageable
             DashingDamageBuff = 0;
             dmg *= 2;
         }
-        crew.TakeDamage(dmg, checkHit);
+        if (crew is DRIFTER) ((DRIFTER)crew).Impact(dmg, checkHit);
+        else crew.TakeDamage(dmg, checkHit);
         canStrikeMelee = false; //Turn off until animation ends
         return true;
     }
@@ -792,6 +798,7 @@ public class CREW : NetworkBehaviour, iDamageable
                     //if (crew.GetFaction() != Faction) return;
                     if (crew == this) continue;
                     if (crew.Space != Space) continue;
+                    if (crew.GetFaction() != Faction) continue;
                     if (crew is Module) continue;
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
@@ -858,7 +865,18 @@ public class CREW : NetworkBehaviour, iDamageable
     private void FixedUpdate()
     {
         //if (!IsServer) return;
-        if (!CanFunction()) return;
+        if (!CanFunction())
+        {
+            if (isDead())
+            {
+                if (GetHealth() > 50)
+                {
+                    Alive.Value = true;
+                    setAnimationRpc(ANIM.AnimationState.MI_IDLE);
+                }
+            }
+            return;
+        }
         if (isLooking)
         {
             float ang = AngleToTurnTarget();
@@ -1019,7 +1037,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public bool ConsumeStamina(float fl)
     {
         if (fl > CurStamina.Value) return false;
-        LastStaminaUsed = 0f;
+        if (fl > 0) LastStaminaUsed = 0f;
         CurStamina.Value -= fl;
         return true;
     }
@@ -1160,7 +1178,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public float GetCurrentSpeed()
     {
         if (!isMoving.Value) return 0;
-        return MovementSpeed;
+        return GetSpeed();
     }
     public float AngleToTurnTarget()
     {
@@ -1197,8 +1215,9 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         return Faction;
     }
-    public bool CanBeTargeted()
+    public bool CanBeTargeted(SPACE space)
     {
+        if (space != Space) return false;
         return !isDead();
     }
 }

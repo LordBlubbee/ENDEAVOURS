@@ -12,26 +12,16 @@ public class DMG : MonoBehaviour
     private Vector3 MovementDir = new Vector3(0,1);
     private float MovementSpeed = 3f;
     float Scale = 1f;
-    public void InitDamage(float dmg, float scale)
+    public void InitNumber(float dmg, float scale, Color col)
     {
         texto.text = dmg.ToString("0");
-        texto.color = Color.red;
+        texto.color = col;
 
         Scale = scale;
         scale *= 0.6f + CAM.cam.camob.orthographicSize * 0.04f;
         transform.localScale = new Vector3(scale, scale, 1);
 
         MovementDir = new Vector3(Random.Range(-0.3f,0.3f), Random.Range(0.2f, 0.3f));
-    }
-    public void InitHeal(float dmg, float scale)
-    {
-        texto.text = dmg.ToString("0");
-        texto.color = Color.green;
-
-        Scale = scale;
-        scale *= 0.6f + CAM.cam.camob.orthographicSize * 0.04f;
-        transform.localScale = new Vector3(scale, scale, 1);
-        MovementDir = new Vector3(Random.Range(-0.3f, 0.3f), Random.Range(0.2f, 0.3f));
     }
     public void InitWords(string str, float dur, Color col)
     {

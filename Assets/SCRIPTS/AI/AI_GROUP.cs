@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -10,14 +11,16 @@ public class AI_GROUP : MonoBehaviour
     public AI_TYPES AI_Type { get; private set; }
     public AI_OBJECTIVES AI_Objective { get; private set; }
 
-    private DRIFTER HomeDrifter;
-    private SPACE HomeSpace;
+    [NonSerialized] public int Faction;
+    [NonSerialized] public DRIFTER HomeDrifter;
+    [NonSerialized] public SPACE HomeSpace;
     private Vector3 MainPoint;
     private float MainObjectiveTimer = 0f;
-    public void SetAI(AI_TYPES type, AI_OBJECTIVES objective, List<AI_UNIT> Units)
+    public void SetAI(AI_TYPES type, AI_OBJECTIVES objective, int Fac, List<AI_UNIT> Units)
     {
         AI_Type = type;
         AI_Objective = objective;
+        Faction = Fac;  
         foreach (AI_UNIT unit in Units)
         {
             unit.AddToGroup(this);
@@ -27,9 +30,15 @@ public class AI_GROUP : MonoBehaviour
     {
         MainPoint = vec;
     }
+
+    public void Add(AI_UNIT unit)
+    {
+        unit.AddToGroup(this);
+    }
     public void SetAIHome(DRIFTER dr)
     {
         HomeDrifter = dr;
+        HomeSpace = dr.Space;
     }
     public void SetAIHome(SPACE dr)
     {
@@ -37,14 +46,16 @@ public class AI_GROUP : MonoBehaviour
     }
     public enum AI_TYPES
     {
-        DEFAULT_SHIP,
+        SHIP_DEFENSIVE,
+        SHIP_BOARDING,
         SWARM
     }
     public enum AI_OBJECTIVES
     {
         WANDER,
         PATROL,
-        ENGAGE
+        ENGAGE,
+        SHIP
     }
 
     private void Start()
@@ -67,7 +78,7 @@ public class AI_GROUP : MonoBehaviour
             }
             switch (AI_Type)
             {
-                case AI_TYPES.DEFAULT_SHIP:
+                case AI_TYPES.SHIP_DEFENSIVE:
                     ShipAI();
                     break;
                 case AI_TYPES.SWARM:
@@ -81,8 +92,43 @@ public class AI_GROUP : MonoBehaviour
 
     private void ShipAI()
     {
+        if (!HomeDrifter) return;
+        //Defensive non-boarding playstyle
+
         List<AI_UNIT> UsableUnits = new();
         //Pick the closest unit
+        List<Module> ManModules = new List<Module>();
+        ManModules.Add(HomeDrifter.EngineModule);
+        foreach (Module mod in HomeDrifter.Space.GetModules())
+        {
+            if (mod.GetHealthRelative() < 1) ManModules.Add(mod);
+        }
+        List<CREW> Intruders = new List<CREW>(EnemiesInSpace(HomeDrifter.Space));
+        Vector3 PointOfInterest;
+        while (UsableUnits.Count > 0)
+        {
+            AI_UNIT Closest;
+            if (ManModules.Count > 0)
+            {
+                PointOfInterest = ManModules[0].transform.position;
+                Closest = GetClosestUnitInGroup(PointOfInterest, UsableUnits);
+                Closest.SetObjectiveTarget(PointOfInterest, HomeSpace);
+                UsableUnits.Remove(Closest);
+                ManModules.Remove(ManModules[0]);
+                continue;
+            }
+            if (Intruders.Count > 0)
+            {
+                PointOfInterest = Intruders[0].transform.position;
+                Closest = GetClosestUnitInGroup(PointOfInterest, UsableUnits);
+                Closest.SetObjectiveTarget(PointOfInterest, HomeSpace);
+                UsableUnits.Remove(Closest);
+                continue;
+            }
+            Closest = UsableUnits[0];
+            if (Closest.DistToObjective(Closest.transform.position) > 8) Closest.SetObjectiveTarget(HomeDrifter.Space.GetRandomGrid().transform, HomeSpace);
+            UsableUnits.Remove(Closest);
+        }
     }
     private void SwarmAI()
     {
@@ -93,7 +139,7 @@ public class AI_GROUP : MonoBehaviour
                 {
                     if (unit.GetObjectiveDistance() < 3f)
                     {
-                        unit.SetObjectiveTarget(GetRandomPointAround(MainPoint, 12f));
+                        unit.SetObjectiveTarget(GetRandomPointAround(MainPoint, 12f), unit.getSpace());
                     }
                 }
                 break;
@@ -107,7 +153,7 @@ public class AI_GROUP : MonoBehaviour
                 {
                     if (unit.GetObjectiveDistance() < 3f)
                     {
-                        unit.SetObjectiveTarget(GetRandomPointAround(MainPoint, 12f));
+                        unit.SetObjectiveTarget(GetRandomPointAround(MainPoint, 12f), unit.getSpace());
                     }
                 }
                 break;
@@ -116,7 +162,8 @@ public class AI_GROUP : MonoBehaviour
                 {
                     if (unit.GetObjectiveDistance() < 3f)
                     {
-                        unit.SetObjectiveTarget(unit.GetClosestEnemyDrifter().Interior.GetRandomGrid().transform);
+                        DRIFTER enem = unit.GetClosestEnemyDrifter();
+                        unit.SetObjectiveTarget(enem.Interior.GetRandomGrid().transform, enem.Interior);
                     }
                 }
                 break;
@@ -177,5 +224,19 @@ public class AI_GROUP : MonoBehaviour
         }
 
         return closest;
+    }
+    public List<CREW> CrewInSpace(SPACE space)
+    {
+        return space.GetCrew();
+    }
+    public List<CREW> EnemiesInSpace(SPACE space)
+    {
+        List<CREW> enemies = new();
+        foreach (var crew in CrewInSpace(space))
+        {
+            if (crew.isDead()) continue;
+            if (crew.Faction != Faction && crew.Faction != 0) enemies.Add(crew);
+        }
+        return enemies;
     }
 }

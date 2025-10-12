@@ -11,6 +11,12 @@ public class TOOL : MonoBehaviour
     public List<Transform> handPoints;
     public List<Transform> strikePoints;
     public List<BlockAttacks> Blockers;
+    public ToolAI AI;
+    public enum ToolAI
+    {
+        MELEE,
+        RANGED
+    }
 
     [Header("CROSSHAIR")]
     public Sprite CrosshairSprite;

@@ -28,6 +28,11 @@ public class GamerTag : MonoBehaviour
     }
     private void Update()
     {
+        if (FollowObject == null || FollowObject.transform == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         transform.position = FollowObject.transform.position + new Vector3(0, 2);
         float healthRelative = FollowObject.GetHealthRelative();
         Color col = new Color(1 - healthRelative, healthRelative, 0);

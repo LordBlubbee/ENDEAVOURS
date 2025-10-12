@@ -78,7 +78,14 @@ public class PROJ : NetworkBehaviour
             {
                 if (CrewDamageSplash > 0f)
                 {
-                    foreach (Collider2D collision in Physics2D.OverlapCircleAll(Tip.position, CrewDamageSplash))
+                    Collider2D[] cols = Physics2D.OverlapCircleAll(Tip.position, CrewDamageSplash);
+                    foreach (Collider2D collision in cols)
+                    {
+                        if (!collision.GetComponent<DRIFTER>()) continue;
+                        PotentialHitTarget(collision.gameObject);
+                    }
+                    if (!isActive) return;
+                    foreach (Collider2D collision in cols)
                     {
                         PotentialHitTarget(collision.gameObject);
                     }
@@ -99,13 +106,13 @@ public class PROJ : NetworkBehaviour
         if (crew != null)
         {
             if (crew.GetFaction() == Faction) return;
-            if (crew.Space != Space) return;
             if (Damageables.Contains(collision)) return;
-            if (!crew.CanBeTargeted()) return;
+            if (!crew.CanBeTargeted(Space)) return;
             DRIFTER drifter = collision.GetComponent<DRIFTER>();
             if (drifter != null)
             {
                 drifter.Impact(this, transform.position);
+                isActive = false;
             } else
             {
                 crew.TakeDamage(AttackDamage, transform.position);
@@ -119,6 +126,7 @@ public class PROJ : NetworkBehaviour
             }
             else
             {
+                isActive = false;
                 BulletImpact();
             }
             return;
@@ -156,7 +164,16 @@ public class PROJ : NetworkBehaviour
                     AttackDamage *= (1f - Blocker.ReduceDamageMod);
                     PotentialHitTarget(Blocker.tool.GetCrew().gameObject);
                 }
-                BulletImpact();
+                if (StickToWalls)
+                {
+                    isActive = false;
+                    transform.SetParent(collision.transform);
+                    ExpireSlowlyRpc();
+                }
+                else
+                {
+                    BulletImpact();
+                }
             }
         }
     }

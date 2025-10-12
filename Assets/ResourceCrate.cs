@@ -32,8 +32,9 @@ public class ResourceCrate : NetworkBehaviour, iDamageable, iInteractable
     {
         return 0;
     }
-    public bool CanBeTargeted()
+    public bool CanBeTargeted(SPACE space)
     {
+        if (space != Space) return false;
         return true;
     }
     public float GetHealth()

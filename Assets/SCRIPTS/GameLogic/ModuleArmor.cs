@@ -22,10 +22,11 @@ public class ModuleArmor : Module
         if (!IsServer) return;
         CurArmor.Value = Mathf.Clamp(CurArmor.Value + ArmorRegen * CO.co.GetWorldSpeedDelta(), 0, MaxArmor);
     }
-    public void TakeArmorDamage(float fl)
+    public void TakeArmorDamage(float fl, Vector3 impact)
     {
         float before = CurArmor.Value;
         CurArmor.Value = Mathf.Clamp(CurArmor.Value - fl, 0, MaxArmor);
+        CO_SPAWNER.co.SpawnArmorDMGRpc(fl, impact);
     }
 
     public float GetArmor()

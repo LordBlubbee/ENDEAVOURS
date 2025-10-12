@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TreeEditor;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -6,8 +7,12 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 {
     [Header("REFERENCES")]
     public SPACE Interior;
+    public AI_GROUP CrewGroup;
     public DrifterCollider DrifterCollider;
     public List<ScriptableEquippableModule> StartingModules;
+    public List<CREW> StartingCrew;
+
+    public Module EngineModule;
 
     public SpriteRenderer Spr;
     public int Faction;
@@ -50,6 +55,9 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         {
             CurHealth.Value = MaxHealth;
             DrifterCollider.gameObject.SetActive(true);
+
+            CrewGroup.SetAIHome(this);
+            CrewGroup.SetAI(AI_GROUP.AI_TYPES.SHIP_DEFENSIVE, AI_GROUP.AI_OBJECTIVES.SHIP, GetFaction(), new());
         }
     }
 
@@ -94,6 +102,10 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         return RotationBaseSpeed * PilotingEfficiency;
     }
 
+    public bool EnginesDown()
+    {
+        return EngineModule && EngineModule.IsDisabled();
+    }
     public float GetMovementSpeed()
     {
         return MovementSpeed;
@@ -106,7 +118,6 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         return Mathf.Abs(CurrentRotation.Value) / RotationBaseSpeed;
     }
-
     public float GetRotorSpeed()
     {
         return Mathf.Clamp01(GetRelativeSpeed() * 0.6f + GetRelativeRotation() * 0.6f);
@@ -123,6 +134,10 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     void UpdateTurn()
     {
         float ang = AngleToTurnTarget();
+        if (EnginesDown())
+        {
+            ang = 0f;
+        }
         float rotGoal = 0f;
         float accelSpeed = GetRotation() * 0.5f;
         if (ang > 1f)
@@ -152,7 +167,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         
         UpdateTurn();
 
-        if (MoveInput == Vector3.zero)
+        if (MoveInput == Vector3.zero || EnginesDown())
         {
             bool XPOS = CurrentMovement.Value.x > 0;
             bool YPOS = CurrentMovement.Value.y > 0;
@@ -224,6 +239,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             CurHealth.Value = 0f;
             //Death
         }
+        CO_SPAWNER.co.SpawnDMGRpc(fl, ImpactArea);
     }
     public void Impact(PROJ fl, Vector3 ImpactArea)
     {
@@ -240,7 +256,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
                 {
                     AbsorbableDamage *= fl.ArmorDamageModifier; //Say, we deal 80 damage with +50% modifier = 120
                     float DamageNeeded = arm.CurArmor.Value; //Say, we need only 80 damage
-                    arm.TakeArmorDamage(AbsorbableDamage);
+                    arm.TakeArmorDamage(AbsorbableDamage, ImpactArea);
                     AbsorbableDamage -= DamageNeeded; //We have 40 damage left
                     AbsorbableDamage /= fl.ArmorDamageModifier; //27 damage is returned to main damage mod
                     break;
@@ -266,12 +282,37 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             }
         }
     }
+    public void Impact(float Damage, Vector3 ImpactArea)
+    {
+        float AbsorbableDamage = Damage;
+        Damage -= AbsorbableDamage;
+        foreach (Module mod in Interior.GetModules())
+        {
+            float Dist = (mod.transform.position - ImpactArea).magnitude;
+            if (mod is ModuleArmor && !mod.IsDisabled())
+            {
+                ModuleArmor arm = (ModuleArmor)mod;
+                if (Dist < arm.ArmorAuraSize)
+                {
+                    AbsorbableDamage *= 0.5f; //Say, we deal 80 damage with +50% modifier = 120
+                    float DamageNeeded = arm.CurArmor.Value; //Say, we need only 80 damage
+                    arm.TakeArmorDamage(AbsorbableDamage, ImpactArea);
+                    AbsorbableDamage -= DamageNeeded; //We have 40 damage left
+                    AbsorbableDamage /= 0.5f; //27 damage is returned to main damage mod
+                    break;
+                }
+            }
+        }
+        Damage += AbsorbableDamage;
+        TakeDamage(Damage * 1f, ImpactArea);
+    }
     public int GetFaction()
     {
         return Faction;
     }
-    public bool CanBeTargeted()
+    public bool CanBeTargeted(SPACE space)
     {
+        if (space == Space) return false;
         return true;
     }
 

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using TreeEditor;
 using Unity.Netcode;
 using UnityEngine;
+using static CO;
 
 public class SPACE : NetworkBehaviour
 {
@@ -137,6 +139,7 @@ public class SPACE : NetworkBehaviour
                         mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
                         vec = CoreModuleLocations[CoreModules.Count];
                         CoreModules.Add(mod);
+                        if (mod.ModuleType == Module.ModuleTypes.ENGINES) Drifter.EngineModule = mod;
                         break;
                     }
                 }
@@ -213,6 +216,7 @@ public class SPACE : NetworkBehaviour
         mod.transform.SetParent(transform);
         mod.transform.localPosition = vec;
         mod.SpaceID.Value = SpaceID.Value;
+        mod.Faction = Drifter.GetFaction();
         Modules.Add(mod);
         mod.Init();
         return true;
@@ -320,6 +324,8 @@ public class SPACE : NetworkBehaviour
     {
         return CrewInSpace;
     }
+
+
     public List<Module> GetModules()
     {
         return Modules;

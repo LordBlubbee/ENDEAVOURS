@@ -19,6 +19,10 @@ public class CO : NetworkBehaviour
     [NonSerialized] public DRIFTER PlayerMainDrifter;
     [NonSerialized] public NetworkVariable<int> PlayerMapPointID = new();
 
+    public bool IsSafe()
+    {
+        return !AreWeInDanger.Value;
+    }
     public MapPoint GetMapPoint(int ID)
     {
         foreach (MapPoint point in GetMapPoints())
@@ -183,7 +187,7 @@ public class CO : NetworkBehaviour
         HandleRelativity();
     }
 
-    void HandleRelativity()
+    void HandleRelativity() //Gravity
     {
         List<Transform> Trans = new();
         foreach (CREW ob in GetAllCrews())
@@ -220,10 +224,8 @@ public class CO : NetworkBehaviour
         Vector3 midpoint = (posA + posB) * 0.5f;
 
         // You can now use `midpoint` for whatever you need (debug, centering camera, etc.)
-        Debug.DrawLine(posA, posB, Color.red, 1f); // optional debug line
-        Debug.DrawRay(midpoint, Vector3.up * 2f, Color.green, 1f); // visualize midpoint
 
-        float noPullRange = 30f + Drifters.Count*10;       // distance within which no pull is applied
+        float noPullRange = 40f + Drifters.Count*10;       // distance within which no pull is applied
         float pullStrength = 0.1f;    // base multiplier for how strongly they move per frame (tune as needed)
 
         foreach (Transform trans in Trans)
@@ -646,7 +648,7 @@ public class CO : NetworkBehaviour
             yield return new WaitForSeconds(0.5f);
             int DeadAmount = GroupDeathAmount(GetEnemyCrew());
             int AliveAmount = GetEnemyCrew().Count - DeadAmount;
-            Death = DeadAmount / GetEnemyCrew().Count;
+            Death = (float)DeadAmount / (float)GetEnemyCrew().Count;
             EnemyBarRelative.Value = 1f-Death;
             EnemyBarString.Value = $"THREATS: ({AliveAmount})";
         }

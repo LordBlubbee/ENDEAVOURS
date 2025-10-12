@@ -5,7 +5,9 @@ using System.Linq;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static AI_GROUP;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class AI_UNIT : NetworkBehaviour
 {
@@ -15,6 +17,7 @@ public class AI_UNIT : NetworkBehaviour
     private AI_TACTICS AI_Tactic;
     private AI_GROUP Group;
     private Vector3 ObjectiveTarget = Vector3.zero;
+    private SPACE ObjectiveSpace;
     private Transform ObjectiveTargetTransform = null;
 
     private CREW EnemyTarget;
@@ -43,15 +46,17 @@ public class AI_UNIT : NetworkBehaviour
         AI_TacticTimer = timer;
         AI_MoveTimer = 0;
     }
-    public void SetObjectiveTarget(Vector3 target)
+    public void SetObjectiveTarget(Vector3 target, SPACE space)
     {
         ObjectiveTarget = target;
         ObjectiveTargetTransform = null;
+        ObjectiveSpace = space;
     }
-    public void SetObjectiveTarget(Transform target)
+    public void SetObjectiveTarget(Transform target, SPACE space)
     {
         ObjectiveTargetTransform = target;
         ObjectiveTarget = target.position;
+        ObjectiveSpace = space;
     }
 
     public float GetObjectiveDistance()
@@ -70,7 +75,13 @@ public class AI_UNIT : NetworkBehaviour
     }
     private void SetMoveTowards(Vector3 trt)
     {
-        AI_MoveTarget = trt;
+        if (getSpace())
+        {
+            AI_MoveTarget = getSpace().transform.InverseTransformPoint(trt);
+        } else
+        {
+            AI_MoveTarget = trt;
+        }
         AI_IsMoving = true;
     }
     private bool SetMoveTowardsIfExpired(Vector3 trt, float movtimer)
@@ -87,7 +98,14 @@ public class AI_UNIT : NetworkBehaviour
     }
     private void SetLookTowards(Vector3 trt)
     {
-        AI_LookTarget = trt;
+        if (getSpace())
+        {
+            AI_LookTarget = getSpace().transform.InverseTransformPoint(trt);
+        }
+        else
+        {
+            AI_LookTarget = trt;
+        }
         AI_IsLooking = true;
     }
     private void StopLooking()
@@ -102,9 +120,7 @@ public class AI_UNIT : NetworkBehaviour
         CHARGE,
         CIRCLE,
         SABOTAGE,
-        INTERACT_NAVIGATION,
-        INTERACT_WEAPONS,
-        INTERACT_REPAIR
+        RETREAT
     }
     public enum AI_UNIT_TYPES
     {
@@ -116,12 +132,18 @@ public class AI_UNIT : NetworkBehaviour
         if (!IsServer) return;
         StartCoroutine(RunAI());
     }
+
+    private float AI_MoveSpeed = 1f;
+    private bool LeaningRight = false;
     IEnumerator RunAI()
     {
         float Tick = 0f;
+        LeaningRight = UnityEngine.Random.Range(0f, 1f) < 0.5f;
         while (true)
         {
             Tick -= CO.co.GetWorldSpeedDelta();
+            Debug.DrawLine(transform.position, AI_MoveTarget, Color.red);
+            Debug.DrawLine(transform.position, ObjectiveTarget, Color.cyan);
             if (Tick < 0f)
             {
                 Tick = 0.25f;
@@ -130,39 +152,55 @@ public class AI_UNIT : NetworkBehaviour
             }
             if (AI_IsMoving)
             {
-                if (getSpace() && !HasLineOfSight(AI_MoveTarget))
+                if (getSpace())
                 {
-                    if (path == null)
+                    if (!HasLineOfSight(getSpace().transform.TransformPoint(AI_MoveTarget)))
                     {
-                        SetPath(AI_MoveTarget);
-                    }
-                    if (path != null)
-                    {
-                        if (pathTravelIndex >= path.Count)
+                        if (path == null)
                         {
-                            path = null;
-                        } else
+                            SetPath(getSpace().transform.TransformPoint(AI_MoveTarget));
+                        }
+                        if (path != null)
                         {
-                            Vector3 trt = getSpace().ConvertGridToWorld(path[pathTravelIndex]);
-                            Unit.SetMoveInput((trt - transform.position).normalized);
-                            if (Dist(trt) < 3f)
+                            if (pathTravelIndex >= path.Count)
                             {
-                                pathTravelIndex++; 
-                                if (pathTravelIndex >= path.Count) path = null;
+                                path = null;
                             }
-                        } 
+                            else
+                            {
+                                Vector3 trt = getSpace().ConvertGridToWorld(path[pathTravelIndex]);
+                                Unit.SetMoveInput((trt - transform.position).normalized);
+                                if (Dist(trt) < 3f)
+                                {
+                                    pathTravelIndex++;
+                                    if (pathTravelIndex >= path.Count) path = null;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        path = null;
+                        Unit.SetMoveInput((getSpace().transform.TransformPoint(AI_MoveTarget) - transform.position).normalized * AI_MoveSpeed);
                     }
                 }
                 else
                 {
                     path = null;
-                    Unit.SetMoveInput((AI_MoveTarget - transform.position).normalized);
+                    Unit.SetMoveInput((AI_MoveTarget - transform.position).normalized * AI_MoveSpeed);
                 }
             }
             else Unit.SetMoveInput(Vector3.zero);
-            if (AI_IsLooking) Unit.SetLookTowards(AI_LookTarget);
-            else Unit.SetLookTowards(Vector3.zero);
 
+            if (AI_IsLooking)
+            {
+                if (getSpace()) Unit.SetLookTowards(getSpace().transform.TransformPoint(AI_LookTarget));
+                else Unit.SetLookTowards(AI_LookTarget);
+            }
+            else
+            {
+                Unit.SetLookTowards(transform.position + Unit.getLookVector() * 100f);
+            }
             yield return null;
         }
     }
@@ -191,20 +229,163 @@ public class AI_UNIT : NetworkBehaviour
     }
     private void AITick_Crew()
     {
+        InteractingModule = null;
+        Module mod;
         CREW trt = GetClosestEnemy();
+        Vector3 point;
+        if (getSpace() == Group.HomeSpace)
+        {
+            //We are at home
+            if (!EnemyTarget || EnemyTargetTimer < 0 || EnemyTarget.isDead())
+            {
+                EnemyTarget = GetClosestVisibleEnemy();
+            }
+            if (EnemyTarget)
+            {
+                EnemyTargetTimer = 7;
+
+                if (AI_TacticTimer < 0) SwitchTacticsCrew();
+
+                switch (AI_Tactic)
+                {
+                    case AI_TACTICS.SKIRMISH:
+                        Unit.EquipWeapon1Rpc();
+                        SetMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()));
+                        SetLookTowards(EnemyTarget.transform.position);
+                        Unit.Dash();
+                        break;
+                    case AI_TACTICS.CIRCLE:
+                        Unit.EquipWeapon1Rpc();
+                        if (Unit.GetHealthRelative() < 0.3f)
+                        {
+                            SetMoveTowards(GetPointTowardsPoint(EnemyTarget.transform.position, -12f));
+                        }
+                        else
+                        {
+                            SetMoveTowardsIfExpired(GetRandomPointAround(EnemyTarget.transform.position, 5f, 12f), 3f);
+                        }
+                        Unit.UseItem2();
+                        SetLookTowards(EnemyTarget.transform.position);
+                        break;
+                    case AI_TACTICS.RETREAT:
+                        point = GetDiagonalPointTowards(EnemyTarget.transform.position, -12f, LeaningRight);
+                        SetMoveTowards(point);
+                        SetLookTowards(point);
+                        Unit.Dash();
+                        Unit.EquipMedkitRpc();
+                        Unit.UseItem2();
+                        break;
+                }
+                if (Unit.IsEnemyInFront(GetAttackDistance()))
+                {
+                    Unit.UseItem1();
+                }
+                return;
+            }
+            //We are not in combat
+            if (DistToObjective(transform.position) > 16)
+            {
+                SetMoveTowards(ObjectiveTarget);
+                SetLookTowards(ObjectiveTarget);
+                Unit.EquipWeapon1Rpc();
+                return;
+            }
+            mod = GetClosestFriendlyModule(); 
+            if (DistToObjective(mod.transform.position) < 16)
+            {
+                SetMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(),2f));
+                SetLookTowards(ObjectiveTarget);
+                if (Dist(mod.transform.position) < 4f)
+                {
+                    if (mod.GetHealthRelative() < 1)
+                    {
+                        Unit.EquipWrenchRpc();
+                        Unit.UseItem1();
+                        return;
+                    }
+                    switch (mod.ModuleType)
+                    {
+                        case Module.ModuleTypes.NAVIGATION:
+                            if (InteractingModule != mod)
+                            {
+                                InteractingModule = mod;
+                                StartCoroutine(Interact_Navigation());
+                            }
+                            break;
+                        case Module.ModuleTypes.WEAPON:
+                            if (InteractingModule != mod)
+                            {
+                                InteractingModule = mod;
+                                StartCoroutine(Interact_Weapons());
+                            }
+                            break;
+                    }
+                }
+                return;
+            }
+
+            return;
+        }
+        //We are in a hostile vessel
+        mod = GetClosestEnemyModule();
+        if (mod && (Dist(mod.transform.position) < 5 || DistToObjective(mod.transform.position) < 20))
+        {
+            SetMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f));
+            SetLookTowards(mod.GetTargetPos());
+            return;
+        }
+        //Engage!
+
+        //Retreat!
+        AttemptBoard(Group.HomeSpace);
+        SetMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position);
+        SetLookTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position);
+    }
+
+    Module InteractingModule;
+    IEnumerator Interact_Navigation()
+    {
+        while (InteractingModule != null && InteractingModule.ModuleType == Module.ModuleTypes.NAVIGATION)
+        {
+            CREW crew = GetClosestEnemyAnywhere();
+            if (crew != null)
+            {
+                InteractingModule.Space.Drifter.SetMoveInput((crew.transform.position - transform.position).normalized * -1, 0.6f + Unit.GetATT_PILOTING() * 0.15f);
+                InteractingModule.Space.Drifter.SetLookTowards((crew.transform.position-transform.position).normalized * -1);
+            }
+            yield return null;
+        }
+    }
+    IEnumerator Interact_Weapons()
+    {
+        ModuleWeapon wep = InteractingModule as ModuleWeapon;
+        while (InteractingModule != null && InteractingModule.ModuleType == Module.ModuleTypes.WEAPON)
+        {
+            CREW crew = GetClosestEnemyAnywhere();
+            if (crew != null)
+            {
+                wep.SetLookTowards(crew.transform.position);
+                if (Mathf.Abs(wep.AngleBetweenPoints(crew.transform.position)) < 10)
+                {
+                    wep.UseRpc(Vector3.zero, 0.75f + Unit.GetATT_GUNNERY() * 0.1f + Unit.GetATT_ARMS() * 0.02f);
+                }
+            }
+            yield return null;
+        }
+        wep.StopRpc();
     }
     private void AITick_Looncrab()
     {
         Module mod;
         if (getSpace())
         {
-            if (!EnemyTarget || EnemyTargetTimer < 0)
+            if (!EnemyTarget || EnemyTargetTimer < 0 || EnemyTarget.isDead())
             {
                 EnemyTarget = GetClosestVisibleEnemy();
             }
             if (EnemyTarget)
             {
-                EnemyTargetTimer = 5;
+                EnemyTargetTimer = 3;
                 AttemptBoard(EnemyTarget.Space);
 
                 if (AI_TacticTimer < 0) SwitchTacticsLooncrab();
@@ -213,7 +394,7 @@ public class AI_UNIT : NetworkBehaviour
                 {
                     case AI_TACTICS.SKIRMISH:
                        
-                        SetMoveTowards(EnemyTarget.transform.position);
+                        SetMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()));
                         SetLookTowards(EnemyTarget.transform.position);
                         break;
                     case AI_TACTICS.CIRCLE:
@@ -235,7 +416,7 @@ public class AI_UNIT : NetworkBehaviour
                         break;
                     case AI_TACTICS.SABOTAGE:
                         mod = GetClosestEnemyModule();
-                        SetMoveTowards(mod.transform.position);
+                        SetMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f));
                         if (Dist(mod.transform.position) < 8f)
                         {
                             SetLookTowards(mod.transform.position);
@@ -247,55 +428,92 @@ public class AI_UNIT : NetworkBehaviour
                         }
                         break;
                 }
-                if (Unit.IsEnemyInFront(5f))
+                if (Unit.IsEnemyInFront(GetAttackDistance()))
                 {
                     Unit.UseItem1();
                 }
                 return;
             }
             mod = GetClosestEnemyModule();
-            if (mod && Dist(mod.transform.position) < 20)
+            if (mod && (Dist(mod.transform.position) < 5 || DistToObjective(mod.transform.position) < 20))
             {
-                SetMoveTowards(mod.transform.position);
-                SetLookTowards(mod.transform.position);
+                SetMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(),2f));
+                SetLookTowards(mod.GetTargetPos());
                 return;
             }
             SetMoveTowards(ObjectiveTarget);
-            SetLookTowards(Vector3.zero); 
-            if (Unit.IsEnemyInFront(5f))
+            SetLookTowards(ObjectiveTarget);
+            if (Unit.IsEnemyInFront(GetAttackDistance()))
             {
                 Unit.UseItem1();
             }
             return;
         }
-        AttemptBoard(GetClosestEnemyDrifter().Space);
-        SetMoveTowards(ObjectiveTarget);
-        SetLookTowards(Vector3.zero);
-        if (Unit.IsEnemyInFront(5f))
+        if (AI_TacticTimer < 0)
+        {
+            AI_TacticTimer = UnityEngine.Random.Range(4, 9);
+            AI_MoveSpeed = UnityEngine.Random.Range(0.8f, 3f);
+        }
+        DRIFTER dr = GetClosestEnemyDrifter();
+        AttemptBoard(dr.Space);
+        SetLookTowards(dr.transform.position);
+        if (Unit.IsEnemyInFront(GetAttackDistance()))
         {
             Unit.UseItem1();
+            SetMoveTowards(GetDiagonalPointTowards(dr.transform.position, 24f, LeaningRight));
+        } else
+        {
+            SetMoveTowards(ObjectiveTarget);
         }
     }
-
+    private void SwitchTacticsCrew()
+    {
+        ResetWeights();
+        switch (AI_Unit_Type)
+        {
+            case AI_UNIT_TYPES.CREW:
+                AddWeights(0, 20);
+                if (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) > 16f) AddWeights(1, 25);
+                else AddWeights(1, 10);
+                if (Unit.GetHealthRelative() < 0.4f) AddWeights(2, 40);
+                switch (GetWeight())
+                {
+                    case 0:
+                        SetTactic(AI_TACTICS.SKIRMISH, UnityEngine.Random.Range(4, 8));
+                        break;
+                    case 1:
+                        SetTactic(AI_TACTICS.CIRCLE, UnityEngine.Random.Range(4, 8));
+                        break;
+                    case 2:
+                        SetTactic(AI_TACTICS.RETREAT, UnityEngine.Random.Range(8, 12));
+                        break;
+                }
+                break;
+        }
+    }
     private void SwitchTacticsLooncrab()
     {
         ResetWeights();
         AddWeights(0, 15);
-        AddWeights(1, 10);
-        if (Dist(EnemyTarget.transform.position) > 16f) AddWeights(2, 10);
-        AddWeights(3, 5);
+        if (Unit.GetHealthRelative() < 0.7f || Dist(EnemyTarget.transform.position) > 16f) AddWeights(1, 15);
+        AddWeights(2, 12);
+        AddWeights(3, 8);
         switch (GetWeight())
         {
             case 0:
+                AI_MoveSpeed = UnityEngine.Random.Range(0.8f, 1.2f);
                 SetTactic(AI_TACTICS.SKIRMISH, UnityEngine.Random.Range(4,8));
                 break;
             case 1:
+                AI_MoveSpeed = UnityEngine.Random.Range(0.8f, 1.2f);
                 SetTactic(AI_TACTICS.CIRCLE, UnityEngine.Random.Range(4, 8));
                 break;
             case 2:
+                AI_MoveSpeed = UnityEngine.Random.Range(1.1f, 1.4f);
                 SetTactic(AI_TACTICS.CHARGE, 4);
                 break;
             case 3:
+                AI_MoveSpeed = UnityEngine.Random.Range(0.8f, 1.2f);
                 SetTactic(AI_TACTICS.SABOTAGE, UnityEngine.Random.Range(6, 9));
                 break;
         }
@@ -361,6 +579,7 @@ public class AI_UNIT : NetworkBehaviour
         List<CREW> enemies = new();
         foreach (var crew in CrewInSpace())
         {
+            if (crew.isDead()) continue;
             if (isEnemy(crew)) enemies.Add(crew);
         }
         return enemies;
@@ -456,8 +675,27 @@ public class AI_UNIT : NetworkBehaviour
         Vector3 myPos = transform.position;
         foreach (var enemy in enemies)
         {
-            if (!enemy.CanBeTargeted()) continue;
+            if (!enemy.CanBeTargeted(getSpace())) continue;
             if (enemy.Faction == Unit.GetFaction()) continue;
+            float dist = (enemy.transform.position - myPos).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = enemy;
+            }
+        }
+        return closest;
+    }
+    public Module GetClosestFriendlyModule()
+    {
+        if (!getSpace()) return null;
+        List<Module> enemies = getSpace().GetModules();
+        Module closest = null;
+        float minDist = float.MaxValue;
+        Vector3 myPos = transform.position;
+        foreach (var enemy in enemies)
+        {
+            if (enemy.Faction != Unit.GetFaction()) continue;
             float dist = (enemy.transform.position - myPos).sqrMagnitude;
             if (dist < minDist)
             {
@@ -470,6 +708,24 @@ public class AI_UNIT : NetworkBehaviour
     public CREW GetClosestEnemy()
     {
         List<CREW> enemies = EnemiesInSpace();
+        CREW closest = null;
+        float minDist = float.MaxValue;
+        Vector3 myPos = transform.position;
+        foreach (var enemy in enemies)
+        {
+            if (enemy == Unit) continue; // skip self
+            float dist = (enemy.getPos() - myPos).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = enemy;
+            }
+        }
+        return closest;
+    }
+    public CREW GetClosestEnemyAnywhere()
+    {
+        List<CREW> enemies = CO.co.GetAllCrews();
         CREW closest = null;
         float minDist = float.MaxValue;
         Vector3 myPos = transform.position;
@@ -503,10 +759,47 @@ public class AI_UNIT : NetworkBehaviour
         }
         return closest;
     }
+    public Vector3 GetDiagonalPointTowards(Vector3 target, float distance, bool toRight = true)
+    {
+        Vector3 dir = (target - transform.position).normalized;
 
+        // Rotate direction by ±45° around the Y axis (assuming "up" is Y)
+        float angle = toRight ? 45f : -45f;
+        Vector3 rotatedDir = Quaternion.Euler(0f, 0f, angle) * dir;
+
+        return transform.position + rotatedDir * distance;
+    }
     public Vector3 GetPointTowardsPoint(Vector3 trt, float dis)
     {
         return transform.position + (trt- transform.position).normalized * dis;
+    }
+    public Vector3 GetPointAwayFromPoint(Vector3 trt, float dis)
+    {
+        return trt + (transform.position - trt).normalized * dis;
+    }
+    public float GetAttackDistance()
+    {
+        if (!Unit.EquippedToolObject) return 4f;
+        switch (Unit.EquippedToolObject.AI)
+        {
+            case TOOL.ToolAI.MELEE:
+                return 4f;
+            case TOOL.ToolAI.RANGED:
+                return 30f;
+        }
+        return 2f;
+    }
+    public float GetAttackStayDistance()
+    {
+        if (!Unit.EquippedToolObject) return 10f;
+        switch (Unit.EquippedToolObject.AI)
+        {
+            case TOOL.ToolAI.MELEE:
+                return 2f;
+            case TOOL.ToolAI.RANGED:
+                return 22f;
+        }
+        return 2f;
     }
 
     // Returns true if there is a clear line of sight to the target position (no obstacles in between)
@@ -549,6 +842,10 @@ public class AI_UNIT : NetworkBehaviour
     public float Dist(Vector3 vec)
     {
         return (transform.position-vec).magnitude;
+    }
+    public float DistToObjective(Vector3 vec)
+    {
+        return (ObjectiveTarget - vec).magnitude;
     }
     /// <summary>
     /// Clears all weights.

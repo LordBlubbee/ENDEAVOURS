@@ -92,8 +92,9 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     {
         return Faction;
     }
-    public bool CanBeTargeted()
+    public bool CanBeTargeted(SPACE space)
     {
+        if (space != Space) return false;
         return !isDisabled;
     }
 
@@ -114,5 +115,11 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public float GetHealthRelative()
     {
         return GetHealth() / GetMaxHealth();
+    }
+
+    public Transform CenterPos;
+    public Vector3 GetTargetPos()
+    {
+        return CenterPos ? CenterPos.position : transform.position;
     }
 }

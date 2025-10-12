@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEditor.PlayerSettings;
@@ -70,14 +71,6 @@ public class CO_SPAWNER : NetworkBehaviour
         int i = 0;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            SpawnLooncrabsAggressive(new Vector3(0, 150), 3);
-        }
-    }
-
     [Rpc(SendTo.Server)]
     public void SpawnPlayerShipRpc(int ID)
     {
@@ -90,28 +83,28 @@ public class CO_SPAWNER : NetworkBehaviour
         drifter.Init();
         CO.co.PlayerMainDrifter = drifter;
 
+        foreach (CREW Prefab in drifter.StartingCrew)
+        {
+            SpawnUnitOnShip(Prefab, drifter);
+        }
+
         CO.co.StartGame();
     }
-    public void SpawnLooncrabsAggressive(Vector3 pos, int Amount) //TEST
+
+    public void SpawnUnitOnShip(CREW Prefab, DRIFTER drift)
     {
-        float Degrees = UnityEngine.Random.Range(0, 360);   
-        float Radius = 5f;
-        AI_GROUP group = Instantiate(PrefabAIGROUP);
-        List<AI_UNIT> members = new();
-        for (int i = 0; i < Amount; i++)
-        {
-            Vector3 tryPos = pos + new Vector3(UnityEngine.Random.Range(-Radius, Radius), UnityEngine.Random.Range(-Radius, Radius));
-            CREW looncrab = Instantiate(PrefabLooncrab, tryPos, Quaternion.identity);
-            looncrab.NetworkObject.Spawn();
-            looncrab.transform.Rotate(Vector3.forward, Degrees + UnityEngine.Random.Range(-30f, 30f));
-            looncrab.Init();
-            members.Add(looncrab.GetComponent<AI_UNIT>());
-        }
-        group.SetAI(AI_GROUP.AI_TYPES.SWARM,AI_GROUP.AI_OBJECTIVES.ENGAGE, members);
+        CREW enem = Instantiate(Prefab, drift.Space.Bridge, Quaternion.identity);
+        enem.NetworkObject.Spawn();
+        enem.CharacterName.Value = Prefab.CharacterBackground.GetRandomName();
+        Color col = Prefab.CharacterBackground.BackgroundColor;
+        enem.CharacterNameColor.Value = new Vector3(col.r,col.g,col.b);
+        enem.Init();
+        //enem.EquipWeaponPrefab(0);
+        drift.Interior.AddCrew(enem);
+        drift.CrewGroup.Add(enem.GetComponent<AI_UNIT>());
     }
     public void SpawnEnemyGroup(ScriptableEnemyGroup gr, float PowerLevelFactor)
     {
-        Debug.Log("SPAWNING ENEMY GROUP");
         float Degrees = UnityEngine.Random.Range(0, 360);
         float Radius = gr.SpawnGroupRange;
         float Dist = UnityEngine.Random.Range(gr.SpawnDistanceMin, gr.SpawnDistanceMax);
@@ -141,7 +134,7 @@ public class CO_SPAWNER : NetworkBehaviour
             members.Add(enem.GetComponent<AI_UNIT>());
         }
 
-        group.SetAI(gr.AI_Type, gr.AI_Group, members);
+        group.SetAI(gr.AI_Type, gr.AI_Group, 2, members);
         group.SetAIHome(Spawn);
     }
 
@@ -149,13 +142,19 @@ public class CO_SPAWNER : NetworkBehaviour
     public void SpawnDMGRpc(float dm, Vector3 pos)
     {
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
-        dmg.InitDamage(dm, 1f);
+        dmg.InitNumber(dm, 1f, Color.red);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnArmorDMGRpc(float dm, Vector3 pos)
+    {
+        DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
+        dmg.InitNumber(dm, 1f, Color.yellow);
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnHealRpc(float dm, Vector3 pos)
     {
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
-        dmg.InitHeal(dm, 1f);
+        dmg.InitNumber(dm, 1f, Color.green);
     }
 
     public MapPoint CreateMapPoint(Vector3 pos)

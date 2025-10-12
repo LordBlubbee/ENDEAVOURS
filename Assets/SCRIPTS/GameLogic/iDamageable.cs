@@ -4,7 +4,7 @@ public interface iDamageable
 {
     public SPACE Space { get; set; }
 
-    public bool CanBeTargeted();
+    public bool CanBeTargeted(SPACE space);
     public int GetFaction();
     public float GetHealth();
 

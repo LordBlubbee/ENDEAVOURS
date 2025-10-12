@@ -32,7 +32,7 @@ public class ModuleWeapon : Module
 
     public float GetAmmoRatio()
     {
-        return LoadedAmmo.Value / MaxAmmo;
+        return (float)LoadedAmmo.Value / (float)MaxAmmo;
     }
     public int GetAmmo()
     {

@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 5867427934140877094}
   - component: {fileID: 5706374163872125340}
   m_Layer: 7
-  m_Name: Crew
+  m_Name: PragmaticusEnforcer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2656527547
+  GlobalObjectIdHash: 2354566495
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -333,9 +333,10 @@ MonoBehaviour:
     m_InternalValue: 2
   ATT_MEDICAL:
     m_InternalValue: 2
+  CharacterBackground: {fileID: 11400000, guid: 1434ffc3413dd3748809a54bdf292fcb, type: 2}
   DefaultToolset: 1
   EquippedWeapons:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 06439ec68f11da34fbafc00241024dca, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   EquippedArmor: {fileID: 0}
@@ -542,7 +543,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 6dcc73ea065e8b649a99b9affad328eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cc6b98cb42340c641aaebbd08b616496, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -629,7 +630,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: faadbe7a69dfa1649b5cbe429338c6c3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bf632b2086e9a4c4d865d811d1e8789c, type: 3}
   m_Color: {r: 1, g: 0.78079355, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
