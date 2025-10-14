@@ -77,9 +77,8 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public void Heal(float fl)
     {
         CurHealth.Value = Mathf.Min(MaxHealth, CurHealth.Value + fl);
-        if (CurHealth.Value > MaxHealth * 0.5f) isDisabled = false;
-        if (fl > 1) return;
-        CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
+        if (CurHealth.Value > 50) isDisabled = false;
+        if (fl > 1) CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
     }
     public void TakeDamage(float fl, Vector3 src)
     {
@@ -91,7 +90,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
             isDisabled = true;
             //Death
         }
-        CO_SPAWNER.co.SpawnDMGRpc(fl, src);
+        if (fl > 1) CO_SPAWNER.co.SpawnDMGRpc(fl, src);
     }
     public int GetFaction()
     {
@@ -100,6 +99,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public bool CanBeTargeted(SPACE space)
     {
         if (space != Space) return false;
+        if (MaxHealth < 1) return false;
         return !isDisabled;
     }
 

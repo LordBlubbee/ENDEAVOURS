@@ -71,7 +71,7 @@ public class AI_GROUP : MonoBehaviour
          */
         while (true)
         {
-            if (Units.Count == 0)
+            if (Units.Count == 0 && HomeDrifter == null)
             {
                 Destroy(this.gameObject);
                 yield break;
@@ -158,12 +158,14 @@ public class AI_GROUP : MonoBehaviour
                 }
                 break;
             case AI_OBJECTIVES.ENGAGE: //Move towards random rooms of nearest enemy drifter
+                Debug.Log("Engage...");
                 foreach (AI_UNIT unit in Units)
                 {
                     if (unit.GetObjectiveDistance() < 4f)
                     {
+                        Debug.Log("Setting target");
                         DRIFTER enem = unit.GetClosestEnemyDrifter();
-                        unit.SetObjectiveTarget(enem.Interior.GetRandomGrid().transform, enem.Interior);
+                        if (enem) unit.SetObjectiveTarget(enem.Interior.GetRandomGrid().transform, enem.Interior);
                     }
                 }
                 break;

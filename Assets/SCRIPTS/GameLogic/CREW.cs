@@ -681,7 +681,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public bool IsEnemyInFront(float dis)
     {
-        foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position + getLookVector() * dis * 0.5f, dis * 0.5f))
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position + getLookVector() * dis * 0.6f, dis * 0.5f))
         {
             iDamageable crew = col.GetComponent<iDamageable>();
             if (crew != null)

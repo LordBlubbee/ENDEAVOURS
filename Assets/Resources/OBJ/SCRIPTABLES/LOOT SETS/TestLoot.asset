@@ -28,7 +28,7 @@ MonoBehaviour:
     Resource_Ammunition: 50
     Resource_Technology: 0
     ItemDrop: {fileID: 0}
-    Weight: 0
+    Weight: 10
   - Randomness: 0.5
     Resource_Materials: 0
     Resource_Supplies: 50

@@ -263,6 +263,11 @@ public class SPACE : NetworkBehaviour
         return null;
     }
 
+    public bool IsOnGrid(Vector3 here)
+    {
+        return GetCurrentGrid(here) != null;
+    }
+
     //[NonSerialized] public NetworkVariable<bool> IsOnBoardableTile = new();
     //[NonSerialized] public NetworkVariable<bool> IsTargetedTileBoardable = new();
     public bool isCurrentGridBoardable(Vector3 here)

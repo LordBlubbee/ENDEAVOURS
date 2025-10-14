@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static AI_GROUP;
 using static UnityEngine.EventSystems.EventTrigger;
+using static UnityEngine.GraphicsBuffer;
 
 public class AI_UNIT : NetworkBehaviour
 {
@@ -16,6 +17,7 @@ public class AI_UNIT : NetworkBehaviour
     private float AI_TacticTimer;
     private AI_TACTICS AI_Tactic;
     private AI_GROUP Group;
+    private bool HasObjective = false;
     private Vector3 ObjectiveTarget = Vector3.zero;
     private SPACE ObjectiveSpace;
     private Transform ObjectiveTargetTransform = null;
@@ -24,15 +26,22 @@ public class AI_UNIT : NetworkBehaviour
     private float EnemyTargetTimer;
 
     private Vector3 AI_MoveTarget;
+    private SPACE AI_MoveTargetSpace;
     private bool AI_IsMoving;
     private float AI_MoveTimer;
     private Vector3 AI_LookTarget;
+    private SPACE AI_LookTargetSpace;
     private bool AI_IsLooking;
 
     public void SetEnemyTarget(CREW crew)
     {
         EnemyTarget = crew;
         EnemyTargetTimer = 5;
+    }
+
+    public Vector3 GetEnemyTargetPosition()
+    {
+        return EnemyTarget.transform.position;
     }
     public void AddToGroup(AI_GROUP grp)
     {
@@ -48,53 +57,77 @@ public class AI_UNIT : NetworkBehaviour
     }
     public void SetObjectiveTarget(Vector3 target, SPACE space)
     {
-        ObjectiveTarget = target;
+        if (space == null) ObjectiveTarget = target;
+        else ObjectiveTarget = space.transform.InverseTransformPoint(target);
+        HasObjective = true;
         ObjectiveTargetTransform = null;
         ObjectiveSpace = space;
     }
     public void SetObjectiveTarget(Transform target, SPACE space)
     {
         ObjectiveTargetTransform = target;
-        ObjectiveTarget = target.position;
+        if (space == null) ObjectiveTarget = target.position;
+        else ObjectiveTarget = space.transform.InverseTransformPoint(target.position);
+        HasObjective = true;
         ObjectiveSpace = space;
+        Debug.Log("Objective set: " +ObjectiveTarget);
     }
 
     public float GetObjectiveDistance()
     {
-        if (ObjectiveTarget == Vector3.zero) return 0f;
-        return (ObjectiveTarget - transform.position).magnitude;
+        if (!HasObjective) return 0f;
+        return (GetObjectiveTarget() - transform.position).magnitude;
     }
     public AI_GROUP.AI_OBJECTIVES CurrentObjective()
     {
         return Group.AI_Objective;
     }
-
     public float DistToMoveTarget()
     {
-        return (AI_MoveTarget - transform.position).magnitude;
+        return (GetAI_MoveTarget() - transform.position).magnitude;
     }
-    private void SetMoveTowards(Vector3 trt)
+    private void SetAIMoveTowards(Vector3 target, SPACE space)
     {
-        Debug.Log(trt);
-        AI_MoveTarget = trt;
+        if (space == null) AI_MoveTarget = target;
+        else AI_MoveTarget = space.transform.InverseTransformPoint(target);
+        AI_MoveTargetSpace = space;
         AI_IsMoving = true;
     }
-    private bool SetMoveTowardsIfExpired(Vector3 trt, float movtimer)
+    private bool SetAIMoveTowardsIfExpired(Vector3 target, SPACE space, float movtimer)
     {
         if (AI_MoveTimer > 0f && DistToMoveTarget() > 1f) return false;
 
-        AI_MoveTarget = trt;
+        if (space == null) AI_MoveTarget = target;
+        else AI_MoveTarget = space.transform.InverseTransformPoint(target);
         AI_IsMoving = true;
+        AI_MoveTargetSpace = space;
         AI_MoveTimer = movtimer;
         return true;
+    }
+    public Vector3 GetObjectiveTarget()
+    {
+        if (ObjectiveSpace == null) return ObjectiveTarget;
+        return ObjectiveSpace.transform.TransformPoint(ObjectiveTarget);
+    }
+    public Vector3 GetAI_MoveTarget()
+    {
+        if (AI_MoveTargetSpace == null) return AI_MoveTarget;
+        return AI_MoveTargetSpace.transform.TransformPoint(AI_MoveTarget);
+    }
+    public Vector3 GetAI_LookTarget()
+    {
+        if (AI_LookTargetSpace == null) return AI_LookTarget;
+        return AI_LookTargetSpace.transform.TransformPoint(AI_LookTarget);
     }
     private void StopMoving()
     {
         AI_IsMoving = false;
     }
-    private void SetLookTowards(Vector3 trt)
+    private void SetLookTowards(Vector3 trt, SPACE space)
     {
-        AI_LookTarget = trt;
+        if (space == null) AI_LookTarget = trt;
+        else AI_LookTarget = space.transform.InverseTransformPoint(trt);
+        AI_LookTargetSpace = space;
         AI_IsLooking = true;
     }
     private void StopLooking()
@@ -128,11 +161,11 @@ public class AI_UNIT : NetworkBehaviour
     {
         float Tick = 0f;
         LeaningRight = UnityEngine.Random.Range(0f, 1f) < 0.5f;
+        float RecalculatePath = 0f;
         while (true)
         {
             Tick -= CO.co.GetWorldSpeedDelta();
-            Debug.DrawLine(transform.position, AI_MoveTarget, Color.red);
-            Debug.DrawLine(transform.position, ObjectiveTarget, Color.cyan);
+            Debug.DrawLine(transform.position, GetObjectiveTarget(), Color.cyan);
             if (Tick < 0f)
             {
                 Tick = 0.25f;
@@ -143,14 +176,16 @@ public class AI_UNIT : NetworkBehaviour
             {
                 if (getSpace())
                 {
-                    if (!HasLineOfSight(AI_MoveTarget))
+                    if (!HasLineOfSight(GetAI_MoveTarget()) && getSpace().IsOnGrid(GetAI_MoveTarget()))
                     {
-                        if (path == null)
+                        if (path == null || RecalculatePath < 0f)
                         {
-                            SetPath(AI_MoveTarget);
+                            SetPath(GetAI_MoveTarget());
+                            RecalculatePath = 3f;
                         }
                         if (path != null)
                         {
+                            RecalculatePath -= 0.25f;
                             if (pathTravelIndex >= path.Count)
                             {
                                 path = null;
@@ -159,6 +194,7 @@ public class AI_UNIT : NetworkBehaviour
                             {
                                 Vector3 trt = getSpace().ConvertGridToWorld(path[pathTravelIndex]);
                                 Unit.SetMoveInput((trt - transform.position).normalized);
+                                Debug.DrawLine(transform.position, trt, Color.magenta);
                                 if (Dist(trt) < 3f)
                                 {
                                     pathTravelIndex++;
@@ -170,25 +206,25 @@ public class AI_UNIT : NetworkBehaviour
                     else
                     {
                         path = null;
-                        Unit.SetMoveInput((AI_MoveTarget - transform.position).normalized * AI_MoveSpeed);
+                        Unit.SetMoveInput((GetAI_MoveTarget() - transform.position).normalized * AI_MoveSpeed);
+                        Debug.DrawLine(transform.position, GetAI_MoveTarget(), Color.red);
                     }
                 }
                 else
                 {
                     path = null;
-                    Unit.SetMoveInput((AI_MoveTarget - transform.position).normalized * AI_MoveSpeed);
+                    Unit.SetMoveInput((GetAI_MoveTarget() - transform.position).normalized * AI_MoveSpeed);
                 }
             }
             else Unit.SetMoveInput(Vector3.zero);
 
             if (AI_IsLooking)
             {
-                if (getSpace()) Unit.SetLookTowards(AI_MoveTarget);
-                else Unit.SetLookTowards(AI_LookTarget);
+                Unit.SetLookTowards(GetAI_LookTarget());
             }
             else
             {
-                Unit.SetLookTowards(transform.position + Unit.getLookVector() * 100f);
+                Unit.SetLookTowards(transform.position + Unit.GetMoveInput() * 100f);
             }
             yield return null;
         }
@@ -201,8 +237,11 @@ public class AI_UNIT : NetworkBehaviour
         AI_MoveTimer -= 0.25f;
         if (ObjectiveTargetTransform)
         {
-            ObjectiveTarget = ObjectiveTargetTransform.position;
+            if (ObjectiveSpace == null) ObjectiveTarget = ObjectiveTargetTransform.position;
+            else ObjectiveTarget = ObjectiveSpace.transform.InverseTransformPoint(ObjectiveTargetTransform.position);
         }
+        Unit.StopItem1Rpc();
+        Unit.StopItem2Rpc();
 
         switch (AI_Unit_Type)
         {
@@ -239,30 +278,30 @@ public class AI_UNIT : NetworkBehaviour
                 {
                     case AI_TACTICS.SKIRMISH:
                         Unit.EquipWeapon1Rpc();
-                        SetMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()));
-                        SetLookTowards(EnemyTarget.transform.position);
+                        SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()), EnemyTarget.Space);
+                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
                         Unit.Dash();
                         break;
                     case AI_TACTICS.CIRCLE:
                         Unit.EquipWeapon1Rpc();
                         if (Unit.GetHealthRelative() < 0.3f)
                         {
-                            SetMoveTowards(GetPointTowardsPoint(EnemyTarget.transform.position, -12f));
+                            SetAIMoveTowards(GetPointTowardsPoint(EnemyTarget.transform.position, -12f), EnemyTarget.Space);
                         }
                         else
                         {
-                            SetMoveTowardsIfExpired(GetRandomPointAround(EnemyTarget.transform.position, 5f, 12f), 3f);
+                            SetAIMoveTowardsIfExpired(GetRandomPointAround(EnemyTarget.transform.position, 5f, 12f), EnemyTarget.Space, 3f);
                         }
-                        Unit.UseItem2();
-                        SetLookTowards(EnemyTarget.transform.position);
+                        Unit.UseItem2Rpc();
+                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
                         break;
                     case AI_TACTICS.RETREAT:
                         point = GetDiagonalPointTowards(EnemyTarget.transform.position, -12f, LeaningRight);
-                        SetMoveTowards(point);
-                        SetLookTowards(point);
+                        SetAIMoveTowards(point, EnemyTarget.Space);
+                        SetLookTowards(point, EnemyTarget.Space);
                         Unit.Dash();
                         Unit.EquipMedkitRpc();
-                        Unit.UseItem2();
+                        Unit.UseItem2Rpc();
                         break;
                 }
                 if (Unit.IsEnemyInFront(GetAttackDistance()))
@@ -274,22 +313,22 @@ public class AI_UNIT : NetworkBehaviour
             //We are not in combat
             if (DistToObjective(transform.position) > 16)
             {
-                SetMoveTowards(ObjectiveTarget);
-                SetLookTowards(ObjectiveTarget);
+                SetAIMoveTowards(GetObjectiveTarget(), ObjectiveSpace);
+                SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
                 Unit.EquipWeapon1Rpc();
                 return;
             }
             mod = GetClosestFriendlyModule(); 
             if (DistToObjective(mod.transform.position) < 16)
             {
-                SetMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(),2f));
-                SetLookTowards(ObjectiveTarget);
+                SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(),2f), mod.Space);
+                SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
                 if (Dist(mod.transform.position) < 4f)
                 {
                     if (mod.GetHealthRelative() < 1)
                     {
                         Unit.EquipWrenchRpc();
-                        Unit.UseItem1();
+                        Unit.UseItem1Rpc();
                         return;
                     }
                     switch (mod.ModuleType)
@@ -319,16 +358,16 @@ public class AI_UNIT : NetworkBehaviour
         mod = GetClosestEnemyModule();
         if (mod && (Dist(mod.transform.position) < 5 || DistToObjective(mod.transform.position) < 20))
         {
-            SetMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f));
-            SetLookTowards(mod.GetTargetPos());
+            SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+            SetLookTowards(mod.GetTargetPos(), mod.Space);
             return;
         }
         //Engage!
 
         //Retreat!
         AttemptBoard(Group.HomeSpace);
-        SetMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position);
-        SetLookTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position);
+        SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position, getSpace());
+        SetLookTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position, getSpace());
     }
 
     Module InteractingModule;
@@ -363,98 +402,6 @@ public class AI_UNIT : NetworkBehaviour
         }
         wep.StopRpc();
     }
-    private void AITick_Looncrab()
-    {
-        Module mod;
-        if (getSpace())
-        {
-            if (!EnemyTarget || EnemyTargetTimer < 0 || EnemyTarget.isDead())
-            {
-                EnemyTarget = GetClosestVisibleEnemy();
-            }
-            if (EnemyTarget)
-            {
-                EnemyTargetTimer = 3;
-                AttemptBoard(EnemyTarget.Space);
-
-                if (AI_TacticTimer < 0) SwitchTacticsLooncrab();
-
-                switch (AI_Tactic)
-                {
-                    case AI_TACTICS.SKIRMISH:
-                       
-                        SetMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()));
-                        SetLookTowards(EnemyTarget.transform.position);
-                        break;
-                    case AI_TACTICS.CIRCLE:
-                        if (Unit.GetHealthRelative() < 0.3f)
-                        {
-                            SetMoveTowards(GetPointTowardsPoint(EnemyTarget.transform.position,-12f));
-                        }
-                        else
-                        {
-                            SetMoveTowardsIfExpired(GetRandomPointAround(EnemyTarget.transform.position,5f,12f), 3f);
-                        }
-                        Unit.UseItem2();
-                        SetLookTowards(EnemyTarget.transform.position);
-                        break;
-                    case AI_TACTICS.CHARGE:
-                        SetMoveTowardsIfExpired(GetPointTowardsPoint(EnemyTarget.transform.position, 24f), UnityEngine.Random.Range(2f,4f));
-                        SetLookTowards(EnemyTarget.transform.position);
-                        Unit.Dash();
-                        break;
-                    case AI_TACTICS.SABOTAGE:
-                        mod = GetClosestEnemyModule();
-                        SetMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f));
-                        if (Dist(mod.transform.position) < 8f)
-                        {
-                            SetLookTowards(mod.transform.position);
-                        } else
-                        {
-                            Unit.UseItem2();
-                            SetLookTowards(EnemyTarget.transform.position);
-                            Unit.Dash();
-                        }
-                        break;
-                }
-                if (Unit.IsEnemyInFront(GetAttackDistance()))
-                {
-                    Unit.UseItem1();
-                }
-                return;
-            }
-            mod = GetClosestEnemyModule();
-            if (mod && (Dist(mod.transform.position) < 5 || DistToObjective(mod.transform.position) < 20))
-            {
-                SetMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(),2f));
-                SetLookTowards(mod.GetTargetPos());
-                return;
-            }
-            SetMoveTowards(ObjectiveTarget);
-            SetLookTowards(ObjectiveTarget);
-            if (Unit.IsEnemyInFront(GetAttackDistance()))
-            {
-                Unit.UseItem1();
-            }
-            return;
-        }
-        if (AI_TacticTimer < 0)
-        {
-            AI_TacticTimer = UnityEngine.Random.Range(4, 9);
-            AI_MoveSpeed = UnityEngine.Random.Range(0.8f, 3f);
-        }
-        DRIFTER dr = GetClosestEnemyDrifter();
-        AttemptBoard(dr.Space);
-        SetLookTowards(dr.transform.position);
-        if (Unit.IsEnemyInFront(GetAttackDistance()))
-        {
-            Unit.UseItem1();
-            SetMoveTowards(GetDiagonalPointTowards(dr.transform.position, 24f, LeaningRight));
-        } else
-        {
-            SetMoveTowards(ObjectiveTarget);
-        }
-    }
     private void SwitchTacticsCrew()
     {
         ResetWeights();
@@ -480,6 +427,108 @@ public class AI_UNIT : NetworkBehaviour
                 break;
         }
     }
+
+    /*--------------------------------------------------------------------------------------------
+     * LOONCRAB
+     * --------------------------------------------------------------------------------------------
+     */
+    private void AITick_Looncrab()
+    {
+        Module mod;
+        if (getSpace())
+        {
+            if (!EnemyTarget || EnemyTargetTimer < 0 || EnemyTarget.isDead())
+            {
+                EnemyTarget = GetClosestVisibleEnemy();
+            }
+            if (EnemyTarget)
+            {
+                EnemyTargetTimer = 3;
+                AttemptBoard(EnemyTarget.Space);
+
+                if (AI_TacticTimer < 0) SwitchTacticsLooncrab();
+
+                switch (AI_Tactic)
+                {
+                    case AI_TACTICS.SKIRMISH:
+
+                        SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()), EnemyTarget.Space);
+                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                        break;
+                    case AI_TACTICS.CIRCLE:
+                        if (Unit.GetHealthRelative() < 0.3f)
+                        {
+                            SetAIMoveTowards(GetPointTowardsPoint(EnemyTarget.transform.position, -12f), EnemyTarget.Space);
+                        }
+                        else
+                        {
+                            SetAIMoveTowardsIfExpired(GetRandomPointAround(EnemyTarget.transform.position, 5f, 12f), EnemyTarget.Space, 3f);
+                        }
+                        Unit.UseItem2Rpc();
+                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                        break;
+                    case AI_TACTICS.CHARGE:
+                        SetAIMoveTowardsIfExpired(GetPointTowardsPoint(EnemyTarget.transform.position, 24f), EnemyTarget.Space, UnityEngine.Random.Range(2f, 4f));
+                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                        Unit.Dash();
+                        break;
+                    case AI_TACTICS.SABOTAGE:
+                        mod = GetClosestEnemyModule();
+                        SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+                        if (Dist(mod.transform.position) < 8f)
+                        {
+                            SetLookTowards(mod.transform.position, mod.Space);
+                        }
+                        else
+                        {
+                            Unit.UseItem2Rpc();
+                            SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                            Unit.Dash();
+                        }
+                        break;
+                }
+                if (Unit.IsEnemyInFront(GetAttackDistance()))
+                {
+                    Unit.UseItem1Rpc();
+                }
+                return;
+            }
+            mod = GetClosestEnemyModule();
+            if (Unit.IsEnemyInFront(GetAttackDistance()))
+            {
+                Unit.UseItem1Rpc();
+            }
+            if (mod && (Dist(mod.transform.position) < 8 || DistToObjective(mod.transform.position) < 20))
+            {
+                SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+                SetLookTowards(mod.GetTargetPos(), mod.Space);
+                return;
+            }
+            if (DistToObjective(transform.position) > 1)
+            {
+                SetAIMoveTowards(GetObjectiveTarget(), ObjectiveSpace);
+                SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
+            }
+            return;
+        }
+        if (AI_TacticTimer < 0)
+        {
+            AI_TacticTimer = UnityEngine.Random.Range(4, 9);
+            AI_MoveSpeed = UnityEngine.Random.Range(0.8f, 4f);
+        }
+        DRIFTER dr = GetClosestEnemyDrifter();
+        AttemptBoard(dr.Space);
+        SetLookTowards(dr.transform.position, dr.Space);
+        if (Unit.IsEnemyInFront(GetAttackDistance()))
+        {
+            Unit.UseItem1Rpc();
+            SetAIMoveTowards(GetDiagonalPointTowards(dr.transform.position, 24f, LeaningRight), dr.Space);
+        }
+        else
+        {
+            SetAIMoveTowards(GetObjectiveTarget(), ObjectiveSpace);
+        }
+    }
     private void SwitchTacticsLooncrab()
     {
         ResetWeights();
@@ -491,7 +540,7 @@ public class AI_UNIT : NetworkBehaviour
         {
             case 0:
                 AI_MoveSpeed = UnityEngine.Random.Range(0.8f, 1.2f);
-                SetTactic(AI_TACTICS.SKIRMISH, UnityEngine.Random.Range(4,8));
+                SetTactic(AI_TACTICS.SKIRMISH, UnityEngine.Random.Range(4, 8));
                 break;
             case 1:
                 AI_MoveSpeed = UnityEngine.Random.Range(0.8f, 1.2f);
@@ -507,10 +556,11 @@ public class AI_UNIT : NetworkBehaviour
                 break;
         }
     }
+   
 
     private void SetLookTowardsMoveDirection()
     {
-        SetLookTowards(transform.position + Unit.GetMoveInput() * 100f);
+        SetLookTowards(transform.position + Unit.GetMoveInput() * 100f, getSpace());
     }
     private void AttemptBoard(SPACE trt)
     {
@@ -835,7 +885,7 @@ public class AI_UNIT : NetworkBehaviour
     }
     public float DistToObjective(Vector3 vec)
     {
-        return (ObjectiveTarget - vec).magnitude;
+        return (GetObjectiveTarget() - vec).magnitude;
     }
     /// <summary>
     /// Clears all weights.

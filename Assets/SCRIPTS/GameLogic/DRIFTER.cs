@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TreeEditor;
 using Unity.Netcode;
@@ -12,8 +13,8 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     public List<ScriptableEquippableModule> StartingModules;
     public List<CREW> StartingCrew;
 
-    public Module EngineModule;
-    public Module NavModule;
+    [NonSerialized] public Module EngineModule;
+    [NonSerialized] public Module NavModule;
 
     public SpriteRenderer Spr;
     public int Faction;
@@ -240,7 +241,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             CurHealth.Value = 0f;
             //Death
         }
-        CO_SPAWNER.co.SpawnDMGRpc(fl, ImpactArea);
+        if (fl > 1) CO_SPAWNER.co.SpawnDMGRpc(fl, ImpactArea);
     }
     public void Impact(PROJ fl, Vector3 ImpactArea)
     {
@@ -256,7 +257,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
                 if (Dist < arm.ArmorAuraSize)
                 {
                     AbsorbableDamage *= fl.ArmorDamageModifier; //Say, we deal 80 damage with +50% modifier = 120
-                    float DamageNeeded = arm.CurArmor.Value; //Say, we need only 80 damage
+                    float DamageNeeded = Mathf.Min(arm.CurArmor.Value,AbsorbableDamage); //Say, we need only 80 damage
                     arm.TakeArmorDamage(AbsorbableDamage, ImpactArea);
                     AbsorbableDamage -= DamageNeeded; //We have 40 damage left
                     AbsorbableDamage /= fl.ArmorDamageModifier; //27 damage is returned to main damage mod
@@ -296,7 +297,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
                 if (Dist < arm.ArmorAuraSize)
                 {
                     AbsorbableDamage *= 0.5f; //Say, we deal 80 damage with +50% modifier = 120
-                    float DamageNeeded = arm.CurArmor.Value; //Say, we need only 80 damage
+                    float DamageNeeded = Mathf.Min(arm.CurArmor.Value, AbsorbableDamage); //Say, we need only 80 damage
                     arm.TakeArmorDamage(AbsorbableDamage, ImpactArea);
                     AbsorbableDamage -= DamageNeeded; //We have 40 damage left
                     AbsorbableDamage /= 0.5f; //27 damage is returned to main damage mod
