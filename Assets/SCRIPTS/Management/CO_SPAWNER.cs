@@ -137,7 +137,12 @@ public class CO_SPAWNER : NetworkBehaviour
         group.SetAI(gr.AI_Type, gr.AI_Group, 2, members);
         group.SetAIHome(Spawn);
     }
-
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnWordsRpc(string dm, Vector3 pos)
+    {
+        DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
+        dmg.InitWords(dm, 1f, Color.red);
+    }
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnDMGRpc(float dm, Vector3 pos)
     {

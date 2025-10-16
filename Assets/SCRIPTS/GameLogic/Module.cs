@@ -8,6 +8,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     // Damageable and Interactable Module
 
     [Header("MAIN")]
+    public string ModuleTag;
     public ModuleTypes ModuleType;
     public Sprite IconSprite;
     //

@@ -333,7 +333,7 @@ public class AI_UNIT : NetworkBehaviour
                     }
                     switch (mod.ModuleType)
                     {
-                        case Module.ModuleTypes.NAVIGATION:
+                        case Module.ModuleTypes.NAVIGATION: //OLD
                             if (InteractingModule != mod)
                             {
                                 InteractingModule = mod;
@@ -378,7 +378,7 @@ public class AI_UNIT : NetworkBehaviour
             CREW crew = GetClosestEnemyAnywhere();
             if (crew != null)
             {
-                InteractingModule.Space.Drifter.SetMoveInput((crew.transform.position - transform.position).normalized * -1, 0.6f + Unit.GetATT_PILOTING() * 0.15f);
+                InteractingModule.Space.Drifter.SetMoveInput((crew.transform.position - transform.position).normalized * -1, 0.6f + Unit.GetATT_COMMAND() * 0.15f);
                 InteractingModule.Space.Drifter.SetLookTowards((crew.transform.position-transform.position).normalized * -1);
             }
             yield return null;
@@ -395,7 +395,7 @@ public class AI_UNIT : NetworkBehaviour
                 wep.SetLookTowards(crew.transform.position);
                 if (Mathf.Abs(wep.AngleBetweenPoints(crew.transform.position)) < 10)
                 {
-                    wep.UseRpc(Vector3.zero, 0.75f + Unit.GetATT_GUNNERY() * 0.1f + Unit.GetATT_ARMS() * 0.02f);
+                    wep.UseRpc(Vector3.zero, 0.75f + Unit.GetATT_ALCHEMY() * 0.1f + Unit.GetATT_ARMS() * 0.02f);
                 }
             }
             yield return null;
@@ -514,7 +514,7 @@ public class AI_UNIT : NetworkBehaviour
         if (AI_TacticTimer < 0)
         {
             AI_TacticTimer = UnityEngine.Random.Range(4, 9);
-            AI_MoveSpeed = UnityEngine.Random.Range(0.8f, 4f);
+            AI_MoveSpeed = UnityEngine.Random.Range(0.8f, 1.2f);
         }
         DRIFTER dr = GetClosestEnemyDrifter();
         AttemptBoard(dr.Space);

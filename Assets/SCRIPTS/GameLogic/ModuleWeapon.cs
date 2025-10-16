@@ -29,7 +29,7 @@ public class ModuleWeapon : Module
 
     [NonSerialized] public NetworkVariable<float> CurCooldown = new();
     [NonSerialized] public NetworkVariable<int> LoadedAmmo = new();
-
+    [NonSerialized] public NetworkVariable<bool> ReloadingCurrently = new();
     public float GetAmmoRatio()
     {
         return (float)LoadedAmmo.Value / (float)MaxAmmo;
@@ -62,23 +62,17 @@ public class ModuleWeapon : Module
 
         Platform.transform.SetParent(transform.parent);
     }
-    public void ReloadAmmo()
+
+    [Rpc(SendTo.Server)]
+    public void ReloadAmmoRpc()
     {
-        foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position,8f))
-        {
-            ResourceCrate crate = col.GetComponent<ResourceCrate>();
-            if (crate != null)
-            {
-                if (crate.ResourceType == ResourceType)
-                {
-                    StartCoroutine(AttackReloadAmmo());
-                    LoadedAmmo.Value = Mathf.FloorToInt(MaxAmmo * crate.ResourceAmount.Value / 10f);
-                    crate.RemoveCrate();
-                    return;
-                }
-            }
-        }
+        if (CO.co.Resource_Ammo.Value < 10) return;
+        if (ReloadingCurrently.Value) return;
+        CO.co.Resource_Ammo.Value -= 10;
+        CO_SPAWNER.co.SpawnWordsRpc("RELOADING...",transform.position);
+        StartCoroutine(AttackReloadAmmo());
     }
+
 
     private void Update()
     {
@@ -121,11 +115,6 @@ public class ModuleWeapon : Module
     private bool canFire = true;
     private void Fire(Vector3 mouse)
     {
-        if (LoadedAmmo.Value < 1)
-        {
-            ReloadAmmo();
-            return;
-        }
         if (!canFire) return;
         StartCoroutine(FireSequence(mouse));
     }
@@ -157,14 +146,15 @@ public class ModuleWeapon : Module
 
     IEnumerator AttackReloadAmmo()
     {
-        canFire = false;
-        CurCooldown.Value = ReloadCooldown;
-        while (CurCooldown.Value > 0f)
+        ReloadingCurrently.Value = true;
+        float wait = ReloadCooldown;
+        while (wait > 0f)
         {
-            CurCooldown.Value -= CO.co.GetWorldSpeedDelta();
+            wait -= CO.co.GetWorldSpeedDelta();
             yield return null;
         }
-        canFire = true;
+        ReloadingCurrently.Value = false;
+        LoadedAmmo.Value = MaxAmmo;
     }
     public float AngleToTurnTarget()
     {

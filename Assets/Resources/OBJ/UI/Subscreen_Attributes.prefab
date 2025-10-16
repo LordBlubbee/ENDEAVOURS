@@ -352,8 +352,6 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Health and melee weapon damage.
 
-        Resistance to knockback.
-
 '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -541,7 +539,7 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Sight range and magical efficiency.
 
-        Usage of flux equipment.'
+        Ability to perceive threats.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -728,7 +726,7 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Efficiency in healing self and others.
 
-        Improved learning speed.'
+        Usage of advanced items.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -913,9 +911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356777915098846576, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: 'Ranged weapon reload and damage.
-
-        Usage of potions.'
+      value: Ranged weapon reload and damage.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1100,9 +1096,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356777915098846576, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: 'Movement speed and dashing.
+      value: 'Movement speed, stamina.
 
-        Stamina and weapon reload speed.'
+        Reload speed.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1467,7 +1463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3437863500442666517, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: 'GUNNERY: 1'
+      value: 'ALCHEMY: 1'
       objectReference: {fileID: 0}
     - target: {fileID: 5359387141577791439, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_Name
@@ -1475,9 +1471,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356777915098846576, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: 'Increases heavy emplacement damage.
+      value: 'Ability to efficiently craft and create items.
 
-        Usage of advanced explosives.'
+        Usage of advanced
+        potions and consumables.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1654,7 +1651,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3437863500442666517, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: 'HARNESSING: 1'
+      value: 'COMMAND: 1'
       objectReference: {fileID: 0}
     - target: {fileID: 5359387141577791439, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_Name
@@ -1662,7 +1659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356777915098846576, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: 'Drifter- and emplacement maneuverability.
+      value: 'Learning speed and aura that buffs allies.
 
         Usage of advanced
         gadgets.'

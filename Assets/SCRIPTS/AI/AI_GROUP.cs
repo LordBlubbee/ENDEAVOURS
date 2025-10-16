@@ -8,6 +8,8 @@ using UnityEngine;
 public class AI_GROUP : MonoBehaviour
 {
     private List<AI_UNIT> Units = new();
+
+    private List<ModuleWeapon> WeaponModules = new();
     public AI_TYPES AI_Type { get; private set; }
     public AI_OBJECTIVES AI_Objective { get; private set; }
 
@@ -34,6 +36,10 @@ public class AI_GROUP : MonoBehaviour
     public void Add(AI_UNIT unit)
     {
         unit.AddToGroup(this);
+    }
+    public void Add(ModuleWeapon unit)
+    {
+        WeaponModules.Add(unit);
     }
     public void SetAIHome(DRIFTER dr)
     {

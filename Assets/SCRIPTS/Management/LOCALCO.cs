@@ -1,12 +1,8 @@
-using Mono.Cecil;
+
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
 using Unity.Netcode;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class LOCALCO : NetworkBehaviour
 {
@@ -152,6 +148,7 @@ public class LOCALCO : NetworkBehaviour
                     if (Input.GetKeyDown(KeyCode.Alpha3)) GetPlayer().EquipWeapon3Rpc();
                     break;
                 case ControlModes.DRIFTER:
+                    break;
                     UI.ui.MainGameplayUI.SetActiveGameUI(null);
                     UI.ui.SetCrosshairTexture(null);
                     UI.ui.SetCrosshair(Mouse); 
@@ -162,15 +159,16 @@ public class LOCALCO : NetworkBehaviour
                     if (Input.GetKey(KeyCode.S)) mov += new Vector3(0, -1);
                     if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
                     if (Input.GetKey(KeyCode.D)) mov += new Vector3(1, 0);
-                    Drifter.SetMoveInput(mov, 0.6f + GetPlayer().GetATT_PILOTING() * 0.15f);
+                    Drifter.SetMoveInput(mov, 0.6f + GetPlayer().GetATT_COMMAND() * 0.15f);
                     Drifter.SetLookTowards(Mouse);
                     if (!IsServer)
                     {
-                        Drifter.SetMoveInputRpc(mov, 0.6f + GetPlayer().GetATT_PILOTING() * 0.15f);
+                        Drifter.SetMoveInputRpc(mov, 0.6f + GetPlayer().GetATT_COMMAND() * 0.15f);
                         Drifter.SetLookTowardsRpc(Mouse);
                     }
                     break;
                 case ControlModes.WEAPON:
+                    break;
                     UI.ui.MainGameplayUI.SetActiveGameUI(UI.ui.MainGameplayUI.WeaponUI);
                     UI.ui.SetCrosshairTexture(UsingWeapon.CrosshairSprite);
                     UI.ui.SetCrosshairRotateReset();
@@ -180,7 +178,7 @@ public class LOCALCO : NetworkBehaviour
                     if (!IsServer) GetPlayer().SetMoveInputRpc(Vector3.zero);
                     if (!IsServer) UsingWeapon.SetLookTowardsRpc(Mouse);
                     UsingWeapon.SetLookTowards(Mouse);
-                    if (Input.GetMouseButtonDown(0)) UsingWeapon.UseRpc(Mouse, 0.75f + GetPlayer().GetATT_GUNNERY() * 0.1f + GetPlayer().GetATT_ARMS() * 0.02f);
+                    if (Input.GetMouseButtonDown(0)) UsingWeapon.UseRpc(Mouse, 0.75f + GetPlayer().GetATT_ARMS() * 0.1f + GetPlayer().GetATT_ARMS() * 0.02f);
                     if (Input.GetMouseButtonUp(0)) UsingWeapon.StopRpc();
                     break;
             }
@@ -325,7 +323,7 @@ public class LOCALCO : NetworkBehaviour
                     {
                         switch (mod.GetInteractableType())
                         {
-                            case Module.ModuleTypes.NAVIGATION:
+                            /*case Module.ModuleTypes.NAVIGATION:
                                 UI.ui.MainGameplayUI.SetInteractTex("[F] NAVIGATE", Color.green);
                                 if (Input.GetKeyDown(KeyCode.F))
                                 {
@@ -341,11 +339,36 @@ public class LOCALCO : NetworkBehaviour
                                 UI.ui.MainGameplayUI.SetInteractTex("[F] USE WEAPON", Color.green);
                                 if (Input.GetKeyDown(KeyCode.F))
                                 {
+
                                     UsingWeapon = (ModuleWeapon)mod;
                                     CurrentControlMode = ControlModes.WEAPON;
                                     CAM.cam.SetCameraMode(mod.transform, 100f, 50f, 150);
                                     CurrentInteractionModule = mod;
                                 }
+                                break;*/
+                            case Module.ModuleTypes.WEAPON:
+                                ModuleWeapon weapon = mod as ModuleWeapon;
+                                string str;
+
+                                if (weapon.ReloadingCurrently.Value)
+                                {
+                                    str = $"{weapon.ModuleTag}\nRELOADING...";
+                                } else
+                                {
+                                    if (weapon.GetAmmoRatio() < 0.1f) str = $"{weapon.ModuleTag}\nAMMO ({weapon.GetAmmo() / weapon.MaxAmmo})";
+                                    else str = $"{weapon.ModuleTag}\nAMMO ({weapon.GetAmmo() / weapon.MaxAmmo})";
+                                    if (weapon.GetAmmoRatio() < 1f)
+                                    {
+                                        if (CO.co.Resource_Ammo.Value < 10) str += "\n<color=red> [NO AMMO]";
+                                        else str += "\n<color=green> [F] RELOAD <color=red> [10 AMMO]";
+                                        if (Input.GetKeyDown(KeyCode.F))
+                                        {
+                                            weapon.ReloadAmmoRpc();
+                                        }
+                                    }
+                                }
+                               
+                                UI.ui.MainGameplayUI.SetInteractTex(str, Color.yellow);
                                 break;
                             case Module.ModuleTypes.INVENTORY:
                                 UI.ui.MainGameplayUI.SetInteractTex("[F] INVENTORY", Color.green);
@@ -377,20 +400,13 @@ public class LOCALCO : NetworkBehaviour
                                     UI.ui.MainGameplayUI.SetInteractTex("[DANGER]", Color.red);
                                 }
                                 break;
-                            case Module.ModuleTypes.GENERATOR:
+                            /*case Module.ModuleTypes.GENERATOR:
                                 UI.ui.MainGameplayUI.SetInteractTex("[F] MANAGE", Color.green);
                                 if (Input.GetKeyDown(KeyCode.F))
                                 {
 
                                 }
-                                break;
-                            case Module.ModuleTypes.ARMOR:
-                                UI.ui.MainGameplayUI.SetInteractTex("[F] MANAGE", Color.green);
-                                if (Input.GetKeyDown(KeyCode.F))
-                                {
-
-                                }
-                                break;
+                                break;*/
                             case Module.ModuleTypes.DRAGGABLE:
                                 UI.ui.MainGameplayUI.SetInteractTex("[F] CARRY", Color.green);
                                 if (Input.GetKeyDown(KeyCode.F))

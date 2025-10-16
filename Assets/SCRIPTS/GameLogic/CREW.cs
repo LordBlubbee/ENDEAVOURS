@@ -40,9 +40,9 @@ public class CREW : NetworkBehaviour, iDamageable
     public NetworkVariable<int> ATT_ARMS = new NetworkVariable<int>(2); //Buffs ranged damage, reload (+gunnery)
     public NetworkVariable<int> ATT_DEXTERITY = new NetworkVariable<int>(2);//Buffs movement speed, stamina
     public NetworkVariable<int> ATT_COMMUNOPATHY = new NetworkVariable<int>(2);//Buffs magic damage, camera range, senses
-    public NetworkVariable<int> ATT_PILOTING = new NetworkVariable<int>(2); //Buffs piloting maneuverability, dodge chance
+    public NetworkVariable<int> ATT_COMMAND = new NetworkVariable<int>(2); //Buffs piloting maneuverability, dodge chance
     public NetworkVariable<int> ATT_ENGINEERING = new NetworkVariable<int>(2); //Buffs repair speed
-    public NetworkVariable<int> ATT_GUNNERY = new NetworkVariable<int>(2); //Buffs usage of large heavy weapons
+    public NetworkVariable<int> ATT_ALCHEMY = new NetworkVariable<int>(2); //Buffs usage of large heavy weapons
     public NetworkVariable<int> ATT_MEDICAL = new NetworkVariable<int>(2); //Buffs healing abilities (+regeneration)
     public ScriptableBackground CharacterBackground;
     public CO_SPAWNER.DefaultEquipmentSet DefaultToolset;
@@ -64,9 +64,9 @@ public class CREW : NetworkBehaviour, iDamageable
         ATT_ARMS.Value = arms; //Ranged attack
         ATT_DEXTERITY.Value = dex; //Buffs movement speed, stamina
         ATT_COMMUNOPATHY.Value = comm; //Buffs magic damage, camera range, senses
-        ATT_PILOTING.Value = pil; //Buffs piloting maneuverability, dodge chance
+        ATT_COMMAND.Value = pil; //Buffs piloting maneuverability, dodge chance
         ATT_ENGINEERING.Value = eng; //Buffs repair speed
-        ATT_GUNNERY.Value = gun; //Buffs usage of large heavy weapons
+        ATT_ALCHEMY.Value = gun; //Buffs usage of large heavy weapons
         ATT_MEDICAL.Value = med; //Buffs healing abilities (+regeneration)
         CurHealth.Value = GetMaxHealth();
     }
@@ -101,10 +101,10 @@ public class CREW : NetworkBehaviour, iDamageable
         return ATT_COMMUNOPATHY.Value;
     }
 
-    public int GetATT_PILOTING()
+    public int GetATT_COMMAND()
     {
-        if (CharacterBackground) return ATT_PILOTING.Value + CharacterBackground.Background_ATT_BONUS[4];
-        return ATT_PILOTING.Value;
+        if (CharacterBackground) return ATT_COMMAND.Value + CharacterBackground.Background_ATT_BONUS[4];
+        return ATT_COMMAND.Value;
     }
 
     public int GetATT_ENGINEERING()
@@ -113,10 +113,10 @@ public class CREW : NetworkBehaviour, iDamageable
         return ATT_ENGINEERING.Value;
     }
 
-    public int GetATT_GUNNERY()
+    public int GetATT_ALCHEMY()
     {
-        if (CharacterBackground) return ATT_GUNNERY.Value + CharacterBackground.Background_ATT_BONUS[6];
-        return ATT_GUNNERY.Value;
+        if (CharacterBackground) return ATT_ALCHEMY.Value + CharacterBackground.Background_ATT_BONUS[6];
+        return ATT_ALCHEMY.Value;
     }
 
     public int GetATT_MEDICAL()
@@ -134,9 +134,9 @@ public class CREW : NetworkBehaviour, iDamageable
             case 1: ATT = ATT_ARMS; break;
             case 2: ATT = ATT_DEXTERITY; break;
             case 3: ATT = ATT_COMMUNOPATHY; break;
-            case 4: ATT = ATT_PILOTING; break;
+            case 4: ATT = ATT_COMMAND; break;
             case 5: ATT = ATT_ENGINEERING; break;
-            case 6: ATT = ATT_GUNNERY; break;
+            case 6: ATT = ATT_ALCHEMY; break;
             case 7: ATT = ATT_MEDICAL; break;
             default: return 0; // Invalid ID, do nothing
         }
@@ -157,9 +157,9 @@ public class CREW : NetworkBehaviour, iDamageable
             case 1: ATT = ATT_ARMS; break;
             case 2: ATT = ATT_DEXTERITY; break;
             case 3: ATT = ATT_COMMUNOPATHY; break;
-            case 4: ATT = ATT_PILOTING; break;
+            case 4: ATT = ATT_COMMAND; break;
             case 5: ATT = ATT_ENGINEERING; break;
-            case 6: ATT = ATT_GUNNERY; break;
+            case 6: ATT = ATT_ALCHEMY; break;
             case 7: ATT = ATT_MEDICAL; break;
             default: return; // Invalid ID, do nothing
         }
@@ -736,7 +736,7 @@ public class CREW : NetworkBehaviour, iDamageable
         if (crew.GetFaction() == Faction) return false;
         if (!crew.CanBeTargeted(Space)) return false;
         dmg *= AnimationController.CurrentStrikePower();
-        dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE() + 0.02f * GetATT_PILOTING();
+        dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE() + 0.02f * GetATT_COMMAND();
         if (DashingDamageBuff > 0)
         {
             DashingDamageBuff = 0;
@@ -758,7 +758,7 @@ public class CREW : NetworkBehaviour, iDamageable
         proj.CrewOwner = this;
         proj.NetworkObject.Spawn();
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
-        reload /= 0.6f + 0.05f * GetATT_ARMS() + 0.05f * GetATT_GUNNERY();
+        reload /= 0.6f + 0.05f * GetATT_ARMS() + 0.05f * GetATT_ALCHEMY();
         StartCoroutine(AttackCooldown(reload));
     }
     private void StrikeRepair()
