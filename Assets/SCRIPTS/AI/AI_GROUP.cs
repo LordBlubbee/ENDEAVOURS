@@ -12,8 +12,6 @@ public class AI_GROUP : MonoBehaviour
     {
         return Units;
     }
-
-    private List<ModuleWeapon> WeaponModules = new();
     public AI_TYPES AI_Type { get; private set; }
     public AI_OBJECTIVES AI_Objective { get; private set; }
 
@@ -40,10 +38,6 @@ public class AI_GROUP : MonoBehaviour
     public void Add(AI_UNIT unit)
     {
         unit.AddToGroup(this);
-    }
-    public void Add(ModuleWeapon unit)
-    {
-        WeaponModules.Add(unit);
     }
     public void SetAIHome(DRIFTER dr)
     {
@@ -95,11 +89,45 @@ public class AI_GROUP : MonoBehaviour
                     SwarmAI();
                     break;
             }
-            MainObjectiveTimer--;
-            yield return new WaitForSeconds(1f);
+            MainObjectiveTimer -= 0.5f;
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
+    /*
+    Module InteractingModule;
+    IEnumerator Interact_Navigation()
+    {
+        while (InteractingModule != null && InteractingModule.ModuleType == Module.ModuleTypes.NAVIGATION)
+        {
+            CREW crew = GetClosestEnemyAnywhere();
+            if (crew != null)
+            {
+                InteractingModule.Space.Drifter.SetMoveInput((crew.transform.position - transform.position).normalized * -1, 0.6f + Unit.GetATT_COMMAND() * 0.15f);
+                InteractingModule.Space.Drifter.SetLookTowards((crew.transform.position-transform.position).normalized * -1);
+            }
+            yield return null;
+        }
+    }
+    IEnumerator Interact_Weapons()
+    {
+        ModuleWeapon wep = InteractingModule as ModuleWeapon;
+        while (InteractingModule != null && InteractingModule.ModuleType == Module.ModuleTypes.WEAPON)
+        {
+            CREW crew = GetClosestEnemyAnywhere();
+            if (crew != null)
+            {
+                wep.SetLookTowards(crew.transform.position);
+                if (Mathf.Abs(wep.AngleBetweenPoints(crew.transform.position)) < 10)
+                {
+                    wep.UseRpc(Vector3.zero, 0.75f + Unit.GetATT_ALCHEMY() * 0.1f + Unit.GetATT_ARMS() * 0.02f);
+                }
+            }
+            yield return null;
+        }
+        wep.StopRpc();
+    }
+     */
     private void ShipAI()
     {
         if (!HomeDrifter) return;
@@ -107,8 +135,15 @@ public class AI_GROUP : MonoBehaviour
 
         List<AI_UNIT> UsableUnits = new(Units);
         //Pick the closest unit
+        foreach (AI_UNIT un in Units)
+        {
+            if (un.Unit.GetOrderPoint() != Vector3.zero)
+            {
+                un.SetObjectiveTarget(un.Unit.GetOrderPoint(),un.Unit.GetOrderTransform());
+                UsableUnits.Remove(un);
+            }
+        }
         List<Module> ManModules = new List<Module>();
-        ManModules.Add(HomeDrifter.NavModule);
         foreach (Module mod in HomeDrifter.Space.GetModules())
         {
             if (mod.GetHealthRelative() < 1) ManModules.Add(mod);
@@ -138,6 +173,37 @@ public class AI_GROUP : MonoBehaviour
             Closest = UsableUnits[0];
             if (Closest.DistToObjective(Closest.transform.position) < 8) Closest.SetObjectiveTarget(HomeDrifter.Space.GetRandomGrid().transform, HomeSpace);
             UsableUnits.Remove(Closest);
+        }
+
+        /* CONTROL WEAPONS */
+        foreach (ModuleWeapon wep in HomeDrifter.Interior.WeaponModules)
+        {
+            if (wep.GetOrderPoint() != Vector3.zero)
+            {
+                wep.SetLookTowards(wep.GetOrderPoint());
+                if (Mathf.Abs(wep.AngleBetweenPoints(wep.GetOrderPoint())) < 3)
+                {
+                    wep.Use(wep.GetOrderPoint());
+                    continue;
+                }
+                wep.Stop();
+                continue;
+            }
+            if (wep.AutofireActive.Value)
+            {
+                CREW trt = GetClosestEnemyAnywhere(wep.transform.position);
+                if (trt != null)
+                {
+                    wep.SetLookTowards(trt.transform.position);
+                    if (Mathf.Abs(wep.AngleBetweenPoints(trt.transform.position)) < 10)
+                    {
+                        wep.Use(trt.transform.position);
+                        continue;
+                    }
+                    wep.Stop();
+                    continue;
+                }
+            }
         }
     }
     private void SwarmAI()
@@ -250,5 +316,40 @@ public class AI_GROUP : MonoBehaviour
             if (crew.Faction != Faction && crew.Faction != 0) enemies.Add(crew);
         }
         return enemies;
+    }
+    public CREW GetClosestEnemy(Vector3 vec, SPACE space)
+    {
+        List<CREW> enemies = EnemiesInSpace(space);
+        CREW closest = null;
+        float minDist = float.MaxValue;
+        Vector3 myPos = vec;
+        foreach (var enemy in enemies)
+        {
+            float dist = (enemy.getPos() - myPos).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = enemy;
+            }
+        }
+        return closest;
+    }
+    public CREW GetClosestEnemyAnywhere(Vector3 vec)
+    {
+        List<CREW> enemies = CO.co.GetAllCrews();
+        CREW closest = null;
+        float minDist = float.MaxValue;
+        Vector3 myPos = vec;
+        foreach (var enemy in enemies)
+        {
+            if (enemy.Faction == 0 || enemy.Faction == Faction) continue;
+            float dist = (enemy.getPos() - myPos).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = enemy;
+            }
+        }
+        return closest;
     }
 }

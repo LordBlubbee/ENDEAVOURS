@@ -85,7 +85,7 @@ public class CO_SPAWNER : NetworkBehaviour
 
         foreach (CREW Prefab in drifter.StartingCrew)
         {
-            //SpawnUnitOnShip(Prefab, drifter);
+            SpawnUnitOnShip(Prefab, drifter);
         }
 
         CO.co.StartGame();

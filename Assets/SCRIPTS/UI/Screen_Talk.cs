@@ -109,10 +109,11 @@ public class Screen_Talk : MonoBehaviour
     public GameObject RewardScreen;
     public TextMeshProUGUI MaterialGain;
     public List<InventorySlot> InventorySlots;
-    public void OpenRewardScreen(int Materials, int Supplies, int Ammo, int Tech, FactionReputation[] Facs, FixedString64Bytes[] RewardItemsGained)
+    public void OpenRewardScreen(int Materials, int Supplies, int Ammo, int Tech, int XP, FactionReputation[] Facs, FixedString64Bytes[] RewardItemsGained)
     {
         RewardScreen.SetActive(true);
         MaterialGain.text = "";
+        if (XP != 0) MaterialGain.text += $"<color=cyan>XP: +{XP}</color>\n";
         if (Materials > 0) MaterialGain.text += $"<color=green>MATERIALS: +{Materials}</color>\n";
         else if (Materials < 0) MaterialGain.text += $"<color=red>MATERIALS: {Materials}</color>\n";
         if (Supplies > 0) MaterialGain.text += $"<color=green>SUPPLIES: +{Supplies}</color>\n";

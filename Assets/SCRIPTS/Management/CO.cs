@@ -523,6 +523,18 @@ public class CO : NetworkBehaviour
         }
         return list;
     }
+    public List<CREW> GetAlliedCrew(int fac = 1)
+    {
+        List<CREW> list = new();
+        foreach (CREW loc in GetAllCrews())
+        {
+            if (loc.GetFaction() == fac)
+            {
+                list.Add(loc);
+            }
+        }
+        return list;
+    }
 
     List<CREW> RegisteredCREW = new();
     public List<CREW> GetAllCrews()
@@ -705,6 +717,7 @@ public class CO : NetworkBehaviour
         int ChangeMaterials = 0;
         int ChangeSupplies = 0;
         int ChangeTech = 0;
+        int ChangeXP = 0;
         List<FixedString64Bytes> ItemTranslate = new();
         foreach (LootItem item in list)
         {
@@ -712,6 +725,7 @@ public class CO : NetworkBehaviour
             ChangeMaterials += Mathf.RoundToInt(item.Resource_Materials * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
             ChangeSupplies += Mathf.RoundToInt(item.Resource_Supplies * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
             ChangeTech += Mathf.RoundToInt(item.Resource_Technology * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
+            ChangeXP += Mathf.RoundToInt(item.Resource_XP * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
             if (item.ItemDrop)
             {
                 AddInventoryItem(item.ItemDrop);
@@ -722,12 +736,15 @@ public class CO : NetworkBehaviour
         Resource_Materials.Value += ChangeMaterials;
         Resource_Supplies.Value += ChangeSupplies;
         Resource_Tech.Value += ChangeTech;
-
-        OpenRewardScreenRpc(ChangeMaterials, ChangeSupplies, ChangeAmmo, ChangeTech, Factions.ToArray(), FactionChanges.ToArray(), ItemTranslate.ToArray());
+        foreach (CREW crew in GetAlliedCrew())
+        {
+            crew.XPPoints.Value += ChangeXP;
+        }
+        OpenRewardScreenRpc(ChangeMaterials, ChangeSupplies, ChangeAmmo, ChangeTech, ChangeXP, Factions.ToArray(), FactionChanges.ToArray(), ItemTranslate.ToArray());
         //Send report to clients with all faction rep changes
     }
     [Rpc(SendTo.ClientsAndHost)]
-    private void OpenRewardScreenRpc(int Materials, int Supplies, int Ammo, int Tech, Faction[] Facs, int[] FacChanges, FixedString64Bytes[] RewardItemsGained)
+    private void OpenRewardScreenRpc(int Materials, int Supplies, int Ammo, int Tech, int XP, Faction[] Facs, int[] FacChanges, FixedString64Bytes[] RewardItemsGained)
     {
         List<FactionReputation> list = new();
         for (int i = 0; i < Facs.Length ;i++)
@@ -737,7 +754,7 @@ public class CO : NetworkBehaviour
             newfac.Amount = FacChanges[i];
             list.Add(newfac);
         }
-        UI.ui.TalkUI.OpenRewardScreen(Materials, Supplies, Ammo, Tech, list.ToArray(), RewardItemsGained);
+        UI.ui.TalkUI.OpenRewardScreen(Materials, Supplies, Ammo, Tech, XP, list.ToArray(), RewardItemsGained);
     }
     /// <summary>
     /// Clears all weights.

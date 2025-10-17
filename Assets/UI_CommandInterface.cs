@@ -7,10 +7,13 @@ using UnityEngine;
 
 public class UI_CommandInterface : MonoBehaviour
 {
+    public static UI_CommandInterface co;
     public UI_Module PrefabModule;
     public UI_OrderMarker PrefabOrderMarker;
-    private UI_OrderMarker CurrentOrderMarker;
-    List<UI_OrderMarker> OrderMarkers = new();
+    [NonSerialized] public UI_OrderMarker CurrentOrderMarker;
+    private UI_Module CurrentModuleSelected;
+    List<UI_OrderMarker> OrderMarkersCrew = new();
+    List<UI_OrderMarker> OrderMarkersWeapons = new();
     public TextMeshProUGUI[] TabButtonTexts;
     public GameObject[] Tabs;
     [NonSerialized] public List<UI_Module> Modules = new();
@@ -20,17 +23,31 @@ public class UI_CommandInterface : MonoBehaviour
     int SelectedTab = -1;
     private void Start()
     {
+        co = this;
         for (int i = 0; i < 12; i++)
         {
             UI_Module module = Instantiate(PrefabModule, Tabs[0].transform);
             Modules.Add(module);
+            module.SetNumberID(i);
             module.SetOff();
+           
+
+            //Weapons
             module = Instantiate(PrefabModule, Tabs[1].transform);
             Weapons.Add(module);
+            module.SetNumberID(i);
             module.SetOff();
+            UI_OrderMarker mark = Instantiate(PrefabOrderMarker, Vector3.zero, Quaternion.identity);
+            OrderMarkersWeapons.Add(mark);
+            module.SetModuleMarker(mark);
+            //Crew
             module = Instantiate(PrefabModule, Tabs[2].transform);
             Crews.Add(module);
+            module.SetNumberID(i);
             module.SetOff();
+            mark = Instantiate(PrefabOrderMarker, Vector3.zero, Quaternion.identity);
+            OrderMarkersCrew.Add(mark);
+            module.SetModuleMarker(mark);
         }
     }
 
@@ -99,9 +116,16 @@ public class UI_CommandInterface : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Alpha0)) Crews[9].PressModule();
                 break;
         }
+        if (IsOrdering())
+        {
+            CurrentModuleSelected.CommandFollowCursor();
+            if (Input.GetMouseButtonDown(0)) SelectOrderTarget();
+            else if (Input.GetMouseButtonDown(1)) StopOrdering();
+        }
     }
     public void PressTabButton(int ID)
     {
+        if (IsOrdering()) StopOrdering();
         for (int i = 0; i < TabButtonTexts.Length; i++)
         {
             if (i == ID && SelectedTab != ID)
@@ -118,23 +142,16 @@ public class UI_CommandInterface : MonoBehaviour
         if (SelectedTab == ID)
         {
             SelectedTab = -1;
-            IsCommanding = false;
-            foreach (UI_OrderMarker spr in OrderMarkers)
-            {
-                spr.gameObject.SetActive(false);
-            }
+            IsCommanding = false; 
+            RefreshCommandInterface();
             LOCALCO.local.SetCameraToPlayer();
         }
         else
         {
             SelectedTab = ID;
             IsCommanding = true;
-            foreach (UI_OrderMarker spr in OrderMarkers)
-            {
-                spr.gameObject.SetActive(true);
-            }
             RefreshCommandInterface();
-            CAM.cam.SetCameraMode(CO.co.PlayerMainDrifter.transform, 150f, 30f, 150f);
+            LOCALCO.local.SetCameraToCommand();
         }
     }
     public void RefreshCommandInterface()
@@ -157,52 +174,94 @@ public class UI_CommandInterface : MonoBehaviour
         {
             ModuleReferences.Add(mod);
         }
-        foreach (AI_UNIT crew in CO.co.PlayerMainDrifter.CrewGroup.GetUnits())
+        foreach (CREW crew in CO.co.GetAlliedCrew())
         {
-            CrewReferences.Add(crew.Unit);
+            CrewReferences.Add(crew);
         }
         for (int i = 0; i < 12; i++)
         {
-            if (WeaponReferences.Count >= i) Weapons[i].SetModuleTargetWeapon(WeaponReferences[i]);
+            if (WeaponReferences.Count > i) Weapons[i].SetModuleTargetWeapon(WeaponReferences[i]);
             else Weapons[i].SetOff();
-            if (ModuleReferences.Count >= i) Modules[i].SetModuleTarget(ModuleReferences[i]);
+            if (ModuleReferences.Count > i) Modules[i].SetModuleTarget(ModuleReferences[i]);
             else Modules[i].SetOff();
-            if (CrewReferences.Count >= i) Crews[i].SetCrewTarget(CrewReferences[i]);
+            if (CrewReferences.Count > i) Crews[i].SetCrewTarget(CrewReferences[i]);
             else Crews[i].SetOff();
         }
     }
-    private void StopAiming()
+    private void StopOrdering()
     {
-        Destroy(CurrentOrderMarker.gameObject);
+        switch (CurrentModuleSelected.Mode)
+        {
+            case UI_Module.UIModuleModes.MODULE:
+                CurrentModuleSelected.Module.SetOrderPointRpc(Vector3.zero);
+                break;
+            case UI_Module.UIModuleModes.MODULEWEAPON:
+                CurrentModuleSelected.ModuleWeapon.SetOrderPointRpc(Vector3.zero);
+                break;
+            case UI_Module.UIModuleModes.CREW:
+                CurrentModuleSelected.Crew.SetOrderPointRpc(Vector3.zero);
+                break;
+        }
+        CurrentOrderMarker.DeselectOrderMarker();
         CurrentOrderMarker = null;
+        CurrentOrderMarker.gameObject.SetActive(false);
+        RefreshCommandInterface();
+        
     }
-    private void PressAim()
+    private void SelectOrderTarget()
     {
         Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouse = new Vector3(mouse.x, mouse.y);
         bool Hit = false;
         foreach (Collider2D col in Physics2D.OverlapCircleAll(mouse,0.1f))
         {
             //
+            if (col.GetComponent<SPACE>() != null)
+            {
+                Hit = true;
+                break;
+            }
+            if (CurrentModuleSelected.Mode == UI_Module.UIModuleModes.MODULEWEAPON)
+            {
+                if (col.GetComponent<CREW>() != null)
+                {
+                    Hit = true;
+                    break;
+                }
+            }
         }
+
         if (!Hit) return;
+        switch (CurrentModuleSelected.Mode)
+        {
+            case UI_Module.UIModuleModes.MODULE:
+                CurrentModuleSelected.Module.SetOrderPointRpc(mouse);
+                break;
+            case UI_Module.UIModuleModes.MODULEWEAPON:
+                CurrentModuleSelected.ModuleWeapon.SetOrderPointRpc(mouse);
+                break;
+            case UI_Module.UIModuleModes.CREW:
+                CurrentModuleSelected.Crew.SetOrderPointRpc(mouse);
+                break;
+        }
+        CurrentOrderMarker.DeselectOrderMarker();
+        CurrentOrderMarker = null;
+        RefreshCommandInterface();
     }
-    private void BeginAim()
+
+    private bool IsOrdering()
     {
-        Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        CurrentOrderMarker = Instantiate(PrefabOrderMarker, mouse, Quaternion.identity);
+        return CurrentOrderMarker != null;
+    }
+    public void BeginOrdering(UI_Module mod)
+    {
+        CurrentOrderMarker = mod.OrderMarker;
+        CurrentOrderMarker.SelectOrderMarker();
+        CurrentModuleSelected = mod;
+        RefreshCommandInterface();
     }
 
     private List<CREW> CrewReferences;
     private List<Module> ModuleReferences;
     private List<ModuleWeapon> WeaponReferences;
-    public void AimModule(UI_Module UI_Mod)
-    {
-        switch (UI_Mod.Mode)
-        {
-            case UI_Module.UIModuleModes.CREW:
-                break;
-            case UI_Module.UIModuleModes.MODULEWEAPON:
-                break;
-        }
-    }
 }

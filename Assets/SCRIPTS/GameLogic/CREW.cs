@@ -44,6 +44,41 @@ public class CREW : NetworkBehaviour, iDamageable
 
     [Header("ATTRIBUTES")]
     [NonSerialized] public NetworkVariable<int> SkillPoints = new NetworkVariable<int>(0); //Not used in initial character creation
+    [NonSerialized] public NetworkVariable<int> XPPoints = new NetworkVariable<int>(0); //Not used in initial character creation
+    [NonSerialized] public NetworkVariable<Vector3> OrderPoint = new();
+    private Vector3 OrderPointLocal;
+    private SPACE OrderTransform;
+    public Vector3 GetOrderPoint()
+    {
+        return OrderPoint.Value;
+    }
+    public SPACE GetOrderTransform()
+    {
+        return OrderTransform;
+    }
+
+    [Rpc(SendTo.Server)]
+    public void SetOrderPointRpc(Vector3 vec)
+    {
+        if (vec == Vector3.zero)
+        {
+            OrderTransform = null;
+            OrderPointLocal = Vector3.zero;
+            OrderPoint.Value = Vector3.zero;
+            return;
+        }
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(vec, 0.1f))
+        {
+            if (col.GetComponent<SPACE>() != null)
+            {
+                OrderTransform = col.GetComponent<SPACE>();
+                OrderPointLocal = OrderTransform.transform.InverseTransformPoint(vec);
+                OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
+                return;
+            }
+        }
+    }
+
     public NetworkVariable<int> ATT_PHYSIQUE = new NetworkVariable<int>(2); //Buffs maximum health, melee damage
     public NetworkVariable<int> ATT_ARMS = new NetworkVariable<int>(2); //Buffs ranged damage, reload (+gunnery)
     public NetworkVariable<int> ATT_DEXTERITY = new NetworkVariable<int>(2);//Buffs movement speed, stamina
@@ -618,6 +653,7 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         AnimationUpdate();
         if (!IsServer) return;
+        if (OrderTransform != null) OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
         StrikeUpdate();
         if (GetStamina() < GetMaxStamina())
         {

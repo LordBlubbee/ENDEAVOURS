@@ -18,6 +18,7 @@ public class LOCALCO : NetworkBehaviour
     {
         NONE,
         PLAYER,
+        COMMAND,
         DIALOG,
         DRIFTER,
         WEAPON
@@ -147,39 +148,14 @@ public class LOCALCO : NetworkBehaviour
                     if (Input.GetKeyDown(KeyCode.Alpha2)) GetPlayer().EquipWeapon2Rpc();
                     if (Input.GetKeyDown(KeyCode.Alpha3)) GetPlayer().EquipWeapon3Rpc();
                     break;
-                case ControlModes.DRIFTER:
-                    break;
-                    UI.ui.MainGameplayUI.SetActiveGameUI(null);
+                case ControlModes.COMMAND:
+                    //Managed by the CommandInterface
+                    UI.ui.MainGameplayUI.SetActiveGameUI(UI.ui.MainGameplayUI.ActiveUI);
                     UI.ui.SetCrosshairTexture(null);
-                    UI.ui.SetCrosshair(Mouse); 
-                    UI.ui.SetCrosshairRotateReset();
-                    GetPlayer().SetMoveInput(mov);
-                    if (!IsServer) GetPlayer().SetMoveInputRpc(Vector3.zero);
-                    if (Input.GetKey(KeyCode.W)) mov += new Vector3(0, 1);
-                    if (Input.GetKey(KeyCode.S)) mov += new Vector3(0, -1);
-                    if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
-                    if (Input.GetKey(KeyCode.D)) mov += new Vector3(1, 0);
-                    Drifter.SetMoveInput(mov, 0.6f + GetPlayer().GetATT_COMMAND() * 0.15f);
-                    Drifter.SetLookTowards(Mouse);
-                    if (!IsServer)
-                    {
-                        Drifter.SetMoveInputRpc(mov, 0.6f + GetPlayer().GetATT_COMMAND() * 0.15f);
-                        Drifter.SetLookTowardsRpc(Mouse);
-                    }
-                    break;
-                case ControlModes.WEAPON:
-                    break;
-                    UI.ui.MainGameplayUI.SetActiveGameUI(UI.ui.MainGameplayUI.WeaponUI);
-                    UI.ui.SetCrosshairTexture(UsingWeapon.CrosshairSprite);
-                    UI.ui.SetCrosshairRotateReset();
-                    CrosshairPoint = UsingWeapon.transform.position + UsingWeapon.getLookVector() * (UsingWeapon.transform.position-Mouse).magnitude;
                     UI.ui.SetCrosshair(CrosshairPoint);
-                    GetPlayer().SetMoveInput(mov);
+                    UI.ui.SetCrosshairRotateReset();
+                    GetPlayer().SetMoveInput(Vector3.zero);
                     if (!IsServer) GetPlayer().SetMoveInputRpc(Vector3.zero);
-                    if (!IsServer) UsingWeapon.SetLookTowardsRpc(Mouse);
-                    UsingWeapon.SetLookTowards(Mouse);
-                    if (Input.GetMouseButtonDown(0)) UsingWeapon.UseRpc(Mouse, 0.75f + GetPlayer().GetATT_ARMS() * 0.1f + GetPlayer().GetATT_ARMS() * 0.02f);
-                    if (Input.GetMouseButtonUp(0)) UsingWeapon.StopRpc();
                     break;
             }
         }
@@ -253,8 +229,16 @@ public class LOCALCO : NetworkBehaviour
     }
     public void SetCameraToPlayer()
     {
+        if (CurrentControlMode == ControlModes.PLAYER) return;
         CurrentControlMode = ControlModes.PLAYER;
         CAM.cam.SetCameraMode(Player.transform, 13f+ Player.GetATT_COMMUNOPATHY(), 8f, 16f+Player.GetATT_COMMUNOPATHY());
+    }
+
+    public void SetCameraToCommand()
+    {
+        if (CurrentControlMode == ControlModes.COMMAND) return;
+        CurrentControlMode = ControlModes.COMMAND;
+        CAM.cam.SetCameraMode(CO.co.PlayerMainDrifter.transform, 150f, 30f, 150f);
     }
 
     Transform DraggingObject;
@@ -356,7 +340,7 @@ public class LOCALCO : NetworkBehaviour
                                 } else
                                 {
                                     if (weapon.GetAmmoRatio() < 0.1f) str = $"{weapon.ModuleTag}\nAMMO ({weapon.GetAmmo() / weapon.MaxAmmo})";
-                                    else str = $"{weapon.ModuleTag}\nAMMO ({weapon.GetAmmo() / weapon.MaxAmmo})";
+                                    else str = $"{weapon.ModuleTag}\nAMMO ({weapon.GetAmmo()}/{weapon.MaxAmmo})";
                                     if (weapon.GetAmmoRatio() < 1f)
                                     {
                                         if (CO.co.Resource_Ammo.Value < 10) str += "\n<color=red> [NO AMMO]";
@@ -425,7 +409,7 @@ public class LOCALCO : NetworkBehaviour
                     switch (CurrentInteractionModule.GetInteractableType())
                     {
                         case Module.ModuleTypes.WEAPON:
-                            UsingWeapon.StopRpc();
+                            UsingWeapon.Stop();
                             break;
                     }
                 }

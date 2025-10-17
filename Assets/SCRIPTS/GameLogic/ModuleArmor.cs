@@ -17,7 +17,7 @@ public class ModuleArmor : Module
         CurArmor.Value = MaxArmor;
     }
 
-    private void Update()
+    protected override void Frame()
     {
         if (!IsServer) return;
         CurArmor.Value = Mathf.Clamp(CurArmor.Value + ArmorRegen * CO.co.GetWorldSpeedDelta(), 0, MaxArmor);

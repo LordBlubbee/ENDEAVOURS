@@ -159,7 +159,6 @@ public class SPACE : NetworkBehaviour
                     }
                     if (tryLocation)
                     {
-
                         mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
                         vec = WeaponModuleLocations[WeaponModules.Count];
                         WeaponModules.Add(mod);

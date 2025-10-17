@@ -70,7 +70,7 @@ public class Screen_GameUI : MonoBehaviour
             CommsMapButton.gameObject.SetActive(true);
             InventoryButton.gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.I)) UI.ui.SelectScreen(UI.ui.InventoryUI.gameObject);
-            if (Input.GetKeyDown(KeyCode.C)) OpenMissionScreen();
+            if (Input.GetKeyDown(KeyCode.U)) OpenMissionScreen();
         }
         if (ActiveUI.gameObject.activeSelf)
         {

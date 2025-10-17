@@ -6,6 +6,7 @@ using UnityEngine;
 public class ModuleWeapon : Module
 {
     [Header("References")]
+    public string WeaponName;
     public Transform Platform;
     public Transform FirePoint;
     public PROJ FireProjectile;
@@ -30,6 +31,14 @@ public class ModuleWeapon : Module
     [NonSerialized] public NetworkVariable<float> CurCooldown = new();
     [NonSerialized] public NetworkVariable<int> LoadedAmmo = new();
     [NonSerialized] public NetworkVariable<bool> ReloadingCurrently = new();
+    [NonSerialized] public NetworkVariable<bool> AutofireActive = new(true);
+
+    [Rpc(SendTo.Server)]
+    public void SetAutofireRpc(bool bol)
+    {
+        AutofireActive.Value = bol;
+    }
+         
     public float GetAmmoRatio()
     {
         return (float)LoadedAmmo.Value / (float)MaxAmmo;
@@ -72,9 +81,7 @@ public class ModuleWeapon : Module
         CO_SPAWNER.co.SpawnWordsRpc("RELOADING...",transform.position);
         StartCoroutine(AttackReloadAmmo());
     }
-
-
-    private void Update()
+    protected override void Frame()
     {
         if (!IsServer) return;
         if (isUsing) Fire(ShootTowards);
@@ -116,6 +123,7 @@ public class ModuleWeapon : Module
     private void Fire(Vector3 mouse)
     {
         if (!canFire) return;
+        if (LoadedAmmo.Value < 1) return;
         StartCoroutine(FireSequence(mouse));
     }
     IEnumerator FireSequence(Vector3 mouse)
@@ -190,18 +198,12 @@ public class ModuleWeapon : Module
 
     private Vector3 ShootTowards = Vector3.zero;
     private bool isUsing = false;
-    float UserGunneryMod = 1f;
-
-    [Rpc(SendTo.Server)]
-    public void UseRpc(Vector3 vec, float GUNNERY)
+    public void Use(Vector3 vec)
     {
         isUsing = true;
         ShootTowards = vec;
-        UserGunneryMod = GUNNERY;
     }
-
-    [Rpc(SendTo.Server)]
-    public void StopRpc()
+    public void Stop()
     {
         isUsing = false;
     }

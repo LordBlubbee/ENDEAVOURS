@@ -38,7 +38,6 @@ public class AI_UNIT : NetworkBehaviour
         EnemyTarget = crew;
         EnemyTargetTimer = 5;
     }
-
     public Vector3 GetEnemyTargetPosition()
     {
         return EnemyTarget.transform.position;
@@ -257,7 +256,6 @@ public class AI_UNIT : NetworkBehaviour
     }
     private void AITick_Crew()
     {
-        InteractingModule = null;
         Module mod;
         CREW trt = GetClosestEnemy();
         Vector3 point;
@@ -331,23 +329,6 @@ public class AI_UNIT : NetworkBehaviour
                         Unit.UseItem1Rpc();
                         return;
                     }
-                    switch (mod.ModuleType)
-                    {
-                        case Module.ModuleTypes.NAVIGATION: //OLD
-                            if (InteractingModule != mod)
-                            {
-                                InteractingModule = mod;
-                                StartCoroutine(Interact_Navigation());
-                            }
-                            break;
-                        case Module.ModuleTypes.WEAPON:
-                            if (InteractingModule != mod)
-                            {
-                                InteractingModule = mod;
-                                StartCoroutine(Interact_Weapons());
-                            }
-                            break;
-                    }
                 }
                 return;
             }
@@ -370,38 +351,6 @@ public class AI_UNIT : NetworkBehaviour
         SetLookTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position, getSpace());
     }
 
-    Module InteractingModule;
-    IEnumerator Interact_Navigation()
-    {
-        while (InteractingModule != null && InteractingModule.ModuleType == Module.ModuleTypes.NAVIGATION)
-        {
-            CREW crew = GetClosestEnemyAnywhere();
-            if (crew != null)
-            {
-                InteractingModule.Space.Drifter.SetMoveInput((crew.transform.position - transform.position).normalized * -1, 0.6f + Unit.GetATT_COMMAND() * 0.15f);
-                InteractingModule.Space.Drifter.SetLookTowards((crew.transform.position-transform.position).normalized * -1);
-            }
-            yield return null;
-        }
-    }
-    IEnumerator Interact_Weapons()
-    {
-        ModuleWeapon wep = InteractingModule as ModuleWeapon;
-        while (InteractingModule != null && InteractingModule.ModuleType == Module.ModuleTypes.WEAPON)
-        {
-            CREW crew = GetClosestEnemyAnywhere();
-            if (crew != null)
-            {
-                wep.SetLookTowards(crew.transform.position);
-                if (Mathf.Abs(wep.AngleBetweenPoints(crew.transform.position)) < 10)
-                {
-                    wep.UseRpc(Vector3.zero, 0.75f + Unit.GetATT_ALCHEMY() * 0.1f + Unit.GetATT_ARMS() * 0.02f);
-                }
-            }
-            yield return null;
-        }
-        wep.StopRpc();
-    }
     private void SwitchTacticsCrew()
     {
         ResetWeights();

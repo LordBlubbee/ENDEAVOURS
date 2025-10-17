@@ -6,6 +6,44 @@ using static CO;
 public class Module : NetworkBehaviour, iDamageable, iInteractable
 {
     // Damageable and Interactable Module
+    [NonSerialized] public NetworkVariable<Vector3> OrderPoint = new();
+    private Vector3 OrderPointLocal;
+    private Transform OrderTransform;
+    public Vector3 GetOrderPoint()
+    {
+        return OrderPoint.Value;
+    }
+
+    [Rpc(SendTo.Server)]
+    public void SetOrderPointRpc(Vector3 vec)
+    {
+        if (vec == Vector3.zero)
+        {
+            OrderTransform = null;
+            OrderPointLocal = Vector3.zero;
+            OrderPoint.Value = Vector3.zero;
+            return;
+        }
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(vec,0.1f))
+        {
+            if (col.GetComponent<CREW>() != null) {
+                OrderTransform = col.GetComponent<Transform>();
+                OrderPointLocal = OrderTransform.InverseTransformPoint(vec);
+                OrderPoint.Value = OrderTransform.TransformPoint(OrderPointLocal);
+                return;
+            }
+        }
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(vec, 0.1f))
+        {
+            if (col.GetComponent<SPACE>() != null)
+            {
+                OrderTransform = col.GetComponent<Transform>();
+                OrderPointLocal = OrderTransform.InverseTransformPoint(vec);
+                OrderPoint.Value = OrderTransform.TransformPoint(OrderPointLocal);
+                return;
+            }
+        }
+    }
 
     [Header("MAIN")]
     public string ModuleTag;
@@ -59,6 +97,18 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         }
         
         Init();
+    }
+    void Update()
+    {
+        if (IsServer)
+        {
+            if (OrderTransform != null) OrderPoint.Value = OrderTransform.TransformPoint(OrderPointLocal);
+        }
+        Frame();
+    }
+    protected virtual void Frame()
+    {
+
     }
 
     protected bool hasInitialized = false;

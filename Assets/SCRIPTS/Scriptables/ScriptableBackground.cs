@@ -17,7 +17,7 @@ public class ScriptableBackground : ScriptableObject
     [TextArea(5, 10)]
     public string LongDesc;
     public Color BackgroundColor;
-    [Header("PHYS, ARM, DEX, COM, HAR, ENG, GUN, MED")]
+    [Header("PHYS, ARM, DEX, COM, CMD, ENG, ALC, MED")]
     public int[] Background_ATT_BONUS = new int[8];
     public ScriptableEquippableWeapon Background_StartingWeapon;
     public List<FactionReputation> Background_ReputationEffect;

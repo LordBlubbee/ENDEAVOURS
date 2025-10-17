@@ -249,10 +249,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  ModuleTag: 
   ModuleType: 1
   IconSprite: {fileID: 21300000, guid: aa1a4ba3835c1b54bb69868e67b7d2f3, type: 3}
   MaxHealth: 200
   HitboxRadius: 16
+  CenterPos: {fileID: 0}
+  WeaponName: HEAVY BALLISTA
   Platform: {fileID: 6031975965002184304}
   FirePoint: {fileID: 3676994766029858991}
   FireProjectile: {fileID: 8910635656682413825, guid: bcb2fb2362f019e4290db11af9a5f758, type: 3}
