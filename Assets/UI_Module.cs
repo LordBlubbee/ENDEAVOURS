@@ -103,7 +103,7 @@ public class UI_Module : MonoBehaviour
         Icon.color = new Color(1f - wep.GetHealthRelative(), wep.GetHealthRelative(), 0);
         Button1.SetActive(true);
         if (wep.AutofireActive.Value) Button1Tex.text = "<color=yellow>AUTO ON";
-        else Button1Tex.text = "<color=gray>AUTO OFF";
+        else Button1Tex.text = "<color=#888888>AUTO OFF";
         Button2.SetActive(false);
 
         MainTex.text = $"{GetUseNumber()}{wep.WeaponName}";

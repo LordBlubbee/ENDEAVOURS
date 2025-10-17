@@ -173,6 +173,10 @@ public class AI_UNIT : NetworkBehaviour
             }
             if (AI_IsMoving)
             {
+                if (Dist(GetAI_MoveTarget()) < 0.2f) AI_IsMoving = false;
+            }
+            if (AI_IsMoving)
+            {
                 if (getSpace())
                 {
                     if (!HasLineOfSight(GetAI_MoveTarget()) && getSpace().IsOnGrid(GetAI_MoveTarget()))
