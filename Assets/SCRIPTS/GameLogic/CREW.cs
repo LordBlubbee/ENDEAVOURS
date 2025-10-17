@@ -25,6 +25,14 @@ public class CREW : NetworkBehaviour, iDamageable
 
     [NonSerialized] public NetworkVariable<int> PlayerController = new(); //0 = No Player Controller
     public int Faction = 0;
+    public bool IsPlayer()
+    {
+        return PlayerController.Value > 0;
+    }
+    public int GetPlayerController()
+    {
+        return PlayerController.Value;
+    }
 
     [Header("STATS")]
     public float MaxHealth = 100f;

@@ -13,6 +13,10 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     public List<ScriptableEquippableModule> StartingModules;
     public List<CREW> StartingCrew;
 
+    [NonSerialized] public Vector3 MoveTowardsPoint;
+    [NonSerialized] public Vector3 CurrentLocationPoint;
+    [NonSerialized] public Vector3 CurrentTurbulence;
+
     [NonSerialized] public Module EngineModule;
     [NonSerialized] public Module NavModule;
 
@@ -27,7 +31,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 
     private NetworkVariable<Vector3> CurrentMovement = new();
     private NetworkVariable<float> CurrentRotation = new();
-
+    [NonSerialized] public NetworkVariable<bool> IsMainDrifter = new();
     private NetworkVariable<float> CurHealth = new();
 
     private void Start()

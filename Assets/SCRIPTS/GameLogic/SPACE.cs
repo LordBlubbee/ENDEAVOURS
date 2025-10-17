@@ -317,6 +317,8 @@ public class SPACE : NetworkBehaviour
         crew.SpaceID.Value = SpaceID.Value;
         crew.transform.SetParent(transform);
         crew.transform.localPosition = new Vector3(crew.transform.localPosition.x, crew.transform.localPosition.y, -0.5f);
+
+
     }
     public void RemoveCrew(CREW crew)
     {

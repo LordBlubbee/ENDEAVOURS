@@ -8,6 +8,10 @@ using UnityEngine;
 public class AI_GROUP : MonoBehaviour
 {
     private List<AI_UNIT> Units = new();
+    public List<AI_UNIT> GetUnits()
+    {
+        return Units;
+    }
 
     private List<ModuleWeapon> WeaponModules = new();
     public AI_TYPES AI_Type { get; private set; }

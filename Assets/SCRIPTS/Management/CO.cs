@@ -35,6 +35,10 @@ public class CO : NetworkBehaviour
     {
         return GetMapPoint(PlayerMapPointID.Value);
     }
+    public SPACE GetPlayerSpace()
+    {
+        return PlayerMainDrifter.Space;
+    }
 
     [NonSerialized] public NetworkVariable<int> Resource_Materials = new();
     [NonSerialized] public NetworkVariable<int> Resource_Supplies = new();
@@ -189,7 +193,9 @@ public class CO : NetworkBehaviour
 
     void HandleRelativity() //Gravity
     {
-        List<Transform> Trans = new();
+        /* OLD
+         * 
+         * List<Transform> Trans = new();
         foreach (CREW ob in GetAllCrews())
         {
             if (ob.Space == null) Trans.Add(ob.transform);
@@ -244,8 +250,7 @@ public class CO : NetworkBehaviour
 
             // Apply pull
             trans.position += dir * pullFactor * GetWorldSpeedDelta();
-        }
-
+        }*/
     }
 
     IEnumerator Travel(MapPoint destination)
@@ -545,6 +550,7 @@ public class CO : NetworkBehaviour
         RegisteredCREW.Remove(crew);
     }
 
+    int RegisteredDrifters = 0;
     List<DRIFTER> RegisteredDRIFTER = new();
     public List<DRIFTER> GetAllDrifters()
     {
@@ -554,6 +560,7 @@ public class CO : NetworkBehaviour
     {
         if (RegisteredDRIFTER.Contains(drifter)) return;
         RegisteredDRIFTER.Add(drifter);
+        if (drifter.IsMainDrifter.Value) PlayerMainDrifter = drifter;
     }
 
     public void UnregisterDrifter(DRIFTER drifter)
