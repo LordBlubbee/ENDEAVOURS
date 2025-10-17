@@ -24,7 +24,7 @@ public class CREW : NetworkBehaviour, iDamageable
     private float NextDashCost = 30;
 
     [NonSerialized] public NetworkVariable<int> PlayerController = new(); //0 = No Player Controller
-    public int Faction = 0;
+    [NonSerialized] public NetworkVariable<int> Faction = new();
     public bool IsPlayer()
     {
         return PlayerController.Value > 0;
@@ -721,7 +721,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public bool IsTargetEnemy(int targetFac)
     {
-        return targetFac != Faction && targetFac != 0;
+        return targetFac != GetFaction() && targetFac != 0;
     }
     public bool IsEnemyInFront(float dis)
     {
@@ -777,7 +777,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     private bool Melee(iDamageable crew, Vector3 checkHit, float dmg)
     {
-        if (crew.GetFaction() == Faction) return false;
+        if (crew.GetFaction() == GetFaction()) return false;
         if (!crew.CanBeTargeted(Space)) return false;
         dmg *= AnimationController.CurrentStrikePower();
         dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE() + 0.02f * GetATT_COMMAND();
@@ -798,7 +798,7 @@ public class CREW : NetworkBehaviour, iDamageable
         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
         dmg *= AnimationController.CurrentStrikePower();
         dmg *= 0.7f + 0.1f * GetATT_ARMS();
-        proj.Init(dmg, Faction, Space, trt);
+        proj.Init(dmg, GetFaction(), Space, trt);
         proj.CrewOwner = this;
         proj.NetworkObject.Spawn();
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
@@ -842,7 +842,7 @@ public class CREW : NetworkBehaviour, iDamageable
                     //if (crew.GetFaction() != Faction) return;
                     if (crew == this) continue;
                     if (crew.Space != Space) continue;
-                    if (crew.GetFaction() != Faction) continue;
+                    if (crew.GetFaction() != GetFaction()) continue;
                     if (crew is Module) continue;
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
@@ -985,9 +985,13 @@ public class CREW : NetworkBehaviour, iDamageable
         if (LOCALCO.local.GetPlayer() != this) return;
         UI.ui.MainGameplayUI.EquipWeaponUI(ID);
     }
+
+    int CurrentToolID = -9;
     public void EquipTool(TOOL tol, int ID)
     {
         //Works on Server
+        if (CurrentToolID == ID) return;
+        CurrentToolID = ID;
         EquipToolLocallyRpc(ID); //Send to Clients
     }
 
@@ -1020,15 +1024,21 @@ public class CREW : NetworkBehaviour, iDamageable
             Init();
             return;
         }
+      
+        if (tol == null)
+        {
+            if (EquippedToolObject)
+            {
+                Destroy(EquippedToolObject.gameObject);
+            }
+            EquippedToolObject = null;
+            return;
+        }
         if (EquippedToolObject)
         {
             Destroy(EquippedToolObject.gameObject);
         }
-        if (tol == null)
-        {
-            EquippedToolObject = null;
-            return;
-        }
+
         EquippedToolObject = Instantiate(tol, transform);
         EquippedToolObject.Init(this);
         EquippedToolObject.transform.localPosition = new Vector3(EquippedToolObject.localX, EquippedToolObject.localY, -0.0002f);
@@ -1124,6 +1134,7 @@ public class CREW : NetworkBehaviour, iDamageable
         EquippedWeapons[slot] = wep;
         if (IsServer)
         {
+            CurrentToolID = -9;
             if (wep == null)
             {
                 EquipWeaponLocallyRpc(slot, ""); 
@@ -1140,12 +1151,14 @@ public class CREW : NetworkBehaviour, iDamageable
     public void EquipWeaponLocallyRpc(int slot, string wep)
     {
         if (IsServer) return;
+        CurrentToolID = -9;
         if (wep == null) EquipWeapon(slot, null);
         else EquipWeapon(slot, Resources.Load<ScriptableEquippableWeapon>(wep));
     }
     [Rpc(SendTo.Server)]
     public void EquipWeaponRpc(int slot, string wep)
     {
+        CurrentToolID = -9;
         if (wep == null) EquipWeapon(slot, null);
         EquipWeapon(slot, Resources.Load<ScriptableEquippableWeapon>(wep));
     }
@@ -1256,7 +1269,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public int GetFaction()
     {
-        return Faction;
+        return Faction.Value;
     }
     public bool CanBeTargeted(SPACE space)
     {

@@ -29,6 +29,8 @@ public class PROJ : NetworkBehaviour
 
     [NonSerialized] public CREW CrewOwner;
 
+    private float Expire = 10;
+
     protected List<GameObject> Damageables = new();
 
     protected bool isActive = true;
@@ -61,6 +63,12 @@ public class PROJ : NetworkBehaviour
     {
         if (!IsServer) return;
         if (!isActive) return;
+        Expire -= CO.co.GetWorldSpeedDeltaFixed();
+        if (Expire < 0)
+        {
+            Kill();
+            return;
+        }
         float step = ProjectileSpeed * CO.co.GetWorldSpeedDeltaFixed();
         transform.position += step * getLookVector();
         if (MaximumRange > 0)
@@ -90,7 +98,7 @@ public class PROJ : NetworkBehaviour
                         PotentialHitTarget(collision.gameObject);
                     }
                 }
-                BulletImpact();
+                AltitudeRemaining = 999;
             }
         } else
         {

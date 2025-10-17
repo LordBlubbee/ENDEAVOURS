@@ -148,6 +148,10 @@ public class AI_GROUP : MonoBehaviour
         {
             if (mod.GetHealthRelative() < 1) ManModules.Add(mod);
         }
+        foreach (ModuleWeapon mod in HomeDrifter.Space.WeaponModules)
+        {
+            if (mod.EligibleForReload()) ManModules.Add(mod);
+        }
         List<CREW> Intruders = new List<CREW>(EnemiesInSpace(HomeDrifter.Space));
         Vector3 PointOfInterest;
         while (UsableUnits.Count > 0)
@@ -189,7 +193,7 @@ public class AI_GROUP : MonoBehaviour
                 wep.Stop();
                 continue;
             }
-            if (wep.AutofireActive.Value)
+            if (wep.AutofireActive.Value || HomeDrifter != CO.co.PlayerMainDrifter)
             {
                 CREW trt = GetClosestEnemyAnywhere(wep.transform.position);
                 if (trt != null)
@@ -204,6 +208,7 @@ public class AI_GROUP : MonoBehaviour
                     continue;
                 }
             }
+            wep.Stop();
         }
     }
     private void SwarmAI()
@@ -313,7 +318,7 @@ public class AI_GROUP : MonoBehaviour
         foreach (var crew in CrewInSpace(space))
         {
             if (crew.isDead()) continue;
-            if (crew.Faction != Faction && crew.Faction != 0) enemies.Add(crew);
+            if (crew.GetFaction() != Faction && crew.GetFaction() != 0) enemies.Add(crew);
         }
         return enemies;
     }
@@ -342,7 +347,8 @@ public class AI_GROUP : MonoBehaviour
         Vector3 myPos = vec;
         foreach (var enemy in enemies)
         {
-            if (enemy.Faction == 0 || enemy.Faction == Faction) continue;
+            if (enemy.GetFaction() == 0 || enemy.GetFaction() == Faction) continue;
+            if (enemy.isDead()) continue;
             float dist = (enemy.getPos() - myPos).sqrMagnitude;
             if (dist < minDist)
             {

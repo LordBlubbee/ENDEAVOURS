@@ -31,10 +31,10 @@ public class UI_Module : MonoBehaviour
     public void SetModuleMarker(UI_OrderMarker Mark)
     {
         OrderMarker = Mark;
+        OrderMarker.SetNumber(GetUseNumber());
     }
 
     int NumID = -1;
-
     private string GetUseNumber()
     {
         switch (NumID)

@@ -188,11 +188,64 @@ public class CO : NetworkBehaviour
     private void FixedUpdate()
     {
         if (!IsServer) return;
-        HandleRelativity();
+        HandleGravity();
     }
-
-    void HandleRelativity() //Gravity
+    public Vector3 GetLookVectorWithRandomSpread(Vector3 originalLook, float maxAngle = 20f)
     {
+        // Pick a random angle between -maxAngle and +maxAngle
+        float randomAngle = UnityEngine.Random.Range(-maxAngle, maxAngle);
+
+        // Rotate the vector around the Y-axis (assuming 3D horizontal look)
+        Quaternion rotation = Quaternion.AngleAxis(randomAngle, Vector3.forward);
+
+        // Return the rotated direction
+        return rotation * originalLook;
+    }
+    public Vector3 RotatePointWithLookVectors(Vector3 pointA, Vector3 pointB, Vector3 oldLookVector, Vector3 newLookVector)
+    {
+        // Get A’s position relative to B
+        Vector3 relativePos = pointA - pointB;
+
+        // Compute the rotation needed to go from old look to new look
+        Quaternion rotation = Quaternion.FromToRotation(oldLookVector, newLookVector);
+
+        // Apply that rotation to the relative position
+        Vector3 rotatedRelative = rotation * relativePos;
+
+        // Return the new world position
+        return pointB + rotatedRelative;
+    }
+    void HandleGravity() //Gravity Relativity
+    {
+        if (PlayerMainDrifter == null) return;
+        Vector3 CurrentCenter = PlayerMainDrifter.CurrentLocationPoint;
+        Vector3 BackgroundSpeed = -PlayerMainDrifter.getLookVector() * PlayerMainDrifter.GetCurrentMovement();
+        float CurrentSpeed = 99f;
+        if (PlayerMainDrifter.GetRelativeSpeed() > 0.05f)
+        {
+            foreach (DRIFTER drift in GetAllDrifters())
+            {
+                CurrentSpeed = Mathf.Min(drift.GetCurrentMovement(), CurrentSpeed);
+                drift.CurrentPositionTimer -= CO.co.GetWorldSpeedDelta();
+                if (drift.CurrentPositionTimer < 0)
+                {
+                    drift.CurrentPositionTimer = UnityEngine.Random.Range(10f, 20f);
+                    if (PlayerMainDrifter == drift)
+                    {
+                        drift.CurrentLocationPoint = new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f));
+                        Vector3 newLookVector = GetLookVectorWithRandomSpread(drift.getLookVector(), 20f * drift.GetRelativeSpeed());
+                        drift.SetLookTowards(newLookVector);
+                        foreach (DRIFTER drift2 in GetAllDrifters())
+                        {
+                            drift2.SetLookTowards(drift.getLookVector());
+                            drift2.SetMoveTowards(RotatePointWithLookVectors(drift2.CurrentLocationPoint, drift.CurrentLocationPoint, drift.getLookVector(), newLookVector));
+                        }
+                    }
+                    else drift.SetMoveTowards(CurrentCenter + (drift.CurrentLocationPoint - CurrentCenter).normalized * UnityEngine.Random.Range(60f, 180f) + new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f)));
+                }
+            }
+        }
+       
         /* OLD
          * 
          * List<Transform> Trans = new();
@@ -687,6 +740,15 @@ public class CO : NetworkBehaviour
         return Death;
     }
 
+    public float GetCommanderExperienceFactor()
+    {
+        float ExperienceMod = 1f;
+        foreach (CREW crew in GetAlliedCrew())
+        {
+            ExperienceMod = Mathf.Max(ExperienceMod, crew.GetATT_COMMAND() * 0.05f + 1f);
+        }
+        return ExperienceMod;
+    }
     private void ProcessLootTable(ScriptableLootTable table, float LootLevelMod)
     {
         List<LootItem> list = new List<LootItem>();
@@ -725,7 +787,7 @@ public class CO : NetworkBehaviour
             ChangeMaterials += Mathf.RoundToInt(item.Resource_Materials * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
             ChangeSupplies += Mathf.RoundToInt(item.Resource_Supplies * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
             ChangeTech += Mathf.RoundToInt(item.Resource_Technology * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
-            ChangeXP += Mathf.RoundToInt(item.Resource_XP * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
+            ChangeXP += Mathf.RoundToInt(item.Resource_XP * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod * GetCommanderExperienceFactor());
             if (item.ItemDrop)
             {
                 AddInventoryItem(item.ItemDrop);

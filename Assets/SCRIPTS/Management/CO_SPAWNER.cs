@@ -80,6 +80,7 @@ public class CO_SPAWNER : NetworkBehaviour
         DRIFTER driftPrefab = UI.ui.ShipSelectionUI.SpawnableShips[ID].Prefab;
         DRIFTER drifter = Instantiate(driftPrefab,Vector3.zero,Quaternion.identity);
         drifter.NetworkObject.Spawn();
+        drifter.Faction.Value = 1;
         drifter.Init();
         CO.co.PlayerMainDrifter = drifter;
 
@@ -90,11 +91,25 @@ public class CO_SPAWNER : NetworkBehaviour
 
         CO.co.StartGame();
     }
+    public void SpawnOtherShip(DRIFTER driftPrefab, Vector3 pos, int Faction = 2)
+    {
+        DRIFTER drifter = Instantiate(driftPrefab, pos, CO.co.PlayerMainDrifter.transform.rotation);
+        drifter.NetworkObject.Spawn();
+        drifter.Faction.Value = Faction;
+        drifter.Init();
 
+        foreach (CREW Prefab in drifter.StartingCrew)
+        {
+            SpawnUnitOnShip(Prefab, drifter);
+        }
+
+        CO.co.StartGame();
+    }
     public void SpawnUnitOnShip(CREW Prefab, DRIFTER drift)
     {
         CREW enem = Instantiate(Prefab, drift.Space.Bridge, Quaternion.identity);
         enem.NetworkObject.Spawn();
+        enem.Faction.Value = drift.GetFaction();
         enem.CharacterName.Value = Prefab.CharacterBackground.GetRandomName();
         Color col = Prefab.CharacterBackground.BackgroundColor;
         enem.CharacterNameColor.Value = new Vector3(col.r,col.g,col.b);
@@ -103,7 +118,7 @@ public class CO_SPAWNER : NetworkBehaviour
         drift.Interior.AddCrew(enem);
         drift.CrewGroup.Add(enem.GetComponent<AI_UNIT>());
     }
-    public void SpawnEnemyGroup(ScriptableEnemyGroup gr, float PowerLevelFactor)
+    public void SpawnEnemyGroup(ScriptableEnemyGroup gr, float PowerLevelFactor, int Faction = 2)
     {
         float Degrees = UnityEngine.Random.Range(0, 360);
         float Radius = gr.SpawnGroupRange;
@@ -129,6 +144,7 @@ public class CO_SPAWNER : NetworkBehaviour
             CREW enem = Instantiate(enemyType.SpawnCrew, tryPos, Quaternion.identity);
             WorthPoints -= enemyType.Worth;
             enem.NetworkObject.Spawn();
+            enem.Faction.Value = Faction;
             enem.transform.Rotate(Vector3.forward, Degrees + UnityEngine.Random.Range(-30f, 30f));
             enem.Init();
             members.Add(enem.GetComponent<AI_UNIT>());

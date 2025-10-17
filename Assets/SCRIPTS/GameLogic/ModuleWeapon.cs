@@ -81,6 +81,14 @@ public class ModuleWeapon : Module
         CO_SPAWNER.co.SpawnWordsRpc("RELOADING...",transform.position);
         StartCoroutine(AttackReloadAmmo());
     }
+
+    public bool EligibleForReload()
+    {
+        if (CO.co.Resource_Ammo.Value < 10) return false;
+        if (isDisabled) return false;
+        if (GetAmmo() > 0) return false;
+        return AutofireActive.Value || GetOrderPoint() != Vector3.zero;
+    }
     protected override void Frame()
     {
         if (!IsServer) return;

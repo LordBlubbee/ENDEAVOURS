@@ -29,7 +29,7 @@ public class DrifterCollider : MonoBehaviour
 
             Vector3 away = (Drifter.transform.position - col.transform.position).normalized;
 
-            Drifter.transform.position += away * (Drifter.GetCurrentMovement() + 0.5f) * CO.co.GetWorldSpeedDeltaFixed();
+            Drifter.transform.position += away * -Collider.Distance(col).distance * CO.co.GetWorldSpeedDeltaFixed();
         }
     }
 }   

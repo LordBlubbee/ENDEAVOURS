@@ -34,7 +34,7 @@ public class GamerTag : MonoBehaviour
     }
     private void Update()
     {
-        if (FollowObject == null || FollowObject.transform == null)
+        if (FollowObject == null)
         {
             Destroy(gameObject);
             return;

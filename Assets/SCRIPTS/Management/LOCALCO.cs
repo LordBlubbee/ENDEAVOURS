@@ -205,6 +205,7 @@ public class LOCALCO : NetworkBehaviour
         //SpawnPlayer Spawn Player
         CREW crew = Instantiate(CO_SPAWNER.co.PlayerPrefab, CO.co.PlayerMainDrifter.transform.TransformPoint(CO.co.PlayerMainDrifter.Interior.Bridge), Quaternion.identity);
         crew.NetworkObject.Spawn();
+        crew.Faction.Value = 1;
         Debug.Log($"We are player: {GetPlayerID()}");
         crew.PlayerController.Value = GetPlayerID();
         crew.CharacterName.Value = name;
@@ -443,6 +444,7 @@ public class LOCALCO : NetworkBehaviour
     {
         UI.ui.FadeFromBlack(2f);
         UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
-        LOCALCO.local.SetCameraToPlayer();
+        CurrentControlMode = ControlModes.NONE;
+        SetCameraToPlayer();
     }
 }

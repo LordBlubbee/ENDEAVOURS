@@ -269,10 +269,10 @@ public class AI_UNIT : NetworkBehaviour
             if (!EnemyTarget || EnemyTargetTimer < 0 || EnemyTarget.isDead())
             {
                 EnemyTarget = GetClosestVisibleEnemy();
+                EnemyTargetTimer = 7;
             }
             if (EnemyTarget)
             {
-                EnemyTargetTimer = 7;
 
                 if (AI_TacticTimer < 0) SwitchTacticsCrew();
 
@@ -313,6 +313,15 @@ public class AI_UNIT : NetworkBehaviour
                 return;
             }
             //We are not in combat
+
+            if (Unit.GetHealthRelative() < 1f)
+            {
+                StopMoving();
+                StopLooking();
+                Unit.EquipMedkitRpc();
+                Unit.UseItem2Rpc();
+                return;
+            }
             if (DistToObjective(transform.position) > 16)
             {
                 SetAIMoveTowards(GetObjectiveTarget(), ObjectiveSpace);
@@ -320,23 +329,38 @@ public class AI_UNIT : NetworkBehaviour
                 Unit.EquipWeapon1Rpc();
                 return;
             }
-            mod = GetClosestFriendlyModule(); 
-            if (DistToObjective(mod.transform.position) < 16)
+            mod = GetClosestFriendlyModule();
+            if (mod.GetHealthRelative() < 1)
             {
-                SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(),2f), mod.Space);
-                SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
-                if (Dist(mod.transform.position) < 4f)
+                if (DistToObjective(mod.transform.position) < 8)
                 {
-                    if (mod.GetHealthRelative() < 1)
+                    SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+                    SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
+                    if (Dist(mod.transform.position) < 4f)
                     {
                         Unit.EquipWrenchRpc();
                         Unit.UseItem1Rpc();
-                        return;
                     }
+                    return;
                 }
                 return;
             }
-
+            if (mod is ModuleWeapon)
+            {
+                if (((ModuleWeapon)mod).EligibleForReload())
+                {
+                    if (DistToObjective(mod.transform.position) < 8)
+                    {
+                        SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+                        SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
+                        if (Dist(mod.transform.position) < 4f)
+                        {
+                            ((ModuleWeapon)mod).ReloadAmmoRpc();
+                        }
+                        return;
+                    }
+                }
+            }
             return;
         }
         //We are in a hostile vessel
@@ -393,10 +417,10 @@ public class AI_UNIT : NetworkBehaviour
             if (!EnemyTarget || EnemyTargetTimer < 0 || EnemyTarget.isDead())
             {
                 EnemyTarget = GetClosestVisibleEnemy();
+                EnemyTargetTimer = 3;
             }
             if (EnemyTarget)
             {
-                EnemyTargetTimer = 3;
                 AttemptBoard(EnemyTarget.Space);
 
                 if (AI_TacticTimer < 0) SwitchTacticsLooncrab();
@@ -578,7 +602,7 @@ public class AI_UNIT : NetworkBehaviour
     }
     public bool isEnemy(CREW other)
     {
-        return Unit.Faction != other.Faction && other.Faction != 0;
+        return Unit.GetFaction() != other.GetFaction() && other.GetFaction() != 0;
     }
 
     /* UTILITIES */
@@ -724,7 +748,7 @@ public class AI_UNIT : NetworkBehaviour
         foreach (var enemy in enemies)
         {
             if (enemy == Unit) continue; // skip self
-            if (enemy.Faction == 0 || enemy.Faction == Unit.GetFaction()) continue;
+            if (enemy.GetFaction() == 0 || enemy.GetFaction() == Unit.GetFaction()) continue;
             float dist = (enemy.getPos() - myPos).sqrMagnitude;
             if (dist < minDist)
             {
@@ -838,6 +862,7 @@ public class AI_UNIT : NetworkBehaviour
     }
     public float DistToObjective(Vector3 vec)
     {
+        if (GetObjectiveTarget() == Vector3.zero) return 0f;
         return (GetObjectiveTarget() - vec).magnitude;
     }
     /// <summary>

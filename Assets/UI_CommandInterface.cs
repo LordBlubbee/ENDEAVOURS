@@ -60,7 +60,7 @@ public class UI_CommandInterface : MonoBehaviour
         while (true)
         {
             if (SelectedTab > -1) RefreshCommandInterface();
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
     private void Update()

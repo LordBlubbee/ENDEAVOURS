@@ -13,18 +13,26 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     public List<ScriptableEquippableModule> StartingModules;
     public List<CREW> StartingCrew;
 
-    [NonSerialized] public Vector3 MoveTowardsPoint;
+    private Vector3 MoveTowardsPoint;
+    public void SetMoveTowards(Vector3 point)
+    {
+        MoveTowardsPoint = point;
+    }
     [NonSerialized] public Vector3 CurrentLocationPoint;
     [NonSerialized] public Vector3 CurrentTurbulence;
+    [NonSerialized] public float CurrentPositionTimer;
 
     [NonSerialized] public Module EngineModule;
     [NonSerialized] public Module NavModule;
 
     public SpriteRenderer Spr;
-    public int Faction;
+    [NonSerialized] public NetworkVariable<int> Faction = new();
 
     [Header("STATS")]
+    public bool IsLoon;
     public float MaxHealth = 2500f;
+    public float RadiusX = 60f;
+    public float RadiusY = 45f;
     public float MovementSpeed = 5;
     public float AccelerationSpeedMod = 0.25f;
     public float RotationBaseSpeed = 30f;
@@ -138,7 +146,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     }
     void UpdateTurn()
     {
-        float ang = AngleToTurnTarget();
+        float ang = AngleToTurnTarget() + RotationTurbulence;
         if (EnginesDown())
         {
             ang = 0f;
@@ -166,6 +174,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         transform.Rotate(Vector3.forward,CurrentRotation.Value * CO.co.GetWorldSpeedDeltaFixed());
     }
 
+    private float RotationTurbulence = 0f;
     private void FixedUpdate()
     {
         if (!IsServer) return;
@@ -183,11 +192,25 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             CurrentMovement.Value += MoveInput * GetMovementAccel() * MovementSpeed * CO.co.GetWorldSpeedDeltaFixed();
             if (CurrentMovement.Value.magnitude > MovementSpeed) CurrentMovement.Value = CurrentMovement.Value.normalized * MovementSpeed;
         }
+        if (IsLoon)
+        {
+            float towardsang = Mathf.Abs(AngleTowards(CurrentMovement.Value));
+            float towardsfactor = 1.2f - Mathf.Clamp((towardsang - 60f) * 0.006f, 0, 0.4f); //The more you look in the correct direction, the faster you move!
+            transform.position += CurrentMovement.Value * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
+        } else
+        {
+            Vector3 Target = MoveTowardsPoint + CurrentTurbulence;
+            Vector3 Dir = (Target - transform.position).normalized;
+            float Dis = (Target - transform.position).magnitude;
+            transform.position += Dir * GetCurrentMovement() * Mathf.Min(0.2f * Dis,1f) * CO.co.GetWorldSpeedDeltaFixed();
+            if (Dis < 0.3f && GetCurrentMovement() > 0.5f)
+            {
+                float Turb = GetCurrentMovement();
+                CurrentTurbulence = new Vector3(UnityEngine.Random.Range(-Turb, Turb), UnityEngine.Random.Range(-Turb, Turb));
+                RotationTurbulence = UnityEngine.Random.Range(-Turb, Turb);
+            }
+        }
 
-        float towardsang = Mathf.Abs(AngleTowards(CurrentMovement.Value));
-        float towardsfactor = 1.2f - Mathf.Clamp((towardsang - 60f) * 0.006f, 0, 0.4f); //The more you look in the correct direction, the faster you move!
-        transform.position += CurrentMovement.Value * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
-        //Rigid.MovePosition(transform.position);
     }
 
 
@@ -313,7 +336,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     }
     public int GetFaction()
     {
-        return Faction;
+        return Faction.Value;
     }
     public bool CanBeTargeted(SPACE space)
     {

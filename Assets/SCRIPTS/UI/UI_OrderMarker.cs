@@ -1,11 +1,17 @@
+using TMPro;
 using UnityEngine;
 
 public class UI_OrderMarker : MonoBehaviour
 {
     public SpriteRenderer Spr;
     public Rotator Rotator;
+    public TextMeshPro Texto;
     float Scale = 1f;
 
+    public void SetNumber(string num)
+    {
+        Texto.text = num;
+    }
     public void SelectOrderMarker()
     {
         Spr.color = Color.green;
