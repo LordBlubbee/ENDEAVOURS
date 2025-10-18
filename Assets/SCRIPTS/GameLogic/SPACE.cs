@@ -140,7 +140,8 @@ public class SPACE : NetworkBehaviour
                         vec = CoreModuleLocations[CoreModules.Count];
                         CoreModules.Add(mod);
                         if (mod.ModuleType == Module.ModuleTypes.ENGINES) Drifter.EngineModule = mod;
-                        if (mod.ModuleType == Module.ModuleTypes.NAVIGATION) Drifter.NavModule = mod;
+                        else if (mod.ModuleType == Module.ModuleTypes.NAVIGATION) Drifter.NavModule = mod;
+                        else if (mod.ModuleType == Module.ModuleTypes.MEDICAL) Drifter.MedicalModule = mod;
                         break;
                     }
                 }

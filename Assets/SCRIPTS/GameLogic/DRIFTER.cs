@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TreeEditor;
+using Unity.Burst.Intrinsics;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -13,10 +14,9 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     public List<ScriptableEquippableModule> StartingModules;
     public List<CREW> StartingCrew;
 
-    private Vector3 MoveTowardsPoint;
     public void SetMoveTowards(Vector3 point)
     {
-        MoveTowardsPoint = point;
+        CurrentLocationPoint = point;
     }
     [NonSerialized] public Vector3 CurrentLocationPoint;
     [NonSerialized] public Vector3 CurrentTurbulence;
@@ -24,6 +24,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 
     [NonSerialized] public Module EngineModule;
     [NonSerialized] public Module NavModule;
+    [NonSerialized] public Module MedicalModule;
 
     public SpriteRenderer Spr;
     [NonSerialized] public NetworkVariable<int> Faction = new();
@@ -89,25 +90,29 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     }
 
     [Rpc(SendTo.Server)]
-    public void SetMoveInputRpc(Vector3 mov, float eff)
+    public void SetMoveInputRpc(Vector3 mov)
     {
-        SetMoveInput(mov, eff);
+        SetMoveInput(mov);
     }
     [Rpc(SendTo.Server)]
     public void SetLookTowardsRpc(Vector2 mov)
     {
         SetLookTowards(mov);
     }
-    public void SetMoveInput(Vector3 mov, float eff)
+    public void SetMoveInput(Vector3 mov)
     {
         if (!canReceiveInput) return;
         MoveInput = mov;
-        PilotingEfficiency = eff;
     }
     public void SetLookTowards(Vector3 mov)
     {
         if (!canReceiveInput) return;
         LookTowards = (mov-transform.position).normalized;
+    }
+    public void SetLookDirection(Vector3 mov)
+    {
+        if (!canReceiveInput) return;
+        LookTowards = mov;
     }
 
     public float GetRotation()
@@ -147,10 +152,10 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     void UpdateTurn()
     {
         float ang = AngleToTurnTarget() + RotationTurbulence;
-        if (EnginesDown())
+        /*if (EnginesDown())
         {
             ang = 0f;
-        }
+        }*/
         float rotGoal = 0f;
         float accelSpeed = GetRotation() * 0.5f;
         if (ang > 1f)
@@ -181,7 +186,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         
         UpdateTurn();
 
-        if (MoveInput == Vector3.zero || EnginesDown())
+        if (MoveInput == Vector3.zero) // || EnginesDown()
         {
             bool XPOS = CurrentMovement.Value.x > 0;
             bool YPOS = CurrentMovement.Value.y > 0;
@@ -199,7 +204,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             transform.position += CurrentMovement.Value * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
         } else
         {
-            Vector3 Target = MoveTowardsPoint + CurrentTurbulence;
+            Vector3 Target = CurrentLocationPoint + CurrentTurbulence;
             Vector3 Dir = (Target - transform.position).normalized;
             float Dis = (Target - transform.position).magnitude;
             transform.position += Dir * GetCurrentMovement() * Mathf.Min(0.2f * Dis,1f) * CO.co.GetWorldSpeedDeltaFixed();
@@ -274,21 +279,31 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         float Damage = fl.AttackDamage;
         float AbsorbableDamage = fl.AttackDamage * fl.ArmorAbsorptionModifier;
         Damage -= AbsorbableDamage;
-        foreach (Module mod in Interior.GetModules())
+        ModuleArmor ClosestArmor = null;
+        float MaxDis = 9999f;
+        foreach (Module mod in Interior.SystemModules)
         {
             float Dist = (mod.transform.position - ImpactArea).magnitude;
-            if (mod is ModuleArmor && !mod.IsDisabled())
+            if (mod is ModuleArmor)
             {
                 ModuleArmor arm = (ModuleArmor)mod;
-                if (Dist < arm.ArmorAuraSize)
+                if (Dist < MaxDis)
                 {
-                    AbsorbableDamage *= fl.ArmorDamageModifier; //Say, we deal 80 damage with +50% modifier = 120
-                    float DamageNeeded = Mathf.Min(arm.CurArmor.Value,AbsorbableDamage); //Say, we need only 80 damage
-                    arm.TakeArmorDamage(AbsorbableDamage, ImpactArea);
-                    AbsorbableDamage -= DamageNeeded; //We have 40 damage left
-                    AbsorbableDamage /= fl.ArmorDamageModifier; //27 damage is returned to main damage mod
-                    break;
+                    ClosestArmor = arm;
+                    MaxDis = Dist;
                 }
+            }
+        }
+        if (ClosestArmor)
+        {
+            if (!ClosestArmor.IsDisabled())
+            {
+
+                AbsorbableDamage *= fl.ArmorDamageModifier; //Say, we deal 80 damage with +50% modifier = 120
+                float DamageNeeded = Mathf.Min(ClosestArmor.CurArmor.Value, AbsorbableDamage); //Say, we need only 80 damage
+                ClosestArmor.TakeArmorDamage(AbsorbableDamage, ImpactArea);
+                AbsorbableDamage -= DamageNeeded; //We have 40 damage left
+                AbsorbableDamage /= fl.ArmorDamageModifier; //27 damage is returned to main damage mod
             }
         }
         Damage += AbsorbableDamage;
@@ -306,7 +321,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             float Dist = (mod.transform.position - ImpactArea).magnitude;
             if (Dist < 4f)
             {
-                mod.TakeDamage(Damage * fl.CrewDamageSplash, ImpactArea);
+                mod.TakeDamage(Damage * fl.CrewDamageModifier, ImpactArea);
             }
         }
     }
@@ -314,21 +329,31 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         float AbsorbableDamage = Damage;
         Damage -= AbsorbableDamage;
-        foreach (Module mod in Interior.GetModules())
+        ModuleArmor ClosestArmor = null;
+        float MaxDis = 9999f;
+        foreach (Module mod in Interior.SystemModules)
         {
             float Dist = (mod.transform.position - ImpactArea).magnitude;
-            if (mod is ModuleArmor && !mod.IsDisabled())
+            if (mod is ModuleArmor)
             {
                 ModuleArmor arm = (ModuleArmor)mod;
-                if (Dist < arm.ArmorAuraSize)
+                if (Dist < MaxDis)
                 {
-                    AbsorbableDamage *= 0.5f; //Say, we deal 80 damage with +50% modifier = 120
-                    float DamageNeeded = Mathf.Min(arm.CurArmor.Value, AbsorbableDamage); //Say, we need only 80 damage
-                    arm.TakeArmorDamage(AbsorbableDamage, ImpactArea);
-                    AbsorbableDamage -= DamageNeeded; //We have 40 damage left
-                    AbsorbableDamage /= 0.5f; //27 damage is returned to main damage mod
-                    break;
+                    ClosestArmor = arm;
+                    MaxDis = Dist;
                 }
+            }
+        }
+        if (ClosestArmor)
+        {
+            if (!ClosestArmor.IsDisabled())
+            {
+
+                AbsorbableDamage *= 1f; //Say, we deal 80 damage with +50% modifier = 120
+                float DamageNeeded = Mathf.Min(ClosestArmor.CurArmor.Value, AbsorbableDamage); //Say, we need only 80 damage
+                ClosestArmor.TakeArmorDamage(AbsorbableDamage, ImpactArea);
+                AbsorbableDamage -= DamageNeeded; //We have 40 damage left
+                AbsorbableDamage /= 1f; //27 damage is returned to main damage mod
             }
         }
         Damage += AbsorbableDamage;
@@ -357,6 +382,11 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     public float GetHealthRelative()
     {
         return GetHealth() / GetMaxHealth();
+    }
+    public void DespawnAndUnregister()
+    {
+        CO.co.UnregisterDrifter(this);
+        NetworkObject.Despawn();
     }
 }
 public class DrifterModule

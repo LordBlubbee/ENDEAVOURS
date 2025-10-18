@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Nav
   ItemDesc: N/A
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: 21300000, guid: 40e74035ea3ce8643843327a94785e44, type: 3}
   ItemResourceID: OBJ/SCRIPTABLES/DRIFTER/Core2_Nav
   PrefabModule: {fileID: 6313021248617021957, guid: 444c5c76f86db5c4a8b595cabd2ca5d4, type: 3}
   EquipType: 0

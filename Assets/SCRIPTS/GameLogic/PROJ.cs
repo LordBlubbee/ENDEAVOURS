@@ -84,19 +84,10 @@ public class PROJ : NetworkBehaviour
             AltitudeRemaining -= step;
             if (AltitudeRemaining < 0f)
             {
-                if (CrewDamageSplash > 0f)
+                Collider2D[] cols = Physics2D.OverlapCircleAll(Tip.position, CrewDamageSplash);
+                foreach (Collider2D collision in cols)
                 {
-                    Collider2D[] cols = Physics2D.OverlapCircleAll(Tip.position, CrewDamageSplash);
-                    foreach (Collider2D collision in cols)
-                    {
-                        if (!collision.GetComponent<DRIFTER>()) continue;
-                        PotentialHitTarget(collision.gameObject);
-                    }
-                    if (!isActive) return;
-                    foreach (Collider2D collision in cols)
-                    {
-                        PotentialHitTarget(collision.gameObject);
-                    }
+                    PotentialHitTarget(collision.gameObject);
                 }
                 AltitudeRemaining = 999;
             }
@@ -155,35 +146,37 @@ public class PROJ : NetworkBehaviour
                 }
                 return;
             }
-        }
-        BlockAttacks Blocker = GetComponent<BlockAttacks>();
-        if (Blocker != null)
-        {
-            Debug.Log("Hitting blocker!");
-            if (Damageables.Contains(Blocker.gameObject)) return;
-            Damageables.Add(Blocker.gameObject);
-            bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChance;
-            if (isBlocked)
+            BlockAttacks Blocker = collision.GetComponent<BlockAttacks>();
+            if (Blocker != null)
             {
-                Debug.Log("Blocked");
-                if (Blocker.ReduceDamageMod < 1f)
+                if (Damageables.Contains(Blocker.gameObject)) return;
+                Damageables.Add(Blocker.gameObject);
+                bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChance;
+                if (isBlocked)
                 {
-                    Debug.Log("Still deal damage");
-                    AttackDamage *= (1f - Blocker.ReduceDamageMod);
-                    PotentialHitTarget(Blocker.tool.GetCrew().gameObject);
-                }
-                if (StickToWalls)
-                {
-                    isActive = false;
-                    transform.SetParent(collision.transform);
-                    ExpireSlowlyRpc();
-                }
-                else
-                {
-                    BulletImpact();
+                    if (Blocker.ReduceDamageMod < 1f)
+                    {
+                        AttackDamage *= (1f - Blocker.ReduceDamageMod);
+                        PotentialHitTarget(Blocker.tool.GetCrew().gameObject);
+                    }
+                    else
+                    {
+                        CO_SPAWNER.co.SpawnWordsRpc("BLOCKED", transform.position);
+                    }
+                    if (StickToWalls)
+                    {
+                        isActive = false;
+                        transform.SetParent(collision.transform);
+                        ExpireSlowlyRpc();
+                    }
+                    else
+                    {
+                        BulletImpact();
+                    }
                 }
             }
         }
+        
     }
 
     [Rpc(SendTo.ClientsAndHost)]

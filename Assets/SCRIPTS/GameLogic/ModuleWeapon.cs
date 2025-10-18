@@ -38,7 +38,10 @@ public class ModuleWeapon : Module
     {
         AutofireActive.Value = bol;
     }
-         
+    public bool IsCooldown()
+    {
+        return canFire;
+    }
     public float GetAmmoRatio()
     {
         return (float)LoadedAmmo.Value / (float)MaxAmmo;
@@ -75,16 +78,19 @@ public class ModuleWeapon : Module
     [Rpc(SendTo.Server)]
     public void ReloadAmmoRpc()
     {
-        if (CO.co.Resource_Ammo.Value < 10) return;
         if (ReloadingCurrently.Value) return;
-        CO.co.Resource_Ammo.Value -= 10;
+        if (GetFaction() == 1)
+        {
+            if (CO.co.Resource_Ammo.Value < 10) return;
+            CO.co.Resource_Ammo.Value -= 10;
+        }
         CO_SPAWNER.co.SpawnWordsRpc("RELOADING...",transform.position);
         StartCoroutine(AttackReloadAmmo());
     }
 
     public bool EligibleForReload()
     {
-        if (CO.co.Resource_Ammo.Value < 10) return false;
+        if (CO.co.Resource_Ammo.Value < 10 && GetFaction() == 1) return false;
         if (isDisabled) return false;
         if (GetAmmo() > 0) return false;
         return AutofireActive.Value || GetOrderPoint() != Vector3.zero;
@@ -97,6 +103,7 @@ public class ModuleWeapon : Module
     private void FixedUpdate()
     {
         if (!IsServer) return;
+        if (IsDisabled()) return;
         if (isLooking)
         {
             float ang = AngleToTurnTarget();
@@ -132,6 +139,7 @@ public class ModuleWeapon : Module
     {
         if (!canFire) return;
         if (LoadedAmmo.Value < 1) return;
+        if (IsDisabled()) return;
         StartCoroutine(FireSequence(mouse));
     }
     IEnumerator FireSequence(Vector3 mouse)

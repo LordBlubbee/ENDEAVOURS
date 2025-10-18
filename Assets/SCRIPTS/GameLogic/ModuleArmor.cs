@@ -6,7 +6,6 @@ public class ModuleArmor : Module
 {
     public float MaxArmor = 100;
     public float ArmorRegen = 10;
-    public float ArmorAuraSize = 40;
     [NonSerialized] public NetworkVariable<float> CurArmor = new();
     public override void Init()
     {
@@ -20,6 +19,10 @@ public class ModuleArmor : Module
     protected override void Frame()
     {
         if (!IsServer) return;
+        if (IsDisabled())
+        {
+            CurArmor.Value = 0;
+        }
         CurArmor.Value = Mathf.Clamp(CurArmor.Value + ArmorRegen * CO.co.GetWorldSpeedDelta(), 0, MaxArmor);
     }
     public void TakeArmorDamage(float fl, Vector3 impact)

@@ -20,6 +20,9 @@ public class ScriptableBackground : ScriptableObject
     [Header("PHYS, ARM, DEX, COM, CMD, ENG, ALC, MED")]
     public int[] Background_ATT_BONUS = new int[8];
     public ScriptableEquippableWeapon Background_StartingWeapon;
+    public ScriptableEquippableWeapon Background_StartingWeapon2;
+    public ScriptableEquippableWeapon Background_StartingArtifact;
+    public ScriptableEquippableWeapon Background_StartingArmor;
     public List<FactionReputation> Background_ReputationEffect;
     public enum NameCategories
     {

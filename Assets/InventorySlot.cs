@@ -11,7 +11,7 @@ public class InventorySlot : MonoBehaviour
     public Image InnerIconImage;
     public Image ImageBorder;
     public EquipStates DefaultEquipState;
-    ScriptableEquippable EquipItem = null;
+    protected ScriptableEquippable EquipItem = null;
 
     public ScriptableEquippable GetEquippedItem()
     {

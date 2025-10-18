@@ -25,6 +25,7 @@ public class CREW : NetworkBehaviour, iDamageable
 
     [NonSerialized] public NetworkVariable<int> PlayerController = new(); //0 = No Player Controller
     [NonSerialized] public NetworkVariable<int> Faction = new();
+    [NonSerialized] public NetworkVariable<float> BleedingTime = new();
     public bool IsPlayer()
     {
         return PlayerController.Value > 0;
@@ -256,10 +257,15 @@ public class CREW : NetworkBehaviour, iDamageable
     private NetworkVariable<float> CurGrappleCooldown = new();
 
     private NetworkVariable<bool> Alive = new();
+    private NetworkVariable<bool> DeadForever = new();
 
     public bool isDead()
     {
         return !Alive.Value;
+    }
+    public bool isDeadForever()
+    {
+        return DeadForever.Value;
     }
     public bool CanFunction()
     {
@@ -669,6 +675,15 @@ public class CREW : NetworkBehaviour, iDamageable
         if (UseItem1_Input) UseItem1();
         if (UseItem2_Input) UseItem2();
 
+        if (isDead() && !isDeadForever())
+        {
+            BleedingTime.Value-= CO.co.GetWorldSpeedDelta();
+            if (BleedingTime.Value < 0)
+            {
+                DeadForever.Value = true;
+            }
+        }
+
         DamageHealingUpdate();
     }
     private void StrikeUpdate()
@@ -684,22 +699,18 @@ public class CREW : NetworkBehaviour, iDamageable
                     StrikeMelee();
                     break;
                 case TOOL.ToolActionType.RANGED_ATTACK:
-
                     if (!canStrike) return;
                     StrikeRanged(LookTowards);
                     break;
                 case TOOL.ToolActionType.REPAIR:
-
                     if (!canStrikeMelee) return;
                     StrikeRepair();
                     break;
                 case TOOL.ToolActionType.HEAL_OTHERS:
-
                     if (!canStrikeMelee) return;
                     StrikeHealOthers();
                     break;
                 case TOOL.ToolActionType.HEAL_SELF:
-
                     if (!canStrikeMelee) return;
                     StrikeHealSelf();
                     break;
@@ -753,21 +764,20 @@ public class CREW : NetworkBehaviour, iDamageable
                 BlockAttacks Blocker = col.GetComponent<BlockAttacks>();
                 if (Blocker != null)
                 {
-                    Debug.Log("Melee on Blocker?");
                     if (MeleeHits.Contains(Blocker.gameObject)) continue;
                     if (!IsTargetEnemy(Blocker.tool.GetCrew().GetFaction())) continue;
                     if (!Blocker.tool.GetCrew().CanBeTargeted(Space)) continue;
-                    Debug.Log("Melee on Blocker!!");
                     MeleeHits.Add(Blocker.gameObject);
                     bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChance;
                     if (isBlocked)
                     {
-                        Debug.Log("Blocked!");
                         if (Blocker.ReduceDamageMod < 1f)
                         {
-                            Debug.Log("Damage still done!");
                             float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                             Melee(Blocker.tool.GetCrew(), checkHit, dmg * (1f-Blocker.ReduceDamageMod));
+                        } else
+                        {
+                            CO_SPAWNER.co.SpawnWordsRpc("BLOCKED", checkHit);
                         }
                         canStrikeMelee = false;
                     }
@@ -815,7 +825,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 iDamageable crew = col.GetComponent<iDamageable>();
                 if (crew != null)
                 {
-                    //if (crew.GetFaction() != Faction) return;
+                    if (crew.GetFaction() != GetFaction()) return;
                     if (crew.Space != Space) continue;
                     if (!(crew is Module)) continue;
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
@@ -840,7 +850,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 if (crew != null)
                 {
                     //if (crew.GetFaction() != Faction) return;
-                    if (crew == this) continue;
+                    if (col.gameObject == gameObject) continue;
                     if (crew.Space != Space) continue;
                     if (crew.GetFaction() != GetFaction()) continue;
                     if (crew is Module) continue;
@@ -1108,9 +1118,14 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public void Heal(float fl)
     {
+        if (isDeadForever()) return;
         float Diff = CurHealth.Value;
         CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
         Diff -= CurHealth.Value;
+        if (CurHealth.Value > 50 && isDead())
+        {
+            Alive.Value = true;
+        }
         if (Diff > -1) return;
         CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
     }
@@ -1212,6 +1227,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public void Die()
     {
         Alive.Value = false;
+        BleedingTime.Value = 60;
         setAnimationRpc(ANIM.AnimationState.MI_DEAD1, 1);
     }
     public void AddStamina(float fl)

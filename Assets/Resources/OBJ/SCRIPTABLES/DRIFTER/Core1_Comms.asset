@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Comms
   ItemDesc: N/A
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: 21300000, guid: 5f10ee54fc65a624d9d86c8919ac5718, type: 3}
   ItemResourceID: OBJ/SCRIPTABLES/DRIFTER/Core1_Comms
   PrefabModule: {fileID: 6313021248617021957, guid: 695f221402cdb6e4ca8f4e8a1c491cfc, type: 3}
   EquipType: 0

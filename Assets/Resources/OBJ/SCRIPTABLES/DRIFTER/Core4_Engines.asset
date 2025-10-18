@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Engine
   ItemDesc: N/A
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: 21300000, guid: 6e3fedde432525a43ad8f283833d80f7, type: 3}
   ItemResourceID: OBJ/SCRIPTABLES/DRIFTER/Core4_Engines
   PrefabModule: {fileID: 6313021248617021957, guid: 72821b5fe697996488705fd2d61b3d30, type: 3}
   EquipType: 0

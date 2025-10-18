@@ -203,8 +203,8 @@ public class UI_CommandInterface : MonoBehaviour
                 break;
         }
         CurrentOrderMarker.DeselectOrderMarker();
-        CurrentOrderMarker = null;
         CurrentOrderMarker.gameObject.SetActive(false);
+        CurrentOrderMarker = null;
         RefreshCommandInterface();
         
     }

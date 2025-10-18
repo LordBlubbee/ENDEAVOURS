@@ -344,6 +344,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1653631809627978801, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 747b724700a895d4ea37cf3dc8ec84be, type: 3}
     - target: {fileID: 5359387141577791439, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_Name
       value: ATT_PHYS
@@ -353,6 +357,19 @@ PrefabInstance:
       value: 'Health and melee weapon damage.
 
 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: Tooltip
+      value: 'Each point in PHYSICAL increases:
+
+        -Your melee weapon damage
+        by approximately 8%
+
+        -Your health by approximately 15%
+
+
+        Some
+        powerful melee weapons require a certain amount of PHYSICAL to be used.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -527,6 +544,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1653631809627978801, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c79fb8abdd488ed488424b4844ddeac5, type: 3}
     - target: {fileID: 3437863500442666517, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
       value: 'COMMUNOPATHY: 1'
@@ -540,6 +561,21 @@ PrefabInstance:
       value: 'Sight range and magical efficiency.
 
         Ability to perceive threats.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: Tooltip
+      value: 'Each point in COMMUNOPATHY increases:
+
+        -Your spell damage by
+        approximately 10%
+
+        -Your spell reload by approximately 8%
+
+
+        Spells
+        often require a certain amount of COMMUNOPATHY to be used. COMMUNOPATHY can
+        also be helpful in certain encounters, preventing your Drifter from being
+        taken by surprise.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -714,6 +750,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1653631809627978801, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5c390595440e6d04db6e1dd44d7a441d, type: 3}
     - target: {fileID: 3437863500442666517, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
       value: 'MEDICAL: 1'
@@ -724,9 +764,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356777915098846576, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: 'Efficiency in healing self and others.
+      value: Efficiency in healing self and others.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: Tooltip
+      value: 'Each point in MEDICAL increases:
 
-        Usage of advanced items.'
+        -Your healing speed of yourself
+        and others by approximately 20%.
+
+        -Your maximum health by approximately
+        5%.
+
+        -Your team''s loot gain from Biological sources by approximately
+        5%.
+
+
+        Your MEDICAL attribute might also be helpful in certain encounters
+        related to creatures, knowledge, and anatomy.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -901,6 +956,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1653631809627978801, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ebab0efd82ccc584cb97656170802508, type: 3}
     - target: {fileID: 3437863500442666517, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
       value: 'ARMAMENTS: 1'
@@ -912,6 +971,19 @@ PrefabInstance:
     - target: {fileID: 6356777915098846576, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
       value: Ranged weapon reload and damage.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: Tooltip
+      value: 'Each point in ARMAMENTS increases:
+
+        -Your ranged weapon damage
+        by approximately 8%
+
+        -Your weapon reload speed by approximately 4%
+
+
+        Some
+        powerful ranged weapons require a certain amount of ARMAMENTS to be used.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1086,6 +1158,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1653631809627978801, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5da38574e2a00564ca76782c48b5f4e4, type: 3}
     - target: {fileID: 3437863500442666517, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
       value: 'DEXTERITY: 1'
@@ -1099,6 +1175,21 @@ PrefabInstance:
       value: 'Movement speed, stamina.
 
         Reload speed.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: Tooltip
+      value: 'Each point in DEXTERITY increases:
+
+        -Your maximum stamina by
+        5%
+
+        -Your stamina regeneration by approximately 10%
+
+        -Your
+        movement speed by approximately 8%
+
+        -Your ranged weapon reload speed
+        by approximately 3%'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1273,6 +1364,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1653631809627978801, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a3f484481eddb6f439eaec6e38dcc444, type: 3}
     - target: {fileID: 3437863500442666517, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
       value: 'ENGINEERING: 1'
@@ -1287,6 +1382,20 @@ PrefabInstance:
 
         Usage of advanced
         armor.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: Tooltip
+      value: 'Each point in ENGINEERING increases:
+
+        -Your repair speed by
+        approximately 20%
+
+        -Your resistance to environmental damage by approximately
+        5%.
+
+
+        Some powerful Armor items require a certain amount of ARMAMENTS
+        to be used.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1461,6 +1570,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1653631809627978801, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 71fe695bb885df04cafbe4f696447a16, type: 3}
     - target: {fileID: 3437863500442666517, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
       value: 'ALCHEMY: 1'
@@ -1475,6 +1588,14 @@ PrefabInstance:
 
         Usage of advanced
         potions and consumables.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: Tooltip
+      value: "Each point in ALCHEMY increases:\n-Your damage using consumables by
+        approximately 8%\n-The efficiency of the crafting cost for consumables by
+        3% \n\nSome powerful consumables like potions, explosives, and scrolls require
+        a certain amount of ALCHEMY to be used. Most crafting recipes for useful
+        consumables are locked behind ALCHEMY."
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1649,6 +1770,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1653631809627978801, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7f8f88ae5a8681449903af849c528a9b, type: 3}
     - target: {fileID: 3437863500442666517, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
       value: 'COMMAND: 1'
@@ -1663,6 +1788,32 @@ PrefabInstance:
 
         Usage of advanced
         gadgets.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6533569227050209211, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
+      propertyPath: Tooltip
+      value: 'Each point in COMMAND increases:
+
+        -Your team''s XP gain by
+        5%
+
+        -The efficiency of buying items sold by merchants by 2%
+
+        -The
+        stamina regeneration of allies near you.
+
+
+        The highest number is
+        taken into effect. Your team thus requires only a single Commander.
+
+
+        Some
+        powerful Artifacts require a certain amount of COMMAND to be used. COMMAND
+        also represents your charisma and can be helpful  in certain encounters,
+        allowing you to find diplomatic solutions more easily.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

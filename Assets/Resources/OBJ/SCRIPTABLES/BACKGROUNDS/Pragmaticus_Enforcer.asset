@@ -24,7 +24,7 @@ MonoBehaviour:
 
     PHYS +2
 
-    HAR +1
+    CMD +1
 
     MED +1'
   BackgroundColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}

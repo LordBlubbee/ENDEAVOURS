@@ -14,12 +14,12 @@ public class UI_OrderMarker : MonoBehaviour
     }
     public void SelectOrderMarker()
     {
-        Spr.color = Color.green;
+        Spr.color = new Color(0,1,0,0.7f);
         Rotator.RotationSpeed = 30;
     }
     public void DeselectOrderMarker()
     {
-        Spr.color = Color.yellow;
+        Spr.color = new Color(1, 1, 0, 0.7f);
         Rotator.RotationSpeed = 90;
     }
     private void Update()

@@ -91,23 +91,24 @@ public class CO_SPAWNER : NetworkBehaviour
 
         CO.co.StartGame();
     }
-    public void SpawnOtherShip(DRIFTER driftPrefab, Vector3 pos, int Faction = 2)
+    public DRIFTER SpawnOtherShip(DRIFTER driftPrefab, Vector3 pos, int Faction = 2)
     {
-        DRIFTER drifter = Instantiate(driftPrefab, pos, CO.co.PlayerMainDrifter.transform.rotation);
+        DRIFTER drifter = Instantiate(driftPrefab, pos, Quaternion.identity);
         drifter.NetworkObject.Spawn();
         drifter.Faction.Value = Faction;
         drifter.Init();
-
+        drifter.transform.rotation = CO.co.PlayerMainDrifter.transform.rotation;
+        drifter.SetMoveInput(drifter.getLookVector());
+        drifter.SetLookDirection(CO.co.PlayerMainDrifter.getLookVector());
         foreach (CREW Prefab in drifter.StartingCrew)
         {
             SpawnUnitOnShip(Prefab, drifter);
         }
-
-        CO.co.StartGame();
+        return drifter;
     }
-    public void SpawnUnitOnShip(CREW Prefab, DRIFTER drift)
+    public CREW SpawnUnitOnShip(CREW Prefab, DRIFTER drift)
     {
-        CREW enem = Instantiate(Prefab, drift.Space.Bridge, Quaternion.identity);
+        CREW enem = Instantiate(Prefab, drift.Space.transform.TransformPoint(drift.Space.Bridge), Quaternion.identity);
         enem.NetworkObject.Spawn();
         enem.Faction.Value = drift.GetFaction();
         enem.CharacterName.Value = Prefab.CharacterBackground.GetRandomName();
@@ -117,47 +118,92 @@ public class CO_SPAWNER : NetworkBehaviour
         //enem.EquipWeaponPrefab(0);
         drift.Interior.AddCrew(enem);
         drift.CrewGroup.Add(enem.GetComponent<AI_UNIT>());
+        return enem;
     }
-    public void SpawnEnemyGroup(ScriptableEnemyGroup gr, float PowerLevelFactor, int Faction = 2)
+    public DRIFTER SpawnEnemyGroup(ScriptableEnemyGroup gr, float PowerLevelFactor, int Faction = 2)
     {
         float Degrees = UnityEngine.Random.Range(0, 360);
         float Radius = gr.SpawnGroupRange;
         float Dist = UnityEngine.Random.Range(gr.SpawnDistanceMin, gr.SpawnDistanceMax);
-        AI_GROUP group = Instantiate(PrefabAIGROUP);
-        List<AI_UNIT> members = new();
-
-        float WorthPoints = PowerLevelFactor * gr.CrewPowerLevel;
+        int i;
+        Vector3 Offset = UnityEngine.Random.insideUnitCircle.normalized * Dist;
+        Vector3 Spawn = CO.co.PlayerMainDrifter.transform.position + Offset;
         List<EnemyCrewWithWeight> PossibleSpawns = new();
+        float WorthPoints = PowerLevelFactor * gr.CrewPowerLevel;
+        AI_GROUP group;
+        List<AI_UNIT> members = new();
+        if (gr.SpawnDrifter == null)
+        {
+            group = Instantiate(PrefabAIGROUP);
+
+            ResetWeights();
+            i = 0;
+            foreach (EnemyCrewWithWeight weight in gr.SpawnCrewList)
+            {
+                AddWeights(i, weight.Weight);
+                PossibleSpawns.Add(weight);
+                i++;
+            }
+          
+            while (WorthPoints > 0)
+            {
+                Vector3 tryPos = Spawn + new Vector3(UnityEngine.Random.Range(-Radius, Radius), UnityEngine.Random.Range(-Radius, Radius));
+                EnemyCrewWithWeight enemyType = PossibleSpawns[GetWeight()];
+                CREW enem = Instantiate(enemyType.SpawnCrew, tryPos, Quaternion.identity);
+                WorthPoints -= enemyType.Worth;
+                enem.NetworkObject.Spawn();
+                enem.Faction.Value = Faction;
+                enem.transform.Rotate(Vector3.forward, Degrees + UnityEngine.Random.Range(-30f, 30f));
+                enem.Init();
+                members.Add(enem.GetComponent<AI_UNIT>());
+            }
+
+            group.SetAI(gr.AI_Type, gr.AI_Group, 2, members);
+            group.SetAIHome(Spawn);
+            return null;
+        }
         ResetWeights();
-        int i = 0;
+        i = 0;
+        List<EnemyDrifterWithWeight> PossibleDrifterSpawns = new();
+        foreach (EnemyDrifterWithWeight weight in gr.SpawnDrifter)
+        {
+            AddWeights(i, weight.Weight);
+            PossibleDrifterSpawns.Add(weight);
+            i++;
+        }
+        EnemyDrifterWithWeight drifterType = PossibleDrifterSpawns[GetWeight()];
+        Offset = UnityEngine.Random.insideUnitCircle.normalized * Dist * 2.5f;
+        Spawn = CO.co.PlayerMainDrifter.transform.position + Offset;
+        DRIFTER drifter = SpawnOtherShip(drifterType.SpawnDrifter, Spawn, Faction);
+        Offset = UnityEngine.Random.insideUnitCircle.normalized * Dist;
+        Spawn = CO.co.PlayerMainDrifter.transform.position + Offset;
+        drifter.CurrentLocationPoint = Spawn;
+        ResetWeights();
+        i = 0;
         foreach (EnemyCrewWithWeight weight in gr.SpawnCrewList)
         {
             AddWeights(i, weight.Weight);
             PossibleSpawns.Add(weight);
+            i++;
         }
-        Vector3 Offset = UnityEngine.Random.insideUnitCircle.normalized * Dist;
-        Vector3 Spawn = CO.co.PlayerMainDrifter.transform.position + Offset;
         while (WorthPoints > 0)
         {
-            Vector3 tryPos = Spawn + new Vector3(UnityEngine.Random.Range(-Radius, Radius), UnityEngine.Random.Range(-Radius, Radius));
+            Vector3 tryPos = drifter.Interior.GetRandomGrid().transform.position;
             EnemyCrewWithWeight enemyType = PossibleSpawns[GetWeight()];
-            CREW enem = Instantiate(enemyType.SpawnCrew, tryPos, Quaternion.identity);
+            CREW crew = SpawnUnitOnShip(enemyType.SpawnCrew, drifter);
             WorthPoints -= enemyType.Worth;
-            enem.NetworkObject.Spawn();
-            enem.Faction.Value = Faction;
-            enem.transform.Rotate(Vector3.forward, Degrees + UnityEngine.Random.Range(-30f, 30f));
-            enem.Init();
-            members.Add(enem.GetComponent<AI_UNIT>());
         }
-
-        group.SetAI(gr.AI_Type, gr.AI_Group, 2, members);
-        group.SetAIHome(Spawn);
+        return drifter;
     }
+
+
+
+
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnWordsRpc(string dm, Vector3 pos)
     {
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
-        dmg.InitWords(dm, 1f, Color.red);
+        dmg.InitWords(dm, 0.7f, Color.red);
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnDMGRpc(float dm, Vector3 pos)

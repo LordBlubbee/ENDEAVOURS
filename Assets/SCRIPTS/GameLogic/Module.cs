@@ -8,10 +8,14 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     // Damageable and Interactable Module
     [NonSerialized] public NetworkVariable<Vector3> OrderPoint = new();
     private Vector3 OrderPointLocal;
-    private Transform OrderTransform;
+    private SPACE OrderTransform;
     public Vector3 GetOrderPoint()
     {
         return OrderPoint.Value;
+    }
+    public SPACE GetOrderTransform()
+    {
+        return OrderTransform;
     }
 
     [Rpc(SendTo.Server)]
@@ -27,9 +31,9 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         foreach (Collider2D col in Physics2D.OverlapCircleAll(vec,0.1f))
         {
             if (col.GetComponent<CREW>() != null) {
-                OrderTransform = col.GetComponent<Transform>();
-                OrderPointLocal = OrderTransform.InverseTransformPoint(vec);
-                OrderPoint.Value = OrderTransform.TransformPoint(OrderPointLocal);
+                OrderTransform = col.GetComponent<SPACE>();
+                OrderPointLocal = OrderTransform.transform.InverseTransformPoint(vec);
+                OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
                 return;
             }
         }
@@ -37,9 +41,9 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         {
             if (col.GetComponent<SPACE>() != null)
             {
-                OrderTransform = col.GetComponent<Transform>();
-                OrderPointLocal = OrderTransform.InverseTransformPoint(vec);
-                OrderPoint.Value = OrderTransform.TransformPoint(OrderPointLocal);
+                OrderTransform = col.GetComponent<SPACE>();
+                OrderPointLocal = OrderTransform.transform.InverseTransformPoint(vec);
+                OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
                 return;
             }
         }
@@ -49,6 +53,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public string ModuleTag;
     public ModuleTypes ModuleType;
     public Sprite IconSprite;
+    public ScriptableEquippableModule ShowAsModule;
     //
     public enum ModuleTypes
     {
@@ -102,7 +107,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     {
         if (IsServer)
         {
-            if (OrderTransform != null) OrderPoint.Value = OrderTransform.TransformPoint(OrderPointLocal);
+            if (OrderTransform != null) OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
         }
         Frame();
     }

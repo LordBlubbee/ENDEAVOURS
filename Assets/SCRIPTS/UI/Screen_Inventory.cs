@@ -9,11 +9,11 @@ public class Screen_Inventory : MonoBehaviour
     public GameObject SubscreenInventory;
     public GameObject SubscreenDrifter;
     public GameObject SubscreenAttributes;
+    public GameObject SubscreenDrifterWeapons;
     public InventorySlot[] InventoryWeapons;
     public InventorySlot InventoryArmor;
     public InventorySlot[] InventoryArtifacts;
     public InventorySlot[] InventoryCargo;
-    public TextMeshProUGUI CraftAmmoCrate;
 
     private void OnEnable()
     {
@@ -46,14 +46,20 @@ public class Screen_Inventory : MonoBehaviour
         {
             RefreshShipEquipment();
         }
-        RefreshDrifterStats();
         if (SubscreenDrifter.activeSelf)
         {
-            if (CO.co.Resource_Ammo.Value < 10) CraftAmmoCrate.color = Color.gray;
-            else CraftAmmoCrate.color = Color.white;
+            RefreshDrifterSubscreen();
         }
+        if (SubscreenDrifterWeapons.activeSelf)
+        {
+            RefreshDrifterWeaponSubscreen();
+        }
+        if (SubscreenModuleEditor.activeSelf)
+        {
+            RefreshSubscreenModuleEditor();
+        }
+        RefreshDrifterStats();
     }
-
     public void PressCraftAmmo()
     {
         if (CO.co.Resource_Ammo.Value < 10) return;
@@ -221,6 +227,7 @@ public class Screen_Inventory : MonoBehaviour
     }
     public void OpenSubscreen(GameObject ob)
     {
+        DeselectDrifterSlot();
         foreach (GameObject sub in Subscreens)
         {
             sub.SetActive(false);
@@ -345,5 +352,94 @@ public class Screen_Inventory : MonoBehaviour
         }
         HoldingItem = null;
         HoldingItemTile = null;
+    }
+
+    [Header("Drifter Modules")]
+    public DrifterInventorySlot[] DrifterModuleSlots;
+    public DrifterInventorySlot[] DrifterWeaponSlots;
+    public GameObject SubscreenModuleEditor;
+    public TextMeshProUGUI ModuleTitle;
+    public TextMeshProUGUI ModuleDesc;
+    public TextMeshProUGUI DrifterModuleBuy;
+    public TextMeshProUGUI DrifterModuleSell;
+    private DrifterInventorySlot SelectedDrifterSlot = null;
+
+    private void DeselectDrifterSlot()
+    {
+        if (SelectedDrifterSlot != null) SelectedDrifterSlot.SelectedBox.gameObject.SetActive(false);
+        SelectedDrifterSlot = null;
+    }
+    public void PressUpgradeDrifterSlot()
+    {
+
+    }
+    public void PressDismantleDrifterSlot()
+    {
+
+    }
+
+    private void RefreshDrifterSubscreen()
+    {
+        int ID = -1;
+        int i = 0;
+        while (i < DrifterModuleSlots.Length)
+        {
+            DrifterInventorySlot slot = DrifterModuleSlots[i];
+            ID++;
+            if (CO.co.PlayerMainDrifter.Interior.GetModules().Count > ID)
+            {
+                Module mod = CO.co.PlayerMainDrifter.Interior.GetModules()[ID];
+                if (mod is ModuleWeapon) continue;
+                if (!mod.ShowAsModule) continue;
+                slot.SetInventoryItem(mod.ShowAsModule);
+                i++;
+            } else
+            {
+                i++;
+                slot.SetInventoryItem(null);
+            }
+            slot.UpdateInventorySlot();
+        }
+    }
+    private void RefreshDrifterWeaponSubscreen()
+    {
+        int ID = -1;
+        int i = 0;
+        while (i < DrifterWeaponSlots.Length)
+        {
+            DrifterInventorySlot slot = DrifterWeaponSlots[i];
+            ID++;
+            if (CO.co.PlayerMainDrifter.Interior.WeaponModules.Count > ID)
+            {
+                Module mod = CO.co.PlayerMainDrifter.Interior.WeaponModules[ID];
+                if (!mod.ShowAsModule) continue;
+                slot.SetInventoryItem(mod.ShowAsModule);
+                i++;
+            }
+            else
+            {
+                i++;
+                slot.SetInventoryItem(null);
+            }
+            slot.UpdateInventorySlot();
+        }
+    }
+    public void PressDrifterModule(DrifterInventorySlot slot)
+    {
+        if (slot.GetEquippedItem() == null)
+        {
+            return;
+        }
+        DeselectDrifterSlot();
+        SelectedDrifterSlot = slot;
+        SelectedDrifterSlot.SelectedBox.gameObject.SetActive(false);
+        SubscreenModuleEditor.gameObject.SetActive(true);
+        RefreshSubscreenModuleEditor();
+    }
+    private void RefreshSubscreenModuleEditor()
+    {
+        if (!SelectedDrifterSlot) return;
+        ModuleTitle.text = SelectedDrifterSlot.GetEquippedItem().ItemName;
+        ModuleDesc.text = SelectedDrifterSlot.GetEquippedItem().ItemDesc;
     }
 }

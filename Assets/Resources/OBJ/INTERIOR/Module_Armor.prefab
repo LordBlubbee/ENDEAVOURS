@@ -415,11 +415,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  ModuleTag: 
   ModuleType: 5
   IconSprite: {fileID: 21300000, guid: f6dcf1b64a817a4419e34b2fccbf5ab5, type: 3}
+  ShowAsModule: {fileID: 11400000, guid: ecf400006c4c4aa47afd56f85fab16f5, type: 2}
   MaxHealth: 200
   HitboxRadius: 16
   CenterPos: {fileID: 0}
   MaxArmor: 100
   ArmorRegen: 10
-  ArmorAuraSize: 40

@@ -94,7 +94,11 @@ public class AlternativePrerequisiteBackground : AlternativePrerequisite //Only 
     public List<ScriptableBackground> Backgrounds;
     public override bool IsTrue()
     {
-        return true;
+        foreach (CREW crew in CO.co.GetAlliedCrew())
+        {
+            if (Backgrounds.Contains(crew.CharacterBackground)) return true;
+        }
+        return false;
     }
 }
 [Serializable]

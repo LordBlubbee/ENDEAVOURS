@@ -181,6 +181,7 @@ MonoBehaviour:
   - {fileID: 5158618258877860477}
   Blockers:
   - {fileID: 7437231586876515039}
+  AI: 0
   CrosshairSprite: {fileID: 21300000, guid: b2087bbfc192e8041bd4924a70def55c, type: 3}
   CrosshairMaxRange: 5
   CrosshairMinRange: 4
@@ -188,7 +189,7 @@ MonoBehaviour:
   ActionUse1: 1
   attackAnimations1: 03000000040000000500000006000000
   UsageStamina1: 0
-  attackDamage1: 10
+  attackDamage1: 15
   RangedPrefab1: {fileID: 0}
   Reload1: 0
   ActionUse2: 3

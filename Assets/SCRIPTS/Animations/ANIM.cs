@@ -234,7 +234,7 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 break;
             case AnimationState.ATTACK_HALBERD1:
                 Priority = 3;
-                curFrame = new AnimFrame(1, 0.1f);
+                curFrame = new AnimFrame(1, 0.3f);
                 curFrame.moveForward = 6f;
                 curFrame.AnimationMoveFactor = 0.6f;
                 curFrame.addMovement(new Vector3(-0.1f, -0.1f), -40); //Body
@@ -268,7 +268,7 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 break;
             case AnimationState.ATTACK_HALBERD2:
                 Priority = 3;
-                curFrame = new AnimFrame(1, 0.1f);
+                curFrame = new AnimFrame(1, 0.3f);
                 curFrame.moveForward = 3f;
                 curFrame.AnimationMoveFactor = 0.2f;
                 curFrame.addMovement(new Vector3(-0.1f, 0.1f), -40); //Body
@@ -332,7 +332,7 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 break;
             case AnimationState.ATTACK_HALBERD4:
                 Priority = 3;
-                curFrame = new AnimFrame(1, 0.1f);
+                curFrame = new AnimFrame(1, 0.4f);
                 curFrame.moveForward = -4f;
                 curFrame.AnimationMoveFactor = 0.6f;
                 curFrame.addMovement(new Vector3(-0.1f, 0f), new Vector3(-0.05f, -0.05f),-70); //Body
@@ -354,7 +354,7 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 curFrame.addMovement(new Vector3(0.4f, -2.95f), 87); //Tool Right
                 curFrame.addMovement(new Vector3(0.15f, 0f), -12); //Tool Left
                 Frames.Add(curFrame);
-                curFrame = new AnimFrame(4, 0.5f);
+                curFrame = new AnimFrame(4, 0.8f);
                 curFrame.moveForward = -3f;
                 curFrame.AnimationMoveFactor = 0.4f;
                 curFrame.addMovement(new Vector3(-0.06f, 0f), new Vector3(0.05f, 0.05f), 3); //Body

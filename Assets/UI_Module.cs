@@ -1,6 +1,5 @@
 using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -79,10 +78,14 @@ public class UI_Module : MonoBehaviour
                 MainTex.text = $"{GetUseNumber()}ENGINES";
                 StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")}";
                 StatusTex.color = Icon.color;
+                Button1.SetActive(true);
+                Button1Tex.text = "BOARD";
                 break;
             case Module.ModuleTypes.ARMOR:
                 MainTex.text = $"{GetUseNumber()}ARMOR CORE";
-                StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")} | ARMOR STATUS {((ModuleArmor)wep).GetArmor().ToString("0") }/{((ModuleArmor)wep).MaxArmor.ToString("0")}";
+                float getArmorRelative = ((ModuleArmor)wep).GetArmor() / ((ModuleArmor)wep).MaxArmor;
+                Color ArmorColor = new Color(1f - getArmorRelative, getArmorRelative, 0);
+                StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")} | <color=#{ColorUtility.ToHtmlStringRGB(ArmorColor)}>ARMOR STATUS {((ModuleArmor)wep).GetArmor().ToString("0") }/{((ModuleArmor)wep).MaxArmor.ToString("0")}</color>";
                 StatusTex.color = Icon.color;
                 break;
             case Module.ModuleTypes.MEDICAL:
@@ -127,6 +130,8 @@ public class UI_Module : MonoBehaviour
                 OrderMarker.Spr.sprite = wep.CrosshairSprite;
                 OrderMarker.gameObject.SetActive(true);
                 OrderMarker.transform.position = wep.GetOrderPoint();
+                if (wep.GetOrderTransform() != null) OrderMarker.transform.SetParent(wep.GetOrderTransform().transform);
+                else OrderMarker.transform.SetParent(null);
             }
             else
             {
@@ -147,7 +152,8 @@ public class UI_Module : MonoBehaviour
 
         MainTex.text = $"{GetUseNumber()}{crew.CharacterName.Value}";
         MainTex.color = new Color(crew.CharacterNameColor.Value.x, crew.CharacterNameColor.Value.y, crew.CharacterNameColor.Value.z);
-        if (crew.isDead()) StatusTex.text = $"KNOCKED OUT";
+        if (crew.isDeadForever()) StatusTex.text = $"<color=#880000>KIA";
+        else if (crew.isDead()) StatusTex.text = $"<color=red>BLEEDING OUT: {crew.BleedingTime.Value.ToString("0")}";
         else StatusTex.text = $"HEALTH {(crew.GetHealthRelative() * 100).ToString("0")}";
         if (crew.IsPlayer()) StatusTex.text += " | <color=yellow>PLAYER</color>";
         else if (crew.GetOrderPoint() == Vector3.zero) StatusTex.text += " | <color=white>NO ORDERS</color>";
@@ -165,6 +171,7 @@ public class UI_Module : MonoBehaviour
             {
                 OrderMarker.gameObject.SetActive(true);
                 OrderMarker.transform.position = crew.GetOrderPoint();
+                OrderMarker.transform.SetParent(crew.GetOrderTransform().transform);
             }
             else
             {
@@ -200,6 +207,12 @@ public class UI_Module : MonoBehaviour
             case UIModuleModes.CREW:
                 break;
             case UIModuleModes.MODULE:
+                switch (Module.ModuleType)
+                {
+                    case Module.ModuleTypes.ENGINES:
+                        CO.co.BoardingManeuverRpc();
+                        break;
+                }
                 break;
             case UIModuleModes.MODULEWEAPON:
                 ModuleWeapon.SetAutofireRpc(!ModuleWeapon.AutofireActive.Value);

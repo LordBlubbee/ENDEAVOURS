@@ -163,11 +163,11 @@ MonoBehaviour:
   Spr: {fileID: 5573374972207478105}
   Tip: {fileID: 6722780836644206192}
   ProjectileSpeed: 100
-  InaccuracyDegrees: 2
+  InaccuracyDegrees: 5
   MaximumRange: -1
   StickToWalls: 0
   UseAltitude: 1
-  AltitudeInacurracyFactor: 0.02
+  AltitudeInacurracyFactor: 0.1
   AltitudeDirectHitCeiling: 1
 --- !u!114 &1279859445198227217
 MonoBehaviour:

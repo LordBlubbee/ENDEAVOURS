@@ -263,55 +263,58 @@ public class AI_UNIT : NetworkBehaviour
         Module mod;
         CREW trt = GetClosestEnemy();
         Vector3 point;
+        if (!EnemyTarget || EnemyTargetTimer < 0 || EnemyTarget.isDead())
+        {
+            EnemyTarget = GetClosestVisibleEnemy();
+            EnemyTargetTimer = 7;
+        }
+        if (EnemyTarget)
+        {
+
+            if (AI_TacticTimer < 0) SwitchTacticsCrew();
+
+            switch (AI_Tactic)
+            {
+                case AI_TACTICS.SKIRMISH:
+                    Unit.EquipWeapon1Rpc();
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.4f) SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()), EnemyTarget.Space);
+                    else SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, UnityEngine.Random.Range(8f, 20f)), EnemyTarget.Space);
+                    SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.15f) Unit.UseItem2Rpc();
+                    else if (UnityEngine.Random.Range(0f, 1f) < 0.05f) Unit.Dash();
+                    break;
+                case AI_TACTICS.CIRCLE:
+                    Unit.EquipWeapon1Rpc();
+                    if (Unit.GetHealthRelative() < 0.3f)
+                    {
+                        SetAIMoveTowards(GetPointTowardsPoint(EnemyTarget.transform.position, -12f), EnemyTarget.Space);
+                    }
+                    else
+                    {
+                        SetAIMoveTowardsIfExpired(GetRandomPointAround(EnemyTarget.transform.position, 5f, 12f), EnemyTarget.Space, 3f);
+                    }
+                    Unit.UseItem2Rpc();
+                    SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                    break;
+                case AI_TACTICS.RETREAT:
+                    point = GetDiagonalPointTowards(EnemyTarget.transform.position, -12f, LeaningRight);
+                    SetAIMoveTowards(point, EnemyTarget.Space);
+                    SetLookTowards(point, EnemyTarget.Space);
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.2f) Unit.Dash();
+                    Unit.EquipMedkitRpc();
+                    Unit.UseItem2Rpc();
+                    break;
+            }
+            if (Unit.IsEnemyInFront(GetAttackDistance()))
+            {
+                Unit.UseItem1Rpc();
+            }
+            return;
+        }
         if (getSpace() == Group.HomeSpace)
         {
             //We are at home
-            if (!EnemyTarget || EnemyTargetTimer < 0 || EnemyTarget.isDead())
-            {
-                EnemyTarget = GetClosestVisibleEnemy();
-                EnemyTargetTimer = 7;
-            }
-            if (EnemyTarget)
-            {
-
-                if (AI_TacticTimer < 0) SwitchTacticsCrew();
-
-                switch (AI_Tactic)
-                {
-                    case AI_TACTICS.SKIRMISH:
-                        Unit.EquipWeapon1Rpc();
-                        SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()), EnemyTarget.Space);
-                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
-                        Unit.Dash();
-                        break;
-                    case AI_TACTICS.CIRCLE:
-                        Unit.EquipWeapon1Rpc();
-                        if (Unit.GetHealthRelative() < 0.3f)
-                        {
-                            SetAIMoveTowards(GetPointTowardsPoint(EnemyTarget.transform.position, -12f), EnemyTarget.Space);
-                        }
-                        else
-                        {
-                            SetAIMoveTowardsIfExpired(GetRandomPointAround(EnemyTarget.transform.position, 5f, 12f), EnemyTarget.Space, 3f);
-                        }
-                        Unit.UseItem2Rpc();
-                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
-                        break;
-                    case AI_TACTICS.RETREAT:
-                        point = GetDiagonalPointTowards(EnemyTarget.transform.position, -12f, LeaningRight);
-                        SetAIMoveTowards(point, EnemyTarget.Space);
-                        SetLookTowards(point, EnemyTarget.Space);
-                        Unit.Dash();
-                        Unit.EquipMedkitRpc();
-                        Unit.UseItem2Rpc();
-                        break;
-                }
-                if (Unit.IsEnemyInFront(GetAttackDistance()))
-                {
-                    Unit.UseItem1();
-                }
-                return;
-            }
+           
             //We are not in combat
 
             if (Unit.GetHealthRelative() < 1f)
@@ -320,6 +323,13 @@ public class AI_UNIT : NetworkBehaviour
                 StopLooking();
                 Unit.EquipMedkitRpc();
                 Unit.UseItem2Rpc();
+                return;
+            }
+            if (ObjectiveSpace != getSpace())
+            {
+                AttemptBoard(ObjectiveSpace);
+                SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(ObjectiveSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
+                SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
                 return;
             }
             if (DistToObjective(transform.position) > 16)
@@ -335,7 +345,7 @@ public class AI_UNIT : NetworkBehaviour
                 if (DistToObjective(mod.transform.position) < 8)
                 {
                     SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
-                    SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
+                    SetLookTowards(mod.GetTargetPos(), ObjectiveSpace);
                     if (Dist(mod.transform.position) < 4f)
                     {
                         Unit.EquipWrenchRpc();
@@ -352,7 +362,7 @@ public class AI_UNIT : NetworkBehaviour
                     if (DistToObjective(mod.transform.position) < 8)
                     {
                         SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
-                        SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
+                        SetLookTowards(mod.GetTargetPos(), ObjectiveSpace);
                         if (Dist(mod.transform.position) < 4f)
                         {
                             ((ModuleWeapon)mod).ReloadAmmoRpc();
@@ -429,7 +439,8 @@ public class AI_UNIT : NetworkBehaviour
                 {
                     case AI_TACTICS.SKIRMISH:
 
-                        SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()), EnemyTarget.Space);
+                        if (UnityEngine.Random.Range(0f,1f) < 0.4f) SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()), EnemyTarget.Space);
+                        else SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, UnityEngine.Random.Range(8f,20f)), EnemyTarget.Space);
                         SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
                         break;
                     case AI_TACTICS.CIRCLE:
@@ -454,7 +465,7 @@ public class AI_UNIT : NetworkBehaviour
                         SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
                         if (Dist(mod.transform.position) < 8f)
                         {
-                            SetLookTowards(mod.transform.position, mod.Space);
+                            SetLookTowards(mod.GetTargetPos(), mod.Space);
                         }
                         else
                         {
@@ -539,16 +550,22 @@ public class AI_UNIT : NetworkBehaviour
     {
         SetLookTowards(transform.position + Unit.GetMoveInput() * 100f, getSpace());
     }
-    private void AttemptBoard(SPACE trt)
+    private bool AttemptBoard(SPACE trt)
     {
         if (trt != getSpace())
         {
             WalkableTile boarding = trt.GetNearestBoardingGridTransformToPoint(transform.position);
-            if (Dist(boarding.transform.position) < 25f+Unit.GetATT_COMMUNOPATHY())
+            if (Dist(boarding.transform.position) < 30f)
             {
-                Unit.UseGrapple(boarding);
+                Unit.SetLookTowards(boarding.transform.position);
+                Unit.EquipGrappleRpc();
+                if (Mathf.Abs(Unit.AngleBetweenPoints(boarding.transform.position)) < 3)
+                    Unit.UseItem1Rpc();
+                return true;
+                //Unit.UseGrapple(boarding);
             }
         }
+        return false;
     }
     private void AttemptBoard(CREW trt)
     {

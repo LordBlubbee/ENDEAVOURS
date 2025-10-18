@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CO : NetworkBehaviour
@@ -190,35 +191,34 @@ public class CO : NetworkBehaviour
         if (!IsServer) return;
         HandleGravity();
     }
-    public Vector3 GetLookVectorWithRandomSpread(Vector3 originalLook, float maxAngle = 20f)
+
+    [Rpc(SendTo.Server)]
+    public void BoardingManeuverRpc()
     {
-        // Pick a random angle between -maxAngle and +maxAngle
-        float randomAngle = UnityEngine.Random.Range(-maxAngle, maxAngle);
-
-        // Rotate the vector around the Y-axis (assuming 3D horizontal look)
-        Quaternion rotation = Quaternion.AngleAxis(randomAngle, Vector3.forward);
-
-        // Return the rotated direction
-        return rotation * originalLook;
+        foreach (DRIFTER drift in GetAllDrifters())
+        {
+            drift.CurrentPositionTimer = UnityEngine.Random.Range(15f, 20f);
+            GravityResposition(drift, 40f, 70f);
+        }
     }
-    public Vector3 RotatePointWithLookVectors(Vector3 pointA, Vector3 pointB, Vector3 oldLookVector, Vector3 newLookVector)
+    void GravityResposition(DRIFTER drift, float mindis, float maxdis)
     {
-        // Get A’s position relative to B
-        Vector3 relativePos = pointA - pointB;
-
-        // Compute the rotation needed to go from old look to new look
-        Quaternion rotation = Quaternion.FromToRotation(oldLookVector, newLookVector);
-
-        // Apply that rotation to the relative position
-        Vector3 rotatedRelative = rotation * relativePos;
-
-        // Return the new world position
-        return pointB + rotatedRelative;
+        Vector3 CurrentCenter = PlayerMainDrifter.CurrentLocationPoint;
+        if (PlayerMainDrifter == drift)
+        {
+            drift.SetMoveTowards(new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f)));
+        }
+        else
+        {
+            Vector3 Deviation = new Vector3(UnityEngine.Random.Range(-0.4f, 0.4f), UnityEngine.Random.Range(-0.4f, 0.4f));
+            Vector3 TowardsDrifter = (drift.CurrentLocationPoint - CurrentCenter).normalized;
+            Vector3 AroundPoint = new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f));
+            drift.SetMoveTowards(CurrentCenter + (TowardsDrifter + Deviation).normalized * UnityEngine.Random.Range(mindis, maxdis) + AroundPoint);
+        }
     }
     void HandleGravity() //Gravity Relativity
     {
         if (PlayerMainDrifter == null) return;
-        Vector3 CurrentCenter = PlayerMainDrifter.CurrentLocationPoint;
         Vector3 BackgroundSpeed = -PlayerMainDrifter.getLookVector() * PlayerMainDrifter.GetCurrentMovement();
         float CurrentSpeed = 99f;
         if (PlayerMainDrifter.GetRelativeSpeed() > 0.05f)
@@ -229,19 +229,8 @@ public class CO : NetworkBehaviour
                 drift.CurrentPositionTimer -= CO.co.GetWorldSpeedDelta();
                 if (drift.CurrentPositionTimer < 0)
                 {
-                    drift.CurrentPositionTimer = UnityEngine.Random.Range(10f, 20f);
-                    if (PlayerMainDrifter == drift)
-                    {
-                        drift.CurrentLocationPoint = new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f));
-                        Vector3 newLookVector = GetLookVectorWithRandomSpread(drift.getLookVector(), 20f * drift.GetRelativeSpeed());
-                        drift.SetLookTowards(newLookVector);
-                        foreach (DRIFTER drift2 in GetAllDrifters())
-                        {
-                            drift2.SetLookTowards(drift.getLookVector());
-                            drift2.SetMoveTowards(RotatePointWithLookVectors(drift2.CurrentLocationPoint, drift.CurrentLocationPoint, drift.getLookVector(), newLookVector));
-                        }
-                    }
-                    else drift.SetMoveTowards(CurrentCenter + (drift.CurrentLocationPoint - CurrentCenter).normalized * UnityEngine.Random.Range(60f, 180f) + new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f)));
+                    drift.CurrentPositionTimer = UnityEngine.Random.Range(5f, 15f);
+                    GravityResposition(drift, 50f, 200f);
                 }
             }
         }
@@ -310,7 +299,7 @@ public class CO : NetworkBehaviour
     {
         Vector3 moveDirection = destination.transform.position - GetPlayerMapPoint().transform.position;
         PlayerMainDrifter.SetLookTowards(moveDirection);
-        PlayerMainDrifter.SetMoveInput(moveDirection, 1f);
+        PlayerMainDrifter.SetMoveInput(moveDirection);
         PlayerMainDrifter.SetCanReceiveInput(false);
         foreach (LOCALCO local in GetLOCALCO())
         {
@@ -334,12 +323,26 @@ public class CO : NetworkBehaviour
     {
         PlayerMainDrifter.transform.position = Vector3.zero;
         PlayerMainDrifter.transform.Rotate(Vector3.forward, PlayerMainDrifter.AngleToTurnTarget());
-        PlayerMainDrifter.SetMoveInput(Vector3.zero, 1f);
+        PlayerMainDrifter.SetMoveInput(Vector3.zero);
+
+        ClearMap();
+    }
+
+    private void ClearMap()
+    {
+        //CLEAR MAP
         foreach (CREW crew in new List<CREW>(GetAllCrews()))
         {
             if (crew.Space != PlayerMainDrifter.Space || crew.isDead())
             {
                 crew.DespawnAndUnregister();
+            }
+        }
+        foreach (DRIFTER drift in new List<DRIFTER>(GetAllDrifters()))
+        {
+            if (drift != PlayerMainDrifter)
+            {
+                drift.DespawnAndUnregister();
             }
         }
     }
@@ -713,18 +716,35 @@ public class CO : NetworkBehaviour
             AddWeights(i, weighted.Weight);
             i++;
         }
-        CO_SPAWNER.co.SpawnEnemyGroup(Groups[GetWeight()].EnemyGroup, 1f);
-        float Death = 0f;
-        while (Death < 1)
+        ScriptableEnemyGroup EnemyGroup = Groups[GetWeight()].EnemyGroup;
+        DRIFTER enemyDrifter = CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup, 1f);
+        if (enemyDrifter == null)
         {
-            yield return new WaitForSeconds(0.5f);
-            int DeadAmount = GroupDeathAmount(GetEnemyCrew());
-            int AliveAmount = GetEnemyCrew().Count - DeadAmount;
-            Death = (float)DeadAmount / (float)GetEnemyCrew().Count;
-            EnemyBarRelative.Value = 1f-Death;
-            EnemyBarString.Value = $"THREATS: ({AliveAmount})";
+            float Death = 0f;
+            while (Death < 1)
+            {
+                yield return new WaitForSeconds(0.5f);
+                int DeadAmount = GroupDeathAmount(GetEnemyCrew());
+                int AliveAmount = GetEnemyCrew().Count - DeadAmount;
+                Death = (float)DeadAmount / (float)GetEnemyCrew().Count;
+                EnemyBarRelative.Value = 1f - Death;
+                EnemyBarString.Value = $"THREATS: {AliveAmount}";
+            }
+        } else
+        {
+            float Death = 0f;
+            while (Death < 1)
+            {
+                yield return new WaitForSeconds(0.5f);
+                int DeadAmount = GroupDeathAmount(GetEnemyCrew());
+                int AliveAmount = GetEnemyCrew().Count - DeadAmount;
+                Death = (float)DeadAmount / (float)GetEnemyCrew().Count;
+                EnemyBarRelative.Value = enemyDrifter.GetHealthRelative();
+                EnemyBarString.Value = $"INTEGRITY: {enemyDrifter.GetHealth().ToString("0")}";
+            }
         }
-        EnemyBarRelative.Value = -1;
+
+            EnemyBarRelative.Value = -1;
         if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
         AreWeInDanger.Value = false;
         ProcessLootTable(CurrentEvent.LootTable, 1f);
@@ -770,6 +790,7 @@ public class CO : NetworkBehaviour
         {
             AddWeights(i, item.Weight);
             RandomLoot.Add(item);
+            i++;
         }
         for (i = 0; i < RandomLoot.Count; ++i)
         {

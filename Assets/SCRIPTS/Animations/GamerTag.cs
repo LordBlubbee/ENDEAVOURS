@@ -7,11 +7,13 @@ public class GamerTag : MonoBehaviour
     public TextMeshPro Health;
     public SpriteRenderer FarIcon;
     private iDamageable FollowObject;
+    private GameObject FollowObjectRef;
     private bool UseFarIcon;
     public void SetPlayerAndName(iDamageable trans, string str, Color col)
     {
         //
         FollowObject = trans;
+        FollowObjectRef = trans.transform.gameObject;
         Name.text = str;
         Name.color = col;
         UseFarIcon = false;
@@ -20,6 +22,7 @@ public class GamerTag : MonoBehaviour
     {
         //
         FollowObject = trans;
+        FollowObjectRef = trans.transform.gameObject;
         UseFarIcon = true;
     }
     public void SetFarIcon(Sprite spr)
@@ -34,7 +37,7 @@ public class GamerTag : MonoBehaviour
     }
     private void Update()
     {
-        if (FollowObject == null)
+        if (!FollowObjectRef)
         {
             Destroy(gameObject);
             return;

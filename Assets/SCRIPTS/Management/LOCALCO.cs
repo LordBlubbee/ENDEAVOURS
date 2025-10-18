@@ -232,7 +232,7 @@ public class LOCALCO : NetworkBehaviour
     {
         if (CurrentControlMode == ControlModes.PLAYER) return;
         CurrentControlMode = ControlModes.PLAYER;
-        CAM.cam.SetCameraMode(Player.transform, 13f+ Player.GetATT_COMMUNOPATHY(), 8f, 16f+Player.GetATT_COMMUNOPATHY());
+        CAM.cam.SetCameraMode(Player.transform, 13f+ Player.GetATT_COMMUNOPATHY(), 8f, 20f+Player.GetATT_COMMUNOPATHY());
     }
 
     public void SetCameraToCommand()

@@ -232,8 +232,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  ModuleTag: 
   ModuleType: 6
   IconSprite: {fileID: 21300000, guid: 6e3fedde432525a43ad8f283833d80f7, type: 3}
+  ShowAsModule: {fileID: 11400000, guid: 9f90683edf0f5ad4bb0cda0497fb3d84, type: 2}
   MaxHealth: 200
   HitboxRadius: 16
   CenterPos: {fileID: 0}

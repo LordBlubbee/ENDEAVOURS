@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class AI_GROUP : MonoBehaviour
 {
@@ -195,13 +196,13 @@ public class AI_GROUP : MonoBehaviour
             }
             if (wep.AutofireActive.Value || HomeDrifter != CO.co.PlayerMainDrifter)
             {
-                CREW trt = GetClosestEnemyAnywhere(wep.transform.position);
+                Vector3 trt = GetClosestEnemyPositionInNebula(wep.transform.position);
                 if (trt != null)
                 {
-                    wep.SetLookTowards(trt.transform.position);
-                    if (Mathf.Abs(wep.AngleBetweenPoints(trt.transform.position)) < 10)
+                    wep.SetLookTowards(trt);
+                    if (Mathf.Abs(wep.AngleBetweenPoints(trt)) < 10)
                     {
-                        wep.Use(trt.transform.position);
+                        wep.Use(trt);
                         continue;
                     }
                     wep.Stop();
@@ -354,6 +355,39 @@ public class AI_GROUP : MonoBehaviour
             {
                 minDist = dist;
                 closest = enemy;
+            }
+        }
+        return closest;
+    }
+    public Vector3 GetClosestEnemyPositionInNebula(Vector3 vec)
+    {
+        List<CREW> enemies = CO.co.GetAllCrews();
+        Vector3 closest = Vector3.zero;
+        float minDist = float.MaxValue;
+        Vector3 myPos = vec;
+        foreach (var enemy in enemies)
+        {
+            if ((enemy.transform.position - vec).magnitude > 150) continue;
+            if (enemy.GetFaction() == 0 || enemy.GetFaction() == Faction) continue;
+            if (enemy.Space != null) continue;
+            if (enemy.isDead()) continue;
+            float dist = (enemy.getPos() - myPos).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = enemy.transform.position;
+            }
+        }
+        List<DRIFTER> drifters = CO.co.GetAllDrifters();
+        foreach (var enemy in drifters)
+        {
+            if ((enemy.transform.position - vec).magnitude > 150) continue;
+            if (enemy.GetFaction() == 0 || enemy.GetFaction() == Faction) continue;
+            float dist = (enemy.getPos() - myPos).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = enemy.transform.TransformPoint(new Vector3(UnityEngine.Random.Range(-enemy.RadiusX, enemy.RadiusX), UnityEngine.Random.Range(-enemy.RadiusY, enemy.RadiusY)));
             }
         }
         return closest;

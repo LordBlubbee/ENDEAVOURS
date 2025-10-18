@@ -396,6 +396,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8a6bf186b9e338048943d374d686d7d0, type: 2}
   - {fileID: 11400000, guid: 1829ec9a8937d4c4d847fe9020ec83d6, type: 2}
   - {fileID: 11400000, guid: 9f90683edf0f5ad4bb0cda0497fb3d84, type: 2}
+  - {fileID: 11400000, guid: 1299b96d9516f77439b3b8edeeb43255, type: 2}
   - {fileID: 11400000, guid: 5e327c34dc8e8044db4ecf9d321d5743, type: 2}
   - {fileID: 11400000, guid: 5e327c34dc8e8044db4ecf9d321d5743, type: 2}
   - {fileID: 11400000, guid: ecf400006c4c4aa47afd56f85fab16f5, type: 2}
@@ -407,8 +408,10 @@ MonoBehaviour:
   - {fileID: 5867427934140877094, guid: 6c1f3fd00e3114142b6d3261c1ce4be1, type: 3}
   - {fileID: 5867427934140877094, guid: 6c1f3fd00e3114142b6d3261c1ce4be1, type: 3}
   Spr: {fileID: 7590115494558501324}
-  Faction: 1
+  IsLoon: 0
   MaxHealth: 2500
+  RadiusX: 60
+  RadiusY: 45
   MovementSpeed: 8
   AccelerationSpeedMod: 0.3
   RotationBaseSpeed: 15
@@ -536,6 +539,7 @@ MonoBehaviour:
   - {x: 60, y: 4, z: 0}
   - {x: -36, y: 24, z: 0}
   - {x: -40, y: -16, z: 0}
+  - {x: -44, y: 24, z: 0}
   WeaponModuleLocations:
   - {x: 12, y: -32, z: 0}
   - {x: 28, y: 24, z: 0}
