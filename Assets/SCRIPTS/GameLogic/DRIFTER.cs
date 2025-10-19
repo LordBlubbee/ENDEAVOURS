@@ -383,9 +383,19 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         return GetHealth() / GetMaxHealth();
     }
+
+    public override void OnNetworkDespawn()
+    {
+        UI_CommandInterface.co.HandleDespawningOfDrifter(this);
+        base.OnNetworkDespawn();
+    }
     public void DespawnAndUnregister()
     {
         CO.co.UnregisterDrifter(this);
+        foreach (Module mod in Interior.GetModules())
+        {
+            mod.NetworkObject.Despawn();
+        }
         NetworkObject.Despawn();
     }
 }

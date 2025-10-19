@@ -261,17 +261,17 @@ MonoBehaviour:
   FirePoint: {fileID: 3676994766029858991}
   FireProjectile: {fileID: 8910635656682413825, guid: bcb2fb2362f019e4290db11af9a5f758, type: 3}
   CrosshairSprite: {fileID: 21300000, guid: 3d1452e5180bdf641bb60a3aadc3248a, type: 3}
-  Damage: 60
+  Damage: 100
   HullDamageMod: 1
   ModuleDamageMod: 1
-  CrewDamageMod: 0.5
-  CrewDamageSplash: 4
+  CrewDamageMod: 0.3
+  CrewDamageSplash: 5
   ArmorDamageMod: 1
-  ArmorDamageAbsorption: 0.8
+  ArmorDamageAbsorption: 1
   RotationBaseSpeed: 60
   MaxAmmo: 50
-  FireCooldown: 5
-  ReloadCooldown: 5
+  FireCooldown: 9
+  ReloadCooldown: 9
   ProjectileCount: 1
   AdditionalProjectileDelay: 0
   ResourceType: 2

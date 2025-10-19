@@ -46,6 +46,15 @@ public class Screen_GameUI : MonoBehaviour
     public InventorySlot InventoryGrappleSlot;
     public InventorySlot InventoryToolsSlot;
     public InventorySlot InventoryHealsSlot;
+
+    [Header("BLEED OUT")]
+    public Image BleedingOutScreen;
+    public TextMeshProUGUI BleedingTex;
+    public GameObject BleedingButton;
+    public void PressRespawnButton()
+    {
+        if (LOCALCO.local.GetPlayer().BleedingTime.Value > 0) LOCALCO.local.GetPlayer().RespawnASAPRpc();
+    }
     void Update()
     {
         if (!LOCALCO.local)
@@ -81,7 +90,7 @@ public class Screen_GameUI : MonoBehaviour
             StaminaTex.text = player.GetStamina().ToString("0");
             StaminaColor.color = new Color(1f - player.GetStaminaRelative(), player.GetStaminaRelative(), player.GetStaminaRelative());
         }
-        else if (WeaponUI.gameObject.activeSelf)
+        /*else if (WeaponUI.gameObject.activeSelf)
         {
             ModuleWeapon wep = LOCALCO.local.GetWeapon();
             if (wep)
@@ -94,7 +103,7 @@ public class Screen_GameUI : MonoBehaviour
                 AmmoColor.color = new Color(1f - wep.GetAmmoRatio(), wep.GetAmmoRatio(), wep.GetAmmoRatio());
             }
             NoAmmoOverlay.SetActive(wep.LoadedAmmo.Value < 1);
-        }
+        }*/
         OurDrifterIntegritySlider.value = CO.co.PlayerMainDrifter.GetHealthRelative();
         OurDrifterIntegrityTex.text = CO.co.PlayerMainDrifter.GetHealth().ToString("0");
         OurDrifterIntegrityColor.color = new Color(1f - CO.co.PlayerMainDrifter.GetHealthRelative(), CO.co.PlayerMainDrifter.GetHealthRelative(), 0);
@@ -119,6 +128,26 @@ public class Screen_GameUI : MonoBehaviour
         {
             InteractTex.color = new Color(InteractTex.color.r, InteractTex.color.g, InteractTex.color.b, Mathf.Clamp01(InteractTex.color.a - Time.deltaTime * 2f));
         }
+
+        if (player.isDead())
+        {
+            BleedingOutScreen.gameObject.SetActive(true);
+            BleedingButton.gameObject.SetActive(!player.isDeadForever());
+            if (player.isDeadForever()) BleedingTex.text = $"-RESPAWNING- \n{20+player.BleedingTime.Value.ToString("0")}";
+            else BleedingTex.text = $"-BLEEDING OUT- \n{player.BleedingTime.Value.ToString("0")}";
+            if (UI_CommandInterface.co.IsCommandingTabOpen())
+            {
+                BleedingOutScreen.color = Color.clear;
+            }
+            else
+            {
+                BleedingOutScreen.color = new Color(0.5f, 0, 0, 0.2f);
+            }
+        } else
+        {
+            BleedingOutScreen.gameObject.SetActive(false);
+        }
+
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {

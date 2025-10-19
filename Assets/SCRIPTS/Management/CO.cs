@@ -198,7 +198,7 @@ public class CO : NetworkBehaviour
         foreach (DRIFTER drift in GetAllDrifters())
         {
             drift.CurrentPositionTimer = UnityEngine.Random.Range(15f, 20f);
-            GravityResposition(drift, 40f, 70f);
+            GravityResposition(drift, 40f, 50f);
         }
     }
     void GravityResposition(DRIFTER drift, float mindis, float maxdis)

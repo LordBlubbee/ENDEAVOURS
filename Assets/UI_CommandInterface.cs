@@ -21,6 +21,11 @@ public class UI_CommandInterface : MonoBehaviour
     [NonSerialized] public List<UI_Module> Weapons = new();
     [NonSerialized] public bool IsCommanding = false;
     int SelectedTab = -1;
+
+    public bool IsCommandingTabOpen()
+    {
+        return SelectedTab > -1;
+    }
     private void Start()
     {
         co = this;
@@ -259,6 +264,32 @@ public class UI_CommandInterface : MonoBehaviour
         CurrentOrderMarker.SelectOrderMarker();
         CurrentModuleSelected = mod;
         RefreshCommandInterface();
+    }
+
+    public void HandleDespawningOfDrifter(DRIFTER drifter)
+    {
+        foreach (CREW orderMarker in CrewReferences)
+        {
+            if (orderMarker.GetOrderTransform() == drifter.Space)
+            {
+                orderMarker.SetOrderPointRpc(Vector3.zero);
+            }
+        }
+        foreach (ModuleWeapon orderMarker in WeaponReferences)
+        {
+            if (orderMarker.GetOrderTransform() == drifter.Space)
+            {
+                orderMarker.SetOrderPointRpc(Vector3.zero);
+            }
+        }
+        foreach (UI_Module orderMarker in Crews)
+        {
+            if (orderMarker.OrderMarker.transform.parent == drifter.transform) orderMarker.DisconnectOrderMarker();
+        }
+        foreach (UI_Module orderMarker in Weapons)
+        {
+            if (orderMarker.OrderMarker.transform.parent == drifter.transform) orderMarker.DisconnectOrderMarker();
+        }
     }
 
     private List<CREW> CrewReferences;

@@ -136,6 +136,14 @@ public class AI_GROUP : MonoBehaviour
 
         List<AI_UNIT> UsableUnits = new(Units);
         //Pick the closest unit
+        foreach (AI_UNIT un in UsableUnits)
+        {
+            if (!un)
+            {
+                Units.Remove(un);
+            }
+        }
+        UsableUnits = new(Units);
         foreach (AI_UNIT un in Units)
         {
             if (un.Unit.GetOrderPoint() != Vector3.zero)

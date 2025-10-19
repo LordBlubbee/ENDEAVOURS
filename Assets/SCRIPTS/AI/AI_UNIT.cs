@@ -47,7 +47,6 @@ public class AI_UNIT : NetworkBehaviour
         Group = grp;
         grp.RegisterUnit(this);
     }
-
     public void SetTactic(AI_TACTICS tac, float timer)
     {
         AI_Tactic = tac;
@@ -270,7 +269,6 @@ public class AI_UNIT : NetworkBehaviour
         }
         if (EnemyTarget)
         {
-
             if (AI_TacticTimer < 0) SwitchTacticsCrew();
 
             switch (AI_Tactic)
@@ -384,9 +382,9 @@ public class AI_UNIT : NetworkBehaviour
         //Engage!
 
         //Retreat!
-        AttemptBoard(Group.HomeSpace);
         SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position, getSpace());
         SetLookTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position, getSpace());
+        AttemptBoard(Group.HomeSpace);
     }
 
     private void SwitchTacticsCrew()

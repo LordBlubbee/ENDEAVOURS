@@ -10,8 +10,8 @@ public class PROJ_Grapple : PROJ
         {
             if (crew.Space == Space) return;
             if (!crew.canBeBoarded) return;
-            BulletImpact();
             CrewOwner.UseGrapple(crew);
+            BulletImpact();
             return;
         }
     }

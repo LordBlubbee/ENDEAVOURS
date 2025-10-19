@@ -135,9 +135,15 @@ public class UI_Module : MonoBehaviour
             }
             else
             {
-                OrderMarker.gameObject.SetActive(false);
+                DisconnectOrderMarker();
             }
         }
+    }
+
+    public void DisconnectOrderMarker()
+    {
+        OrderMarker.gameObject.SetActive(false);
+        OrderMarker.transform.SetParent(null);
     }
     public void SetCrewTarget(CREW crew)
     {
@@ -175,7 +181,7 @@ public class UI_Module : MonoBehaviour
             }
             else
             {
-                OrderMarker.gameObject.SetActive(false);
+                DisconnectOrderMarker();
             }
         }
     }

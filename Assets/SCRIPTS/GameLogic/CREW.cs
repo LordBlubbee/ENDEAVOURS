@@ -378,6 +378,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public void DespawnAndUnregister()
     {
+        if (Space) Space.RemoveCrew(this);
         CO.co.UnregisterCrew(this);
         NetworkObject.Despawn();
     }
@@ -675,17 +676,42 @@ public class CREW : NetworkBehaviour, iDamageable
         if (UseItem1_Input) UseItem1();
         if (UseItem2_Input) UseItem2();
 
-        if (isDead() && !isDeadForever())
+        if (isDead())
         {
             BleedingTime.Value-= CO.co.GetWorldSpeedDelta();
-            if (BleedingTime.Value < 0)
+            if (!isDeadForever())
             {
-                DeadForever.Value = true;
+                if (BleedingTime.Value < 0)
+                {
+                    DeadForever.Value = true;
+                }
+            }
+            else if (IsPlayer())
+            {
+                if (BleedingTime.Value < -20 || CO.co.IsSafe())
+                {
+                    DeadForever.Value = false;
+                    Heal(50);
+                    transform.position = CO.co.PlayerMainDrifter.MedicalModule.transform.position;
+                    CO.co.PlayerMainDrifter.Interior.AddCrew(this);
+                }
+            } else
+            {
+                //Remove
+                DespawnAndUnregister();
             }
         }
 
         DamageHealingUpdate();
     }
+
+    [Rpc(SendTo.Server)]
+    public void RespawnASAPRpc()
+    {
+        DeadForever.Value = true;
+        BleedingTime.Value = 0;
+    }
+
     private void StrikeUpdate()
     {
         if (EquippedToolObject == null) return;
@@ -983,6 +1009,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public void EquipWeaponPrefab(int ID)
     {
         //Works on Server
+        if (!CanFunction()) return;
         if (EquippedWeapons[ID]) EquipTool(EquippedWeapons[ID].ToolPrefab, ID);
         else EquipTool(null, ID);
         EquipWeaponUpdateUIRpc(ID);
@@ -1001,6 +1028,7 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         //Works on Server
         if (CurrentToolID == ID) return;
+        if (!CanFunction()) return;
         CurrentToolID = ID;
         EquipToolLocallyRpc(ID); //Send to Clients
     }
