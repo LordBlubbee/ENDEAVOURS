@@ -7,6 +7,7 @@ using Unity.Collections;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class CO : NetworkBehaviour
 {
@@ -198,10 +199,10 @@ public class CO : NetworkBehaviour
         foreach (DRIFTER drift in GetAllDrifters())
         {
             drift.CurrentPositionTimer = UnityEngine.Random.Range(15f, 20f);
-            GravityResposition(drift, 40f, 50f);
+            GravityResposition(drift, 40f, 50f, true);
         }
     }
-    void GravityResposition(DRIFTER drift, float mindis, float maxdis)
+    void GravityResposition(DRIFTER drift, float mindis, float maxdis, bool boardingAction = false)
     {
         Vector3 CurrentCenter = PlayerMainDrifter.CurrentLocationPoint;
         if (PlayerMainDrifter == drift)
@@ -213,28 +214,56 @@ public class CO : NetworkBehaviour
             Vector3 Deviation = new Vector3(UnityEngine.Random.Range(-0.4f, 0.4f), UnityEngine.Random.Range(-0.4f, 0.4f));
             Vector3 TowardsDrifter = (drift.CurrentLocationPoint - CurrentCenter).normalized;
             Vector3 AroundPoint = new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f));
-            drift.SetMoveTowards(CurrentCenter + (TowardsDrifter + Deviation).normalized * UnityEngine.Random.Range(mindis, maxdis) + AroundPoint);
+            if (boardingAction)
+            {
+                Deviation = new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f));
+                Vector3 ToLocation = (drift.CurrentLocationPoint - CurrentCenter).normalized;
+                Vector3 LeftDir = new Vector3(-ToLocation.y, ToLocation.x);
+                Vector3 RightDir = new Vector3(ToLocation.y, -ToLocation.x);
+                float distLeft = Vector3.Distance(drift.transform.position, CurrentCenter + LeftDir);
+                float distRight = Vector3.Distance(drift.transform.position, CurrentCenter + RightDir);
+                Vector3 FlankDir = distLeft < distRight ? LeftDir : RightDir;
+                drift.SetMoveTowards(CurrentCenter + (FlankDir + Deviation).normalized * UnityEngine.Random.Range(mindis, maxdis) + AroundPoint);
+            }
+            else drift.SetMoveTowards(CurrentCenter + (TowardsDrifter + Deviation).normalized * UnityEngine.Random.Range(mindis, maxdis) + AroundPoint);
         }
     }
     void HandleGravity() //Gravity Relativity
     {
         if (PlayerMainDrifter == null) return;
-        Vector3 BackgroundSpeed = -PlayerMainDrifter.getLookVector() * PlayerMainDrifter.GetCurrentMovement();
+        Vector3 BackgroundSpeed = -PlayerMainDrifter.getLookVector();
         float CurrentSpeed = 99f;
-        if (PlayerMainDrifter.GetRelativeSpeed() > 0.05f)
+        foreach (DRIFTER drift in GetAllDrifters())
         {
-            foreach (DRIFTER drift in GetAllDrifters())
+            CurrentSpeed = Mathf.Min(drift.GetCurrentMovement(), CurrentSpeed);
+            drift.CurrentPositionTimer -= CO.co.GetWorldSpeedDeltaFixed();
+            if (drift.CurrentPositionTimer < 0)
             {
-                CurrentSpeed = Mathf.Min(drift.GetCurrentMovement(), CurrentSpeed);
-                drift.CurrentPositionTimer -= CO.co.GetWorldSpeedDelta();
-                if (drift.CurrentPositionTimer < 0)
-                {
-                    drift.CurrentPositionTimer = UnityEngine.Random.Range(5f, 15f);
-                    GravityResposition(drift, 50f, 200f);
-                }
+                drift.CurrentPositionTimer = UnityEngine.Random.Range(5f, 15f);
+                GravityResposition(drift, 50f, 200f);
             }
         }
-       
+        BackgroundSpeed *= Mathf.Max(0, CurrentSpeed);
+        BackgroundTransform.back.AddPosition(BackgroundSpeed * CO.co.GetWorldSpeedDeltaFixed());
+        // --- Wrapping logic ---
+        /*if (BackgroundTransform.back.transform.position.x < -BackgroundTransform.back.MapSize())
+        {
+            BackgroundTransform.back.transform.position += new Vector3(BackgroundTransform.back.MapSize() + BackgroundTransform.back.MapSize(), 0);
+        }
+        else if (BackgroundTransform.back.transform.position.x > BackgroundTransform.back.MapSize())
+        {
+            BackgroundTransform.back.transform.position -= new Vector3(BackgroundTransform.back.MapSize() + BackgroundTransform.back.MapSize(), 0);
+        }
+
+        if (BackgroundTransform.back.transform.position.y < -BackgroundTransform.back.MapSize())
+        {
+            BackgroundTransform.back.transform.position += new Vector3(0,BackgroundTransform.back.MapSize() + BackgroundTransform.back.MapSize());
+        }
+        else if (BackgroundTransform.back.transform.position.y > BackgroundTransform.back.MapSize())
+        {
+            BackgroundTransform.back.transform.position -= new Vector3(0, BackgroundTransform.back.MapSize() + BackgroundTransform.back.MapSize());
+        }*/
+
         /* OLD
          * 
          * List<Transform> Trans = new();
@@ -331,6 +360,7 @@ public class CO : NetworkBehaviour
     private void ClearMap()
     {
         //CLEAR MAP
+        BackgroundTransform.back.ResetPosition();
         foreach (CREW crew in new List<CREW>(GetAllCrews()))
         {
             if (crew.Space != PlayerMainDrifter.Space || crew.isDead())
@@ -740,7 +770,8 @@ public class CO : NetworkBehaviour
                 int AliveAmount = GetEnemyCrew().Count - DeadAmount;
                 Death = (float)DeadAmount / (float)GetEnemyCrew().Count;
                 EnemyBarRelative.Value = enemyDrifter.GetHealthRelative();
-                EnemyBarString.Value = $"INTEGRITY: {enemyDrifter.GetHealth().ToString("0")}";
+                if (enemyDrifter.isDead()) EnemyBarString.Value = $"DRIFTER DISABLED";
+                else EnemyBarString.Value = $"INTEGRITY: {enemyDrifter.GetHealth().ToString("0")}";
             }
         }
 

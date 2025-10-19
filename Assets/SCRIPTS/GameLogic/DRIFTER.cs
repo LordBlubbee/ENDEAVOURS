@@ -38,6 +38,13 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     public float AccelerationSpeedMod = 0.25f;
     public float RotationBaseSpeed = 30f;
 
+    private NetworkVariable<bool> Alive = new(true);
+
+    public bool isDead()
+    {
+        return !Alive.Value;
+    }
+
     private NetworkVariable<Vector3> CurrentMovement = new();
     private NetworkVariable<float> CurrentRotation = new();
     [NonSerialized] public NetworkVariable<bool> IsMainDrifter = new();
@@ -122,7 +129,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 
     public bool EnginesDown()
     {
-        return EngineModule && EngineModule.IsDisabled();
+        return EngineModule && EngineModule.IsDisabled() && !isDead();
     }
     public float GetMovementSpeed()
     {
@@ -152,10 +159,10 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     void UpdateTurn()
     {
         float ang = AngleToTurnTarget() + RotationTurbulence;
-        /*if (EnginesDown())
+        if (EnginesDown())
         {
             ang = 0f;
-        }*/
+        }
         float rotGoal = 0f;
         float accelSpeed = GetRotation() * 0.5f;
         if (ang > 1f)
@@ -186,7 +193,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         
         UpdateTurn();
 
-        if (MoveInput == Vector3.zero) // || EnginesDown()
+        if (MoveInput == Vector3.zero || EnginesDown()) // 
         {
             bool XPOS = CurrentMovement.Value.x > 0;
             bool YPOS = CurrentMovement.Value.y > 0;
@@ -199,6 +206,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         }
         if (IsLoon)
         {
+            //Normal 2D space movement
             float towardsang = Mathf.Abs(AngleTowards(CurrentMovement.Value));
             float towardsfactor = 1.2f - Mathf.Clamp((towardsang - 60f) * 0.006f, 0, 0.4f); //The more you look in the correct direction, the faster you move!
             transform.position += CurrentMovement.Value * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
@@ -207,7 +215,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             Vector3 Target = CurrentLocationPoint + CurrentTurbulence;
             Vector3 Dir = (Target - transform.position).normalized;
             float Dis = (Target - transform.position).magnitude;
-            transform.position += Dir * GetCurrentMovement() * Mathf.Min(0.2f * Dis,1f) * CO.co.GetWorldSpeedDeltaFixed();
+            transform.position += Dir * GetMovementSpeed() * Mathf.Min(0.2f * Dis,1f) * CO.co.GetWorldSpeedDeltaFixed();
             if (Dis < 0.3f && GetCurrentMovement() > 0.5f)
             {
                 float Turb = GetCurrentMovement();
@@ -271,8 +279,18 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         {
             CurHealth.Value = 0f;
             //Death
+            Die();
         }
         if (fl > 1) CO_SPAWNER.co.SpawnDMGRpc(fl, ImpactArea);
+    }
+
+    public void Die()
+    {
+        Alive.Value = false;
+        foreach (Module mod in Interior.GetModules())
+        {
+            mod.Die(true);
+        }
     }
     public void Impact(PROJ fl, Vector3 ImpactArea)
     {

@@ -205,7 +205,7 @@ public class AI_GROUP : MonoBehaviour
             if (wep.AutofireActive.Value || HomeDrifter != CO.co.PlayerMainDrifter)
             {
                 Vector3 trt = GetClosestEnemyPositionInNebula(wep.transform.position);
-                if (trt != null)
+                if (trt != Vector3.zero)
                 {
                     wep.SetLookTowards(trt);
                     if (Mathf.Abs(wep.AngleBetweenPoints(trt)) < 10)
@@ -391,6 +391,7 @@ public class AI_GROUP : MonoBehaviour
         {
             if ((enemy.transform.position - vec).magnitude > 150) continue;
             if (enemy.GetFaction() == 0 || enemy.GetFaction() == Faction) continue;
+            if (enemy.isDead()) continue;
             float dist = (enemy.getPos() - myPos).sqrMagnitude;
             if (dist < minDist)
             {

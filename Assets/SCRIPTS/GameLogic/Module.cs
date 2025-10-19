@@ -79,6 +79,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public float HitboxRadius = 16f;
     [NonSerialized] public int Faction;
     protected bool isDisabled = false;
+    protected bool PermanentlyDead = false;
 
     protected NetworkVariable<float> CurHealth = new();
     [NonSerialized] public NetworkVariable<int> SpaceID = new();
@@ -132,6 +133,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     }
     public void Heal(float fl)
     {
+        if (PermanentlyDead) return;
         CurHealth.Value = Mathf.Min(MaxHealth, CurHealth.Value + fl);
         if (CurHealth.Value > 50) isDisabled = false;
         if (fl > 1) CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
@@ -142,11 +144,17 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         CurHealth.Value -= fl;
         if (CurHealth.Value < 0.1f)
         {
-            CurHealth.Value = 0f;
-            isDisabled = true;
             //Death
+            Die();
         }
         if (fl > 1) CO_SPAWNER.co.SpawnDMGRpc(fl, src);
+    }
+
+    public void Die(bool Permanent = false)
+    {
+        CurHealth.Value = 0f;
+        isDisabled = true;
+        PermanentlyDead = Permanent;
     }
     public int GetFaction()
     {
