@@ -405,12 +405,14 @@ MonoBehaviour:
   StartingCrew: []
   Spr: {fileID: 7590115494558501324}
   IsLoon: 0
-  MaxHealth: 800
+  MaxHealth: 1000
   RadiusX: 60
   RadiusY: 45
   MovementSpeed: 8
   AccelerationSpeedMod: 0.3
   RotationBaseSpeed: 15
+  DeathExplosionsFrequency: 0.2
+  DeathTime: 5
 --- !u!114 &8365398891127652454
 MonoBehaviour:
   m_ObjectHideFlags: 0

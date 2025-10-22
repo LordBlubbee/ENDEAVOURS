@@ -169,6 +169,7 @@ MonoBehaviour:
   UseAltitude: 1
   AltitudeInacurracyFactor: 0.1
   AltitudeDirectHitCeiling: 1
+  ImpactVFX: {fileID: 7178822272740056672, guid: 7f7f15c6c27261d438e11d44c34555b3, type: 3}
 --- !u!114 &1279859445198227217
 MonoBehaviour:
   m_ObjectHideFlags: 0

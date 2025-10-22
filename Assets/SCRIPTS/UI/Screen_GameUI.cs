@@ -70,7 +70,7 @@ public class Screen_GameUI : MonoBehaviour
         }
         if (CO.co.AreWeInDanger.Value)
         {
-            bool CommsEnabled = CO.co.CommunicationGamePaused.Value;
+            bool CommsEnabled = CO.co.CommunicationGamePaused.Value && !LOCALCO.local.IsArrivingAnimation();
             CommsMapButton.gameObject.SetActive(CommsEnabled);
             InventoryButton.gameObject.SetActive(false);
             if (CommsEnabled && Input.GetKeyDown(KeyCode.M)) OpenMissionScreen();

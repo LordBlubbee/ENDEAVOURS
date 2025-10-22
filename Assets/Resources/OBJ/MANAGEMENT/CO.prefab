@@ -94,6 +94,14 @@ MonoBehaviour:
   PrefabGrappleLogipedes: {fileID: 8311341897716400573, guid: e11f4c2fe346a554589783eaa99827f3, type: 3}
   PrefabGrappleSilent: {fileID: 8311341897716400573, guid: f731be7339e17ee4399b86044f2ad2b7, type: 3}
   PrefabAmmoCrate: {fileID: 5275543212453673670, guid: 8384cb1ea12c4dd46a5c2c2072f30029, type: 3}
+  ExplosionSmall: {fileID: 1759800388499967267, guid: 7f7f15c6c27261d438e11d44c34555b3, type: 3}
+  ExplosionMedium: {fileID: 1759800388499967267, guid: 70d93878a36b8c54292e0c86ba038037, type: 3}
+  ExplosionLarge: {fileID: 1759800388499967267, guid: 1cdb39950044b5e43b54ed3fc3a2520e, type: 3}
+  EmberSmall: {fileID: 9192043369650961900, guid: a07f1e2f34ce23d46945037640df2664, type: 3}
+  EmberLarge: {fileID: 9192043369650961900, guid: 6102dcc075ab7d64bbc835a812156ff5, type: 3}
+  SparkSmall: {fileID: 9192043369650961900, guid: 5c5b067d31320454f9bb5cf5a8d4badb, type: 3}
+  SparkMedium: {fileID: 9192043369650961900, guid: cf983e25fbd0194488d565e850e1c1ef, type: 3}
+  ImpactSparks: {fileID: 9192043369650961900, guid: 544de0d72e32c7e43b79f0f2cfc56db9, type: 3}
   PrefabDMG: {fileID: 7984331047920370264, guid: d7c770080f1bbd74896728c8e86423ca, type: 3}
   PrefabMapPoint: {fileID: 3321087299976624134, guid: dc2158057d660e74e8c4d97661c8c919, type: 3}
   PrefabLooncrab: {fileID: 5867427934140877094, guid: 86f046a72cbd10a4eb1d9f606f946a03, type: 3}

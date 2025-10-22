@@ -88,6 +88,12 @@ public class ModuleWeapon : Module
         StartCoroutine(AttackReloadAmmo());
     }
 
+    public void ReloadInstantly()
+    {
+        if (ReloadingCurrently.Value) return;
+        StartCoroutine(AttackReloadAmmo());
+    }
+
     public bool EligibleForReload()
     {
         if (CO.co.Resource_Ammo.Value < 10 && GetFaction() == 1) return false;

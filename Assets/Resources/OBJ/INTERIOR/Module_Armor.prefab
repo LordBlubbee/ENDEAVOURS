@@ -423,4 +423,4 @@ MonoBehaviour:
   HitboxRadius: 16
   CenterPos: {fileID: 0}
   MaxArmor: 100
-  ArmorRegen: 10
+  ArmorRegen: 20

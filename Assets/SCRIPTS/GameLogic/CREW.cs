@@ -705,6 +705,13 @@ public class CREW : NetworkBehaviour, iDamageable
         DamageHealingUpdate();
     }
 
+    public void DieForever()
+    {
+        Die();
+        DeadForever.Value = true;
+        BleedingTime.Value = 0;
+    }
+
     [Rpc(SendTo.Server)]
     public void RespawnASAPRpc()
     {
@@ -804,6 +811,7 @@ public class CREW : NetworkBehaviour, iDamageable
                         } else
                         {
                             CO_SPAWNER.co.SpawnWordsRpc("BLOCKED", checkHit);
+                            CO_SPAWNER.co.SpawnImpactRpc(checkHit);
                         }
                         canStrikeMelee = false;
                     }
@@ -824,6 +832,7 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         if (crew is DRIFTER) ((DRIFTER)crew).Impact(dmg, checkHit);
         else crew.TakeDamage(dmg, checkHit);
+        CO_SPAWNER.co.SpawnImpactRpc(checkHit);
         canStrikeMelee = false; //Turn off until animation ends
         return true;
     }

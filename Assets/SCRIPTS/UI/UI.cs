@@ -17,7 +17,6 @@ public class UI : MonoBehaviour
     public Image Crosshair;
     private GameObject PreviousScreen;
 
-
     public TextMeshProUGUI CinematicTex;
     public Image BlackScreen;
     public Image WhiteScreen;
@@ -82,8 +81,10 @@ public class UI : MonoBehaviour
     private bool isFadingBlack;
     private bool shouldBlackBeActive;
     private float BlackFadeSpeed;
+    float CinematicTexScale = 1f;
     public void SetCinematicTex(string tex, Color col, float dur, float delay)
     {
+        CinematicTexScale = 1.2f;
         StartCoroutine(RunCinematicTex(tex, col, dur, delay));
     }
     IEnumerator RunCinematicTex(string tex, Color col, float dur, float delay)
@@ -94,12 +95,16 @@ public class UI : MonoBehaviour
         CinematicTex.color = new Color(col.r, col.g, col.b, 0);
         while (CinematicTex.color.a < 1)
         {
+            CinematicTexScale = Mathf.Max((CinematicTexScale-0.8f) * Time.deltaTime * 3f,1);
+            CinematicTex.transform.localScale = new Vector3(CinematicTexScale, CinematicTexScale, 1);
             CinematicTex.color = new Color(CinematicTex.color.r, CinematicTex.color.g, CinematicTex.color.b, CinematicTex.color.a + Time.deltaTime * 1f);
             yield return null;
         }
         yield return new WaitForSeconds(dur);
         while (CinematicTex.color.a > 0)
         {
+            CinematicTexScale = Mathf.Max((CinematicTexScale - 0.8f) * Time.deltaTime * 3f, 1);
+            CinematicTex.transform.localScale = new Vector3(CinematicTexScale, CinematicTexScale, 1);
             CinematicTex.color = new Color(CinematicTex.color.r, CinematicTex.color.g, CinematicTex.color.b, CinematicTex.color.a - Time.deltaTime * 1f);
             yield return null;
         }

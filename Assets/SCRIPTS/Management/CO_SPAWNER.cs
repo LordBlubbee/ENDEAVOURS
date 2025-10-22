@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEditor.PlayerSettings;
@@ -15,6 +16,16 @@ public class CO_SPAWNER : NetworkBehaviour
     public TOOL PrefabGrappleLogipedes;
     public TOOL PrefabGrappleSilent;
     public ResourceCrate PrefabAmmoCrate;
+
+    [Header("VFX")]
+    public PART ExplosionSmall;
+    public PART ExplosionMedium;
+    public PART ExplosionLarge;
+    public GameObject EmberSmall;
+    public GameObject EmberLarge;
+    public GameObject SparkSmall;
+    public GameObject SparkMedium;
+    public GameObject ImpactSparks;
     public enum DefaultEquipmentSet
     {
         NONE,
@@ -196,31 +207,98 @@ public class CO_SPAWNER : NetworkBehaviour
         return drifter;
     }
 
+    /*VFX*/
 
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnExplosionSmallRpc(Vector3 pos)
+    {
+        float Trans = UnityEngine.Random.Range(0.8f, 1.2f);
+        float Fade = UnityEngine.Random.Range(0.8f, 1.2f);
+        PART part = Instantiate(ExplosionSmall, pos, Quaternion.identity);
+        part.transform.SetParent(CO.co.GetTransformAtPoint(pos));
+        part.transform.localScale = new Vector3(Trans, Trans, 1);
+        part.FadeChange *= Fade;
 
+        float ExplosionPower = 10f - CAM.cam.Dis(pos) * 0.25f;
+        if (ExplosionPower > 2) CAM.cam.ShakeCamera(ExplosionPower * 0.7f);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnExplosionMediumRpc(Vector3 pos)
+    {
+        float Trans = UnityEngine.Random.Range(0.8f, 1.2f);
+        float Fade = UnityEngine.Random.Range(0.8f, 1.2f);
+        PART part = Instantiate(ExplosionMedium, pos, Quaternion.identity);
+        part.transform.SetParent(CO.co.GetTransformAtPoint(pos));
+        part.transform.localScale = new Vector3(Trans, Trans, 1);
+        part.FadeChange *= Fade;
+
+        float ExplosionPower = 11f - CAM.cam.Dis(pos) * 0.25f;
+        if (ExplosionPower > 2) CAM.cam.ShakeCamera(ExplosionPower* 0.8f);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnExplosionLargeRpc(Vector3 pos)
+    {
+        float Trans = UnityEngine.Random.Range(0.8f, 1.2f);
+        float Fade = UnityEngine.Random.Range(0.8f, 1.2f);
+        PART part = Instantiate(ExplosionLarge, pos, Quaternion.identity);
+        part.transform.SetParent(CO.co.GetTransformAtPoint(pos));
+        part.transform.localScale = new Vector3(Trans, Trans, 1);
+        part.FadeChange *= Fade;
+
+        float ExplosionPower = 12f - CAM.cam.Dis(pos)*0.2f;
+        if (ExplosionPower > 2) CAM.cam.ShakeCamera(ExplosionPower);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnImpactRpc(Vector3 pos)
+    {
+        float Trans = UnityEngine.Random.Range(0.8f, 1.2f);
+        GameObject part = Instantiate(ImpactSparks, pos, Quaternion.identity);
+        part.transform.SetParent(CO.co.GetTransformAtPoint(pos));
+        part.transform.localScale = new Vector3(Trans, Trans, 1);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnEmberSmallRpc(Vector3 pos)
+    {
+        float Trans = UnityEngine.Random.Range(0.8f, 1.2f);
+        GameObject part = Instantiate(EmberSmall, pos, Quaternion.identity);
+        part.transform.SetParent(CO.co.GetTransformAtPoint(pos));
+        part.transform.localScale = new Vector3(Trans, Trans, 1);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnEmberLargeRpc(Vector3 pos)
+    {
+        float Trans = UnityEngine.Random.Range(0.8f, 1.2f);
+        GameObject part = Instantiate(EmberLarge, pos, Quaternion.identity);
+        part.transform.SetParent(CO.co.GetTransformAtPoint(pos));
+        part.transform.localScale = new Vector3(Trans, Trans, 1);
+    }
 
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnWordsRpc(string dm, Vector3 pos)
     {
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
+        dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
         dmg.InitWords(dm, 0.7f, Color.red);
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnDMGRpc(float dm, Vector3 pos)
     {
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
+        dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
         dmg.InitNumber(dm, 1f, Color.red);
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnArmorDMGRpc(float dm, Vector3 pos)
     {
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
+        dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
         dmg.InitNumber(dm, 1f, Color.yellow);
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnHealRpc(float dm, Vector3 pos)
     {
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
+        dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
         dmg.InitNumber(dm, 1f, Color.green);
     }
 

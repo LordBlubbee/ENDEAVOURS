@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TreeEditor;
 using Unity.Burst.Intrinsics;
@@ -17,6 +18,11 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     public void SetMoveTowards(Vector3 point)
     {
         CurrentLocationPoint = point;
+    }
+
+    public float GetDodgeChance()
+    {
+        return 0.1f;
     }
     [NonSerialized] public Vector3 CurrentLocationPoint;
     [NonSerialized] public Vector3 CurrentTurbulence;
@@ -37,6 +43,10 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     public float MovementSpeed = 5;
     public float AccelerationSpeedMod = 0.25f;
     public float RotationBaseSpeed = 30f;
+
+    [Header("DEATH")]
+    public float DeathExplosionsFrequency = 0.2f;
+    public float DeathTime = 5f;
 
     private NetworkVariable<bool> Alive = new(true);
 
@@ -129,7 +139,8 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 
     public bool EnginesDown()
     {
-        return EngineModule && EngineModule.IsDisabled() && !isDead();
+        if (isDead()) return true;
+        return EngineModule && EngineModule.IsDisabled();
     }
     public float GetMovementSpeed()
     {
@@ -197,12 +208,12 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         {
             bool XPOS = CurrentMovement.Value.x > 0;
             bool YPOS = CurrentMovement.Value.y > 0;
-            CurrentMovement.Value -= CurrentMovement.Value.normalized * GetMovementAccel() * MovementSpeed * CO.co.GetWorldSpeedDeltaFixed();
+            CurrentMovement.Value -= CurrentMovement.Value.normalized * GetMovementAccel() * GetMovementSpeed() * CO.co.GetWorldSpeedDeltaFixed();
             if (XPOS != CurrentMovement.Value.x > 0 || YPOS != CurrentMovement.Value.y > 0 || CurrentMovement.Value.magnitude < 0.1f) CurrentMovement.Value = Vector3.zero;
         } else
         {
-            CurrentMovement.Value += MoveInput * GetMovementAccel() * MovementSpeed * CO.co.GetWorldSpeedDeltaFixed();
-            if (CurrentMovement.Value.magnitude > MovementSpeed) CurrentMovement.Value = CurrentMovement.Value.normalized * MovementSpeed;
+            CurrentMovement.Value += MoveInput * GetMovementAccel() * GetMovementSpeed() * CO.co.GetWorldSpeedDeltaFixed();
+            if (CurrentMovement.Value.magnitude > GetMovementSpeed()) CurrentMovement.Value = CurrentMovement.Value.normalized * MovementSpeed;
         }
         if (IsLoon)
         {
@@ -215,7 +226,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             Vector3 Target = CurrentLocationPoint + CurrentTurbulence;
             Vector3 Dir = (Target - transform.position).normalized;
             float Dis = (Target - transform.position).magnitude;
-            transform.position += Dir * GetMovementSpeed() * Mathf.Min(0.2f * Dis,1f) * CO.co.GetWorldSpeedDeltaFixed();
+            transform.position += Dir * GetMovementSpeed() * Mathf.Min(0.05f * Dis,1f) * CO.co.GetWorldSpeedDeltaFixed() * 2f;
             if (Dis < 0.3f && GetCurrentMovement() > 0.5f)
             {
                 float Turb = GetCurrentMovement();
@@ -274,6 +285,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     }
     public void TakeDamage(float fl, Vector3 ImpactArea)
     {
+        if (isDead()) return;
         CurHealth.Value -= fl;
         if (CurHealth.Value < 0.1f)
         {
@@ -287,9 +299,68 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     public void Die()
     {
         Alive.Value = false;
+        if (GetFaction() != 1)
+        {
+            LOCALCO.local.CinematicTexRpc("ENEMY DRIFTER DESTROYED");
+        }
+
+        StartCoroutine(DrifterDeathAnimation());
+    }
+
+    IEnumerator DrifterDeathAnimation()
+    {
+        float Death = DeathTime * UnityEngine.Random.Range(0.7f, 1.3f);
+        float ExplosionTimer = 0f;
+        while (Death > 0f)
+        {
+            ExplosionTimer -= Time.deltaTime;
+            Death -= Time.deltaTime;
+            if (ExplosionTimer <= 0f)
+            {
+                Vector3 ExplPos = transform.TransformPoint(new Vector3(UnityEngine.Random.Range(-RadiusX, RadiusX), UnityEngine.Random.Range(-RadiusY, RadiusY), 0)*0.85f);
+                if (UnityEngine.Random.Range(0f, 1f) < 0.7f)
+                {
+                    CO_SPAWNER.co.SpawnExplosionMediumRpc(ExplPos);
+                    ExplosionTimer = DeathExplosionsFrequency * UnityEngine.Random.Range(0.4f, 0.7f);
+                } else
+                {
+                    CO_SPAWNER.co.SpawnExplosionLargeRpc(ExplPos);
+                    ExplosionTimer = DeathExplosionsFrequency * UnityEngine.Random.Range(0.7f, 1.2f);
+                }
+                if (Death < 1f)
+                {
+                    ExplosionTimer *= 0.2f;
+                }
+                foreach (Module mod in Interior.GetModules())
+                {
+                    if ((mod.transform.position - ExplPos).magnitude < 5f)
+                    {
+                        mod.Die(true);
+                    }
+                }
+                foreach (CREW mod in Interior.GetCrew())
+                {
+                    if (mod.GetFaction() == Faction.Value)
+                    {
+                        if ((mod.transform.position - ExplPos).magnitude < 7f)
+                        {
+                            mod.DieForever();
+                        }
+                    }
+                }
+            }
+            yield return null;
+        }
         foreach (Module mod in Interior.GetModules())
         {
             mod.Die(true);
+        }
+        foreach (CREW mod in Interior.GetCrew())
+        {
+            if (mod.GetFaction() == Faction.Value)
+            {
+                mod.DieForever();
+            }
         }
     }
     public void Impact(PROJ fl, Vector3 ImpactArea)

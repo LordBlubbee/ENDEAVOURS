@@ -553,7 +553,7 @@ public class AI_UNIT : NetworkBehaviour
         if (trt != getSpace())
         {
             WalkableTile boarding = trt.GetNearestBoardingGridTransformToPoint(transform.position);
-            if (Dist(boarding.transform.position) < 30f)
+            if (Dist(boarding.transform.position) < 40f)
             {
                 Unit.SetLookTowards(boarding.transform.position);
                 Unit.EquipGrappleRpc();

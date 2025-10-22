@@ -220,6 +220,10 @@ public class SPACE : NetworkBehaviour
         mod.Faction = Drifter.GetFaction();
         Modules.Add(mod);
         mod.Init();
+        if (mod is ModuleWeapon weaponMod)
+        {
+            ((ModuleWeapon)mod).ReloadInstantly();
+        }
         return true;
     }
     public Vector2 ConvertWorldToGrid(Vector3 pos)

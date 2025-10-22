@@ -178,8 +178,9 @@ MonoBehaviour:
   Tip: {fileID: 5280911498916563812}
   ProjectileSpeed: 70
   InaccuracyDegrees: 3
-  MaximumRange: -1
+  MaximumRange: 45
   StickToWalls: 0
-  UseAltitude: 1
+  UseAltitude: 0
   AltitudeInacurracyFactor: 0.05
   AltitudeDirectHitCeiling: 0
+  ImpactVFX: {fileID: 0}

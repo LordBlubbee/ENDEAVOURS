@@ -20,13 +20,13 @@ public class PROJ : NetworkBehaviour
     public float AltitudeDirectHitCeiling;
 
     [Header("IMPACT")]
+    public GameObject ImpactVFX;
     [NonSerialized] public float HullDamageModifier = 1f; //Which factor of damage is done to modules
     [NonSerialized] public float ModuleDamageModifier = 1f; //Which factor of damage is done to modules
     [NonSerialized] public float ArmorDamageModifier = 1f; //Which factor of damage is done to armor
     [NonSerialized] public float ArmorAbsorptionModifier = 1f; //Which factor of damage is taken by armor
     [NonSerialized] public float CrewDamageModifier = 0.5f; //Which facotr of damage is done to nearby crew members
     [NonSerialized] public float CrewDamageSplash = 0f; //Which facotr of damage is done to nearby crew members
-
     [NonSerialized] public CREW CrewOwner;
 
     private float Expire = 10;
@@ -101,6 +101,8 @@ public class PROJ : NetworkBehaviour
     }
     protected virtual void PotentialHitTarget(GameObject collision)
     {
+        if (hasImpacted) return;
+        if (!isActive) return;
         iDamageable crew = collision.GetComponent<iDamageable>();
         if (crew != null)
         {
@@ -110,8 +112,14 @@ public class PROJ : NetworkBehaviour
             DRIFTER drifter = collision.GetComponent<DRIFTER>();
             if (drifter != null)
             {
-                drifter.Impact(this, transform.position);
-                isActive = false;
+                if (UnityEngine.Random.Range(0f, 1f) > drifter.GetDodgeChance())
+                {
+                    drifter.Impact(this, transform.position);
+                    isActive = false;
+                } else
+                {
+                    return;
+                }
             } else
             {
                 crew.TakeDamage(AttackDamage, transform.position);
@@ -121,6 +129,7 @@ public class PROJ : NetworkBehaviour
             {
                 isActive = false;
                 transform.SetParent(collision.transform);
+                if (ImpactVFX) ImpactVFXRpc();
                 ExpireSlowlyRpc();
             }
             else
@@ -138,6 +147,7 @@ public class PROJ : NetworkBehaviour
                 {
                     isActive = false;
                     transform.SetParent(collision.transform.parent);
+                    if (ImpactVFX) ImpactVFXRpc();
                     ExpireSlowlyRpc();
                 }
                 else
@@ -163,16 +173,7 @@ public class PROJ : NetworkBehaviour
                     {
                         CO_SPAWNER.co.SpawnWordsRpc("BLOCKED", transform.position);
                     }
-                    if (StickToWalls)
-                    {
-                        isActive = false;
-                        transform.SetParent(collision.transform);
-                        ExpireSlowlyRpc();
-                    }
-                    else
-                    {
-                        BulletImpact();
-                    }
+                    BulletImpact();
                 }
             }
         }
@@ -183,6 +184,13 @@ public class PROJ : NetworkBehaviour
     protected void ExpireSlowlyRpc()
     {
         StartCoroutine(ExpireSlowlyNum());
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+
+    public void ImpactVFXRpc()
+    {
+        Instantiate(ImpactVFX,Tip.position, Quaternion.identity).transform.SetParent(CO.co.GetTransformAtPoint(Tip.position));
     }
     IEnumerator ExpireSlowlyNum()
     {
@@ -200,6 +208,7 @@ public class PROJ : NetworkBehaviour
     {
         if (hasImpacted) return;
         hasImpacted = true;
+        if (ImpactVFX) ImpactVFXRpc();
         Kill();
     }
     protected void Kill()

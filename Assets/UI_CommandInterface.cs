@@ -295,4 +295,37 @@ public class UI_CommandInterface : MonoBehaviour
     private List<CREW> CrewReferences;
     private List<Module> ModuleReferences;
     private List<ModuleWeapon> WeaponReferences;
+
+
+    public SpriteRenderer SelectionBox;
+    public void SetSelection(Transform trans)
+    {
+        SelectionBoxFollow = trans;
+        SelectionBoxTargetScale = 1.5f;
+        SelectionBoxFade = 1.1f;
+        if (!SelectionBoxActive)
+        {
+            StartCoroutine(SelectionBoxFadeNum());
+        }
+    }
+    bool SelectionBoxActive = false;
+    Transform SelectionBoxFollow;
+    float SelectionBoxTargetScale = 1f;
+    float SelectionBoxFade = 1f;
+    IEnumerator SelectionBoxFadeNum()
+    {
+        SelectionBoxActive = true;
+        while (SelectionBoxFade > 0)
+        {
+            SelectionBox.transform.position = SelectionBoxFollow.position;
+
+            SelectionBoxFade = Mathf.Max(SelectionBoxFade - Time.deltaTime * 2f, 0);
+            SelectionBox.color = new Color(1, 1, 1, SelectionBoxFade);
+
+            SelectionBoxTargetScale = Mathf.Max(SelectionBoxTargetScale - Time.deltaTime * 4f, 1);
+            SelectionBox.transform.localScale = new Vector3(SelectionBoxTargetScale, SelectionBoxTargetScale, 1);
+            yield return null;
+        }
+        SelectionBoxActive = false;
+    }
 }

@@ -6,7 +6,10 @@ using System.Linq;
 using Unity.Collections;
 using Unity.Netcode;
 using Unity.VisualScripting;
+using UnityEditor.ShaderGraph.Drawing.Inspector.PropertyDrawers;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
+using static UnityEditor.PlayerSettings;
 using static UnityEngine.GraphicsBuffer;
 
 public class CO : NetworkBehaviour
@@ -21,6 +24,7 @@ public class CO : NetworkBehaviour
     [NonSerialized] public DRIFTER PlayerMainDrifter;
     [NonSerialized] public NetworkVariable<int> PlayerMapPointID = new();
 
+    private bool ShouldDriftersMove = false;
     public bool IsSafe()
     {
         return !AreWeInDanger.Value;
@@ -143,15 +147,13 @@ public class CO : NetworkBehaviour
 
     public void StartGame()
     {
-        GenerateMap(25, 20);
+        GenerateMap(15);
 
         //NEW GAME
         Resource_Materials.Value = 50;
         Resource_Supplies.Value = 50;
         Resource_Ammo.Value = 50;
         Resource_Tech.Value = 0;
-        AddInventoryItem(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Items/Weapons/Logipedes_Crossbow"));
-        AddInventoryItem(Resources.Load<ScriptableEquippable>("OBJ/SCRIPTABLES/Items/Weapons/Logipedes_Halberd"));
     }
 
     public void AddInventoryItem(ScriptableEquippable equip)
@@ -199,19 +201,35 @@ public class CO : NetworkBehaviour
         foreach (DRIFTER drift in GetAllDrifters())
         {
             drift.CurrentPositionTimer = UnityEngine.Random.Range(15f, 20f);
-            GravityResposition(drift, 40f, 50f, true);
+            GravityResposition(drift, 40f, 50f);
         }
     }
-    void GravityResposition(DRIFTER drift, float mindis, float maxdis, bool boardingAction = false)
+    [Rpc(SendTo.Server)]
+    public void EvasiveManeuverRpc()
+    {
+        foreach (DRIFTER drift in GetAllDrifters())
+        {
+            drift.CurrentPositionTimer = UnityEngine.Random.Range(15f, 20f);
+            GravityResposition(drift, 150f, 200f);
+        }
+    }
+    void GravityResposition(DRIFTER drift, float mindis, float maxdis)
     {
         Vector3 CurrentCenter = PlayerMainDrifter.CurrentLocationPoint;
         if (PlayerMainDrifter == drift)
         {
-            drift.SetMoveTowards(new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f)));
+            drift.SetMoveTowards(Vector3.zero);
         }
         else
         {
-            Vector3 Deviation = new Vector3(UnityEngine.Random.Range(-0.4f, 0.4f), UnityEngine.Random.Range(-0.4f, 0.4f));
+            Vector3 ToLocation = PlayerMainDrifter.getLookVector();
+            Vector3 LeftDir = new Vector3(-ToLocation.y, ToLocation.x);
+            Vector3 RightDir = new Vector3(ToLocation.y, -ToLocation.x);
+            float distLeft = Vector3.Distance(drift.transform.position, CurrentCenter + LeftDir);
+            float distRight = Vector3.Distance(drift.transform.position, CurrentCenter + RightDir);
+            Vector3 FlankDir = distLeft < distRight ? LeftDir : RightDir;
+            drift.SetMoveTowards(CurrentCenter + FlankDir.normalized * UnityEngine.Random.Range(mindis, maxdis));
+            /*Vector3 Deviation = new Vector3(UnityEngine.Random.Range(-0.4f, 0.4f), UnityEngine.Random.Range(-0.4f, 0.4f));
             Vector3 TowardsDrifter = (drift.CurrentLocationPoint - CurrentCenter).normalized;
             Vector3 AroundPoint = new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f));
             if (boardingAction)
@@ -225,12 +243,13 @@ public class CO : NetworkBehaviour
                 Vector3 FlankDir = distLeft < distRight ? LeftDir : RightDir;
                 drift.SetMoveTowards(CurrentCenter + (FlankDir + Deviation).normalized * UnityEngine.Random.Range(mindis, maxdis) + AroundPoint);
             }
-            else drift.SetMoveTowards(CurrentCenter + (TowardsDrifter + Deviation).normalized * UnityEngine.Random.Range(mindis, maxdis) + AroundPoint);
+            else drift.SetMoveTowards(CurrentCenter + (TowardsDrifter + Deviation).normalized * UnityEngine.Random.Range(mindis, maxdis) + AroundPoint);*/
         }
     }
     void HandleGravity() //Gravity Relativity
     {
         if (PlayerMainDrifter == null) return;
+        if (!ShouldDriftersMove) return;
         Vector3 BackgroundSpeed = -PlayerMainDrifter.getLookVector();
         float CurrentSpeed = 99f;
         foreach (DRIFTER drift in GetAllDrifters())
@@ -245,83 +264,6 @@ public class CO : NetworkBehaviour
         }
         BackgroundSpeed *= Mathf.Max(0, CurrentSpeed);
         BackgroundTransform.back.AddPosition(BackgroundSpeed * CO.co.GetWorldSpeedDeltaFixed());
-        // --- Wrapping logic ---
-        /*if (BackgroundTransform.back.transform.position.x < -BackgroundTransform.back.MapSize())
-        {
-            BackgroundTransform.back.transform.position += new Vector3(BackgroundTransform.back.MapSize() + BackgroundTransform.back.MapSize(), 0);
-        }
-        else if (BackgroundTransform.back.transform.position.x > BackgroundTransform.back.MapSize())
-        {
-            BackgroundTransform.back.transform.position -= new Vector3(BackgroundTransform.back.MapSize() + BackgroundTransform.back.MapSize(), 0);
-        }
-
-        if (BackgroundTransform.back.transform.position.y < -BackgroundTransform.back.MapSize())
-        {
-            BackgroundTransform.back.transform.position += new Vector3(0,BackgroundTransform.back.MapSize() + BackgroundTransform.back.MapSize());
-        }
-        else if (BackgroundTransform.back.transform.position.y > BackgroundTransform.back.MapSize())
-        {
-            BackgroundTransform.back.transform.position -= new Vector3(0, BackgroundTransform.back.MapSize() + BackgroundTransform.back.MapSize());
-        }*/
-
-        /* OLD
-         * 
-         * List<Transform> Trans = new();
-        foreach (CREW ob in GetAllCrews())
-        {
-            if (ob.Space == null) Trans.Add(ob.transform);
-        }
-        List<DRIFTER> Drifters = GetAllDrifters();
-        foreach (DRIFTER ob in Drifters)
-        {
-            Trans.Add(ob.transform);
-        }
-
-        if (Trans.Count < 2) return; // not enough objects to compare
-
-        float maxDist = 0f;
-        Vector3 posA = Vector3.zero;
-        Vector3 posB = Vector3.zero;
-
-        // Find the two furthest transforms
-        for (int i = 0; i < Trans.Count; i++)
-        {
-            for (int j = i + 1; j < Trans.Count; j++)
-            {
-                float dist = Vector3.Distance(Trans[i].position, Trans[j].position);
-                if (dist > maxDist)
-                {
-                    maxDist = dist;
-                    posA = Trans[i].position;
-                    posB = Trans[j].position;
-                }
-            }
-        }
-        // Calculate midpoint between them
-        Vector3 midpoint = (posA + posB) * 0.5f;
-
-        // You can now use `midpoint` for whatever you need (debug, centering camera, etc.)
-
-        float noPullRange = 40f + Drifters.Count*10;       // distance within which no pull is applied
-        float pullStrength = 0.1f;    // base multiplier for how strongly they move per frame (tune as needed)
-
-        foreach (Transform trans in Trans)
-        {
-            Vector3 dir = (midpoint - trans.position);
-            float dist = dir.magnitude;
-            if (dist <= noPullRange) continue; // skip close ones
-
-            dir.Normalize();
-
-            // The pull grows stronger the further they are beyond 50 units
-            float pullFactor = (dist - noPullRange) * pullStrength;
-
-            // Optionally clamp it so it doesn’t yank things too hard
-            pullFactor = Mathf.Max(pullFactor, 0f);
-
-            // Apply pull
-            trans.position += dir * pullFactor * GetWorldSpeedDelta();
-        }*/
     }
 
     IEnumerator Travel(MapPoint destination)
@@ -442,31 +384,33 @@ public class CO : NetworkBehaviour
         if (local.CurrentMapVote.Value == ID) local.CurrentMapVote.Value = -1;
         else local.CurrentMapVote.Value = ID;
     }
-    public void GenerateMap(float mapSize, int PointAmount)
+
+    private int GetMapWidth() { return 20; }
+    private int GetPointStep() { return 5; }
+    public void GenerateMap(float mapSize)
     {
         foreach (MapPoint map in GetMapPoints())
         {
             map.NetworkObject.Despawn();
         }
         RegisteredMapPoints = new();
-        MapPoint mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3(-mapSize, UnityEngine.Random.Range(-mapSize * 0.7f, mapSize * 0.7f)));
         //StartPoint
         PlayerMapPointID.Value = 0;
+        float MapWidth = GetMapWidth();
+        MapPoint mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3(-GetPointStep(), MapWidth * 0.5f));
         RegisterMapPoint(mapPoint);
-        int Tries = 50;
-
-        while (PointAmount > 0)
+       // mapPoint.Init(CurrentBiome.PossiblePointsRandom[UnityEngine.Random.Range(0,CurrentBiome.PossiblePointsRandom.Count)], 0);
+        for (int i = 0; i < mapSize; i++)
         {
-            Vector3 tryPos = new Vector3(UnityEngine.Random.Range(-mapSize, mapSize), UnityEngine.Random.Range(-mapSize * 0.7f, mapSize * 0.7f));
-            if (IsPointLegal(tryPos) || Tries < 1)
+            int max = UnityEngine.Random.Range(2, 5);
+            for (int amn = 0; amn < max; amn++)
             {
+                // 5
+                // 2.5 7.5
+                // 3.33 6.67
+                Vector3 tryPos = new Vector3(i* GetPointStep(), (amn + 1) * (MapWidth / max) - (MapWidth / max));
                 mapPoint = CO_SPAWNER.co.CreateMapPoint(tryPos);
-                PointAmount--;
                 RegisterMapPoint(mapPoint);
-                Tries = 50;
-            } else
-            {
-                Tries--;
             }
         }
         Debug.Log("Generating map");
@@ -476,16 +420,6 @@ public class CO : NetworkBehaviour
             map.ConnectedPoints = GetConnectedPoints(map.transform.position, map);
             map.Init(CurrentBiome.PossiblePointsRandom[UnityEngine.Random.Range(0, CurrentBiome.PossiblePointsRandom.Count)], ID);
             ID++;
-        }
-        foreach (MapPoint map in GetMapPoints())
-        {
-            foreach (MapPoint map2 in map.ConnectedPoints)
-            {
-                if (!map2.ConnectedPoints.Contains(map))
-                {
-                    map2.ConnectedPoints.Add(map);
-                }
-            }
         }
     }
 
@@ -526,7 +460,7 @@ public class CO : NetworkBehaviour
     }
     private List<MapPoint> GetConnectedPoints(Vector3 center, MapPoint us = null)
     {
-        MapPoint Closest1 = null;
+        /*MapPoint Closest1 = null;
         MapPoint Closest2 = null;
         float Closest1Dist = 999f;
         float Closest2Dist = 999f;
@@ -552,7 +486,13 @@ public class CO : NetworkBehaviour
             }
         }
         if (Closest1 && !list.Contains(Closest1)) list.Add(Closest1);
-        if (Closest2 && !list.Contains(Closest2)) list.Add(Closest2);
+        if (Closest2 && !list.Contains(Closest2)) list.Add(Closest2);*/
+        List<MapPoint> list = new();
+        foreach (MapPoint map in GetMapPoints())
+        {
+            if (map == us) continue;
+            if (map.transform.position.x > center.x - 0.5f + GetPointStep() && map.transform.position.x < center.x + 0.5f + GetPointStep()) list.Add(map);
+        }
         return list;
     }
 
@@ -736,6 +676,7 @@ public class CO : NetworkBehaviour
     }
     IEnumerator Event_GenericBattle()
     {
+        ShouldDriftersMove = true;
         AreWeInDanger.Value = true;
         ResetWeights();
         int i = 0;
@@ -775,7 +716,20 @@ public class CO : NetworkBehaviour
             }
         }
 
-            EnemyBarRelative.Value = -1;
+        EnemyBarRelative.Value = -1;
+
+        if (enemyDrifter)
+        {
+            foreach (Module mod in enemyDrifter.Interior.GetModules())
+            {
+                mod.Die(true);
+            }
+        }
+
+        yield return new WaitForSeconds(5f);
+        LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
+
+        yield return new WaitForSeconds(3f);
         if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
         AreWeInDanger.Value = false;
         ProcessLootTable(CurrentEvent.LootTable, 1f);
@@ -799,6 +753,18 @@ public class CO : NetworkBehaviour
             ExperienceMod = Mathf.Max(ExperienceMod, crew.GetATT_COMMAND() * 0.05f + 1f);
         }
         return ExperienceMod;
+    }
+
+    public Transform GetTransformAtPoint(Vector3 vec)
+    {
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(vec, 0.1f))
+        {
+            if (col.GetComponent<SPACE>() != null)
+            {
+                return col.transform;
+            }
+        }
+        return null;
     }
     private void ProcessLootTable(ScriptableLootTable table, float LootLevelMod)
     {

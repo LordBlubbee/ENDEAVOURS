@@ -114,8 +114,13 @@ public class UI_Module : MonoBehaviour
         
         if (wep.GetAmmoRatio() > 0) StatusTex.text += $" | <color=yellow>AMMO {wep.GetAmmo()}/{wep.MaxAmmo}</color>";
         else StatusTex.text += " | <color=red>NO AMMO</color>";
+
         if (wep.GetOrderPoint() == Vector3.zero) StatusTex.text += " | <color=red>NO TARGET</color>";
         else StatusTex.text += " | <color=yellow>TARGET SET</color>";
+
+        if (wep.CurCooldown.Value > 0f) StatusTex.text += " | <color=green>READY</color>";
+        else StatusTex.text += $" | <color=yellow>LOADING {(wep.CurCooldown.Value).ToString("0.0")}</color>";
+
 
         StatusTex.color = Icon.color;
 
@@ -197,11 +202,13 @@ public class UI_Module : MonoBehaviour
         switch (Mode)
         {
             case UIModuleModes.CREW:
+                UI_CommandInterface.co.SetSelection(Crew.transform);
                 UI_CommandInterface.co.BeginOrdering(this);
                 break;
             case UIModuleModes.MODULE:
                 break;
             case UIModuleModes.MODULEWEAPON:
+                UI_CommandInterface.co.SetSelection(ModuleWeapon.transform);
                 UI_CommandInterface.co.BeginOrdering(this);
                 break;
         }

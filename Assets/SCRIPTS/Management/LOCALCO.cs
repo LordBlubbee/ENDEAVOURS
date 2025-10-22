@@ -443,8 +443,44 @@ public class LOCALCO : NetworkBehaviour
     public void ShipTransportFadeInRpc()
     {
         UI.ui.FadeFromBlack(2f);
-        UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
+        StartCoroutine(ArrivalAnimation());
+    }
+
+    bool arrivalAnimation = false;
+
+    public bool IsArrivingAnimation()
+    {
+        return arrivalAnimation;
+    }
+    IEnumerator ArrivalAnimation()
+    {
+        arrivalAnimation = true;
         CurrentControlMode = ControlModes.NONE;
+        CAM.cam.SetCameraMode(Vector3.zero, 150f, 150f, 150f);
+        yield return new WaitForSeconds(3f);
+        CurrentControlMode = ControlModes.NONE;
+        SetCameraToPlayer();
+        yield return new WaitForSeconds(1.5f);
+        UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
+        arrivalAnimation = false;
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void CinematicTexRpc(string str)
+    {
+        UI.ui.SetCinematicTex(str, Color.green, 4f, 1f);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void PanCameraRpc(Vector3 vec, float size, float dur)
+    {
+        StartCoroutine(PanCameraNum(vec, size, dur));
+    }
+
+    IEnumerator PanCameraNum(Vector3 vec, float size, float dur)
+    {
+        CurrentControlMode = ControlModes.NONE;
+        CAM.cam.SetCameraMode(vec, 150f, 150f, 150f);
+        yield return new WaitForSeconds(dur);
         SetCameraToPlayer();
     }
 }
