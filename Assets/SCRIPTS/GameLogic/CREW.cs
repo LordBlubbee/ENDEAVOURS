@@ -42,6 +42,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public float RotationDistanceFactor = 4;
     public float RotationBaseSpeed = 90;
     public float GrappleCooldown = 10f;
+    public bool BleedOut = true;
 
     [Header("ATTRIBUTES")]
     [NonSerialized] public NetworkVariable<int> SkillPoints = new NetworkVariable<int>(0); //Not used in initial character creation
@@ -544,7 +545,13 @@ public class CREW : NetworkBehaviour, iDamageable
         CurrentReload = 0;
         DashingDamageBuff = 0.6f;
         StartCoroutine(DashNumerator());
-        setAnimationRpc(ANIM.AnimationState.MI_DASH);
+        if (EquippedToolObject)
+        {
+            if (EquippedToolObject.ActionUse1 == TOOL.ToolActionType.RANGED_ATTACK || EquippedToolObject.ActionUse1 == TOOL.ToolActionType.SPELL_ATTACK)
+            {
+                setAnimationRpc(ANIM.AnimationState.MI_DASH);
+            }
+        }
     }
 
     bool isDashing = false;
@@ -656,55 +663,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
 
     private float LastStaminaUsed = 0f;
-    private void Update()
-    {
-        AnimationUpdate();
-        if (!IsServer) return;
-        if (OrderTransform != null) OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
-        StrikeUpdate();
-        if (GetStamina() < GetMaxStamina())
-        {
-            LastStaminaUsed += CO.co.GetWorldSpeedDelta();
-
-            AddStamina(CO.co.GetWorldSpeedDelta() * GetStaminaRegen() * LastStaminaUsed * 0.5f);
-            if (LastStaminaUsed > 2f)
-            {
-                AnimationComboWeapon1 = 0;
-                AnimationComboWeapon2 = 0;
-            }
-        }
-        if (UseItem1_Input) UseItem1();
-        if (UseItem2_Input) UseItem2();
-
-        if (isDead())
-        {
-            BleedingTime.Value-= CO.co.GetWorldSpeedDelta();
-            if (!isDeadForever())
-            {
-                if (BleedingTime.Value < 0)
-                {
-                    DeadForever.Value = true;
-                }
-            }
-            else if (IsPlayer())
-            {
-                if (BleedingTime.Value < -20 || CO.co.IsSafe())
-                {
-                    DeadForever.Value = false;
-                    Heal(50);
-                    transform.position = CO.co.PlayerMainDrifter.MedicalModule.transform.position;
-                    CO.co.PlayerMainDrifter.Interior.AddCrew(this);
-                }
-            } else
-            {
-                //Remove
-                DespawnAndUnregister();
-            }
-        }
-
-        DamageHealingUpdate();
-    }
-
+    
     public void DieForever()
     {
         Die();
@@ -735,6 +694,10 @@ public class CREW : NetworkBehaviour, iDamageable
                     if (!canStrike) return;
                     StrikeRanged(LookTowards);
                     break;
+                case TOOL.ToolActionType.SPELL_ATTACK:
+                    if (!canStrike) return;
+                    StrikeSpell(LookTowards);
+                    break;
                 case TOOL.ToolActionType.REPAIR:
                     if (!canStrikeMelee) return;
                     StrikeRepair();
@@ -752,6 +715,14 @@ public class CREW : NetworkBehaviour, iDamageable
                     {
                         blocker.SetActive(true);
                     }
+                    break;
+                case TOOL.ToolActionType.MELEE_AND_BLOCK:
+                    foreach (BlockAttacks blocker in EquippedToolObject.Blockers)
+                    {
+                        blocker.SetActive(true);
+                    }
+                    if (!canStrikeMelee) return;
+                    StrikeMelee();
                     break;
             }
             return;
@@ -843,11 +814,25 @@ public class CREW : NetworkBehaviour, iDamageable
         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
         dmg *= AnimationController.CurrentStrikePower();
         dmg *= 0.7f + 0.1f * GetATT_ARMS();
+        proj.NetworkObject.Spawn();
         proj.Init(dmg, GetFaction(), Space, trt);
         proj.CrewOwner = this;
-        proj.NetworkObject.Spawn();
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
         reload /= 0.6f + 0.05f * GetATT_ARMS() + 0.05f * GetATT_ALCHEMY();
+        StartCoroutine(AttackCooldown(reload));
+    }
+    private void StrikeSpell(Vector3 trt)
+    {
+        PROJ proj = Instantiate(SelectedWeaponAbility == 0 ? EquippedToolObject.RangedPrefab1 : EquippedToolObject.RangedPrefab2, EquippedToolObject.strikePoints[0].position, EquippedToolObject.transform.rotation);
+        float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
+        dmg *= AnimationController.CurrentStrikePower();
+        dmg *= 0.7f + 0.1f * GetATT_COMMUNOPATHY();
+        if (GetATT_COMMUNOPATHY() < 4) dmg *= 0.25f * GetATT_COMMUNOPATHY();
+        proj.NetworkObject.Spawn();
+        proj.Init(dmg, GetFaction(), Space, trt);
+        proj.CrewOwner = this;
+        float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
+        reload /= 0.4f + 0.08f * GetATT_COMMUNOPATHY() + 0.08f * GetATT_ALCHEMY();
         StartCoroutine(AttackCooldown(reload));
     }
     private void StrikeRepair()
@@ -866,7 +851,7 @@ public class CREW : NetworkBehaviour, iDamageable
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
                     dmg *= 0.4f + 0.2f * GetATT_ENGINEERING();
-                    if (!CO.co.AreWeInDanger.Value) dmg *= 5;
+                    if (CO.co.IsSafe()) dmg *= 5;
                     crew.Heal(dmg);
                     canStrikeMelee = false; //Turn off until animation ends
                     return;
@@ -876,28 +861,36 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     private void StrikeHealOthers()
     {
+        iDamageable crew = null;
+        float MaxDis = 999f;
         foreach (Transform hitTrans in EquippedToolObject.strikePoints)
         {
             Vector3 checkHit = hitTrans.position;
             foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 2f))
             {
-                iDamageable crew = col.GetComponent<iDamageable>();
-                if (crew != null)
+                iDamageable trt = col.GetComponent<iDamageable>();
+                float Dis = (col.transform.position - transform.position).magnitude;
+                if (Dis < MaxDis)
                 {
-                    //if (crew.GetFaction() != Faction) return;
-                    if (col.gameObject == gameObject) continue;
-                    if (crew.Space != Space) continue;
-                    if (crew.GetFaction() != GetFaction()) continue;
-                    if (crew is Module) continue;
-                    float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
-                    dmg *= AnimationController.CurrentStrikePower();
-                    dmg *= GetHealingSkill();
-                    if (!CO.co.AreWeInDanger.Value) dmg *= 5;
-                    crew.Heal(dmg);
-                    canStrikeMelee = false; //Turn off until animation ends
-                    return;
+                    if (col.gameObject == gameObject) continue; 
+                    if (trt.Space != Space) continue;
+                    if (trt.GetFaction() != GetFaction()) continue;
+                    if (trt is Module) continue;
+                    crew = trt;
+                    MaxDis = Dis;
                 }
             }
+        }
+        if (crew != null)
+        {
+            //if (crew.GetFaction() != Faction) return;
+            float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
+            dmg *= AnimationController.CurrentStrikePower();
+            dmg *= GetHealingSkill();
+            if (CO.co.IsSafe()) dmg *= 5;
+            crew.Heal(dmg);
+            canStrikeMelee = false; //Turn off until animation ends
+            return;
         }
     }
     private void StrikeHealSelf()
@@ -906,7 +899,7 @@ public class CREW : NetworkBehaviour, iDamageable
         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
         dmg *= AnimationController.CurrentStrikePower();
         dmg *= GetHealingSkill();
-        if (!CO.co.AreWeInDanger.Value) dmg *= 5;
+        if (CO.co.IsSafe()) dmg *= 5;
         Heal(dmg);
     }
 
@@ -939,6 +932,12 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         return AnimationController.setAnimation(stat, pr);
     }
+    public void setAnimationIfNotAlready(ANIM.AnimationState stat, int pr = 99)
+    {
+        if (!hasInitialized) return;
+        if (GetCurrentAnimation() == stat) return;
+        AnimationController.setAnimation(stat, pr);
+    }
 
     [Rpc(SendTo.ClientsAndHost)]
     public void setAnimationRpc(ANIM.AnimationState stat, int pr = 99)
@@ -951,27 +950,81 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         AnimationController.setAnimation(stat, pr);
     }
-    private void FixedUpdate()
+    private void Update()
     {
-        //if (!IsServer) return;
+        AnimationUpdate();
+        MoveAndLook();
+        if (!IsServer) return;
+        if (OrderTransform != null) OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
+        StrikeUpdate();
+        if (GetStamina() < GetMaxStamina())
+        {
+            LastStaminaUsed += CO.co.GetWorldSpeedDelta();
+
+            AddStamina(CO.co.GetWorldSpeedDelta() * GetStaminaRegen() * LastStaminaUsed * 0.5f);
+            if (LastStaminaUsed > 2f)
+            {
+                AnimationComboWeapon1 = 0;
+                AnimationComboWeapon2 = 0;
+            }
+        }
+        if (UseItem1_Input) UseItem1();
+        if (UseItem2_Input) UseItem2();
+
+        if (isDead())
+        {
+            BleedingTime.Value -= CO.co.GetWorldSpeedDelta();
+            if (!isDeadForever())
+            {
+                if (BleedingTime.Value < 0)
+                {
+                    DeadForever.Value = true;
+                }
+            }
+            else if (IsPlayer())
+            {
+                if (BleedingTime.Value < -20 || CO.co.IsSafe())
+                {
+                    DeadForever.Value = false;
+                    Heal(50);
+                    transform.position = CO.co.PlayerMainDrifter.MedicalModule.transform.position;
+                    CO.co.PlayerMainDrifter.Interior.AddCrew(this);
+                }
+            }
+            else
+            {
+                //Remove
+            }
+        }
+
+        DamageHealingUpdate();
+    }
+
+    public ANIM.AnimationState GetCurrentAnimation()
+    {
+         return AnimationController.getAnimationState();
+    }
+    private void MoveAndLook()
+    {
         if (!CanFunction())
         {
-            if (isDead())
+            if (isDead() && !isDeadForever() && IsServer)
             {
                 if (GetHealth() > 50)
                 {
                     Alive.Value = true;
-                    setAnimationRpc(ANIM.AnimationState.MI_IDLE);
+                    setAnimationIfNotAlready(ANIM.AnimationState.MI_IDLE);
                 }
             }
             return;
         }
+        float delta = CO.co.GetWorldSpeedDelta();
         if (isLooking)
         {
             float ang = AngleToTurnTarget();
             if (ang > 1f)
             {
-                transform.Rotate(Vector3.forward, (Mathf.Abs(ang) * RotationDistanceFactor + RotationBaseSpeed) * CO.co.GetWorldSpeedDeltaFixed());
+                transform.Rotate(Vector3.forward, (Mathf.Abs(ang) * RotationDistanceFactor + RotationBaseSpeed) * delta);
                 ang = AngleToTurnTarget();
                 if (AngleToTurnTarget() < 0f)
                 {
@@ -981,14 +1034,15 @@ public class CREW : NetworkBehaviour, iDamageable
             }
             else if (ang < -1f)
             {
-                transform.Rotate(Vector3.forward, -(Mathf.Abs(ang) * RotationDistanceFactor + RotationBaseSpeed) * CO.co.GetWorldSpeedDeltaFixed());
+                transform.Rotate(Vector3.forward, -(Mathf.Abs(ang) * RotationDistanceFactor + RotationBaseSpeed) * delta);
                 ang = AngleToTurnTarget();
                 if (AngleToTurnTarget() > 0f)
                 {
                     transform.Rotate(Vector3.forward, ang);
                     isLooking = false;
                 }
-            } else
+            }
+            else
             {
                 isLooking = false;
             }
@@ -1001,14 +1055,15 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         if (isMoving.Value)
         {
-            if (IsServer) setAnimationRpc(animDefaultMove, 1);
+            if (IsServer) setAnimationIfNotAlready(animDefaultMove, 1);
             float towardsang = Mathf.Abs(AngleTowards(MoveInput));
-            float towardsfactor = 1.1f - Mathf.Clamp((towardsang-70f)*0.005f,0,0.5f); //The more you look in the correct direction, the faster you move!
-            transform.position += MoveInput * GetSpeed() * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
+            float towardsfactor = 1.1f - Mathf.Clamp((towardsang - 70f) * 0.005f, 0, 0.5f); //The more you look in the correct direction, the faster you move!
+            transform.position += MoveInput * GetSpeed() * towardsfactor * delta;
             Rigid.MovePosition(transform.position);
             //Rigid.MovePosition(transform.position + MoveInput * GetSpeed() * towardsfactor * CO.co.GetWorldSpeedDelta());
-            
-        } else
+
+        }
+        else
         {
             if (IsServer) setAnimationRpc(animDefaultIdle, 1);
         }
@@ -1159,7 +1214,7 @@ public class CREW : NetworkBehaviour, iDamageable
         float Diff = CurHealth.Value;
         CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
         Diff -= CurHealth.Value;
-        if (CurHealth.Value > 50 && isDead())
+        if (CurHealth.Value > 49 && isDead())
         {
             Alive.Value = true;
         }
@@ -1168,6 +1223,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public void TakeDamage(float fl, Vector3 src)
     {
+        if (isDeadForever()) return;
         if (isDashing) return;
         if (DashingDamageBuff > 0f) fl *= 0.5f;
         lastDamageTime = 7f;
@@ -1175,7 +1231,8 @@ public class CREW : NetworkBehaviour, iDamageable
         if (CurHealth.Value < 0.1f)
         {
             CurHealth.Value = 0f;
-            Die();
+            if (!BleedOut) DieForever();
+            else Die();
         }
         CO_SPAWNER.co.SpawnDMGRpc(fl, src);
     }
@@ -1265,7 +1322,7 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         Alive.Value = false;
         BleedingTime.Value = 60;
-        setAnimationRpc(ANIM.AnimationState.MI_DEAD1, 1);
+        setAnimationRpc(ANIM.AnimationState.MI_DEAD1);
     }
     public void AddStamina(float fl)
     {

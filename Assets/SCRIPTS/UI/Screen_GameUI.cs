@@ -78,7 +78,7 @@ public class Screen_GameUI : MonoBehaviour
         {
             CommsMapButton.gameObject.SetActive(true);
             InventoryButton.gameObject.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.I)) UI.ui.SelectScreen(UI.ui.InventoryUI.gameObject);
+            if (Input.GetKeyDown(KeyCode.I)) UI.ui.OpenTalkScreenFancy(UI.ui.InventoryUI.gameObject);
             if (Input.GetKeyDown(KeyCode.U)) OpenMissionScreen();
         }
         if (ActiveUI.gameObject.activeSelf)
@@ -131,9 +131,18 @@ public class Screen_GameUI : MonoBehaviour
 
         if (player.isDead())
         {
-            BleedingOutScreen.gameObject.SetActive(true);
+            BleedingOutScreen.gameObject.SetActive(!CO.co.PlayerMainDrifter.MedicalModule.IsDisabled());
             BleedingButton.gameObject.SetActive(!player.isDeadForever());
-            if (player.isDeadForever()) BleedingTex.text = $"-RESPAWNING- \n{20+player.BleedingTime.Value.ToString("0")}";
+            if (player.isDeadForever())
+            {
+                if (CO.co.PlayerMainDrifter.MedicalModule.IsDisabled())
+                {
+                    BleedingTex.text = "-CANNOT RESPAWN- \nNO MEDICAL BAY";
+                } else
+                {
+                    BleedingTex.text = $"-RESPAWNING- \n{(20 + player.BleedingTime.Value).ToString("0")}";
+                }
+            }
             else BleedingTex.text = $"-BLEEDING OUT- \n{player.BleedingTime.Value.ToString("0")}";
             if (UI_CommandInterface.co.IsCommandingTabOpen())
             {
@@ -179,8 +188,8 @@ public class Screen_GameUI : MonoBehaviour
     }
     public void OpenMissionScreen()
     {
-        if (CO_STORY.co.IsCommsActive()) UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
-        else UI.ui.SelectScreen(UI.ui.MapUI.gameObject);
+        if (CO_STORY.co.IsCommsActive()) UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
+        else UI.ui.OpenTalkScreenFancy(UI.ui.MapUI.gameObject);
     }
     public void EquipWeaponUI(int ID)
     {

@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7e2d111c92f9ac4584f40d8399107e1, type: 3}
+  m_Name: Nomaden_Hunter
+  m_EditorClassIdentifier: 
+  BackgroundName: Nebuloid Hunter
+  ResourcePath: OBJ/SCRIPTABLES/BACKGROUNDS/Nomaden_Hunter
+  MainIcon: {fileID: 21300000, guid: dc34b7f7fe82db8468037fd392493744, type: 3}
+  Sprite_Player: {fileID: 21300000, guid: 0c1886808aa933c40a603d5875372528, type: 3}
+  Sprite_Stripes: {fileID: 21300000, guid: 3747a236bcb720442860dfee28781287, type: 3}
+  ShortDesc: The proud Nebuloid Hunter Clans are various groups that pride themselves
+    in hunting down the dangerous fauna of the Mist, as mercenary bodyguards or as
+    exotic defenders of humanity.
+  LongDesc: 'The proud Nebuloid Hunter Clans are various groups that pride themselves
+    in hunting down the dangerous fauna of the Mist, as mercenary bodyguards or as
+    exotic defenders of humanity.
+
+
+    STARTING ITEMS: RIFLE
+
+    DEX +2
+
+    ARM
+    +1
+
+    ALC +1'
+  BackgroundColor: {r: 0.059271906, g: 0.3679245, b: 0, a: 1}
+  Background_ATT_BONUS: 0000000001000000020000000000000000000000000000000100000000000000
+  Background_StartingWeapon: {fileID: 11400000, guid: e59a1c2997ccefe469aab1d66e0ff5a3, type: 2}
+  Background_StartingWeapon2: {fileID: 0}
+  Background_StartingArtifact: {fileID: 0}
+  Background_StartingArmor: {fileID: 0}
+  Background_ReputationEffect:
+  - Fac: 7
+    Amount: 1
+  - Fac: 6
+    Amount: 1
+  - Fac: 8
+    Amount: 1
+  - Fac: 1
+    Amount: -1
+  NameCategory: 4

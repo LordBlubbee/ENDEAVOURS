@@ -91,6 +91,14 @@ public class AI_UNIT : NetworkBehaviour
         AI_MoveTargetSpace = space;
         AI_IsMoving = true;
     }
+    private void SetAIMoveTowardsIfDistant(Vector3 target, SPACE space)
+    {
+        if ((GetAI_MoveTarget() - target).magnitude > 5f)
+        {
+            StopMoving();
+        }
+        SetAIMoveTowards(target, space);
+    }
     private bool SetAIMoveTowardsIfExpired(Vector3 target, SPACE space, float movtimer)
     {
         if (AI_MoveTimer > 0f && DistToMoveTarget() > 1f) return false;
@@ -278,8 +286,8 @@ public class AI_UNIT : NetworkBehaviour
                     if (UnityEngine.Random.Range(0f, 1f) < 0.4f) SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()), EnemyTarget.Space);
                     else SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, UnityEngine.Random.Range(8f, 20f)), EnemyTarget.Space);
                     SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
-                    if (UnityEngine.Random.Range(0f, 1f) < 0.15f) Unit.UseItem2Rpc();
-                    else if (UnityEngine.Random.Range(0f, 1f) < 0.05f) Unit.Dash();
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.UseItem2Rpc();
+                    else if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
                     break;
                 case AI_TACTICS.CIRCLE:
                     Unit.EquipWeapon1Rpc();
@@ -293,12 +301,13 @@ public class AI_UNIT : NetworkBehaviour
                     }
                     Unit.UseItem2Rpc();
                     SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
                     break;
                 case AI_TACTICS.RETREAT:
                     point = GetDiagonalPointTowards(EnemyTarget.transform.position, -12f, LeaningRight);
                     SetAIMoveTowards(point, EnemyTarget.Space);
                     SetLookTowards(point, EnemyTarget.Space);
-                    if (UnityEngine.Random.Range(0f, 1f) < 0.2f) Unit.Dash();
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();
                     Unit.EquipMedkitRpc();
                     Unit.UseItem2Rpc();
                     break;
@@ -325,15 +334,18 @@ public class AI_UNIT : NetworkBehaviour
             }
             if (ObjectiveSpace != getSpace())
             {
-                AttemptBoard(ObjectiveSpace);
-                SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(ObjectiveSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
-                SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
+                if (!AttemptBoard(ObjectiveSpace))
+                {
+                    SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(ObjectiveSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
+                    SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
+                }
                 return;
             }
+            SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
             if (DistToObjective(transform.position) > 16)
             {
-                SetAIMoveTowards(GetObjectiveTarget(), ObjectiveSpace);
-                SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
+                StopLooking();
+                //SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
                 Unit.EquipWeapon1Rpc();
                 return;
             }
@@ -380,11 +392,21 @@ public class AI_UNIT : NetworkBehaviour
             return;
         }
         //Engage!
-
         //Retreat!
-        SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position, getSpace());
-        SetLookTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position, getSpace());
-        AttemptBoard(Group.HomeSpace);
+        if (ObjectiveSpace != getSpace())
+        {
+            if (!AttemptBoard(Group.HomeSpace))
+            {
+                SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position, getSpace());
+                StopLooking();
+                //SetLookTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position, getSpace());
+            }
+        } else
+        {
+            SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
+            StopLooking();
+            //SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
+        }
     }
 
     private void SwitchTacticsCrew()
@@ -490,9 +512,9 @@ public class AI_UNIT : NetworkBehaviour
                 SetLookTowards(mod.GetTargetPos(), mod.Space);
                 return;
             }
+            SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
             if (DistToObjective(transform.position) > 1)
             {
-                SetAIMoveTowards(GetObjectiveTarget(), ObjectiveSpace);
                 SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
             }
             return;
@@ -512,7 +534,7 @@ public class AI_UNIT : NetworkBehaviour
         }
         else
         {
-            SetAIMoveTowards(GetObjectiveTarget(), ObjectiveSpace);
+            SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
         }
     }
     private void SwitchTacticsLooncrab()
@@ -555,10 +577,10 @@ public class AI_UNIT : NetworkBehaviour
             WalkableTile boarding = trt.GetNearestBoardingGridTransformToPoint(transform.position);
             if (Dist(boarding.transform.position) < 40f)
             {
-                Unit.SetLookTowards(boarding.transform.position);
+                SetLookTowards(boarding.transform.position, trt);
                 Unit.EquipGrappleRpc();
-                if (Mathf.Abs(Unit.AngleBetweenPoints(boarding.transform.position)) < 3)
-                    Unit.UseItem1Rpc();
+                
+                if (Mathf.Abs(Unit.AngleBetweenPoints(boarding.transform.position)) < 8) Unit.UseItem1Rpc();
                 return true;
                 //Unit.UseGrapple(boarding);
             }
@@ -815,7 +837,7 @@ public class AI_UNIT : NetworkBehaviour
         switch (Unit.EquippedToolObject.AI)
         {
             case TOOL.ToolAI.MELEE:
-                return 4f;
+                return 4.5f;
             case TOOL.ToolAI.RANGED:
                 return 30f;
         }
@@ -827,11 +849,11 @@ public class AI_UNIT : NetworkBehaviour
         switch (Unit.EquippedToolObject.AI)
         {
             case TOOL.ToolAI.MELEE:
-                return 2f;
+                return 3f;
             case TOOL.ToolAI.RANGED:
                 return 22f;
         }
-        return 2f;
+        return 3f;
     }
 
     // Returns true if there is a clear line of sight to the target position (no obstacles in between)

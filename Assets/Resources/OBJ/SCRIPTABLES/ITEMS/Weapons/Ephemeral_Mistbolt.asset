@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef6d31fc802706642abd802c670bd89e, type: 3}
-  m_Name: Spear
+  m_Name: Ephemeral_Mistbolt
   m_EditorClassIdentifier: 
-  ItemName: Spear
+  ItemName: 'Spell: Mistbolt'
   ItemDesc: Pointy stick.
-  ItemIcon: {fileID: 21300000, guid: 7a8afd92a09096b4a88bb4600e976998, type: 3}
-  ItemResourceID: OBJ/SCRIPTABLES/ITEMS/Weapons/Spear
-  ToolPrefab: {fileID: 8311341897716400573, guid: 8df09dd9598f1c249adae05d82cffc4e, type: 3}
+  ItemIcon: {fileID: 5857598365883991996, guid: 8069dcecba441d4488b39aa85ea59175, type: 3}
+  ItemResourceID: OBJ/SCRIPTABLES/ITEMS/Weapons/Ephemeral_Mistbolt
+  ToolPrefab: {fileID: 8311341897716400573, guid: 3da5e0a7c70368647a08eeea241a3810, type: 3}

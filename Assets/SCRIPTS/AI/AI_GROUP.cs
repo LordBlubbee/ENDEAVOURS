@@ -189,6 +189,7 @@ public class AI_GROUP : MonoBehaviour
         }
 
         /* CONTROL WEAPONS */
+        if (CO.co.IsSafe()) return;
         foreach (ModuleWeapon wep in HomeDrifter.Interior.WeaponModules)
         {
             if (wep.GetOrderPoint() != Vector3.zero)
@@ -213,9 +214,9 @@ public class AI_GROUP : MonoBehaviour
                         wep.Use(trt);
                         continue;
                     }
-                    wep.Stop();
-                    continue;
                 }
+                wep.Stop();
+                continue;
             }
             wep.Stop();
         }

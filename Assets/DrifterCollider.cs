@@ -10,7 +10,7 @@ public class DrifterCollider : MonoBehaviour
 
     private Collider2D[] results = new Collider2D[8];
 
-    private void FixedUpdate()
+    private void Update()
     {
         var filter = new ContactFilter2D
         {
@@ -24,7 +24,7 @@ public class DrifterCollider : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             Collider2D col = results[i];
-            Debug.Log(col.name);
+            Debug.Log(col.name + " moving away " + Collider.Distance(col).distance);
             if (col == Collider) continue; // Skip self
 
             Vector3 away = (Drifter.transform.position - col.transform.position).normalized;

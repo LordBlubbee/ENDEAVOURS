@@ -189,7 +189,7 @@ MonoBehaviour:
   ActionUse1: 1
   attackAnimations1: 03000000040000000500000006000000
   UsageStamina1: 0
-  attackDamage1: 15
+  attackDamage1: 14
   RangedPrefab1: {fileID: 0}
   Reload1: 0
   ActionUse2: 3

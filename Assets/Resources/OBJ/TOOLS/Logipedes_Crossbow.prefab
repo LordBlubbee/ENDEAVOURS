@@ -152,13 +152,13 @@ MonoBehaviour:
   ActionUse1: 2
   attackAnimations1: 070000000800000009000000
   UsageStamina1: 0
-  attackDamage1: 20
+  attackDamage1: 16
   RangedPrefab1: {fileID: 8910635656682413825, guid: 2f5477cb9e9c9134ca702e258e0872c0, type: 3}
   Reload1: 1.2
   ActionUse2: 2
   attackAnimations2: 070000000800000009000000
   UsageStamina2: 0
-  attackDamage2: 15
+  attackDamage2: 18
   RangedPrefab2: {fileID: 8910635656682413825, guid: 2f5477cb9e9c9134ca702e258e0872c0, type: 3}
   Reload2: 1.2
 --- !u!1 &6403120744721419714

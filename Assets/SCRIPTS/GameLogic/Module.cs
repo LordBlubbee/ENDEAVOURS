@@ -78,10 +78,11 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public float MaxHealth = 100f;
     public float HitboxRadius = 16f;
     [NonSerialized] public int Faction;
-    protected bool isDisabled = false;
-    protected bool PermanentlyDead = false;
+    [NonSerialized] public NetworkVariable<bool> isDisabled = new();
+    [NonSerialized] public NetworkVariable<bool> PermanentlyDead = new();
 
     protected NetworkVariable<float> CurHealth = new();
+    [NonSerialized] public NetworkVariable<int> ModuleLevel = new();
     [NonSerialized] public NetworkVariable<int> SpaceID = new();
     [NonSerialized] public NetworkVariable<int> CurrentInteractors = new();
 
@@ -90,7 +91,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         if (MaxHealth > 0)
         {
             GamerTag CharacterNameTag = Instantiate(CO_SPAWNER.co.PrefabGamerTag);
-            CharacterNameTag.SetObject(this);
+            CharacterNameTag.SetModuleObject(this);
             CharacterNameTag.SetFarIcon(IconSprite);
         }
         switch (ModuleType) {
@@ -133,9 +134,9 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     }
     public void Heal(float fl)
     {
-        if (PermanentlyDead) return;
+        if (IsDisabledForever()) return;
         CurHealth.Value = Mathf.Min(MaxHealth, CurHealth.Value + fl);
-        if (CurHealth.Value > 50) isDisabled = false;
+        if (CurHealth.Value > 99) isDisabled.Value = false;
         if (fl > 1) CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
     }
     public void TakeDamage(float fl, Vector3 src)
@@ -153,8 +154,8 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public void Die(bool Permanent = false)
     {
         CurHealth.Value = 0f;
-        isDisabled = true;
-        PermanentlyDead = Permanent;
+        isDisabled.Value = true;
+        PermanentlyDead.Value = Permanent;
     }
     public int GetFaction()
     {
@@ -164,12 +165,15 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     {
         if (space != Space) return false;
         if (MaxHealth < 1) return false;
-        return !isDisabled;
+        return !IsDisabled();
     }
-
     public bool IsDisabled()
     {
-        return isDisabled;
+        return isDisabled.Value;
+    }
+    public bool IsDisabledForever()
+    {
+        return PermanentlyDead.Value;
     }
     public float GetHealth()
     {

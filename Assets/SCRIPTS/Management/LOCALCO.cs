@@ -300,37 +300,26 @@ public class LOCALCO : NetworkBehaviour
                 }
                 if (mod != null)
                 {
+                    if (mod is Module)
+                    {
+                        if (((Module)mod).GetFaction() != Player.GetFaction() && ((Module)mod).GetFaction() > 0)
+                        {
+                            yield return null;
+                            continue;
+                        }
+                    }
                     if (mod.IsDisabled())
                     {
-                        if (mod is Module) UI.ui.MainGameplayUI.SetInteractTex("[DISABLED]", Color.red);
+                        if (mod is Module)
+                        {
+                            if (((Module)mod).IsDisabledForever()) UI.ui.MainGameplayUI.SetInteractTex("[DESTROYED]", new Color(0.5f,0,0));
+                            else UI.ui.MainGameplayUI.SetInteractTex("[DISABLED]", Color.red);
+                        }
                     }
                     else
                     {
                         switch (mod.GetInteractableType())
                         {
-                            /*case Module.ModuleTypes.NAVIGATION:
-                                UI.ui.MainGameplayUI.SetInteractTex("[F] NAVIGATE", Color.green);
-                                if (Input.GetKeyDown(KeyCode.F))
-                                {
-                                    //Interact
-                                    Drifter = Player.Space.Drifter;
-                                    CurrentControlMode = ControlModes.DRIFTER;
-                                    CAM.cam.SetCameraMode(Drifter.transform, 100f, 50f, 150);
-                                    CurrentInteractionModule = mod;
-                                }
-
-                                break;
-                            case Module.ModuleTypes.WEAPON:
-                                UI.ui.MainGameplayUI.SetInteractTex("[F] USE WEAPON", Color.green);
-                                if (Input.GetKeyDown(KeyCode.F))
-                                {
-
-                                    UsingWeapon = (ModuleWeapon)mod;
-                                    CurrentControlMode = ControlModes.WEAPON;
-                                    CAM.cam.SetCameraMode(mod.transform, 100f, 50f, 150);
-                                    CurrentInteractionModule = mod;
-                                }
-                                break;*/
                             case Module.ModuleTypes.WEAPON:
                                 ModuleWeapon weapon = mod as ModuleWeapon;
                                 string str;
@@ -358,7 +347,7 @@ public class LOCALCO : NetworkBehaviour
                             case Module.ModuleTypes.INVENTORY:
                                 UI.ui.MainGameplayUI.SetInteractTex("[F] INVENTORY", Color.green);
                                 if (Input.GetKeyDown(KeyCode.F))
-                                    UI.ui.SelectScreen(UI.ui.InventoryUI.gameObject);
+                                    UI.ui.OpenTalkScreenFancy(UI.ui.InventoryUI.gameObject);
                                 break;
                             case Module.ModuleTypes.MAPCOMMS:
                                 if (!CO.co.AreWeInDanger.Value)
@@ -368,7 +357,7 @@ public class LOCALCO : NetworkBehaviour
                                         UI.ui.MainGameplayUI.SetInteractTex("[F] OPEN COMMS", Color.cyan);
                                         if (Input.GetKeyDown(KeyCode.F))
                                         {
-                                            UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
+                                            UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
                                         }
                                     }
                                     else
@@ -376,7 +365,7 @@ public class LOCALCO : NetworkBehaviour
                                         UI.ui.MainGameplayUI.SetInteractTex("[F] OPEN MAP", Color.cyan);
                                         if (Input.GetKeyDown(KeyCode.F))
                                         {
-                                            UI.ui.SelectScreen(UI.ui.MapUI.gameObject);
+                                            UI.ui.OpenTalkScreenFancy(UI.ui.MapUI.gameObject);
                                         }
                                     }
                                 }
@@ -461,7 +450,7 @@ public class LOCALCO : NetworkBehaviour
         CurrentControlMode = ControlModes.NONE;
         SetCameraToPlayer();
         yield return new WaitForSeconds(1.5f);
-        UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
+        UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
         arrivalAnimation = false;
     }
 

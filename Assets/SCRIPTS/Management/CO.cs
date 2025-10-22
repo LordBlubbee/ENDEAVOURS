@@ -178,6 +178,7 @@ public class CO : NetworkBehaviour
          
          */
         if (!IsServer) return;
+        HandleGravity();
         if (HasVoteResult() != -1)
         {
             Debug.Log("Moving to point!");
@@ -187,12 +188,6 @@ public class CO : NetworkBehaviour
             PlayerMapPointID.Value = destination.PointID.Value;
             ResetMapVotes();
         }
-    }
-
-    private void FixedUpdate()
-    {
-        if (!IsServer) return;
-        HandleGravity();
     }
 
     [Rpc(SendTo.Server)]
@@ -228,7 +223,8 @@ public class CO : NetworkBehaviour
             float distLeft = Vector3.Distance(drift.transform.position, CurrentCenter + LeftDir);
             float distRight = Vector3.Distance(drift.transform.position, CurrentCenter + RightDir);
             Vector3 FlankDir = distLeft < distRight ? LeftDir : RightDir;
-            drift.SetMoveTowards(CurrentCenter + FlankDir.normalized * UnityEngine.Random.Range(mindis, maxdis));
+            Vector3 Deviate = new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f));
+            drift.SetMoveTowards(CurrentCenter + FlankDir.normalized * UnityEngine.Random.Range(mindis, maxdis) + Deviate);
             /*Vector3 Deviation = new Vector3(UnityEngine.Random.Range(-0.4f, 0.4f), UnityEngine.Random.Range(-0.4f, 0.4f));
             Vector3 TowardsDrifter = (drift.CurrentLocationPoint - CurrentCenter).normalized;
             Vector3 AroundPoint = new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f));
@@ -255,15 +251,21 @@ public class CO : NetworkBehaviour
         foreach (DRIFTER drift in GetAllDrifters())
         {
             CurrentSpeed = Mathf.Min(drift.GetCurrentMovement(), CurrentSpeed);
-            drift.CurrentPositionTimer -= CO.co.GetWorldSpeedDeltaFixed();
+            drift.CurrentPositionTimer -= CO.co.GetWorldSpeedDelta();
             if (drift.CurrentPositionTimer < 0)
             {
-                drift.CurrentPositionTimer = UnityEngine.Random.Range(5f, 15f);
-                GravityResposition(drift, 50f, 200f);
+                drift.CurrentPositionTimer = UnityEngine.Random.Range(10f, 15f);
+                if (UnityEngine.Random.Range(0f,1f) < 0.4f || IsSafe())
+                {
+                    GravityResposition(drift, 40f, 50f);
+                } else
+                {
+                    GravityResposition(drift, 80f, 160f);
+                }
             }
         }
         BackgroundSpeed *= Mathf.Max(0, CurrentSpeed);
-        BackgroundTransform.back.AddPosition(BackgroundSpeed * CO.co.GetWorldSpeedDeltaFixed());
+        BackgroundTransform.back.AddPosition(BackgroundSpeed * CO.co.GetWorldSpeedDelta());
     }
 
     IEnumerator Travel(MapPoint destination)
@@ -720,10 +722,7 @@ public class CO : NetworkBehaviour
 
         if (enemyDrifter)
         {
-            foreach (Module mod in enemyDrifter.Interior.GetModules())
-            {
-                mod.Die(true);
-            }
+            enemyDrifter.Disable();
         }
 
         yield return new WaitForSeconds(5f);

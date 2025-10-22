@@ -21,6 +21,25 @@ public class UI : MonoBehaviour
     public Image BlackScreen;
     public Image WhiteScreen;
 
+
+    public void OpenTalkScreenFancy(GameObject ob)
+    {
+        ob.transform.localScale = Vector3.zero;
+        SelectScreen(ob);
+        StartCoroutine(OpeningTalkUIFancy(ob));
+    }
+
+    IEnumerator OpeningTalkUIFancy(GameObject ob)
+    {
+        float Scale = 0f;
+        while (Scale < 1f)
+        {
+            Scale += Time.deltaTime * 4.5f * (0.1f + (1f-Scale));
+            ob.transform.localScale = new Vector3(Scale, Scale, 1);
+            yield return null;
+        }
+        ob.transform.localScale = new Vector3(1, 1, 1);
+    }
     public void SelectScreen(GameObject ob)
     {
         PreviousScreen = CurrentlySelectedScreen;

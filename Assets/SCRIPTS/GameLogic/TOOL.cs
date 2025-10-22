@@ -56,7 +56,9 @@ public class TOOL : MonoBehaviour
         BLOCK,
         REPAIR,
         HEAL_OTHERS,
-        HEAL_SELF
+        HEAL_SELF,
+        SPELL_ATTACK,
+        MELEE_AND_BLOCK
     }
 
 

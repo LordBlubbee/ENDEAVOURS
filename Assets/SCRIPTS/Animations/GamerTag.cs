@@ -6,34 +6,42 @@ public class GamerTag : MonoBehaviour
     public TextMeshPro Name;
     public TextMeshPro Health;
     public SpriteRenderer FarIcon;
+    public TextMeshPro FarHealth;
     private iDamageable FollowObject;
+    private CREW Crew;
+    private Module Mod;
+    private ModuleArmor Armor;
     private GameObject FollowObjectRef;
     private bool UseFarIcon;
-    public void SetPlayerAndName(iDamageable trans, string str, Color col)
+    public void SetPlayerAndName(CREW trans, string str, Color col)
     {
         //
-        FollowObject = trans;
-        FollowObjectRef = trans.transform.gameObject;
         Name.text = str;
         Name.color = col;
+
+        if (Crew) return;
+        Crew = trans;
+        FollowObject = trans;
+        FollowObjectRef = trans.transform.gameObject;
         UseFarIcon = false;
+        Destroy(FarIcon.gameObject);
+        Destroy(FarHealth.gameObject);
     }
-    public void SetObject(iDamageable trans)
+    public void SetModuleObject(Module trans)
     {
         //
+        Mod = trans;
         FollowObject = trans;
         FollowObjectRef = trans.transform.gameObject;
         UseFarIcon = true;
+        if (Mod.ModuleType == Module.ModuleTypes.ARMOR)
+        {
+            Armor = (ModuleArmor)Mod;
+        }
     }
     public void SetFarIcon(Sprite spr)
     {
         FarIcon.sprite = spr;
-    }
-
-    public ModuleArmor Armor;
-    public void SetArmor(ModuleArmor arm)
-    {
-        Armor = arm;
     }
     private void Update()
     {
@@ -45,15 +53,66 @@ public class GamerTag : MonoBehaviour
         transform.position = FollowObject.transform.position + new Vector3(0, 2);
         float healthRelative = FollowObject.GetHealthRelative();
         Color col = new Color(1 - healthRelative, healthRelative, 0);
-        Health.text = $"{FollowObject.GetHealth().ToString("0")}/{FollowObject.GetMaxHealth().ToString("0")}";
-        Health.color = col;
 
-        if (UseFarIcon)
+        if (Crew)
         {
-            float far = CAM.cam.camob.orthographicSize;
-            float scale = 0.5f + far * 0.01f;
-            FarIcon.color = new Color(col.r, col.g, col.b, Mathf.Clamp01(far * 0.04f - 2.2f));
-            FarIcon.transform.localScale = new Vector3(scale, scale, 1);
+            if (Crew.isDeadForever())
+            {
+                Health.text = $"DEAD";
+                Health.color = new Color(0.5f, 0, 0);
+                return;
+            }
+            if (Crew.isDead())
+            {
+                Health.text = $"BLEEDING: {Crew.BleedingTime.Value.ToString("0")}";
+                Health.color = new Color(1, 0, 0);
+                return;
+            }
+            Health.text = $"{FollowObject.GetHealth().ToString("0")}/{FollowObject.GetMaxHealth().ToString("0")}";
+            Health.color = col;
+            return;
         }
+        if (Mod)
+        {
+            if (Mod.IsDisabled())
+            {
+                Health.text = $"DESTROYED";
+                Health.color = new Color(0.5f, 0, 0);
+                return;
+            }
+            else if (Mod.IsDisabled())
+            {
+                Health.text = $"DISABLED \n<color=yellow>REPAIRS: {FollowObject.GetHealth().ToString("0")}%";
+                Health.color = new Color(1, 0, 0);
+            } else
+            {
+                Health.text = $"{FollowObject.GetHealth().ToString("0")}/{FollowObject.GetMaxHealth().ToString("0")}";
+                Health.color = col;
+            }
+
+            if (UseFarIcon)
+            {
+                float far = CAM.cam.camob.orthographicSize;
+                float scale = 0.5f + far * 0.01f;
+                if (Mod.IsDisabled()) FarIcon.color = new Color(0.5f, 0, 0, Mathf.Clamp01(far * 0.04f - 2.2f));
+                else FarIcon.color = new Color(col.r, col.g, col.b, Mathf.Clamp01(far * 0.04f - 2.2f));
+                FarIcon.transform.localScale = new Vector3(scale, scale, 1);
+                if (Armor)
+                {
+                    if (!Armor.CanAbsorbArmor())
+                    {
+                        FarHealth.text = "X";
+                        FarHealth.color = new Color(1,0, 0, Mathf.Clamp01(far * 0.04f - 2.2f));
+                    }
+                    else
+                    {
+                        FarHealth.text = $"{Armor.GetArmor().ToString("0")}";
+                        FarHealth.color = new Color(1,1,0, Mathf.Clamp01(far * 0.04f - 2.2f));
+                    }
+                    FarHealth.transform.localScale = new Vector3(scale, scale, 1);
+                }
+            }
+        }
+       
     }
 }

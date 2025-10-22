@@ -20,7 +20,13 @@ MonoBehaviour:
   ShortDesc: The infamous Pragmaticus' arrestation teams are heavily armored police
     officers that operate in groups to capture enemies of the Stipulations. By enforcing
     the One Truth, their actions require no explanation, no jury, and no evidence.
-  LongDesc: 'STARTING ITEMS: HALBERD
+  LongDesc: 'The infamous Pragmaticus'' arrestation teams are heavily armored police
+    officers that operate in groups to capture enemies of the Stipulations. By enforcing
+    the One Truth, their actions require no explanation, no jury, and no evidence.
+
+
+    STARTING
+    ITEMS: HALBERD
 
     PHYS +2
 
@@ -30,6 +36,9 @@ MonoBehaviour:
   BackgroundColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
   Background_ATT_BONUS: 0200000000000000000000000000000001000000000000000000000001000000
   Background_StartingWeapon: {fileID: 11400000, guid: 06439ec68f11da34fbafc00241024dca, type: 2}
+  Background_StartingWeapon2: {fileID: 0}
+  Background_StartingArtifact: {fileID: 0}
+  Background_StartingArmor: {fileID: 0}
   Background_ReputationEffect:
   - Fac: 1
     Amount: 2

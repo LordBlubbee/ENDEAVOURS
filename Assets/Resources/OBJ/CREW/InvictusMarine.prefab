@@ -310,9 +310,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   Spr: {fileID: 5632965166791697770}
   Stripes: {fileID: 2877882561032477406}
-  Faction: 1
   MaxHealth: 100
-  NaturalStaminaRegen: 25
+  NaturalStaminaRegen: 5
   MovementSpeed: 7
   RotationDistanceFactor: 4
   RotationBaseSpeed: 90
@@ -325,11 +324,11 @@ MonoBehaviour:
     m_InternalValue: 2
   ATT_COMMUNOPATHY:
     m_InternalValue: 2
-  ATT_PILOTING:
+  ATT_COMMAND:
     m_InternalValue: 2
   ATT_ENGINEERING:
     m_InternalValue: 2
-  ATT_GUNNERY:
+  ATT_ALCHEMY:
     m_InternalValue: 2
   ATT_MEDICAL:
     m_InternalValue: 2

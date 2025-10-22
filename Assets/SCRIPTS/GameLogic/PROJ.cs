@@ -16,17 +16,20 @@ public class PROJ : NetworkBehaviour
 
     [Header("ALTITUDE")]
     public bool UseAltitude = false;
+    public bool AltitudeExplodeEarly = false;
+    public bool CanHitWalls = false;
     public float AltitudeInacurracyFactor;
     public float AltitudeDirectHitCeiling;
 
     [Header("IMPACT")]
     public GameObject ImpactVFX;
+    public GameObject LaunchVFX;
     [NonSerialized] public float HullDamageModifier = 1f; //Which factor of damage is done to modules
     [NonSerialized] public float ModuleDamageModifier = 1f; //Which factor of damage is done to modules
     [NonSerialized] public float ArmorDamageModifier = 1f; //Which factor of damage is done to armor
     [NonSerialized] public float ArmorAbsorptionModifier = 1f; //Which factor of damage is taken by armor
     [NonSerialized] public float CrewDamageModifier = 0.5f; //Which facotr of damage is done to nearby crew members
-    [NonSerialized] public float CrewDamageSplash = 0f; //Which facotr of damage is done to nearby crew members
+    public float CrewDamageSplash = 1f; //Which factor of damage is done to nearby crew members
     [NonSerialized] public CREW CrewOwner;
 
     private float Expire = 10;
@@ -48,6 +51,8 @@ public class PROJ : NetworkBehaviour
         Faction = fac;
         Space = space;
         transform.Rotate(Vector3.forward, UnityEngine.Random.Range(-InaccuracyDegrees, InaccuracyDegrees));
+
+        if (LaunchVFX) LaunchVFXRpc();
     }
     public void InitAdvanced(float hullMod, float moduleMod,  float crewMod, float crewSplash, float armorMod, float armorAbsorb)
     {
@@ -57,6 +62,8 @@ public class PROJ : NetworkBehaviour
         CrewDamageModifier = crewMod;
         CrewDamageSplash = crewSplash;
         ArmorAbsorptionModifier = armorAbsorb;
+
+        if (LaunchVFX) LaunchVFXRpc();
     }
 
     private void FixedUpdate()
@@ -82,6 +89,13 @@ public class PROJ : NetworkBehaviour
         if (UseAltitude)
         {
             AltitudeRemaining -= step;
+            if (CanHitWalls)
+            {
+                foreach (Collider2D collision in Physics2D.OverlapCircleAll(Tip.position, 0.3f))
+                {
+                    PotentialHitWall(collision.gameObject);
+                }
+            }
             if (AltitudeRemaining < 0f)
             {
                 Collider2D[] cols = Physics2D.OverlapCircleAll(Tip.position, CrewDamageSplash);
@@ -90,6 +104,7 @@ public class PROJ : NetworkBehaviour
                     PotentialHitTarget(collision.gameObject);
                 }
                 AltitudeRemaining = 999;
+                if (AltitudeExplodeEarly) BulletImpact();
             }
         } else
         {
@@ -118,6 +133,7 @@ public class PROJ : NetworkBehaviour
                     isActive = false;
                 } else
                 {
+                    CO_SPAWNER.co.SpawnWordsRpc("MISS", transform.position);
                     return;
                 }
             } else
@@ -179,6 +195,24 @@ public class PROJ : NetworkBehaviour
         }
         
     }
+    protected virtual void PotentialHitWall(GameObject collision)
+    {
+        if (collision.tag.Equals("LOSBlocker"))
+        {
+            if (StickToWalls)
+            {
+                isActive = false;
+                transform.SetParent(collision.transform.parent);
+                if (ImpactVFX) ImpactVFXRpc();
+                ExpireSlowlyRpc();
+            }
+            else
+            {
+                BulletImpact();
+            }
+            return;
+        }
+    }
 
     [Rpc(SendTo.ClientsAndHost)]
     protected void ExpireSlowlyRpc()
@@ -191,6 +225,12 @@ public class PROJ : NetworkBehaviour
     public void ImpactVFXRpc()
     {
         Instantiate(ImpactVFX,Tip.position, Quaternion.identity).transform.SetParent(CO.co.GetTransformAtPoint(Tip.position));
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+
+    public void LaunchVFXRpc()
+    {
+        Instantiate(LaunchVFX, transform.position, Quaternion.identity).transform.SetParent(CO.co.GetTransformAtPoint(transform.position));
     }
     IEnumerator ExpireSlowlyNum()
     {

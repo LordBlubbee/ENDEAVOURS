@@ -169,6 +169,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     }
     void UpdateTurn()
     {
+        float delta = CO.co.GetWorldSpeedDelta();
         float ang = AngleToTurnTarget() + RotationTurbulence;
         if (EnginesDown())
         {
@@ -186,33 +187,35 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         }
         if (rotGoal > CurrentRotation.Value)
         {
-            CurrentRotation.Value += accelSpeed * CO.co.GetWorldSpeedDeltaFixed();
+            CurrentRotation.Value += accelSpeed * delta;
         }
         else if (rotGoal < CurrentRotation.Value)
         {
-            CurrentRotation.Value -= accelSpeed * CO.co.GetWorldSpeedDeltaFixed();
+            CurrentRotation.Value -= accelSpeed * delta;
         }
         float maxRot = Mathf.Min(GetRotation(), Mathf.Abs(ang)*2f);
         CurrentRotation.Value = Mathf.Clamp(CurrentRotation.Value, -maxRot, maxRot);
-        transform.Rotate(Vector3.forward,CurrentRotation.Value * CO.co.GetWorldSpeedDeltaFixed());
+        transform.Rotate(Vector3.forward,CurrentRotation.Value * delta);
     }
 
     private float RotationTurbulence = 0f;
-    private void FixedUpdate()
+    private void Update()
     {
         if (!IsServer) return;
         
+        float delta = CO.co.GetWorldSpeedDelta();
+
         UpdateTurn();
 
         if (MoveInput == Vector3.zero || EnginesDown()) // 
         {
             bool XPOS = CurrentMovement.Value.x > 0;
             bool YPOS = CurrentMovement.Value.y > 0;
-            CurrentMovement.Value -= CurrentMovement.Value.normalized * GetMovementAccel() * GetMovementSpeed() * CO.co.GetWorldSpeedDeltaFixed();
+            CurrentMovement.Value -= CurrentMovement.Value.normalized * GetMovementAccel() * GetMovementSpeed() * delta;
             if (XPOS != CurrentMovement.Value.x > 0 || YPOS != CurrentMovement.Value.y > 0 || CurrentMovement.Value.magnitude < 0.1f) CurrentMovement.Value = Vector3.zero;
         } else
         {
-            CurrentMovement.Value += MoveInput * GetMovementAccel() * GetMovementSpeed() * CO.co.GetWorldSpeedDeltaFixed();
+            CurrentMovement.Value += MoveInput * GetMovementAccel() * GetMovementSpeed() * delta;
             if (CurrentMovement.Value.magnitude > GetMovementSpeed()) CurrentMovement.Value = CurrentMovement.Value.normalized * MovementSpeed;
         }
         if (IsLoon)
@@ -220,13 +223,13 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             //Normal 2D space movement
             float towardsang = Mathf.Abs(AngleTowards(CurrentMovement.Value));
             float towardsfactor = 1.2f - Mathf.Clamp((towardsang - 60f) * 0.006f, 0, 0.4f); //The more you look in the correct direction, the faster you move!
-            transform.position += CurrentMovement.Value * towardsfactor * CO.co.GetWorldSpeedDeltaFixed();
+            transform.position += CurrentMovement.Value * towardsfactor * delta;
         } else
         {
             Vector3 Target = CurrentLocationPoint + CurrentTurbulence;
             Vector3 Dir = (Target - transform.position).normalized;
             float Dis = (Target - transform.position).magnitude;
-            transform.position += Dir * GetMovementSpeed() * Mathf.Min(0.05f * Dis,1f) * CO.co.GetWorldSpeedDeltaFixed() * 2f;
+            transform.position += Dir * GetMovementSpeed() * Mathf.Min(0.05f * Dis,1f) * delta * 2f;
             if (Dis < 0.3f && GetCurrentMovement() > 0.5f)
             {
                 float Turb = GetCurrentMovement();
@@ -298,13 +301,22 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 
     public void Die()
     {
+        if (isDead()) return;
         Alive.Value = false;
         if (GetFaction() != 1)
         {
             LOCALCO.local.CinematicTexRpc("ENEMY DRIFTER DESTROYED");
         }
-
         StartCoroutine(DrifterDeathAnimation());
+    }
+    public void Disable()
+    {
+        if (isDead()) return;
+        Alive.Value = false;
+        foreach (Module mod in Interior.GetModules())
+        {
+            mod.Die(true);
+        }
     }
 
     IEnumerator DrifterDeathAnimation()
@@ -340,9 +352,9 @@ public class DRIFTER : NetworkBehaviour, iDamageable
                 }
                 foreach (CREW mod in Interior.GetCrew())
                 {
-                    if (mod.GetFaction() == Faction.Value)
+                    if (mod.GetFaction() == GetFaction())
                     {
-                        if ((mod.transform.position - ExplPos).magnitude < 7f)
+                        if ((mod.transform.position - ExplPos).magnitude < 9f)
                         {
                             mod.DieForever();
                         }
@@ -357,7 +369,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         }
         foreach (CREW mod in Interior.GetCrew())
         {
-            if (mod.GetFaction() == Faction.Value)
+            if (mod.GetFaction() == GetFaction())
             {
                 mod.DieForever();
             }
@@ -390,7 +402,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 
                 AbsorbableDamage *= fl.ArmorDamageModifier; //Say, we deal 80 damage with +50% modifier = 120
                 float DamageNeeded = Mathf.Min(ClosestArmor.CurArmor.Value, AbsorbableDamage); //Say, we need only 80 damage
-                ClosestArmor.TakeArmorDamage(AbsorbableDamage, ImpactArea);
+                ClosestArmor.TakeArmorDamage(AbsorbableDamage, ClosestArmor.transform.position);
                 AbsorbableDamage -= DamageNeeded; //We have 40 damage left
                 AbsorbableDamage /= fl.ArmorDamageModifier; //27 damage is returned to main damage mod
             }
@@ -402,7 +414,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             float Dist = (mod.transform.position - ImpactArea).magnitude;
             if (Dist < mod.HitboxRadius)
             {
-                mod.TakeDamage(Damage * fl.ModuleDamageModifier, ImpactArea);
+                mod.TakeDamage(Damage * fl.ModuleDamageModifier, mod.transform.position);
             }
         }
         foreach (CREW mod in Interior.GetCrew())
@@ -410,7 +422,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             float Dist = (mod.transform.position - ImpactArea).magnitude;
             if (Dist < 4f)
             {
-                mod.TakeDamage(Damage * fl.CrewDamageModifier, ImpactArea);
+                mod.TakeDamage(Damage * fl.CrewDamageModifier, mod.transform.position);
             }
         }
     }
@@ -440,7 +452,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 
                 AbsorbableDamage *= 1f; //Say, we deal 80 damage with +50% modifier = 120
                 float DamageNeeded = Mathf.Min(ClosestArmor.CurArmor.Value, AbsorbableDamage); //Say, we need only 80 damage
-                ClosestArmor.TakeArmorDamage(AbsorbableDamage, ImpactArea);
+                ClosestArmor.TakeArmorDamage(AbsorbableDamage, ClosestArmor.transform.position);
                 AbsorbableDamage -= DamageNeeded; //We have 40 damage left
                 AbsorbableDamage /= 1f; //27 damage is returned to main damage mod
             }
@@ -475,7 +487,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 
     public override void OnNetworkDespawn()
     {
-        UI_CommandInterface.co.HandleDespawningOfDrifter(this);
+        if (UI_CommandInterface.co) UI_CommandInterface.co.HandleDespawningOfDrifter(this);
         base.OnNetworkDespawn();
     }
     public void DespawnAndUnregister()

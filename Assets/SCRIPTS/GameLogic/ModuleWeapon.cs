@@ -38,9 +38,9 @@ public class ModuleWeapon : Module
     {
         AutofireActive.Value = bol;
     }
-    public bool IsCooldown()
+    public bool IsOnCooldown()
     {
-        return canFire;
+        return !canFire;
     }
     public float GetAmmoRatio()
     {
@@ -97,7 +97,7 @@ public class ModuleWeapon : Module
     public bool EligibleForReload()
     {
         if (CO.co.Resource_Ammo.Value < 10 && GetFaction() == 1) return false;
-        if (isDisabled) return false;
+        if (IsDisabled()) return false;
         if (GetAmmo() > 0) return false;
         return AutofireActive.Value || GetOrderPoint() != Vector3.zero;
     }

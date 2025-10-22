@@ -292,9 +292,9 @@ public class UI_CommandInterface : MonoBehaviour
         }
     }
 
-    private List<CREW> CrewReferences;
-    private List<Module> ModuleReferences;
-    private List<ModuleWeapon> WeaponReferences;
+    private List<CREW> CrewReferences = new();
+    private List<Module> ModuleReferences = new();
+    private List<ModuleWeapon> WeaponReferences = new();
 
 
     public SpriteRenderer SelectionBox;
@@ -320,10 +320,10 @@ public class UI_CommandInterface : MonoBehaviour
             SelectionBox.transform.position = SelectionBoxFollow.position;
 
             SelectionBoxFade = Mathf.Max(SelectionBoxFade - Time.deltaTime * 2f, 0);
-            SelectionBox.color = new Color(1, 1, 1, SelectionBoxFade);
+            SelectionBox.color = new Color(0, 1, 0, SelectionBoxFade);
 
             SelectionBoxTargetScale = Mathf.Max(SelectionBoxTargetScale - Time.deltaTime * 4f, 1);
-            SelectionBox.transform.localScale = new Vector3(SelectionBoxTargetScale, SelectionBoxTargetScale, 1);
+            SelectionBox.transform.localScale = new Vector3(SelectionBoxTargetScale * 25f, SelectionBoxTargetScale *25f, 1);
             yield return null;
         }
         SelectionBoxActive = false;

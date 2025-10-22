@@ -20,16 +20,25 @@ MonoBehaviour:
   ShortDesc: The Logipedes military trains its troops with cohesion and extreme teamwork
     in mind, relying on defensive formations and volley fire strategies to eliminate
     threats to the Republic.
-  LongDesc: 'STARTING ITEMS: CROSSBOW
+  LongDesc: 'The Logipedes military trains its troops with cohesion and extreme teamwork
+    in mind, relying on defensive formations and volley fire strategies to eliminate
+    threats to the Republic.
+
+
+    STARTING ITEMS: CROSSBOW
 
     ARMS +2
 
-    PHYS +1
+    PHYS
+    +1
 
     MED +1'
   BackgroundColor: {r: 1, g: 0.6850692, b: 0, a: 1}
   Background_ATT_BONUS: 0100000002000000000000000000000000000000000000000000000001000000
   Background_StartingWeapon: {fileID: 11400000, guid: 1a5ba66db25aae94794c0a02ba54b3d2, type: 2}
+  Background_StartingWeapon2: {fileID: 0}
+  Background_StartingArtifact: {fileID: 0}
+  Background_StartingArmor: {fileID: 0}
   Background_ReputationEffect:
   - Fac: 0
     Amount: 2

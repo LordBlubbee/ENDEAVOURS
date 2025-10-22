@@ -75,8 +75,8 @@ public class CAM : MonoBehaviour
     {
         while (ShakePower > 0f)
         {
-            ShakePower -= Time.deltaTime * 5f * Mathf.Max((ShakePower - 2f),1);
-            CameraShake = new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-1f, 1f), 0).normalized * ShakePower;
+            ShakePower -= Time.deltaTime * 4f * Mathf.Max((ShakePower - 2f),1);
+            CameraShake = new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-1f, 1f)) * ShakePower;
             yield return null;
         }
         CameraShake = Vector3.zero;

@@ -80,6 +80,8 @@ public class UI_Module : MonoBehaviour
                 StatusTex.color = Icon.color;
                 Button1.SetActive(true);
                 Button1Tex.text = "BOARD";
+                Button2.SetActive(true);
+                Button2Tex.text = "EVADE";
                 break;
             case Module.ModuleTypes.ARMOR:
                 MainTex.text = $"{GetUseNumber()}ARMOR CORE";
@@ -118,8 +120,8 @@ public class UI_Module : MonoBehaviour
         if (wep.GetOrderPoint() == Vector3.zero) StatusTex.text += " | <color=red>NO TARGET</color>";
         else StatusTex.text += " | <color=yellow>TARGET SET</color>";
 
-        if (wep.CurCooldown.Value > 0f) StatusTex.text += " | <color=green>READY</color>";
-        else StatusTex.text += $" | <color=yellow>LOADING {(wep.CurCooldown.Value).ToString("0.0")}</color>";
+        if (wep.IsOnCooldown()) StatusTex.text += $" | <color=yellow>LOADING {(wep.CurCooldown.Value).ToString("0.0")}</color>";
+        else StatusTex.text += " | <color=green>READY</color>";
 
 
         StatusTex.color = Icon.color;
@@ -234,6 +236,20 @@ public class UI_Module : MonoBehaviour
     }
     public void PressButton2()
     {
-
+        switch (Mode)
+        {
+            case UIModuleModes.CREW:
+                break;
+            case UIModuleModes.MODULE:
+                switch (Module.ModuleType)
+                {
+                    case Module.ModuleTypes.ENGINES:
+                        CO.co.EvasiveManeuverRpc();
+                        break;
+                }
+                break;
+            case UIModuleModes.MODULEWEAPON:
+                break;
+        }
     }
 }
