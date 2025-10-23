@@ -305,6 +305,11 @@ public class AI_UNIT : NetworkBehaviour
                     break;
                 case AI_TACTICS.RETREAT:
                     point = GetDiagonalPointTowards(EnemyTarget.transform.position, -12f, LeaningRight);
+                    if (Group.HomeDrifter.MedicalModule)
+                    {
+                        float dist = (Group.HomeDrifter.MedicalModule.transform.position - transform.position).magnitude;
+                        if (dist > 16f) point = Group.HomeDrifter.MedicalModule.transform.position;
+                    }
                     SetAIMoveTowards(point, EnemyTarget.Space);
                     SetLookTowards(point, EnemyTarget.Space);
                     if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();

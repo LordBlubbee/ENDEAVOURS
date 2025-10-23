@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 8038492078634388055}
   - component: {fileID: 4153547531769238838}
   - component: {fileID: 1898558090153098328}
-  - component: {fileID: 6313021248617021957}
+  - component: {fileID: 3862529427635089174}
   - component: {fileID: 7532573690162859283}
   - component: {fileID: 5007212338689857353}
   m_Layer: 0
@@ -112,7 +112,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 5ee77b14553f8604884c7564dd343057, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 66ca386b6378eff4bbad4b01c610491f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &6313021248617021957
+--- !u!114 &3862529427635089174
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,17 +157,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8465642290706125043}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fe53180be5a8bb4cba4c34c57f0593c, type: 3}
+  m_Script: {fileID: 11500000, guid: adf3a2252cd180b409467504e3aff695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   ModuleTag: 
   ModuleType: 7
-  IconSprite: {fileID: 21300000, guid: 5f10ee54fc65a624d9d86c8919ac5718, type: 3}
+  IconSprite: {fileID: 21300000, guid: 9a63fee83a4087e499b62524ba4692c4, type: 3}
   ShowAsModule: {fileID: 11400000, guid: 1299b96d9516f77439b3b8edeeb43255, type: 2}
   MaxHealth: 200
   HitboxRadius: 16
   CenterPos: {fileID: 4179111860458812673}
+  RegenAuraRange: 24
+  RegenAmount: 10
 --- !u!114 &7532573690162859283
 MonoBehaviour:
   m_ObjectHideFlags: 0
