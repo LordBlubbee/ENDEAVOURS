@@ -331,10 +331,11 @@ public class CREW : NetworkBehaviour, iDamageable
         
         if (!IsServer)
         {
+            Debug.Log("CHARACTER BACKGROUND FOUND: " + CharacterBackgroundLink.Value.ToString());
             if (CharacterBackgroundLink.Value != "")
             {
-                Debug.Log("CHARACTER BACKGROUND FOUND: "+CharacterBackgroundLink.Value);
                 CharacterBackground = Resources.Load<ScriptableBackground>(($"OBJ/SCRIPTABLES/BACKGROUNDS/{CharacterBackgroundLink.Value.ToString()}"));
+                Debug.Log("CHARACTER BACKGROUND IS: " + CharacterBackground);
             }
         }
         if (CharacterBackground)
