@@ -6,7 +6,7 @@ public class AUD : MonoBehaviour
 {
     public AudioSource src;
     //
-    public void PlayAUD(AudioClip clip, float pitchshift = 0f)
+    public void PlayAUD(AudioClip clip, float pitchshift = 0f, float volume = 1f)
     {
         int Maximum = 0;
         foreach (AUD aud in AUDCO.aud.GetActiveAudio())
@@ -24,6 +24,7 @@ public class AUD : MonoBehaviour
         StartCoroutine(FinishAudio());
         src.clip = clip;
         src.pitch = 1f + Random.Range(-pitchshift, pitchshift);
+        src.volume = volume;
         src.Play();
     }
 

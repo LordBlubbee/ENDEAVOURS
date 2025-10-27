@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pragmaticus_Enforcer
   m_EditorClassIdentifier: 
   BackgroundName: Pragmaticus Enforcer
-  ResourcePath: OBJ/SCRIPTABLES/BACKGROUNDS/Pragmaticus_Enforcer
+  ResourcePath: Pragmaticus_Enforcer
   MainIcon: {fileID: 21300000, guid: 97f4b0d3c4d14f7449f47c9cafe439c5, type: 3}
   Sprite_Player: {fileID: 21300000, guid: cc6b98cb42340c641aaebbd08b616496, type: 3}
   Sprite_Stripes: {fileID: 21300000, guid: bf632b2086e9a4c4d865d811d1e8789c, type: 3}

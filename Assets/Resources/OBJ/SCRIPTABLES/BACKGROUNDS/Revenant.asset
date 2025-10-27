@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Revenant
   m_EditorClassIdentifier: 
   BackgroundName: Revenant
-  ResourcePath: OBJ/SCRIPTABLES/BACKGROUNDS/Revenant
+  ResourcePath: Revenant
   MainIcon: {fileID: 21300000, guid: dc34b7f7fe82db8468037fd392493744, type: 3}
   Sprite_Player: {fileID: 21300000, guid: 81e66b9831e4c9343aea72674e0fddf7, type: 3}
   Sprite_Stripes: {fileID: 21300000, guid: 0810b318df3d8f94cbb69453f455a041, type: 3}

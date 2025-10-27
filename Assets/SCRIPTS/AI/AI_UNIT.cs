@@ -68,7 +68,6 @@ public class AI_UNIT : NetworkBehaviour
         else ObjectiveTarget = space.transform.InverseTransformPoint(target.position);
         HasObjective = true;
         ObjectiveSpace = space;
-        Debug.Log("Objective set: " +ObjectiveTarget);
     }
 
     public float GetObjectiveDistance()
@@ -158,6 +157,7 @@ public class AI_UNIT : NetworkBehaviour
     private void Start()
     {
         if (!IsServer) return;
+        if (!ObjectiveSpace) ObjectiveSpace = getSpace();
         StartCoroutine(RunAI());
     }
 
@@ -599,6 +599,7 @@ public class AI_UNIT : NetworkBehaviour
     }
     private bool AttemptBoard(SPACE trt)
     {
+        if (!trt) return false;
         if (trt != getSpace())
         {
             WalkableTile boarding = trt.GetNearestBoardingGridTransformToPoint(transform.position);

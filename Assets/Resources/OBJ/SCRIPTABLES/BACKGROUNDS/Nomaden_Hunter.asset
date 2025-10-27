@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Nomaden_Hunter
   m_EditorClassIdentifier: 
   BackgroundName: Nebuloid Hunter
-  ResourcePath: OBJ/SCRIPTABLES/BACKGROUNDS/Nomaden_Hunter
+  ResourcePath: Nomaden_Hunter
   MainIcon: {fileID: 21300000, guid: dc34b7f7fe82db8468037fd392493744, type: 3}
   Sprite_Player: {fileID: 21300000, guid: 0c1886808aa933c40a603d5875372528, type: 3}
   Sprite_Stripes: {fileID: 21300000, guid: 3747a236bcb720442860dfee28781287, type: 3}

@@ -226,7 +226,8 @@ public class LOCALCO : NetworkBehaviour
             attributes[6],
             attributes[7]
             );
-        ScriptableBackground back = Resources.Load<ScriptableBackground>(backTex);
+        ScriptableBackground back = Resources.Load<ScriptableBackground>($"OBJ/SCRIPTABLES/BACKGROUNDS/{backTex}");
+        Debug.Log($"Set initial background: {back} searched at OBJ/SCRIPTABLES/BACKGROUNDS/{backTex}");
         crew.SetCharacterBackground(back); //Must be called BEFORE INIT
         crew.Init();
         crew.RegisterPlayerOnLOCALCORpc();

@@ -525,6 +525,7 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 {
                     curFrame = new AnimFrame(i+1, 0.5f);
                     curFrame.AnimationMoveFactor = 0.3f;
+                    curFrame.isStriking = 0.01f;
                     curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0), -30); //Body
                     curFrame.addMovement(new Vector3(-0.55f, -0.9f), 22); //Tool Right
                     curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left
@@ -564,6 +565,7 @@ public class ANIM //Monobehavior that uses AnimTransforms and acts as a controll
                 {
                     curFrame = new AnimFrame(i + 1, 0.5f);
                     curFrame.AnimationMoveFactor = 0.3f;
+                    curFrame.isStriking = 0.01f;
                     curFrame.addMovement(new Vector3(-0.1f, 0), new Vector3(0, 0), -30); //Body
                     curFrame.addMovement(new Vector3(-0.35f, -0.9f), 22); //Tool Right
                     curFrame.addMovement(new Vector3(-0.03f, -0.05f), -15); //Tool Left

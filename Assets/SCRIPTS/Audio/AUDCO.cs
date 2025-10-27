@@ -77,7 +77,10 @@ public class AUDCO : NetworkBehaviour
     public void PlaySFX(AudioClip clip, Vector3 trt, float pitchshift = 0f)
     {
         trt = new Vector3(trt.x,trt.y,CAM.cam.transform.position.z);
-        Instantiate(spawnSFX, trt, Quaternion.identity).PlayAUD(clip, pitchshift);
+        AUD aud = Instantiate(spawnSFX, trt, Quaternion.identity);
+        aud.transform.SetParent(CAM.cam.transform);
+        float Dist = (CAM.cam.transform.position - trt).magnitude;
+        aud.PlayAUD(clip, pitchshift, Mathf.Clamp01((70f-Dist)*0.04f));
     }
     public void PlaySFX(AudioClip[] clips, Vector3 trt, float pitchshift = 0f)
     {

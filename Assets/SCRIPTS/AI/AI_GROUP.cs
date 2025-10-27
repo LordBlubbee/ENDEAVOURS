@@ -30,6 +30,7 @@ public class AI_GROUP : MonoBehaviour
         {
             unit.AddToGroup(this);
         }
+        StartCoroutine(RunAI());
     }
     public void SetAIHome(Vector3 vec)
     {
@@ -62,12 +63,6 @@ public class AI_GROUP : MonoBehaviour
         ENGAGE,
         SHIP
     }
-
-    private void Start()
-    {
-        StartCoroutine(RunAI());
-    }
-
     IEnumerator RunAI()
     {
         /*

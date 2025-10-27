@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ephemeral_Disciple
   m_EditorClassIdentifier: 
   BackgroundName: Ephemeral Disciple
-  ResourcePath: OBJ/SCRIPTABLES/BACKGROUNDS/Ephemeral_Disciple
+  ResourcePath: Ephemeral_Disciple
   MainIcon: {fileID: 21300000, guid: 72c7470883a4fc9418e164a72b16551e, type: 3}
   Sprite_Player: {fileID: 21300000, guid: 812e74fdae81d9d4296ff9191f355565, type: 3}
   Sprite_Stripes: {fileID: 21300000, guid: 150e98436cab9484489b4e70e43504d0, type: 3}

@@ -106,7 +106,11 @@ public class PROJ : NetworkBehaviour
                     PotentialHitTarget(collision.gameObject);
                 }
                 AltitudeRemaining = 999;
-                if (AltitudeExplodeEarly) BulletImpact();
+                if (AltitudeExplodeEarly)
+                {
+                    BulletImpact(); 
+                    if (ImpactSFX.Length > 0) ImpactSFXRpc();
+                }
             }
         } else
         {
@@ -154,7 +158,6 @@ public class PROJ : NetworkBehaviour
             {
                 isActive = false;
                 BulletImpact();
-                if (ImpactVFX) ImpactVFXRpc();
             }
             return;
         }
@@ -162,6 +165,7 @@ public class PROJ : NetworkBehaviour
         {
             if (collision.tag.Equals("LOSBlocker"))
             {
+                if (ImpactSFX.Length > 0) ImpactSFXRpc();
                 if (StickToWalls)
                 {
                     isActive = false;
@@ -172,7 +176,6 @@ public class PROJ : NetworkBehaviour
                 else
                 {
                     BulletImpact();
-                    if (ImpactVFX) ImpactVFXRpc();
                 }
                 return;
             }
@@ -185,7 +188,7 @@ public class PROJ : NetworkBehaviour
                 if (isBlocked)
                 {
                     if (Blocker.BlockSound != AUDCO.BlockSoundEffects.NONE) AUDCO.aud.PlayBlockSFXRpc(Blocker.BlockSound, transform.position);
-                    else if (ImpactVFX) ImpactVFXRpc();
+                    else if (ImpactSFX.Length > 0) ImpactSFXRpc();
                     if (Blocker.ReduceDamageMod < 1f)
                     {
                         AttackDamage *= (1f - Blocker.ReduceDamageMod);
@@ -209,7 +212,7 @@ public class PROJ : NetworkBehaviour
             {
                 isActive = false;
                 transform.SetParent(collision.transform.parent);
-                if (ImpactVFX) ImpactVFXRpc();
+                if (ImpactSFX.Length > 0) ImpactSFXRpc();
                 ExpireSlowlyRpc();
             }
             else
@@ -231,10 +234,11 @@ public class PROJ : NetworkBehaviour
     public void ImpactVFXRpc()
     {
         Instantiate(ImpactVFX,Tip.position, Quaternion.identity).transform.SetParent(CO.co.GetTransformAtPoint(Tip.position));
-        if (ImpactSFX.Length > 0)
-        {
-            AUDCO.aud.PlaySFX(ImpactSFX, Tip.position, 0.1f);
-        }
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void ImpactSFXRpc()
+    {
+        AUDCO.aud.PlaySFX(ImpactSFX, Tip.position, 0.1f);
     }
     [Rpc(SendTo.ClientsAndHost)]
 
@@ -258,6 +262,7 @@ public class PROJ : NetworkBehaviour
     {
         if (hasImpacted) return;
         hasImpacted = true;
+        if (ImpactVFX) ImpactVFXRpc();
         Kill();
     }
     protected void Kill()

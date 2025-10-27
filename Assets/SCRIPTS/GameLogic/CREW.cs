@@ -88,6 +88,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public NetworkVariable<int> ATT_ENGINEERING = new NetworkVariable<int>(2); //Buffs repair speed
     public NetworkVariable<int> ATT_ALCHEMY = new NetworkVariable<int>(2); //Buffs usage of large heavy weapons
     public NetworkVariable<int> ATT_MEDICAL = new NetworkVariable<int>(2); //Buffs healing abilities (+regeneration)
+    private NetworkVariable<FixedString64Bytes> CharacterBackgroundLink = new(); //Buffs healing abilities (+regeneration)
     public ScriptableBackground CharacterBackground;
     public CO_SPAWNER.DefaultEquipmentSet DefaultToolset;
     public ScriptableEquippableWeapon[] EquippedWeapons = new ScriptableEquippableWeapon[3];
@@ -120,6 +121,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public void SetCharacterBackground(ScriptableBackground back)
     {
         CharacterBackground = back;
+        CharacterBackgroundLink.Value = back ? back.ResourcePath : "";
     }
     public int GetATT_PHYSIQUE()
     {
@@ -327,6 +329,14 @@ public class CREW : NetworkBehaviour, iDamageable
         CharacterNameTag = Instantiate(CO_SPAWNER.co.PrefabGamerTag);
         CharacterNameTag.SetPlayerAndName(this, CharacterName.Value.ToString(), new Color(CharacterNameColor.Value.x, CharacterNameColor.Value.y, CharacterNameColor.Value.z));
         
+        if (!IsServer)
+        {
+            if (CharacterBackgroundLink.Value != "")
+            {
+                Debug.Log("CHARACTER BACKGROUND FOUND: "+CharacterBackgroundLink.Value);
+                CharacterBackground = Resources.Load<ScriptableBackground>(($"OBJ/SCRIPTABLES/BACKGROUNDS/{CharacterBackgroundLink.Value.ToString()}"));
+            }
+        }
         if (CharacterBackground)
         {
             Spr.sprite = CharacterBackground.Sprite_Player;
@@ -374,6 +384,10 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             yield return null;
         }
+        RegisterAsLocalPlayer();
+    }
+    private void RegisterAsLocalPlayer()
+    {
         CO.co.GetLOCALCO(PlayerController.Value).SetPlayerObject(this);
     }
     public void DespawnAndUnregister()
@@ -403,7 +417,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public void SetMoveInput(Vector3 mov)
     {
         MoveInput = mov;
-        isMoving.Value = mov != Vector3.zero;
+        if (IsServer) isMoving.Value = mov != Vector3.zero;
     }
 
     public Vector3 GetMoveInput()
@@ -700,46 +714,49 @@ public class CREW : NetworkBehaviour, iDamageable
         if (EquippedToolObject.strikePoints.Count == 0) return;
         if (AnimationController.isCurrentlyStriking())
         {
-            switch (SelectedWeaponAbility == 0 ? EquippedToolObject.ActionUse1 : EquippedToolObject.ActionUse2)
+            if (AnimationController.CurrentStrikePower() > 0.1f)
             {
-                case TOOL.ToolActionType.MELEE_ATTACK:
-                    if (!canStrikeMelee) return;
-                    StrikeMelee();
-                    break;
-                case TOOL.ToolActionType.RANGED_ATTACK:
-                    if (!canStrike) return;
-                    StrikeRanged(LookTowards);
-                    break;
-                case TOOL.ToolActionType.SPELL_ATTACK:
-                    if (!canStrike) return;
-                    StrikeSpell(LookTowards);
-                    break;
-                case TOOL.ToolActionType.REPAIR:
-                    if (!canStrikeMelee) return;
-                    StrikeRepair();
-                    break;
-                case TOOL.ToolActionType.HEAL_OTHERS:
-                    if (!canStrikeMelee) return;
-                    StrikeHealOthers();
-                    break;
-                case TOOL.ToolActionType.HEAL_SELF:
-                    if (!canStrikeMelee) return;
-                    StrikeHealSelf();
-                    break;
-                case TOOL.ToolActionType.BLOCK:
-                    foreach (BlockAttacks blocker in EquippedToolObject.Blockers)
-                    {
-                        blocker.SetActive(true);
-                    }
-                    break;
-                case TOOL.ToolActionType.MELEE_AND_BLOCK:
-                    foreach (BlockAttacks blocker in EquippedToolObject.Blockers)
-                    {
-                        blocker.SetActive(true);
-                    }
-                    if (!canStrikeMelee) return;
-                    StrikeMelee();
-                    break;
+                switch (SelectedWeaponAbility == 0 ? EquippedToolObject.ActionUse1 : EquippedToolObject.ActionUse2)
+                {
+                    case TOOL.ToolActionType.MELEE_ATTACK:
+                        if (!canStrikeMelee) return;
+                        StrikeMelee();
+                        break;
+                    case TOOL.ToolActionType.RANGED_ATTACK:
+                        if (!canStrike) return;
+                        StrikeRanged(LookTowards);
+                        break;
+                    case TOOL.ToolActionType.SPELL_ATTACK:
+                        if (!canStrike) return;
+                        StrikeSpell(LookTowards);
+                        break;
+                    case TOOL.ToolActionType.REPAIR:
+                        if (!canStrikeMelee) return;
+                        StrikeRepair();
+                        break;
+                    case TOOL.ToolActionType.HEAL_OTHERS:
+                        if (!canStrikeMelee) return;
+                        StrikeHealOthers();
+                        break;
+                    case TOOL.ToolActionType.HEAL_SELF:
+                        if (!canStrikeMelee) return;
+                        StrikeHealSelf();
+                        break;
+                    case TOOL.ToolActionType.BLOCK:
+                        foreach (BlockAttacks blocker in EquippedToolObject.Blockers)
+                        {
+                            blocker.SetActive(true);
+                        }
+                        break;
+                    case TOOL.ToolActionType.MELEE_AND_BLOCK:
+                        foreach (BlockAttacks blocker in EquippedToolObject.Blockers)
+                        {
+                            blocker.SetActive(true);
+                        }
+                        if (!canStrikeMelee) return;
+                        StrikeMelee();
+                        break;
+                }
             }
             if (SelectedWeaponAbility == 0 && !hasCreatedSound)
             {
@@ -1116,7 +1133,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public void EquipWeaponUpdateUIRpc(int ID)
     {
         //Works on Owner
-        if (LOCALCO.local.GetPlayer() != this) return;
+        if (LOCALCO.local.GetPlayerID() != GetPlayerController()) return;
         UI.ui.MainGameplayUI.EquipWeaponUI(ID);
     }
 
