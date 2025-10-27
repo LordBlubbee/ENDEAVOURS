@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Unity.Collections;
 using Unity.Netcode;
-using Unity.VisualScripting;
+using UnityEngine;
 
 public class CO_STORY : NetworkBehaviour
 {
@@ -15,6 +14,18 @@ public class CO_STORY : NetworkBehaviour
     [NonSerialized] public NetworkVariable<FixedString512Bytes> CurrentChoices4 = new();
     [NonSerialized] public NetworkVariable<FixedString512Bytes> CurrentChoices5 = new();
     [NonSerialized] public NetworkVariable<FixedString512Bytes> CurrentChoices6 = new();
+
+    [NonSerialized] public NetworkVariable<FixedString64Bytes> SpeakerLink0 = new();
+    [NonSerialized] public NetworkVariable<FixedString64Bytes> SpeakerLink1 = new();
+    [NonSerialized] public NetworkVariable<FixedString64Bytes> SpeakerLink2 = new();
+    [NonSerialized] public NetworkVariable<FixedString64Bytes> SpeakerLink3 = new();
+    [NonSerialized] public NetworkVariable<FixedString64Bytes> SpeakerLink4 = new();
+    [NonSerialized] public NetworkVariable<FixedString64Bytes> SpeakerLink5 = new();
+    [NonSerialized] public NetworkVariable<FixedString64Bytes> SpeakerLink6 = new();
+    [NonSerialized] public NetworkVariable<FixedString64Bytes> SpeakerLink7 = new();
+    [NonSerialized] public NetworkVariable<FixedString64Bytes> SpeakerLink8 = new();
+    [NonSerialized] public NetworkVariable<FixedString64Bytes> SpeakerLink9 = new();
+
     [NonSerialized] public NetworkVariable<FixedString512Bytes> MainStoryText0 = new();
     [NonSerialized] public NetworkVariable<FixedString512Bytes> MainStoryText1 = new();
     [NonSerialized] public NetworkVariable<FixedString512Bytes> MainStoryText2 = new();
@@ -26,6 +37,33 @@ public class CO_STORY : NetworkBehaviour
     [NonSerialized] public NetworkVariable<FixedString512Bytes> MainStoryText8 = new();
     [NonSerialized] public NetworkVariable<FixedString512Bytes> MainStoryText9 = new();
 
+    public string GetSpeakerLink(int id)
+    {
+        switch (id)
+        {
+            case 0: return SpeakerLink0.Value.ToString();
+            case 1: return SpeakerLink1.Value.ToString();
+            case 2: return SpeakerLink2.Value.ToString();
+            case 3: return SpeakerLink3.Value.ToString();
+            case 4: return SpeakerLink4.Value.ToString();
+            case 5: return SpeakerLink5.Value.ToString();
+            case 6: return SpeakerLink6.Value.ToString();
+            case 7: return SpeakerLink7.Value.ToString();
+            case 8: return SpeakerLink8.Value.ToString();
+            case 9: return SpeakerLink9.Value.ToString();
+            default: return string.Empty;
+        }
+    }
+    public ScriptableDialogSpeaker GetSpeaker(int id)
+    {
+        string link = GetSpeakerLink(id);
+        if (string.IsNullOrEmpty(link))
+        {
+            Debug.Log("Error!");
+            return null;
+        }
+        return Resources.Load<ScriptableDialogSpeaker>($"OBJ/SCRIPTABLES/SPEAKERS/{link}");
+    }
     public string GetCurrentChoice(int index)
     {
         switch (index)
@@ -122,25 +160,43 @@ public class CO_STORY : NetworkBehaviour
         }
         return count;
     }
-    public void SetMainStoryText(List<string> StoryList)
+    public void SetMainStoryText(List<string> StoryList, List<string> SpeakerLinks)
     {
-        Debug.Write(StoryList.Count);
         MainStoryText0.Value = StoryList.Count > 0 ? StoryList[0] : "";
+        SpeakerLink0.Value = SpeakerLinks.Count > 0 ? SpeakerLinks[0] : "";
+
         MainStoryText1.Value = StoryList.Count > 1 ? StoryList[1] : "";
+        SpeakerLink1.Value = SpeakerLinks.Count > 1 ? SpeakerLinks[1] : "";
+
         MainStoryText2.Value = StoryList.Count > 2 ? StoryList[2] : "";
+        SpeakerLink2.Value = SpeakerLinks.Count > 2 ? SpeakerLinks[2] : "";
+
         MainStoryText3.Value = StoryList.Count > 3 ? StoryList[3] : "";
+        SpeakerLink3.Value = SpeakerLinks.Count > 3 ? SpeakerLinks[3] : "";
+
         MainStoryText4.Value = StoryList.Count > 4 ? StoryList[4] : "";
+        SpeakerLink4.Value = SpeakerLinks.Count > 4 ? SpeakerLinks[4] : "";
+
         MainStoryText5.Value = StoryList.Count > 5 ? StoryList[5] : "";
+        SpeakerLink5.Value = SpeakerLinks.Count > 5 ? SpeakerLinks[5] : "";
+
         MainStoryText6.Value = StoryList.Count > 6 ? StoryList[6] : "";
+        SpeakerLink6.Value = SpeakerLinks.Count > 6 ? SpeakerLinks[6] : "";
+
         MainStoryText7.Value = StoryList.Count > 7 ? StoryList[7] : "";
+        SpeakerLink7.Value = SpeakerLinks.Count > 7 ? SpeakerLinks[7] : "";
+
         MainStoryText8.Value = StoryList.Count > 8 ? StoryList[8] : "";
+        SpeakerLink8.Value = SpeakerLinks.Count > 8 ? SpeakerLinks[8] : "";
+
         MainStoryText9.Value = StoryList.Count > 9 ? StoryList[9] : "";
+        SpeakerLink9.Value = SpeakerLinks.Count > 9 ? SpeakerLinks[9] : "";
     }
     public void SetStoryEnd()
     {
         CommsActive.Value = false;
         SetCurrentChoices(new());
-        SetMainStoryText(new());
+        SetMainStoryText(new(), new());
         foreach (LOCALCO local in CO.co.GetLOCALCO())
         {
             local.CurrentDialogVote.Value = -1;
@@ -154,11 +210,13 @@ public class CO_STORY : NetworkBehaviour
         CommsActive.Value = true;
         CurrentDialog = Dialog;
         List<string> StoryList = new();
+        List<string> SpeakerLinks = new();
         foreach (DialogPart line in Dialog.StoryTexts)
         {
             StoryList.Add(ReturnDialogPart(line));
+            SpeakerLinks.Add(line.Speaker.Name);
         }
-        SetMainStoryText(StoryList);
+        SetMainStoryText(StoryList, SpeakerLinks);
         StoryList = new();
         foreach (PossibleNextDialog line in Dialog.ChoicePathDialogs)
         {

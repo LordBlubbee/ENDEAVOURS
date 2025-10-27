@@ -37,7 +37,7 @@ public class Screen_Map : MonoBehaviour
                 ChoiceButtonVotes[i].color = (LOCALCO.local.CurrentMapVote.Value == i) ? Color.cyan : Color.white;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.U))
         {
             UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
         }
@@ -57,6 +57,8 @@ public class Screen_Map : MonoBehaviour
         MapLines = new();
 
         // Spawn map points
+        float scale = transform.localScale.x;
+        transform.localScale = new Vector3(1, 1, 1);
         MapPoint PlayerPoint = CO.co.GetPlayerMapPoint();
         foreach (MapPoint map in CO.co.GetMapPoints())
         {
@@ -128,5 +130,6 @@ public class Screen_Map : MonoBehaviour
             }
             else ChoiceButton[i].gameObject.SetActive(false);
         }
+        transform.localScale = new Vector3(scale, scale, 1f);
     }
 }

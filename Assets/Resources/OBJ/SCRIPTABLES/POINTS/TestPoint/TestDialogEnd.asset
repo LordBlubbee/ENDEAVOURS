@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StoryTexts:
   - BaseText: Oh no!
-    Speaker: {fileID: 0}
+    Speaker: {fileID: 11400000, guid: a76193bce8f537b43a2443543883bc33, type: 2}
     Alternatives: []
   - BaseText: You totally beat us!
-    Speaker: {fileID: 0}
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
   - BaseText: Guess you win.
-    Speaker: {fileID: 0}
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:

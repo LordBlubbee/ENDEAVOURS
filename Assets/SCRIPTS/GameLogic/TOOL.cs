@@ -28,6 +28,9 @@ public class TOOL : MonoBehaviour
     public ToolActionType ActionUse1;
     public List<ANIM.AnimationState> attackAnimations1;
     public float UsageStamina1 = 2f;
+    public AudioClip[] Action1_SFX;
+    public AudioClip[] Action1_SFX_Hit;
+    public AudioClip[] Action1_SFX_Block;
 
     public float attackDamage1 = 10f;
     public PROJ RangedPrefab1;
@@ -37,6 +40,7 @@ public class TOOL : MonoBehaviour
     public ToolActionType ActionUse2;
     public List<ANIM.AnimationState> attackAnimations2;
     public float UsageStamina2 = 2f;
+    public AudioClip[] Action2_SFX;
 
     public float attackDamage2 = 10f;
     public PROJ RangedPrefab2;

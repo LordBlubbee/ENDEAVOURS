@@ -15,6 +15,7 @@ public class CO_SPAWNER : NetworkBehaviour
     public TOOL PrefabMedkitLogipedes;
     public TOOL PrefabGrappleLogipedes;
     public TOOL PrefabGrappleSilent;
+    public Sprite GrappleCursor;
     public ResourceCrate PrefabAmmoCrate;
 
     [Header("VFX")]
@@ -219,7 +220,7 @@ public class CO_SPAWNER : NetworkBehaviour
         part.transform.localScale = new Vector3(Trans, Trans, 1);
         part.FadeChange *= Fade;
 
-        float ExplosionPower = 10f - CAM.cam.Dis(pos) * 0.25f;
+        float ExplosionPower = 10f - CAM.cam.Dis(pos) * 0.15f;
         if (ExplosionPower > 2) CAM.cam.ShakeCamera(ExplosionPower * 0.7f);
     }
     [Rpc(SendTo.ClientsAndHost)]
@@ -232,7 +233,7 @@ public class CO_SPAWNER : NetworkBehaviour
         part.transform.localScale = new Vector3(Trans, Trans, 1);
         part.FadeChange *= Fade;
 
-        float ExplosionPower = 11f - CAM.cam.Dis(pos) * 0.25f;
+        float ExplosionPower = 11f - CAM.cam.Dis(pos) * 0.14f;
         if (ExplosionPower > 2) CAM.cam.ShakeCamera(ExplosionPower* 0.8f);
     }
     [Rpc(SendTo.ClientsAndHost)]
@@ -245,7 +246,7 @@ public class CO_SPAWNER : NetworkBehaviour
         part.transform.localScale = new Vector3(Trans, Trans, 1);
         part.FadeChange *= Fade;
 
-        float ExplosionPower = 12f - CAM.cam.Dis(pos)*0.2f;
+        float ExplosionPower = 12f - CAM.cam.Dis(pos)*0.12f;
         if (ExplosionPower > 2) CAM.cam.ShakeCamera(ExplosionPower);
     }
     [Rpc(SendTo.ClientsAndHost)]

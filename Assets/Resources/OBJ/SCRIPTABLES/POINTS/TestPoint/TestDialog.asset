@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StoryTexts:
   - BaseText: We are the EPHEMERAL EYE.
-    Speaker: {fileID: 0}
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
   - BaseText: We want to EAT CHOCOLATE CHIP COOKIES.
-    Speaker: {fileID: 0}
+    Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
     Alternatives: []
   - BaseText: Give them to us or DIE.
-    Speaker: {fileID: 0}
+    Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:

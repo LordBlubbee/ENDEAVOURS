@@ -63,7 +63,7 @@ public class AUDCO : NetworkBehaviour
     }
     public void PlaySFX(AudioClip clip, float pitchshift = 0f)
     {
-        Instantiate(spawnSFX, CAM.cam.transform.position, Quaternion.identity).PlayAUD(clip, pitchshift);
+        Instantiate(spawnSFX, CAM.cam.transform).PlayAUD(clip, pitchshift);
     }
     public void PlaySFX(AudioClip[] clips, float pitchshift = 0f)
     {
@@ -71,49 +71,15 @@ public class AUDCO : NetworkBehaviour
     }
     public void PlaySFX(AudioClip clip, Vector3 trt, float pitchshift = 0f)
     {
+        trt = new Vector3(trt.x,trt.y,CAM.cam.transform.position.z);
         Instantiate(spawnSFX, trt, Quaternion.identity).PlayAUD(clip, pitchshift);
     }
     public void PlaySFX(AudioClip[] clips, Vector3 trt, float pitchshift = 0f)
     {
         PlaySFX(clips[Random.Range(0, clips.Length)], trt, pitchshift);
     }
-    public void SetRandomRestOST()
-    {
-        SetRandomRestOSTClientRpc(Random.Range(0, OST_Rest.Length));
-    }
-    [ClientRpc]
-    public void SetRandomRestOSTClientRpc(int ID)
-    {
-        setOST(OST_Rest[ID]);
-    }
-    public void SetRandomOST()
-    {
-        SetRandomOSTClientRpc(Random.Range(0, OST_Preparation.Length));
-    }
-    [ClientRpc]
-    public void SetRandomOSTClientRpc(int ID)
-    {
-        SetOSTBattle(ID);
-    }
-    public void SetOSTBattle(int ID)
-    {
-        StartCoroutine(BattleOSTWait(ID));
-    }
-    IEnumerator BattleOSTWait(int ID)
-    {
-        setOST(OST_Preparation[ID]);
-        yield return new WaitForSeconds(mainOST.clip.length);
-        if (mainOST.clip == OST_Preparation[ID])
-        {
-            setOST(OST_Intense[ID]);
-        }
-    }
-
-    [Header("OST Clips")]
-    public AudioClip[] OST_Rest;
-    public AudioClip[] OST_Preparation;
-    public AudioClip[] OST_Intense;
 
     [Header("SFX Clips")]
     public AudioClip Press;
+    public AudioClip Fail;
 }

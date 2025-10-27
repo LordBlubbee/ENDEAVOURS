@@ -39,7 +39,7 @@ public class ModuleArmor : Module
 
     public bool CanAbsorbArmor()
     {
-        return CurArmor.Value > 99;
+        return CurArmor.Value > 99 && !IsDisabled();
     }
     public float GetArmor()
     {

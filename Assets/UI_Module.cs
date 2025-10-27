@@ -78,10 +78,10 @@ public class UI_Module : MonoBehaviour
                 MainTex.text = $"{GetUseNumber()}ENGINES";
                 StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")}";
                 StatusTex.color = Icon.color;
-                Button1.SetActive(true);
-                Button1Tex.text = "BOARD";
-                Button2.SetActive(true);
-                Button2Tex.text = "EVADE";
+                //Button1.SetActive(true);
+                //Button1Tex.text = "BOARD";
+                //Button2.SetActive(true);
+                //Button2Tex.text = "EVADE";
                 break;
             case Module.ModuleTypes.ARMOR:
                 MainTex.text = $"{GetUseNumber()}ARMOR CORE";

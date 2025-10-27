@@ -152,12 +152,17 @@ MonoBehaviour:
   ActionUse1: 2
   attackAnimations1: 070000000800000009000000
   UsageStamina1: 0
+  Action1_SFX:
+  - {fileID: 8300000, guid: 9e9dd386944e2cb4390ea93b9afab6d1, type: 3}
+  - {fileID: 8300000, guid: 84e54f64f3f8e9e40829a1ac68afbe5a, type: 3}
+  - {fileID: 8300000, guid: 9dc3212dc1148b44ab55cef301872c60, type: 3}
   attackDamage1: 16
   RangedPrefab1: {fileID: 8910635656682413825, guid: 2f5477cb9e9c9134ca702e258e0872c0, type: 3}
   Reload1: 1.2
-  ActionUse2: 2
+  ActionUse2: 0
   attackAnimations2: 070000000800000009000000
   UsageStamina2: 0
+  Action2_SFX: []
   attackDamage2: 18
   RangedPrefab2: {fileID: 8910635656682413825, guid: 2f5477cb9e9c9134ca702e258e0872c0, type: 3}
   Reload2: 1.2

@@ -10,6 +10,7 @@ public class ModuleWeapon : Module
     public Transform Platform;
     public Transform FirePoint;
     public PROJ FireProjectile;
+    public AudioClip[] Fire_SFX;
     public Sprite CrosshairSprite;
 
     [Header("Offensive Stats")]
@@ -148,6 +149,15 @@ public class ModuleWeapon : Module
         if (IsDisabled()) return;
         StartCoroutine(FireSequence(mouse));
     }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void WeaponSFXRpc()
+    {
+        if (Fire_SFX.Length > 0)
+        {
+            AUDCO.aud.PlaySFX(Fire_SFX, transform.position, 0.1f);
+        }
+    }
     IEnumerator FireSequence(Vector3 mouse)
     {
         canFire = false;
@@ -158,6 +168,9 @@ public class ModuleWeapon : Module
             proj.Init(Damage, Faction, null, mouse);
             proj.InitAdvanced(HullDamageMod, ModuleDamageMod, CrewDamageMod, CrewDamageSplash, ArmorDamageMod, ArmorDamageAbsorption);
             proj.NetworkObject.Spawn();
+
+            WeaponSFXRpc();
+
             CurCooldown.Value = AdditionalProjectileDelay;
             while (CurCooldown.Value > 0f)
             {

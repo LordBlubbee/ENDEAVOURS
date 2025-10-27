@@ -189,9 +189,13 @@ public class AI_GROUP : MonoBehaviour
         }
 
         /* CONTROL WEAPONS */
-        if (CO.co.IsSafe()) return;
         foreach (ModuleWeapon wep in HomeDrifter.Interior.WeaponModules)
         {
+            if (CO.co.IsSafe())
+            {
+                wep.Stop();
+                continue;
+            }
             if (wep.GetOrderPoint() != Vector3.zero)
             {
                 wep.SetLookTowards(wep.GetOrderPoint());

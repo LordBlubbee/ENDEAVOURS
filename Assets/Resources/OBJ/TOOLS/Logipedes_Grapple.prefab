@@ -145,19 +145,26 @@ MonoBehaviour:
   - {fileID: 8362816068341079287}
   Blockers: []
   AI: 0
-  CrosshairSprite: {fileID: 21300000, guid: 3d1452e5180bdf641bb60a3aadc3248a, type: 3}
+  CrosshairSprite: {fileID: 21300000, guid: 60f878be486a87a4ca9baaf1ee6e18e7, type: 3}
   CrosshairMaxRange: 999
   CrosshairMinRange: -1
   RotateCrosshair: 0
   ActionUse1: 2
   attackAnimations1: 0d000000
   UsageStamina1: 50
+  Action1_SFX:
+  - {fileID: 8300000, guid: 9e9dd386944e2cb4390ea93b9afab6d1, type: 3}
+  - {fileID: 8300000, guid: 84e54f64f3f8e9e40829a1ac68afbe5a, type: 3}
+  - {fileID: 8300000, guid: 9dc3212dc1148b44ab55cef301872c60, type: 3}
+  Action1_SFX_Hit: []
+  Action1_SFX_Block: []
   attackDamage1: 0
   RangedPrefab1: {fileID: 1533413245747138546, guid: da0cb37a1719c8b4f98132f97c5efc3e, type: 3}
   Reload1: 1
   ActionUse2: 0
   attackAnimations2: 
   UsageStamina2: 5
+  Action2_SFX: []
   attackDamage2: 15
   RangedPrefab2: {fileID: 0}
   Reload2: 1.2

@@ -181,6 +181,15 @@ MonoBehaviour:
   MaximumRange: 45
   StickToWalls: 0
   UseAltitude: 0
+  AltitudeExplodeEarly: 0
+  CanHitWalls: 0
   AltitudeInacurracyFactor: 0.05
   AltitudeDirectHitCeiling: 0
   ImpactVFX: {fileID: 0}
+  LaunchVFX: {fileID: 0}
+  ImpactSFX:
+  - {fileID: 8300000, guid: 895628b07dd552d4c9d0aad6fde578e7, type: 3}
+  - {fileID: 8300000, guid: 999117fc720192542a48562bc242b423, type: 3}
+  - {fileID: 8300000, guid: d765450ea07bfe742a34f2a80267190f, type: 3}
+  - {fileID: 8300000, guid: ca22bc6628f6ddf4b81a1e4d7fc2a027, type: 3}
+  CrewDamageSplash: 1

@@ -24,7 +24,7 @@ public class Screen_Inventory : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I))
         {
             UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
         }

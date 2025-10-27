@@ -415,6 +415,8 @@ MonoBehaviour:
   MovementSpeed: 8
   AccelerationSpeedMod: 0.3
   RotationBaseSpeed: 15
+  DeathExplosionsFrequency: 0.2
+  DeathTime: 5
 --- !u!114 &8365398891127652454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,11 +542,22 @@ MonoBehaviour:
   - {x: -36, y: 24, z: 0}
   - {x: -40, y: -16, z: 0}
   - {x: -44, y: 24, z: 0}
+  CoreModuleRotations:
+  - 90
+  - 0
+  - 90
+  - 0
+  - 90
   WeaponModuleLocations:
   - {x: 12, y: -32, z: 0}
   - {x: 28, y: 24, z: 0}
   - {x: -4, y: -32, z: 0}
   - {x: -20, y: -24, z: 0}
+  WeaponModuleRotations:
+  - -90
+  - 90
+  - -90
+  - -90
   SystemModuleLocations:
   - {x: 28, y: -24, z: 0}
   - {x: -52, y: -8, z: 0}
@@ -552,8 +565,13 @@ MonoBehaviour:
   - {x: 44, y: -32, z: 0}
   - {x: -52, y: 8, z: 0}
   - {x: -12, y: 0, z: 0}
-  LoonModuleLocations:
-  - {x: -4, y: 48, z: 0}
+  SystemModuleRotations:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   PrefabWall: {fileID: 9019574874123161817, guid: b50d1ee3a96087846b72c40f9c11f28b, type: 3}
   PrefabCorner: {fileID: 5844972831535844615, guid: cbfb38767837270468660a6e7cb3ecbb, type: 3}
   PrefabEmpty: {fileID: 8986802024713289282, guid: ddf8d1bce74a9fd4bae3dc20715d2bdb, type: 3}

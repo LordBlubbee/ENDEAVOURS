@@ -41,7 +41,6 @@ public class CREW : NetworkBehaviour, iDamageable
     public float MovementSpeed = 7;
     public float RotationDistanceFactor = 4;
     public float RotationBaseSpeed = 90;
-    public float GrappleCooldown = 10f;
     public bool BleedOut = true;
 
     [Header("ATTRIBUTES")]
@@ -504,11 +503,6 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         IsGrappling = false;
         Col.enabled = true;
-        while (CurGrappleCooldown.Value > 0f)
-        {
-            CurGrappleCooldown.Value -= CO.co.GetWorldSpeedDelta();
-            yield return null;
-        }
     }
 
     public void AddToSpace(SPACE newSpace)
@@ -524,12 +518,11 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public void UseGrapple(WalkableTile tile)
     {
-        if (GetGrappleCooldown() > 0f) return;
+        if (IsGrappling) return;
         if (Space) Space.RemoveCrew(this);
         AnimationComboWeapon1 = 0;
         AnimationComboWeapon2 = 0;
         AddToSpace(tile.Space);
-        CurGrappleCooldown.Value = GrappleCooldown / 0.8f + (GetATT_ARMS() * 0.1f);
         StartCoroutine(GrappleNum(tile.transform));
     }
     /*Use Inputs*/
@@ -637,9 +630,38 @@ public class CREW : NetworkBehaviour, iDamageable
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations1[AnimationComboWeapon1]);
         if (!setAnimationLocally(EquippedToolObject.attackAnimations1[AnimationComboWeapon1], 3)) return;
         canStrikeMelee = true;
+        hasCreatedSound = false;
         MeleeHits = new();
         ConsumeStamina(EquippedToolObject.UsageStamina1);
         AnimationComboWeapon1++;
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void WeaponSFXRpc()
+    {
+        if (!EquippedToolObject) return;
+        if (EquippedToolObject.Action1_SFX.Length > 0)
+        {
+            AUDCO.aud.PlaySFX(EquippedToolObject.Action1_SFX, transform.position, 0.1f);
+        }
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void WeaponHitSFXRpc()
+    {
+        if (!EquippedToolObject) return;
+        if (EquippedToolObject.Action1_SFX_Hit.Length > 0)
+        {
+            AUDCO.aud.PlaySFX(EquippedToolObject.Action1_SFX_Hit, transform.position, 0.1f);
+        }
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void WeaponBlockSFXRpc()
+    {
+        if (!EquippedToolObject) return;
+        if (EquippedToolObject.Action1_SFX_Block.Length > 0)
+        {
+            AUDCO.aud.PlaySFX(EquippedToolObject.Action1_SFX_Block, transform.position, 0.1f);
+        }
     }
     public void UseItem2()
     {
@@ -657,6 +679,7 @@ public class CREW : NetworkBehaviour, iDamageable
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations2[AnimationComboWeapon2]);
         if (!setAnimationLocally(EquippedToolObject.attackAnimations2[AnimationComboWeapon2],3)) return;
         canStrikeMelee = true;
+        hasCreatedSound = false;
         MeleeHits = new();
         ConsumeStamina(EquippedToolObject.UsageStamina2);
         AnimationComboWeapon2++;
@@ -677,6 +700,8 @@ public class CREW : NetworkBehaviour, iDamageable
         DeadForever.Value = true;
         BleedingTime.Value = 0;
     }
+
+    private bool hasCreatedSound = false;
 
     private void StrikeUpdate()
     {
@@ -725,6 +750,11 @@ public class CREW : NetworkBehaviour, iDamageable
                     StrikeMelee();
                     break;
             }
+            if (SelectedWeaponAbility == 0 && !hasCreatedSound)
+            {
+                hasCreatedSound = true;
+                if (EquippedToolObject.Action1_SFX.Length > 0) WeaponSFXRpc();
+            }
             return;
         }
     }
@@ -740,7 +770,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public bool IsEnemyInFront(float dis)
     {
-        foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position + getLookVector() * dis * 0.6f, dis * 0.5f))
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position + getLookVector() * dis * 0.5f, dis * 0.6f))
         {
             iDamageable crew = col.GetComponent<iDamageable>();
             if (crew != null)
@@ -763,6 +793,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 if (crew != null)
                 {
                     if (!Melee(crew, checkHit, SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2)) continue;
+                    WeaponHitSFXRpc();
                     return;
                 }
                 BlockAttacks Blocker = col.GetComponent<BlockAttacks>();
@@ -775,6 +806,7 @@ public class CREW : NetworkBehaviour, iDamageable
                     bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChance;
                     if (isBlocked)
                     {
+                        WeaponBlockSFXRpc();
                         if (Blocker.ReduceDamageMod < 1f)
                         {
                             float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
@@ -872,10 +904,17 @@ public class CREW : NetworkBehaviour, iDamageable
                 float Dis = (col.transform.position - transform.position).magnitude;
                 if (Dis < MaxDis)
                 {
-                    if (col.gameObject == gameObject) continue; 
+                    Debug.Log("Looking at potential healing target...");
+                    if (col.gameObject == gameObject)
+                    {
+                        Debug.Log("Nope, that's us!...");
+                        continue;
+                    }
                     if (trt.Space != Space) continue;
                     if (trt.GetFaction() != GetFaction()) continue;
+                    if (trt.GetHealthRelative() >= 1f) continue;
                     if (trt is Module) continue;
+                    Debug.Log($"Target {trt.transform.gameObject.name} is valid!");
                     crew = trt;
                     MaxDis = Dis;
                 }
@@ -883,6 +922,7 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         if (crew != null)
         {
+            Debug.Log($"Target healing {crew.transform.gameObject.name} done!");
             //if (crew.GetFaction() != Faction) return;
             float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
             dmg *= AnimationController.CurrentStrikePower();

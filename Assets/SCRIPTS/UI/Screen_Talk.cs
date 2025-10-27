@@ -12,13 +12,28 @@ public class Screen_Talk : MonoBehaviour
     public GameObject[] ChoiceButton;
     public GameObject NextButton;
     public GameObject PreviousButton;
+    public TextMeshProUGUI NextButtonTex;
+    public TextMeshProUGUI PreviousButtonTex;
     public TextMeshProUGUI[] ChoiceButtonVotes;
     public TextMeshProUGUI[] ChoiceTex;
     public Image SpeakerImage;
+    public Image SpeakerFader;
     private int CurrentPage = 0;
+    private ScriptableDialogSpeaker CurrentSpeaker;
     private void OnEnable()
     {
         UpdateData();
+    }
+
+    IEnumerator FadeNewSpeakerImage()
+    {
+        SpeakerFader.color = Color.white;
+        while (SpeakerFader.color.a > 0)
+        {
+            SpeakerFader.color = new Color(1, 1, 1, SpeakerFader.color.a - CO.co.GetWorldSpeedDelta() * 4f);
+            yield return null;
+        }
+        SpeakerFader.color = Color.clear;
     }
     private void Update()
     {
@@ -37,7 +52,7 @@ public class Screen_Talk : MonoBehaviour
                 ChoiceButtonVotes[i].color = (LOCALCO.local.CurrentDialogVote.Value == i) ? Color.cyan : Color.white;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.U))
         {
             UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
         }
@@ -55,7 +70,16 @@ public class Screen_Talk : MonoBehaviour
             CurrentPage = 0;
             curText = CO_STORY.co.GetMainStoryText(CurrentPage);
         }
-        StartCoroutine(SetText(MainTex, curText));
+        CurrentSpeaker = CO_STORY.co.GetSpeaker(CurrentPage);
+        float Delay = 0;
+        if (SpeakerImage.sprite != CurrentSpeaker.Portrait || CurrentPage == 0)
+        {
+            StartCoroutine(FadeNewSpeakerImage());
+            StartCoroutine(SetText(MainTex,"",Color.white));
+            Delay = 0.6f;
+        }
+        SpeakerImage.sprite = CurrentSpeaker.Portrait;
+        StartCoroutine(SetText(MainTex, curText, CurrentSpeaker.NameColor, Delay));
         if (!CO_STORY.co.IsLastMainStoryText(CurrentPage))
         {
             for (int i = 0; i < ChoiceTex.Length; i++)
@@ -64,24 +88,25 @@ public class Screen_Talk : MonoBehaviour
                 ChoiceButtonVotes[i].text = "";
                 ChoiceButton[i].gameObject.SetActive(false);
             }
-            NextButton.SetActive(true);
-            PreviousButton.SetActive(CurrentPage > 0);
+            NextButtonTex.color = Color.white;
+            PreviousButtonTex.color = (CurrentPage > 0) ? Color.white : Color.gray;
         }
         else
         {
-            NextButton.SetActive(false);
-            PreviousButton.SetActive(true);
+            NextButtonTex.color = Color.gray;
+            PreviousButtonTex.color = Color.white;
             for (int i = 0; i < ChoiceTex.Length; i++)
             {
                 string str = CO_STORY.co.GetCurrentChoice(i);
-                StartCoroutine(SetText(ChoiceTex[i], str , 1f));
+                StartCoroutine(SetText(ChoiceTex[i], str, Color.cyan, 0.5f));
                 ChoiceButtonVotes[i].text = CO_STORY.co.VoteResultAmount(i).ToString();
                 ChoiceButton[i].gameObject.SetActive(str != "");
             }
         }
     }
 
-    IEnumerator SetText(TextMeshProUGUI tex, string text, float delay = 0)
+    int speakLetter = 0;
+    IEnumerator SetText(TextMeshProUGUI tex, string text, Color col, float delay = 0)
     {
         yield return new WaitForSeconds(delay);
         string keepTex = "";
@@ -91,6 +116,19 @@ public class Screen_Talk : MonoBehaviour
             if (tex.text != keepTex) yield break;
             keepTex += c;
             tex.text = keepTex;
+            if (CurrentSpeaker)
+            {
+                if (CurrentSpeaker.Voice.Length > 0 && char.IsLetterOrDigit(c))
+                {
+                    speakLetter--;
+                    if (speakLetter < 0)
+                    {
+                        speakLetter = Random.Range(4, 7);
+                        AudioClip clip = CurrentSpeaker.Voice[Random.Range(0, CurrentSpeaker.Voice.Length)];
+                        AUDCO.aud.PlaySFX(clip);
+                    }
+                }
+            }
             yield return new WaitForSeconds(0.03f);
         }
     }

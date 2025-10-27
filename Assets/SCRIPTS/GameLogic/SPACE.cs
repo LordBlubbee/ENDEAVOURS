@@ -19,12 +19,13 @@ public class SPACE : NetworkBehaviour
     public Vector3 Storage;
     public List<Vector3> CoreModuleLocations;
     [NonSerialized] public List<Module> CoreModules = new();
+    public List<float> CoreModuleRotations;
     public List<Vector3> WeaponModuleLocations;
+    public List<float> WeaponModuleRotations;
     [NonSerialized] public List<Module> WeaponModules = new();
     public List<Vector3> SystemModuleLocations;
+    public List<float> SystemModuleRotations;
     [NonSerialized] public List<Module> SystemModules = new();
-    public List<Vector3> LoonModuleLocations;
-    [NonSerialized] public List<Module> LoonModules = new();
 
     public GameObject PrefabWall;
     public GameObject PrefabCorner;
@@ -119,6 +120,7 @@ public class SPACE : NetworkBehaviour
     {
         Module mod = null;
         Vector3 vec = Vector3.zero;
+        float rot = 0;
         switch (module.EquipType)
         {
             case ScriptableEquippableModule.EquipTypes.CORE:
@@ -138,6 +140,7 @@ public class SPACE : NetworkBehaviour
 
                         mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
                         vec = CoreModuleLocations[CoreModules.Count];
+                        rot = CoreModuleRotations[CoreModules.Count];
                         CoreModules.Add(mod);
                         if (mod.ModuleType == Module.ModuleTypes.ENGINES) Drifter.EngineModule = mod;
                         else if (mod.ModuleType == Module.ModuleTypes.NAVIGATION) Drifter.NavModule = mod;
@@ -162,6 +165,7 @@ public class SPACE : NetworkBehaviour
                     {
                         mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
                         vec = WeaponModuleLocations[WeaponModules.Count];
+                        rot = WeaponModuleRotations[WeaponModules.Count];
                         WeaponModules.Add(mod);
                         break;
                     }
@@ -184,13 +188,14 @@ public class SPACE : NetworkBehaviour
 
                         mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
                         vec = SystemModuleLocations[SystemModules.Count];
+                        rot = SystemModuleRotations[SystemModules.Count];
                         SystemModules.Add(mod);
                         break;
                     }
                 }
                 break;
             case ScriptableEquippableModule.EquipTypes.LOON:
-                foreach (Vector3 trymod in LoonModuleLocations)
+               /* foreach (Vector3 trymod in LoonModuleLocations)
                 {
                     bool tryLocation = true;
                     foreach (Module modloc in LoonModules)
@@ -209,13 +214,14 @@ public class SPACE : NetworkBehaviour
                         LoonModules.Add(mod);
                         break;
                     }
-                }
+                }*/
                 break;
         }
         if (mod == null) return false;
         mod.NetworkObject.Spawn();
         mod.transform.SetParent(transform);
         mod.transform.localPosition = vec;
+        mod.transform.Rotate(Vector3.forward, rot);
         mod.SpaceID.Value = SpaceID.Value;
         mod.Faction = Drifter.GetFaction();
         Modules.Add(mod);

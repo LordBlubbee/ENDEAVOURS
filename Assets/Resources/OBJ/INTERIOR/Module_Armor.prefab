@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6833190313493360995}
   - component: {fileID: 8862820483200802099}
-  - component: {fileID: 5613211613246627982}
+  - component: {fileID: 1337322249065792858}
   m_Layer: 0
   m_Name: Cogwheel (1)
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5613211613246627982
+--- !u!114 &1337322249065792858
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,10 +97,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 878790290508762098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d90aec36001c7ec4d8212d851dc9a6cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 06d094cc1ab43104b9c3de17382430ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: -45
+  module: {fileID: 7985907672111993197}
+  RotationSpeed: -30
 --- !u!1 &950536968445905593
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,7 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7960243976690546052}
   - component: {fileID: 5056776865682223185}
-  - component: {fileID: 1517864788356791714}
+  - component: {fileID: 2417500488480559581}
   m_Layer: 0
   m_Name: Cogwheel
   m_TagString: Untagged
@@ -189,7 +190,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1517864788356791714
+--- !u!114 &2417500488480559581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,10 +199,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 950536968445905593}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d90aec36001c7ec4d8212d851dc9a6cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 06d094cc1ab43104b9c3de17382430ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: 45
+  module: {fileID: 7985907672111993197}
+  RotationSpeed: 30
 --- !u!1 &8465642290706125043
 GameObject:
   m_ObjectHideFlags: 0

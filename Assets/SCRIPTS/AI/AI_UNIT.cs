@@ -309,11 +309,21 @@ public class AI_UNIT : NetworkBehaviour
                     {
                         float dist = (Group.HomeDrifter.MedicalModule.transform.position - transform.position).magnitude;
                         if (dist > 16f) point = Group.HomeDrifter.MedicalModule.transform.position;
+
+                        Unit.EquipWeapon1Rpc();
+                    } else
+                    {
+                        if (Dist(EnemyTarget.transform.position) > 24f)
+                        {
+                            Unit.EquipMedkitRpc();
+                        } else
+                        {
+                            Unit.EquipWeapon1Rpc();
+                        }
                     }
                     SetAIMoveTowards(point, EnemyTarget.Space);
-                    SetLookTowards(point, EnemyTarget.Space);
+                    SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
                     if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();
-                    Unit.EquipMedkitRpc();
                     Unit.UseItem2Rpc();
                     break;
             }
@@ -331,8 +341,16 @@ public class AI_UNIT : NetworkBehaviour
 
             if (Unit.GetHealthRelative() < 1f)
             {
-                StopMoving();
-                StopLooking();
+                if (Group.HomeDrifter.MedicalModule)
+                {
+                    SetAIMoveTowards(Group.HomeDrifter.MedicalModule.transform.position, EnemyTarget.Space);
+                    StopLooking();
+                    Unit.Dash();
+                } else
+                {
+                    StopMoving();
+                    StopLooking();
+                }
                 Unit.EquipMedkitRpc();
                 Unit.UseItem2Rpc();
                 return;
@@ -387,6 +405,10 @@ public class AI_UNIT : NetworkBehaviour
                 }
             }
             return;
+        }
+        if (Unit.IsEnemyInFront(GetAttackDistance()))
+        {
+            Unit.UseItem1Rpc();
         }
         //We are in a hostile vessel
         mod = GetClosestEnemyModule();

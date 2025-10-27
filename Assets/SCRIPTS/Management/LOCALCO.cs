@@ -73,6 +73,7 @@ public class LOCALCO : NetworkBehaviour
                 return;
             }
             Cursor.visible = Input.GetKey(KeyCode.LeftControl) || UI.ui.MainGameplayUI.PauseMenu.activeSelf;
+            UI.ui.SetCrosshairColor(Color.white);
             switch (CurrentControlMode)
             {
                 case ControlModes.PLAYER:
@@ -96,6 +97,11 @@ public class LOCALCO : NetworkBehaviour
                         } else
                         {
                             UI.ui.SetCrosshairRotateReset();
+                        }
+                        if (GetPlayer().EquippedToolObject.CrosshairSprite == CO_SPAWNER.co.GrappleCursor)
+                        {
+                            if (HasGrappleTarget()) UI.ui.SetCrosshairColor(Color.green);
+                            else UI.ui.SetCrosshairColor(Color.red);
                         }
                     } else
                     {
@@ -165,7 +171,7 @@ public class LOCALCO : NetworkBehaviour
         foreach (Collider2D col in Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition),0.1f))
         {
             WalkableTile tile = col.GetComponent<WalkableTile>();
-            if (tile && tile.Space != Player.Space)
+            if (tile && tile.Space != Player.Space && tile.canBeBoarded)
             {
                 return true;
             }

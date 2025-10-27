@@ -59,6 +59,11 @@ public class UI : MonoBehaviour
     {
         Crosshair.sprite = img == null ? CrosshairSpriteGeneric : img;
     }
+
+    public void SetCrosshairColor(Color col)
+    {
+        Crosshair.color = col;
+    }
     public void SetCrosshairRotateTowards(Vector3 towards, Vector3 from)
     {
         Crosshair.transform.Rotate(Vector3.forward, AngleBetweenPoints(from, towards));

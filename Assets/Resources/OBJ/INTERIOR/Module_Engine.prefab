@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9114849472131548513}
   - component: {fileID: 2752872489630296183}
-  - component: {fileID: 2680207108531973664}
+  - component: {fileID: 3339316533454676384}
   m_Layer: 0
   m_Name: Cogwheel (1)
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2680207108531973664
+--- !u!114 &3339316533454676384
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,10 +97,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 538409375159164775}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d90aec36001c7ec4d8212d851dc9a6cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 06d094cc1ab43104b9c3de17382430ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: -45
+  module: {fileID: 6313021248617021957}
+  RotationSpeed: -60
 --- !u!1 &8465642290706125043
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +332,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1567270310210945842}
   - component: {fileID: 2434591078741878281}
-  - component: {fileID: 8100765156420933009}
+  - component: {fileID: 7673073371292726707}
   m_Layer: 0
   m_Name: Cogwheel
   m_TagString: Untagged
@@ -409,7 +410,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8100765156420933009
+--- !u!114 &7673073371292726707
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -418,7 +419,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 9108678741717954169}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d90aec36001c7ec4d8212d851dc9a6cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 06d094cc1ab43104b9c3de17382430ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: 45
+  module: {fileID: 6313021248617021957}
+  RotationSpeed: 60

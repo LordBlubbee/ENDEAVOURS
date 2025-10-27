@@ -24,6 +24,7 @@ public class PROJ : NetworkBehaviour
     [Header("IMPACT")]
     public GameObject ImpactVFX;
     public GameObject LaunchVFX;
+    public AudioClip[] ImpactSFX;
     [NonSerialized] public float HullDamageModifier = 1f; //Which factor of damage is done to modules
     [NonSerialized] public float ModuleDamageModifier = 1f; //Which factor of damage is done to modules
     [NonSerialized] public float ArmorDamageModifier = 1f; //Which factor of damage is done to armor
@@ -51,6 +52,7 @@ public class PROJ : NetworkBehaviour
         Faction = fac;
         Space = space;
         transform.Rotate(Vector3.forward, UnityEngine.Random.Range(-InaccuracyDegrees, InaccuracyDegrees));
+        if (Space) transform.SetParent(Space.transform);
 
         if (LaunchVFX) LaunchVFXRpc();
     }
@@ -225,6 +227,10 @@ public class PROJ : NetworkBehaviour
     public void ImpactVFXRpc()
     {
         Instantiate(ImpactVFX,Tip.position, Quaternion.identity).transform.SetParent(CO.co.GetTransformAtPoint(Tip.position));
+        if (ImpactSFX.Length > 0)
+        {
+            AUDCO.aud.PlaySFX(ImpactSFX, Tip.position, 0.1f);
+        }
     }
     [Rpc(SendTo.ClientsAndHost)]
 

@@ -397,9 +397,8 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         }
         if (ClosestArmor)
         {
-            if (!ClosestArmor.IsDisabled())
+            if (ClosestArmor.CanAbsorbArmor())
             {
-
                 AbsorbableDamage *= fl.ArmorDamageModifier; //Say, we deal 80 damage with +50% modifier = 120
                 float DamageNeeded = Mathf.Min(ClosestArmor.CurArmor.Value, AbsorbableDamage); //Say, we need only 80 damage
                 ClosestArmor.TakeArmorDamage(AbsorbableDamage, ClosestArmor.transform.position);
@@ -447,7 +446,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         }
         if (ClosestArmor)
         {
-            if (!ClosestArmor.IsDisabled())
+            if (ClosestArmor.CanAbsorbArmor())
             {
 
                 AbsorbableDamage *= 1f; //Say, we deal 80 damage with +50% modifier = 120
