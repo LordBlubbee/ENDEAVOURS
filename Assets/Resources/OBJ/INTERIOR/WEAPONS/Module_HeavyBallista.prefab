@@ -261,9 +261,9 @@ MonoBehaviour:
   FirePoint: {fileID: 3676994766029858991}
   FireProjectile: {fileID: 8910635656682413825, guid: bcb2fb2362f019e4290db11af9a5f758, type: 3}
   Fire_SFX:
-  - {fileID: 8300000, guid: 9e9dd386944e2cb4390ea93b9afab6d1, type: 3}
-  - {fileID: 8300000, guid: 84e54f64f3f8e9e40829a1ac68afbe5a, type: 3}
-  - {fileID: 8300000, guid: 9dc3212dc1148b44ab55cef301872c60, type: 3}
+  - {fileID: 8300000, guid: 3acb48c68b05b29438e3ef27bd3b012d, type: 3}
+  - {fileID: 8300000, guid: 4b07ae0e15c3af04eaaf763a1580761d, type: 3}
+  - {fileID: 8300000, guid: dc98d35753a89c040904c73f02f92e9a, type: 3}
   CrosshairSprite: {fileID: 21300000, guid: 3d1452e5180bdf641bb60a3aadc3248a, type: 3}
   Damage: 100
   HullDamageMod: 1

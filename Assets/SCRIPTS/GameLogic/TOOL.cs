@@ -30,7 +30,6 @@ public class TOOL : MonoBehaviour
     public float UsageStamina1 = 2f;
     public AudioClip[] Action1_SFX;
     public AudioClip[] Action1_SFX_Hit;
-    public AudioClip[] Action1_SFX_Block;
 
     public float attackDamage1 = 10f;
     public PROJ RangedPrefab1;

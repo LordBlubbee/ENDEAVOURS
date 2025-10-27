@@ -302,6 +302,7 @@ MonoBehaviour:
   BlockChance: 0.7
   ReflectProjectileChance: 0
   isActive: 0
+  BlockSound: 1
 --- !u!50 &3703035250229006873
 Rigidbody2D:
   serializedVersion: 5

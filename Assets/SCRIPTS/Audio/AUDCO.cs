@@ -11,6 +11,11 @@ public class AUDCO : NetworkBehaviour
     protected AudioSource otherOST;
     public AUD spawnSFX;
     public static AUDCO aud;
+    public enum BlockSoundEffects
+    {
+        NONE,
+        SHIELD
+    }
 
     private List<AUD> ActiveAudio = new();
 
@@ -79,7 +84,23 @@ public class AUDCO : NetworkBehaviour
         PlaySFX(clips[Random.Range(0, clips.Length)], trt, pitchshift);
     }
 
+    [Rpc(SendTo.ClientsAndHost)]
+    public void PlayBlockSFXRpc(BlockSoundEffects eff, Vector3 trt)
+    {
+        PlayBlockSFX(eff, trt);
+    }
+    public void PlayBlockSFX(BlockSoundEffects eff, Vector3 trt)
+    {
+        switch (eff)
+        {
+            default:
+                PlaySFX(Block_Shield, trt, 0.1f);
+                break;
+        }
+    }
+
     [Header("SFX Clips")]
+    public AudioClip[] Block_Shield;
     public AudioClip Press;
     public AudioClip Fail;
 }

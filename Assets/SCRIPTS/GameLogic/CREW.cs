@@ -654,15 +654,6 @@ public class CREW : NetworkBehaviour, iDamageable
             AUDCO.aud.PlaySFX(EquippedToolObject.Action1_SFX_Hit, transform.position, 0.1f);
         }
     }
-    [Rpc(SendTo.ClientsAndHost)]
-    public void WeaponBlockSFXRpc()
-    {
-        if (!EquippedToolObject) return;
-        if (EquippedToolObject.Action1_SFX_Block.Length > 0)
-        {
-            AUDCO.aud.PlaySFX(EquippedToolObject.Action1_SFX_Block, transform.position, 0.1f);
-        }
-    }
     public void UseItem2()
     {
         if (!CanFunction()) return;
@@ -806,12 +797,14 @@ public class CREW : NetworkBehaviour, iDamageable
                     bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChance;
                     if (isBlocked)
                     {
-                        WeaponBlockSFXRpc();
+                        if (Blocker.BlockSound != AUDCO.BlockSoundEffects.NONE) AUDCO.aud.PlayBlockSFXRpc(Blocker.BlockSound, transform.position);
+                        else WeaponHitSFXRpc();
                         if (Blocker.ReduceDamageMod < 1f)
                         {
                             float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
-                            Melee(Blocker.tool.GetCrew(), checkHit, dmg * (1f-Blocker.ReduceDamageMod));
-                        } else
+                            Melee(Blocker.tool.GetCrew(), checkHit, dmg * (1f - Blocker.ReduceDamageMod));
+                        }
+                        else
                         {
                             CO_SPAWNER.co.SpawnWordsRpc("BLOCKED", checkHit);
                             CO_SPAWNER.co.SpawnImpactRpc(checkHit);

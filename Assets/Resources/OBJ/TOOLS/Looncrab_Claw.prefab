@@ -279,6 +279,7 @@ MonoBehaviour:
   BlockChance: 0.9
   ReflectProjectileChance: 0
   isActive: 0
+  BlockSound: 1
 --- !u!1 &6379426935444245879
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,6 +462,7 @@ MonoBehaviour:
   BlockChance: 0.9
   ReflectProjectileChance: 0
   isActive: 0
+  BlockSound: 1
 --- !u!1 &6403120744721419714
 GameObject:
   m_ObjectHideFlags: 0

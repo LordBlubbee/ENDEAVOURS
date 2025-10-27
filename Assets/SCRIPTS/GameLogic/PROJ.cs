@@ -93,7 +93,7 @@ public class PROJ : NetworkBehaviour
             AltitudeRemaining -= step;
             if (CanHitWalls)
             {
-                foreach (Collider2D collision in Physics2D.OverlapCircleAll(Tip.position, 0.3f))
+                foreach (Collider2D collision in Physics2D.OverlapCircleAll(Tip.position, 0.5f))
                 {
                     PotentialHitWall(collision.gameObject);
                 }
@@ -110,7 +110,7 @@ public class PROJ : NetworkBehaviour
             }
         } else
         {
-            foreach (Collider2D collision in Physics2D.OverlapCircleAll(Tip.position, 0.3f))
+            foreach (Collider2D collision in Physics2D.OverlapCircleAll(Tip.position, 0.5f))
             {
                 PotentialHitTarget(collision.gameObject);
             }
@@ -154,6 +154,7 @@ public class PROJ : NetworkBehaviour
             {
                 isActive = false;
                 BulletImpact();
+                if (ImpactVFX) ImpactVFXRpc();
             }
             return;
         }
@@ -171,6 +172,7 @@ public class PROJ : NetworkBehaviour
                 else
                 {
                     BulletImpact();
+                    if (ImpactVFX) ImpactVFXRpc();
                 }
                 return;
             }
@@ -182,6 +184,8 @@ public class PROJ : NetworkBehaviour
                 bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChance;
                 if (isBlocked)
                 {
+                    if (Blocker.BlockSound != AUDCO.BlockSoundEffects.NONE) AUDCO.aud.PlayBlockSFXRpc(Blocker.BlockSound, transform.position);
+                    else if (ImpactVFX) ImpactVFXRpc();
                     if (Blocker.ReduceDamageMod < 1f)
                     {
                         AttackDamage *= (1f - Blocker.ReduceDamageMod);
@@ -254,7 +258,6 @@ public class PROJ : NetworkBehaviour
     {
         if (hasImpacted) return;
         hasImpacted = true;
-        if (ImpactVFX) ImpactVFXRpc();
         Kill();
     }
     protected void Kill()

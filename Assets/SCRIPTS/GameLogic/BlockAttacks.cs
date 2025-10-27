@@ -10,6 +10,7 @@ public class BlockAttacks : MonoBehaviour
     public float BlockChance = 1f;
     public float ReflectProjectileChance = 0f;
     public bool isActive;
+    public AUDCO.BlockSoundEffects BlockSound;
     private float EnableTimer = 0f;
     public void SetActive(bool bol)
     {

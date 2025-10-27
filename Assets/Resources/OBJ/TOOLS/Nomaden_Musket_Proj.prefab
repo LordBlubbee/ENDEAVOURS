@@ -174,10 +174,9 @@ MonoBehaviour:
   ImpactVFX: {fileID: 9192043369650961900, guid: 544de0d72e32c7e43b79f0f2cfc56db9, type: 3}
   LaunchVFX: {fileID: 7178822272740056672, guid: 168ce2b692f2ff74d916e8d028179b9d, type: 3}
   ImpactSFX:
-  - {fileID: 8300000, guid: 895628b07dd552d4c9d0aad6fde578e7, type: 3}
-  - {fileID: 8300000, guid: 999117fc720192542a48562bc242b423, type: 3}
-  - {fileID: 8300000, guid: d765450ea07bfe742a34f2a80267190f, type: 3}
-  - {fileID: 8300000, guid: ca22bc6628f6ddf4b81a1e4d7fc2a027, type: 3}
+  - {fileID: 8300000, guid: 80c4c9e547579f442ae46103be6e7491, type: 3}
+  - {fileID: 8300000, guid: ee10e0d26f2bf5c47a6ef0aa507927a3, type: 3}
+  - {fileID: 8300000, guid: 2e5be57a9add5bf4287040a4dcc42eb2, type: 3}
   CrewDamageSplash: 1
 --- !u!114 &1279859445198227217
 MonoBehaviour:
