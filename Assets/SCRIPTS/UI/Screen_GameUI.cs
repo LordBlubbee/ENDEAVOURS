@@ -104,16 +104,10 @@ public class Screen_GameUI : MonoBehaviour
             }
             NoAmmoOverlay.SetActive(wep.LoadedAmmo.Value < 1);
         }*/
-        if (CO.co.PlayerMainDrifter)
-        {
-            OurDrifterIntegritySlider.gameObject.SetActive(true);
-            OurDrifterIntegritySlider.value = CO.co.PlayerMainDrifter.GetHealthRelative();
-            OurDrifterIntegrityTex.text = CO.co.PlayerMainDrifter.GetHealth().ToString("0");
-            OurDrifterIntegrityColor.color = new Color(1f - CO.co.PlayerMainDrifter.GetHealthRelative(), CO.co.PlayerMainDrifter.GetHealthRelative(), 0);
-        } else
-        {
-            OurDrifterIntegritySlider.gameObject.SetActive(false);
-        }
+        OurDrifterIntegritySlider.gameObject.SetActive(true);
+        OurDrifterIntegritySlider.value = CO.co.PlayerMainDrifter.GetHealthRelative();
+        OurDrifterIntegrityTex.text = CO.co.PlayerMainDrifter.GetHealth().ToString("0");
+        OurDrifterIntegrityColor.color = new Color(1f - CO.co.PlayerMainDrifter.GetHealthRelative(), CO.co.PlayerMainDrifter.GetHealthRelative(), 0);
 
         if (CO.co.EnemyBarRelative.Value > -1)
         {

@@ -417,6 +417,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public void SetMoveInput(Vector3 mov)
     {
+        Debug.Log($"{name} is moving towards {mov}");
         MoveInput = mov;
         if (IsServer) isMoving.Value = mov != Vector3.zero;
     }

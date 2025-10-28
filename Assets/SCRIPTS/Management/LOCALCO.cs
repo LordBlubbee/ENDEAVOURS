@@ -58,6 +58,7 @@ public class LOCALCO : NetworkBehaviour
     private void Update()
     {
         //Controls
+        if (!IsOwner) return;
         if (GetPlayer())
         {
             Vector3 mov = Vector3.zero;
@@ -204,13 +205,12 @@ public class LOCALCO : NetworkBehaviour
             StartCoroutine(CheckInteraction());
         }
     }
-
     [Rpc(SendTo.Server)]
     public void CreatePlayerRpc(string name, Color col, int[] attributes, string backTex)
     {
         //SpawnPlayer Spawn Player
         CREW crew = Instantiate(CO_SPAWNER.co.PlayerPrefab, CO.co.PlayerMainDrifter.transform.TransformPoint(CO.co.PlayerMainDrifter.Interior.Bridge), Quaternion.identity);
-        crew.NetworkObject.Spawn();
+     
         crew.Faction.Value = 1;
         Debug.Log($"We are player: {GetPlayerID()}");
         crew.PlayerController.Value = GetPlayerID();
@@ -229,10 +229,11 @@ public class LOCALCO : NetworkBehaviour
         ScriptableBackground back = Resources.Load<ScriptableBackground>($"OBJ/SCRIPTABLES/BACKGROUNDS/{backTex}");
         Debug.Log($"Set initial background: {back} searched at OBJ/SCRIPTABLES/BACKGROUNDS/{backTex}");
         crew.SetCharacterBackground(back); //Must be called BEFORE INIT
+        crew.NetworkObject.Spawn();
         crew.Init();
         crew.RegisterPlayerOnLOCALCORpc();
         Player.EquipWeapon(0, back.Background_StartingWeapon);
-        Player.EquipWeaponPrefab(0);
+        //Player.EquipWeaponPrefab(0);
         CO.co.PlayerMainDrifter.Interior.AddCrew(crew);
     }
     public void SetCameraToPlayer()

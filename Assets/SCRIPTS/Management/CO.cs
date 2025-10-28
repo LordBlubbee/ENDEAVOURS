@@ -598,9 +598,15 @@ public class CO : NetworkBehaviour
     }
     public void RegisterDrifter(DRIFTER drifter)
     {
+        Debug.Log("Register drifter?");
         if (RegisteredDRIFTER.Contains(drifter)) return;
         RegisteredDRIFTER.Add(drifter);
-        if (drifter.IsMainDrifter.Value) PlayerMainDrifter = drifter;
+        Debug.Log("Main drifter?");
+        if (drifter.IsMainDrifter.Value)
+        {
+            PlayerMainDrifter = drifter;
+            Debug.Log("Main drifter detected and set!");
+        }
     }
 
     public void UnregisterDrifter(DRIFTER drifter)
