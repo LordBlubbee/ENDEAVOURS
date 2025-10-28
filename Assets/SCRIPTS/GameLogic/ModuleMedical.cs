@@ -12,12 +12,10 @@ public class ModuleMedical : Module
     {
         if (hasInitialized) return;
         hasInitialized = true;
-
+        if (!IsServer) return;
         CurHealth.Value = MaxHealth;
-        if (IsServer)
-        {
-            StartCoroutine(RegenAura());
-        }
+
+        StartCoroutine(RegenAura());
     }
     IEnumerator RegenAura()
     {

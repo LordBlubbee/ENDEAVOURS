@@ -184,7 +184,7 @@ public class UI_Module : MonoBehaviour
             {
                 OrderMarker.gameObject.SetActive(true);
                 OrderMarker.transform.position = crew.GetOrderPoint();
-                OrderMarker.transform.SetParent(crew.GetOrderTransform().transform);
+                OrderMarker.transform.SetParent(CO.co.GetTransformAtPoint(crew.GetOrderPoint()));
             }
             else
             {

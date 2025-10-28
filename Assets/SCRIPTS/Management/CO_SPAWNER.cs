@@ -91,6 +91,7 @@ public class CO_SPAWNER : NetworkBehaviour
 
         DRIFTER driftPrefab = UI.ui.ShipSelectionUI.SpawnableShips[ID].Prefab;
         DRIFTER drifter = Instantiate(driftPrefab,Vector3.zero,Quaternion.identity);
+        drifter.IsMainDrifter.Value = true;
         drifter.NetworkObject.Spawn();
         drifter.Faction.Value = 1;
         drifter.Init();
@@ -126,8 +127,8 @@ public class CO_SPAWNER : NetworkBehaviour
         enem.CharacterName.Value = Prefab.CharacterBackground.GetRandomName();
         Color col = Prefab.CharacterBackground.BackgroundColor;
         enem.CharacterNameColor.Value = new Vector3(col.r,col.g,col.b);
+        enem.EquipWeapon1Rpc();
         enem.Init();
-        //enem.EquipWeaponPrefab(0);
         drift.Interior.AddCrew(enem);
         drift.CrewGroup.Add(enem.GetComponent<AI_UNIT>());
         return enem;

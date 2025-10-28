@@ -11,20 +11,20 @@ public class SPACE : NetworkBehaviour
     [NonSerialized] public NetworkVariable<int> SpaceID = new();
     [NonSerialized] public List<CREW> CrewInSpace = new();
     private List<Module> Modules = new();
-    public List<WalkableTile> RoomTiles;
-    public List<GameObject> EmptyTiles;
+    public List<WalkableTile> RoomTiles = new();
+    public List<GameObject> EmptyTiles = new();
     private List<Vector2> RoomLocations = new();
     private List<Vector2> EmptyLocations = new();
     public Vector3 Bridge;
     public Vector3 Storage;
     public List<Vector3> CoreModuleLocations;
     [NonSerialized] public List<Module> CoreModules = new();
-    public List<float> CoreModuleRotations;
-    public List<Vector3> WeaponModuleLocations;
-    public List<float> WeaponModuleRotations;
+    public List<float> CoreModuleRotations = new();
+    public List<Vector3> WeaponModuleLocations = new();
+    public List<float> WeaponModuleRotations = new();
     [NonSerialized] public List<Module> WeaponModules = new();
-    public List<Vector3> SystemModuleLocations;
-    public List<float> SystemModuleRotations;
+    public List<Vector3> SystemModuleLocations = new();
+    public List<float> SystemModuleRotations = new();
     [NonSerialized] public List<Module> SystemModules = new();
 
     public GameObject PrefabWall;
@@ -324,16 +324,22 @@ public class SPACE : NetworkBehaviour
         if (CrewInSpace.Contains(crew)) return;
         CrewInSpace.Add(crew);
         crew.Space = this;
-        crew.SpaceID.Value = SpaceID.Value;
-        crew.transform.SetParent(transform);
-        crew.transform.localPosition = new Vector3(crew.transform.localPosition.x, crew.transform.localPosition.y, -0.5f);
+        if (IsServer)
+        {
+            crew.SpaceID.Value = SpaceID.Value;
+            crew.transform.SetParent(transform);
+            crew.transform.localPosition = new Vector3(crew.transform.localPosition.x, crew.transform.localPosition.y, -0.5f);
+        }
     }
     public void RemoveCrew(CREW crew)
     {
         CrewInSpace.Remove(crew);
-        crew.Space = null;
-        crew.SpaceID.Value = 0;
-        crew.transform.SetParent(null);
+        if (IsServer)
+        {
+            crew.Space = null;
+            crew.SpaceID.Value = 0;
+            crew.transform.SetParent(null);
+        }
     }
 
     public List<CREW> GetCrew()

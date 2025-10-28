@@ -13,6 +13,7 @@ public class ModuleArmor : Module
         if (hasInitialized) return;
         hasInitialized = true;
 
+        if (!IsServer) return;
         CurHealth.Value = MaxHealth;
         CurArmor.Value = MaxArmor;
     }

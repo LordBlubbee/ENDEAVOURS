@@ -97,13 +97,43 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         switch (ModuleType) {
 
         }
+        Init();
         if (!IsServer)
         {
-            if (!Space.GetModules().Contains(this)) Space.GetModules().Add(this);
+            Debug.Log($"Module spawned. Trying to add to {Space}");
+            if (!Space.GetModules().Contains(this))
+            {
+                Space.GetModules().Add(this);
+                switch (GetInteractableType())
+                {
+                    case ModuleTypes.NAVIGATION:
+                        Space.CoreModules.Add(this);
+                        break;
+                    case ModuleTypes.INVENTORY:
+                        Space.CoreModules.Add(this);
+                        break;
+                    case ModuleTypes.ENGINES:
+                        Space.CoreModules.Add(this);
+                        break;
+                    case ModuleTypes.MEDICAL:
+                        Space.CoreModules.Add(this);
+                        break;
+                    case ModuleTypes.MAPCOMMS:
+                        Space.CoreModules.Add(this);
+                        break;
+                    default:
+                        Space.SystemModules.Add(this);
+                        break;
+                    case ModuleTypes.WEAPON:
+                        Space.WeaponModules.Add(this as ModuleWeapon);
+                        break;
+                }
+            }
+           
+            Debug.Log($"{Space} now has {Space.GetModules().Count} modules");
             return;
         }
         
-        Init();
     }
     void Update()
     {
@@ -130,6 +160,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         if (hasInitialized) return;
         hasInitialized = true;
 
+        if (!IsServer) return;
         CurHealth.Value = MaxHealth;
     }
     public void Heal(float fl)

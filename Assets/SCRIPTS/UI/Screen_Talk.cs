@@ -37,6 +37,11 @@ public class Screen_Talk : MonoBehaviour
     }
     private void Update()
     {
+        if (!CO_STORY.co.CommsActive.Value)
+        {
+            UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
+            return;
+        }
         if (CO_STORY.co.ShouldUpdate)
         {
             CO_STORY.co.ShouldUpdate = false; 
@@ -59,11 +64,6 @@ public class Screen_Talk : MonoBehaviour
     }
     private void UpdateData()
     {
-        if (!CO_STORY.co.CommsActive.Value)
-        {
-            UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
-            return;
-        }
         string curText = CO_STORY.co.GetMainStoryText(CurrentPage);
         if (curText == "")
         {

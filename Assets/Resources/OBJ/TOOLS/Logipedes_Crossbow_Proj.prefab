@@ -162,7 +162,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   Spr: {fileID: 5573374972207478105}
   Tip: {fileID: 1926082290725974325}
-  ProjectileSpeed: 60
+  ProjectileSpeed: 45
   InaccuracyDegrees: 1
   MaximumRange: -1
   StickToWalls: 1

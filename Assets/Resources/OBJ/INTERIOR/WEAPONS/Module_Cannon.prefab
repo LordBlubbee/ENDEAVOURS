@@ -118,7 +118,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &8465642290706125043
+--- !u!1 &2890979022733601159
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,43 +126,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8038492078634388055}
-  - component: {fileID: 4153547531769238838}
-  - component: {fileID: 1898558090153098328}
-  - component: {fileID: 2733437315669949757}
-  - component: {fileID: -427056032657588051}
-  - component: {fileID: 5540327214154652118}
+  - component: {fileID: 1669101256883187062}
+  - component: {fileID: 2954009218368308082}
   m_Layer: 0
-  m_Name: Module_Cannon
+  m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8038492078634388055
+--- !u!4 &1669101256883187062
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8465642290706125043}
+  m_GameObject: {fileID: 2890979022733601159}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: -6.5, z: -0.0001}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6031975965002184304}
-  - {fileID: 3676994766029858991}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 8038492078634388055}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &4153547531769238838
+--- !u!212 &2954009218368308082
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8465642290706125043}
+  m_GameObject: {fileID: 2890979022733601159}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -199,18 +193,56 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 6a245fb4d4808ff4193ce7dc8efabe06, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.6, y: 1.85}
+  m_Size: {x: 8.06, y: 8.06}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &8465642290706125043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8038492078634388055}
+  - component: {fileID: 1898558090153098328}
+  - component: {fileID: 2733437315669949757}
+  - component: {fileID: -427056032657588051}
+  - component: {fileID: 5540327214154652118}
+  m_Layer: 0
+  m_Name: Module_Cannon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8038492078634388055
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465642290706125043}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3, y: -6.5, z: -0.0001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6031975965002184304}
+  - {fileID: 1669101256883187062}
+  - {fileID: 3676994766029858991}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1898558090153098328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,11 +284,12 @@ MonoBehaviour:
   ModuleTag: 
   ModuleType: 1
   IconSprite: {fileID: 21300000, guid: aa1a4ba3835c1b54bb69868e67b7d2f3, type: 3}
-  ShowAsModule: {fileID: 11400000, guid: 5e327c34dc8e8044db4ecf9d321d5743, type: 2}
+  ShowAsModule: {fileID: 11400000, guid: acdc84f7aedc49344a581b4ed33a3453, type: 2}
   MaxHealth: 200
   HitboxRadius: 16
   CenterPos: {fileID: 0}
   WeaponName: HEAVY CANNON
+  WeaponTransform: {fileID: 1669101256883187062}
   Platform: {fileID: 6031975965002184304}
   FirePoint: {fileID: 3676994766029858991}
   FireProjectile: {fileID: 8910635656682413825, guid: e1f362700e73b244cb3ab7163c174b5e, type: 3}

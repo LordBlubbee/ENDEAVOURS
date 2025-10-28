@@ -337,6 +337,11 @@ public class CREW : NetworkBehaviour, iDamageable
                 CharacterBackground = Resources.Load<ScriptableBackground>(($"OBJ/SCRIPTABLES/BACKGROUNDS/{CharacterBackgroundLink.Value.ToString()}"));
                 Debug.Log("CHARACTER BACKGROUND IS: " + CharacterBackground);
             }
+            if (CurrentToolIDNetwork.Value > -9)
+            {
+                if (EquippedWeapons[CurrentToolIDNetwork.Value]) LocallyEquip(EquippedWeapons[CurrentToolIDNetwork.Value].ToolPrefab);
+                else LocallyEquip(null);
+            }
         }
         if (CharacterBackground)
         {
@@ -417,7 +422,6 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public void SetMoveInput(Vector3 mov)
     {
-        Debug.Log($"{name} is moving towards {mov}");
         MoveInput = mov;
         if (IsServer) isMoving.Value = mov != Vector3.zero;
     }
@@ -460,19 +464,19 @@ public class CREW : NetworkBehaviour, iDamageable
     public void EquipWrenchRpc()
     {
         EquipTool(CO_SPAWNER.co.GetPrefabWrench(DefaultToolset), -2);
-        EquipWeaponUpdateUIRpc(-2);
+        if (IsPlayerControlled()) EquipWeaponUpdateUIRpc(-2);
     }
     [Rpc(SendTo.Server)]
     public void EquipGrappleRpc()
     {
         EquipTool(CO_SPAWNER.co.GetPrefabGrapple(DefaultToolset), -1);
-        EquipWeaponUpdateUIRpc(-1);
+        if (IsPlayerControlled()) EquipWeaponUpdateUIRpc(-1);
     }
     [Rpc(SendTo.Server)]
     public void EquipMedkitRpc()
     {
         EquipTool(CO_SPAWNER.co.GetPrefabMedkit(DefaultToolset), -3);
-        EquipWeaponUpdateUIRpc(-3);
+        if (IsPlayerControlled()) EquipWeaponUpdateUIRpc(-3);
     }
     [Rpc(SendTo.Server)]
     public void EquipWeapon1Rpc()
@@ -914,6 +918,7 @@ public class CREW : NetworkBehaviour, iDamageable
             {
                 iDamageable trt = col.GetComponent<iDamageable>();
                 float Dis = (col.transform.position - transform.position).magnitude;
+                if (trt == null) continue;
                 if (Dis < MaxDis)
                 {
                     Debug.Log("Looking at potential healing target...");
@@ -1128,7 +1133,7 @@ public class CREW : NetworkBehaviour, iDamageable
         if (!CanFunction()) return;
         if (EquippedWeapons[ID]) EquipTool(EquippedWeapons[ID].ToolPrefab, ID);
         else EquipTool(null, ID);
-        EquipWeaponUpdateUIRpc(ID);
+        if (IsPlayerControlled()) EquipWeaponUpdateUIRpc(ID);
     }
 
     [Rpc(SendTo.ClientsAndHost)]
@@ -1140,18 +1145,21 @@ public class CREW : NetworkBehaviour, iDamageable
     }
 
     int CurrentToolID = -9;
+    NetworkVariable<int> CurrentToolIDNetwork = new(-9);
     public void EquipTool(TOOL tol, int ID)
     {
         //Works on Server
         if (CurrentToolID == ID) return;
         if (!CanFunction()) return;
         CurrentToolID = ID;
+        CurrentToolIDNetwork.Value = ID;
         EquipToolLocallyRpc(ID); //Send to Clients
     }
 
     [Rpc(SendTo.ClientsAndHost)]
     public void EquipToolLocallyRpc(int ID)
     {
+        Debug.Log($"Unit {name} is equipping locally, ID {ID}");
         switch (ID)
         {
             default:
@@ -1176,7 +1184,6 @@ public class CREW : NetworkBehaviour, iDamageable
         if (!hasInitialized)
         {
             Init();
-            return;
         }
       
         if (tol == null)
@@ -1306,6 +1313,9 @@ public class CREW : NetworkBehaviour, iDamageable
                 EquipWeaponLocallyRpc(slot, wep.ItemResourceID);
                 EquipTool(wep.ToolPrefab, slot);
             }
+        } else
+        {
+            LocallyEquip(EquippedWeapons[slot].ToolPrefab);
         }
     }
     [Rpc(SendTo.ClientsAndHost)]

@@ -24,7 +24,6 @@ public class DrifterCollider : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             Collider2D col = results[i];
-            Debug.Log(col.name + " moving away " + Collider.Distance(col).distance);
             if (col == Collider) continue; // Skip self
 
             Vector3 away = (Drifter.transform.position - col.transform.position).normalized;

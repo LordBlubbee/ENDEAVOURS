@@ -308,15 +308,10 @@ public class LOCALCO : NetworkBehaviour
                 }
                 if (mod != null)
                 {
-                    if (mod is Module)
+                    if (mod is Module && ((Module)mod).GetFaction() != Player.GetFaction())
                     {
-                        if (((Module)mod).GetFaction() != Player.GetFaction() && ((Module)mod).GetFaction() > 0)
-                        {
-                            yield return null;
-                            continue;
-                        }
                     }
-                    if (mod.IsDisabled())
+                    else if (mod.IsDisabled())
                     {
                         if (mod is Module)
                         {

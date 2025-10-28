@@ -343,7 +343,7 @@ public class AI_UNIT : NetworkBehaviour
             {
                 if (Group.HomeDrifter.MedicalModule)
                 {
-                    SetAIMoveTowards(Group.HomeDrifter.MedicalModule.transform.position, EnemyTarget.Space);
+                    SetAIMoveTowards(Group.HomeDrifter.MedicalModule.transform.position, getSpace());
                     StopLooking();
                     Unit.Dash();
                 } else

@@ -431,16 +431,6 @@ public class CO : NetworkBehaviour
         {
             map.ConnectedPoints = GetConnectedPoints(map.transform.position, map);
         }
-        foreach (MapPoint map in GetMapPoints())
-        {
-            foreach (MapPoint map2 in map.ConnectedPoints)
-            {
-                if (!map2.ConnectedPoints.Contains(map))
-                {
-                    map2.ConnectedPoints.Add(map);
-                }
-            }
-        }
     }
     private bool IsPointLegal(Vector3 center)
     {

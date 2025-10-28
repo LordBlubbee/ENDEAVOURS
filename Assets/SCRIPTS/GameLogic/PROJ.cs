@@ -85,6 +85,7 @@ public class PROJ : NetworkBehaviour
             MaximumRange -= step;
             if (MaximumRange < 0)
             {
+                if (ImpactSFX.Length > 0) ImpactSFXRpc();
                 BulletImpact();
             }
         }
@@ -147,6 +148,7 @@ public class PROJ : NetworkBehaviour
                 crew.TakeDamage(AttackDamage, transform.position);
             }
             Damageables.Add(collision);
+            if (ImpactSFX.Length > 0) ImpactSFXRpc();
             if (StickToWalls)
             {
                 isActive = false;
@@ -208,11 +210,11 @@ public class PROJ : NetworkBehaviour
     {
         if (collision.tag.Equals("LOSBlocker"))
         {
+            if (ImpactSFX.Length > 0) ImpactSFXRpc();
             if (StickToWalls)
             {
                 isActive = false;
                 transform.SetParent(collision.transform.parent);
-                if (ImpactSFX.Length > 0) ImpactSFXRpc();
                 ExpireSlowlyRpc();
             }
             else

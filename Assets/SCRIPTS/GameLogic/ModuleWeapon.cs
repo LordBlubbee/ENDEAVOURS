@@ -7,6 +7,7 @@ public class ModuleWeapon : Module
 {
     [Header("References")]
     public string WeaponName;
+    public Transform WeaponTransform;
     public Transform Platform;
     public Transform FirePoint;
     public PROJ FireProjectile;
@@ -29,6 +30,7 @@ public class ModuleWeapon : Module
     public float AdditionalProjectileDelay = 0f;
     public ResourceCrate.ResourceTypes ResourceType = ResourceCrate.ResourceTypes.AMMUNITION;
 
+    private NetworkVariable<float> Rotation = new();
     [NonSerialized] public NetworkVariable<float> CurCooldown = new();
     [NonSerialized] public NetworkVariable<int> LoadedAmmo = new();
     [NonSerialized] public NetworkVariable<bool> ReloadingCurrently = new();
@@ -71,9 +73,9 @@ public class ModuleWeapon : Module
         if (hasInitialized) return;
         hasInitialized = true;
 
+        if (!IsServer) return;
         CurHealth.Value = MaxHealth;
 
-        Platform.transform.SetParent(transform.parent);
     }
 
     [Rpc(SendTo.Server)]
@@ -104,35 +106,37 @@ public class ModuleWeapon : Module
     }
     protected override void Frame()
     {
-        if (!IsServer) return;
+        if (!IsServer)
+        {
+            WeaponTransform.rotation = Quaternion.Euler(0, 0, Rotation.Value);
+            return;
+        }
         if (isUsing) Fire(ShootTowards);
-    }
-    private void FixedUpdate()
-    {
-        if (!IsServer) return;
         if (IsDisabled()) return;
         if (isLooking)
         {
             float ang = AngleToTurnTarget();
             if (ang > 1f)
             {
-                transform.Rotate(Vector3.forward, Mathf.Min(RotationBaseSpeed * CO.co.GetWorldSpeedDeltaFixed(),ang* RotationBaseSpeed*0.1f));
+                WeaponTransform.Rotate(Vector3.forward, Mathf.Min(RotationBaseSpeed * CO.co.GetWorldSpeedDelta(), ang * RotationBaseSpeed * 0.1f));
                 ang = AngleToTurnTarget();
                 if (AngleToTurnTarget() < 0f)
                 {
-                    transform.Rotate(Vector3.forward, ang);
+                    WeaponTransform.Rotate(Vector3.forward, ang);
                     isLooking = false;
                 }
+                Rotation.Value = WeaponTransform.rotation.eulerAngles.z;
             }
             else if (ang < -1f)
             {
-                transform.Rotate(Vector3.forward, -Mathf.Min(RotationBaseSpeed * CO.co.GetWorldSpeedDeltaFixed(), -ang * RotationBaseSpeed * 0.1f));
+                WeaponTransform.Rotate(Vector3.forward, -Mathf.Min(RotationBaseSpeed * CO.co.GetWorldSpeedDelta(), -ang * RotationBaseSpeed * 0.1f));
                 ang = AngleToTurnTarget();
                 if (AngleToTurnTarget() > 0f)
                 {
-                    transform.Rotate(Vector3.forward, ang);
+                    WeaponTransform.Rotate(Vector3.forward, ang);
                     isLooking = false;
                 }
+                Rotation.Value = WeaponTransform.rotation.eulerAngles.z;
             }
             else
             {
@@ -164,7 +168,7 @@ public class ModuleWeapon : Module
         for (int i = 0; i < ProjectileCount; i++)
         {
             LoadedAmmo.Value--;
-            PROJ proj = Instantiate(FireProjectile, FirePoint.position, transform.rotation);
+            PROJ proj = Instantiate(FireProjectile, FirePoint.position, WeaponTransform.rotation);
             proj.Init(Damage, Faction, null, mouse);
             proj.InitAdvanced(HullDamageMod, ModuleDamageMod, CrewDamageMod, CrewDamageSplash, ArmorDamageMod, ArmorDamageAbsorption);
             proj.NetworkObject.Spawn();
@@ -221,7 +225,7 @@ public class ModuleWeapon : Module
     }
     public Vector3 getLookVector()
     {
-        return getLookVector(transform.rotation);
+        return getLookVector(WeaponTransform.rotation);
     }
     protected Vector3 getLookVector(Quaternion rotref)
     {

@@ -132,17 +132,17 @@ public class Screen_GameUI : MonoBehaviour
 
         if (player.isDead())
         {
-            BleedingOutScreen.gameObject.SetActive(!CO.co.PlayerMainDrifter.MedicalModule.IsDisabled());
+            BleedingOutScreen.gameObject.SetActive(true); //!CO.co.PlayerMainDrifter.MedicalModule.IsDisabled()
             BleedingButton.gameObject.SetActive(!player.isDeadForever());
             if (player.isDeadForever())
             {
-                if (CO.co.PlayerMainDrifter.MedicalModule.IsDisabled())
+                /*if (CO.co.PlayerMainDrifter.MedicalModule.IsDisabled())
                 {
                     BleedingTex.text = "-CANNOT RESPAWN- \nNO MEDICAL BAY";
                 } else
                 {
-                    BleedingTex.text = $"-RESPAWNING- \n{(20 + player.BleedingTime.Value).ToString("0")}";
-                }
+                }*/
+                BleedingTex.text = $"-RESPAWNING- \n{(20 + player.BleedingTime.Value).ToString("0")}";
             }
             else BleedingTex.text = $"-BLEEDING OUT- \n{player.BleedingTime.Value.ToString("0")}";
             if (UI_CommandInterface.co.IsCommandingTabOpen())
