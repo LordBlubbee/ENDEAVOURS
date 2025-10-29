@@ -75,7 +75,7 @@ public class Screen_Talk : MonoBehaviour
         if (SpeakerImage.sprite != CurrentSpeaker.Portrait || CurrentPage == 0)
         {
             StartCoroutine(FadeNewSpeakerImage());
-            StartCoroutine(SetText(MainTex,"",Color.white, false));
+            //StartCoroutine(SetText(MainTex,"",Color.white, false));
             Delay = 0.6f;
         }
         SpeakerImage.sprite = CurrentSpeaker.Portrait;
@@ -108,9 +108,9 @@ public class Screen_Talk : MonoBehaviour
     int speakLetter = 0;
     IEnumerator SetText(TextMeshProUGUI tex, string text, Color col, bool Speak, float delay = 0)
     {
-        yield return new WaitForSeconds(delay);
         string keepTex = "";
         tex.text = keepTex;
+        yield return new WaitForSeconds(delay);
         foreach (char c in text)
         {
             if (tex.text != keepTex) yield break;

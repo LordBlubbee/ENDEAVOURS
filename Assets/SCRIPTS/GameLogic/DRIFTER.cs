@@ -457,7 +457,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             }
         }
         Damage += AbsorbableDamage;
-        TakeDamage(Damage * 1f, ImpactArea);
+        TakeDamage(Damage * 0.8f, ImpactArea);
     }
     public int GetFaction()
     {

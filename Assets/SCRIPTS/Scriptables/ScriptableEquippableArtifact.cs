@@ -11,4 +11,15 @@ public class ScriptableEquippableArtifact : ScriptableEquippable
         ARMOR,
         ARTIFACT
     }
+    [Header("PHYS, ARM, DEX, COM, CMD, ENG, ALC, MED")]
+    public int[] ModifyAttributes;
+    public float ModifyHealthMax;
+    public float ModifyHealthRegen;
+    public float ModifyStaminaMax;
+    public float ModifyStaminaRegen;
+    public float ModifyMovementSpeed;
+
+    public float ModifyMeleeDamage;
+    public float ModifyRangedDamage;
+    public float ModifySpellDamage;
 }

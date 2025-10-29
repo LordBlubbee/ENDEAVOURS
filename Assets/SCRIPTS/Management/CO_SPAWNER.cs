@@ -123,6 +123,7 @@ public class CO_SPAWNER : NetworkBehaviour
         enem.CharacterNameColor.Value = new Vector3(col.r,col.g,col.b);
         enem.EquipWeapon1Rpc();
         enem.Init();
+        enem.SetHomeDrifter(drift);
         drift.Interior.AddCrew(enem);
         drift.CrewGroup.Add(enem.GetComponent<AI_UNIT>());
         return enem;

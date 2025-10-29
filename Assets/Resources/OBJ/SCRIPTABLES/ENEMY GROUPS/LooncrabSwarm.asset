@@ -22,5 +22,5 @@ MonoBehaviour:
   DrifterPowerLevel: 0
   SpawnDrifter: []
   SpawnGroupRange: 30
-  SpawnDistanceMin: 100
-  SpawnDistanceMax: 150
+  SpawnDistanceMin: 130
+  SpawnDistanceMax: 160

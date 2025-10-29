@@ -86,6 +86,15 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     [NonSerialized] public NetworkVariable<int> SpaceID = new();
     [NonSerialized] public NetworkVariable<int> CurrentInteractors = new();
 
+    private DRIFTER HomeDrifter;
+    public DRIFTER GetHomeDrifter()
+    {
+        return HomeDrifter;
+    }
+    public void SetHomeDrifter(DRIFTER drifter)
+    {
+        HomeDrifter = drifter;
+    }
     private void Start()
     {
         if (MaxHealth > 0)
@@ -135,11 +144,23 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         }
         
     }
+
+    float TakeDamageFromDisablement = 0f;
     void Update()
     {
         if (IsServer)
         {
             if (OrderTransform != null) OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
+
+            if (HomeDrifter && IsDisabled())
+            {
+                TakeDamageFromDisablement += 1f * CO.co.GetWorldSpeedDelta();
+                if (TakeDamageFromDisablement > 5f)
+                {
+                    TakeDamageFromDisablement -= 5f;
+                    HomeDrifter.TakeDamage(5f, transform.position);
+                }
+            }
         }
         Frame();
     }

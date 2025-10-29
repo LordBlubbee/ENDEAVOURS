@@ -231,6 +231,7 @@ public class LOCALCO : NetworkBehaviour
         crew.SetCharacterBackground(back); //Must be called BEFORE INIT
         crew.NetworkObject.Spawn();
         crew.Init();
+        crew.SetHomeDrifter(CO.co.PlayerMainDrifter);
         crew.RegisterPlayerOnLOCALCORpc();
         Player.EquipWeapon(0, back.Background_StartingWeapon);
         //Player.EquipWeaponPrefab(0);
@@ -308,7 +309,7 @@ public class LOCALCO : NetworkBehaviour
                 }
                 if (mod != null)
                 {
-                    if (mod is Module && ((Module)mod).GetFaction() != Player.GetFaction())
+                    if (mod is Module)
                     {
                     }
                     else if (mod.IsDisabled())

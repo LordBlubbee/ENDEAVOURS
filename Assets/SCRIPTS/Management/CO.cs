@@ -301,9 +301,14 @@ public class CO : NetworkBehaviour
         BackgroundTransform.back.ResetPosition();
         foreach (CREW crew in new List<CREW>(GetAllCrews()))
         {
-            if (crew.Space != PlayerMainDrifter.Space || crew.isDead())
+            if (crew.isDeadForever())
             {
                 crew.DespawnAndUnregister();
+            }
+            else if (crew.Space != PlayerMainDrifter.Space || crew.isDead())
+            {
+                if (crew.GetFaction() == 1) transform.position = PlayerMainDrifter.Interior.Bridge;
+                else crew.DespawnAndUnregister();
             }
         }
         foreach (DRIFTER drift in new List<DRIFTER>(GetAllDrifters()))
@@ -853,8 +858,16 @@ public class CO : NetworkBehaviour
             ChangeXP += Mathf.RoundToInt(item.Resource_XP * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod * GetCommanderExperienceFactor());
             if (item.ItemDrop)
             {
-                AddInventoryItem(item.ItemDrop);
-                ItemTranslate.Add(item.ItemDrop.ItemResourceID);
+                ResetWeights();
+                i = 0;
+                foreach (WeightedLootItem weighted in item.ItemDrop.PossibleDrops)
+                {
+                    AddWeights(i, weighted.Weight);
+                    i++;
+                }
+                ScriptableEquippable newItem = item.ItemDrop.PossibleDrops[GetWeight()].Item;
+                AddInventoryItem(newItem);
+                ItemTranslate.Add(newItem.ItemResourceID);
             }
         }
         Resource_Ammo.Value += ChangeAmmo;

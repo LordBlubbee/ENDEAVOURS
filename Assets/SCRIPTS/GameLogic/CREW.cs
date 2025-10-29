@@ -45,6 +45,15 @@ public class CREW : NetworkBehaviour, iDamageable
     [NonSerialized] public NetworkVariable<int> XPPoints = new NetworkVariable<int>(0); //Not used in initial character creation
     [NonSerialized] public NetworkVariable<Vector3> OrderPoint = new();
 
+    private DRIFTER HomeDrifter;
+    public DRIFTER GetHomeDrifter()
+    {
+        return HomeDrifter;
+    }
+    public void SetHomeDrifter(DRIFTER drifter)
+    {
+        HomeDrifter = drifter;
+    }
     public void AddXP(int amount)
     {
         XPPoints.Value += amount;
@@ -87,6 +96,17 @@ public class CREW : NetworkBehaviour, iDamageable
             }
         }
     }
+    //Modified attributes from equipment
+    public int[] ModifyAttributes;
+    public float ModifyHealthMax;
+    public float ModifyHealthRegen;
+    public float ModifyStaminaMax;
+    public float ModifyStaminaRegen;
+    public float ModifyMovementSpeed;
+
+    public float ModifyMeleeDamage;
+    public float ModifyRangedDamage;
+    public float ModifySpellDamage;
 
     public NetworkVariable<int> ATT_PHYSIQUE = new NetworkVariable<int>(2); //Buffs maximum health, melee damage
     public NetworkVariable<int> ATT_ARMS = new NetworkVariable<int>(2); //Buffs ranged damage, reload (+gunnery)
@@ -364,7 +384,7 @@ public class CREW : NetworkBehaviour, iDamageable
         //
         StartCoroutine(PeriodicUpdates());
         if (IsServer) {
-
+            StartCoroutine(PeriodicUpdateCommander());
             Alive.Value = true;
             CurHealth.Value = GetMaxHealth();
             CurStamina.Value = GetMaxStamina();
@@ -375,13 +395,39 @@ public class CREW : NetworkBehaviour, iDamageable
             }
         }
     }
-
+    public int GetCurrentCommanderLevel()
+    {
+        return NearbyCommander;
+    }
+    int NearbyCommander = 0;
+    IEnumerator PeriodicUpdateCommander()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            NearbyCommander = 0;
+            Vector3 checkHit = transform.position;
+            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 25f))
+            {
+                CREW trt = col.GetComponent<CREW>();
+                float Dis = (col.transform.position - transform.position).magnitude;
+                if (trt == null) continue;
+                if (col.gameObject == gameObject)
+                {
+                    continue;
+                }
+                if (trt.Space != Space) continue;
+                if (trt.GetFaction() != GetFaction()) continue;
+                NearbyCommander = Mathf.Max(trt.GetATT_COMMAND(),NearbyCommander);
+            }
+        }
+    }
     IEnumerator PeriodicUpdates()
     {
         while (true)
         {
             CharacterNameTag.SetPlayerAndName(this, CharacterName.Value.ToString(), new Color(CharacterNameColor.Value.x, CharacterNameColor.Value.y, CharacterNameColor.Value.z));
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
         }
     }
     [Rpc(SendTo.Everyone)]
@@ -851,13 +897,13 @@ public class CREW : NetworkBehaviour, iDamageable
         if (crew.GetFaction() == GetFaction()) return false;
         if (!crew.CanBeTargeted(Space)) return false;
         dmg *= AnimationController.CurrentStrikePower();
-        dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE() + 0.02f * GetATT_COMMAND();
+        dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE() + 0.02f * GetCurrentCommanderLevel();
         if (DashingDamageBuff > 0)
         {
             DashingDamageBuff = 0;
             dmg *= 2;
         }
-        if (crew is DRIFTER) ((DRIFTER)crew).Impact(dmg, checkHit);
+        if (crew is DRIFTER) ((DRIFTER)crew).Impact(dmg * 0.5f, checkHit);
         else crew.TakeDamage(dmg, checkHit);
         CO_SPAWNER.co.SpawnImpactRpc(checkHit);
         canStrikeMelee = false; //Turn off until animation ends
@@ -869,7 +915,7 @@ public class CREW : NetworkBehaviour, iDamageable
         PROJ proj = Instantiate(SelectedWeaponAbility == 0 ? EquippedToolObject.RangedPrefab1 : EquippedToolObject.RangedPrefab2, EquippedToolObject.strikePoints[0].position, EquippedToolObject.transform.rotation);
         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
         dmg *= AnimationController.CurrentStrikePower();
-        dmg *= 0.7f + 0.1f * GetATT_ARMS();
+        dmg *= 0.7f + 0.1f * GetATT_ARMS() + 0.02f * GetCurrentCommanderLevel();
         proj.NetworkObject.Spawn();
         proj.Init(dmg, GetFaction(), Space, trt);
         proj.CrewOwner = this;
@@ -882,7 +928,7 @@ public class CREW : NetworkBehaviour, iDamageable
         PROJ proj = Instantiate(SelectedWeaponAbility == 0 ? EquippedToolObject.RangedPrefab1 : EquippedToolObject.RangedPrefab2, EquippedToolObject.strikePoints[0].position, EquippedToolObject.transform.rotation);
         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
         dmg *= AnimationController.CurrentStrikePower();
-        dmg *= 0.7f + 0.1f * GetATT_COMMUNOPATHY();
+        dmg *= 0.7f + 0.1f * GetATT_COMMUNOPATHY() + 0.02f * GetCurrentCommanderLevel();
         if (GetATT_COMMUNOPATHY() < 4) dmg *= 0.25f * GetATT_COMMUNOPATHY();
         proj.NetworkObject.Spawn();
         proj.Init(dmg, GetFaction(), Space, trt);
@@ -906,7 +952,7 @@ public class CREW : NetworkBehaviour, iDamageable
                     if (!(crew is Module)) continue;
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
-                    dmg *= 0.4f + 0.2f * GetATT_ENGINEERING();
+                    dmg *= 0.4f + 0.2f * GetATT_ENGINEERING() + 0.05f * GetCurrentCommanderLevel();
                     if (CO.co.IsSafe()) dmg *= 5;
                     crew.Heal(dmg);
                     canStrikeMelee = false; //Turn off until animation ends
@@ -1022,7 +1068,7 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             LastStaminaUsed += CO.co.GetWorldSpeedDelta();
 
-            AddStamina(CO.co.GetWorldSpeedDelta() * GetStaminaRegen() * LastStaminaUsed * 0.5f);
+            AddStamina(CO.co.GetWorldSpeedDelta() * GetStaminaRegen() * (LastStaminaUsed + 1f) * 0.3f);
             if (LastStaminaUsed > 2f)
             {
                 AnimationComboWeapon1 = 0;
@@ -1034,27 +1080,32 @@ public class CREW : NetworkBehaviour, iDamageable
 
         if (isDead())
         {
-            BleedingTime.Value -= CO.co.GetWorldSpeedDelta();
             if (!isDeadForever())
             {
+                BleedingTime.Value -= CO.co.GetWorldSpeedDelta();
                 if (BleedingTime.Value < 0)
                 {
                     DeadForever.Value = true;
                 }
             }
-            else if (IsPlayer())
+            else if (HomeDrifter)
             {
-                if (BleedingTime.Value < -20 || CO.co.IsSafe())
+                if (!HomeDrifter.MedicalModule.IsDisabled())
                 {
-                    DeadForever.Value = false;
-                    Heal(50);
-                    transform.position = CO.co.PlayerMainDrifter.MedicalModule.transform.position;
-                    CO.co.PlayerMainDrifter.Interior.AddCrew(this);
+                    if ((transform.position - HomeDrifter.MedicalModule.transform.position).magnitude > 8)
+                    {
+                        transform.position = HomeDrifter.MedicalModule.transform.position + new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-3f, 3f));
+                        Space.RemoveCrew(this);
+                        HomeDrifter.Interior.AddCrew(this);
+                    }
+                    BleedingTime.Value -= CO.co.GetWorldSpeedDelta();
+                    if (BleedingTime.Value < -20 || CO.co.IsSafe())
+                    {
+                        DeadForever.Value = false;
+                        Alive.Value = true;
+                        Heal(1);
+                    }
                 }
-            }
-            else
-            {
-                //Remove
             }
         }
 
@@ -1163,7 +1214,6 @@ public class CREW : NetworkBehaviour, iDamageable
     [Rpc(SendTo.ClientsAndHost)]
     public void EquipToolLocallyRpc(int ID)
     {
-        Debug.Log($"Unit {name} is equipping locally, ID {ID}");
         switch (ID)
         {
             default:
@@ -1231,11 +1281,11 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetHealingSkill()
     {
-        return (0.4f + 0.2f * GetATT_MEDICAL());
+        return (0.4f + 0.2f * GetATT_MEDICAL() + 0.05f * GetCurrentCommanderLevel());
     }
     public float GetStaminaRegen()
     {
-        return NaturalStaminaRegen * (0.8f + 0.1f * GetATT_DEXTERITY());
+        return NaturalStaminaRegen * (0.8f + 0.08f * GetATT_DEXTERITY() + 0.08f * GetCurrentCommanderLevel());
     }
     public float GetDashCost()
     {
@@ -1340,11 +1390,57 @@ public class CREW : NetworkBehaviour, iDamageable
     public void EquipArmor(ScriptableEquippableArtifact wep)
     {
         if (EquippedArmor == wep) return;
+        if (EquippedArmor) UnapplyArtifact(EquippedArmor);
         EquippedArmor = wep;
+        if (EquippedArmor) ApplyArtifact(EquippedArmor);
         if (IsServer)
         {
             if (wep == null) EquipArmorLocallyRpc("");
             else EquipArmorLocallyRpc(wep.ItemResourceID);
+        }
+    }
+
+    private void ApplyArtifact(ScriptableEquippableArtifact wep)
+    {
+        // Apply all flat modifiers
+        ModifyHealthMax += wep.ModifyHealthMax;
+        ModifyHealthRegen += wep.ModifyHealthRegen;
+        ModifyStaminaMax += wep.ModifyStaminaMax;
+        ModifyStaminaRegen += wep.ModifyStaminaRegen;
+        ModifyMovementSpeed += wep.ModifyMovementSpeed;
+
+        ModifyMeleeDamage += wep.ModifyMeleeDamage;
+        ModifyRangedDamage += wep.ModifyRangedDamage;
+        ModifySpellDamage += wep.ModifySpellDamage;
+
+        // Apply array modifiers if applicable
+        if (wep.ModifyAttributes != null && ModifyAttributes != null)
+        {
+            int len = Mathf.Min(ModifyAttributes.Length, wep.ModifyAttributes.Length);
+            for (int i = 0; i < len; i++)
+                ModifyAttributes[i] += wep.ModifyAttributes[i];
+        }
+    }
+
+    private void UnapplyArtifact(ScriptableEquippableArtifact wep)
+    {
+        // Remove all flat modifiers
+        ModifyHealthMax -= wep.ModifyHealthMax;
+        ModifyHealthRegen -= wep.ModifyHealthRegen;
+        ModifyStaminaMax -= wep.ModifyStaminaMax;
+        ModifyStaminaRegen -= wep.ModifyStaminaRegen;
+        ModifyMovementSpeed -= wep.ModifyMovementSpeed;
+
+        ModifyMeleeDamage -= wep.ModifyMeleeDamage;
+        ModifyRangedDamage -= wep.ModifyRangedDamage;
+        ModifySpellDamage -= wep.ModifySpellDamage;
+
+        // Remove array modifiers if applicable
+        if (wep.ModifyAttributes != null && ModifyAttributes != null)
+        {
+            int len = Mathf.Min(ModifyAttributes.Length, wep.ModifyAttributes.Length);
+            for (int i = 0; i < len; i++)
+                ModifyAttributes[i] -= wep.ModifyAttributes[i];
         }
     }
 
@@ -1364,7 +1460,9 @@ public class CREW : NetworkBehaviour, iDamageable
     public void EquipArtifact(int slot, ScriptableEquippableArtifact wep)
     {
         if (EquippedArtifacts[slot] == wep) return;
+        if (EquippedArtifacts[slot]) ApplyArtifact(EquippedArtifacts[slot]);
         EquippedArtifacts[slot] = wep;
+        if (EquippedArtifacts[slot]) UnapplyArtifact(EquippedArtifacts[slot]);
         if (IsServer)
         {
             if (wep == null) EquipArtifactLocallyRpc(slot, "");

@@ -16,12 +16,6 @@ public class ModuleWeapon : Module
 
     [Header("Offensive Stats")]
     public float Damage;
-    public float HullDamageMod = 1f;
-    public float ModuleDamageMod = 1f;
-    public float CrewDamageMod = 0.5f;
-    public float CrewDamageSplash = 1f;
-    public float ArmorDamageMod = 1f;
-    public float ArmorDamageAbsorption = 1f;
     public float RotationBaseSpeed = 30;
     public int MaxAmmo = 50;
     public float FireCooldown = 2f;

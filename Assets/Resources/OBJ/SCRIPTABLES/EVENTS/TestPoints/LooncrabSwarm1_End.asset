@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: LooncrabSwarm1_End
   m_EditorClassIdentifier: 
   StoryTexts:
-  - BaseText: The Crabs have been slain. The bodies that we could retrieved were
-      scavenged for supplies.
+  - BaseText: The Crabs have been slain. The bodies that we could retrieve were scavenged
+      for supplies.
     Speaker: {fileID: 11400000, guid: a76193bce8f537b43a2443543883bc33, type: 2}
     Alternatives: []
   - BaseText: A nearby nest, the source of the Looncrab's unusual aggression, has

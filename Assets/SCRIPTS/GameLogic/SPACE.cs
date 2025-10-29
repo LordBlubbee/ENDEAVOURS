@@ -135,7 +135,6 @@ public class SPACE : NetworkBehaviour
                     }
                     if (tryLocation)
                     {
-
                         mod = Instantiate(module.PrefabModule, Vector3.zero, Quaternion.identity);
                         vec = CoreModuleLocations[CoreModules.Count];
                         rot = CoreModuleRotations[CoreModules.Count];
@@ -222,6 +221,7 @@ public class SPACE : NetworkBehaviour
         mod.transform.Rotate(Vector3.forward, rot);
         mod.SpaceID.Value = SpaceID.Value;
         mod.Faction = Drifter.GetFaction();
+        mod.SetHomeDrifter(Drifter);
         Modules.Add(mod);
         mod.Init();
         if (mod is ModuleWeapon weaponMod)
