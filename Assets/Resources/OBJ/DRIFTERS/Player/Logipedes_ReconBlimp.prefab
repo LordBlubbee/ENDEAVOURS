@@ -402,11 +402,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ecf400006c4c4aa47afd56f85fab16f5, type: 2}
   - {fileID: 11400000, guid: ecf400006c4c4aa47afd56f85fab16f5, type: 2}
   - {fileID: 11400000, guid: ecf400006c4c4aa47afd56f85fab16f5, type: 2}
-  StartingCrew:
-  - {fileID: 5867427934140877094, guid: e3648a6c91d53c448b023e06c981efeb, type: 3}
-  - {fileID: 5867427934140877094, guid: e3648a6c91d53c448b023e06c981efeb, type: 3}
-  - {fileID: 5867427934140877094, guid: 6c1f3fd00e3114142b6d3261c1ce4be1, type: 3}
-  - {fileID: 5867427934140877094, guid: 6c1f3fd00e3114142b6d3261c1ce4be1, type: 3}
+  StartingCrew: []
   Spr: {fileID: 7590115494558501324}
   IsLoon: 0
   MaxHealth: 3000
