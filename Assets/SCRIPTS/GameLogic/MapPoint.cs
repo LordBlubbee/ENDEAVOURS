@@ -31,20 +31,20 @@ public class MapPoint : NetworkBehaviour
         {
             PointName.Value = $"POINT-{UnityEngine.Random.Range(0, 10)}{UnityEngine.Random.Range(0, 10)}-{UnityEngine.Random.Range(0, 10)}{UnityEngine.Random.Range(0, 10)}";
             PointID.Value = ID;
-            SetInitRpc(AssociatedPoint.ResourceLink);
+            SetInitRpc(AssociatedPoint.GetResourceLink());
         }
     }
 
     [Rpc(SendTo.Server)]
     public void RequestInitRpc()
     {
-        SetInitRpc(AssociatedPoint.ResourceLink);
+        SetInitRpc(AssociatedPoint.GetResourceLink());
     }
 
     [Rpc(SendTo.ClientsAndHost)]
     public void SetInitRpc(string str)
     {
         if (IsServer) return;
-        Init(Resources.Load<ScriptablePoint>(str), -1);
+        Init(Resources.Load<ScriptablePoint>($"OBJ/SCRIPTABLES/EVENTS/{str}"), -1);
     }
 }

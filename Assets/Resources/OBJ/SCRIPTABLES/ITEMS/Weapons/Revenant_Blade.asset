@@ -13,7 +13,17 @@ MonoBehaviour:
   m_Name: Revenant_Blade
   m_EditorClassIdentifier: 
   ItemName: Frostblade
-  ItemDesc: Pointy stick.
-  ItemIcon: {fileID: 5857598365883991996, guid: 8069dcecba441d4488b39aa85ea59175, type: 3}
+  ItemDesc: 'A blade crafted by soldiers of the insurrectionist House of Winter,
+    this swift blade can slow down its enemies.
+
+
+    Skill: PHYSICAL
+
+    Base damage:
+    7
+
+
+    SECONDARY: BLOCK'
+  ItemIcon: {fileID: 21300000, guid: e5a326e82f8aa5945b20fa8ce12076d4, type: 3}
   ItemResourceID: OBJ/SCRIPTABLES/ITEMS/Weapons/Revenant_Blade
   ToolPrefab: {fileID: 8311341897716400573, guid: 4ed98f51f7c7ee34395cccf3adad3d8e, type: 3}

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff1cb8d74fb9fc14f810f6588fa2864b, type: 3}
-  m_Name: Test
+  m_Name: SpawnerPragmaticusPatrollers
   m_EditorClassIdentifier: 
   SpawnEnemyGroupList:
   - EnemyGroup: {fileID: 11400000, guid: 93b20b831715e4e4398dd683e63d529a, type: 2}

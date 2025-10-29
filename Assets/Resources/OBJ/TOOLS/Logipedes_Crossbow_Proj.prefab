@@ -178,7 +178,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 999117fc720192542a48562bc242b423, type: 3}
   - {fileID: 8300000, guid: d765450ea07bfe742a34f2a80267190f, type: 3}
   - {fileID: 8300000, guid: ca22bc6628f6ddf4b81a1e4d7fc2a027, type: 3}
+  HullDamageModifier: 1
+  ModuleDamageModifier: 0.5
+  ArmorDamageModifier: 1
+  ArmorAbsorptionModifier: 1
+  CrewDamageModifier: 1
   CrewDamageSplash: 1
+  DealSplash: 0
+  CanBeBlocked: 1
 --- !u!114 &1279859445198227217
 MonoBehaviour:
   m_ObjectHideFlags: 0

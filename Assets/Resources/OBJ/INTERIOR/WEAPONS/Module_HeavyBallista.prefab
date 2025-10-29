@@ -29,7 +29,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3676994766029858991}
   m_Father: {fileID: 8038492078634388055}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7767419753968848229
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: b2c49791b1a0ac342918ea3d387a06a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -111,12 +112,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1448943773510729218}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.26, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8038492078634388055}
+  m_Father: {fileID: 1101510134941141221}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2630506145431962987
 GameObject:
@@ -240,7 +241,6 @@ Transform:
   m_Children:
   - {fileID: 6031975965002184304}
   - {fileID: 1101510134941141221}
-  - {fileID: 3676994766029858991}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1898558090153098328
@@ -307,8 +307,8 @@ MonoBehaviour:
   ArmorDamageAbsorption: 1
   RotationBaseSpeed: 60
   MaxAmmo: 50
-  FireCooldown: 9
-  ReloadCooldown: 9
+  FireCooldown: 7
+  ReloadCooldown: 7
   ProjectileCount: 1
   AdditionalProjectileDelay: 0
   ResourceType: 2

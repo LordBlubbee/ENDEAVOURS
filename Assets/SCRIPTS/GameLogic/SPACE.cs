@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using TreeEditor;
 using Unity.Netcode;
 using UnityEngine;
-using static CO;
 
 public class SPACE : NetworkBehaviour
 {

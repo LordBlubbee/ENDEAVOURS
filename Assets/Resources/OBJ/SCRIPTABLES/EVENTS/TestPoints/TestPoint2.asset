@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6713958396d342478460fae2111cc58, type: 3}
-  m_Name: TestPoint
+  m_Name: TestPoint2
   m_EditorClassIdentifier: 
-  ResourceLink: OBJ/SCRIPTABLES/POINTS/TestPoint/TestPoint
+  ResourceLink: TestPoints/TestPoint2
   InitialSoundtrack: {fileID: 0}
   CombatSoundtrack: {fileID: 0}
   InitialMapData: 
-  InitialDialog: {fileID: 11400000, guid: 82e3b6c852a98ec4ebdf42d3e045c762, type: 2}
+  InitialDialog: {fileID: 11400000, guid: 422ab0d1c423cde4cbac797b46e629f5, type: 2}

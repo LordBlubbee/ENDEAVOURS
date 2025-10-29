@@ -12,8 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef6d31fc802706642abd802c670bd89e, type: 3}
   m_Name: Nomaden_Rifle
   m_EditorClassIdentifier: 
-  ItemName: Rifle
-  ItemDesc: Pointy stick.
-  ItemIcon: {fileID: -3121528104570643317, guid: 6145d55218492bd43a8b563804b4109f, type: 3}
+  ItemName: Nomaden Rifle
+  ItemDesc: 'A custom-crafted uncommon gunpowder weapon of Nomaden make. Reloads
+    slowly but fires bullets that deal great damage.
+
+
+    Skill: ARMS (+ALCHEMY)
+
+    Base
+    damage: 30
+
+    Base Cooldown: 3.0'
+  ItemIcon: {fileID: 21300000, guid: e6f35ef3de4884a4fac3c08b2111c998, type: 3}
   ItemResourceID: OBJ/SCRIPTABLES/ITEMS/Weapons/Nomaden_Rifle
   ToolPrefab: {fileID: 8311341897716400573, guid: bf01785d50761ba4da4f2a36943d0a71, type: 3}

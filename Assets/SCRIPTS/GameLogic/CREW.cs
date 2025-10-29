@@ -3,10 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public class CREW : NetworkBehaviour, iDamageable
 {
@@ -47,6 +44,17 @@ public class CREW : NetworkBehaviour, iDamageable
     [NonSerialized] public NetworkVariable<int> SkillPoints = new NetworkVariable<int>(0); //Not used in initial character creation
     [NonSerialized] public NetworkVariable<int> XPPoints = new NetworkVariable<int>(0); //Not used in initial character creation
     [NonSerialized] public NetworkVariable<Vector3> OrderPoint = new();
+
+    public void AddXP(int amount)
+    {
+        XPPoints.Value += amount;
+        while (XPPoints.Value > 100)
+        {
+            XPPoints.Value = 0;
+            SkillPoints.Value++;
+        }
+    }
+
     private Vector3 OrderPointLocal;
     private SPACE OrderTransform;
     public Vector3 GetOrderPoint()
@@ -909,29 +917,25 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     private void StrikeHealOthers()
     {
-        iDamageable crew = null;
+        CREW crew = null;
         float MaxDis = 999f;
         foreach (Transform hitTrans in EquippedToolObject.strikePoints)
         {
             Vector3 checkHit = hitTrans.position;
             foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 2f))
             {
-                iDamageable trt = col.GetComponent<iDamageable>();
+                CREW trt = col.GetComponent<CREW>();
                 float Dis = (col.transform.position - transform.position).magnitude;
                 if (trt == null) continue;
                 if (Dis < MaxDis)
                 {
-                    Debug.Log("Looking at potential healing target...");
                     if (col.gameObject == gameObject)
                     {
-                        Debug.Log("Nope, that's us!...");
                         continue;
                     }
                     if (trt.Space != Space) continue;
                     if (trt.GetFaction() != GetFaction()) continue;
                     if (trt.GetHealthRelative() >= 1f) continue;
-                    if (trt is Module) continue;
-                    Debug.Log($"Target {trt.transform.gameObject.name} is valid!");
                     crew = trt;
                     MaxDis = Dis;
                 }

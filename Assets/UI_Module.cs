@@ -137,8 +137,7 @@ public class UI_Module : MonoBehaviour
                 OrderMarker.Spr.sprite = wep.CrosshairSprite;
                 OrderMarker.gameObject.SetActive(true);
                 OrderMarker.transform.position = wep.GetOrderPoint();
-                if (wep.GetOrderTransform() != null) OrderMarker.transform.SetParent(wep.GetOrderTransform().transform);
-                else OrderMarker.transform.SetParent(null);
+                OrderMarker.transform.SetParent(CO.co.GetTransformAtPoint(wep.GetOrderPoint()));
             }
             else
             {

@@ -13,7 +13,16 @@ MonoBehaviour:
   m_Name: Logipedes_Crossbow
   m_EditorClassIdentifier: 
   ItemName: Crossbow
-  ItemDesc: Pointy stick.
+  ItemDesc: 'Standard-issue ranged weapon that efficiently fires light bolts that
+    deal great damage to enemy combatants.
+
+
+    Skill: ARMS (+ALCHEMY)
+
+    Base
+    damage: 15
+
+    Base Cooldown: 1.4'
   ItemIcon: {fileID: -3121528104570643317, guid: 6145d55218492bd43a8b563804b4109f, type: 3}
   ItemResourceID: OBJ/SCRIPTABLES/ITEMS/Weapons/Logipedes_Crossbow
   ToolPrefab: {fileID: 8311341897716400573, guid: b9cabbcc33d9e6e4bb51d1e635599682, type: 3}

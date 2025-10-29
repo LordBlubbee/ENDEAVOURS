@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: TestLoot
   m_EditorClassIdentifier: 
   GuaranteedLoot:
-  - Randomness: 0
+  - Randomness: 0.2
     Resource_Materials: 0
     Resource_Supplies: 0
     Resource_Ammunition: 0
-    Resource_Technology: 10
+    Resource_Technology: 0
+    Resource_XP: 20
     ItemDrop: {fileID: 0}
   ReputationChanges: []
   TotalLootDrops: 3
@@ -25,28 +26,56 @@ MonoBehaviour:
   - Randomness: 0.5
     Resource_Materials: 0
     Resource_Supplies: 0
-    Resource_Ammunition: 50
+    Resource_Ammunition: 10
     Resource_Technology: 0
+    Resource_XP: 0
     ItemDrop: {fileID: 0}
     Weight: 10
   - Randomness: 0.5
+    Resource_Materials: 10
+    Resource_Supplies: 10
+    Resource_Ammunition: 0
+    Resource_Technology: 0
+    Resource_XP: 0
+    ItemDrop: {fileID: 0}
+    Weight: 10
+  - Randomness: 0
     Resource_Materials: 0
-    Resource_Supplies: 50
-    Resource_Ammunition: 0
-    Resource_Technology: 0
-    ItemDrop: {fileID: 0}
-    Weight: 10
-  - Randomness: 0.5
-    Resource_Materials: 50
     Resource_Supplies: 0
     Resource_Ammunition: 0
     Resource_Technology: 0
-    ItemDrop: {fileID: 0}
-    Weight: 10
-  - Randomness: 0.5
-    Resource_Materials: 50
-    Resource_Supplies: 0
-    Resource_Ammunition: 0
-    Resource_Technology: 0
+    Resource_XP: 0
     ItemDrop: {fileID: 11400000, guid: 06439ec68f11da34fbafc00241024dca, type: 2}
-    Weight: 10
+    Weight: 2
+  - Randomness: 0
+    Resource_Materials: 0
+    Resource_Supplies: 0
+    Resource_Ammunition: 0
+    Resource_Technology: 0
+    Resource_XP: 0
+    ItemDrop: {fileID: 11400000, guid: 1a5ba66db25aae94794c0a02ba54b3d2, type: 2}
+    Weight: 2
+  - Randomness: 0
+    Resource_Materials: 0
+    Resource_Supplies: 0
+    Resource_Ammunition: 0
+    Resource_Technology: 0
+    Resource_XP: 0
+    ItemDrop: {fileID: 11400000, guid: 0f59758b37777cf48a10cda5079f3b24, type: 2}
+    Weight: 2
+  - Randomness: 0
+    Resource_Materials: 0
+    Resource_Supplies: 0
+    Resource_Ammunition: 0
+    Resource_Technology: 0
+    Resource_XP: 0
+    ItemDrop: {fileID: 11400000, guid: 1a5ba66db25aae94794c0a02ba54b3d2, type: 2}
+    Weight: 2
+  - Randomness: 0
+    Resource_Materials: 0
+    Resource_Supplies: 0
+    Resource_Ammunition: 0
+    Resource_Technology: 0
+    Resource_XP: 0
+    ItemDrop: {fileID: 11400000, guid: 1a5ba66db25aae94794c0a02ba54b3d2, type: 2}
+    Weight: 2

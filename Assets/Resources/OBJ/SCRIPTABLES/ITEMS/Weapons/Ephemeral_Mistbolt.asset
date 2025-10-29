@@ -13,7 +13,17 @@ MonoBehaviour:
   m_Name: Ephemeral_Mistbolt
   m_EditorClassIdentifier: 
   ItemName: 'Spell: Mistbolt'
-  ItemDesc: Pointy stick.
-  ItemIcon: {fileID: 5857598365883991996, guid: 8069dcecba441d4488b39aa85ea59175, type: 3}
+  ItemDesc: 'Harnessing the Ephemeral''s faith in the Nebula, Mistbolt allows you
+    to fling a small condensation of Nebula forward, exploding in a small radius
+    to deal splash damage.
+
+
+    Skill: COMMUNOPATHY
+
+    Base damage: 30
+
+    Base
+    Cooldown: 3.0'
+  ItemIcon: {fileID: 21300000, guid: b76ea5d9b24b73a4597737cc454793d0, type: 3}
   ItemResourceID: OBJ/SCRIPTABLES/ITEMS/Weapons/Ephemeral_Mistbolt
   ToolPrefab: {fileID: 8311341897716400573, guid: 3da5e0a7c70368647a08eeea241a3810, type: 3}

@@ -15,4 +15,5 @@ MonoBehaviour:
   Name: Mistscape1
   NameColor: {r: 1, g: 1, b: 1, a: 1}
   Portrait: {fileID: 21300000, guid: ae5101f3e825009469b2b7287c8bb98c, type: 3}
-  Voice: []
+  Voice:
+  - {fileID: 8300000, guid: a2f587f085eb3634eab0238d8fbb47ce, type: 3}

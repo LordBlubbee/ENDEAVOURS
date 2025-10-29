@@ -25,18 +25,22 @@ public class PROJ : NetworkBehaviour
     public GameObject ImpactVFX;
     public GameObject LaunchVFX;
     public AudioClip[] ImpactSFX;
-    [NonSerialized] public float HullDamageModifier = 1f; //Which factor of damage is done to modules
-    [NonSerialized] public float ModuleDamageModifier = 1f; //Which factor of damage is done to modules
-    [NonSerialized] public float ArmorDamageModifier = 1f; //Which factor of damage is done to armor
-    [NonSerialized] public float ArmorAbsorptionModifier = 1f; //Which factor of damage is taken by armor
-    [NonSerialized] public float CrewDamageModifier = 0.5f; //Which facotr of damage is done to nearby crew members
+    public float HullDamageModifier = 1f; //Which factor of damage is done to modules
+    public float ModuleDamageModifier = 1f; //Which factor of damage is done to modules
+    public float ArmorDamageModifier = 1f; //Which factor of damage is done to armor
+    public float ArmorAbsorptionModifier = 1f; //Which factor of damage is taken by armor
+    public float CrewDamageModifier = 1f; //Which facotr of damage is done to nearby crew members
+    public float CrewDamageModifierDirect = 1f; //Which facotr of damage is done to nearby crew members
     public float CrewDamageSplash = 1f; //Which factor of damage is done to nearby crew members
+    public bool DealSplash = false;
+    public bool CanBeBlocked = true;
     [NonSerialized] public CREW CrewOwner;
 
     private float Expire = 10;
 
     protected List<GameObject> Damageables = new();
 
+    protected bool hasHitTarget = false;
     protected bool isActive = true;
     protected SPACE Space;
     [NonSerialized] public float AttackDamage;
@@ -56,18 +60,6 @@ public class PROJ : NetworkBehaviour
 
         if (LaunchVFX) LaunchVFXRpc();
     }
-    public void InitAdvanced(float hullMod, float moduleMod,  float crewMod, float crewSplash, float armorMod, float armorAbsorb)
-    {
-        HullDamageModifier = hullMod;
-        ModuleDamageModifier = moduleMod;
-        ArmorDamageModifier = armorMod;
-        CrewDamageModifier = crewMod;
-        CrewDamageSplash = crewSplash;
-        ArmorAbsorptionModifier = armorAbsorb;
-
-        if (LaunchVFX) LaunchVFXRpc();
-    }
-
     private void FixedUpdate()
     {
         if (!IsServer) return;
@@ -107,10 +99,10 @@ public class PROJ : NetworkBehaviour
                     PotentialHitTarget(collision.gameObject);
                 }
                 AltitudeRemaining = 999;
-                if (AltitudeExplodeEarly)
+                if (AltitudeExplodeEarly || hasHitTarget)
                 {
-                    BulletImpact(); 
                     if (ImpactSFX.Length > 0) ImpactSFXRpc();
+                    BulletImpact(); 
                 }
             }
         } else
@@ -145,12 +137,17 @@ public class PROJ : NetworkBehaviour
                 }
             } else
             {
-                crew.TakeDamage(AttackDamage, transform.position);
+                if (crew is Module) crew.TakeDamage(AttackDamage * ModuleDamageModifier, transform.position);
+                else crew.TakeDamage(AttackDamage * CrewDamageModifierDirect, transform.position);
             }
             Damageables.Add(collision);
-            if (ImpactSFX.Length > 0) ImpactSFXRpc();
-            if (StickToWalls)
+            if (DealSplash)
             {
+                hasHitTarget = true;
+            }
+            else if (StickToWalls)
+            {
+                if (ImpactSFX.Length > 0) ImpactSFXRpc();
                 isActive = false;
                 transform.SetParent(collision.transform);
                 if (ImpactVFX) ImpactVFXRpc();
@@ -158,6 +155,7 @@ public class PROJ : NetworkBehaviour
             }
             else
             {
+                if (ImpactSFX.Length > 0) ImpactSFXRpc();
                 isActive = false;
                 BulletImpact();
             }
@@ -182,9 +180,10 @@ public class PROJ : NetworkBehaviour
                 return;
             }
             BlockAttacks Blocker = collision.GetComponent<BlockAttacks>();
-            if (Blocker != null)
+            if (Blocker != null && CanBeBlocked)
             {
                 if (Damageables.Contains(Blocker.gameObject)) return;
+                if (Blocker.tool.GetCrew().GetFaction() == Faction) return;
                 Damageables.Add(Blocker.gameObject);
                 bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChance;
                 if (isBlocked)
@@ -210,6 +209,11 @@ public class PROJ : NetworkBehaviour
     {
         if (collision.tag.Equals("LOSBlocker"))
         {
+            Collider2D[] cols = Physics2D.OverlapCircleAll(Tip.position, CrewDamageSplash);
+            foreach (Collider2D col2 in cols)
+            {
+                PotentialHitTarget(col2.gameObject);
+            }
             if (ImpactSFX.Length > 0) ImpactSFXRpc();
             if (StickToWalls)
             {

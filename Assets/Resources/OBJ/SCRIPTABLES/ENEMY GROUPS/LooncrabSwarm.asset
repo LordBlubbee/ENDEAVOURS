@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AI_Type: 2
   AI_Group: 2
-  CrewPowerLevel: 100
+  CrewPowerLevel: 200
   SpawnCrewList:
   - SpawnCrew: {fileID: 5867427934140877094, guid: 86f046a72cbd10a4eb1d9f606f946a03, type: 3}
     Weight: 10
     Worth: 25
   DrifterPowerLevel: 0
   SpawnDrifter: []
-  SpawnGroupRange: 10
-  SpawnDistanceMin: 150
-  SpawnDistanceMax: 200
+  SpawnGroupRange: 30
+  SpawnDistanceMin: 100
+  SpawnDistanceMax: 150

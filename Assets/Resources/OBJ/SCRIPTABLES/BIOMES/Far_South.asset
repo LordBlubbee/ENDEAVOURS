@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4fc65e7be402ef41b3a849a94b12e47, type: 3}
-  m_Name: TestBiome
+  m_Name: Far_South
   m_EditorClassIdentifier: 
-  BiomeName: 
+  BiomeName: Far South
   BiomeDescription: 
   PossiblePointsCalm: []
   PossiblePointsNeutral:
   - {fileID: 11400000, guid: 98c0cb6d83d8ddc478ce223c29917d40, type: 2}
+  - {fileID: 11400000, guid: 657bb37a7438f4b4a9577913d1030c9b, type: 2}
   PossiblePointsHostile: []
   PossiblePointsArrival:
   - {fileID: 11400000, guid: 98c0cb6d83d8ddc478ce223c29917d40, type: 2}
+  - {fileID: 11400000, guid: 657bb37a7438f4b4a9577913d1030c9b, type: 2}
   PossiblePointsExit:
   - {fileID: 11400000, guid: 98c0cb6d83d8ddc478ce223c29917d40, type: 2}
+  - {fileID: 11400000, guid: 657bb37a7438f4b4a9577913d1030c9b, type: 2}

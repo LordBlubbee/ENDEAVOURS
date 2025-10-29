@@ -603,12 +603,21 @@ public class AI_UNIT : NetworkBehaviour
         if (trt != getSpace())
         {
             WalkableTile boarding = trt.GetNearestBoardingGridTransformToPoint(transform.position);
+          
             if (Dist(boarding.transform.position) < 40f)
             {
-                SetLookTowards(boarding.transform.position, trt);
-                Unit.EquipGrappleRpc();
-                
-                if (Mathf.Abs(Unit.AngleBetweenPoints(boarding.transform.position)) < 8) Unit.UseItem1Rpc();
+                SetLookTowards(boarding.transform.position, trt); 
+                if (Unit.DefaultToolset == CO_SPAWNER.DefaultEquipmentSet.NONE)
+                {
+                    Unit.UseGrapple(boarding);
+                }
+                else
+                {
+                    Unit.EquipGrappleRpc();
+
+                    if (Mathf.Abs(Unit.AngleBetweenPoints(boarding.transform.position)) < 8) Unit.UseItem1Rpc();
+                }
+              
                 return true;
                 //Unit.UseGrapple(boarding);
             }

@@ -2,15 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Collections;
 using Unity.Netcode;
-using Unity.VisualScripting;
-using UnityEditor.ShaderGraph.Drawing.Inspector.PropertyDrawers;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.GraphicsBuffer;
 
 public class CO : NetworkBehaviour
 {
@@ -265,7 +259,7 @@ public class CO : NetworkBehaviour
             }
         }
         BackgroundSpeed *= Mathf.Max(0, CurrentSpeed);
-        BackgroundTransform.back.AddPosition(BackgroundSpeed * CO.co.GetWorldSpeedDelta());
+        BackgroundTransform.back.AddPosition(BackgroundSpeed * CO.co.GetWorldSpeedDelta() * 5f);
     }
 
     IEnumerator Travel(MapPoint destination)
@@ -667,10 +661,22 @@ public class CO : NetworkBehaviour
         string str = even.EventController;
         switch (str)
         {
+            case "GenericLoot":
+                StartCoroutine(Event_GenericLoot());
+                break;
             case "GenericBattle":
                 StartCoroutine(Event_GenericBattle());
                 break;
+            case "GenericSurvival":
+                StartCoroutine(Event_GenericSurvival());
+                break;
         }
+    }
+    IEnumerator Event_GenericLoot()
+    {
+        ShouldDriftersMove = true;
+        ProcessLootTable(CurrentEvent.LootTable, 1f);
+        yield break;
     }
     IEnumerator Event_GenericBattle()
     {
@@ -712,6 +718,50 @@ public class CO : NetworkBehaviour
                 if (enemyDrifter.isDead()) EnemyBarString.Value = $"DRIFTER DISABLED";
                 else EnemyBarString.Value = $"INTEGRITY: {enemyDrifter.GetHealth().ToString("0")}";
             }
+        }
+
+        EnemyBarRelative.Value = -1;
+
+        if (enemyDrifter)
+        {
+            enemyDrifter.Disable();
+        }
+
+        yield return new WaitForSeconds(5f);
+        LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
+
+        yield return new WaitForSeconds(3f);
+        if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
+        AreWeInDanger.Value = false;
+        ProcessLootTable(CurrentEvent.LootTable, 1f);
+    }
+    IEnumerator Event_GenericSurvival()
+    {
+        ShouldDriftersMove = true;
+        AreWeInDanger.Value = true;
+        ResetWeights();
+        int i = 0;
+        List<EnemyGroupWithWeight> Groups = new();
+        foreach (EnemyGroupWithWeight weighted in CurrentEvent.EnemyWave.SpawnEnemyGroupList)
+        {
+            Groups.Add(weighted);
+            AddWeights(i, weighted.Weight);
+            i++;
+        }
+        ScriptableEnemyGroup EnemyGroup = Groups[GetWeight()].EnemyGroup;
+        DRIFTER enemyDrifter = CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup, 1f);
+        float Death = 0f;
+        float MaxTimer = 60f;
+        float Timer = MaxTimer;
+        while (Death < 1 && Timer > 0)
+        {
+            yield return new WaitForSeconds(0.5f);
+            Timer -= 0.5f;
+            int DeadAmount = GroupDeathAmount(GetEnemyCrew());
+            int AliveAmount = GetEnemyCrew().Count - DeadAmount;
+            Death = (float)DeadAmount / (float)GetEnemyCrew().Count;
+            EnemyBarRelative.Value = Timer/MaxTimer;
+            EnemyBarString.Value = $"SURVIVE: {Timer.ToString("0")}";
         }
 
         EnemyBarRelative.Value = -1;
@@ -813,7 +863,7 @@ public class CO : NetworkBehaviour
         Resource_Tech.Value += ChangeTech;
         foreach (CREW crew in GetAlliedCrew())
         {
-            crew.XPPoints.Value += ChangeXP;
+            crew.AddXP(ChangeXP);
         }
         OpenRewardScreenRpc(ChangeMaterials, ChangeSupplies, ChangeAmmo, ChangeTech, ChangeXP, Factions.ToArray(), FactionChanges.ToArray(), ItemTranslate.ToArray());
         //Send report to clients with all faction rep changes

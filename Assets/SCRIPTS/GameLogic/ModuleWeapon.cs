@@ -170,7 +170,6 @@ public class ModuleWeapon : Module
             LoadedAmmo.Value--;
             PROJ proj = Instantiate(FireProjectile, FirePoint.position, WeaponTransform.rotation);
             proj.Init(Damage, Faction, null, mouse);
-            proj.InitAdvanced(HullDamageMod, ModuleDamageMod, CrewDamageMod, CrewDamageSplash, ArmorDamageMod, ArmorDamageAbsorption);
             proj.NetworkObject.Spawn();
 
             WeaponSFXRpc();

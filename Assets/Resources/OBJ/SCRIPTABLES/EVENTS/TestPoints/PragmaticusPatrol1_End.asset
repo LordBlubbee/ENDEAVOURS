@@ -10,21 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
-  m_Name: TestDialogEnd
+  m_Name: PragmaticusPatrol1_End
   m_EditorClassIdentifier: 
   StoryTexts:
-  - BaseText: Oh no!
-    Speaker: {fileID: 11400000, guid: a76193bce8f537b43a2443543883bc33, type: 2}
-    Alternatives: []
-  - BaseText: You totally beat us!
+  - BaseText: The Pragmaticus have been defeated, and their Drifter sinks into the
+      Nebula.
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
-  - BaseText: Guess you win.
+  - BaseText: Their intentions matter little now. The Starlight Endeavour must continue.
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
-      BaseText: '[Close Dialog]'
+      BaseText: We did what we had to do.
       Speaker: {fileID: 0}
       Alternatives: []
     DialogResult: {fileID: 0}

@@ -10,21 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
-  m_Name: TestDialog
+  m_Name: PragmaticusPatrol1
   m_EditorClassIdentifier: 
   StoryTexts:
-  - BaseText: We are the EPHEMERAL EYE.
+  - BaseText: 'Alert: A blimp-class drifter has been detected and is on intercept
+      course with ours. It is a registered Legislatus Pragmaticus patrol blimp on-duty.'
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
-  - BaseText: We want to EAT CHOCOLATE CHIP COOKIES.
+  - BaseText: Attention, unregistered vessel. According to calculations reaching
+      an index rating of +55 we have concluded that you are the culprit of stolen
+      merchant cargo in this area.
     Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
     Alternatives: []
-  - BaseText: Give them to us or DIE.
+  - BaseText: By Stipulation 03-25-68, we reserve the right to detain your drifter.
+      By the Republic's will, you are ordered to stand down and to surrender your
+      cargo.
     Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
+    Alternatives: []
+  - BaseText: Target drifter has been marked hostile. They are approaching with weapons
+      armed. Prepare for combat!
+    Speaker: {fileID: 11400000, guid: a76193bce8f537b43a2443543883bc33, type: 2}
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
-      BaseText: '[Close Dialog]'
+      BaseText: Prepare for combat!
       Speaker: {fileID: 0}
       Alternatives: []
     DialogResult: {fileID: 0}

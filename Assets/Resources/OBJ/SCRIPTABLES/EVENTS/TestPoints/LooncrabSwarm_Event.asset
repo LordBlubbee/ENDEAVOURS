@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69a8717e7279b88409550c597721d3ae, type: 3}
-  m_Name: TestEvent
+  m_Name: LooncrabSwarm_Event
   m_EditorClassIdentifier: 
   BeginEventOST: {fileID: 0}
   EventController: GenericBattle
-  EnemyWave: {fileID: 11400000, guid: 380dd5b65247fd042b5970a876614b9b, type: 2}
+  EnemyWave: {fileID: 11400000, guid: 95b70910d0a491549940f04145c02d91, type: 2}
   AdditionalDialogs: []
   LootTable: {fileID: 11400000, guid: bcde1ef72cde48746a22c9a989184747, type: 2}
-  DebriefDialog: {fileID: 11400000, guid: 039e3e362e7b2e148aac087c7379baff, type: 2}
+  DebriefDialog: {fileID: 11400000, guid: d460e3c88558a9243ac3f39ef10c4aef, type: 2}

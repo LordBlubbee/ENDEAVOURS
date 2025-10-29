@@ -1,12 +1,6 @@
-using System;
 using System.Collections.Generic;
 using Unity.Netcode;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Rendering;
-using static UnityEditor.PlayerSettings;
-
 public class CO_SPAWNER : NetworkBehaviour
 {
     public GamerTag PrefabGamerTag;
@@ -145,7 +139,7 @@ public class CO_SPAWNER : NetworkBehaviour
         float WorthPoints = PowerLevelFactor * gr.CrewPowerLevel;
         AI_GROUP group;
         List<AI_UNIT> members = new();
-        if (gr.SpawnDrifter == null)
+        if (gr.SpawnDrifter.Count == 0)
         {
             group = Instantiate(PrefabAIGROUP);
 
@@ -160,6 +154,7 @@ public class CO_SPAWNER : NetworkBehaviour
           
             while (WorthPoints > 0)
             {
+                Debug.Log("Spawning creature...");
                 Vector3 tryPos = Spawn + new Vector3(UnityEngine.Random.Range(-Radius, Radius), UnityEngine.Random.Range(-Radius, Radius));
                 EnemyCrewWithWeight enemyType = PossibleSpawns[GetWeight()];
                 CREW enem = Instantiate(enemyType.SpawnCrew, tryPos, Quaternion.identity);

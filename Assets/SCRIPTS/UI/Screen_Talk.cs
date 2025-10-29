@@ -75,11 +75,11 @@ public class Screen_Talk : MonoBehaviour
         if (SpeakerImage.sprite != CurrentSpeaker.Portrait || CurrentPage == 0)
         {
             StartCoroutine(FadeNewSpeakerImage());
-            StartCoroutine(SetText(MainTex,"",Color.white));
+            StartCoroutine(SetText(MainTex,"",Color.white, false));
             Delay = 0.6f;
         }
         SpeakerImage.sprite = CurrentSpeaker.Portrait;
-        StartCoroutine(SetText(MainTex, curText, CurrentSpeaker.NameColor, Delay));
+        StartCoroutine(SetText(MainTex, curText, CurrentSpeaker.NameColor, true, Delay));
         if (!CO_STORY.co.IsLastMainStoryText(CurrentPage))
         {
             for (int i = 0; i < ChoiceTex.Length; i++)
@@ -98,7 +98,7 @@ public class Screen_Talk : MonoBehaviour
             for (int i = 0; i < ChoiceTex.Length; i++)
             {
                 string str = CO_STORY.co.GetCurrentChoice(i);
-                StartCoroutine(SetText(ChoiceTex[i], str, Color.cyan, 0.5f));
+                StartCoroutine(SetText(ChoiceTex[i], str, Color.cyan, false, 0.5f));
                 ChoiceButtonVotes[i].text = CO_STORY.co.VoteResultAmount(i).ToString();
                 ChoiceButton[i].gameObject.SetActive(str != "");
             }
@@ -106,7 +106,7 @@ public class Screen_Talk : MonoBehaviour
     }
 
     int speakLetter = 0;
-    IEnumerator SetText(TextMeshProUGUI tex, string text, Color col, float delay = 0)
+    IEnumerator SetText(TextMeshProUGUI tex, string text, Color col, bool Speak, float delay = 0)
     {
         yield return new WaitForSeconds(delay);
         string keepTex = "";
@@ -116,14 +116,14 @@ public class Screen_Talk : MonoBehaviour
             if (tex.text != keepTex) yield break;
             keepTex += c;
             tex.text = keepTex;
-            if (CurrentSpeaker)
+            if (CurrentSpeaker && Speak)
             {
                 if (CurrentSpeaker.Voice.Length > 0 && char.IsLetterOrDigit(c))
                 {
                     speakLetter--;
                     if (speakLetter < 0)
                     {
-                        speakLetter = Random.Range(4, 7);
+                        speakLetter = Random.Range(2, 4);
                         AudioClip clip = CurrentSpeaker.Voice[Random.Range(0, CurrentSpeaker.Voice.Length)];
                         AUDCO.aud.PlaySFX(clip);
                     }
@@ -151,7 +151,7 @@ public class Screen_Talk : MonoBehaviour
     {
         RewardScreen.SetActive(true);
         MaterialGain.text = "";
-        if (XP != 0) MaterialGain.text += $"<color=cyan>XP: +{XP}</color>\n";
+        if (XP != 0) MaterialGain.text += $"<color=#FFFF00>XP: +{XP}</color>\n";
         if (Materials > 0) MaterialGain.text += $"<color=green>MATERIALS: +{Materials}</color>\n";
         else if (Materials < 0) MaterialGain.text += $"<color=red>MATERIALS: {Materials}</color>\n";
         if (Supplies > 0) MaterialGain.text += $"<color=green>SUPPLIES: +{Supplies}</color>\n";
