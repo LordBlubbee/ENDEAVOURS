@@ -97,6 +97,8 @@ public class Screen_Inventory : MonoBehaviour
 
     [Header("Skills")]
     public TextMeshProUGUI SkillPointTex;
+    public TextMeshProUGUI ExperienceTex;
+    public Slider ExperienceSlider;
     public string[] SkillName;
     public TextMeshProUGUI[] SkillTex;
     public Image[] SkillLevelButton;
@@ -146,6 +148,9 @@ public class Screen_Inventory : MonoBehaviour
     public void SkillRefresh()
     {
         SkillPointTex.text = $"SKILL POINTS: ({LOCALCO.local.GetPlayer().SkillPoints.Value})";
+        SkillPointTex.color = (LOCALCO.local.GetPlayer().SkillPoints.Value > 0) ? Color.green : Color.white;
+        ExperienceTex.text = $"SKILL POINTS: ({LOCALCO.local.GetPlayer().XPPoints.Value})";
+        ExperienceSlider.value = (float)LOCALCO.local.GetPlayer().XPPoints.Value / 100f;
         for (int i = 0; i < 8; i++)
         {
             if (LOCALCO.local.GetPlayer().CharacterBackground)

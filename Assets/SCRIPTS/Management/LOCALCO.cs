@@ -426,6 +426,7 @@ public class LOCALCO : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     public void ShipTransportFadeAwayRpc(string str)
     {
+        if (!IsOwner) return;
         UI.ui.FadeToBlack(1f,1f);
         UI.ui.SetCinematicTex(str, Color.green, 4f, 1f);
         CAM.cam.SetCameraCinematic(200f);
@@ -435,6 +436,7 @@ public class LOCALCO : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     public void ShipTransportFadeInRpc()
     {
+        if (!IsOwner) return;
         UI.ui.FadeFromBlack(2f);
         StartCoroutine(ArrivalAnimation());
     }
@@ -461,11 +463,13 @@ public class LOCALCO : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     public void CinematicTexRpc(string str)
     {
+        if (!IsOwner) return;
         UI.ui.SetCinematicTex(str, Color.green, 4f, 1f);
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void PanCameraRpc(Vector3 vec, float size, float dur)
     {
+        if (!IsOwner) return;
         StartCoroutine(PanCameraNum(vec, size, dur));
     }
 

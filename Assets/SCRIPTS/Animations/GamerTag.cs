@@ -58,8 +58,15 @@ public class GamerTag : MonoBehaviour
         {
             if (Crew.isDeadForever())
             {
-                Health.text = $"DEAD";
-                Health.color = new Color(0.5f, 0, 0);
+                if (Crew.isDeadButReviving())
+                {
+                    Health.text = $"REVIVING";
+                    Health.color = new Color(0.5f, 0, 0.5f);
+                } else
+                {
+                    Health.text = $"DEAD";
+                    Health.color = new Color(0.5f, 0, 0);
+                }
                 return;
             }
             if (Crew.isDead())

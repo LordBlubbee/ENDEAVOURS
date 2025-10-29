@@ -60,7 +60,7 @@ public class CREW : NetworkBehaviour, iDamageable
         while (XPPoints.Value > 100)
         {
             XPPoints.Value = 0;
-            SkillPoints.Value++;
+            SkillPoints.Value+= 3;
         }
     }
 
@@ -296,6 +296,10 @@ public class CREW : NetworkBehaviour, iDamageable
     public bool isDeadForever()
     {
         return DeadForever.Value;
+    }
+    public bool isDeadButReviving()
+    {
+        return DeadForever.Value && BleedingTime.Value < 0;
     }
     public bool CanFunction()
     {
@@ -896,6 +900,7 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         if (crew.GetFaction() == GetFaction()) return false;
         if (!crew.CanBeTargeted(Space)) return false;
+        dmg += ModifyMeleeDamage;
         dmg *= AnimationController.CurrentStrikePower();
         dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE() + 0.02f * GetCurrentCommanderLevel();
         if (DashingDamageBuff > 0)
@@ -914,6 +919,7 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         PROJ proj = Instantiate(SelectedWeaponAbility == 0 ? EquippedToolObject.RangedPrefab1 : EquippedToolObject.RangedPrefab2, EquippedToolObject.strikePoints[0].position, EquippedToolObject.transform.rotation);
         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
+        dmg += ModifyRangedDamage;
         dmg *= AnimationController.CurrentStrikePower();
         dmg *= 0.7f + 0.1f * GetATT_ARMS() + 0.02f * GetCurrentCommanderLevel();
         proj.NetworkObject.Spawn();
@@ -927,6 +933,7 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         PROJ proj = Instantiate(SelectedWeaponAbility == 0 ? EquippedToolObject.RangedPrefab1 : EquippedToolObject.RangedPrefab2, EquippedToolObject.strikePoints[0].position, EquippedToolObject.transform.rotation);
         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
+        dmg += ModifySpellDamage;
         dmg *= AnimationController.CurrentStrikePower();
         dmg *= 0.7f + 0.1f * GetATT_COMMUNOPATHY() + 0.02f * GetCurrentCommanderLevel();
         if (GetATT_COMMUNOPATHY() < 4) dmg *= 0.25f * GetATT_COMMUNOPATHY();
@@ -949,7 +956,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 {
                     if (crew.GetFaction() != GetFaction()) return;
                     if (crew.Space != Space) continue;
-                    if (!(crew is Module)) continue;
+                    if (!(crew is Module)) continue; 
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
                     dmg *= 0.4f + 0.2f * GetATT_ENGINEERING() + 0.05f * GetCurrentCommanderLevel();
@@ -1067,7 +1074,6 @@ public class CREW : NetworkBehaviour, iDamageable
         if (GetStamina() < GetMaxStamina())
         {
             LastStaminaUsed += CO.co.GetWorldSpeedDelta();
-
             AddStamina(CO.co.GetWorldSpeedDelta() * GetStaminaRegen() * (LastStaminaUsed + 1f) * 0.3f);
             if (LastStaminaUsed > 2f)
             {
@@ -1086,17 +1092,16 @@ public class CREW : NetworkBehaviour, iDamageable
                 if (BleedingTime.Value < 0)
                 {
                     DeadForever.Value = true;
+                    BleedingTime.Value = 0;
                 }
             }
             else if (HomeDrifter)
             {
-                if (!HomeDrifter.MedicalModule.IsDisabled())
+                if (!HomeDrifter.MedicalModule.IsDisabled() && (Space == HomeDrifter.Space || (GetFaction() == 1 && CO.co.IsSafe())))
                 {
                     if ((transform.position - HomeDrifter.MedicalModule.transform.position).magnitude > 8)
                     {
                         transform.position = HomeDrifter.MedicalModule.transform.position + new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-3f, 3f));
-                        Space.RemoveCrew(this);
-                        HomeDrifter.Interior.AddCrew(this);
                     }
                     BleedingTime.Value -= CO.co.GetWorldSpeedDelta();
                     if (BleedingTime.Value < -20 || CO.co.IsSafe())
@@ -1105,6 +1110,10 @@ public class CREW : NetworkBehaviour, iDamageable
                         Alive.Value = true;
                         Heal(1);
                     }
+                }
+                else
+                {
+                    BleedingTime.Value = 0;
                 }
             }
         }
@@ -1277,7 +1286,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetMaxHealth()
     {
-        return MaxHealth * (0.8f + 0.1f * GetATT_PHYSIQUE());
+        return MaxHealth * (0.8f + 0.1f * GetATT_PHYSIQUE()) + ModifyHealthMax;
     }
     public float GetHealingSkill()
     {
@@ -1285,7 +1294,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetStaminaRegen()
     {
-        return NaturalStaminaRegen * (0.8f + 0.08f * GetATT_DEXTERITY() + 0.08f * GetCurrentCommanderLevel());
+        return NaturalStaminaRegen * (0.8f + 0.08f * GetATT_DEXTERITY() + 0.08f * GetCurrentCommanderLevel()) * (1+ ModifyStaminaRegen);
     }
     public float GetDashCost()
     {
@@ -1495,7 +1504,7 @@ public class CREW : NetworkBehaviour, iDamageable
 
     public float GetMaxStamina()
     {
-        return 80 + GetATT_DEXTERITY() * 5 + GetATT_MEDICAL() * 5;
+        return 80 + GetATT_DEXTERITY() * 5 + GetATT_MEDICAL() * 5 + ModifyStaminaMax;
     }
     private bool IsPlayerControlled()
     {
@@ -1503,7 +1512,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetSpeed()
     {
-        return MovementSpeed * (0.8f+GetATT_DEXTERITY()*0.08f);
+        return MovementSpeed * (0.8f+GetATT_DEXTERITY()*0.08f) * (1f+ ModifyMovementSpeed);
     }
     public float GetCurrentSpeed()
     {

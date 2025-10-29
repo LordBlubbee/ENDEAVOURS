@@ -74,6 +74,15 @@ public class Screen_CharacterCreator : MonoBehaviour
         SkillPower[ID]++;
         SkillRefresh();
     }
+    public void ResetSkills()
+    {
+        SkillPoints = 12;
+        for (int i = 0; i < SkillPower.Length; i++)
+        {
+            SkillPower[i] = 0;
+        }
+        SkillRefresh();
+    }
     private void SkillRefresh()
     {
         SkillPointTex.text = $"SKILL POINTS: ({SkillPoints})";
@@ -234,6 +243,10 @@ public class Screen_CharacterCreator : MonoBehaviour
     public void PressCreateCharacter()
     {
         //if (!ReadyToMoveOn()) return;
+        if (!SelectedBackground)
+        {
+            return;
+        }
         LOCALCO.local.CreatePlayerRpc(GO.g.localUsername, GO.g.localColor, SkillPower, SelectedBackground.ResourcePath);
         UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
     }

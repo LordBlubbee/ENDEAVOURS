@@ -166,7 +166,11 @@ public class PROJ : NetworkBehaviour
             if (collision.tag.Equals("LOSBlocker"))
             {
                 if (ImpactSFX.Length > 0) ImpactSFXRpc();
-                if (StickToWalls)
+                if (DealSplash)
+                {
+                    hasHitTarget = true;
+                }
+                else if (StickToWalls)
                 {
                     isActive = false;
                     transform.SetParent(collision.transform.parent);
