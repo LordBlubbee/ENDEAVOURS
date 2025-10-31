@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4fc65e7be402ef41b3a849a94b12e47, type: 3}
-  m_Name: Far_South
+  m_Name: StartingSouth
   m_EditorClassIdentifier: 
   BiomeName: Far South
   BiomeDescription: 

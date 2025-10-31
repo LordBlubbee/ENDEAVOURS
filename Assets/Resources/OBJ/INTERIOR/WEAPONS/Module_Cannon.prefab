@@ -287,6 +287,9 @@ MonoBehaviour:
   ShowAsModule: {fileID: 11400000, guid: acdc84f7aedc49344a581b4ed33a3453, type: 2}
   MaxHealth: 200
   HitboxRadius: 16
+  ModuleWorth: 100
+  ModuleUpgradeMaterials: 3c0000004600000078000000
+  ModuleUpgradeTechs: 14000000280000003c000000
   CenterPos: {fileID: 0}
   WeaponName: HEAVY CANNON
   WeaponTransform: {fileID: 1669101256883187062}
@@ -296,20 +299,17 @@ MonoBehaviour:
   Fire_SFX:
   - {fileID: 8300000, guid: b23e4b506b7fb8142bbf43b83e95fb39, type: 3}
   CrosshairSprite: {fileID: 21300000, guid: 3d1452e5180bdf641bb60a3aadc3248a, type: 3}
+  ResourceType: 2
   Damage: 200
-  HullDamageMod: 1
-  ModuleDamageMod: 1
-  CrewDamageMod: 0.25
-  CrewDamageSplash: 10
-  ArmorDamageMod: 1
-  ArmorDamageAbsorption: 0.5
   RotationBaseSpeed: 60
   MaxAmmo: 15
   FireCooldown: 12
   ReloadCooldown: 12
   ProjectileCount: 1
   AdditionalProjectileDelay: 0
-  ResourceType: 2
+  DamagePerLevel: 100
+  ProjectilesPerLevel: 0
+  CooldownPerLevel: 0
 --- !u!114 &-427056032657588051
 MonoBehaviour:
   m_ObjectHideFlags: 0

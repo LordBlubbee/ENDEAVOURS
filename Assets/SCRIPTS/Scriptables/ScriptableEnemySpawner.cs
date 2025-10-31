@@ -9,6 +9,8 @@ public class ScriptableEnemySpawner : ScriptableObject
 {
     //List of groups that can be spawned...
     public List<EnemyGroupWithWeight> SpawnEnemyGroupList;
+    public float EnemyAmountModifier;
+    public float EnemyQualityModifier;
 }
 
 [Serializable]

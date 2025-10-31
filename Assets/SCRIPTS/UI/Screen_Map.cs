@@ -126,7 +126,7 @@ public class Screen_Map : MonoBehaviour
         {
             if (i < PlayerPoint.ConnectedPoints.Count) {
                 ChoiceButton[i].gameObject.SetActive(true);
-                ChoiceTex[i].text = PlayerPoint.ConnectedPoints[i].GetName();
+                ChoiceTex[i].text = PlayerPoint.ConnectedPoints[i].GetNameAndData();
             }
             else ChoiceButton[i].gameObject.SetActive(false);
         }

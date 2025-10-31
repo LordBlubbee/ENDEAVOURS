@@ -20,6 +20,11 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 
     public float GetDodgeChance()
     {
+        if (EngineModule)
+        {
+            if (EnginesDown()) return 0f;
+            return 0.1f + EngineModule.ModuleLevel.Value * 0.05f;
+        }
         return 0.1f;
     }
     [NonSerialized] public Vector3 CurrentLocationPoint;

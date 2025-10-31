@@ -423,6 +423,11 @@ MonoBehaviour:
   ShowAsModule: {fileID: 11400000, guid: ecf400006c4c4aa47afd56f85fab16f5, type: 2}
   MaxHealth: 200
   HitboxRadius: 16
+  ModuleWorth: 50
+  ModuleUpgradeMaterials: 28000000500000007d000000c8000000
+  ModuleUpgradeTechs: 00000000000000000000000000000000
   CenterPos: {fileID: 0}
   MaxArmor: 100
+  ArmorPerUpgrade: 100
+  ArmorRegenPerUpgrade: 2
   ArmorRegen: 20

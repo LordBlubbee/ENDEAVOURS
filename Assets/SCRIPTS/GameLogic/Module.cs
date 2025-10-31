@@ -117,7 +117,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 
     [Header("RESOURCES")]
     public int ModuleWorth = 50;
-    public int MaxModuleLevel = 5;
+    public int MaxModuleLevel => ModuleUpgradeMaterials.Length;
     public int[] ModuleUpgradeMaterials = new int[] { 40, 60, 100, 200, 300 };
     public int[] ModuleUpgradeTechs = new int[] { 0,0,0,0,0 };
 

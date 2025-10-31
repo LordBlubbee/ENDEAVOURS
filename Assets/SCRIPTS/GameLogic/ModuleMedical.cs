@@ -7,7 +7,8 @@ public class ModuleMedical : Module
 {
     public float RegenAuraRange;
     public float RegenAmount;
-
+    public float RegenAuraPerLevel;
+    public float RegenAmountPerLevel;
     public override void Init()
     {
         if (hasInitialized) return;
@@ -27,9 +28,12 @@ public class ModuleMedical : Module
                 {
                     if (crew.GetFaction() != GetFaction()) continue;
                     if (crew.isDead()) continue;
-                    if (Vector3.Distance(crew.transform.position, transform.position) < RegenAuraRange)
+                    float Dist = Vector3.Distance(crew.transform.position, transform.position);
+                    if (Dist < RegenAuraRange + RegenAuraPerLevel * ModuleLevel.Value)
                     {
-                        crew.Heal(RegenAmount/2f);
+                        float Divide = 4f;
+                        if (Dist < 10f) Divide = 2f;
+                        crew.Heal((RegenAmount + RegenAmountPerLevel * ModuleLevel.Value) / Divide);
                     }
                 }
             }

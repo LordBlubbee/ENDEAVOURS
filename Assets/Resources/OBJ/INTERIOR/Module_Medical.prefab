@@ -270,9 +270,15 @@ MonoBehaviour:
   ShowAsModule: {fileID: 11400000, guid: 1299b96d9516f77439b3b8edeeb43255, type: 2}
   MaxHealth: 200
   HitboxRadius: 16
+  ModuleWorth: 50
+  MaxModuleLevel: 4
+  ModuleUpgradeMaterials: 280000003c00000064000000c8000000
+  ModuleUpgradeTechs: 00000000000000000000000000000000
   CenterPos: {fileID: 4179111860458812673}
-  RegenAuraRange: 24
+  RegenAuraRange: 20
   RegenAmount: 10
+  RegenAuraPerLevel: 4
+  RegenAmountPerLevel: 5
 --- !u!114 &7532573690162859283
 MonoBehaviour:
   m_ObjectHideFlags: 0

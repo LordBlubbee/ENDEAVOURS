@@ -7,6 +7,14 @@ public class ScriptableBiome : ScriptableObject
 {
     public string BiomeName;
     public string BiomeDescription;
+
+    public float BiomeBaseDifficulty = 1f;
+    public int BiomeSize;
+
+    public int GetBiomeSize()
+    {
+        return BiomeSize;
+    }
     public List<ScriptablePoint> PossiblePointsRandom
     { 
         get

@@ -239,6 +239,9 @@ MonoBehaviour:
   ShowAsModule: {fileID: 11400000, guid: 9f90683edf0f5ad4bb0cda0497fb3d84, type: 2}
   MaxHealth: 200
   HitboxRadius: 16
+  ModuleWorth: 50
+  ModuleUpgradeMaterials: 2300000032000000460000006400000096000000c8000000fa0000002c010000
+  ModuleUpgradeTechs: 0000000000000000140000001e00000028000000320000003c00000046000000
   CenterPos: {fileID: 0}
 --- !u!114 &1907047031803987074
 MonoBehaviour:

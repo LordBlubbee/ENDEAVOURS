@@ -13,7 +13,7 @@ public class MapPointButton : MonoBehaviour
     {
         AssociatedPoint = pon;
         DestinationID = dest;
-        if (NameVisible) Texto.text = pon.GetName();
+        if (NameVisible) Texto.text = pon.GetData();
     }
     public void SetDefaultColor(Color col)
     {
@@ -34,5 +34,10 @@ public class MapPointButton : MonoBehaviour
     public void Pressed()
     {
         CO.co.VoteForMapRpc(LOCALCO.local.PlayerID.Value, DestinationID);
+    }
+
+    public MapPoint GetAssociatedPoint()
+    {
+        return AssociatedPoint;
     }
 }

@@ -97,17 +97,38 @@ public class CREW : NetworkBehaviour, iDamageable
             }
         }
     }
-    //Modified attributes from equipment
+    //Modified attributes from equipment and buffs
     public int[] ModifyAttributes;
     public float ModifyHealthMax;
     public float ModifyHealthRegen;
     public float ModifyStaminaMax;
     public float ModifyStaminaRegen;
     public float ModifyMovementSpeed;
+    public float ModifyMovementSlow;
+    public float ModifyAnimationSpeed;
+    public float ModifyAnimationSlow;
 
     public float ModifyMeleeDamage;
     public float ModifyRangedDamage;
     public float ModifySpellDamage;
+
+    private List<BUFF> Buffs = new();
+    public void AddBuff(ScriptableBuff buf)
+    {
+        Buffs.Add(new BUFF(buf, this));
+    }
+    public void BuffTick(float time)
+    {
+        foreach (BUFF buf in new List<BUFF>(Buffs))
+        {
+            buf.TickBuff(time);
+            if (buf.IsExpired())
+            {
+                buf.RemoveBuff(this);
+                Buffs.Remove(buf);
+            }
+        }
+    }
 
     public NetworkVariable<int> ATT_PHYSIQUE = new NetworkVariable<int>(2); //Buffs maximum health, melee damage
     public NetworkVariable<int> ATT_ARMS = new NetworkVariable<int>(2); //Buffs ranged damage, reload (+gunnery)
@@ -455,7 +476,7 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         while (true)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
             NearbyCommander = 0;
             Vector3 checkHit = transform.position;
             foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 25f))
@@ -471,6 +492,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 if (trt.GetFaction() != GetFaction()) continue;
                 NearbyCommander = Mathf.Max(trt.GetATT_COMMAND(),NearbyCommander);
             }
+            BuffTick(0.5f);
         }
     }
     IEnumerator PeriodicUpdates()
@@ -766,9 +788,19 @@ public class CREW : NetworkBehaviour, iDamageable
     public void WeaponSFXRpc()
     {
         if (!EquippedToolObject) return;
-        if (EquippedToolObject.Action1_SFX.Length > 0)
+        if (SelectedWeaponAbility == 0)
         {
-            AUDCO.aud.PlaySFX(EquippedToolObject.Action1_SFX, transform.position, 0.1f);
+            if (EquippedToolObject.Action1_SFX.Length > 0)
+            {
+                AUDCO.aud.PlaySFX(EquippedToolObject.Action1_SFX, transform.position, 0.1f);
+            }
+        }
+        else if (SelectedWeaponAbility == 1)
+        {
+            if (EquippedToolObject.Action2_SFX.Length > 0)
+            {
+                AUDCO.aud.PlaySFX(EquippedToolObject.Action2_SFX, transform.position, 0.1f);
+            }
         }
     }
     [Rpc(SendTo.ClientsAndHost)]
@@ -1084,12 +1116,12 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     private void AnimationUpdate()
     {
-        AnimationController.animationFrame();
+        AnimationController.animationFrame(1f * (1f+ ModifyAnimationSpeed) / (1f + ModifyAnimationSlow));
         if (IsServer)
         {
             if (AnimationController.getAnimationMoveForward() != 0)
             {
-                transform.position += AnimationController.getAnimationMoveForward() * getLookVector() * CO.co.GetWorldSpeedDelta();
+                transform.position += AnimationController.getAnimationMoveForward() * getLookVector() * CO.co.GetWorldSpeedDelta() * (1f+ModifyMovementSpeed) / (1f + ModifyMovementSlow);
             }
         }
     }
@@ -1564,7 +1596,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetSpeed()
     {
-        return MovementSpeed * (0.8f+GetATT_DEXTERITY()*0.08f) * (1f+ ModifyMovementSpeed);
+        return MovementSpeed * (0.8f+GetATT_DEXTERITY()*0.08f) * (1f+ ModifyMovementSpeed) / (1f + ModifyMovementSlow);
     }
     public float GetCurrentSpeed()
     {

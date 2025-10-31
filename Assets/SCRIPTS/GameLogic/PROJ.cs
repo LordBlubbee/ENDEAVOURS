@@ -25,6 +25,7 @@ public class PROJ : NetworkBehaviour
     public GameObject ImpactVFX;
     public GameObject LaunchVFX;
     public AudioClip[] ImpactSFX;
+    public float DodgeModifier = 1f;
     public float HullDamageModifier = 1f; //Which factor of damage is done to modules
     public float ModuleDamageModifier = 1f; //Which factor of damage is done to modules
     public float ArmorDamageModifier = 1f; //Which factor of damage is done to armor
@@ -126,7 +127,7 @@ public class PROJ : NetworkBehaviour
             DRIFTER drifter = collision.GetComponent<DRIFTER>();
             if (drifter != null)
             {
-                if (UnityEngine.Random.Range(0f, 1f) > drifter.GetDodgeChance())
+                if (UnityEngine.Random.Range(0f, 1f) > Mathf.Min(drifter.GetDodgeChance() * DodgeModifier,0.9f))
                 {
                     drifter.Impact(this, transform.position);
                     isActive = false;

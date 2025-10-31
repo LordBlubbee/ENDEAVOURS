@@ -287,6 +287,9 @@ MonoBehaviour:
   ShowAsModule: {fileID: 11400000, guid: 5e327c34dc8e8044db4ecf9d321d5743, type: 2}
   MaxHealth: 200
   HitboxRadius: 16
+  ModuleWorth: 50
+  ModuleUpgradeMaterials: 1e0000003c00000064000000
+  ModuleUpgradeTechs: 00000000140000001e000000
   CenterPos: {fileID: 0}
   WeaponName: HEAVY BALLISTA
   WeaponTransform: {fileID: 1101510134941141221}
@@ -298,20 +301,17 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4b07ae0e15c3af04eaaf763a1580761d, type: 3}
   - {fileID: 8300000, guid: dc98d35753a89c040904c73f02f92e9a, type: 3}
   CrosshairSprite: {fileID: 21300000, guid: 3d1452e5180bdf641bb60a3aadc3248a, type: 3}
+  ResourceType: 2
   Damage: 100
-  HullDamageMod: 1
-  ModuleDamageMod: 1
-  CrewDamageMod: 0.3
-  CrewDamageSplash: 5
-  ArmorDamageMod: 1
-  ArmorDamageAbsorption: 1
   RotationBaseSpeed: 60
   MaxAmmo: 50
   FireCooldown: 7
   ReloadCooldown: 7
   ProjectileCount: 1
   AdditionalProjectileDelay: 0
-  ResourceType: 2
+  DamagePerLevel: 0
+  ProjectilesPerLevel: 0
+  CooldownPerLevel: -1
 --- !u!114 &-427056032657588051
 MonoBehaviour:
   m_ObjectHideFlags: 0

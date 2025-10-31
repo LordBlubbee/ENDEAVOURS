@@ -11,8 +11,9 @@ public class ScriptableEnemyGroup : ScriptableObject
     public AI_GROUP.AI_TYPES AI_Type;
     public AI_GROUP.AI_OBJECTIVES AI_Group;
     public int CrewPowerLevel = 100;
+    public int CrewQualityLevel = 100;
     public List<EnemyCrewWithWeight> SpawnCrewList;
-    public int DrifterPowerLevel = 0;
+    public int DrifterQualityLevel = 0;
     public List<EnemyDrifterWithWeight> SpawnDrifter;
     public float SpawnGroupRange = 10f; //Area in which the group is spawned
     public float SpawnDistanceMin = 100f; //Distance away from players

@@ -11,9 +11,17 @@ public class MapPoint : NetworkBehaviour
     [NonSerialized] public List<MapPoint> ConnectedPoints = new();
     [NonSerialized] public NetworkVariable<int> PointID = new();
     [NonSerialized] private NetworkVariable<FixedString32Bytes> PointName = new();
-    public string GetName()
+    public string GetNameAndData()
     {
         return PointName.Value + $"\n{AssociatedPoint.InitialMapData}";
+    }
+    public string GetData()
+    {
+        return $"\n{AssociatedPoint.InitialMapData}";
+    }
+    public string GetNameOnly()
+    {
+        return PointName.Value.ToString();
     }
     private void Start()
     {
@@ -29,7 +37,8 @@ public class MapPoint : NetworkBehaviour
         AssociatedPoint = Dialog;
         if (IsServer)
         {
-            PointName.Value = $"POINT-{UnityEngine.Random.Range(0, 10)}{UnityEngine.Random.Range(0, 10)}-{UnityEngine.Random.Range(0, 10)}{UnityEngine.Random.Range(0, 10)}";
+            if (Dialog.UniqueName == "") PointName.Value = $"POINT-{UnityEngine.Random.Range(0, 10)}{UnityEngine.Random.Range(0, 10)}-{UnityEngine.Random.Range(0, 10)}{UnityEngine.Random.Range(0, 10)}";
+            else PointName.Value = Dialog.UniqueName;
             PointID.Value = ID;
             SetInitRpc(AssociatedPoint.GetResourceLink());
         }

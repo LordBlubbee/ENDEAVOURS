@@ -83,6 +83,137 @@ public class CO : NetworkBehaviour
     }
 
     public ScriptableBiome CurrentBiome;
+    public int BiomeProgress;
+    public int TotalZoneProgress;
+    public float BaseDifficulty;
+    public List<ScriptablePoint> NextBiomePoints = new();
+
+    public float GetEncounterDifficultyModifier()
+    {
+        float ProgressDiff = 1f;
+        switch (BiomeProgress)
+        {
+            case 0:
+                ProgressDiff = 0.8f;
+                break;
+            case 1:
+                ProgressDiff = 1f;
+                break;
+            case 2:
+                ProgressDiff = 1.3f;
+                break;
+            case 3:
+                ProgressDiff = 1.5f;
+                break;
+            case 4:
+                ProgressDiff = 1.8f;
+                break;
+            case 5:
+                ProgressDiff = 2f;
+                break;
+            case 6:
+                ProgressDiff = 2.5f;
+                break;
+        }
+        float PlayerDiff = 1f;
+        switch (GetLOCALCO().Count)
+        {
+            case 1:
+                PlayerDiff = 0.9f;
+                break;
+            case 2:
+                PlayerDiff = 1f;
+                break;
+            case 3:
+                PlayerDiff = 1.15f;
+                break;
+            case 4:
+                PlayerDiff = 1.3f;
+                break;
+            case 5:
+                PlayerDiff = 1.4f;
+                break;
+            case 6:
+                PlayerDiff = 1.5f;
+                break;
+            case 7:
+                PlayerDiff = 1.6f;
+                break;
+            case 8:
+                PlayerDiff = 1.7f;
+                break;
+            case 9:
+                PlayerDiff = 1.9f;
+                break;
+            case 10:
+                PlayerDiff = 2f;
+                break;
+        }
+        return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
+    }
+    public float GetEncounterSizeModifier()
+    {
+        float ProgressDiff = 1f;
+        switch (BiomeProgress)
+        {
+            case 0:
+                ProgressDiff = 0.8f;
+                break;
+            case 1:
+                ProgressDiff = 1f;
+                break;
+            case 2:
+                ProgressDiff = 1.2f;
+                break;
+            case 3:
+                ProgressDiff = 1.3f;
+                break;
+            case 4:
+                ProgressDiff = 1.5f;
+                break;
+            case 5:
+                ProgressDiff = 1.8f;
+                break;
+            case 6:
+                ProgressDiff = 2f;
+                break;
+        }
+        float PlayerDiff = 1f;
+        switch (GetLOCALCO().Count)
+        {
+            case 1:
+                PlayerDiff = 0.7f;
+                break;
+            case 2:
+                PlayerDiff = 1f;
+                break;
+            case 3:
+                PlayerDiff = 1.3f;
+                break;
+            case 4:
+                PlayerDiff = 1.5f;
+                break;
+            case 5:
+                PlayerDiff = 1.7f;
+                break;
+            case 6:
+                PlayerDiff = 1.9f;
+                break;
+            case 7:
+                PlayerDiff = 2.1f;
+                break;
+            case 8:
+                PlayerDiff = 2.25f;
+                break;
+            case 9:
+                PlayerDiff = 2.4f;
+                break;
+            case 10:
+                PlayerDiff = 2.5f;
+                break;
+        }
+        return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
+    }
     private void Start()
     {
         co = this; 
@@ -147,7 +278,7 @@ public class CO : NetworkBehaviour
     }
     public void StartGame()
     {
-        GenerateMap(15);
+        GenerateMap();
 
         //NEW GAME
         Resource_Materials.Value = 50;
@@ -189,7 +320,6 @@ public class CO : NetworkBehaviour
         {
             Debug.Log("Moving to point!");
             MapPoint destination = GetPlayerMapPoint().ConnectedPoints[HasVoteResult()];
-            CO_STORY.co.SetStory(destination.AssociatedPoint.InitialDialog);
             StartCoroutine(Travel(destination));
             PlayerMapPointID.Value = destination.PointID.Value;
             ResetMapVotes();
@@ -282,10 +412,21 @@ public class CO : NetworkBehaviour
         PlayerMainDrifter.SetCanReceiveInput(false);
         foreach (LOCALCO local in GetLOCALCO())
         {
-            local.ShipTransportFadeAwayRpc(destination.GetName());
+            local.ShipTransportFadeAwayRpc(destination.GetNameOnly());
         }
         yield return new WaitForSeconds(2.5f);
         GenerateLevel();
+
+        if (destination.AssociatedPoint.GateToBiome)
+        {
+            CurrentBiome = destination.AssociatedPoint.GateToBiome;
+            BiomeProgress++;
+            GenerateMap();
+            destination = RegisteredMapPoints[0];
+        }
+        CO_STORY.co.SetStory(destination.AssociatedPoint.InitialDialog);
+
+
         //UpdatePlayerMapPointRpc(destination.transform.position);
         foreach (LOCALCO local in GetLOCALCO())
         {
@@ -400,28 +541,30 @@ public class CO : NetworkBehaviour
 
     private int GetMapWidth() { return 20; }
     private int GetPointStep() { return 5; }
-    public void GenerateMap(float mapSize)
+    public void GenerateMap()
     {
         foreach (MapPoint map in GetMapPoints())
         {
             map.NetworkObject.Despawn();
         }
+        float mapSize = CurrentBiome.GetBiomeSize();
         RegisteredMapPoints = new();
         //StartPoint
         PlayerMapPointID.Value = 0;
         float MapWidth = GetMapWidth();
         MapPoint mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3(-GetPointStep(), MapWidth * 0.5f));
         RegisterMapPoint(mapPoint);
-       // mapPoint.Init(CurrentBiome.PossiblePointsRandom[UnityEngine.Random.Range(0,CurrentBiome.PossiblePointsRandom.Count)], 0);
+
         for (int i = 0; i < mapSize; i++)
         {
             int max = UnityEngine.Random.Range(2, 5);
             for (int amn = 0; amn < max; amn++)
             {
-                // 5
-                // 2.5 7.5
-                // 3.33 6.67
-                Vector3 tryPos = new Vector3(i* GetPointStep(), (amn + 1) * (MapWidth / max) - (MapWidth / max));
+                // Reversed Y-direction (top to bottom)
+                float step = MapWidth / max;
+                float yPos = MapWidth - ((amn + 1) * step - step);
+                Vector3 tryPos = new Vector3(i * GetPointStep(), yPos);
+
                 mapPoint = CO_SPAWNER.co.CreateMapPoint(tryPos);
                 RegisterMapPoint(mapPoint);
             }
@@ -435,7 +578,6 @@ public class CO : NetworkBehaviour
             ID++;
         }
     }
-
     private void UpdateMapConnections()
     {
         foreach (MapPoint map in GetMapPoints())
