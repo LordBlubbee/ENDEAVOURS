@@ -15,5 +15,6 @@ MonoBehaviour:
   ItemName: Wrench
   ItemDesc: The Wrench can be used to repair damaged Modules.
   ItemIcon: {fileID: 21300000, guid: a617f0d8d0e1d8c42a9f336c1a337ab4, type: 3}
-  ItemResourceID: OBJ/SCRIPTABLES/ITEMS/Weapons/Logipedes_Wrench
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Logipedes_Wrench
+  ItemResourceIDShort: Logipedes_Wrench
   ToolPrefab: {fileID: 8311341897716400573, guid: 2c40e2d5cca7e6244b812f2d75dce46b, type: 3}

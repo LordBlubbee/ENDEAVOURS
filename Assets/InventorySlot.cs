@@ -52,6 +52,10 @@ public class InventorySlot : MonoBehaviour
             {
                 SetEquipState(EquipStates.INVENTORY_WEAPON);
             }
+            else if (equippable is ScriptableEquippableModule)
+            {
+                SetEquipState(EquipStates.INVENTORY_MODULE);
+            }
             else SetEquipState(DefaultEquipState);
         }
         else SetEquipState(DefaultEquipState);

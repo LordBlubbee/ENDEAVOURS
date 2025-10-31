@@ -15,6 +15,7 @@ MonoBehaviour:
   ItemName: Comms
   ItemDesc: N/A
   ItemIcon: {fileID: 0}
-  ItemResourceID: OBJ/SCRIPTABLES/DRIFTER/Core1_Comms
+  ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Core1_Comms
+  ItemResourceIDShort: Core1_Comms
   PrefabModule: {fileID: 6313021248617021957, guid: 695f221402cdb6e4ca8f4e8a1c491cfc, type: 3}
   EquipType: 0

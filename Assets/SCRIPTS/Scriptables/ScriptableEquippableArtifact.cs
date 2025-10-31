@@ -11,6 +11,11 @@ public class ScriptableEquippableArtifact : ScriptableEquippable
         ARMOR,
         ARTIFACT
     }
+    public ArtifactAbilityTypes Ability = ArtifactAbilityTypes.NONE;
+    public enum ArtifactAbilityTypes
+    {
+        NONE
+    }
     [Header("PHYS, ARM, DEX, COM, CMD, ENG, ALC, MED")]
     public int[] ModifyAttributes;
     public float ModifyHealthMax;

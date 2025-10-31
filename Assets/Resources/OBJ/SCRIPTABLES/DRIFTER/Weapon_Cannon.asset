@@ -15,6 +15,7 @@ MonoBehaviour:
   ItemName: Cannon
   ItemDesc: N/A
   ItemIcon: {fileID: 21300000, guid: aa1a4ba3835c1b54bb69868e67b7d2f3, type: 3}
-  ItemResourceID: OBJ/SCRIPTABLES/DRIFTER/Weapon_Cannon
+  ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Weapon_Cannon
+  ItemResourceIDShort: Weapon_Cannon
   PrefabModule: {fileID: 2733437315669949757, guid: f1c84c6e27e822e4e9d887455c80896d, type: 3}
   EquipType: 1

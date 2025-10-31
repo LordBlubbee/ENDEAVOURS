@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CO : NetworkBehaviour
@@ -109,11 +110,11 @@ public class CO : NetworkBehaviour
             {
                 if (local.GetPlayer() != null)
                 {
-                    local.GetPlayer().EquipArmorLocallyRpc(local.GetPlayer().EquippedArmor ? local.GetPlayer().EquippedArmor.ItemResourceID : null);
+                    local.GetPlayer().EquipArmorLocallyRpc(local.GetPlayer().EquippedArmor ? local.GetPlayer().EquippedArmor.GetItemResourceIDShort() : null);
                     for (int i = 0; i < 3; i++)
                     {
-                        local.GetPlayer().EquipWeaponLocallyRpc(i, local.GetPlayer().EquippedWeapons[i] ? local.GetPlayer().EquippedWeapons[i].ItemResourceID : null);
-                        local.GetPlayer().EquipArtifactLocallyRpc(i, local.GetPlayer().EquippedArtifacts[i] ? local.GetPlayer().EquippedArtifacts[i].ItemResourceID : null);
+                        local.GetPlayer().EquipWeaponLocallyRpc(i, local.GetPlayer().EquippedWeapons[i] ? local.GetPlayer().EquippedWeapons[i].GetItemResourceIDShort() : null);
+                        local.GetPlayer().EquipArtifactLocallyRpc(i, local.GetPlayer().EquippedArtifacts[i] ? local.GetPlayer().EquippedArtifacts[i].GetItemResourceIDShort() : null);
                     }
                 }
                 SendPeriodicInventoryUpdate();
@@ -133,12 +134,17 @@ public class CO : NetworkBehaviour
         List<FixedString64Bytes> strings = new();
         for (int i = 0; i < CO.co.Drifter_Inventory.Count; i++)
         {
-            if (CO.co.Drifter_Inventory[i]) strings.Add(CO.co.Drifter_Inventory[i].ItemResourceID);
+            if (CO.co.Drifter_Inventory[i]) strings.Add(CO.co.Drifter_Inventory[i].GetItemResourceIDFull());
             else strings.Add("");
         }
         CO.co.SetDrifterInventoryForClientsRpc(strings.ToArray());
     }
-
+    [Rpc(SendTo.Server)]
+    public void RequestModuleUpdateRpc()
+    {
+        UI.ui.InventoryUI.RefreshDrifterSubscreen();
+        UI.ui.InventoryUI.RefreshDrifterWeaponSubscreen();
+    }
     public void StartGame()
     {
         GenerateMap(15);
@@ -149,9 +155,15 @@ public class CO : NetworkBehaviour
         Resource_Ammo.Value = 50;
         Resource_Tech.Value = 0;
     }
-
+    [Rpc(SendTo.Server)]
+    public void AddInventoryItemRpc(FixedString64Bytes moduleLink)
+    {
+        //Server only
+        Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>(moduleLink.ToString()));
+    }
     public void AddInventoryItem(ScriptableEquippable equip)
     {
+        //Server only
         Drifter_Inventory.Add(equip);
     }
     public override void OnNetworkSpawn()
@@ -867,7 +879,7 @@ public class CO : NetworkBehaviour
                 }
                 ScriptableEquippable newItem = item.ItemDrop.PossibleDrops[GetWeight()].Item;
                 AddInventoryItem(newItem);
-                ItemTranslate.Add(newItem.ItemResourceID);
+                ItemTranslate.Add(newItem.GetItemResourceIDFull());
             }
         }
         Resource_Ammo.Value += ChangeAmmo;

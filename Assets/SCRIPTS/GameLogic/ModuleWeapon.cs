@@ -13,6 +13,7 @@ public class ModuleWeapon : Module
     public PROJ FireProjectile;
     public AudioClip[] Fire_SFX;
     public Sprite CrosshairSprite;
+    public ResourceCrate.ResourceTypes ResourceType = ResourceCrate.ResourceTypes.AMMUNITION;
 
     [Header("Offensive Stats")]
     public float Damage;
@@ -21,8 +22,12 @@ public class ModuleWeapon : Module
     public float FireCooldown = 2f;
     public float ReloadCooldown = 5f;
     public int ProjectileCount = 1;
-    public float AdditionalProjectileDelay = 0f;
-    public ResourceCrate.ResourceTypes ResourceType = ResourceCrate.ResourceTypes.AMMUNITION;
+    public float AdditionalProjectileDelay = 0.2f;
+
+    [Header("Level upgrades")]
+    public float DamagePerLevel;
+    public float ProjectilesPerLevel;
+    public float CooldownPerLevel;
 
     private NetworkVariable<float> Rotation = new();
     [NonSerialized] public NetworkVariable<float> CurCooldown = new();
@@ -35,6 +40,20 @@ public class ModuleWeapon : Module
     {
         AutofireActive.Value = bol;
     }
+
+    public int GetProjectileCount()
+    {
+        return ProjectileCount + Mathf.FloorToInt(ProjectilesPerLevel * ModuleLevel.Value);
+    }
+    public float GetDamage()
+    {
+        return Damage + DamagePerLevel * ModuleLevel.Value;
+    }
+    public float GetFireCooldown()
+    {
+        return FireCooldown + CooldownPerLevel * ModuleLevel.Value;
+    }
+
     public bool IsOnCooldown()
     {
         return !canFire;
@@ -159,11 +178,11 @@ public class ModuleWeapon : Module
     IEnumerator FireSequence(Vector3 mouse)
     {
         canFire = false;
-        for (int i = 0; i < ProjectileCount; i++)
+        for (int i = 0; i < GetProjectileCount(); i++)
         {
             LoadedAmmo.Value--;
             PROJ proj = Instantiate(FireProjectile, FirePoint.position, WeaponTransform.rotation);
-            proj.Init(Damage, Faction, null, mouse);
+            proj.Init(GetDamage(), Faction, null, mouse);
             proj.NetworkObject.Spawn();
 
             WeaponSFXRpc();
@@ -175,7 +194,7 @@ public class ModuleWeapon : Module
                 yield return null;
             }
         }
-        CurCooldown.Value = FireCooldown;
+        CurCooldown.Value = GetFireCooldown();
         while (CurCooldown.Value > 0f)
         {
             CurCooldown.Value -= CO.co.GetWorldSpeedDelta();

@@ -24,5 +24,6 @@ MonoBehaviour:
 
     SECONDARY: BLOCK'
   ItemIcon: {fileID: 5857598365883991996, guid: 8069dcecba441d4488b39aa85ea59175, type: 3}
-  ItemResourceID: OBJ/SCRIPTABLES/ITEMS/Weapons/Logipedes_Halberd
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Logipedes_Halberd
+  ItemResourceIDShort: Logipedes_Halberd
   ToolPrefab: {fileID: 8311341897716400573, guid: bf6539e6c67cbf74cb762b15de34eff5, type: 3}

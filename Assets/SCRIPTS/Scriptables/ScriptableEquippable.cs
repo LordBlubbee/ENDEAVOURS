@@ -7,5 +7,14 @@ public class ScriptableEquippable : ScriptableObject
     [TextArea(3, 10)]
     public string ItemDesc;
     public Sprite ItemIcon;
-    public string ItemResourceID;
+    public string ItemResourceIDFull;
+    public string ItemResourceIDShort;
+    public string GetItemResourceIDFull()
+    {
+        return ItemResourceIDFull;
+    }
+    public string GetItemResourceIDShort()
+    {
+        return ItemResourceIDShort;
+    }
 }

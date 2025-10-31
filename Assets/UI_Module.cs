@@ -87,7 +87,7 @@ public class UI_Module : MonoBehaviour
                 MainTex.text = $"{GetUseNumber()}ARMOR CORE";
                 float getArmorRelative = ((ModuleArmor)wep).GetArmor() / ((ModuleArmor)wep).MaxArmor;
                 Color ArmorColor = new Color(1f - getArmorRelative, getArmorRelative, 0);
-                StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")} | <color=#{ColorUtility.ToHtmlStringRGB(ArmorColor)}>ARMOR STATUS {((ModuleArmor)wep).GetArmor().ToString("0") }/{((ModuleArmor)wep).MaxArmor.ToString("0")}</color>";
+                StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")} | <color=#{ColorUtility.ToHtmlStringRGB(ArmorColor)}>ARMOR STATUS {((ModuleArmor)wep).GetArmor().ToString("0") }/{((ModuleArmor)wep).GetMaxArmor().ToString("0")}</color>";
                 StatusTex.color = Icon.color;
                 break;
             case Module.ModuleTypes.MEDICAL:

@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -149,7 +150,7 @@ public class Screen_Inventory : MonoBehaviour
     {
         SkillPointTex.text = $"SKILL POINTS: ({LOCALCO.local.GetPlayer().SkillPoints.Value})";
         SkillPointTex.color = (LOCALCO.local.GetPlayer().SkillPoints.Value > 0) ? Color.green : Color.white;
-        ExperienceTex.text = $"SKILL POINTS: ({LOCALCO.local.GetPlayer().XPPoints.Value})";
+        ExperienceTex.text = $"XP: ({LOCALCO.local.GetPlayer().XPPoints.Value}/100)";
         ExperienceSlider.value = (float)LOCALCO.local.GetPlayer().XPPoints.Value / 100f;
         for (int i = 0; i < 8; i++)
         {
@@ -238,7 +239,7 @@ public class Screen_Inventory : MonoBehaviour
             sub.SetActive(false);
         }
         ob.SetActive(true);
-        if (ob == SubscreenEquipment || ob == SubscreenDrifter) SubscreenInventory.SetActive(true);
+        if (ob == SubscreenEquipment || ob == SubscreenDrifter || ob == SubscreenDrifterWeapons) SubscreenInventory.SetActive(true);
     }
 
     InventorySlot CurrentDraggingSlot;
@@ -267,6 +268,11 @@ public class Screen_Inventory : MonoBehaviour
             CO.co.RequestPeriodicInventoryUpdateRpc();
             Debug.Log($"We moved FROM {CurrentDraggingSlot} item: {CurrentDraggingSlot.GetEquippedItem()} (Supposed to be {slotSwap})");
             Debug.Log($"We moved TO {slot} item: {slot.GetEquippedItem()}  (Supposed to be {HoldingItem})");
+
+            if (HoldingItem is ScriptableEquippableModule)
+            {
+                CO.co.PlayerMainDrifter.Interior.AddModuleRpc(HoldingItem.GetItemResourceIDFull());
+            }
         }
         StopHoldingItem();
     }
@@ -274,43 +280,41 @@ public class Screen_Inventory : MonoBehaviour
     private bool doesItemFitInSlot(ScriptableEquippable item, InventorySlot slot)
     {
         if (item == null) return true;
-        if (slot.DefaultEquipState == InventorySlot.EquipStates.INVENTORY_ARMOR)
+        switch (slot.DefaultEquipState)
         {
-            if (item is ScriptableEquippableArtifact)
-            {
-                if (((ScriptableEquippableArtifact)item).EquipType != ScriptableEquippableArtifact.EquipTypes.ARMOR)
+            case InventorySlot.EquipStates.INVENTORY_ARMOR:
+                if (item is ScriptableEquippableArtifact)
+                {
+                    if (((ScriptableEquippableArtifact)item).EquipType != ScriptableEquippableArtifact.EquipTypes.ARMOR)
+                    {
+                        return false;
+                    }
+                }
+                else
                 {
                     return false;
                 }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        if (slot.DefaultEquipState == InventorySlot.EquipStates.INVENTORY_WEAPON)
-        {
-            if (item is ScriptableEquippableWeapon)
-            {
-            }
-            else
-            {
-                return false;
-            }
-        }
-        if (slot.DefaultEquipState == InventorySlot.EquipStates.INVENTORY_ARTIFACT)
-        {
-            if (item is ScriptableEquippableArtifact)
-            {
-                if (((ScriptableEquippableArtifact)item).EquipType != ScriptableEquippableArtifact.EquipTypes.ARTIFACT)
+                break;
+            case InventorySlot.EquipStates.INVENTORY_WEAPON:
+                if (!(item is ScriptableEquippableWeapon)) return false;
+                break;
+            case InventorySlot.EquipStates.INVENTORY_ARTIFACT:
+                if (item is ScriptableEquippableArtifact)
+                {
+                    if (((ScriptableEquippableArtifact)item).EquipType != ScriptableEquippableArtifact.EquipTypes.ARTIFACT)
+                    {
+                        return false;
+                    }
+                }
+                else
                 {
                     return false;
                 }
-            }
-            else
-            {
-                return false;
-            }
+                break;
+            case InventorySlot.EquipStates.INVENTORY_MODULE:
+                if (!(item is ScriptableEquippableModule)) return false;
+                if (slot.GetEquippedItem() != null) return false;
+                break;
         }
         return true;
     }
@@ -320,7 +324,7 @@ public class Screen_Inventory : MonoBehaviour
         if (slot == InventoryArmor)
         {
             if (slot.GetEquippedItem() == null) LOCALCO.local.GetPlayer().EquipArmorRpc(null);
-            else LOCALCO.local.GetPlayer().EquipArmorRpc(slot.GetEquippedItem().ItemResourceID);
+            else LOCALCO.local.GetPlayer().EquipArmorRpc(slot.GetEquippedItem().GetItemResourceIDShort());
             return;
         }
         for (int i = 0; i < 3; i++)
@@ -328,13 +332,13 @@ public class Screen_Inventory : MonoBehaviour
             if (slot == InventoryArtifacts[i])
             {
                 if (slot.GetEquippedItem() == null) LOCALCO.local.GetPlayer().EquipArtifactRpc(i,null);
-                else LOCALCO.local.GetPlayer().EquipArtifactRpc(i, slot.GetEquippedItem().ItemResourceID);
+                else LOCALCO.local.GetPlayer().EquipArtifactRpc(i, slot.GetEquippedItem().GetItemResourceIDShort());
                 return;
             }
             if (slot == InventoryWeapons[i])
             {
                 if (slot.GetEquippedItem() == null) LOCALCO.local.GetPlayer().EquipWeaponRpc(i, null);
-                else LOCALCO.local.GetPlayer().EquipWeaponRpc(i, slot.GetEquippedItem().ItemResourceID);
+                else LOCALCO.local.GetPlayer().EquipWeaponRpc(i, slot.GetEquippedItem().GetItemResourceIDShort());
                 return;
             }
         }
@@ -343,7 +347,7 @@ public class Screen_Inventory : MonoBehaviour
             if (slot == InventoryCargo[i])
             {
                 if (slot.GetEquippedItem() == null) CO.co.SetDrifterInventoryItemRpc(i, null);
-                else CO.co.SetDrifterInventoryItemRpc(i, slot.GetEquippedItem().ItemResourceID);
+                else CO.co.SetDrifterInventoryItemRpc(i, slot.GetEquippedItem().GetItemResourceIDFull());
                 return;
             }
         }
@@ -376,14 +380,28 @@ public class Screen_Inventory : MonoBehaviour
     }
     public void PressUpgradeDrifterSlot()
     {
-
+        if (!SelectedDrifterSlot.ModuleLink) return;
+        if (SelectedDrifterSlot.ModuleLink.ModuleLevel.Value == SelectedDrifterSlot.ModuleLink.MaxModuleLevel - 1) return;
+        int MoneyNeeded = SelectedDrifterSlot.ModuleLink.ModuleUpgradeMaterials[SelectedDrifterSlot.ModuleLink.ModuleLevel.Value];
+        if (MoneyNeeded > CO.co.Resource_Materials.Value) return;
+        int TechNeeded = SelectedDrifterSlot.ModuleLink.ModuleUpgradeTechs[SelectedDrifterSlot.ModuleLink.ModuleLevel.Value];
+        if (TechNeeded > CO.co.Resource_Tech.Value) return;
+        SelectedDrifterSlot.ModuleLink.SendUpgradeRpc();
     }
     public void PressDismantleDrifterSlot()
     {
+        if (!SelectedDrifterSlot.ModuleLink) return;
 
+        SelectedDrifterSlot.ModuleLink.SalvageRpc();
+       // CO.co.AddInventoryItemRpc(SelectedDrifterSlot.GetEquippedItem().ItemResourceID);
+       // SelectedDrifterSlot.SetInventoryItem(null);
+       // UpdateEquipmentBasedOnItem(SelectedDrifterSlot);
+        CO.co.RequestPeriodicInventoryUpdateRpc();
+        DeselectDrifterSlot();
+        RefreshSubscreenModuleEditor();
     }
 
-    private void RefreshDrifterSubscreen()
+    public void RefreshDrifterSubscreen()
     {
         int ID = -1;
         int i = 0;
@@ -396,17 +414,18 @@ public class Screen_Inventory : MonoBehaviour
                 Module mod = CO.co.PlayerMainDrifter.Interior.GetModules()[ID];
                 if (mod is ModuleWeapon) continue;
                 if (!mod.ShowAsModule) continue;
-                slot.SetInventoryItem(mod.ShowAsModule);
+                slot.SetInventoryItem(mod.ShowAsModule); 
+                slot.UpdateInventorySlot(mod);
                 i++;
             } else
             {
                 i++;
                 slot.SetInventoryItem(null);
+                slot.UpdateInventorySlot(null);
             }
-            slot.UpdateInventorySlot();
         }
     }
-    private void RefreshDrifterWeaponSubscreen()
+    public void RefreshDrifterWeaponSubscreen()
     {
         int ID = -1;
         int i = 0;
@@ -419,14 +438,15 @@ public class Screen_Inventory : MonoBehaviour
                 Module mod = CO.co.PlayerMainDrifter.Interior.WeaponModules[ID];
                 if (!mod.ShowAsModule) continue;
                 slot.SetInventoryItem(mod.ShowAsModule);
+                slot.UpdateInventorySlot(mod);
                 i++;
             }
             else
             {
                 i++;
                 slot.SetInventoryItem(null);
+                slot.UpdateInventorySlot(null);
             }
-            slot.UpdateInventorySlot();
         }
     }
     public void PressDrifterModule(DrifterInventorySlot slot)
@@ -444,7 +464,15 @@ public class Screen_Inventory : MonoBehaviour
     private void RefreshSubscreenModuleEditor()
     {
         if (!SelectedDrifterSlot) return;
-        ModuleTitle.text = SelectedDrifterSlot.GetEquippedItem().ItemName;
-        ModuleDesc.text = SelectedDrifterSlot.GetEquippedItem().ItemDesc;
+        if (!SelectedDrifterSlot.GetEquippedItem())
+        {
+            ModuleTitle.text = "[DISMANTLED]";
+            ModuleDesc.text = "";
+        } else
+        {
+            ModuleTitle.text = SelectedDrifterSlot.GetEquippedItem().ItemName;
+            ModuleDesc.text = SelectedDrifterSlot.GetEquippedItem().ItemDesc;
+        }
+            
     }
 }

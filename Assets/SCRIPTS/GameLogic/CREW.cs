@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CREW : NetworkBehaviour, iDamageable
 {
@@ -122,6 +123,52 @@ public class CREW : NetworkBehaviour, iDamageable
     public ScriptableEquippableWeapon[] EquippedWeapons = new ScriptableEquippableWeapon[3];
     public ScriptableEquippableArtifact EquippedArmor = null;
     public ScriptableEquippableArtifact[] EquippedArtifacts = new ScriptableEquippableArtifact[3];
+
+    private List<ArtifactAbility> ArtifactAbilities = new(); //Server only
+    public void AddArtifactAbility(ArtifactAbility ability)
+    {
+        ArtifactAbilities.Add(ability);
+    }
+    public void RemovertifactAbility(ArtifactAbility ability)
+    {
+        ArtifactAbilities.Remove(ability);
+    }
+
+    private void ArtifactOnMelee()
+    {
+        foreach (ArtifactAbility ability in ArtifactAbilities)
+        {
+            ability.OnMelee();
+        }
+    }
+    private void ArtifactOnRanged()
+    {
+        foreach (ArtifactAbility ability in ArtifactAbilities)
+        {
+            ability.OnRanged();
+        }
+    }
+    private void ArtifactOnSpell()
+    {
+        foreach (ArtifactAbility ability in ArtifactAbilities)
+        {
+            ability.OnSpell();
+        }
+    }
+    private void ArtifactOnDash()
+    {
+        foreach (ArtifactAbility ability in ArtifactAbilities)
+        {
+            ability.OnDash();
+        }
+    }
+    private void ArtifactOnDamaged()
+    {
+        foreach (ArtifactAbility ability in ArtifactAbilities)
+        {
+            ability.OnDamaged();
+        }
+    }
 
     //Utilities
     [NonSerialized] public Transform DraggingObject;
@@ -623,6 +670,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 setAnimationRpc(ANIM.AnimationState.MI_DASH);
             }
         }
+        ArtifactOnDash();
     }
 
     bool isDashing = false;
@@ -912,6 +960,7 @@ public class CREW : NetworkBehaviour, iDamageable
         else crew.TakeDamage(dmg, checkHit);
         CO_SPAWNER.co.SpawnImpactRpc(checkHit);
         canStrikeMelee = false; //Turn off until animation ends
+        ArtifactOnMelee();
         return true;
     }
 
@@ -928,6 +977,7 @@ public class CREW : NetworkBehaviour, iDamageable
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
         reload /= 0.6f + 0.05f * GetATT_ARMS() + 0.05f * GetATT_ALCHEMY();
         StartCoroutine(AttackCooldown(reload));
+        ArtifactOnRanged();
     }
     private void StrikeSpell(Vector3 trt)
     {
@@ -943,6 +993,7 @@ public class CREW : NetworkBehaviour, iDamageable
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
         reload /= 0.4f + 0.08f * GetATT_COMMUNOPATHY() + 0.08f * GetATT_ALCHEMY();
         StartCoroutine(AttackCooldown(reload));
+        ArtifactOnSpell();
     }
     private void StrikeRepair()
     {
@@ -1357,6 +1408,7 @@ public class CREW : NetworkBehaviour, iDamageable
             else Die();
         }
         CO_SPAWNER.co.SpawnDMGRpc(fl, src);
+        ArtifactOnDamaged();
     }
 
     public void EquipWeapon(int slot, ScriptableEquippableWeapon wep)
@@ -1373,7 +1425,7 @@ public class CREW : NetworkBehaviour, iDamageable
             }
             else
             {
-                EquipWeaponLocallyRpc(slot, wep.ItemResourceID);
+                EquipWeaponLocallyRpc(slot, wep.GetItemResourceIDShort());
                 EquipTool(wep.ToolPrefab, slot);
             }
         } else
@@ -1387,14 +1439,14 @@ public class CREW : NetworkBehaviour, iDamageable
         if (IsServer) return;
         CurrentToolID = -9;
         if (wep == null) EquipWeapon(slot, null);
-        else EquipWeapon(slot, Resources.Load<ScriptableEquippableWeapon>(wep));
+        else EquipWeapon(slot, Resources.Load<ScriptableEquippableWeapon>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{wep}"));
     }
     [Rpc(SendTo.Server)]
     public void EquipWeaponRpc(int slot, string wep)
     {
         CurrentToolID = -9;
         if (wep == null) EquipWeapon(slot, null);
-        EquipWeapon(slot, Resources.Load<ScriptableEquippableWeapon>(wep));
+        EquipWeapon(slot, Resources.Load<ScriptableEquippableWeapon>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{wep}"));
     }
     public void EquipArmor(ScriptableEquippableArtifact wep)
     {
@@ -1405,7 +1457,7 @@ public class CREW : NetworkBehaviour, iDamageable
         if (IsServer)
         {
             if (wep == null) EquipArmorLocallyRpc("");
-            else EquipArmorLocallyRpc(wep.ItemResourceID);
+            else EquipArmorLocallyRpc(wep.GetItemResourceIDShort());
         }
     }
 
@@ -1457,14 +1509,14 @@ public class CREW : NetworkBehaviour, iDamageable
     public void EquipArmorRpc(string wep)
     {
         if (wep == null) EquipArmor(null);
-        EquipArmor(Resources.Load<ScriptableEquippableArtifact>(wep));
+        EquipArmor(Resources.Load<ScriptableEquippableArtifact>($"OBJ/SCRIPTABLES/ITEMS/Armor/{wep}"));
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void EquipArmorLocallyRpc(string wep)
     {
         if (IsServer) return;
         if (wep == null) EquipArmor(null);
-        else EquipArmor(Resources.Load<ScriptableEquippableArtifact>(wep));
+        else EquipArmor(Resources.Load<ScriptableEquippableArtifact>($"OBJ/SCRIPTABLES/ITEMS/Armor/{wep}"));
     }
     public void EquipArtifact(int slot, ScriptableEquippableArtifact wep)
     {
@@ -1475,21 +1527,21 @@ public class CREW : NetworkBehaviour, iDamageable
         if (IsServer)
         {
             if (wep == null) EquipArtifactLocallyRpc(slot, "");
-            else EquipArtifactLocallyRpc(slot, wep.ItemResourceID);
+            else EquipArtifactLocallyRpc(slot, $"OBJ/SCRIPTABLES/ITEMS/Artifacts/{wep}");
         }
     }
     [Rpc(SendTo.Server)]
     public void EquipArtifactRpc(int slot, string wep)
     {
         if (wep == null) EquipArtifact(slot, null);
-        EquipArtifact(slot, Resources.Load<ScriptableEquippableArtifact>(wep));
+        EquipArtifact(slot, Resources.Load<ScriptableEquippableArtifact>($"OBJ/SCRIPTABLES/ITEMS/Artifacts/{wep}"));
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void EquipArtifactLocallyRpc(int slot, string wep)
     {
         if (IsServer) return;
         if (wep == null) EquipArtifact(slot, null);
-        else EquipArtifact(slot, Resources.Load<ScriptableEquippableArtifact>(wep));
+        else EquipArtifact(slot, Resources.Load<ScriptableEquippableArtifact>($"OBJ/SCRIPTABLES/ITEMS/Artifacts/{wep}"));
     }
     public void Die()
     {

@@ -309,10 +309,7 @@ public class LOCALCO : NetworkBehaviour
                 }
                 if (mod != null)
                 {
-                    if (mod is Module)
-                    {
-                    }
-                    else if (mod.IsDisabled())
+                    if (mod.IsDisabled())
                     {
                         if (mod is Module)
                         {
@@ -322,78 +319,91 @@ public class LOCALCO : NetworkBehaviour
                     }
                     else
                     {
-                        switch (mod.GetInteractableType())
+                        bool Pass = true;
+                        if (mod is Module)
                         {
-                            case Module.ModuleTypes.WEAPON:
-                                ModuleWeapon weapon = mod as ModuleWeapon;
-                                string str;
+                            if (Player.Space != CO.co.PlayerMainDrifter.Space)
+                            {
+                                Pass = false;
+                            }
+                        }
+                        if (Pass)
+                        {
+                            switch (mod.GetInteractableType())
+                            {
+                                case Module.ModuleTypes.WEAPON:
+                                    ModuleWeapon weapon = mod as ModuleWeapon;
+                                    string str;
 
-                                if (weapon.ReloadingCurrently.Value)
-                                {
-                                    str = $"{weapon.ModuleTag}\nRELOADING...";
-                                } else
-                                {
-                                    if (weapon.GetAmmoRatio() < 0.1f) str = $"{weapon.ModuleTag}\nAMMO ({weapon.GetAmmo() / weapon.MaxAmmo})";
-                                    else str = $"{weapon.ModuleTag}\nAMMO ({weapon.GetAmmo()}/{weapon.MaxAmmo})";
-                                    if (weapon.GetAmmoRatio() < 1f)
+                                    if (weapon.ReloadingCurrently.Value)
                                     {
-                                        if (CO.co.Resource_Ammo.Value < 10) str += "\n<color=red> [NO AMMO]";
-                                        else str += "\n<color=green> [F] RELOAD <color=red> [10 AMMO]";
-                                        if (Input.GetKeyDown(KeyCode.F))
+                                        str = $"{weapon.ModuleTag}\nRELOADING...";
+                                    }
+                                    else
+                                    {
+                                        if (weapon.GetAmmoRatio() < 0.1f) str = $"{weapon.ModuleTag}\nAMMO ({weapon.GetAmmo() / weapon.MaxAmmo})";
+                                        else str = $"{weapon.ModuleTag}\nAMMO ({weapon.GetAmmo()}/{weapon.MaxAmmo})";
+                                        if (weapon.GetAmmoRatio() < 1f)
                                         {
-                                            weapon.ReloadAmmoRpc();
+                                            if (CO.co.Resource_Ammo.Value < 10) str += "\n<color=red> [NO AMMO]";
+                                            else str += "\n<color=green> [F] RELOAD <color=red> [10 AMMO]";
+                                            if (Input.GetKeyDown(KeyCode.F))
+                                            {
+                                                weapon.ReloadAmmoRpc();
+                                            }
                                         }
                                     }
-                                }
-                               
-                                UI.ui.MainGameplayUI.SetInteractTex(str, Color.yellow);
-                                break;
-                            case Module.ModuleTypes.INVENTORY:
-                                UI.ui.MainGameplayUI.SetInteractTex("[F] INVENTORY", Color.green);
-                                if (Input.GetKeyDown(KeyCode.F))
-                                    UI.ui.OpenTalkScreenFancy(UI.ui.InventoryUI.gameObject);
-                                break;
-                            case Module.ModuleTypes.MAPCOMMS:
-                                if (!CO.co.AreWeInDanger.Value)
-                                {
-                                    if (CO_STORY.co.IsCommsActive())
+
+                                    UI.ui.MainGameplayUI.SetInteractTex(str, Color.yellow);
+                                    break;
+                                case Module.ModuleTypes.INVENTORY:
+                                    UI.ui.MainGameplayUI.SetInteractTex("[F] INVENTORY", Color.green);
+                                    if (Input.GetKeyDown(KeyCode.F))
+                                        UI.ui.OpenTalkScreenFancy(UI.ui.InventoryUI.gameObject);
+                                    break;
+                                case Module.ModuleTypes.MAPCOMMS:
+                                    if (!CO.co.AreWeInDanger.Value)
                                     {
-                                        UI.ui.MainGameplayUI.SetInteractTex("[F] OPEN COMMS", Color.cyan);
-                                        if (Input.GetKeyDown(KeyCode.F))
+                                        if (CO_STORY.co.IsCommsActive())
                                         {
-                                            UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
+                                            UI.ui.MainGameplayUI.SetInteractTex("[F] OPEN COMMS", Color.cyan);
+                                            if (Input.GetKeyDown(KeyCode.F))
+                                            {
+                                                UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            UI.ui.MainGameplayUI.SetInteractTex("[F] OPEN MAP", Color.cyan);
+                                            if (Input.GetKeyDown(KeyCode.F))
+                                            {
+                                                UI.ui.OpenTalkScreenFancy(UI.ui.MapUI.gameObject);
+                                            }
                                         }
                                     }
                                     else
                                     {
-                                        UI.ui.MainGameplayUI.SetInteractTex("[F] OPEN MAP", Color.cyan);
-                                        if (Input.GetKeyDown(KeyCode.F))
-                                        {
-                                            UI.ui.OpenTalkScreenFancy(UI.ui.MapUI.gameObject);
-                                        }
+                                        UI.ui.MainGameplayUI.SetInteractTex("[DANGER]", Color.red);
                                     }
-                                }
-                                else
-                                {
-                                    UI.ui.MainGameplayUI.SetInteractTex("[DANGER]", Color.red);
-                                }
-                                break;
-                            /*case Module.ModuleTypes.GENERATOR:
-                                UI.ui.MainGameplayUI.SetInteractTex("[F] MANAGE", Color.green);
-                                if (Input.GetKeyDown(KeyCode.F))
-                                {
+                                    break;
+                                /*case Module.ModuleTypes.GENERATOR:
+                                    UI.ui.MainGameplayUI.SetInteractTex("[F] MANAGE", Color.green);
+                                    if (Input.GetKeyDown(KeyCode.F))
+                                    {
 
-                                }
-                                break;*/
-                            case Module.ModuleTypes.DRAGGABLE:
-                                UI.ui.MainGameplayUI.SetInteractTex("[F] CARRY", Color.green);
-                                if (Input.GetKeyDown(KeyCode.F))
-                                {
-                                    DraggingObject = mod.transform;
-                                    GetPlayer().StartDragging(mod.transform);
-                                }
-                                break;
+                                    }
+                                    break;*/
+                                case Module.ModuleTypes.DRAGGABLE:
+                                    UI.ui.MainGameplayUI.SetInteractTex("[F] CARRY", Color.green);
+                                    if (Input.GetKeyDown(KeyCode.F))
+                                    {
+                                        DraggingObject = mod.transform;
+                                        GetPlayer().StartDragging(mod.transform);
+                                    }
+                                    break;
+                            }
                         }
+                        
                     }
                 }
             } else if (Input.GetKeyDown(KeyCode.F) || LeftModule())

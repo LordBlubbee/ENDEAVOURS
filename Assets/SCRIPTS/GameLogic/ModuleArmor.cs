@@ -5,6 +5,8 @@ using UnityEngine;
 public class ModuleArmor : Module
 {
     public float MaxArmor = 100;
+    public float ArmorPerUpgrade = 100;
+    public float ArmorRegenPerUpgrade = 2;
     public float ArmorRegen = 10;
     float WaitWithRegen = 0f;
     [NonSerialized] public NetworkVariable<float> CurArmor = new();
@@ -18,6 +20,10 @@ public class ModuleArmor : Module
         CurArmor.Value = MaxArmor;
     }
 
+    public float GetMaxArmor()
+    {
+        return MaxArmor + ArmorPerUpgrade * ModuleLevel.Value;
+    }
     protected override void Frame()
     {
         if (!IsServer) return;
@@ -29,11 +35,11 @@ public class ModuleArmor : Module
             WaitWithRegen -= CO.co.GetWorldSpeedDelta();
             return;
         }
-        CurArmor.Value = Mathf.Clamp(CurArmor.Value + ArmorRegen * CO.co.GetWorldSpeedDelta(), 0, MaxArmor);
+        CurArmor.Value = Mathf.Clamp(CurArmor.Value + (ArmorRegen + ArmorRegenPerUpgrade* ModuleLevel.Value) * CO.co.GetWorldSpeedDelta(), 0, GetMaxArmor());
     }
     public void TakeArmorDamage(float fl, Vector3 impact)
     {
-        CurArmor.Value = Mathf.Clamp(CurArmor.Value - fl, 0, MaxArmor);
+        CurArmor.Value = Mathf.Clamp(CurArmor.Value - fl, 0, GetMaxArmor());
         if (fl > 50) WaitWithRegen = 1f + 0.02f * fl;
         CO_SPAWNER.co.SpawnArmorDMGRpc(fl, impact);
     }

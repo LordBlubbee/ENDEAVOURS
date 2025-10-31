@@ -15,5 +15,6 @@ MonoBehaviour:
   ItemName: Claw
   ItemDesc: 
   ItemIcon: {fileID: 21300000, guid: 1d29de57caae98443bb8f05faa8b4be4, type: 3}
-  ItemResourceID: OBJ/SCRIPTABLES/ITEMS/Weapons/Looncrab_Claw
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Looncrab_Claw
+  ItemResourceIDShort: Looncrab_Claw
   ToolPrefab: {fileID: 8311341897716400573, guid: e4f7ef7e0bec9f84589d9c9fec3b8ce5, type: 3}

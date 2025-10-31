@@ -15,6 +15,7 @@ MonoBehaviour:
   ItemName: Heavy Ballista
   ItemDesc: N/A
   ItemIcon: {fileID: 21300000, guid: aa1a4ba3835c1b54bb69868e67b7d2f3, type: 3}
-  ItemResourceID: OBJ/SCRIPTABLES/DRIFTER/Weapon_Ballista
+  ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Weapon_Ballista
+  ItemResourceIDShort: Weapon_Ballista
   PrefabModule: {fileID: 2733437315669949757, guid: f82b2799c1dc99b478404365e2526da3, type: 3}
   EquipType: 1

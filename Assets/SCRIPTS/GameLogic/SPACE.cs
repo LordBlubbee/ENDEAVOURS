@@ -99,7 +99,7 @@ public class SPACE : NetworkBehaviour
 
         foreach (ScriptableEquippableModule mod in Drifter.StartingModules)
         {
-            AddModule(mod);
+            AddModule(mod, true);
         }
         /*
         for (int i = 0; i < StartingModuleList.Count; i++)
@@ -114,7 +114,12 @@ public class SPACE : NetworkBehaviour
         }
         */
     }
-    public bool AddModule(ScriptableEquippableModule module)
+    [Rpc(SendTo.Server)]
+    public void AddModuleRpc(string resourceLink)
+    {
+        AddModule(Resources.Load<ScriptableEquippableModule>(resourceLink), false);
+    }
+    public bool AddModule(ScriptableEquippableModule module, bool Initial)
     {
         Module mod = null;
         Vector3 vec = Vector3.zero;
@@ -224,7 +229,7 @@ public class SPACE : NetworkBehaviour
         mod.SetHomeDrifter(Drifter);
         Modules.Add(mod);
         mod.Init();
-        if (mod is ModuleWeapon weaponMod)
+        if (mod is ModuleWeapon weaponMod && Initial)
         {
             ((ModuleWeapon)mod).ReloadInstantly();
         }
@@ -349,6 +354,18 @@ public class SPACE : NetworkBehaviour
     public List<Module> GetModules()
     {
         return Modules;
+    }
+
+    public void RemoveModule(Module mod)
+    {
+        if (CoreModules.Contains(mod))
+        {
+            Debug.Log("Error: Removing core module");
+            return;
+        }
+        Modules.Remove(mod);
+        if (WeaponModules.Contains(mod)) WeaponModules.Remove(mod);
+        if (SystemModules.Contains(mod)) SystemModules.Remove(mod);
     }
     public Module NearestModule(Vector3 vec)
     {

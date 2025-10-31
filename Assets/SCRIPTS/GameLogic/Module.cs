@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using static CO;
@@ -68,11 +69,42 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         LOON_NAVIGATION,
         DRAGGABLE
     }
-
     public ModuleTypes GetInteractableType()
     {
         return ModuleType;
     }
+
+    [Rpc(SendTo.Server)]
+    public void SendUpgradeRpc()
+    {
+        if (ModuleLevel.Value == MaxModuleLevel-1) return;
+        if (ModuleUpgradeMaterials[ModuleLevel.Value] > CO.co.Resource_Materials.Value) return;
+        if (ModuleUpgradeTechs[ModuleLevel.Value] > CO.co.Resource_Tech.Value) return;
+        CO.co.Resource_Materials.Value -= ModuleUpgradeMaterials[ModuleLevel.Value];
+        CO.co.Resource_Tech.Value -= ModuleUpgradeTechs[ModuleLevel.Value];
+        ModuleLevel.Value++;
+        if (CO.co.IsSafe()) Heal(999);
+        CO.co.RequestModuleUpdateRpc();
+    }
+
+    [Rpc(SendTo.Server)]
+    public void SalvageRpc()
+    {
+        if (Space.CoreModules.Contains(this)) return;
+        int Worth = 0;
+        int TechWorth = 0;
+        for (int i = 0; i < ModuleLevel.Value; i++) {
+            Worth += ModuleUpgradeMaterials[i];
+            TechWorth += ModuleUpgradeTechs[i];
+        }
+        CO.co.Resource_Materials.Value += Mathf.RoundToInt(Worth*0.6f);
+        CO.co.Resource_Tech.Value += Mathf.RoundToInt(Worth * 0.6f);
+        CO.co.AddInventoryItem(ShowAsModule);
+        Space.RemoveModule(this);
+
+        NetworkObject.Despawn();
+    }
+
 
     [Header("STATS")]
     public float MaxHealth = 100f;
@@ -82,6 +114,14 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     [NonSerialized] public NetworkVariable<bool> PermanentlyDead = new();
 
     protected NetworkVariable<float> CurHealth = new();
+
+    [Header("RESOURCES")]
+    public int ModuleWorth = 50;
+    public int MaxModuleLevel = 5;
+    public int[] ModuleUpgradeMaterials = new int[] { 40, 60, 100, 200, 300 };
+    public int[] ModuleUpgradeTechs = new int[] { 0,0,0,0,0 };
+
+
     [NonSerialized] public NetworkVariable<int> ModuleLevel = new();
     [NonSerialized] public NetworkVariable<int> SpaceID = new();
     [NonSerialized] public NetworkVariable<int> CurrentInteractors = new();
@@ -187,7 +227,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public void Heal(float fl)
     {
         if (IsDisabledForever()) return;
-        CurHealth.Value = Mathf.Min(MaxHealth, CurHealth.Value + fl);
+        CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
         if (CurHealth.Value > 99) isDisabled.Value = false;
         if (fl > 1) CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
     }
@@ -234,7 +274,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 
     public float GetMaxHealth()
     {
-        return MaxHealth;
+        return MaxHealth + ModuleLevel.Value * 100f;
     }
 
     public float GetHealthRelative()

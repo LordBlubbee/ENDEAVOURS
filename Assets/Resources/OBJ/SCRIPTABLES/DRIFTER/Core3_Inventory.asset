@@ -15,6 +15,7 @@ MonoBehaviour:
   ItemName: Inventory
   ItemDesc: N/A
   ItemIcon: {fileID: 0}
-  ItemResourceID: OBJ/SCRIPTABLES/DRIFTER/Core3_Inventory
+  ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Core3_Inventory
+  ItemResourceIDShort: Core3_Inventory
   PrefabModule: {fileID: 6313021248617021957, guid: 10052423c64acaf4ca2b78de834a409b, type: 3}
   EquipType: 0

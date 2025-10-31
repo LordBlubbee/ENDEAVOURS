@@ -133,7 +133,7 @@ public class Screen_GameUI : MonoBehaviour
         if (player.isDead())
         {
             BleedingOutScreen.gameObject.SetActive(true); //!CO.co.PlayerMainDrifter.MedicalModule.IsDisabled()
-            BleedingButton.gameObject.SetActive(!player.isDeadForever());
+            BleedingButton.gameObject.SetActive(!player.isDeadForever() && player.Space == CO.co.PlayerMainDrifter.Interior);
             if (player.isDeadForever())
             {
                 /*if (CO.co.PlayerMainDrifter.MedicalModule.IsDisabled())
@@ -142,7 +142,14 @@ public class Screen_GameUI : MonoBehaviour
                 } else
                 {
                 }*/
-                BleedingTex.text = $"-RESPAWNING- \n{(20 + player.BleedingTime.Value).ToString("0")}";
+                if (player.Space == CO.co.PlayerMainDrifter.Interior)
+                {
+                    BleedingTex.text = "-CANNOT RESPAWN- \nEliminate all threats";
+                }
+                else
+                {
+                    BleedingTex.text = $"-RESPAWNING- \n{(20 + player.BleedingTime.Value).ToString("0")}";
+                }
             }
             else BleedingTex.text = $"-BLEEDING OUT- \n{player.BleedingTime.Value.ToString("0")}";
             if (UI_CommandInterface.co.IsCommandingTabOpen())

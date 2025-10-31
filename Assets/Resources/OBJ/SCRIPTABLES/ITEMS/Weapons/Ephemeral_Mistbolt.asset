@@ -25,5 +25,6 @@ MonoBehaviour:
     Base
     Cooldown: 3.0'
   ItemIcon: {fileID: 21300000, guid: b76ea5d9b24b73a4597737cc454793d0, type: 3}
-  ItemResourceID: OBJ/SCRIPTABLES/ITEMS/Weapons/Ephemeral_Mistbolt
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Ephemeral_Mistbolt
+  ItemResourceIDShort: Ephemeral_Mistbolt
   ToolPrefab: {fileID: 8311341897716400573, guid: 3da5e0a7c70368647a08eeea241a3810, type: 3}
