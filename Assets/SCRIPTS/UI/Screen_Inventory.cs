@@ -11,11 +11,16 @@ public class Screen_Inventory : MonoBehaviour
     public GameObject SubscreenDrifter;
     public GameObject SubscreenAttributes;
     public GameObject SubscreenDrifterWeapons;
+    public GameObject SubscreenRest;
     public InventorySlot[] InventoryWeapons;
     public InventorySlot InventoryArmor;
     public InventorySlot[] InventoryArtifacts;
     public InventorySlot[] InventoryCargo;
-
+    public TextMeshProUGUI SubscreenCharacterButtonTex;
+    public GameObject SubscreenRestButton;
+    public Slider DrifterHealthSlider;
+    public TextMeshProUGUI DrifterHealthTex;
+    public TextMeshProUGUI DrifterRepairTex;
     private void OnEnable()
     {
         SkillRefresh(); 
@@ -59,13 +64,30 @@ public class Screen_Inventory : MonoBehaviour
         {
             RefreshSubscreenModuleEditor();
         }
+        if (SubscreenRest.activeSelf)
+        {
+            RefreshRest();
+        }
         RefreshDrifterStats();
     }
-    public void PressCraftAmmo()
+
+    void RefreshRest()
+    {
+        if (CO.co.AreWeResting.Value)
+        {
+            OpenSubscreen(SubscreenDrifter);
+            return;
+        }
+        DrifterHealthSlider.value = CO.co.PlayerMainDrifter.GetHealthRelative();
+        DrifterHealthTex.text = $"{CO.co.PlayerMainDrifter.GetHealth().ToString("0")}/{CO.co.PlayerMainDrifter.GetMaxHealth().ToString("0")}";
+        DrifterHealthTex.color = CO.co.PlayerMainDrifter.GetHealthRelative() > 0.75 ? Color.green : (CO.co.PlayerMainDrifter.GetHealthRelative() > 0.25 ? Color.yellow : Color.red);
+        DrifterRepairTex.color = CO.co.PlayerMainDrifter.GetHealthRelative() < 1f ? Color.white : Color.gray;
+    }
+    /*public void PressCraftAmmo()
     {
         if (CO.co.Resource_Ammo.Value < 10) return;
         CO.co.PlayerMainDrifter.CreateAmmoCrateRpc(LOCALCO.local.GetPlayer().transform.position);
-    }
+    }*/
 
     void RefreshPlayerEquipment()
     {
@@ -85,10 +107,21 @@ public class Screen_Inventory : MonoBehaviour
 
     void RefreshDrifterStats()
     {
+        SubscreenRestButton.gameObject.SetActive(CO.co.AreWeResting.Value);
         DrifterTexResources.text = $"MATERIALS: {CO.co.Resource_Materials.Value}";
         DrifterTexSupplies.text = $"SUPPLIES: {CO.co.Resource_Supplies.Value}";
         DrifterTexAmmunition.text = $"AMMUNITION: {CO.co.Resource_Ammo.Value}";
         DrifterTexTechnology.text = $"TECHNOLOGY: {CO.co.Resource_Tech.Value}";
+
+        if (LOCALCO.local.GetPlayer().SkillPoints.Value > 2)
+        {
+            SubscreenCharacterButtonTex.text = "CHARACTER";
+            SubscreenCharacterButtonTex.color = Color.yellow;
+        } else
+        {
+            SubscreenCharacterButtonTex.text = "LEVEL UP";
+            SubscreenCharacterButtonTex.color = Color.cyan;
+        }
     }
     [Header("Drifter Inventory")]
     public TextMeshProUGUI DrifterTexResources;
@@ -472,7 +505,17 @@ public class Screen_Inventory : MonoBehaviour
         {
             ModuleTitle.text = SelectedDrifterSlot.GetEquippedItem().ItemName;
             ModuleDesc.text = SelectedDrifterSlot.GetEquippedItem().ItemDesc;
+        } 
+    }
+    public void PressRepairButton()
+    {
+        if (CO.co.PlayerMainDrifter.GetHealthRelative() < 1)
+        {
+            if (CO.co.Resource_Materials.Value > 5)
+            {
+                CO.co.RepairOurDrifterRpc();
+                return;
+            }
         }
-            
     }
 }

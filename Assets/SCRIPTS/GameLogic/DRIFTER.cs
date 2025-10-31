@@ -410,6 +410,11 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             }
         }
         Damage += AbsorbableDamage;
+        if (Damage < 1)
+        {
+            CO_SPAWNER.co.SpawnArmorImpactRpc(ImpactArea);
+            return;
+        }
         TakeDamage(Damage * fl.HullDamageModifier, ImpactArea);
         foreach (Module mod in Interior.GetModules())
         {

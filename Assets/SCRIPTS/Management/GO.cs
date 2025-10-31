@@ -20,6 +20,9 @@ public class GO : MonoBehaviour
     public int screenShakeLevel;
     public int resolutionConfig;
 
+    public int SelectedGameDifficulty;
+    public int SelectedGamePlayers;
+
     public string localUsername;
     public Color localColor;
 

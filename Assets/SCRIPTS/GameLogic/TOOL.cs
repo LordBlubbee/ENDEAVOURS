@@ -34,6 +34,7 @@ public class TOOL : MonoBehaviour
     public float attackDamage1 = 10f;
     public PROJ RangedPrefab1;
     public float Reload1 = 0f;
+    public ScriptableBuff ApplyBuff;
 
     [Header("ACTION 2")]
     public ToolActionType ActionUse2;

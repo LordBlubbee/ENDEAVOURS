@@ -82,9 +82,14 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         if (ModuleUpgradeTechs[ModuleLevel.Value] > CO.co.Resource_Tech.Value) return;
         CO.co.Resource_Materials.Value -= ModuleUpgradeMaterials[ModuleLevel.Value];
         CO.co.Resource_Tech.Value -= ModuleUpgradeTechs[ModuleLevel.Value];
-        ModuleLevel.Value++;
-        if (CO.co.IsSafe()) Heal(999);
+        UpgradeLevel();
         CO.co.RequestModuleUpdateRpc();
+    }
+
+    public void UpgradeLevel()
+    {
+        ModuleLevel.Value++;
+        if (CO.co.IsSafe() || GetFaction() != 1) Heal(999);
     }
 
     [Rpc(SendTo.Server)]
@@ -224,7 +229,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         if (!IsServer) return;
         CurHealth.Value = MaxHealth;
     }
-    public void Heal(float fl)
+    public virtual void Heal(float fl)
     {
         if (IsDisabledForever()) return;
         CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);

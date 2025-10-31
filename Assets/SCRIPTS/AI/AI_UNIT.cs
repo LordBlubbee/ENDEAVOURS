@@ -70,6 +70,11 @@ public class AI_UNIT : NetworkBehaviour
         ObjectiveSpace = space;
     }
 
+    public SPACE GetObjectiveSpace()
+    {
+        return ObjectiveSpace;
+    }
+
     public float GetObjectiveDistance()
     {
         if (!HasObjective) return 0f;
@@ -147,7 +152,8 @@ public class AI_UNIT : NetworkBehaviour
         CHARGE,
         CIRCLE,
         SABOTAGE,
-        RETREAT
+        RETREAT,
+        HEAL_ALLIES
     }
     public enum AI_UNIT_TYPES
     {
@@ -273,7 +279,7 @@ public class AI_UNIT : NetworkBehaviour
         if (!EnemyTarget || EnemyTargetTimer < 0 || EnemyTarget.isDead())
         {
             EnemyTarget = GetClosestVisibleEnemy();
-            EnemyTargetTimer = 7;
+            EnemyTargetTimer = 5;
         }
         if (EnemyTarget)
         {
@@ -326,6 +332,37 @@ public class AI_UNIT : NetworkBehaviour
                     if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();
                     Unit.UseItem2Rpc();
                     break;
+                case AI_TACTICS.HEAL_ALLIES:
+                    CREW WoundedAlly = GetClosestWoundedAlly();
+                    if (!WoundedAlly)
+                    {
+                        AI_TacticTimer = 0f;
+                        break;
+                    }
+                    if (Dist(WoundedAlly.transform.position) > 24f)
+                    {
+                        AI_TacticTimer = 0f;
+                        break;
+                    }
+                    if (Dist(EnemyTarget.transform.position) < 10f)
+                    {
+                        AI_TacticTimer = 0f;
+                        break;
+                    }
+                    SetAIMoveTowards(GetPointAwayFromPoint(WoundedAlly.transform.position, 2f), WoundedAlly.Space);
+                    Unit.EquipMedkitRpc();
+                    if (Dist(WoundedAlly.transform.position) < 8f)
+                    {
+                        SetLookTowards(WoundedAlly.transform.position, WoundedAlly.Space);
+                        Unit.UseItem1Rpc();
+                    } else
+                    {
+                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                        Unit.EquipWeapon1Rpc();
+                        Unit.UseItem2Rpc();
+                        if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
+                    }
+                    break;
             }
             if (Unit.IsEnemyInFront(GetAttackDistance()))
             {
@@ -364,6 +401,19 @@ public class AI_UNIT : NetworkBehaviour
                 }
                 return;
             }
+            CREW WoundedAlly = GetClosestWoundedAlly();
+            if (WoundedAlly)
+            {
+                SetAIMoveTowards(GetPointAwayFromPoint(WoundedAlly.transform.position, 2f), WoundedAlly.Space);
+                SetLookTowards(WoundedAlly.transform.position, WoundedAlly.Space);
+                if (Dist(WoundedAlly.transform.position) < 4f)
+                {
+                    Unit.EquipMedkitRpc();
+                    Unit.UseItem1Rpc();
+                }
+                return;
+            }
+
             SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
             if (DistToObjective(transform.position) > 16)
             {
@@ -388,6 +438,7 @@ public class AI_UNIT : NetworkBehaviour
                 }
                 return;
             }
+           
             if (mod is ModuleWeapon)
             {
                 if (((ModuleWeapon)mod).EligibleForReload())
@@ -418,6 +469,18 @@ public class AI_UNIT : NetworkBehaviour
             SetLookTowards(mod.GetTargetPos(), mod.Space);
             return;
         }
+        CREW WoundedAlly2 = GetClosestWoundedAlly();
+        if (WoundedAlly2)
+        {
+            SetAIMoveTowards(GetPointAwayFromPoint(WoundedAlly2.transform.position, 2f), WoundedAlly2.Space);
+            SetLookTowards(WoundedAlly2.transform.position, WoundedAlly2.Space);
+            if (Dist(WoundedAlly2.transform.position) < 4f)
+            {
+                Unit.EquipMedkitRpc();
+                Unit.UseItem1Rpc();
+            }
+            return;
+        }
         //Engage!
         //Retreat!
         if (ObjectiveSpace != getSpace())
@@ -446,6 +509,11 @@ public class AI_UNIT : NetworkBehaviour
                 if (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) > 16f) AddWeights(1, 25);
                 else AddWeights(1, 10);
                 if (Unit.GetHealthRelative() < 0.4f) AddWeights(2, 40);
+                CREW Ally = GetClosestWoundedAlly();
+                if (Ally != null)
+                {
+                    if (Dist(Ally.transform.position) < 20f && Dist(EnemyTarget.transform.position) > 14f) AddWeights(3, 40);
+                }
                 switch (GetWeight())
                 {
                     case 0:
@@ -456,6 +524,9 @@ public class AI_UNIT : NetworkBehaviour
                         break;
                     case 2:
                         SetTactic(AI_TACTICS.RETREAT, UnityEngine.Random.Range(8, 12));
+                        break;
+                    case 3:
+                        SetTactic(AI_TACTICS.HEAL_ALLIES, UnityEngine.Random.Range(22, 26));
                         break;
                 }
                 break;
@@ -674,6 +745,28 @@ public class AI_UNIT : NetworkBehaviour
         }
         return enemies;
     }
+    public List<CREW> WoundedAlliesInSpace()
+    {
+        List<CREW> allies = new();
+        foreach (var crew in CrewInSpace())
+        {
+            if (crew.isDeadForever()) continue;
+            if (crew == Unit) continue;
+            if (crew.GetFaction() == Unit.GetFaction() && crew.isDead()) allies.Add(crew);
+        }
+        return allies;
+    }
+    public List<CREW> WoundedAlliesAnywhere()
+    {
+        List<CREW> allies = new();
+        foreach (var crew in CO.co.GetAllCrews())
+        {
+            if (crew.isDeadForever()) continue;
+            if (crew == Unit) continue;
+            if (crew.GetFaction() == Unit.GetFaction() && crew.isDead()) allies.Add(crew);
+        }
+        return allies;
+    }
     public bool isEnemy(CREW other)
     {
         return Unit.GetFaction() != other.GetFaction() && other.GetFaction() != 0;
@@ -787,6 +880,23 @@ public class AI_UNIT : NetworkBehaviour
         {
             if (enemy.Faction != Unit.GetFaction()) continue;
             float dist = (enemy.transform.position - myPos).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = enemy;
+            }
+        }
+        return closest;
+    }
+    public CREW GetClosestWoundedAlly()
+    {
+        List<CREW> enemies = WoundedAlliesAnywhere();
+        CREW closest = null;
+        float minDist = float.MaxValue;
+        Vector3 myPos = transform.position;
+        foreach (var enemy in enemies)
+        {
+            float dist = (enemy.getPos() - myPos).sqrMagnitude;
             if (dist < minDist)
             {
                 minDist = dist;

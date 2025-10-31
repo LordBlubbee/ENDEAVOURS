@@ -43,7 +43,17 @@ public class ModuleArmor : Module
         if (fl > 50) WaitWithRegen = 1f + 0.02f * fl;
         CO_SPAWNER.co.SpawnArmorDMGRpc(fl, impact);
     }
-
+    public override void Heal(float fl)
+    {
+        if (IsDisabledForever()) return;
+        CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
+        if (CurHealth.Value > 99) isDisabled.Value = false;
+        if (GetHealthRelative() > 0.9f)
+        {
+            CurArmor.Value = Mathf.Clamp(CurArmor.Value + fl, 0, GetMaxArmor());
+        }
+        if (fl > 1) CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
+    }
     public bool CanAbsorbArmor()
     {
         return CurArmor.Value > 99 && !IsDisabled();

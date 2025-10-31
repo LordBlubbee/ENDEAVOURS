@@ -35,6 +35,7 @@ public class PROJ : NetworkBehaviour
     public float CrewDamageSplash = 1f; //Which factor of damage is done to nearby crew members
     public bool DealSplash = false;
     public bool CanBeBlocked = true;
+    public ScriptableBuff ApplyBuff;
     [NonSerialized] public CREW CrewOwner;
 
     private float Expire = 10;
@@ -139,7 +140,17 @@ public class PROJ : NetworkBehaviour
             } else
             {
                 if (crew is Module) crew.TakeDamage(AttackDamage * ModuleDamageModifier, transform.position);
-                else crew.TakeDamage(AttackDamage * CrewDamageModifierDirect, transform.position);
+                else
+                {
+                    crew.TakeDamage(AttackDamage * CrewDamageModifierDirect, transform.position);
+                    if (crew is CREW)
+                    {
+                        if (ApplyBuff)
+                        {
+                            ((CREW)crew).AddBuff(ApplyBuff);
+                        }
+                    }
+                }
             }
             Damageables.Add(collision);
             if (DealSplash)

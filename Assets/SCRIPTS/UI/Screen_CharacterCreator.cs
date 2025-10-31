@@ -242,7 +242,7 @@ public class Screen_CharacterCreator : MonoBehaviour
     }
     public void PressCreateCharacter()
     {
-        //if (!ReadyToMoveOn()) return;
+        if (!ReadyToMoveOn()) return;
         if (!SelectedBackground)
         {
             return;
@@ -299,7 +299,7 @@ public class Screen_CharacterCreator : MonoBehaviour
         //Handles background chosen
         SelectedBackground = CurrentlySelectedBackground.Background;
         ChooseBackgroundExact(CurrentlySelectedBackground.Border);
-        OpenSubscreen(Subscreens[2]); //Background selected
+        OpenSubscreen(Subscreens[0]); //Background selected
         SkillRefresh();
     }
 }

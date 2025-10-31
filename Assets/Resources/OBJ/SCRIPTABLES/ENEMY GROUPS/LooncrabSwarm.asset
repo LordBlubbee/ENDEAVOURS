@@ -14,13 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AI_Type: 2
   AI_Group: 2
-  CrewPowerLevel: 200
+  CrewAmountLevel: 1000
+  CrewQualityLevel: 100
+  GuaranteedCrewList: []
   SpawnCrewList:
-  - SpawnCrew: {fileID: 5867427934140877094, guid: 86f046a72cbd10a4eb1d9f606f946a03, type: 3}
-    Weight: 10
-    Worth: 25
-  DrifterPowerLevel: 0
+  - Weight: 20
+    WeightIncreaseOverQualityGradient: 0
+    MinimumQuality: 0
+    MaximumQuality: 0
+    Crew: {fileID: 11400000, guid: c6e0fec683152e2489a871ccaefacc48, type: 2}
+  DrifterQualityLevel: 100
   SpawnDrifter: []
   SpawnGroupRange: 30
-  SpawnDistanceMin: 130
+  SpawnDistanceMin: 150
   SpawnDistanceMax: 160

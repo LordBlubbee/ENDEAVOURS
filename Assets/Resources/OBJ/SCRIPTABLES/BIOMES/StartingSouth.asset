@@ -14,14 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BiomeName: Far South
   BiomeDescription: 
-  PossiblePointsCalm: []
+  BiomeBaseDifficulty: 1
+  BiomeCalmRatio: 0.3
+  BiomeHostileRatio: 0.3
+  BiomeSize: 5
+  PossiblePointsCalm:
+  - {fileID: 11400000, guid: 98c0cb6d83d8ddc478ce223c29917d40, type: 2}
+  - {fileID: 11400000, guid: 657bb37a7438f4b4a9577913d1030c9b, type: 2}
   PossiblePointsNeutral:
   - {fileID: 11400000, guid: 98c0cb6d83d8ddc478ce223c29917d40, type: 2}
   - {fileID: 11400000, guid: 657bb37a7438f4b4a9577913d1030c9b, type: 2}
-  PossiblePointsHostile: []
-  PossiblePointsArrival:
+  PossiblePointsHostile:
   - {fileID: 11400000, guid: 98c0cb6d83d8ddc478ce223c29917d40, type: 2}
   - {fileID: 11400000, guid: 657bb37a7438f4b4a9577913d1030c9b, type: 2}
+  PossiblePointsRest:
+  - {fileID: 11400000, guid: 40052bb1b07805b41a76d785598aa233, type: 2}
+  PossiblePointsArrival:
+  - {fileID: 11400000, guid: 65941849005a6fe4882459d7f55e7b64, type: 2}
   PossiblePointsExit:
   - {fileID: 11400000, guid: 98c0cb6d83d8ddc478ce223c29917d40, type: 2}
   - {fileID: 11400000, guid: 657bb37a7438f4b4a9577913d1030c9b, type: 2}

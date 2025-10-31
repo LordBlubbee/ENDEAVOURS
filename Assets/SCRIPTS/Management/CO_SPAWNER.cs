@@ -13,6 +13,7 @@ public class CO_SPAWNER : NetworkBehaviour
     public ResourceCrate PrefabAmmoCrate;
 
     [Header("VFX")]
+    public PART ArmorImpact;
     public PART ExplosionSmall;
     public PART ExplosionMedium;
     public PART ExplosionLarge;
@@ -128,7 +129,7 @@ public class CO_SPAWNER : NetworkBehaviour
         drift.CrewGroup.Add(enem.GetComponent<AI_UNIT>());
         return enem;
     }
-    public DRIFTER SpawnEnemyGroup(ScriptableEnemyGroup gr, float PowerLevelFactor, int Faction = 2)
+    public DRIFTER SpawnEnemyGroup(ScriptableEnemyGroup gr, int Faction = 2)
     {
         float Degrees = UnityEngine.Random.Range(0, 360);
         float Radius = gr.SpawnGroupRange;
@@ -136,8 +137,10 @@ public class CO_SPAWNER : NetworkBehaviour
         int i;
         Vector3 Offset = UnityEngine.Random.insideUnitCircle.normalized * Dist;
         Vector3 Spawn = CO.co.PlayerMainDrifter.transform.position + Offset;
-        List<EnemyCrewWithWeight> PossibleSpawns = new();
-        float WorthPoints = PowerLevelFactor * gr.CrewPowerLevel;
+        List<ScriptableEnemyCrew> PossibleSpawns = new();
+        float CrewWorthPoints = CO.co.GetEncounterSizeModifier() * gr.CrewAmountLevel;
+        float CrewQualityPoints = CO.co.GetEncounterDifficultyModifier() * gr.CrewQualityLevel;
+        float DrifterQualityPoints = CO.co.GetDrifterDifficultyModifier() * gr.DrifterQualityLevel;
         AI_GROUP group;
         List<AI_UNIT> members = new();
         if (gr.SpawnDrifter.Count == 0)
@@ -148,21 +151,22 @@ public class CO_SPAWNER : NetworkBehaviour
             i = 0;
             foreach (EnemyCrewWithWeight weight in gr.SpawnCrewList)
             {
-                AddWeights(i, weight.Weight);
-                PossibleSpawns.Add(weight);
+                AddWeights(i, weight.GetWeight(CrewQualityPoints));
+                PossibleSpawns.Add(weight.Crew);
                 i++;
             }
           
-            while (WorthPoints > 0)
+            while (CrewWorthPoints > 0)
             {
                 Debug.Log("Spawning creature...");
                 Vector3 tryPos = Spawn + new Vector3(UnityEngine.Random.Range(-Radius, Radius), UnityEngine.Random.Range(-Radius, Radius));
-                EnemyCrewWithWeight enemyType = PossibleSpawns[GetWeight()];
+                ScriptableEnemyCrew enemyType = PossibleSpawns[GetWeight()];
                 CREW enem = Instantiate(enemyType.SpawnCrew, tryPos, Quaternion.identity);
-                WorthPoints -= enemyType.Worth;
+                CrewWorthPoints -= enemyType.Worth;
                 enem.NetworkObject.Spawn();
                 enem.Faction.Value = Faction;
                 enem.transform.Rotate(Vector3.forward, Degrees + UnityEngine.Random.Range(-30f, 30f));
+                SetQualityLevelOfCrew(enem, enemyType, CrewQualityPoints);
                 enem.Init();
                 members.Add(enem.GetComponent<AI_UNIT>());
             }
@@ -173,17 +177,19 @@ public class CO_SPAWNER : NetworkBehaviour
         }
         ResetWeights();
         i = 0;
-        List<EnemyDrifterWithWeight> PossibleDrifterSpawns = new();
-        foreach (EnemyDrifterWithWeight weight in gr.SpawnDrifter)
+        List<ScriptableEnemyDrifter> PossibleDrifterSpawns = new();
+        foreach (ScriptableEnemyDrifter weight in gr.SpawnDrifter)
         {
             AddWeights(i, weight.Weight);
             PossibleDrifterSpawns.Add(weight);
             i++;
         }
-        EnemyDrifterWithWeight drifterType = PossibleDrifterSpawns[GetWeight()];
+        ScriptableEnemyDrifter drifterType = PossibleDrifterSpawns[GetWeight()];
         Offset = UnityEngine.Random.insideUnitCircle.normalized * Dist * 2.5f;
         Spawn = CO.co.PlayerMainDrifter.transform.position + Offset;
         DRIFTER drifter = SpawnOtherShip(drifterType.SpawnDrifter, Spawn, Faction);
+        
+        SetQualityLevelOfDrifter(drifter, drifterType, DrifterQualityPoints);
         Offset = UnityEngine.Random.insideUnitCircle.normalized * Dist;
         Spawn = CO.co.PlayerMainDrifter.transform.position + Offset;
         drifter.CurrentLocationPoint = Spawn;
@@ -191,18 +197,145 @@ public class CO_SPAWNER : NetworkBehaviour
         i = 0;
         foreach (EnemyCrewWithWeight weight in gr.SpawnCrewList)
         {
-            AddWeights(i, weight.Weight);
-            PossibleSpawns.Add(weight);
+            AddWeights(i, weight.GetWeight(CrewQualityPoints));
+            PossibleSpawns.Add(weight.Crew);
             i++;
         }
-        while (WorthPoints > 0)
+        while (CrewWorthPoints > 0)
         {
             Vector3 tryPos = drifter.Interior.GetRandomGrid().transform.position;
-            EnemyCrewWithWeight enemyType = PossibleSpawns[GetWeight()];
+            ScriptableEnemyCrew enemyType = PossibleSpawns[GetWeight()];
             CREW crew = SpawnUnitOnShip(enemyType.SpawnCrew, drifter);
-            WorthPoints -= enemyType.Worth;
+            SetQualityLevelOfCrew(crew, enemyType, CrewQualityPoints);
+            CrewWorthPoints -= enemyType.Worth;
         }
+        group = drifter.CrewGroup;
+        group.SetAI(gr.AI_Type, gr.AI_Group, 2, members);
         return drifter;
+    }
+
+    private void SetQualityLevelOfDrifter(DRIFTER drifter, ScriptableEnemyDrifter drifterData, float Quality)
+    {
+        float Levelup = Quality-100;
+        Levelup *= UnityEngine.Random.Range(0.6f, 1.4f);
+        while (Levelup > 100)
+        {
+            Levelup -= 100;
+            drifter.MaxHealth += drifterData.HullIncreasePerLevelup;
+        }
+        float Budget = drifterData.BaseWeaponBudgetMod * Quality;
+        int Tries = 10;
+        while (Budget > 0)
+        {
+            float ChanceForNewWeapon = 0f;
+            if (drifter.Interior.WeaponModules.Count < drifter.Interior.WeaponModuleLocations.Count)
+            {
+                switch (drifter.Interior.WeaponModules.Count)
+                {
+                    case 0:
+                        ChanceForNewWeapon = 1f;
+                        break;
+                    case 1:
+                        ChanceForNewWeapon = 0.8f;
+                        break;
+                    case 2:
+                        ChanceForNewWeapon = 0.4f;
+                        break;
+                    default:
+                        ChanceForNewWeapon = 0.3f;
+                        break;
+                }
+            }
+            float Cost;
+            if (UnityEngine.Random.Range(0f, 1f) < ChanceForNewWeapon)
+            {
+                ScriptableEquippableModule equip = drifterData.EquippableWeapons[UnityEngine.Random.Range(0, drifterData.EquippableWeapons.Count)];
+                Cost = equip.PrefabModule.ModuleWorth * 1.2f;
+                if (Cost > Budget && Tries > 0)
+                {
+                    Tries--;
+                    if (Tries == 0 && drifter.Interior.WeaponModules.Count > 0) break;
+                    continue;
+                }
+                drifter.Interior.AddModule(equip, true);
+                Budget -= Cost;
+                Tries = 10;
+            }
+            else
+            {
+                Module upgrade = drifter.Interior.WeaponModules[UnityEngine.Random.Range(0, drifter.Interior.WeaponModules.Count)];
+                Cost = 0.9f * (upgrade.ModuleUpgradeMaterials[upgrade.ModuleLevel.Value] + upgrade.ModuleUpgradeTechs[upgrade.ModuleLevel.Value] * 2);
+                if (Cost > Budget && Tries > 0)
+                {
+                    Tries--;
+                    if (Tries == 0) break;
+                    continue;
+                }
+                Budget -= Cost;
+                upgrade.UpgradeLevel();
+                Tries = 10;
+            }
+        }
+        Budget = drifterData.BaseModuleBudgetMod * Quality;
+        Tries = 10;
+        while (Budget > 0)
+        {
+            float ChanceForNewModule = 0f;
+            float Cost;
+            if (UnityEngine.Random.Range(0f, 1f) < ChanceForNewModule)
+            {
+                /*ScriptableEquippableModule equip = drifterData.EquippableWeapons[UnityEngine.Random.Range(0, drifterData.EquippableWeapons.Count)];
+                Cost = equip.PrefabModule.ModuleWorth * 1.2f;
+                if (Cost > Budget && Tries > 0)
+                {
+                    Tries--;
+                    if (Tries == 0 && drifter.Interior.WeaponModules.Count > 0) break;
+                    continue;
+                }
+                drifter.Interior.AddModule(equip, true);
+                Budget -= Cost;
+                Tries = 10;*/
+            }
+            else
+            {
+                Module upgrade = drifter.Interior.GetNonWeaponModules()[UnityEngine.Random.Range(0, drifter.Interior.GetNonWeaponModules().Count)];
+                Cost = 0.9f * (upgrade.ModuleUpgradeMaterials[upgrade.ModuleLevel.Value] + upgrade.ModuleUpgradeTechs[upgrade.ModuleLevel.Value] * 2);
+                if (Cost > Budget && Tries > 0)
+                {
+                    Tries--;
+                    if (Tries == 0) break;
+                    continue;
+                }
+                Budget -= Cost;
+                upgrade.UpgradeLevel();
+                Tries = 10;
+            }
+        }
+    }
+    private void SetQualityLevelOfCrew(CREW crew, ScriptableEnemyCrew crewData, float Quality)
+    {
+        Quality -= 100;
+        Quality *= UnityEngine.Random.Range(0.6f, 1.4f);
+        int Levels = 0;
+        while (Quality > 100)
+        {
+            Quality -= 100;
+            Levels++;
+        }
+        if (Levels > 0)
+        {
+            crew.ModifyHealthMax += crewData.HealthIncreasePerLevelup * Levels;
+            crew.AddAttributes(
+                    Mathf.FloorToInt(crewData.PointIncreasePerLevelup[0] * Levels),
+                     Mathf.FloorToInt(crewData.PointIncreasePerLevelup[1] * Levels),
+                      Mathf.FloorToInt(crewData.PointIncreasePerLevelup[2] * Levels),
+                       Mathf.FloorToInt(crewData.PointIncreasePerLevelup[3] * Levels),
+                        Mathf.FloorToInt(crewData.PointIncreasePerLevelup[4] * Levels),
+                         Mathf.FloorToInt(crewData.PointIncreasePerLevelup[5] * Levels),
+                          Mathf.FloorToInt(crewData.PointIncreasePerLevelup[6] * Levels),
+                           Mathf.FloorToInt(crewData.PointIncreasePerLevelup[7] * Levels)
+                );
+        }
     }
 
     /*VFX*/
@@ -245,6 +378,16 @@ public class CO_SPAWNER : NetworkBehaviour
 
         float ExplosionPower = 12f - CAM.cam.Dis(pos)*0.12f;
         if (ExplosionPower > 2) CAM.cam.ShakeCamera(ExplosionPower);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnArmorImpactRpc(Vector3 pos)
+    {
+        float Trans = UnityEngine.Random.Range(0.5f, 0.7f);
+        float Fade = UnityEngine.Random.Range(0.8f, 1.2f);
+        PART part = Instantiate(ArmorImpact, pos, Quaternion.identity);
+        part.transform.SetParent(CO.co.GetTransformAtPoint(pos));
+        part.transform.localScale = new Vector3(Trans, Trans, 1);
+        part.FadeChange *= Fade;
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnImpactRpc(Vector3 pos)

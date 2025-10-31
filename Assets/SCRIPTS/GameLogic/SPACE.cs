@@ -25,6 +25,13 @@ public class SPACE : NetworkBehaviour
     public List<float> SystemModuleRotations = new();
     [NonSerialized] public List<Module> SystemModules = new();
 
+    public List<Module> GetNonWeaponModules()
+    {
+        List<Module> modules = new List<Module>(CoreModules);
+        modules.AddRange(SystemModules);
+        return modules;
+    }
+
     public GameObject PrefabWall;
     public GameObject PrefabCorner;
     public GameObject PrefabEmpty;

@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff1cb8d74fb9fc14f810f6588fa2864b, type: 3}
-  m_Name: SpawnerPragmaticusPatrollers
+  m_Name: SpawnerLooncrabs
   m_EditorClassIdentifier: 
   SpawnEnemyGroupList:
-  - EnemyGroup: {fileID: 11400000, guid: 93b20b831715e4e4398dd683e63d529a, type: 2}
+  - EnemyGroup: {fileID: 11400000, guid: 0b97ee8f43c0f6a499f79e7fcd3b12dc, type: 2}
     Weight: 10
+  EnemyAmountModifier: 1
+  EnemyQualityModifier: 1

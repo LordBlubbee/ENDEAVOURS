@@ -9,6 +9,8 @@ public class ScriptableBiome : ScriptableObject
     public string BiomeDescription;
 
     public float BiomeBaseDifficulty = 1f;
+    public float BiomeCalmRatio = 0.2f;
+    public float BiomeHostileRatio = 0.4f;
     public int BiomeSize;
 
     public int GetBiomeSize()
@@ -29,6 +31,8 @@ public class ScriptableBiome : ScriptableObject
     public List<ScriptablePoint> PossiblePointsCalm;
     public List<ScriptablePoint> PossiblePointsNeutral;
     public List<ScriptablePoint> PossiblePointsHostile;
+
+    public List<ScriptablePoint> PossiblePointsRest;
     public List<ScriptablePoint> PossiblePointsArrival;
     public List<ScriptablePoint> PossiblePointsExit;
 }

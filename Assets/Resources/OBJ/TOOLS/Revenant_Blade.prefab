@@ -219,18 +219,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1ab0802f4c804db4b9031e3e8a0f42be, type: 3}
   - {fileID: 8300000, guid: 2c8ec467e5d107e4faa0a66e6e5375c3, type: 3}
   - {fileID: 8300000, guid: 9c3f5d2aeaf86144a8fad531e16ad498, type: 3}
-  Action1_SFX_Block:
-  - {fileID: 8300000, guid: 6a7428bbd6fbdac44b4907b97f61fd12, type: 3}
-  - {fileID: 8300000, guid: 21fc6e48e0f719b4095a8f52e910af0e, type: 3}
-  - {fileID: 8300000, guid: aee8df5042008d146a44381d30e4529d, type: 3}
-  - {fileID: 8300000, guid: c98891d51e547f8458b1ab58faad746d, type: 3}
-  - {fileID: 8300000, guid: 676c4b3f8f609bb42b45aab8cb9d8635, type: 3}
-  - {fileID: 8300000, guid: 128ce9b5df12c374692187bce97c1a91, type: 3}
-  - {fileID: 8300000, guid: c8844442e2432fa43bb75c44161bffa3, type: 3}
-  - {fileID: 8300000, guid: d2c767fff8b682e408bf049710db5f0b, type: 3}
   attackDamage1: 12
   RangedPrefab1: {fileID: 0}
   Reload1: 0
+  ApplyBuff: {fileID: 11400000, guid: c33d32c2eb0fbd84db083d5c5f9c723b, type: 2}
   ActionUse2: 3
   attackAnimations2: 10000000
   UsageStamina2: 0

@@ -76,7 +76,7 @@ public class Screen_Talk : MonoBehaviour
         {
             StartCoroutine(FadeNewSpeakerImage());
             //StartCoroutine(SetText(MainTex,"",Color.white, false));
-            Delay = 0.6f;
+            Delay = 0.4f;
         }
         SpeakerImage.sprite = CurrentSpeaker.Portrait;
         StartCoroutine(SetText(MainTex, curText, CurrentSpeaker.NameColor, true, Delay));
@@ -114,22 +114,25 @@ public class Screen_Talk : MonoBehaviour
         foreach (char c in text)
         {
             if (tex.text != keepTex) yield break;
-            keepTex += c;
-            tex.text = keepTex;
-            if (CurrentSpeaker && Speak)
+            if (!RewardScreen.gameObject.activeSelf)
             {
-                if (CurrentSpeaker.Voice.Length > 0 && char.IsLetterOrDigit(c))
+                keepTex += c;
+                tex.text = keepTex;
+                if (CurrentSpeaker && Speak)
                 {
-                    speakLetter--;
-                    if (speakLetter < 0)
+                    if (CurrentSpeaker.Voice.Length > 0 && char.IsLetterOrDigit(c))
                     {
-                        speakLetter = Random.Range(2, 4);
-                        AudioClip clip = CurrentSpeaker.Voice[Random.Range(0, CurrentSpeaker.Voice.Length)];
-                        AUDCO.aud.PlaySFX(clip);
+                        speakLetter--;
+                        if (speakLetter < 0)
+                        {
+                            speakLetter = Random.Range(2, 4);
+                            AudioClip clip = CurrentSpeaker.Voice[Random.Range(0, CurrentSpeaker.Voice.Length)];
+                            AUDCO.aud.PlaySFX(clip);
+                        }
                     }
                 }
             }
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForSeconds(0.02f);
         }
     }
     public void NextPage()

@@ -12,20 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486074c487becad41a25117778c346f8, type: 3}
   m_Name: PragmaticusPatroller
   m_EditorClassIdentifier: 
-  AI_Type: 0
+  AI_Type: 1
   AI_Group: 3
-  CrewPowerLevel: 150
+  CrewAmountLevel: 600
+  CrewQualityLevel: 150
+  GuaranteedCrewList: []
   SpawnCrewList:
-  - SpawnCrew: {fileID: 5867427934140877094, guid: 6c1f3fd00e3114142b6d3261c1ce4be1, type: 3}
-    Weight: 10
-    Worth: 30
-  - SpawnCrew: {fileID: 5867427934140877094, guid: e3648a6c91d53c448b023e06c981efeb, type: 3}
-    Weight: 10
-    Worth: 25
-  DrifterPowerLevel: 0
+  - Weight: 30
+    WeightIncreaseOverQualityGradient: 0
+    MinimumQuality: 0
+    MaximumQuality: 0
+    Crew: {fileID: 11400000, guid: 953bc2b110d847c44abe507671bfec7f, type: 2}
+  - Weight: 20
+    WeightIncreaseOverQualityGradient: 0
+    MinimumQuality: 0
+    MaximumQuality: 0
+    Crew: {fileID: 11400000, guid: 06da3eac44f90c94c9ff09a62d6265d7, type: 2}
+  DrifterQualityLevel: 100
   SpawnDrifter:
-  - SpawnDrifter: {fileID: 1453653842865150193, guid: 81d901228f920904a8aebdca445ef8a0, type: 3}
-    Weight: 10
+  - {fileID: 11400000, guid: 196726e5de15a4445812c8215072c986, type: 2}
   SpawnGroupRange: 10
   SpawnDistanceMin: 100
   SpawnDistanceMax: 200

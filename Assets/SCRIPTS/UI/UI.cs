@@ -132,6 +132,7 @@ public class UI : MonoBehaviour
             CinematicTex.color = new Color(CinematicTex.color.r, CinematicTex.color.g, CinematicTex.color.b, CinematicTex.color.a - Time.deltaTime * 1f);
             yield return null;
         }
+        CinematicTex.color = Color.clear;
         CinematicTex.gameObject.SetActive(false);
     }
     public void FlashWhite(float dur)

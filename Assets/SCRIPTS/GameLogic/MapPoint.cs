@@ -32,16 +32,30 @@ public class MapPoint : NetworkBehaviour
         }
     }
     [NonSerialized] public ScriptablePoint AssociatedPoint;
-    public void Init(ScriptablePoint Dialog, int ID)
+
+    private bool Initialized = false;
+
+    public bool HasInitialized()
     {
+        return Initialized;
+    }
+    public void Init(ScriptablePoint Dialog)
+    {
+        if (HasInitialized()) return;
+        Initialized = true;
         AssociatedPoint = Dialog;
         if (IsServer)
         {
             if (Dialog.UniqueName == "") PointName.Value = $"POINT-{UnityEngine.Random.Range(0, 10)}{UnityEngine.Random.Range(0, 10)}-{UnityEngine.Random.Range(0, 10)}{UnityEngine.Random.Range(0, 10)}";
             else PointName.Value = Dialog.UniqueName;
-            PointID.Value = ID;
             SetInitRpc(AssociatedPoint.GetResourceLink());
         }
+    }
+
+    public void Register(int ID)
+    {
+        //Server only
+        PointID.Value = ID;
     }
 
     [Rpc(SendTo.Server)]
@@ -54,6 +68,6 @@ public class MapPoint : NetworkBehaviour
     public void SetInitRpc(string str)
     {
         if (IsServer) return;
-        Init(Resources.Load<ScriptablePoint>($"OBJ/SCRIPTABLES/EVENTS/{str}"), -1);
+        Init(Resources.Load<ScriptablePoint>($"OBJ/SCRIPTABLES/EVENTS/{str}"));
     }
 }

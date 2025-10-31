@@ -78,7 +78,7 @@ public class AI_GROUP : MonoBehaviour
             }
             switch (AI_Type)
             {
-                case AI_TYPES.SHIP_DEFENSIVE:
+                default:
                     ShipAI();
                     break;
                 case AI_TYPES.SWARM:
@@ -157,6 +157,13 @@ public class AI_GROUP : MonoBehaviour
             if (mod.EligibleForReload()) ManModules.Add(mod);
         }
         List<CREW> Intruders = new List<CREW>(EnemiesInSpace(HomeDrifter.Space));
+
+        int WantMarines = 0;
+        if (AI_Type == AI_TYPES.SHIP_BOARDING)
+        {
+            WantMarines = UsableUnits.Count - 1;
+        }
+
         Vector3 PointOfInterest;
         while (UsableUnits.Count > 0)
         {
@@ -177,6 +184,25 @@ public class AI_GROUP : MonoBehaviour
                 Closest.SetObjectiveTarget(Closest.getSpace().GetNearestGridToPoint(PointOfInterest).transform, HomeSpace);
                 UsableUnits.Remove(Closest);
                 continue;
+            }
+            DRIFTER EnemyDrifter = GetClosestEnemyDrifter(HomeDrifter.transform.position);
+            if (WantMarines > 0 && EnemyDrifter)
+            {
+                WantMarines--;
+                Closest = GetClosestUnitInGroup(EnemyDrifter.transform.position, UsableUnits);
+                if (Closest.Unit.GetHealthRelative() < 0.5f)
+                {
+                    PointOfInterest = EnemyDrifter.Interior.GetRandomGrid().transform.position;
+                    Closest.SetObjectiveTarget(HomeDrifter.MedicalModule.transform.position, HomeSpace);
+                } else
+                {
+                    if (Closest.GetObjectiveSpace() != EnemyDrifter.Interior)
+                    {
+                        PointOfInterest = EnemyDrifter.Interior.GetRandomGrid().transform.position;
+                        Closest.SetObjectiveTarget(Closest.getSpace().GetNearestGridToPoint(PointOfInterest).transform, EnemyDrifter.Interior);
+                    }
+                }
+                UsableUnits.Remove(Closest);
             }
             Closest = UsableUnits[0];
             if (Closest.DistToObjective(Closest.transform.position) < 8) Closest.SetObjectiveTarget(HomeDrifter.Space.GetRandomGrid().transform, HomeSpace);
@@ -251,6 +277,7 @@ public class AI_GROUP : MonoBehaviour
                 Debug.Log("Engage...");
                 foreach (AI_UNIT unit in Units)
                 {
+                    if (unit == null) continue;
                     if (unit.GetObjectiveDistance() < 4f)
                     {
                         Debug.Log("Setting target");
@@ -397,6 +424,26 @@ public class AI_GROUP : MonoBehaviour
             {
                 minDist = dist;
                 closest = enemy.transform.TransformPoint(new Vector3(UnityEngine.Random.Range(-enemy.RadiusX, enemy.RadiusX), UnityEngine.Random.Range(-enemy.RadiusY, enemy.RadiusY)));
+            }
+        }
+        return closest;
+    }
+    public DRIFTER GetClosestEnemyDrifter(Vector3 vec)
+    {
+        DRIFTER closest = null;
+        float minDist = float.MaxValue;
+        Vector3 myPos = vec;
+        List<DRIFTER> drifters = CO.co.GetAllDrifters();
+        foreach (var enemy in drifters)
+        {
+            if ((enemy.transform.position - vec).magnitude > 150) continue;
+            if (enemy.GetFaction() == 0 || enemy.GetFaction() == Faction) continue;
+            if (enemy.isDead()) continue;
+            float dist = (enemy.getPos() - myPos).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = enemy;
             }
         }
         return closest;

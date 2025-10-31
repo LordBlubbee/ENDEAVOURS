@@ -29,6 +29,17 @@ public class LOBBY : MonoBehaviour
 
     [Header("Hosting Settings")]
     public TMP_InputField HostNameInput;
+    public Image[] HostPlayers;
+    public Image[] HostDifficulties;
+
+    private int GetHostPlayerCount()
+    {
+        return GO.g.SelectedGamePlayers;
+    }
+    private int GetHostPlayerDifficulty()
+    {
+        return GO.g.SelectedGameDifficulty;
+    }
 
     private bool StartedJoining = false;
     public void StartHost()

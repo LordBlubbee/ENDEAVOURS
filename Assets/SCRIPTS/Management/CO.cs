@@ -13,6 +13,7 @@ public class CO : NetworkBehaviour
 
     [NonSerialized] public NetworkVariable<bool> HasShipBeenLaunched = new();
     [NonSerialized] public NetworkVariable<bool> AreWeInDanger = new();
+    [NonSerialized] public NetworkVariable<bool> AreWeResting = new();
     [NonSerialized] public NetworkVariable<bool> CommunicationGamePaused = new();
     [NonSerialized] public NetworkVariable<float> EnemyBarRelative = new(-1);
     [NonSerialized] public NetworkVariable<FixedString32Bytes> EnemyBarString = new("");
@@ -39,6 +40,19 @@ public class CO : NetworkBehaviour
     public SPACE GetPlayerSpace()
     {
         return PlayerMainDrifter.Space;
+    }
+
+    [Rpc(SendTo.Server)]
+    public void RepairOurDrifterRpc()
+    {
+        if (PlayerMainDrifter.GetHealthRelative() < 1)
+        {
+            if (Resource_Materials.Value > 5)
+            {
+                Resource_Materials.Value -= 5;
+                PlayerMainDrifter.Heal(100);
+            }
+        }
     }
 
     [NonSerialized] public NetworkVariable<int> Resource_Materials = new();
@@ -85,8 +99,13 @@ public class CO : NetworkBehaviour
     public ScriptableBiome CurrentBiome;
     public int BiomeProgress;
     public int TotalZoneProgress;
-    public float BaseDifficulty;
+    private float BaseDifficulty = 1f;
     public List<ScriptablePoint> NextBiomePoints = new();
+
+    public List<ScriptablePoint> GetPossibleDestinations()
+    {
+        return NextBiomePoints;
+    }
 
     public float GetEncounterDifficultyModifier()
     {
@@ -147,6 +166,69 @@ public class CO : NetworkBehaviour
                 break;
             case 10:
                 PlayerDiff = 2f;
+                break;
+        }
+        return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
+    }
+    public float GetDrifterDifficultyModifier()
+    {
+        float ProgressDiff = 1f;
+        switch (BiomeProgress)
+        {
+            case 0:
+                ProgressDiff = 0.8f;
+                break;
+            case 1:
+                ProgressDiff = 1f;
+                break;
+            case 2:
+                ProgressDiff = 1.5f;
+                break;
+            case 3:
+                ProgressDiff = 2f;
+                break;
+            case 4:
+                ProgressDiff = 2.5f;
+                break;
+            case 5:
+                ProgressDiff = 3f;
+                break;
+            case 6:
+                ProgressDiff = 3.5f;
+                break;
+        }
+        float PlayerDiff = 1f;
+        switch (GetLOCALCO().Count)
+        {
+            case 1:
+                PlayerDiff = 0.95f;
+                break;
+            case 2:
+                PlayerDiff = 1f;
+                break;
+            case 3:
+                PlayerDiff = 1.05f;
+                break;
+            case 4:
+                PlayerDiff = 1.1f;
+                break;
+            case 5:
+                PlayerDiff = 1.15f;
+                break;
+            case 6:
+                PlayerDiff = 1.2f;
+                break;
+            case 7:
+                PlayerDiff = 1.25f;
+                break;
+            case 8:
+                PlayerDiff = 1.3f;
+                break;
+            case 9:
+                PlayerDiff = 1.35f;
+                break;
+            case 10:
+                PlayerDiff = 1.4f;
                 break;
         }
         return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
@@ -285,6 +367,8 @@ public class CO : NetworkBehaviour
         Resource_Supplies.Value = 50;
         Resource_Ammo.Value = 50;
         Resource_Tech.Value = 0;
+
+        CO_STORY.co.SetStory(GetPlayerMapPoint().AssociatedPoint.InitialDialog);
     }
     [Rpc(SendTo.Server)]
     public void AddInventoryItemRpc(FixedString64Bytes moduleLink)
@@ -318,6 +402,7 @@ public class CO : NetworkBehaviour
         HandleGravity();
         if (HasVoteResult() != -1)
         {
+
             Debug.Log("Moving to point!");
             MapPoint destination = GetPlayerMapPoint().ConnectedPoints[HasVoteResult()];
             StartCoroutine(Travel(destination));
@@ -406,6 +491,7 @@ public class CO : NetworkBehaviour
 
     IEnumerator Travel(MapPoint destination)
     {
+        AreWeResting.Value = false;
         Vector3 moveDirection = destination.transform.position - GetPlayerMapPoint().transform.position;
         PlayerMainDrifter.SetLookTowards(moveDirection);
         PlayerMainDrifter.SetMoveInput(moveDirection);
@@ -424,7 +510,7 @@ public class CO : NetworkBehaviour
             GenerateMap();
             destination = RegisteredMapPoints[0];
         }
-        CO_STORY.co.SetStory(destination.AssociatedPoint.InitialDialog);
+        if (destination.AssociatedPoint.InitialDialog) CO_STORY.co.SetStory(destination.AssociatedPoint.InitialDialog);
 
 
         //UpdatePlayerMapPointRpc(destination.transform.position);
@@ -549,13 +635,16 @@ public class CO : NetworkBehaviour
         }
         float mapSize = CurrentBiome.GetBiomeSize();
         RegisteredMapPoints = new();
+        List<MapPoint> MustBeInitialized = new();
         //StartPoint
         PlayerMapPointID.Value = 0;
         float MapWidth = GetMapWidth();
         MapPoint mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3(-GetPointStep(), MapWidth * 0.5f));
+        MustBeInitialized.Add(mapPoint);
         RegisterMapPoint(mapPoint);
-
-        for (int i = 0; i < mapSize; i++)
+        mapPoint.Init(CurrentBiome.PossiblePointsArrival[UnityEngine.Random.Range(0, CurrentBiome.PossiblePointsArrival.Count)]);
+        int xSteps = 0;
+        for (xSteps = 0; xSteps < mapSize; xSteps++)
         {
             int max = UnityEngine.Random.Range(2, 5);
             for (int amn = 0; amn < max; amn++)
@@ -563,20 +652,61 @@ public class CO : NetworkBehaviour
                 // Reversed Y-direction (top to bottom)
                 float step = MapWidth / max;
                 float yPos = MapWidth - ((amn + 1) * step - step);
-                Vector3 tryPos = new Vector3(i * GetPointStep(), yPos);
+                Vector3 tryPos = new Vector3(xSteps * GetPointStep(), yPos);
 
                 mapPoint = CO_SPAWNER.co.CreateMapPoint(tryPos);
+                MustBeInitialized.Add(mapPoint);
                 RegisterMapPoint(mapPoint);
             }
         }
-        Debug.Log("Generating map");
-        int ID = 0;
+
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3(xSteps * GetPointStep(), MapWidth * 0.5f));
+        RegisterMapPoint(mapPoint);
+        MapPoint LastRestPoint = mapPoint;
+        mapPoint.Init(CurrentBiome.PossiblePointsArrival[UnityEngine.Random.Range(0, CurrentBiome.PossiblePointsArrival.Count)]);
+
+        xSteps++;
+        List<ScriptablePoint> Destinations = new List<ScriptablePoint> (GetPossibleDestinations());
+
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps+2) * GetPointStep(), MapWidth * 1.5f));
+        RegisterMapPoint(mapPoint);
+        mapPoint.Init(Destinations[UnityEngine.Random.Range(0, Destinations.Count)]);
+
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps + 3) * GetPointStep(), 0));
+        RegisterMapPoint(mapPoint);
+        mapPoint.Init(Destinations[UnityEngine.Random.Range(0, Destinations.Count)]);
+
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps + 2) * GetPointStep(), MapWidth * -1.5f));
+        RegisterMapPoint(mapPoint);
+        mapPoint.Init(Destinations[UnityEngine.Random.Range(0, Destinations.Count)]);
+
+        float TotalPointsLeft = MustBeInitialized.Count;
+        float Points = TotalPointsLeft * CurrentBiome.BiomeHostileRatio;
+        while (Points > 0)
+        {
+            MapPoint map = MustBeInitialized[UnityEngine.Random.Range(0, MustBeInitialized.Count)];
+            map.Init(CurrentBiome.PossiblePointsHostile[UnityEngine.Random.Range(0, CurrentBiome.PossiblePointsHostile.Count)]);
+            MustBeInitialized.Remove(map);
+            Points--;
+        }
+        Points = TotalPointsLeft * CurrentBiome.BiomeCalmRatio;
+        while (Points > 0)
+        {
+            MapPoint map = MustBeInitialized[UnityEngine.Random.Range(0, MustBeInitialized.Count)];
+            map.Init(CurrentBiome.PossiblePointsCalm[UnityEngine.Random.Range(0, CurrentBiome.PossiblePointsCalm.Count)]);
+            MustBeInitialized.Remove(map);
+            Points--;
+        }
+        foreach (MapPoint map in new List<MapPoint>(MustBeInitialized))
+        {
+            map.Init(CurrentBiome.PossiblePointsNeutral[UnityEngine.Random.Range(0, CurrentBiome.PossiblePointsNeutral.Count)]);
+            MustBeInitialized.Remove(map);
+        }
         foreach (MapPoint map in GetMapPoints())
         {
             map.ConnectedPoints = GetConnectedPoints(map.transform.position, map);
-            map.Init(CurrentBiome.PossiblePointsRandom[UnityEngine.Random.Range(0, CurrentBiome.PossiblePointsRandom.Count)], ID);
-            ID++;
         }
+        LastRestPoint.ConnectedPoints = GetFarPoints(mapPoint.transform.position, LastRestPoint);
     }
     private void UpdateMapConnections()
     {
@@ -637,6 +767,16 @@ public class CO : NetworkBehaviour
         {
             if (map == us) continue;
             if (map.transform.position.x > center.x - 0.5f + GetPointStep() && map.transform.position.x < center.x + 0.5f + GetPointStep()) list.Add(map);
+        }
+        return list;
+    }
+    private List<MapPoint> GetFarPoints(Vector3 center, MapPoint us = null)
+    {
+        List<MapPoint> list = new();
+        foreach (MapPoint map in GetMapPoints())
+        {
+            if (map == us) continue;
+            if (map.transform.position.x > center.x + 0.5f) list.Add(map);
         }
         return list;
     }
@@ -766,7 +906,9 @@ public class CO : NetworkBehaviour
     public void RegisterMapPoint(MapPoint crew)
     {
         if (RegisteredMapPoints.Contains(crew)) return;
+        if (IsServer) crew.Register(RegisteredMapPoints.Count);
         RegisteredMapPoints.Add(crew);
+       
     }
     public void UnregisterMapPoint(MapPoint crew)
     {
@@ -820,6 +962,9 @@ public class CO : NetworkBehaviour
         string str = even.EventController;
         switch (str)
         {
+            case "GenericRest":
+                StartCoroutine(Event_GenericRest());
+                break;
             case "GenericLoot":
                 StartCoroutine(Event_GenericLoot());
                 break;
@@ -837,6 +982,14 @@ public class CO : NetworkBehaviour
         ProcessLootTable(CurrentEvent.LootTable, 1f);
         yield break;
     }
+    IEnumerator Event_GenericRest()
+    {
+        ShouldDriftersMove = false;
+        AreWeResting.Value = true;
+        if (CurrentEvent.LootTable) ProcessLootTable(CurrentEvent.LootTable, 1f);
+
+        yield break;
+    }
     IEnumerator Event_GenericBattle()
     {
         ShouldDriftersMove = true;
@@ -851,7 +1004,7 @@ public class CO : NetworkBehaviour
             i++;
         }
         ScriptableEnemyGroup EnemyGroup = Groups[GetWeight()].EnemyGroup;
-        DRIFTER enemyDrifter = CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup, 1f);
+        DRIFTER enemyDrifter = CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
         if (enemyDrifter == null)
         {
             float Death = 0f;
@@ -908,7 +1061,7 @@ public class CO : NetworkBehaviour
             i++;
         }
         ScriptableEnemyGroup EnemyGroup = Groups[GetWeight()].EnemyGroup;
-        DRIFTER enemyDrifter = CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup, 1f);
+        DRIFTER enemyDrifter = CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
         float Death = 0f;
         float MaxTimer = 60f;
         float Timer = MaxTimer;

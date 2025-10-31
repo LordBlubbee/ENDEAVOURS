@@ -75,6 +75,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   CurrentBiome: {fileID: 11400000, guid: 2952fa9bb31474b47bc4bd36f4de4224, type: 2}
+  BiomeProgress: 0
+  TotalZoneProgress: 0
+  NextBiomePoints:
+  - {fileID: 11400000, guid: c5c1a9e590b5bb44dbfa78fa871eb545, type: 2}
 --- !u!114 &5031945110435053922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,6 +100,7 @@ MonoBehaviour:
   PrefabGrappleSilent: {fileID: 8311341897716400573, guid: f731be7339e17ee4399b86044f2ad2b7, type: 3}
   GrappleCursor: {fileID: 21300000, guid: 60f878be486a87a4ca9baaf1ee6e18e7, type: 3}
   PrefabAmmoCrate: {fileID: 5275543212453673670, guid: 8384cb1ea12c4dd46a5c2c2072f30029, type: 3}
+  ArmorImpact: {fileID: 1759800388499967267, guid: 52ce5ea45dc461346bed82ea78a64521, type: 3}
   ExplosionSmall: {fileID: 1759800388499967267, guid: 7f7f15c6c27261d438e11d44c34555b3, type: 3}
   ExplosionMedium: {fileID: 1759800388499967267, guid: 70d93878a36b8c54292e0c86ba038037, type: 3}
   ExplosionLarge: {fileID: 1759800388499967267, guid: 1cdb39950044b5e43b54ed3fc3a2520e, type: 3}

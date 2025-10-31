@@ -115,6 +115,14 @@ public class CREW : NetworkBehaviour, iDamageable
     private List<BUFF> Buffs = new();
     public void AddBuff(ScriptableBuff buf)
     {
+        foreach (BUFF buff in Buffs)
+        {
+            if (buff.GetScriptable() == buf)
+            {
+                buff.AddBuff(buf, this);
+                return;
+            }
+        }
         Buffs.Add(new BUFF(buf, this));
     }
     public void BuffTick(float time)
@@ -209,6 +217,18 @@ public class CREW : NetworkBehaviour, iDamageable
         ATT_ENGINEERING.Value = eng; //Buffs repair speed
         ATT_ALCHEMY.Value = gun; //Buffs usage of large heavy weapons
         ATT_MEDICAL.Value = med; //Buffs healing abilities (+regeneration)
+        CurHealth.Value = GetMaxHealth();
+    }
+    public void AddAttributes(int phys, int arms, int dex, int comm, int pil, int eng, int gun, int med)
+    {
+        ATT_PHYSIQUE.Value += phys;
+        ATT_ARMS.Value += arms; //Ranged attack
+        ATT_DEXTERITY.Value += dex; //Buffs movement speed, stamina
+        ATT_COMMUNOPATHY.Value += comm; //Buffs magic damage, camera range, senses
+        ATT_COMMAND.Value += pil; //Buffs piloting maneuverability, dodge chance
+        ATT_ENGINEERING.Value += eng; //Buffs repair speed
+        ATT_ALCHEMY.Value += gun; //Buffs usage of large heavy weapons
+        ATT_MEDICAL.Value += med; //Buffs healing abilities (+regeneration)
         CurHealth.Value = GetMaxHealth();
     }
     // ==========================
@@ -989,7 +1009,17 @@ public class CREW : NetworkBehaviour, iDamageable
             dmg *= 2;
         }
         if (crew is DRIFTER) ((DRIFTER)crew).Impact(dmg * 0.5f, checkHit);
-        else crew.TakeDamage(dmg, checkHit);
+        else
+        {
+            crew.TakeDamage(dmg, checkHit);
+            if (crew is CREW)
+            {
+                if (EquippedToolObject.ApplyBuff)
+                {
+                    ((CREW)crew).AddBuff(EquippedToolObject.ApplyBuff);
+                }
+            }
+        }
         CO_SPAWNER.co.SpawnImpactRpc(checkHit);
         canStrikeMelee = false; //Turn off until animation ends
         ArtifactOnMelee();
@@ -1032,12 +1062,12 @@ public class CREW : NetworkBehaviour, iDamageable
         foreach (Transform hitTrans in EquippedToolObject.strikePoints)
         {
             Vector3 checkHit = hitTrans.position;
-            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 0.9f))
+            foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 1f))
             {
                 iDamageable crew = col.GetComponent<iDamageable>();
                 if (crew != null)
                 {
-                    if (crew.GetFaction() != GetFaction()) return;
+                    if (crew.GetFaction() != GetFaction()) continue;
                     if (crew.Space != Space) continue;
                     if (!(crew is Module)) continue; 
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;

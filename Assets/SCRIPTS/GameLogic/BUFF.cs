@@ -5,11 +5,22 @@ public class BUFF : MonoBehaviour
     private ScriptableBuff buff;
     private int Stacks;
     private float Duration;
+
+    public ScriptableBuff GetScriptable()
+    {
+        return buff;
+    }
     public BUFF(ScriptableBuff buf, CREW crew)
     {
         buff = buf;
-        Stacks = Mathf.Clamp(Stacks + 1, 1, buf.MaxStacks);
+        AddBuff(buf, crew);
+    }
+
+    public void AddBuff(ScriptableBuff buf, CREW crew)
+    {
         Duration = buf.Duration;
+        if (Stacks >= buf.MaxStacks) return;
+        Stacks = Mathf.Clamp(Stacks + 1, 1, buf.MaxStacks);
 
         crew.ModifyHealthMax += buff.ModifyHealthMax;
         crew.ModifyHealthRegen += buff.ModifyHealthRegen;
@@ -26,18 +37,21 @@ public class BUFF : MonoBehaviour
     }
     public void RemoveBuff(CREW crew)
     {
-        crew.ModifyHealthMax -= buff.ModifyHealthMax;
-        crew.ModifyHealthRegen -= buff.ModifyHealthRegen;
-        crew.ModifyStaminaMax -= buff.ModifyStaminaMax;
-        crew.ModifyStaminaRegen -= buff.ModifyStaminaRegen;
-        crew.ModifyMovementSpeed -= buff.ModifyMovementSpeed;
-        crew.ModifyMovementSlow -= buff.ModifyMovementSlow;
-        crew.ModifyAnimationSpeed -= buff.ModifyAnimationSpeed;
-        crew.ModifyAnimationSlow -= buff.ModifyAnimationSlow;
+        for (int i = 0; i < Stacks;i++)
+        {
+            crew.ModifyHealthMax -= buff.ModifyHealthMax;
+            crew.ModifyHealthRegen -= buff.ModifyHealthRegen;
+            crew.ModifyStaminaMax -= buff.ModifyStaminaMax;
+            crew.ModifyStaminaRegen -= buff.ModifyStaminaRegen;
+            crew.ModifyMovementSpeed -= buff.ModifyMovementSpeed;
+            crew.ModifyMovementSlow -= buff.ModifyMovementSlow;
+            crew.ModifyAnimationSpeed -= buff.ModifyAnimationSpeed;
+            crew.ModifyAnimationSlow -= buff.ModifyAnimationSlow;
 
-        crew.ModifyMeleeDamage -= buff.ModifyMeleeDamage;
-        crew.ModifyRangedDamage -=  buff.ModifyRangedDamage;
-        crew.ModifySpellDamage -= buff.ModifySpellDamage;
+            crew.ModifyMeleeDamage -= buff.ModifyMeleeDamage;
+            crew.ModifyRangedDamage -= buff.ModifyRangedDamage;
+            crew.ModifySpellDamage -= buff.ModifySpellDamage;
+        }
     }
     public bool IsExpired()
     {
