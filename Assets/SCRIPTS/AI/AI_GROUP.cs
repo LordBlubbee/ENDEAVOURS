@@ -235,7 +235,8 @@ public class AI_GROUP : MonoBehaviour
                 if (trt != Vector3.zero)
                 {
                     wep.SetLookTowards(trt);
-                    if (Mathf.Abs(wep.AngleBetweenPoints(trt)) < 10)
+                    float TargetRotation = 20;
+                    if (Mathf.Abs(wep.AngleBetweenPoints(trt)) < TargetRotation)
                     {
                         wep.Use(trt);
                         continue;

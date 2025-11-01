@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f0e6fff80922414d9e1c017e477478b, type: 3}
   m_Name: Flag_Raiders
   m_EditorClassIdentifier: 
-  Name: Mistscape1
+  Name: Flag_Raiders
   NameColor: {r: 1, g: 1, b: 1, a: 1}
   Portrait: {fileID: 21300000, guid: 240600f45dae3c04e8c5934810cf1a46, type: 3}
   Voice:

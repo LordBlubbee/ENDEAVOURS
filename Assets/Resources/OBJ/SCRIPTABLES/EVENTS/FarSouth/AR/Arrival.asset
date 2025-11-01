@@ -17,6 +17,6 @@ MonoBehaviour:
   InitialSoundtrack: 0
   CombatSoundtrack: 0
   InitialMapData: 
-  InitialDialog: {fileID: 11400000, guid: 6e19a1f90fefe3a488dbda8dab9374d2, type: 2}
+  InitialDialog: {fileID: 11400000, guid: d335f810ee3d2264cb5db4964d797a61, type: 2}
   BackgroundType: 0
   GateToBiome: {fileID: 0}

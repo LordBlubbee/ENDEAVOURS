@@ -303,7 +303,7 @@ MonoBehaviour:
   CrosshairSprite: {fileID: 21300000, guid: 3d1452e5180bdf641bb60a3aadc3248a, type: 3}
   ResourceType: 2
   Damage: 100
-  RotationBaseSpeed: 60
+  RotationBaseSpeed: 75
   MaxAmmo: 50
   FireCooldown: 8
   ReloadCooldown: 8

@@ -378,9 +378,31 @@ public class AI_UNIT : NetworkBehaviour
         if (getSpace() == Group.HomeSpace)
         {
             //We are at home
-           
-            //We are not in combat
 
+            //We are not in combat
+            CREW WoundedAlly = GetClosestWoundedAlly();
+            if (WoundedAlly)
+            {
+                if (WoundedAlly.Space != getSpace())
+                {
+                    if (!AttemptBoard(WoundedAlly.Space))
+                    {
+                        SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(WoundedAlly.Space.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
+                        SetLookTowards(GetObjectiveTarget(), WoundedAlly.Space);
+                    }
+                } else
+                {
+                    SetAIMoveTowards(GetPointAwayFromPoint(WoundedAlly.transform.position, 2f), WoundedAlly.Space);
+                    SetLookTowards(WoundedAlly.transform.position, WoundedAlly.Space);
+                    if (Dist(WoundedAlly.transform.position) < 4f)
+                    {
+                        Unit.EquipMedkitRpc();
+                        Unit.UseItem1Rpc();
+                    }
+                }
+                   
+                return;
+            }
             if (Unit.GetHealthRelative() < 1f)
             {
                 if (Group.HomeDrifter.MedicalModule)
@@ -406,18 +428,7 @@ public class AI_UNIT : NetworkBehaviour
                 }
                 return;
             }
-            CREW WoundedAlly = GetClosestWoundedAlly();
-            if (WoundedAlly)
-            {
-                SetAIMoveTowards(GetPointAwayFromPoint(WoundedAlly.transform.position, 2f), WoundedAlly.Space);
-                SetLookTowards(WoundedAlly.transform.position, WoundedAlly.Space);
-                if (Dist(WoundedAlly.transform.position) < 4f)
-                {
-                    Unit.EquipMedkitRpc();
-                    Unit.UseItem1Rpc();
-                }
-                return;
-            }
+           
 
             SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
             if (DistToObjective(transform.position) > 16)

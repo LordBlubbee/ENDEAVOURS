@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f0e6fff80922414d9e1c017e477478b, type: 3}
   m_Name: Raiders1
   m_EditorClassIdentifier: 
-  Name: Pragmaticus1
+  Name: Raiders1
   NameColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
   Portrait: {fileID: 21300000, guid: b8b21f602b513a54792cdef4897532e2, type: 3}
   Voice:

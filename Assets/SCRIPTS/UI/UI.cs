@@ -127,7 +127,7 @@ public class UI : MonoBehaviour
         yield return new WaitForSeconds(dur);
         while (CinematicTex.color.a > 0)
         {
-            CinematicTexScale = Mathf.Max((CinematicTexScale - 0.8f) * Time.deltaTime * 3f, 1);
+            CinematicTexScale = Mathf.Max((CinematicTexScale - 0.8f) * Time.deltaTime * 4f, 1);
             CinematicTex.transform.localScale = new Vector3(CinematicTexScale, CinematicTexScale, 1);
             CinematicTex.color = new Color(CinematicTex.color.r, CinematicTex.color.g, CinematicTex.color.b, CinematicTex.color.a - Time.deltaTime * 1f);
             yield return null;
