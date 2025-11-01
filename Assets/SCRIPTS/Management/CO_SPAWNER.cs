@@ -82,6 +82,10 @@ public class CO_SPAWNER : NetworkBehaviour
         co = this;
         StartCoroutine(BackgroundSparkles());
     }
+    private void Awake()
+    {
+        co = this;
+    }
     IEnumerator BackgroundSparkles()
     {
         while (CO.co == null) yield return null;

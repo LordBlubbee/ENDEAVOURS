@@ -17,7 +17,7 @@ MonoBehaviour:
   BiomeBaseDifficulty: 1
   BiomeCalmRatio: 0.25
   BiomeHostileRatio: 0.45
-  BiomeSize: 8
+  BiomeSize: 6
   PossiblePointsCalm:
   - {fileID: 11400000, guid: a9d5a661b376ddf409fa5ea73de558eb, type: 2}
   - {fileID: 11400000, guid: 83773a7b191572240a47836f4bc465b1, type: 2}

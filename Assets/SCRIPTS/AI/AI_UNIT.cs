@@ -259,6 +259,7 @@ public class AI_UNIT : NetworkBehaviour
         Unit.StopItem1Rpc();
         Unit.StopItem2Rpc();
 
+        if (!Unit.CanFunction()) return;
         switch (AI_Unit_Type)
         {
             case AI_UNIT_TYPES.CREW:
@@ -645,7 +646,7 @@ public class AI_UNIT : NetworkBehaviour
         {
             Unit.UseItem1Rpc();
             SetAIMoveTowards(GetDiagonalPointTowards(dr.transform.position, 24f, LeaningRight), dr.Space);
-            if (UnityEngine.Random.Range(0f, 1f) < 0.02f)
+            if (UnityEngine.Random.Range(0f, 1f) < 0.01f)
             {
                 Unit.UseGrapple(dr.Space.GetNearestGridToPoint(transform.position));
             }

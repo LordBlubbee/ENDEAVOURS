@@ -177,14 +177,17 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 80c4c9e547579f442ae46103be6e7491, type: 3}
   - {fileID: 8300000, guid: ee10e0d26f2bf5c47a6ef0aa507927a3, type: 3}
   - {fileID: 8300000, guid: 2e5be57a9add5bf4287040a4dcc42eb2, type: 3}
+  BlockPenetration: 0
+  DodgeModifier: 1
   HullDamageModifier: 1
   ModuleDamageModifier: 0.5
   ArmorDamageModifier: 1
   ArmorAbsorptionModifier: 1
   CrewDamageModifier: 1
+  CrewDamageModifierDirect: 1
   CrewDamageSplash: 1
   DealSplash: 0
-  CanBeBlocked: 1
+  ApplyBuff: {fileID: 0}
 --- !u!114 &1279859445198227217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,9 +207,9 @@ MonoBehaviour:
   RotationInterpolationType: 0
   ScaleInterpolationType: 0
   PositionLerpSmoothing: 1
-  PositionMaxInterpolationTime: 0.1
+  PositionMaxInterpolationTime: 0.02
   RotationLerpSmoothing: 1
-  RotationMaxInterpolationTime: 0.1
+  RotationMaxInterpolationTime: 0.02
   ScaleLerpSmoothing: 1
   ScaleMaxInterpolationTime: 0.1
   AuthorityMode: 0
