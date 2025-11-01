@@ -34,5 +34,4 @@ public class ScriptableBiome : ScriptableObject
 
     public List<ScriptablePoint> PossiblePointsRest;
     public List<ScriptablePoint> PossiblePointsArrival;
-    public List<ScriptablePoint> PossiblePointsExit;
 }

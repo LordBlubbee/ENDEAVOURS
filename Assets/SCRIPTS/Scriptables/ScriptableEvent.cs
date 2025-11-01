@@ -8,7 +8,6 @@ using UnityEngine;
 public class ScriptableEvent : ScriptableObject
 {
     //Th
-    public AudioClip BeginEventOST; //OST played when this event begins.
     public string EventController; //ID for the EventController which runs the proper code.
 
     public ScriptableEnemySpawner EnemyWave;

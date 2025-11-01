@@ -24,9 +24,20 @@ public struct DialogPart //This is a single line in the dialog. It can be replac
 public struct PossibleNextDialog //This possible next dialog has a descriptive text, and leads to a new dialog. May be based on alternatives.
 {
     public DialogPart ChoiceText;
+    public ScriptablePrerequisite[] Prerequisites;
+    public bool ArePrerequisitesMet()
+    {
+        foreach (var prerequisite in Prerequisites)
+        {
+            if (!prerequisite.IsTrue())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
     [Header("CONTINUED DIALOG ONLY")]
-    public AlternativePrerequisite[] Prerequisites;
     public ScriptableDialog DialogResult;
     public AlternativeDialog[] AlternativeResults;
 
@@ -38,7 +49,7 @@ public struct PossibleNextDialog //This possible next dialog has a descriptive t
 public struct AlternativeDialog //This dialog will be played only if its prerequisites are met.
 {
     public ScriptableDialog ReplaceDialog;
-    public AlternativePrerequisite[] Prerequisites;
+    public ScriptablePrerequisite[] Prerequisites;
     public bool ArePrerequisitesMet()
     {
         foreach (var prerequisite in Prerequisites)
@@ -57,7 +68,7 @@ public struct AlternativeDialogPart //This alternative piece of text happens onl
 {
     [TextArea(3, 10)]
     public string AlternativeText;
-    public AlternativePrerequisite[] Prerequisites;
+    public ScriptablePrerequisite[] Prerequisites;
     public bool ArePrerequisitesMet()
     {
         foreach (var prerequisite in Prerequisites)
@@ -68,71 +79,5 @@ public struct AlternativeDialogPart //This alternative piece of text happens onl
             }
         }
         return true;
-    }
-}
-
-[Serializable]
-public abstract class AlternativePrerequisite
-{
-    public abstract bool IsTrue();
-}
-
-[Serializable]
-public class AlternativePrerequisiteReputation : AlternativePrerequisite //Only if your reputation for target faction is between two values...
-{
-    public int MinReputation = -999;
-    public int MaxReputation = 999;
-    public CO.Faction FactionID;
-    public override bool IsTrue()
-    {
-        return CO.co.Resource_Reputation.GetValueOrDefault(FactionID) > MinReputation && CO.co.Resource_Reputation.GetValueOrDefault(FactionID) < MaxReputation;
-    }
-}
-[Serializable]
-public class AlternativePrerequisiteBackground : AlternativePrerequisite //Only if you have a character in the party with a certain background...
-{
-    public List<ScriptableBackground> Backgrounds;
-    public override bool IsTrue()
-    {
-        foreach (CREW crew in CO.co.GetAlliedCrew())
-        {
-            if (Backgrounds.Contains(crew.CharacterBackground)) return true;
-        }
-        return false;
-    }
-}
-[Serializable]
-public class AlternativePrerequisiteRandom : AlternativePrerequisite //Only if the chance is met...
-{
-    public float Chance;
-    public override bool IsTrue()
-    {
-        return UnityEngine.Random.Range(0f,1f) < Chance;
-    }
-}
-[Serializable]
-public class AlternativePrerequisiteAND : AlternativePrerequisite //Only if all other alternatives in this list are true...
-{
-    public List<AlternativePrerequisite> Alternatives;
-    public override bool IsTrue()
-    {
-        foreach (var a in Alternatives)
-        {
-            if (!a.IsTrue()) return false;
-        }
-        return true;
-    }
-}
-[Serializable]
-public class AlternativePrerequisiteOR : AlternativePrerequisite //Only if at least one other alternative in this list is true...
-{
-    public List<AlternativePrerequisite> Alternatives;
-    public override bool IsTrue()
-    {
-        foreach (var a in Alternatives)
-        {
-            if (a.IsTrue()) return true;
-        }
-        return false;
     }
 }

@@ -117,25 +117,25 @@ public class CO : NetworkBehaviour
         switch (BiomeProgress)
         {
             case 0:
-                ProgressDiff = 0.8f;
-                break;
-            case 1:
                 ProgressDiff = 1f;
                 break;
-            case 2:
+            case 1:
                 ProgressDiff = 1.3f;
                 break;
+            case 2:
+                ProgressDiff = 1.7f;
+                break;
             case 3:
-                ProgressDiff = 1.5f;
+                ProgressDiff = 2.1f;
                 break;
             case 4:
-                ProgressDiff = 1.8f;
+                ProgressDiff = 2.8f;
                 break;
             case 5:
-                ProgressDiff = 2f;
+                ProgressDiff = 3.5f;
                 break;
             case 6:
-                ProgressDiff = 2.5f;
+                ProgressDiff = 4.5f;
                 break;
         }
         float PlayerDiff = 1f;
@@ -180,25 +180,25 @@ public class CO : NetworkBehaviour
         switch (BiomeProgress)
         {
             case 0:
-                ProgressDiff = 0.8f;
-                break;
-            case 1:
                 ProgressDiff = 1f;
                 break;
+            case 1:
+                ProgressDiff = 1.3f;
+                break;
             case 2:
-                ProgressDiff = 1.5f;
+                ProgressDiff = 1.7f;
                 break;
             case 3:
-                ProgressDiff = 2f;
+                ProgressDiff = 2.1f;
                 break;
             case 4:
-                ProgressDiff = 2.5f;
+                ProgressDiff = 2.8f;
                 break;
             case 5:
-                ProgressDiff = 3f;
+                ProgressDiff = 3.5f;
                 break;
             case 6:
-                ProgressDiff = 3.5f;
+                ProgressDiff = 4.5f;
                 break;
         }
         float PlayerDiff = 1f;
@@ -249,19 +249,19 @@ public class CO : NetworkBehaviour
                 ProgressDiff = 1f;
                 break;
             case 2:
-                ProgressDiff = 1.2f;
+                ProgressDiff = 1.25f;
                 break;
             case 3:
-                ProgressDiff = 1.3f;
-                break;
-            case 4:
                 ProgressDiff = 1.5f;
                 break;
-            case 5:
+            case 4:
                 ProgressDiff = 1.8f;
                 break;
+            case 5:
+                ProgressDiff = 2.0f;
+                break;
             case 6:
-                ProgressDiff = 2f;
+                ProgressDiff = 2.2f;
                 break;
         }
         float PlayerDiff = 1f;

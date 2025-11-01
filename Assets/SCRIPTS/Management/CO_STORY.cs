@@ -220,8 +220,11 @@ public class CO_STORY : NetworkBehaviour
         StoryList = new();
         foreach (PossibleNextDialog line in Dialog.ChoicePathDialogs)
         {
-            DialogPart showChoice = line.ChoiceText;
-            StoryList.Add(ReturnDialogPart(showChoice));
+            if (line.ArePrerequisitesMet())
+            {
+                DialogPart showChoice = line.ChoiceText;
+                StoryList.Add(ReturnDialogPart(showChoice));
+            }
         }
         SetCurrentChoices(StoryList); 
         foreach (LOCALCO local in CO.co.GetLOCALCO())

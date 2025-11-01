@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: ChoicePath2
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: We understand your provocations as tones of aggression. Our hypothesis
+      is that it is motivated by greed. This vessel will not stand down and intends
+      to defend itself.
+    Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
+    Alternatives: []
+  - BaseText: 'The semirigid warship moves closer. Heavily-armoured boarding crew
+      members are preparing to board our vessel. We must fight them off. '
+    Speaker: {fileID: 11400000, guid: 96f3fa33f08a69c4e9da2f4d333f781c, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: What they have shall belong to us.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: 6b7ed8fc8c2a3b8419975554355e9f13, type: 2}
