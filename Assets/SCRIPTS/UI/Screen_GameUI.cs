@@ -142,7 +142,7 @@ public class Screen_GameUI : MonoBehaviour
                 } else
                 {
                 }*/
-                if (player.Space == CO.co.PlayerMainDrifter.Interior)
+                if (player.Space != CO.co.PlayerMainDrifter.Interior)
                 {
                     BleedingTex.text = "-CANNOT RESPAWN- \nEliminate all threats";
                 }

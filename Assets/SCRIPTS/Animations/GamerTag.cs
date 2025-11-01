@@ -100,8 +100,8 @@ public class GamerTag : MonoBehaviour
             {
                 float far = CAM.cam.camob.orthographicSize;
                 float scale = 0.5f + far * 0.01f;
-                if (Mod.IsDisabled()) FarIcon.color = new Color(0.5f, 0, 0, Mathf.Clamp01(far * 0.04f - 2.2f));
-                else FarIcon.color = new Color(col.r, col.g, col.b, Mathf.Clamp01(far * 0.04f - 2.2f));
+                if (Mod.IsDisabled()) FarIcon.color = new Color(0.5f, 0, 0, Mathf.Clamp01(far * 0.04f - 2.4f));
+                else FarIcon.color = new Color(col.r, col.g, col.b, Mathf.Clamp01(far * 0.04f - 2.4f));
                 FarIcon.transform.localScale = new Vector3(scale, scale, 1);
                 if (Armor)
                 {
