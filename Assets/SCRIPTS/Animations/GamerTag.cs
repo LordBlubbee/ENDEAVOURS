@@ -81,11 +81,10 @@ public class GamerTag : MonoBehaviour
         }
         if (Mod)
         {
-            if (Mod.IsDisabled())
+            if (Mod.PermanentlyDead.Value)
             {
                 Health.text = $"DESTROYED";
                 Health.color = new Color(0.5f, 0, 0);
-                return;
             }
             else if (Mod.IsDisabled())
             {

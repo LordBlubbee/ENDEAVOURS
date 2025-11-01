@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93d0c18050b8a5c4b9f50e941cfea295, type: 3}
+  m_Name: Common_Book6
+  m_EditorClassIdentifier: 
+  ItemName: Book of Science
+  ItemDesc: 'A wrapped book that teaches one about the chemistry and physics of the
+    world.
+
+
+    <color=green>ENG +1'
+  ItemIcon: {fileID: 21300000, guid: 25f2e76fddae3ff44bf24cb939f7cfb7, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Common_Book6
+  ItemResourceIDShort: Common_Book6
+  EquipType: 1
+  Ability: 0
+  MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
+  ModifyAttributes: 0000000000000000000000000000000000000000010000000000000000000000
+  ModifyHealthMax: 0
+  ModifyHealthRegen: 0
+  ModifyStaminaMax: 0
+  ModifyStaminaRegen: 0
+  ModifyMovementSpeed: 0
+  ModifyMeleeDamage: 0
+  ModifyRangedDamage: 0
+  ModifySpellDamage: 0

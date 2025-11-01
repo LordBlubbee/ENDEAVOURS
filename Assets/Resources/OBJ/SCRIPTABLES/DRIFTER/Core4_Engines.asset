@@ -12,8 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45863f5fd7c6c2c479b9205aecac2490, type: 3}
   m_Name: Core4_Engines
   m_EditorClassIdentifier: 
-  ItemName: Engine
-  ItemDesc: N/A
+  ItemName: Engine Control
+  ItemDesc: 'These advanced levers and pumps control the Drifter''s buoyancy and
+    its engines. While active, Engines maneuver your Drifter and provide a dodging
+    chance against incoming projectiles. They are essential against projectiles capable
+    of penetrating your Armor and for overall defense.
+
+
+    LEVEL 0: 200 HP. 10%
+    Dodge chance.
+
+    LEVEL 1: 300 HP. 15% Dodge chance.
+
+    LEVEL 2: 400 HP. 20%
+    Dodge chance.
+
+    LEVEL 3: 500 HP. 25% Dodge chance.
+
+    LEVEL 4: 600 HP. 30%
+    Dodge chance.
+
+    LEVEL 5: 700 HP. 35% Dodge chance.
+
+    LEVEL 6: 800 HP. 40%
+    Dodge chance.
+
+    LEVEL 7: 900 HP. 45% Dodge chance.
+
+
+'
   ItemIcon: {fileID: 21300000, guid: 6e3fedde432525a43ad8f283833d80f7, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Core4_Engine
   ItemResourceIDShort: Core4_Engine

@@ -794,7 +794,7 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         if (!canStrike) return;
         if (GetStamina() < EquippedToolObject.UsageStamina1) return;
-        AnimationComboWeapon2 = 0; //Reset the other combo
+         //Reset the other combo
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations1[AnimationComboWeapon1]);
         if (!setAnimationLocally(EquippedToolObject.attackAnimations1[AnimationComboWeapon1], 3)) return;
         canStrikeMelee = true;
@@ -846,7 +846,7 @@ public class CREW : NetworkBehaviour, iDamageable
         if (GetStamina() < EquippedToolObject.UsageStamina2) return;
         AnimationComboWeapon1 = 0;
         setAnimationToClientsOnlyRpc(EquippedToolObject.attackAnimations2[AnimationComboWeapon2]);
-        if (!setAnimationLocally(EquippedToolObject.attackAnimations2[AnimationComboWeapon2],3)) return;
+        if (!setAnimationLocally(EquippedToolObject.attackAnimations2[AnimationComboWeapon2],4)) return;
         canStrikeMelee = true;
         hasCreatedSound = false;
         MeleeHits = new();
@@ -975,15 +975,15 @@ public class CREW : NetworkBehaviour, iDamageable
                     if (!IsTargetEnemy(Blocker.tool.GetCrew().GetFaction())) continue;
                     if (!Blocker.tool.GetCrew().CanBeTargeted(Space)) continue;
                     MeleeHits.Add(Blocker.gameObject);
-                    bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChance;
+                    bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChanceMelee;
                     if (isBlocked)
                     {
                         if (Blocker.BlockSound != AUDCO.BlockSoundEffects.NONE) AUDCO.aud.PlayBlockSFXRpc(Blocker.BlockSound, transform.position);
                         else WeaponHitSFXRpc();
-                        if (Blocker.ReduceDamageMod < 1f)
+                        if (Blocker.ReduceDamageModMelee < 1f)
                         {
                             float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
-                            Melee(Blocker.tool.GetCrew(), checkHit, dmg * (1f - Blocker.ReduceDamageMod));
+                            Melee(Blocker.tool.GetCrew(), checkHit, dmg * (1f - Blocker.ReduceDamageModMelee));
                         }
                         else
                         {
@@ -1366,6 +1366,10 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             if (EquippedToolObject)
             {
+                if (EquippedToolObject.Tool2)
+                {
+                    Destroy(EquippedToolObject.Tool2.gameObject);
+                }
                 Destroy(EquippedToolObject.gameObject);
             }
             EquippedToolObject = null;
@@ -1373,18 +1377,22 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         if (EquippedToolObject)
         {
+            if (EquippedToolObject.Tool2)
+            {
+                Destroy(EquippedToolObject.Tool2.gameObject);
+            }
             Destroy(EquippedToolObject.gameObject);
         }
 
         EquippedToolObject = Instantiate(tol, transform);
         EquippedToolObject.Init(this);
-        EquippedToolObject.transform.localPosition = new Vector3(EquippedToolObject.localX, EquippedToolObject.localY, -0.0002f);
+        EquippedToolObject.transform.localPosition = new Vector3(EquippedToolObject.localX, EquippedToolObject.localY, -0.002f);
         EquippedToolObject.transform.Rotate(Vector3.forward, EquippedToolObject.localRot);
         AnimTransforms[1].setTransform(EquippedToolObject.transform);
         if (EquippedToolObject.Tool2)
         {
             EquippedToolObject.Tool2.transform.SetParent(transform);
-            EquippedToolObject.Tool2.transform.localPosition = new Vector3(EquippedToolObject.Tool2.transform.localPosition.x, EquippedToolObject.Tool2.transform.localPosition.y, -0.0002f);
+            EquippedToolObject.Tool2.transform.localPosition = new Vector3(EquippedToolObject.Tool2.transform.localPosition.x, EquippedToolObject.Tool2.transform.localPosition.y, -0.002f);
             AnimTransforms[2].setTransform(EquippedToolObject.Tool2.transform);
         }
         setAnimationRpc(ANIM.AnimationState.MI_IDLE);

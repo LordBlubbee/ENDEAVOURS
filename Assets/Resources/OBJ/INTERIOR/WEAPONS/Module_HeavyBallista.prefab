@@ -305,10 +305,10 @@ MonoBehaviour:
   Damage: 100
   RotationBaseSpeed: 60
   MaxAmmo: 50
-  FireCooldown: 7
-  ReloadCooldown: 7
+  FireCooldown: 8
+  ReloadCooldown: 8
   ProjectileCount: 1
-  AdditionalProjectileDelay: 0
+  AdditionalProjectileDelay: 0.2
   DamagePerLevel: 0
   ProjectilesPerLevel: 0
   CooldownPerLevel: -1

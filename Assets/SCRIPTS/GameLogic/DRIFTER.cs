@@ -23,7 +23,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         if (EngineModule)
         {
             if (EnginesDown()) return 0f;
-            return 0.1f + EngineModule.ModuleLevel.Value * 0.05f;
+            return (0.1f + EngineModule.ModuleLevel.Value * 0.05f) * ((EngineModule.GetHealthRelative() * 0.8f) + 0.2f);
         }
         return 0.1f;
     }

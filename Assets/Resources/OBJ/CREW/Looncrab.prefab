@@ -210,7 +210,19 @@ MonoBehaviour:
   MovementSpeed: 4
   RotationDistanceFactor: 4
   RotationBaseSpeed: 60
-  GrappleCooldown: 10
+  BleedOut: 0
+  ModifyAttributes: 
+  ModifyHealthMax: 0
+  ModifyHealthRegen: 0
+  ModifyStaminaMax: 0
+  ModifyStaminaRegen: 0
+  ModifyMovementSpeed: 0
+  ModifyMovementSlow: 0
+  ModifyAnimationSpeed: 0
+  ModifyAnimationSlow: 0
+  ModifyMeleeDamage: 0
+  ModifyRangedDamage: 0
+  ModifySpellDamage: 0
   ATT_PHYSIQUE:
     m_InternalValue: 2
   ATT_ARMS:

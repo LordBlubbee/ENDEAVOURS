@@ -33,8 +33,15 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         {
             if (col.GetComponent<CREW>() != null) {
                 OrderTransform = col.GetComponent<SPACE>();
-                OrderPointLocal = OrderTransform.transform.InverseTransformPoint(vec);
-                OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
+                if (OrderTransform)
+                {
+                    OrderPointLocal = OrderTransform.transform.InverseTransformPoint(vec);
+                    OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
+                } else
+                {
+                    OrderPointLocal = vec;
+                    OrderPoint.Value = vec;
+                }
                 return;
             }
         }
@@ -43,8 +50,16 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
             if (col.GetComponent<SPACE>() != null)
             {
                 OrderTransform = col.GetComponent<SPACE>();
-                OrderPointLocal = OrderTransform.transform.InverseTransformPoint(vec);
-                OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
+                if (OrderTransform)
+                {
+                    OrderPointLocal = OrderTransform.transform.InverseTransformPoint(vec);
+                    OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
+                }
+                else
+                {
+                    OrderPointLocal = vec;
+                    OrderPoint.Value = vec;
+                }
                 return;
             }
         }

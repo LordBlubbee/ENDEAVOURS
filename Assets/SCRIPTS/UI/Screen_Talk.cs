@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class Screen_Talk : MonoBehaviour
@@ -79,7 +78,8 @@ public class Screen_Talk : MonoBehaviour
             Delay = 0.4f;
         }
         SpeakerImage.sprite = CurrentSpeaker.Portrait;
-        StartCoroutine(SetText(MainTex, curText, CurrentSpeaker.NameColor, true, Delay));
+        if (gameObject.activeSelf) StartCoroutine(SetText(MainTex, curText, CurrentSpeaker.NameColor, true, Delay));
+        else MainTex.text = curText;
         if (!CO_STORY.co.IsLastMainStoryText(CurrentPage))
         {
             for (int i = 0; i < ChoiceTex.Length; i++)

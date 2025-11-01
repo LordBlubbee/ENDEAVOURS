@@ -13,7 +13,24 @@ MonoBehaviour:
   m_Name: System_Armor
   m_EditorClassIdentifier: 
   ItemName: Heavy Plating
-  ItemDesc: N/A
+  ItemDesc: 'Armor is the primary means for your Drifter to stay alive. Whenever
+    your Drifter is hit, the nearest Armor plate absorbs the damage instead. When
+    the Armor goes down, your Drifter can take very heavy damage.
+
+
+    LEVEL 0:
+    200 HP. 100 Armor. 20 Armor/s regeneration.
+
+    LEVEL 1: 300 HP. 200 Armor.
+    22 Armor/s regeneration.
+
+    LEVEL 2: 400 HP. 300 Armor. 24 Armor/s regeneration.
+
+    LEVEL
+    3: 500 HP. 400 Armor. 26 Armor/s regeneration.
+
+
+'
   ItemIcon: {fileID: 21300000, guid: f6dcf1b64a817a4419e34b2fccbf5ab5, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/System_Armor
   ItemResourceIDShort: System_Armor

@@ -315,7 +315,19 @@ MonoBehaviour:
   MovementSpeed: 7
   RotationDistanceFactor: 4
   RotationBaseSpeed: 90
-  GrappleCooldown: 10
+  BleedOut: 1
+  ModifyAttributes: 
+  ModifyHealthMax: 0
+  ModifyHealthRegen: 0
+  ModifyStaminaMax: 0
+  ModifyStaminaRegen: 0
+  ModifyMovementSpeed: 0
+  ModifyMovementSlow: 0
+  ModifyAnimationSpeed: 0
+  ModifyAnimationSlow: 0
+  ModifyMeleeDamage: 0
+  ModifyRangedDamage: 0
+  ModifySpellDamage: 0
   ATT_PHYSIQUE:
     m_InternalValue: 2
   ATT_ARMS:
@@ -335,7 +347,7 @@ MonoBehaviour:
   CharacterBackground: {fileID: 11400000, guid: 1434ffc3413dd3748809a54bdf292fcb, type: 2}
   DefaultToolset: 1
   EquippedWeapons:
-  - {fileID: 11400000, guid: 06439ec68f11da34fbafc00241024dca, type: 2}
+  - {fileID: 11400000, guid: f93f9a53850981a46845218ec6c85ca3, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   EquippedArmor: {fileID: 0}

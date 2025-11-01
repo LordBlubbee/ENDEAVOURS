@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45863f5fd7c6c2c479b9205aecac2490, type: 3}
+  m_Name: Weapon_RepeaterCrossbow
+  m_EditorClassIdentifier: 
+  ItemName: Repeater Crossbow
+  ItemDesc: A heavy crossbow station that constantly suppresses Nebuloids and Drifter
+    armor plating, but deals very low damage to modules and hull.
+  ItemIcon: {fileID: 21300000, guid: aa1a4ba3835c1b54bb69868e67b7d2f3, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Weapon_RepeaterCrossbow
+  ItemResourceIDShort: Weapon_RepeaterCrossbow
+  PrefabModule: {fileID: 2733437315669949757, guid: a694036d6781fec40bcc0a08607779fe, type: 3}
+  EquipType: 1

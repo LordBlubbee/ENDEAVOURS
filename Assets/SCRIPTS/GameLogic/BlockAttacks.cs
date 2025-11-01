@@ -6,15 +6,19 @@ public class BlockAttacks : MonoBehaviour
 {
     public TOOL tool;
     public Collider2D col;
-    public float ReduceDamageMod = 1f;
-    public float BlockChance = 1f;
+    public float ReduceDamageModMelee = 1f;
+    public float ReduceDamageModRanged = 1f;
+    public float BlockChanceMelee = 1f;
+    public float BlockChanceRanged = 1f;
     public float ReflectProjectileChance = 0f;
     public bool isActive;
+    public bool isAlwaysActive = false;
     public AUDCO.BlockSoundEffects BlockSound;
     private float EnableTimer = 0f;
     public void SetActive(bool bol)
     {
-        EnableTimer = 0.1f;
+        if (isAlwaysActive) return;
+        EnableTimer = 0.4f;
         if (!isActive) StartCoroutine(Timer());
         col.enabled = bol;
         isActive = bol;

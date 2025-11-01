@@ -12,8 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45863f5fd7c6c2c479b9205aecac2490, type: 3}
   m_Name: Core2_Nav
   m_EditorClassIdentifier: 
-  ItemName: Nav
-  ItemDesc: N/A
+  ItemName: Gubernator Chambers
+  ItemDesc: 'The candles and strings that surround the Drifter''s steering equipment
+    allow a Gubernator to feel the vibrations around the Drifter as if they had become
+    one with it. It is from here that the vessel is navigated.
+
+
+    LEVEL 0: 200
+    HP.
+
+    LEVEL 1: 300 HP.
+
+    LEVEL 2: 400 HP.
+
+    LEVEL 3: 500 HP.
+
+
+'
   ItemIcon: {fileID: 21300000, guid: 40e74035ea3ce8643843327a94785e44, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Core2_Nav
   ItemResourceIDShort: Core2_Nav

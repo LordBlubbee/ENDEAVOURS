@@ -16,6 +16,20 @@ public class ScriptableEquippableArtifact : ScriptableEquippable
     {
         NONE
     }
+
+    public bool CanWear(CREW crew)
+    {
+        int i = 0;
+        foreach (int num in MinimumAttributes)
+        {
+            if (crew.GetATT(i) >= num) return true;
+            i++;
+        }
+        return false;
+    }
+
+    public int[] MinimumAttributes;
+
     [Header("PHYS, ARM, DEX, COM, CMD, ENG, ALC, MED")]
     public int[] ModifyAttributes;
     public float ModifyHealthMax;

@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using Unity.Networking.Transport;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -76,7 +77,14 @@ public class UI_Module : MonoBehaviour
                 break;
             case Module.ModuleTypes.ENGINES:
                 MainTex.text = $"{GetUseNumber()}ENGINES";
-                StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")}";
+                Color EngineColor = new Color(1f - wep.GetHealthRelative(), wep.GetHealthRelative(), 0);
+                int Dodge = Mathf.RoundToInt((10 + wep.ModuleLevel.Value * 5) * ((0.8f * wep.GetHealthRelative()) + 0.2f));
+                if (wep.IsDisabled())
+                {
+                    EngineColor = Color.red;
+                    Dodge = 0;
+                }
+                StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")} | <color=#{ColorUtility.ToHtmlStringRGB(EngineColor)}>DODGE CHANCE: {Dodge}%";
                 StatusTex.color = Icon.color;
                 //Button1.SetActive(true);
                 //Button1Tex.text = "BOARD";

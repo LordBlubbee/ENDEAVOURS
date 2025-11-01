@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93d0c18050b8a5c4b9f50e941cfea295, type: 3}
+  m_Name: Common_BrassKnuckles
+  m_EditorClassIdentifier: 
+  ItemName: Nomaden Knuckles
+  ItemDesc: 'Knuckles forged from brass by Nomaden fighters for the most brash adventurers.
+
+
+    <color=green>+3
+    Melee damage
+
+    <color=red>-10 Health'
+  ItemIcon: {fileID: 21300000, guid: 4dce19756c065f04db83d95a31c9b80c, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Common_BrassKnuckles
+  ItemResourceIDShort: Common_BrassKnuckles
+  EquipType: 1
+  Ability: 0
+  MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
+  ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
+  ModifyHealthMax: -10
+  ModifyHealthRegen: 0
+  ModifyStaminaMax: 0
+  ModifyStaminaRegen: 0
+  ModifyMovementSpeed: 0
+  ModifyMeleeDamage: 3
+  ModifyRangedDamage: 0
+  ModifySpellDamage: 0

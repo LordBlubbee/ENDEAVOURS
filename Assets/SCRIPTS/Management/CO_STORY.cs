@@ -256,7 +256,6 @@ public class CO_STORY : NetworkBehaviour
     {
         ShouldUpdate = true;
     }
-
     private void Update()
     {
         if (!IsServer) return;

@@ -13,12 +13,8 @@ MonoBehaviour:
   m_Name: Looncrab
   m_EditorClassIdentifier: 
   SpawnCrew: {fileID: 5867427934140877094, guid: 86f046a72cbd10a4eb1d9f606f946a03, type: 3}
-  Weight: 20
-  WeightIncreaseOverQualityGradient: 0
-  MinimumQuality: 0
-  MaximumQuality: 0
   Worth: 100
-  HealthIncreasePerLevelup: 20
+  HealthIncreasePerLevelup: 30
   PointIncreasePerLevelup:
   - 1
   - 0

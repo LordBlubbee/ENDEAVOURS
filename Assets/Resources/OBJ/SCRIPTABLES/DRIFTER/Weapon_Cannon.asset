@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Weapon_Cannon
   m_EditorClassIdentifier: 
   ItemName: Cannon
-  ItemDesc: N/A
-  ItemIcon: {fileID: 21300000, guid: aa1a4ba3835c1b54bb69868e67b7d2f3, type: 3}
+  ItemDesc: Cannons deal heavy damage and partly penetrate armor, making them a force
+    to be reckoned with.
+  ItemIcon: {fileID: 21300000, guid: ea0c9dc68b6111241b5ad170fe3b34ae, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Weapon_Cannon
   ItemResourceIDShort: Weapon_Cannon
   PrefabModule: {fileID: 2733437315669949757, guid: f1c84c6e27e822e4e9d887455c80896d, type: 3}

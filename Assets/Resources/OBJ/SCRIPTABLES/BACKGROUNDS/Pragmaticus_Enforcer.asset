@@ -26,7 +26,7 @@ MonoBehaviour:
 
 
     STARTING
-    ITEMS: HALBERD
+    ITEMS: RIOT SHIELD & SWORD
 
     PHYS +2
 
@@ -35,7 +35,7 @@ MonoBehaviour:
     MED +1'
   BackgroundColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
   Background_ATT_BONUS: 0200000000000000000000000000000001000000000000000000000001000000
-  Background_StartingWeapon: {fileID: 11400000, guid: 06439ec68f11da34fbafc00241024dca, type: 2}
+  Background_StartingWeapon: {fileID: 11400000, guid: f93f9a53850981a46845218ec6c85ca3, type: 2}
   Background_StartingWeapon2: {fileID: 0}
   Background_StartingArtifact: {fileID: 0}
   Background_StartingArmor: {fileID: 0}

@@ -59,8 +59,11 @@ public class PROJ : NetworkBehaviour
         Space = space;
         transform.Rotate(Vector3.forward, UnityEngine.Random.Range(-InaccuracyDegrees, InaccuracyDegrees));
         if (Space) transform.SetParent(Space.transform);
+    }
 
-        if (LaunchVFX) LaunchVFXRpc();
+    private void Start()
+    {
+        if (LaunchVFX) LaunchVFXAnimation();
     }
     private void FixedUpdate()
     {
@@ -130,7 +133,7 @@ public class PROJ : NetworkBehaviour
             {
                 if (UnityEngine.Random.Range(0f, 1f) > Mathf.Min(drifter.GetDodgeChance() * DodgeModifier,0.9f))
                 {
-                    drifter.Impact(this, transform.position);
+                    drifter.Impact(this, Tip.position);
                     isActive = false;
                 } else
                 {
@@ -201,14 +204,14 @@ public class PROJ : NetworkBehaviour
                 if (Damageables.Contains(Blocker.gameObject)) return;
                 if (Blocker.tool.GetCrew().GetFaction() == Faction) return;
                 Damageables.Add(Blocker.gameObject);
-                bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChance;
+                bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChanceRanged;
                 if (isBlocked)
                 {
                     if (Blocker.BlockSound != AUDCO.BlockSoundEffects.NONE) AUDCO.aud.PlayBlockSFXRpc(Blocker.BlockSound, transform.position);
                     else if (ImpactSFX.Length > 0) ImpactSFXRpc();
-                    if (Blocker.ReduceDamageMod < 1f)
+                    if (Blocker.ReduceDamageModRanged < 1f)
                     {
-                        AttackDamage *= (1f - Blocker.ReduceDamageMod);
+                        AttackDamage *= (1f - Blocker.ReduceDamageModRanged);
                         PotentialHitTarget(Blocker.tool.GetCrew().gameObject);
                     }
                     else
@@ -262,9 +265,7 @@ public class PROJ : NetworkBehaviour
     {
         AUDCO.aud.PlaySFX(ImpactSFX, Tip.position, 0.1f);
     }
-    [Rpc(SendTo.ClientsAndHost)]
-
-    public void LaunchVFXRpc()
+    public void LaunchVFXAnimation()
     {
         Instantiate(LaunchVFX, transform.position, Quaternion.identity).transform.SetParent(CO.co.GetTransformAtPoint(transform.position));
     }

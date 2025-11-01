@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93d0c18050b8a5c4b9f50e941cfea295, type: 3}
+  m_Name: Common_MediumChain
+  m_EditorClassIdentifier: 
+  ItemName: Logipedan Medium Chain
+  ItemDesc: 'Mass-distributed, standard-issue medium Logipedan armor.
+
+    <color=green>
+
+    Health
+    +40
+
+    Melee Damage +1'
+  ItemIcon: {fileID: 21300000, guid: 064c6928ce902444d9583b15f1e55b9c, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/MediumChain
+  ItemResourceIDShort: MediumChain
+  EquipType: 0
+  Ability: 0
+  MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
+  ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
+  ModifyHealthMax: 40
+  ModifyHealthRegen: 0
+  ModifyStaminaMax: 0
+  ModifyStaminaRegen: 0
+  ModifyMovementSpeed: 0
+  ModifyMeleeDamage: 1
+  ModifyRangedDamage: 0
+  ModifySpellDamage: 0

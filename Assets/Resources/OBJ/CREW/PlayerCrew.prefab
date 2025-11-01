@@ -309,13 +309,24 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   Spr: {fileID: 5632965166791697770}
   Stripes: {fileID: 2877882561032477406}
-  Faction: 1
   MaxHealth: 100
   NaturalStaminaRegen: 25
   MovementSpeed: 7
   RotationDistanceFactor: 4
   RotationBaseSpeed: 90
-  GrappleCooldown: 10
+  BleedOut: 1
+  ModifyAttributes: 
+  ModifyHealthMax: 0
+  ModifyHealthRegen: 0
+  ModifyStaminaMax: 0
+  ModifyStaminaRegen: 0
+  ModifyMovementSpeed: 0
+  ModifyMovementSlow: 0
+  ModifyAnimationSpeed: 0
+  ModifyAnimationSlow: 0
+  ModifyMeleeDamage: 0
+  ModifyRangedDamage: 0
+  ModifySpellDamage: 0
   ATT_PHYSIQUE:
     m_InternalValue: 2
   ATT_ARMS:
@@ -324,14 +335,15 @@ MonoBehaviour:
     m_InternalValue: 2
   ATT_COMMUNOPATHY:
     m_InternalValue: 2
-  ATT_PILOTING:
+  ATT_COMMAND:
     m_InternalValue: 2
   ATT_ENGINEERING:
     m_InternalValue: 2
-  ATT_GUNNERY:
+  ATT_ALCHEMY:
     m_InternalValue: 2
   ATT_MEDICAL:
     m_InternalValue: 2
+  CharacterBackground: {fileID: 0}
   DefaultToolset: 1
   EquippedWeapons:
   - {fileID: 0}

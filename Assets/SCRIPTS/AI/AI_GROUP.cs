@@ -203,6 +203,7 @@ public class AI_GROUP : MonoBehaviour
                     }
                 }
                 UsableUnits.Remove(Closest);
+                continue;
             }
             Closest = UsableUnits[0];
             if (Closest.DistToObjective(Closest.transform.position) < 8) Closest.SetObjectiveTarget(HomeDrifter.Space.GetRandomGrid().transform, HomeSpace);
@@ -416,7 +417,7 @@ public class AI_GROUP : MonoBehaviour
         List<DRIFTER> drifters = CO.co.GetAllDrifters();
         foreach (var enemy in drifters)
         {
-            if ((enemy.transform.position - vec).magnitude > 150) continue;
+            if ((enemy.transform.position - vec).magnitude > 200) continue;
             if (enemy.GetFaction() == 0 || enemy.GetFaction() == Faction) continue;
             if (enemy.isDead()) continue;
             float dist = (enemy.getPos() - myPos).sqrMagnitude;
