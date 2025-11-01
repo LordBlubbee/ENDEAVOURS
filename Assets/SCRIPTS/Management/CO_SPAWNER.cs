@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -22,6 +24,18 @@ public class CO_SPAWNER : NetworkBehaviour
     public GameObject SparkSmall;
     public GameObject SparkMedium;
     public GameObject ImpactSparks;
+
+    [Header("BACKGROUND")]
+    public GameObject[] NebulaSparks;
+    public BackgroundRock[] BackgroundSmallRocks;
+    public BackgroundRock[] BackgroundLargeRocks;
+    public enum BackgroundType
+    {
+        EMPTY,
+        RANDOM_ROCK,
+        BARREN,
+        MOUNTAINOUS
+    }
     public enum DefaultEquipmentSet
     {
         NONE,
@@ -55,12 +69,10 @@ public class CO_SPAWNER : NetworkBehaviour
         }
     }
 
-
+    [Header("MISC")]
     public DMG PrefabDMG;
     public MapPoint PrefabMapPoint;
-    public CREW PrefabLooncrab;
     public AI_GROUP PrefabAIGROUP;
-
     public CREW PlayerPrefab;
     //This one saves all the prefabs!
     public static CO_SPAWNER co;
@@ -68,14 +80,110 @@ public class CO_SPAWNER : NetworkBehaviour
     private void Start()
     {
         co = this;
-
+        StartCoroutine(BackgroundSparkles());
+    }
+    IEnumerator BackgroundSparkles()
+    {
+        while (CO.co == null) yield return null;
+        while (CO.co.PlayerMainDrifter == null) yield return null;
+        while (true)
+        {
+            Instantiate(NebulaSparks[UnityEngine.Random.Range(0,NebulaSparks.Length)], GetParticleBackgroundPoint(), Quaternion.identity);
+            yield return new WaitForSeconds(0.4f);
+        }
+    }
+    private Vector3 GetParticleBackgroundPoint()
+    {
+        float radius = BackgroundTransform.MapSize() * 0.6f;
+        return CO.co.PlayerMainDrifter.transform.position + new Vector3(UnityEngine.Random.Range(-radius, radius), UnityEngine.Random.Range(-radius, radius));
+    }
+    private Vector3 GetBackgroundPoint(BackgroundRock rock, float scale)
+    {
+        float radius = BackgroundTransform.MapSize();
+       
+        while (true)
+        {
+            bool tryAgain = false;
+            Vector3 tryPos = CO.co.PlayerMainDrifter.transform.position + new Vector3(UnityEngine.Random.Range(-radius, radius), UnityEngine.Random.Range(-radius, radius));
+            foreach (BackgroundRock others in LandscapeObjects)
+            {
+                if (Vector3.Distance(others.transform.position,tryPos) < rock.Radius*scale+others.Radius*others.transform.localScale.x)
+                {
+                    tryAgain = true;
+                    break;
+                }
+            }
+            if (!tryAgain) return tryPos;
+        }
     }
 
-    private void Awake()
+    public List<BackgroundRock> LandscapeObjects = new();
+    public void CreateLandscape(BackgroundType LandscapeType)
     {
-        co = this;
+        foreach (BackgroundRock ob in LandscapeObjects)
+        {
+            ob.NetworkObject.Despawn();
+        }
+        LandscapeObjects = new();
+        switch (LandscapeType)
+        {
+            case BackgroundType.RANDOM_ROCK:
+                switch (UnityEngine.Random.Range(0,3))
+                {
+                    case 0:
+                        LandscapeType = BackgroundType.EMPTY;
+                        break;
+                    case 1:
+                        LandscapeType = BackgroundType.BARREN;
+                        break;
+                    case 2:
+                        LandscapeType = BackgroundType.MOUNTAINOUS;
+                        break;
+                }
+                break;
+        }
+        switch (LandscapeType)
+        {
+            case BackgroundType.EMPTY:
+                break;
+            case BackgroundType.BARREN:
+                for (int i = 0; i < UnityEngine.Random.Range(30, 45); i++)
+                {
+                    SpawnSmallRock();
+                }
+                break;
+            case BackgroundType.MOUNTAINOUS:
+                for (int i = 0; i < UnityEngine.Random.Range(8,14); i++)
+                {
+                    SpawnLargeRock();
+                }
+                for (int i = 0; i < UnityEngine.Random.Range(70, 95); i++)
+                {
+                    SpawnSmallRock();
+                }
+                break;
+        }
+    }
 
-        int i = 0;
+    private void SpawnSmallRock()
+    {
+        BackgroundRock spawn = BackgroundSmallRocks[UnityEngine.Random.Range(0, BackgroundSmallRocks.Length)];
+        float Scale = UnityEngine.Random.Range(0.7f, 1.3f);
+        BackgroundRock ob = Instantiate(spawn, GetBackgroundPoint(spawn, Scale), Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0f, 360f)));
+        
+        ob.transform.localScale = new Vector3(Scale, Scale, 1);
+        LandscapeObjects.Add(ob);
+        ob.NetworkObject.Spawn();
+    }
+    private void SpawnLargeRock()
+    {
+        BackgroundRock spawn = BackgroundSmallRocks[UnityEngine.Random.Range(0, BackgroundSmallRocks.Length)];
+        float Scale = UnityEngine.Random.Range(0.7f, 1.3f);
+        BackgroundRock ob = Instantiate(spawn, GetBackgroundPoint(spawn, Scale), Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0f, 360f)));
+     
+        ob.transform.localScale = new Vector3(Scale, Scale, 1);
+        LandscapeObjects.Add(ob);
+        ob.NetworkObject.Spawn();
     }
 
     [Rpc(SendTo.Server)]

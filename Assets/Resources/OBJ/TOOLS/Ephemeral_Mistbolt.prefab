@@ -175,14 +175,17 @@ MonoBehaviour:
   LaunchVFX: {fileID: 0}
   ImpactSFX:
   - {fileID: 8300000, guid: e65858ce6f0843548b28176ca445c4c4, type: 3}
+  BlockPenetration: 9
+  DodgeModifier: 1
   HullDamageModifier: 1
   ModuleDamageModifier: 1
   ArmorDamageModifier: 1
   ArmorAbsorptionModifier: 1
   CrewDamageModifier: 1
+  CrewDamageModifierDirect: 1
   CrewDamageSplash: 3
   DealSplash: 1
-  CanBeBlocked: 0
+  ApplyBuff: {fileID: 0}
 --- !u!114 &1279859445198227217
 MonoBehaviour:
   m_ObjectHideFlags: 0

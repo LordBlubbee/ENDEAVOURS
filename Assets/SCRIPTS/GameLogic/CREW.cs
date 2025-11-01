@@ -975,7 +975,9 @@ public class CREW : NetworkBehaviour, iDamageable
                     if (!IsTargetEnemy(Blocker.tool.GetCrew().GetFaction())) continue;
                     if (!Blocker.tool.GetCrew().CanBeTargeted(Space)) continue;
                     MeleeHits.Add(Blocker.gameObject);
-                    bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChanceMelee;
+                    float Penetration = 0;
+                    if (DashingDamageBuff > 0) Penetration += 0.3f;
+                    bool isBlocked = UnityEngine.Random.Range(0f, 1f) + Penetration < Blocker.BlockChanceMelee;
                     if (isBlocked)
                     {
                         if (Blocker.BlockSound != AUDCO.BlockSoundEffects.NONE) AUDCO.aud.PlayBlockSFXRpc(Blocker.BlockSound, transform.position);
@@ -987,7 +989,6 @@ public class CREW : NetworkBehaviour, iDamageable
                         }
                         else
                         {
-                            CO_SPAWNER.co.SpawnWordsRpc("BLOCKED", checkHit);
                             CO_SPAWNER.co.SpawnImpactRpc(checkHit);
                         }
                         canStrikeMelee = false;

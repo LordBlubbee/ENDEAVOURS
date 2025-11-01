@@ -361,6 +361,7 @@ public class CO : NetworkBehaviour
     public void StartGame()
     {
         GenerateMap();
+        CO_SPAWNER.co.CreateLandscape(CO_SPAWNER.BackgroundType.BARREN);
 
         //NEW GAME
         Resource_Materials.Value = 50;
@@ -510,6 +511,7 @@ public class CO : NetworkBehaviour
             GenerateMap();
             destination = RegisteredMapPoints[0];
         }
+        CO_SPAWNER.co.CreateLandscape(destination.AssociatedPoint.BackgroundType);
         if (destination.AssociatedPoint.InitialDialog) CO_STORY.co.SetStory(destination.AssociatedPoint.InitialDialog);
 
 

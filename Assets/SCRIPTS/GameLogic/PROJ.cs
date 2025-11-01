@@ -25,6 +25,7 @@ public class PROJ : NetworkBehaviour
     public GameObject ImpactVFX;
     public GameObject LaunchVFX;
     public AudioClip[] ImpactSFX;
+    public float BlockPenetration = 0f;
     public float DodgeModifier = 1f;
     public float HullDamageModifier = 1f; //Which factor of damage is done to modules
     public float ModuleDamageModifier = 1f; //Which factor of damage is done to modules
@@ -34,7 +35,6 @@ public class PROJ : NetworkBehaviour
     public float CrewDamageModifierDirect = 1f; //Which facotr of damage is done to nearby crew members
     public float CrewDamageSplash = 1f; //Which factor of damage is done to nearby crew members
     public bool DealSplash = false;
-    public bool CanBeBlocked = true;
     public ScriptableBuff ApplyBuff;
     [NonSerialized] public CREW CrewOwner;
 
@@ -199,12 +199,12 @@ public class PROJ : NetworkBehaviour
                 return;
             }
             BlockAttacks Blocker = collision.GetComponent<BlockAttacks>();
-            if (Blocker != null && CanBeBlocked)
+            if (Blocker != null && BlockPenetration < 1)
             {
                 if (Damageables.Contains(Blocker.gameObject)) return;
                 if (Blocker.tool.GetCrew().GetFaction() == Faction) return;
                 Damageables.Add(Blocker.gameObject);
-                bool isBlocked = UnityEngine.Random.Range(0f, 1f) < Blocker.BlockChanceRanged;
+                bool isBlocked = UnityEngine.Random.Range(0f, 1f) + BlockPenetration < Blocker.BlockChanceRanged;
                 if (isBlocked)
                 {
                     if (Blocker.BlockSound != AUDCO.BlockSoundEffects.NONE) AUDCO.aud.PlayBlockSFXRpc(Blocker.BlockSound, transform.position);
@@ -216,7 +216,6 @@ public class PROJ : NetworkBehaviour
                     }
                     else
                     {
-                        CO_SPAWNER.co.SpawnWordsRpc("BLOCKED", transform.position);
                     }
                     BulletImpact();
                 }

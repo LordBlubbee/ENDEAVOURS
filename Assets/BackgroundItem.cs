@@ -23,25 +23,25 @@ public class BackgroundItem : MonoBehaviour
         // --- Wrapping logic ---
         bool wrapped = false;
 
-        if (transform.position.x < -BackgroundTransform.back.MapSize())
+        if (transform.position.x < -BackgroundTransform.MapSize())
         {
-            offset.x += (BackgroundTransform.back.MapSize() + BackgroundTransform.back.MapSize()); // shift offset, not actual position
+            offset.x += (BackgroundTransform.MapSize() + BackgroundTransform.MapSize()); // shift offset, not actual position
             wrapped = true;
         }
-        else if (transform.position.x > BackgroundTransform.back.MapSize())
+        else if (transform.position.x > BackgroundTransform.MapSize())
         {
-            offset.x -= (BackgroundTransform.back.MapSize() + BackgroundTransform.back.MapSize());
+            offset.x -= (BackgroundTransform.MapSize() + BackgroundTransform.MapSize());
             wrapped = true;
         }
 
-        if (transform.position.y < -BackgroundTransform.back.MapSize())
+        if (transform.position.y < -BackgroundTransform.MapSize())
         {
-            offset.y += (BackgroundTransform.back.MapSize() + BackgroundTransform.back.MapSize());
+            offset.y += (BackgroundTransform.MapSize() + BackgroundTransform.MapSize());
             wrapped = true;
         }
-        else if (transform.position.y > BackgroundTransform.back.MapSize())
+        else if (transform.position.y > BackgroundTransform.MapSize())
         {
-            offset.y -= (BackgroundTransform.back.MapSize() + BackgroundTransform.back.MapSize());
+            offset.y -= (BackgroundTransform.MapSize() + BackgroundTransform.MapSize());
             wrapped = true;
         }
 

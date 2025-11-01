@@ -114,21 +114,19 @@ public class Screen_Talk : MonoBehaviour
         foreach (char c in text)
         {
             if (tex.text != keepTex) yield break;
-            if (!RewardScreen.gameObject.activeSelf)
+            while (RewardScreen.gameObject.activeSelf) yield return null;
+            keepTex += c;
+            tex.text = keepTex;
+            if (CurrentSpeaker && Speak)
             {
-                keepTex += c;
-                tex.text = keepTex;
-                if (CurrentSpeaker && Speak)
+                if (CurrentSpeaker.Voice.Length > 0 && char.IsLetterOrDigit(c))
                 {
-                    if (CurrentSpeaker.Voice.Length > 0 && char.IsLetterOrDigit(c))
+                    speakLetter--;
+                    if (speakLetter < 0)
                     {
-                        speakLetter--;
-                        if (speakLetter < 0)
-                        {
-                            speakLetter = Random.Range(2, 4);
-                            AudioClip clip = CurrentSpeaker.Voice[Random.Range(0, CurrentSpeaker.Voice.Length)];
-                            AUDCO.aud.PlaySFX(clip);
-                        }
+                        speakLetter = Random.Range(2, 4);
+                        AudioClip clip = CurrentSpeaker.Voice[Random.Range(0, CurrentSpeaker.Voice.Length)];
+                        AUDCO.aud.PlaySFX(clip);
                     }
                 }
             }

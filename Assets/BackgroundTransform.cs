@@ -21,7 +21,7 @@ public class BackgroundTransform : MonoBehaviour
     {
         return pos;
     }
-    public float MapSize()
+    public static float MapSize()
     {
         return 600;
     }

@@ -17,6 +17,18 @@ public class AUDCO : NetworkBehaviour
         SHIELD
     }
 
+    public enum Soundtrack
+    {
+        NONE = -1,
+        TEST1 = 0, 
+        TEST2 = 1,
+        TEST3 = 2,
+    }
+
+    public AudioClip[] SoundtrackCalm;
+    public AudioClip[] SoundtrackIntense;
+    public NetworkVariable<int> CurrentSoundtrackID = new(-1);
+
     private List<AUD> ActiveAudio = new();
 
     public List<AUD> GetActiveAudio()
@@ -35,9 +47,31 @@ public class AUDCO : NetworkBehaviour
     private void Start()
     {
         aud = this;
+        mainOST = OST1;
+        otherOST = OST2;
+        StartCoroutine(SoundManager());
+    }
+
+    IEnumerator SoundManager()
+    {
+        yield return new WaitForSeconds(1);
+        while (true)
+        {
+            switch (CurrentSoundtrackID.Value)
+            {
+                case -1:
+                    setOST(null);
+                    break;
+                default:
+                    setOST(CO.co.IsSafe() ? SoundtrackCalm[CurrentSoundtrackID.Value] : SoundtrackIntense[CurrentSoundtrackID.Value]);
+                    break;
+            }
+            yield return new WaitForSeconds(1);
+        }
     }
     public void setOST(AudioClip clip)
     {
+        if (mainOST.clip == clip) return;
         if (mainOST == OST1)
         {
             otherOST = OST1;
@@ -50,16 +84,23 @@ public class AUDCO : NetworkBehaviour
         }
         mainOST.clip = clip;
         mainOST.Play();
-        if (!isRegulatingOSTDir) StartCoroutine(regulateOSTDir());
+        StartCoroutine(regulateOSTDir());
     }
     bool isRegulatingOSTDir = false;
     IEnumerator regulateOSTDir()
     {
         isRegulatingOSTDir = true;
+        mainOST.volume = 0f;
+        while (otherOST.volume < 1f)
+        {
+            otherOST.volume -= Time.deltaTime * 0.5f;
+            yield return null;
+        }
+        otherOST.volume = 0f;
         while (mainOST.volume < 1f)
         {
-            mainOST.volume += Time.deltaTime * 0.5f;
-            otherOST.volume = 1f - mainOST.volume;
+            mainOST.volume += Time.deltaTime * 0.5f; 
+            otherOST.volume = 0f;
             yield return null;
         }
         mainOST.volume = 1f;
