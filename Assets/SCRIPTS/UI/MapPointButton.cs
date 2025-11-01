@@ -13,7 +13,11 @@ public class MapPointButton : MonoBehaviour
     {
         AssociatedPoint = pon;
         DestinationID = dest;
-        if (NameVisible) Texto.text = pon.GetData();
+        if (NameVisible)
+        {
+            if (pon.AssociatedPoint.UniqueName != "") Texto.text = pon.GetNameAndData();
+            Texto.text = pon.GetData();
+        }
     }
     public void SetDefaultColor(Color col)
     {

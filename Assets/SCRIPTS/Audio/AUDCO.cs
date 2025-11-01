@@ -29,6 +29,11 @@ public class AUDCO : NetworkBehaviour
     public AudioClip[] SoundtrackIntense;
     public NetworkVariable<int> CurrentSoundtrackID = new(-1);
 
+    public void SetCurrentSoundtrack(Soundtrack track)
+    {
+        CurrentSoundtrackID.Value = (int)track;
+    }
+
     private List<AUD> ActiveAudio = new();
 
     public List<AUD> GetActiveAudio()
@@ -91,7 +96,7 @@ public class AUDCO : NetworkBehaviour
     {
         isRegulatingOSTDir = true;
         mainOST.volume = 0f;
-        while (otherOST.volume < 1f)
+        while (otherOST.volume > 0f)
         {
             otherOST.volume -= Time.deltaTime * 0.5f;
             yield return null;

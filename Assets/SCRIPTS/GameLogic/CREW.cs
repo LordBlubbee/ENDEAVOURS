@@ -12,6 +12,7 @@ public class CREW : NetworkBehaviour, iDamageable
     private Collider2D Col;
     public SpriteRenderer Spr;
     public SpriteRenderer Stripes;
+    public bool ControlledByPlayer = false;
     public ANIM AnimationController { get; private set; }
     private List<AnimTransform> AnimTransforms = new List<AnimTransform>();
     private ANIM.AnimationState animDefaultIdle = ANIM.AnimationState.MI_IDLE;
@@ -26,7 +27,7 @@ public class CREW : NetworkBehaviour, iDamageable
     [NonSerialized] public NetworkVariable<float> BleedingTime = new();
     public bool IsPlayer()
     {
-        return PlayerController.Value > 0;
+        return ControlledByPlayer;
     }
     public int GetPlayerController()
     {
@@ -451,11 +452,9 @@ public class CREW : NetworkBehaviour, iDamageable
         
         if (!IsServer)
         {
-            Debug.Log("CHARACTER BACKGROUND FOUND: " + CharacterBackgroundLink.Value.ToString());
             if (CharacterBackgroundLink.Value != "")
             {
                 CharacterBackground = Resources.Load<ScriptableBackground>(($"OBJ/SCRIPTABLES/BACKGROUNDS/{CharacterBackgroundLink.Value.ToString()}"));
-                Debug.Log("CHARACTER BACKGROUND IS: " + CharacterBackground);
             }
             if (CurrentToolIDNetwork.Value > -9)
             {
@@ -465,11 +464,13 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         if (CharacterBackground)
         {
-            Spr.sprite = CharacterBackground.Sprite_Player;
+            if (IsPlayer()) Spr.sprite = CharacterBackground.Sprite_Player;
             if (Stripes)
             {
-                Stripes.sprite = CharacterBackground.Sprite_Stripes;
-                Stripes.color = new Color(CharacterNameColor.Value.x, CharacterNameColor.Value.y, CharacterNameColor.Value.z);
+                if (IsPlayer()) Stripes.sprite = CharacterBackground.Sprite_Stripes;
+                Color col = new Color(CharacterNameColor.Value.x, CharacterNameColor.Value.y, CharacterNameColor.Value.z);
+                if (!IsPlayer()) col = CharacterBackground.BackgroundColor;
+                Stripes.color = col;
             }
         }
         

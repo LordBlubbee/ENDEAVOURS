@@ -227,7 +227,7 @@ public class CO_SPAWNER : NetworkBehaviour
         CREW enem = Instantiate(Prefab, drift.Space.transform.TransformPoint(drift.Space.Bridge), Quaternion.identity);
         enem.NetworkObject.Spawn();
         enem.Faction.Value = drift.GetFaction();
-        enem.CharacterName.Value = Prefab.CharacterBackground.GetRandomName();
+        enem.CharacterName.Value = drift.GetFaction() == 1 ? Prefab.CharacterBackground.GetRandomName() : Prefab.CharacterBackground.GetRandomNameEnemy();
         Color col = Prefab.CharacterBackground.BackgroundColor;
         enem.CharacterNameColor.Value = new Vector3(col.r,col.g,col.b);
         enem.EquipWeapon1Rpc();
@@ -249,6 +249,8 @@ public class CO_SPAWNER : NetworkBehaviour
         float CrewWorthPoints = CO.co.GetEncounterSizeModifier() * gr.CrewAmountLevel;
         float CrewQualityPoints = CO.co.GetEncounterDifficultyModifier() * gr.CrewQualityLevel;
         float DrifterQualityPoints = CO.co.GetDrifterDifficultyModifier() * gr.DrifterQualityLevel;
+
+        Debug.Log($"Spawning enemy group with crew amount {CrewWorthPoints} and crew quality {CrewQualityPoints} and Drfiter quality {DrifterQualityPoints}");
         AI_GROUP group;
         List<AI_UNIT> members = new();
         if (gr.SpawnDrifter.Count == 0)

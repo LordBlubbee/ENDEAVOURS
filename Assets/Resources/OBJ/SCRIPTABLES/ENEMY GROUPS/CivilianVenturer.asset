@@ -10,27 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 486074c487becad41a25117778c346f8, type: 3}
-  m_Name: PragmaticusPatroller
+  m_Name: CivilianVenturer
   m_EditorClassIdentifier: 
   AI_Type: 1
   AI_Group: 3
-  CrewAmountLevel: 800
-  CrewQualityLevel: 150
+  CrewAmountLevel: 600
+  CrewQualityLevel: 100
   GuaranteedCrewList: []
   SpawnCrewList:
   - Weight: 30
     WeightIncreaseOverQualityGradient: 0
     MinimumQuality: 0
     MaximumQuality: 0
-    Crew: {fileID: 11400000, guid: 953bc2b110d847c44abe507671bfec7f, type: 2}
+    Crew: {fileID: 11400000, guid: c6f85b10eddc45a469ad04cbe60db169, type: 2}
   - Weight: 20
     WeightIncreaseOverQualityGradient: 0
     MinimumQuality: 0
     MaximumQuality: 0
-    Crew: {fileID: 11400000, guid: fa449f2ac0c144b46ad939122de14978, type: 2}
-  DrifterQualityLevel: 100
+    Crew: {fileID: 11400000, guid: 7ba5cb155e8ea6148b15e5788e29c48b, type: 2}
+  - Weight: 15
+    WeightIncreaseOverQualityGradient: 0
+    MinimumQuality: 0
+    MaximumQuality: 0
+    Crew: {fileID: 11400000, guid: c8f8d549a99863f4680b0331a6e2c0f5, type: 2}
+  - Weight: 15
+    WeightIncreaseOverQualityGradient: 0
+    MinimumQuality: 0
+    MaximumQuality: 0
+    Crew: {fileID: 11400000, guid: 06da3eac44f90c94c9ff09a62d6265d7, type: 2}
+  DrifterQualityLevel: 90
   SpawnDrifter:
-  - {fileID: 11400000, guid: 196726e5de15a4445812c8215072c986, type: 2}
+  - {fileID: 11400000, guid: 1b0e38ebf9d06ac42ba60e6fb629cd55, type: 2}
   SpawnGroupRange: 10
   SpawnDistanceMin: 100
   SpawnDistanceMax: 200

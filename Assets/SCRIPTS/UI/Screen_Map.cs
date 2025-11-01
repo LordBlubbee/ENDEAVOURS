@@ -64,14 +64,14 @@ public class Screen_Map : MonoBehaviour
         {
             //float Dist = (map.transform.position - CO.co.PlayerMapPoint.transform.position).magnitude;
             if (Mathf.Abs(map.transform.position.x - PlayerPoint.transform.position.x) > 30f) continue;
-            if (Mathf.Abs(map.transform.position.y - PlayerPoint.transform.position.y) > 18f) continue;
+            //if (Mathf.Abs(map.transform.position.y - PlayerPoint.transform.position.y) > 18f) continue;
             Vector3 spawnPos = Anchor1.position + (map.transform.position - CO.co.GetPlayerMapPoint().transform.position) * GetStandardDistanceUnit();
             MapPointButton mpb = Instantiate(PrefabMapScreenPoint, spawnPos, Quaternion.identity, Map);
 
             mpb.SetDefaultColor(Color.gray);
             if (map == PlayerPoint)
             {
-                mpb.Init(map, -1, true);
+                mpb.Init(map, -1, false);
                 mpb.SetDefaultColor(Color.cyan);
             }
             else if (PlayerPoint.ConnectedPoints.Contains(map))

@@ -68,12 +68,16 @@ public class Screen_Inventory : MonoBehaviour
         {
             RefreshRest();
         }
+        if (SubscreenAttributes.activeSelf)
+        {
+            SkillRefresh();
+        }
         RefreshDrifterStats();
     }
 
     void RefreshRest()
     {
-        if (CO.co.AreWeResting.Value)
+        if (!CO.co.AreWeResting.Value)
         {
             OpenSubscreen(SubscreenDrifter);
             return;
@@ -115,12 +119,12 @@ public class Screen_Inventory : MonoBehaviour
 
         if (LOCALCO.local.GetPlayer().SkillPoints.Value > 2)
         {
-            SubscreenCharacterButtonTex.text = "CHARACTER";
-            SubscreenCharacterButtonTex.color = Color.yellow;
-        } else
-        {
             SubscreenCharacterButtonTex.text = "LEVEL UP";
             SubscreenCharacterButtonTex.color = Color.cyan;
+        } else
+        {
+            SubscreenCharacterButtonTex.text = "CHARACTER";
+            SubscreenCharacterButtonTex.color = Color.yellow;
         }
     }
     [Header("Drifter Inventory")]
@@ -182,7 +186,7 @@ public class Screen_Inventory : MonoBehaviour
     public void SkillRefresh()
     {
         SkillPointTex.text = $"SKILL POINTS: ({LOCALCO.local.GetPlayer().SkillPoints.Value})";
-        SkillPointTex.color = (LOCALCO.local.GetPlayer().SkillPoints.Value > 0) ? Color.green : Color.white;
+        SkillPointTex.color = (LOCALCO.local.GetPlayer().SkillPoints.Value > 0) ? Color.cyan : Color.white;
         ExperienceTex.text = $"XP: ({LOCALCO.local.GetPlayer().XPPoints.Value}/100)";
         ExperienceSlider.value = (float)LOCALCO.local.GetPlayer().XPPoints.Value / 100f;
         for (int i = 0; i < 8; i++)

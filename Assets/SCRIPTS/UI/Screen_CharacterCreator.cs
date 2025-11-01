@@ -79,7 +79,7 @@ public class Screen_CharacterCreator : MonoBehaviour
         SkillPoints = 12;
         for (int i = 0; i < SkillPower.Length; i++)
         {
-            SkillPower[i] = 0;
+            SkillPower[i] = 1;
         }
         SkillRefresh();
     }

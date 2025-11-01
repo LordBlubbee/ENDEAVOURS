@@ -174,7 +174,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         float delta = CO.co.GetWorldSpeedDelta();
         float ang = AngleToTurnTarget() + RotationTurbulence;
-        if (EnginesDown())
+        if (EnginesDown() || !CO.co.AreDriftersMoving())
         {
             ang = 0f;
         }
@@ -210,7 +210,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 
         UpdateTurn();
 
-        if (MoveInput == Vector3.zero || EnginesDown()) // 
+        if (MoveInput == Vector3.zero || EnginesDown() || !CO.co.AreDriftersMoving()) // 
         {
             bool XPOS = CurrentMovement.Value.x > 0;
             bool YPOS = CurrentMovement.Value.y > 0;

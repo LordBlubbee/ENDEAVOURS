@@ -120,7 +120,7 @@ public class UI_Module : MonoBehaviour
         Button2.SetActive(false);
 
         MainTex.text = $"{GetUseNumber()}{wep.WeaponName}";
-        StatusTex.text = $"INTEGRITY {(wep.GetHealthRelative() * 100).ToString("0")}";
+        StatusTex.text = $"INTEGRITY {(wep.GetHealth() * 100).ToString("0")}";
         
         if (wep.GetAmmoRatio() > 0) StatusTex.text += $" | <color=yellow>AMMO {wep.GetAmmo()}/{wep.MaxAmmo}</color>";
         else StatusTex.text += " | <color=red>NO AMMO</color>";

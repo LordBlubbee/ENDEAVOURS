@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6713958396d342478460fae2111cc58, type: 3}
   m_Name: TestArrival1
   m_EditorClassIdentifier: 
-  UniqueName: 
+  UniqueName: Arrival Point
   ResourceLink: TestPoints/TestArrival1
-  InitialSoundtrack: {fileID: 0}
-  CombatSoundtrack: {fileID: 0}
-  InitialMapData: Vessel detected
+  InitialSoundtrack: 0
+  CombatSoundtrack: 0
+  InitialMapData: 
   InitialDialog: {fileID: 11400000, guid: 72be4bd31933caa4eac3ac750044aca6, type: 2}
+  BackgroundType: 1
   GateToBiome: {fileID: 0}

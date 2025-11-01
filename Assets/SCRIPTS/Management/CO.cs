@@ -21,6 +21,10 @@ public class CO : NetworkBehaviour
     [NonSerialized] public NetworkVariable<int> PlayerMapPointID = new();
 
     private bool ShouldDriftersMove = false;
+    public bool AreDriftersMoving()
+    {
+        return ShouldDriftersMove;
+    }
     public bool IsSafe()
     {
         return !AreWeInDanger.Value;
@@ -370,6 +374,7 @@ public class CO : NetworkBehaviour
         Resource_Tech.Value = 0;
 
         CO_STORY.co.SetStory(GetPlayerMapPoint().AssociatedPoint.InitialDialog);
+        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
     }
     [Rpc(SendTo.Server)]
     public void AddInventoryItemRpc(FixedString64Bytes moduleLink)
@@ -492,6 +497,7 @@ public class CO : NetworkBehaviour
 
     IEnumerator Travel(MapPoint destination)
     {
+        ShouldDriftersMove = true;
         AreWeResting.Value = false;
         Vector3 moveDirection = destination.transform.position - GetPlayerMapPoint().transform.position;
         PlayerMainDrifter.SetLookTowards(moveDirection);
@@ -513,7 +519,7 @@ public class CO : NetworkBehaviour
         }
         CO_SPAWNER.co.CreateLandscape(destination.AssociatedPoint.BackgroundType);
         if (destination.AssociatedPoint.InitialDialog) CO_STORY.co.SetStory(destination.AssociatedPoint.InitialDialog);
-
+        AUDCO.aud.SetCurrentSoundtrack(destination.AssociatedPoint.InitialSoundtrack);
 
         //UpdatePlayerMapPointRpc(destination.transform.position);
         foreach (LOCALCO local in GetLOCALCO())
@@ -521,7 +527,7 @@ public class CO : NetworkBehaviour
             local.ShipTransportFadeInRpc();
         }
         //Generate Area here
-
+       
 
         yield return new WaitForSeconds(1f);
         PlayerMainDrifter.SetCanReceiveInput(true);
@@ -665,20 +671,20 @@ public class CO : NetworkBehaviour
         mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3(xSteps * GetPointStep(), MapWidth * 0.5f));
         RegisterMapPoint(mapPoint);
         MapPoint LastRestPoint = mapPoint;
-        mapPoint.Init(CurrentBiome.PossiblePointsArrival[UnityEngine.Random.Range(0, CurrentBiome.PossiblePointsArrival.Count)]);
+        mapPoint.Init(CurrentBiome.PossiblePointsRest[UnityEngine.Random.Range(0, CurrentBiome.PossiblePointsRest.Count)]);
 
         xSteps++;
         List<ScriptablePoint> Destinations = new List<ScriptablePoint> (GetPossibleDestinations());
 
-        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps+2) * GetPointStep(), MapWidth * 1.5f));
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps+1) * GetPointStep(), MapWidth * 0.7f));
         RegisterMapPoint(mapPoint);
         mapPoint.Init(Destinations[UnityEngine.Random.Range(0, Destinations.Count)]);
 
-        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps + 3) * GetPointStep(), 0));
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps + 2) * GetPointStep(), 0));
         RegisterMapPoint(mapPoint);
         mapPoint.Init(Destinations[UnityEngine.Random.Range(0, Destinations.Count)]);
 
-        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps + 2) * GetPointStep(), MapWidth * -1.5f));
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps + 1) * GetPointStep(), MapWidth * -0.7f));
         RegisterMapPoint(mapPoint);
         mapPoint.Init(Destinations[UnityEngine.Random.Range(0, Destinations.Count)]);
 
@@ -704,11 +710,7 @@ public class CO : NetworkBehaviour
             map.Init(CurrentBiome.PossiblePointsNeutral[UnityEngine.Random.Range(0, CurrentBiome.PossiblePointsNeutral.Count)]);
             MustBeInitialized.Remove(map);
         }
-        foreach (MapPoint map in GetMapPoints())
-        {
-            map.ConnectedPoints = GetConnectedPoints(map.transform.position, map);
-        }
-        LastRestPoint.ConnectedPoints = GetFarPoints(mapPoint.transform.position, LastRestPoint);
+        UpdateMapConnections();
     }
     private void UpdateMapConnections()
     {
@@ -737,39 +739,13 @@ public class CO : NetworkBehaviour
     }
     private List<MapPoint> GetConnectedPoints(Vector3 center, MapPoint us = null)
     {
-        /*MapPoint Closest1 = null;
-        MapPoint Closest2 = null;
-        float Closest1Dist = 999f;
-        float Closest2Dist = 999f;
-        float ConnectionDist = 10f;
-        List<MapPoint> list = new();
-        foreach (MapPoint map in GetMapPoints())
-        {
-            if (map == us) continue;
-            if (list.Count > 4) break;
-            float dist = (map.transform.position - center).magnitude;
-            if (dist < Closest1Dist)
-            {
-                Closest1 = map;
-                Closest1Dist = dist;
-            } else if (dist < Closest2Dist)
-            {
-                Closest2 = map;
-                Closest2Dist = dist;
-            }
-            if (dist < ConnectionDist)
-            {
-                list.Add(map);
-            }
-        }
-        if (Closest1 && !list.Contains(Closest1)) list.Add(Closest1);
-        if (Closest2 && !list.Contains(Closest2)) list.Add(Closest2);*/
         List<MapPoint> list = new();
         foreach (MapPoint map in GetMapPoints())
         {
             if (map == us) continue;
             if (map.transform.position.x > center.x - 0.5f + GetPointStep() && map.transform.position.x < center.x + 0.5f + GetPointStep()) list.Add(map);
         }
+        if (list.Count == 0) return GetFarPoints(center, us);
         return list;
     }
     private List<MapPoint> GetFarPoints(Vector3 center, MapPoint us = null)
@@ -996,6 +972,7 @@ public class CO : NetworkBehaviour
     {
         ShouldDriftersMove = true;
         AreWeInDanger.Value = true;
+        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
         ResetWeights();
         int i = 0;
         List<EnemyGroupWithWeight> Groups = new();
@@ -1041,8 +1018,9 @@ public class CO : NetworkBehaviour
             enemyDrifter.Disable();
         }
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
+        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
 
         yield return new WaitForSeconds(3f);
         if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
@@ -1053,6 +1031,7 @@ public class CO : NetworkBehaviour
     {
         ShouldDriftersMove = true;
         AreWeInDanger.Value = true;
+        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
         ResetWeights();
         int i = 0;
         List<EnemyGroupWithWeight> Groups = new();
@@ -1085,8 +1064,9 @@ public class CO : NetworkBehaviour
             enemyDrifter.Disable();
         }
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
+        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
 
         yield return new WaitForSeconds(3f);
         if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);

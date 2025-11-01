@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6713958396d342478460fae2111cc58, type: 3}
   m_Name: TestPoint2
   m_EditorClassIdentifier: 
+  UniqueName: 
   ResourceLink: TestPoints/TestPoint2
-  InitialSoundtrack: {fileID: 0}
-  CombatSoundtrack: {fileID: 0}
+  InitialSoundtrack: 1
+  CombatSoundtrack: 1
   InitialMapData: 
   InitialDialog: {fileID: 11400000, guid: 422ab0d1c423cde4cbac797b46e629f5, type: 2}
+  BackgroundType: 1
+  GateToBiome: {fileID: 0}

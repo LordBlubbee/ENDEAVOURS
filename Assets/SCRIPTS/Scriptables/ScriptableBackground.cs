@@ -39,6 +39,26 @@ public class ScriptableBackground : ScriptableObject
         switch (NameCategory)
         {
             case NameCategories.LOGIPEDAN:
+                list.Add("Ally");
+                break;
+            case NameCategories.CATALI:
+                list.Add("Ally");
+                break;
+            case NameCategories.EPHEMERAL:
+                list.Add("Ally");
+                break;
+            case NameCategories.NOMADEN:
+                list.Add("Ally");
+                break;
+        }
+        return list.Count == 0 ? "" : list[UnityEngine.Random.Range(0,list.Count)];
+    }
+    public string GetRandomNameEnemy()
+    {
+        List<string> list = new();
+        switch (NameCategory)
+        {
+            case NameCategories.LOGIPEDAN:
                 list.Add("Logipedan");
                 break;
             case NameCategories.CATALI:
@@ -51,7 +71,7 @@ public class ScriptableBackground : ScriptableObject
                 list.Add("Nomaden");
                 break;
         }
-        return list.Count == 0 ? "" : list[UnityEngine.Random.Range(0,list.Count)];
+        return list.Count == 0 ? "" : list[UnityEngine.Random.Range(0, list.Count)];
     }
 }
 [Serializable]

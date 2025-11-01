@@ -13,7 +13,7 @@ public class MapPoint : NetworkBehaviour
     [NonSerialized] private NetworkVariable<FixedString32Bytes> PointName = new();
     public string GetNameAndData()
     {
-        return PointName.Value + $"\n{AssociatedPoint.InitialMapData}";
+        return PointName.Value.ToString() + $"\n{AssociatedPoint.InitialMapData}";
     }
     public string GetData()
     {

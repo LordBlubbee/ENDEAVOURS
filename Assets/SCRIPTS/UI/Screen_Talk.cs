@@ -78,7 +78,7 @@ public class Screen_Talk : MonoBehaviour
             Delay = 0.4f;
         }
         SpeakerImage.sprite = CurrentSpeaker.Portrait;
-        if (gameObject.activeSelf) StartCoroutine(SetText(MainTex, curText, CurrentSpeaker.NameColor, true, Delay));
+        if (gameObject.activeSelf) StartCoroutine(SetMainText(MainTex, curText, CurrentSpeaker.NameColor, true, Delay));
         else MainTex.text = curText;
         if (!CO_STORY.co.IsLastMainStoryText(CurrentPage))
         {
@@ -98,23 +98,53 @@ public class Screen_Talk : MonoBehaviour
             for (int i = 0; i < ChoiceTex.Length; i++)
             {
                 string str = CO_STORY.co.GetCurrentChoice(i);
-                StartCoroutine(SetText(ChoiceTex[i], str, Color.cyan, false, 0.5f));
+                StartCoroutine(SetChoiceText(ChoiceTex[i], str, Color.cyan, false, 0.5f));
                 ChoiceButtonVotes[i].text = CO_STORY.co.VoteResultAmount(i).ToString();
                 ChoiceButton[i].gameObject.SetActive(str != "");
             }
         }
     }
 
+    int speakID = 0;
     int speakLetter = 0;
-    IEnumerator SetText(TextMeshProUGUI tex, string text, Color col, bool Speak, float delay = 0)
+    IEnumerator SetMainText(TextMeshProUGUI tex, string text, Color col, bool Speak, float delay = 0)
+    {
+        speakID++;
+        int ID = speakID;
+        string keepTex = "";
+        tex.text = keepTex;
+        yield return new WaitForSeconds(delay);
+        foreach (char c in text)
+        {
+            while (RewardScreen.gameObject.activeSelf) yield return null;
+            if (ID != speakID) yield break;
+            keepTex += c;
+            tex.text = keepTex;
+            if (CurrentSpeaker && Speak)
+            {
+                if (CurrentSpeaker.Voice.Length > 0 && char.IsLetterOrDigit(c))
+                {
+                    speakLetter--;
+                    if (speakLetter < 0)
+                    {
+                        speakLetter = Random.Range(2, 4);
+                        AudioClip clip = CurrentSpeaker.Voice[Random.Range(0, CurrentSpeaker.Voice.Length)];
+                        AUDCO.aud.PlaySFX(clip);
+                    }
+                }
+            }
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
+    IEnumerator SetChoiceText(TextMeshProUGUI tex, string text, Color col, bool Speak, float delay = 0)
     {
         string keepTex = "";
         tex.text = keepTex;
         yield return new WaitForSeconds(delay);
         foreach (char c in text)
         {
-            if (tex.text != keepTex) yield break;
             while (RewardScreen.gameObject.activeSelf) yield return null;
+            if (tex.text != keepTex) yield break;
             keepTex += c;
             tex.text = keepTex;
             if (CurrentSpeaker && Speak)

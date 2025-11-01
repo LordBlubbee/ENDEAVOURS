@@ -292,7 +292,7 @@ public class AI_UNIT : NetworkBehaviour
                     if (UnityEngine.Random.Range(0f, 1f) < 0.4f) SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()), EnemyTarget.Space);
                     else SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, UnityEngine.Random.Range(8f, 20f)), EnemyTarget.Space);
                     SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
-                    if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.UseItem2Rpc();
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.05f) Unit.UseItem2Rpc();
                     else if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
                     break;
                 case AI_TACTICS.CIRCLE:
@@ -305,7 +305,8 @@ public class AI_UNIT : NetworkBehaviour
                     {
                         SetAIMoveTowardsIfExpired(GetRandomPointAround(EnemyTarget.transform.position, 5f, 12f), EnemyTarget.Space, 3f);
                     }
-                    Unit.UseItem2Rpc();
+                    if (Unit.IsEnemyInFront(GetAttackDistance())) Unit.UseItem1Rpc();
+                    else Unit.UseItem2Rpc();
                     SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
                     if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
                     break;
@@ -315,6 +316,9 @@ public class AI_UNIT : NetworkBehaviour
                     {
                         float dist = (Group.HomeDrifter.MedicalModule.transform.position - transform.position).magnitude;
                         if (dist > 16f) point = Group.HomeDrifter.MedicalModule.transform.position;
+                        if (getSpace() != Group.HomeSpace) SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
+                        else SetAIMoveTowards(point, Group.HomeSpace);
+                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
 
                         Unit.EquipWeapon1Rpc();
                     } else
@@ -326,9 +330,10 @@ public class AI_UNIT : NetworkBehaviour
                         {
                             Unit.EquipWeapon1Rpc();
                         }
+                        SetAIMoveTowards(point, EnemyTarget.Space);
+                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
                     }
-                    SetAIMoveTowards(point, EnemyTarget.Space);
-                    SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                  
                     if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();
                     Unit.UseItem2Rpc();
                     break;
@@ -629,6 +634,10 @@ public class AI_UNIT : NetworkBehaviour
         {
             Unit.UseItem1Rpc();
             SetAIMoveTowards(GetDiagonalPointTowards(dr.transform.position, 24f, LeaningRight), dr.Space);
+            if (UnityEngine.Random.Range(0f, 1f) < 0.02f)
+            {
+                Unit.UseGrapple(dr.Space.GetNearestGridToPoint(transform.position));
+            }
         }
         else
         {

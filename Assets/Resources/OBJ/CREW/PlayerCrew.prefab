@@ -309,6 +309,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   Spr: {fileID: 5632965166791697770}
   Stripes: {fileID: 2877882561032477406}
+  ControlledByPlayer: 1
   MaxHealth: 100
   NaturalStaminaRegen: 25
   MovementSpeed: 7
