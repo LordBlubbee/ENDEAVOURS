@@ -150,7 +150,14 @@ public class AI_GROUP : MonoBehaviour
         List<Module> ManModules = new List<Module>();
         foreach (Module mod in HomeDrifter.Space.GetModules())
         {
-            if (mod.GetHealthRelative() < 1) ManModules.Add(mod);
+            if (mod.GetHealthRelative() < 1)
+            {
+                ManModules.Add(mod);
+            }
+            if (mod.IsDisabled())
+            {
+                ManModules.Add(mod);
+            }
         }
         foreach (ModuleWeapon mod in HomeDrifter.Space.WeaponModules)
         {

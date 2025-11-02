@@ -22,7 +22,7 @@ MonoBehaviour:
 
     Stamina +5
 
-    Movement +1'
+    Movement +20%'
   ItemIcon: {fileID: 21300000, guid: 73736183d7e82d0438693720d8bc572c, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/Common_LightLeather
   ItemResourceIDShort: Common_LightLeather
@@ -35,7 +35,7 @@ MonoBehaviour:
   ModifyHealthRegen: 0
   ModifyStaminaMax: 5
   ModifyStaminaRegen: 0
-  ModifyMovementSpeed: 1
+  ModifyMovementSpeed: 0.2
   ModifyMeleeDamage: 0
   ModifyRangedDamage: 0
   ModifySpellDamage: 0

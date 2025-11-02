@@ -985,6 +985,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 {
                     case TOOL.ToolActionType.MELEE_ATTACK:
                         if (!canStrikeMelee) return;
+                        ArtifactOnMelee();
                         StrikeMelee();
                         break;
                     case TOOL.ToolActionType.RANGED_ATTACK:
@@ -1019,6 +1020,7 @@ public class CREW : NetworkBehaviour, iDamageable
                             blocker.SetActive(true);
                         }
                         if (!canStrikeMelee) return;
+                        ArtifactOnMelee();
                         StrikeMelee();
                         break;
                 }
@@ -1129,7 +1131,6 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         CO_SPAWNER.co.SpawnImpactRpc(checkHit);
         canStrikeMelee = false; //Turn off until animation ends
-        ArtifactOnMelee();
         return true;
     }
 

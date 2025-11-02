@@ -284,7 +284,7 @@ MonoBehaviour:
   ModuleTag: 
   ModuleType: 1
   IconSprite: {fileID: 21300000, guid: aa1a4ba3835c1b54bb69868e67b7d2f3, type: 3}
-  ShowAsModule: {fileID: 11400000, guid: 5e327c34dc8e8044db4ecf9d321d5743, type: 2}
+  ShowAsModule: {fileID: 11400000, guid: a070b50b714195f4bac819a3003f3a4a, type: 2}
   MaxHealth: 200
   HitboxRadius: 16
   ModuleWorth: 100
@@ -305,8 +305,8 @@ MonoBehaviour:
   Damage: 100
   RotationBaseSpeed: 60
   MaxAmmo: 30
-  FireCooldown: 10
-  ReloadCooldown: 10
+  FireCooldown: 12
+  ReloadCooldown: 12
   ProjectileCount: 2
   AdditionalProjectileDelay: 0.2
   DamagePerLevel: 0

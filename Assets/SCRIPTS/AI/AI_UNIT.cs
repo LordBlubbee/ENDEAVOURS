@@ -400,9 +400,12 @@ public class AI_UNIT : NetworkBehaviour
             if (!WoundedAlly)
             {
                 WoundedAlly = GetClosestWoundedAlly();
-                if (Dist(WoundedAlly.transform.position) > 24f)
+                if (WoundedAlly)
                 {
-                    WoundedAlly = null;
+                    if (Dist(WoundedAlly.transform.position) > 24f)
+                    {
+                        WoundedAlly = null;
+                    }
                 }
             }
             if (WoundedAlly)
@@ -534,9 +537,8 @@ public class AI_UNIT : NetworkBehaviour
                         Unit.EquipMedkitRpc();
                         Unit.UseItem1Rpc();
                     }
-                }
-                    
-                return;
+                    return;
+                } 
             }
             SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
             StopLooking();
