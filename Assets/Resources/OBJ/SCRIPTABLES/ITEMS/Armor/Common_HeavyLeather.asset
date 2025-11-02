@@ -29,10 +29,11 @@ MonoBehaviour:
     Movement
     +1'
   ItemIcon: {fileID: 21300000, guid: 93756e9c2a7dfa2408f8c5421fcf24bc, type: 3}
-  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/HeavyLeather
-  ItemResourceIDShort: HeavyLeather
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/Common_HeavyLeather
+  ItemResourceIDShort: Common_HeavyLeather
   EquipType: 0
   Ability: 0
+  AbilityPrefab1: {fileID: 0}
   MinimumAttributes: 0000000000000000000000000000000000000000040000000000000000000000
   ModifyAttributes: 0000000000000000010000000000000000000000000000000000000000000000
   ModifyHealthMax: 50

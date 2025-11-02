@@ -289,7 +289,7 @@ MonoBehaviour:
   HitboxRadius: 16
   ModuleWorth: 50
   ModuleUpgradeMaterials: 1e0000003c00000064000000
-  ModuleUpgradeTechs: 00000000140000001e000000
+  ModuleUpgradeTechs: 00000000000000001e000000
   CenterPos: {fileID: 0}
   WeaponName: HEAVY BALLISTA
   WeaponTransform: {fileID: 1101510134941141221}

@@ -25,6 +25,12 @@ public class CO_SPAWNER : NetworkBehaviour
     public GameObject SparkMedium;
     public GameObject ImpactSparks;
 
+    public GameObject[] BuffParticleList;
+    public enum BuffParticles
+    {
+        NONE
+    }
+
     [Header("BACKGROUND")]
     public GameObject[] NebulaSparks;
     public BackgroundRock[] BackgroundSmallRocks;
@@ -353,7 +359,7 @@ public class CO_SPAWNER : NetworkBehaviour
                         ChanceForNewWeapon = 0.8f;
                         break;
                     case 2:
-                        ChanceForNewWeapon = 0.4f;
+                        ChanceForNewWeapon = 0.5f;
                         break;
                     default:
                         ChanceForNewWeapon = 0.3f;
@@ -364,7 +370,7 @@ public class CO_SPAWNER : NetworkBehaviour
             if (UnityEngine.Random.Range(0f, 1f) < ChanceForNewWeapon)
             {
                 ScriptableEquippableModule equip = drifterData.EquippableWeapons[UnityEngine.Random.Range(0, drifterData.EquippableWeapons.Count)];
-                Cost = equip.PrefabModule.ModuleWorth * 1.2f;
+                Cost = equip.PrefabModule.ModuleWorth;
                 if (Cost > Budget && Tries > 0)
                 {
                     Tries--;

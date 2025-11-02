@@ -22,10 +22,11 @@ MonoBehaviour:
 
     Movement +1'
   ItemIcon: {fileID: 21300000, guid: 126eebebd664a7c4ebb2721bfb430b1f, type: 3}
-  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/MediumLeather
-  ItemResourceIDShort: MediumLeather
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/Common_MediumLeather
+  ItemResourceIDShort: Common_MediumLeather
   EquipType: 0
   Ability: 0
+  AbilityPrefab1: {fileID: 0}
   MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyHealthMax: 40

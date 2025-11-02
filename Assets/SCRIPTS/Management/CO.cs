@@ -120,22 +120,22 @@ public class CO : NetworkBehaviour
                 ProgressDiff = 1f;
                 break;
             case 1:
-                ProgressDiff = 1.3f;
+                ProgressDiff = 1.5f;
                 break;
             case 2:
-                ProgressDiff = 1.7f;
+                ProgressDiff = 2f;
                 break;
             case 3:
-                ProgressDiff = 2.1f;
-                break;
-            case 4:
                 ProgressDiff = 2.8f;
                 break;
-            case 5:
+            case 4:
                 ProgressDiff = 3.5f;
                 break;
+            case 5:
+                ProgressDiff = 5f;
+                break;
             case 6:
-                ProgressDiff = 4.5f;
+                ProgressDiff = 5.5f;
                 break;
         }
         float PlayerDiff = 1f;
@@ -183,22 +183,22 @@ public class CO : NetworkBehaviour
                 ProgressDiff = 1f;
                 break;
             case 1:
-                ProgressDiff = 1.3f;
+                ProgressDiff = 1.5f;
                 break;
             case 2:
-                ProgressDiff = 1.7f;
+                ProgressDiff = 2f;
                 break;
             case 3:
-                ProgressDiff = 2.1f;
-                break;
-            case 4:
                 ProgressDiff = 2.8f;
                 break;
-            case 5:
+            case 4:
                 ProgressDiff = 3.5f;
                 break;
+            case 5:
+                ProgressDiff = 5.5f;
+                break;
             case 6:
-                ProgressDiff = 4.5f;
+                ProgressDiff = 6f;
                 break;
         }
         float PlayerDiff = 1f;
@@ -676,15 +676,15 @@ public class CO : NetworkBehaviour
         xSteps++;
         List<ScriptablePoint> Destinations = new List<ScriptablePoint> (GetPossibleDestinations());
 
-        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps+1) * GetPointStep(), MapWidth * 0.7f));
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps+1) * GetPointStep(), MapWidth * 1f));
         RegisterMapPoint(mapPoint);
         mapPoint.Init(Destinations[UnityEngine.Random.Range(0, Destinations.Count)]);
 
-        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps + 2) * GetPointStep(), 0));
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps + 2) * GetPointStep(), MapWidth * 0.5f));
         RegisterMapPoint(mapPoint);
         mapPoint.Init(Destinations[UnityEngine.Random.Range(0, Destinations.Count)]);
 
-        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps + 1) * GetPointStep(), MapWidth * -0.7f));
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3((xSteps + 1) * GetPointStep(), MapWidth * 0f));
         RegisterMapPoint(mapPoint);
         mapPoint.Init(Destinations[UnityEngine.Random.Range(0, Destinations.Count)]);
 
@@ -1181,7 +1181,7 @@ public class CO : NetworkBehaviour
             newfac.Amount = FacChanges[i];
             list.Add(newfac);
         }
-        UI.ui.TalkUI.OpenRewardScreen(Materials, Supplies, Ammo, Tech, XP, list.ToArray(), RewardItemsGained);
+        UI.ui.RewardUI.OpenRewardScreen(Materials, Supplies, Ammo, Tech, XP, list.ToArray(), RewardItemsGained);
     }
     /// <summary>
     /// Clears all weights.

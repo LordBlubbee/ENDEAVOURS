@@ -288,10 +288,10 @@ MonoBehaviour:
   MaxHealth: 200
   HitboxRadius: 16
   ModuleWorth: 100
-  ModuleUpgradeMaterials: 280000005000000096000000
-  ModuleUpgradeTechs: 00000000140000001e000000
+  ModuleUpgradeMaterials: 320000006400000096000000
+  ModuleUpgradeTechs: 00000000000000001e000000
   CenterPos: {fileID: 0}
-  WeaponName: HEAVY BALLISTA
+  WeaponName: DOUBLE BALLISTA
   WeaponTransform: {fileID: 1101510134941141221}
   Platform: {fileID: 6031975965002184304}
   FirePoint: {fileID: 3676994766029858991}

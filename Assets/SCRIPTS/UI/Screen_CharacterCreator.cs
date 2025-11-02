@@ -140,15 +140,15 @@ public class Screen_CharacterCreator : MonoBehaviour
                     SkillTex[i].color = new Color(0, 1, 0);
                     break;
                 case 8:
-                    LevelNeed = 7;
+                    LevelNeed = 6;
                     SkillTex[i].color = new Color(0, 1, 0.5f);
                     break;
                 case 9:
-                    LevelNeed = 8;
+                    LevelNeed = 6;
                     SkillTex[i].color = new Color(0, 1, 1);
                     break;
                 default:
-                    LevelNeed = 999;
+                    LevelNeed = 6;
                     SkillTex[i].color = new Color(0, 1, 1);
                     break;
             }

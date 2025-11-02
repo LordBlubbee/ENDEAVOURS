@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8290810d474b4fa43ac85b0fd530822f, type: 3}
   m_Name: CivilianVenturer
   m_EditorClassIdentifier: 
-  SpawnDrifter: {fileID: 1453653842865150193, guid: 30a4a4e595c62934d94d2380debfd8e1, type: 3}
+  SpawnDrifter: {fileID: 1453653842865150193, guid: 6030e9cf584086f478f32d083ac25751, type: 3}
   Weight: 20
   BaseWeaponBudgetMod: 0.8
   BaseModuleBudgetMod: 1

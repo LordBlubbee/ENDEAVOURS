@@ -12,9 +12,13 @@ public class ScriptableEquippableArtifact : ScriptableEquippable
         ARTIFACT
     }
     public ArtifactAbilityTypes Ability = ArtifactAbilityTypes.NONE;
+    public GameObject AbilityPrefab1;
     public enum ArtifactAbilityTypes
     {
-        NONE
+        NONE,
+        KNUCKLE_RAGE,
+        RED_POWDER,
+        CANDLE_BLAST
     }
 
     public bool CanWear(CREW crew)

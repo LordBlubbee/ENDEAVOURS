@@ -80,13 +80,17 @@ public class LOCALCO : NetworkBehaviour
                 case ControlModes.PLAYER:
                     UI.ui.MainGameplayUI.SetActiveGameUI(UI.ui.MainGameplayUI.ActiveUI);
                     bool SpecialCrosshair = GetPlayer().EquippedToolObject;
-                    UI.ui.SetCrosshairTexture(SpecialCrosshair ? GetPlayer().EquippedToolObject.CrosshairSprite : null);
+                    if (GetPlayer().isDead())
+                    {
+                        UI.ui.SetCrosshairTexture(null);
+                    }
+                    else UI.ui.SetCrosshairTexture(SpecialCrosshair ? GetPlayer().EquippedToolObject.CrosshairSprite : null);
                     if (SpecialCrosshair)
                     {
                         float Dist = (Mouse - GetPlayer().transform.position).magnitude;
                         if (Dist < GetPlayer().EquippedToolObject.CrosshairMinRange)
                         {
-                            CrosshairPoint = GetPlayer().transform.position + (Mouse-GetPlayer().transform.position).normalized * GetPlayer().EquippedToolObject.CrosshairMinRange;
+                            CrosshairPoint = GetPlayer().transform.position + (Mouse - GetPlayer().transform.position).normalized * GetPlayer().EquippedToolObject.CrosshairMinRange;
                         }
                         else if (Dist > GetPlayer().EquippedToolObject.CrosshairMaxRange)
                         {
@@ -95,7 +99,8 @@ public class LOCALCO : NetworkBehaviour
                         if (GetPlayer().EquippedToolObject.RotateCrosshair)
                         {
                             UI.ui.SetCrosshairRotateTowards(CrosshairPoint, GetPlayer().transform.position);
-                        } else
+                        }
+                        else
                         {
                             UI.ui.SetCrosshairRotateReset();
                         }
@@ -104,7 +109,8 @@ public class LOCALCO : NetworkBehaviour
                             if (HasGrappleTarget()) UI.ui.SetCrosshairColor(Color.green);
                             else UI.ui.SetCrosshairColor(Color.red);
                         }
-                    } else
+                    }
+                    else
                     {
                         UI.ui.SetCrosshairRotateReset();
                     }

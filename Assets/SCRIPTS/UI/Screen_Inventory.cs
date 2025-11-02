@@ -170,14 +170,8 @@ public class Screen_Inventory : MonoBehaviour
             case 7:
                 LevelNeed = 6;
                 break;
-            case 8:
-                LevelNeed = 7;
-                break;
-            case 9:
-                LevelNeed = 8;
-                break;
             default:
-                LevelNeed = 999;
+                LevelNeed = 6;
                 break;
         }
         if (LOCALCO.local.GetPlayer().SkillPoints.Value < LevelNeed) return;
@@ -191,20 +185,14 @@ public class Screen_Inventory : MonoBehaviour
         ExperienceSlider.value = (float)LOCALCO.local.GetPlayer().XPPoints.Value / 100f;
         for (int i = 0; i < 8; i++)
         {
-            if (LOCALCO.local.GetPlayer().CharacterBackground)
+            int Bonus = LOCALCO.local.GetPlayer().CharacterBackground.Background_ATT_BONUS[i] + LOCALCO.local.GetPlayer().ModifyAttributes[i];
+            if (Bonus > 0)
             {
-                if (LOCALCO.local.GetPlayer().CharacterBackground.Background_ATT_BONUS[i] > 0)
-                {
-                    SkillTex[i].text = $"{SkillName[i]} <color=green>({LOCALCO.local.GetPlayer().GetATT(i) + LOCALCO.local.GetPlayer().CharacterBackground.Background_ATT_BONUS[i]})";
-                }
-                else if (LOCALCO.local.GetPlayer().CharacterBackground.Background_ATT_BONUS[i] < 0)
-                {
-                    SkillTex[i].text = $"{SkillName[i]} <color=red> ({LOCALCO.local.GetPlayer().GetATT(i) + LOCALCO.local.GetPlayer().CharacterBackground.Background_ATT_BONUS[i]})";
-                }
-                else
-                {
-                    SkillTex[i].text = $"{SkillName[i]} ({LOCALCO.local.GetPlayer().GetATT(i)})";
-                }
+                SkillTex[i].text = $"{SkillName[i]} <color=green>({LOCALCO.local.GetPlayer().GetATT(i) + Bonus})";
+            }
+            else if (Bonus < 0)
+            {
+                SkillTex[i].text = $"{SkillName[i]} <color=red> ({LOCALCO.local.GetPlayer().GetATT(i) + Bonus})";
             }
             else
             {
@@ -246,15 +234,15 @@ public class Screen_Inventory : MonoBehaviour
                     SkillTex[i].color = new Color(0, 1, 0);
                     break;
                 case 8:
-                    LevelNeed = 7;
+                    LevelNeed = 6;
                     SkillTex[i].color = new Color(0, 1, 0.5f);
                     break;
                 case 9:
-                    LevelNeed = 8;
+                    LevelNeed = 6;
                     SkillTex[i].color = new Color(0, 1, 1);
                     break;
                 default:
-                    LevelNeed = 999;
+                    LevelNeed = 6;
                     SkillTex[i].color = new Color(0, 1, 1);
                     break;
             }

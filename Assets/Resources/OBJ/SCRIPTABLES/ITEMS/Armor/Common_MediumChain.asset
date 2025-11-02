@@ -22,10 +22,11 @@ MonoBehaviour:
 
     Melee Damage +1'
   ItemIcon: {fileID: 21300000, guid: 064c6928ce902444d9583b15f1e55b9c, type: 3}
-  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/MediumChain
-  ItemResourceIDShort: MediumChain
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/Common_MediumChain
+  ItemResourceIDShort: Common_MediumChain
   EquipType: 0
   Ability: 0
+  AbilityPrefab1: {fileID: 0}
   MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyHealthMax: 40

@@ -113,11 +113,17 @@ public class Screen_Talk : MonoBehaviour
         int ID = speakID;
         string keepTex = "";
         tex.text = keepTex;
+        float Timer = 0f;
         yield return new WaitForSeconds(delay);
         foreach (char c in text)
         {
-            while (RewardScreen.gameObject.activeSelf) yield return null;
+            while (Timer > 0f)
+            {
+                Timer -= Time.deltaTime;
+                yield return null;
+            }
             if (ID != speakID) yield break;
+            Timer += 0.02f;
             keepTex += c;
             tex.text = keepTex;
             if (CurrentSpeaker && Speak)
@@ -133,7 +139,6 @@ public class Screen_Talk : MonoBehaviour
                     }
                 }
             }
-            yield return new WaitForSeconds(0.02f);
         }
     }
     IEnumerator SetChoiceText(TextMeshProUGUI tex, string text, Color col, bool Speak, float delay = 0)
@@ -143,7 +148,6 @@ public class Screen_Talk : MonoBehaviour
         yield return new WaitForSeconds(delay);
         foreach (char c in text)
         {
-            while (RewardScreen.gameObject.activeSelf) yield return null;
             if (tex.text != keepTex) yield break;
             keepTex += c;
             tex.text = keepTex;
@@ -173,50 +177,8 @@ public class Screen_Talk : MonoBehaviour
         if (CurrentPage < 1) return;
         CurrentPage--; UpdateData(); 
     }
-
-    [Header("REWARD SCREEN")]
-    public GameObject RewardScreen;
-    public TextMeshProUGUI MaterialGain;
-    public List<InventorySlot> InventorySlots;
-    public void OpenRewardScreen(int Materials, int Supplies, int Ammo, int Tech, int XP, FactionReputation[] Facs, FixedString64Bytes[] RewardItemsGained)
-    {
-        RewardScreen.SetActive(true);
-        MaterialGain.text = "";
-        if (XP != 0) MaterialGain.text += $"<color=#FFFF00>XP: +{XP}</color>\n";
-        if (Materials > 0) MaterialGain.text += $"<color=green>MATERIALS: +{Materials}</color>\n";
-        else if (Materials < 0) MaterialGain.text += $"<color=red>MATERIALS: {Materials}</color>\n";
-        if (Supplies > 0) MaterialGain.text += $"<color=green>SUPPLIES: +{Supplies}</color>\n";
-        else if (Supplies < 0) MaterialGain.text += $"<color=red>SUPPLIES: {Supplies}</color>\n";
-        if (Ammo > 0) MaterialGain.text += $"<color=green>AMMUNITION: +{Ammo}</color>\n";
-        else if (Ammo < 0) MaterialGain.text += $"<color=red>AMMUNITION: {Ammo}</color>\n";
-        if (Tech > 0) MaterialGain.text += $"<color=green>TECHNOLOGY: +{Tech}</color>\n";
-        else if (Tech < 0) MaterialGain.text += $"<color=red>TECHNOLOGY: {Tech}</color>\n";
-
-        foreach (FactionReputation fac in Facs)
-        {
-            if (fac.Amount > 0) MaterialGain.text += $"<color=green>{fac.Fac} +{fac.Amount}</color>\n";
-            else if (fac.Amount < 0) MaterialGain.text += $"<color=red>{fac.Fac} {fac.Amount}</color>\n";
-        }
-
-        for (int i = 0; i < InventorySlots.Count; i++)
-        {
-            if (RewardItemsGained.Length <= i)
-            {
-                InventorySlots[i].gameObject.SetActive(false);
-            } else
-            {
-                InventorySlots[i].gameObject.SetActive(true);
-                InventorySlots[i].SetInventoryItem(Resources.Load<ScriptableEquippable>(RewardItemsGained[i].ToString()));
-            }
-        }
-    }
-    public void CloseRewardScreen()
-    {
-        RewardScreen.SetActive(false);
-    }
     public void CloseScreen()
     {
-        RewardScreen.SetActive(false);
         UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
     }
 }

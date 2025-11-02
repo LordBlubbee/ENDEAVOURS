@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using static iDamageable;
 
 public class DRIFTER : NetworkBehaviour, iDamageable
 {
@@ -289,7 +290,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         CurHealth.Value = Mathf.Min(MaxHealth, CurHealth.Value + fl);
     }
-    public void TakeDamage(float fl, Vector3 ImpactArea)
+    public void TakeDamage(float fl, Vector3 ImpactArea, DamageType type)
     {
         if (isDead()) return;
         CurHealth.Value -= fl;
@@ -415,13 +416,13 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             CO_SPAWNER.co.SpawnArmorImpactRpc(ImpactArea);
             return;
         }
-        TakeDamage(Damage * fl.HullDamageModifier, ImpactArea);
+        TakeDamage(Damage * fl.HullDamageModifier, ImpactArea, DamageType.TRUE);
         foreach (Module mod in Interior.GetModules())
         {
             float Dist = (mod.transform.position - ImpactArea).magnitude;
             if (Dist < mod.HitboxRadius)
             {
-                mod.TakeDamage(Damage * fl.ModuleDamageModifier, mod.transform.position);
+                mod.TakeDamage(Damage * fl.ModuleDamageModifier, mod.transform.position, DamageType.TRUE);
             }
         }
         foreach (CREW mod in Interior.GetCrew())
@@ -429,7 +430,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             float Dist = (mod.transform.position - ImpactArea).magnitude;
             if (Dist < 4f)
             {
-                mod.TakeDamage(Damage * fl.CrewDamageModifier, mod.transform.position);
+                mod.TakeDamage(Damage * fl.CrewDamageModifier, mod.transform.position, DamageType.TRUE);
             }
         }
     }
@@ -465,7 +466,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             }
         }
         Damage += AbsorbableDamage;
-        TakeDamage(Damage * 0.8f, ImpactArea);
+        TakeDamage(Damage * 0.8f, ImpactArea, DamageType.TRUE);
     }
     public int GetFaction()
     {

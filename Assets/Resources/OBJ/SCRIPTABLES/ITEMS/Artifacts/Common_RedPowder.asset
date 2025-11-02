@@ -17,22 +17,23 @@ MonoBehaviour:
     by a Clan of pirates to grant projectiles explosive properties.
 
 
-    <color=green>+4
-    Ranged Damage
-
-    <color=red>-1 MED'
+    <color=green>(Short
+    cooldown) Whenever you hit an enemy with a ranged attack, create a small blast
+    that deals explosive damage centered on that enemy. Cooldown and damage scale
+    with Alchemy.'
   ItemIcon: {fileID: 21300000, guid: 6543705337f40b741a9e7e9aab5cfbfb, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Common_RedPowder
   ItemResourceIDShort: Common_RedPowder
   EquipType: 1
-  Ability: 0
+  Ability: 2
+  AbilityPrefab1: {fileID: 0}
   MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
-  ModifyAttributes: 00000000000000000000000000000000000000000000000000000000ffffffff
+  ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyHealthMax: 0
   ModifyHealthRegen: 0
   ModifyStaminaMax: 0
   ModifyStaminaRegen: 0
   ModifyMovementSpeed: 0
   ModifyMeleeDamage: 0
-  ModifyRangedDamage: 4
+  ModifyRangedDamage: 0
   ModifySpellDamage: 0

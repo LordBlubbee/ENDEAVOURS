@@ -13,18 +13,20 @@ MonoBehaviour:
   m_Name: End
   m_EditorClassIdentifier: 
   StoryTexts:
-  - BaseText: The Pragmaticus have been defeated, and their Drifter sinks into the
-      Nebula.
+  - BaseText: The Civilian vessel has been ransacked, and their buoyancy is steadily
+      decreasing.
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
-  - BaseText: Their intentions matter little now. The Starlight Endeavour must continue.
+  - BaseText: They will be missed, and the Republic and Coalition will realize this.
+      But it does not matter. We must move on.
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
-      BaseText: Our journey continues.
+      BaseText: It had to be done.
       Speaker: {fileID: 0}
       Alternatives: []
+    Prerequisites: []
     DialogResult: {fileID: 0}
     AlternativeResults: []
     TriggerEvent: {fileID: 11400000, guid: cbd8b5cc701a7a24ca0d291ae1ccae28, type: 2}

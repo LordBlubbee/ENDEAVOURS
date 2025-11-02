@@ -171,6 +171,7 @@ MonoBehaviour:
   CanHitWalls: 1
   AltitudeInacurracyFactor: 0.02
   AltitudeDirectHitCeiling: 0
+  DamageType: 3
   ImpactVFX: {fileID: 7178822272740056672, guid: 9a1890060c8b20f4ababaea577a1a233, type: 3}
   LaunchVFX: {fileID: 0}
   ImpactSFX:

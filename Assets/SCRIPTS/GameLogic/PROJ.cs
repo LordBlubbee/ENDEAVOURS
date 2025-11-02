@@ -22,6 +22,7 @@ public class PROJ : NetworkBehaviour
     public float AltitudeDirectHitCeiling;
 
     [Header("IMPACT")]
+    public iDamageable.DamageType DamageType = iDamageable.DamageType.RANGED;
     public GameObject ImpactVFX;
     public GameObject LaunchVFX;
     public AudioClip[] ImpactSFX;
@@ -142,15 +143,31 @@ public class PROJ : NetworkBehaviour
                 }
             } else
             {
-                if (crew is Module) crew.TakeDamage(AttackDamage * ModuleDamageModifier, transform.position);
+                if (crew is Module) crew.TakeDamage(AttackDamage * ModuleDamageModifier, transform.position, DamageType);
                 else
                 {
-                    crew.TakeDamage(AttackDamage * CrewDamageModifierDirect, transform.position);
+                    crew.TakeDamage(AttackDamage * CrewDamageModifierDirect, transform.position, DamageType);
                     if (crew is CREW)
                     {
                         if (ApplyBuff)
                         {
                             ((CREW)crew).AddBuff(ApplyBuff);
+                        }
+                        if (CrewOwner)
+                        {
+                            switch (DamageType)
+                            {
+                                case iDamageable.DamageType.RANGED:
+                                    CrewOwner.ArtifactOnRangedTarget((CREW)crew);
+                                    break;
+                                case iDamageable.DamageType.SPELL:
+                                    CrewOwner.ArtifactOnSpellTarget((CREW)crew);
+                                    break;
+                            }
+                            if (((CREW)crew).isDead())
+                            {
+                                CrewOwner.ArtifactOnKill((CREW)crew);
+                            }
                         }
                     }
                 }

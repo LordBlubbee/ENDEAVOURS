@@ -24,10 +24,11 @@ MonoBehaviour:
 
     Melee Damage +1'
   ItemIcon: {fileID: 21300000, guid: b703a082054a8c64ca64c9223be547ea, type: 3}
-  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/LightChain
-  ItemResourceIDShort: LightChain
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/Common_LightChain
+  ItemResourceIDShort: Common_LightChain
   EquipType: 0
   Ability: 0
+  AbilityPrefab1: {fileID: 0}
   MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyHealthMax: 20

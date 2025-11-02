@@ -16,4 +16,4 @@ MonoBehaviour:
   EnemyWave: {fileID: 11400000, guid: c5dcc57c916926848b03cf8d62be81bb, type: 2}
   AdditionalDialogs: []
   LootTable: {fileID: 11400000, guid: 2fad7d2d3c4ed2946a677637cfa26399, type: 2}
-  DebriefDialog: {fileID: 11400000, guid: c8db77d883b055b45841b3fddf8166a0, type: 2}
+  DebriefDialog: {fileID: 11400000, guid: 6e0567fc4699e1b4d8f86f0e70681221, type: 2}

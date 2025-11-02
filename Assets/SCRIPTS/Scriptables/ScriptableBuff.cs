@@ -9,6 +9,7 @@ public class ScriptableBuff : ScriptableObject
 {
     public int MaxStacks;
     public float Duration;
+    public CO_SPAWNER.BuffParticles BuffParticles;
 
     public float ModifyHealthMax;
     public float ModifyHealthRegen;

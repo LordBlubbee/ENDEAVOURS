@@ -1,0 +1,20 @@
+using UnityEngine;
+
+public class ArtifactKnuckles : ArtifactAbility
+{
+    public ArtifactKnuckles(CREW crew) : base(crew)
+    {
+    }
+
+    public override void OnDamaged(CREW us)
+    {
+        ScriptableBuff buff = new();
+        buff.name = "KnucklesRage";
+        buff.MaxStacks = 3;
+        buff.Duration = 5;
+        buff.ModifyAnimationSpeed = 0.3f;
+        buff.ModifyMovementSpeed = 0.3f;
+        buff.ModifyMeleeDamage = 3;
+        us.AddBuff(buff);
+    }
+}

@@ -24,10 +24,11 @@ MonoBehaviour:
 
     Movement +1'
   ItemIcon: {fileID: 21300000, guid: 73736183d7e82d0438693720d8bc572c, type: 3}
-  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/LightLeather
-  ItemResourceIDShort: LightLeather
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/Common_LightLeather
+  ItemResourceIDShort: Common_LightLeather
   EquipType: 0
   Ability: 0
+  AbilityPrefab1: {fileID: 0}
   MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyHealthMax: 20

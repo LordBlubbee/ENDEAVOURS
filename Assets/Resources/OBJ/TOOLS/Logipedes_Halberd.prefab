@@ -293,7 +293,7 @@ MonoBehaviour:
   ReduceDamageModMelee: 1
   ReduceDamageModRanged: 0.6
   BlockChanceMelee: 1
-  BlockChanceRanged: 1
+  BlockChanceRanged: 0.8
   ReflectProjectileChance: 0
   isActive: 0
   isAlwaysActive: 0

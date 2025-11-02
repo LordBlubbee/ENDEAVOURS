@@ -19,7 +19,7 @@ MonoBehaviour:
     Resource_Ammunition: 0
     Resource_Technology: 0
     Resource_XP: 25
-    ItemDrop: {fileID: 0}
+    ItemDrop: {fileID: 11400000, guid: 0a70c805b4206b04dad2f4c4d74456c6, type: 2}
   ReputationChanges: []
   TotalLootDrops: 4
   RandomLoot:

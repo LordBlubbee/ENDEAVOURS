@@ -453,8 +453,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: {fileID: 8311341897716400573}
   col: {fileID: 3986237058773100887}
-  ReduceDamageModMelee: 1
-  ReduceDamageModRanged: 1
+  ReduceDamageModMelee: 0.9
+  ReduceDamageModRanged: 0.9
   BlockChanceMelee: 1
   BlockChanceRanged: 1
   ReflectProjectileChance: 0

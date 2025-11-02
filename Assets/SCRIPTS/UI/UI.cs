@@ -14,6 +14,7 @@ public class UI : MonoBehaviour
     public Screen_Inventory InventoryUI;
     public Screen_Map MapUI;
     public Screen_Talk TalkUI;
+    public Screen_Reward RewardUI;
     public Image Crosshair;
     private GameObject PreviousScreen;
 

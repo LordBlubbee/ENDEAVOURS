@@ -3,6 +3,7 @@ using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using static CO;
+using static iDamageable;
 
 public class Module : NetworkBehaviour, iDamageable, iInteractable
 {
@@ -212,13 +213,13 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         {
             if (OrderTransform != null) OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
 
-            if (HomeDrifter && IsDisabled())
+            if (HomeDrifter && IsDisabled() && !CO.co.IsSafe())
             {
                 TakeDamageFromDisablement += 1f * CO.co.GetWorldSpeedDelta();
-                if (TakeDamageFromDisablement > 5f)
+                if (TakeDamageFromDisablement > 15f)
                 {
                     TakeDamageFromDisablement -= 5f;
-                    HomeDrifter.TakeDamage(5f, transform.position);
+                    HomeDrifter.TakeDamage(10f, transform.position, DamageType.TRUE);
                 }
             }
         }
@@ -251,7 +252,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         if (CurHealth.Value > 99) isDisabled.Value = false;
         if (fl > 1) CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
     }
-    public void TakeDamage(float fl, Vector3 src)
+    public void TakeDamage(float fl, Vector3 src, DamageType type)
     {
         if (MaxHealth < 1) return;
         CurHealth.Value -= fl;

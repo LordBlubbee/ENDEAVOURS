@@ -18,7 +18,7 @@ public class ResourceCrate : NetworkBehaviour, iDamageable, iInteractable
     public void Heal(float fl)
     {
     }
-    public void TakeDamage(float fl, Vector3 src)
+    public void TakeDamage(float fl, Vector3 src, iDamageable.DamageType type)
     {
     }
     public enum ResourceTypes

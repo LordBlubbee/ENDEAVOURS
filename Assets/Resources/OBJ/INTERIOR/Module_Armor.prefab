@@ -429,5 +429,5 @@ MonoBehaviour:
   CenterPos: {fileID: 0}
   MaxArmor: 100
   ArmorPerUpgrade: 100
-  ArmorRegenPerUpgrade: 2
+  ArmorRegenPerUpgrade: 5
   ArmorRegen: 20

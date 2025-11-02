@@ -41,6 +41,7 @@ public class Screen_GameUI : MonoBehaviour
     public TextMeshProUGUI InteractTex;
     public GameObject PauseMenu;
     public GameObject CommsMapButton;
+    public TextMeshProUGUI CommsTex;
     public GameObject InventoryButton;
     public InventorySlot[] InventoryWeaponSlots;
     public InventorySlot InventoryGrappleSlot;
@@ -71,11 +72,30 @@ public class Screen_GameUI : MonoBehaviour
         if (CO.co.AreWeInDanger.Value)
         {
             bool CommsEnabled = CO.co.CommunicationGamePaused.Value && !LOCALCO.local.IsArrivingAnimation();
+            /*
+               if (UI.ui.RewardUI.RewardActive) UI.ui.OpenTalkScreenFancy(UI.ui.RewardUI.gameObject);
+        else if (CO_STORY.co.IsCommsActive()) UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
+        else UI.ui.OpenTalkScreenFancy(UI.ui.MapUI.gameObject);
+             
+             
+             */
+            if (CommsEnabled)
+            {
+                if (UI.ui.RewardUI.RewardActive) CommsTex.text = "[U] REWARDS";
+                else if (CO_STORY.co.IsCommsActive()) CommsTex.text = "[U] COMMS";
+                else CommsTex.text = "[U] MAP";
+            }
+            
+
             CommsMapButton.gameObject.SetActive(CommsEnabled);
             InventoryButton.gameObject.SetActive(false);
             if (CommsEnabled && Input.GetKeyDown(KeyCode.M)) OpenMissionScreen();
         } else
         {
+            if (UI.ui.RewardUI.RewardActive) CommsTex.text = "[U] REWARDS";
+            else if (CO_STORY.co.IsCommsActive()) CommsTex.text = "[U] COMMS";
+            else CommsTex.text = "[U] MAP";
+
             CommsMapButton.gameObject.SetActive(true);
             InventoryButton.gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.I)) UI.ui.OpenTalkScreenFancy(UI.ui.InventoryUI.gameObject);
@@ -133,7 +153,7 @@ public class Screen_GameUI : MonoBehaviour
         if (player.isDead())
         {
             BleedingOutScreen.gameObject.SetActive(true); //!CO.co.PlayerMainDrifter.MedicalModule.IsDisabled()
-            BleedingButton.gameObject.SetActive(!player.isDeadForever() && player.Space == CO.co.PlayerMainDrifter.Interior);
+            BleedingButton.gameObject.SetActive(!player.isDeadForever() && player.Space == CO.co.PlayerMainDrifter.Interior && player.BleedingTime.Value < 40);
             if (player.isDeadForever())
             {
                 /*if (CO.co.PlayerMainDrifter.MedicalModule.IsDisabled())
@@ -196,7 +216,8 @@ public class Screen_GameUI : MonoBehaviour
     }
     public void OpenMissionScreen()
     {
-        if (CO_STORY.co.IsCommsActive()) UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
+        if (UI.ui.RewardUI.RewardActive) UI.ui.OpenTalkScreenFancy(UI.ui.RewardUI.gameObject);
+        else if (CO_STORY.co.IsCommsActive()) UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
         else UI.ui.OpenTalkScreenFancy(UI.ui.MapUI.gameObject);
     }
     public void EquipWeaponUI(int ID)

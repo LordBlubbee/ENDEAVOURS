@@ -16,22 +16,21 @@ MonoBehaviour:
   ItemDesc: 'Knuckles forged from brass by Nomaden fighters for the most brash adventurers.
 
 
-    <color=green>+3
-    Melee damage
-
-    <color=red>-10 Health'
+    <color=green>Whenever
+    you take damage, gain a large buff to speed and melee damage.'
   ItemIcon: {fileID: 21300000, guid: 4dce19756c065f04db83d95a31c9b80c, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Common_BrassKnuckles
   ItemResourceIDShort: Common_BrassKnuckles
   EquipType: 1
-  Ability: 0
+  Ability: 1
+  AbilityPrefab1: {fileID: 0}
   MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
-  ModifyHealthMax: -10
+  ModifyHealthMax: 0
   ModifyHealthRegen: 0
   ModifyStaminaMax: 0
   ModifyStaminaRegen: 0
   ModifyMovementSpeed: 0
-  ModifyMeleeDamage: 3
+  ModifyMeleeDamage: 0
   ModifyRangedDamage: 0
   ModifySpellDamage: 0

@@ -19,15 +19,15 @@ MonoBehaviour:
 
 
     LEVEL 0:
-    200 HP. 100 Armor. 20 Armor/s regeneration.
+    100 HP. 100 Armor. 20 Armor/s regeneration.
 
-    LEVEL 1: 300 HP. 200 Armor.
-    22 Armor/s regeneration.
+    LEVEL 1: 200 HP. 200 Armor.
+    25 Armor/s regeneration.
 
-    LEVEL 2: 400 HP. 300 Armor. 24 Armor/s regeneration.
+    LEVEL 2: 300 HP. 300 Armor. 30 Armor/s regeneration.
 
     LEVEL
-    3: 500 HP. 400 Armor. 26 Armor/s regeneration.
+    3: 400 HP. 400 Armor. 35 Armor/s regeneration.
 
 
 '

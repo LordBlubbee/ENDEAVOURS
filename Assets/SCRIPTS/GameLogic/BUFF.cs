@@ -1,11 +1,12 @@
 using UnityEngine;
+using static CO_SPAWNER;
 
-public class BUFF : MonoBehaviour
+public class BUFF
 {
     private ScriptableBuff buff;
     private int Stacks;
     private float Duration;
-
+    public CO_SPAWNER.BuffParticles BuffParticles;
     public ScriptableBuff GetScriptable()
     {
         return buff;
@@ -13,9 +14,9 @@ public class BUFF : MonoBehaviour
     public BUFF(ScriptableBuff buf, CREW crew)
     {
         buff = buf;
+        BuffParticles = buf.BuffParticles;
         AddBuff(buf, crew);
     }
-
     public void AddBuff(ScriptableBuff buf, CREW crew)
     {
         Duration = buf.Duration;

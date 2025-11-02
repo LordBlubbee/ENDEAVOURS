@@ -288,7 +288,7 @@ MonoBehaviour:
   MaxHealth: 200
   HitboxRadius: 16
   ModuleWorth: 100
-  ModuleUpgradeMaterials: 3c0000004600000078000000
+  ModuleUpgradeMaterials: 3c0000005a00000096000000
   ModuleUpgradeTechs: 14000000280000003c000000
   CenterPos: {fileID: 0}
   WeaponName: HEAVY CANNON
