@@ -397,7 +397,14 @@ public class AI_UNIT : NetworkBehaviour
 
             //We are not in combat
             CREW WoundedAlly = GetClosestCriticallyWoundedAllyInSpace();
-            if (!WoundedAlly) WoundedAlly = GetClosestWoundedAlly();
+            if (!WoundedAlly)
+            {
+                WoundedAlly = GetClosestWoundedAlly();
+                if (Dist(WoundedAlly.transform.position) > 24f)
+                {
+                    WoundedAlly = null;
+                }
+            }
             if (WoundedAlly)
             {
                 if (WoundedAlly.Space != getSpace())
@@ -507,9 +514,10 @@ public class AI_UNIT : NetworkBehaviour
             }
         } else
         {
-            mod = GetClosestEnemyModule();
+            mod = GetClosestEnemyModule(); 
             if (mod && (Dist(mod.transform.position) < 8 || DistToObjective(mod.transform.position) < 24))
             {
+                Unit.EquipWeapon1Rpc();
                 SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
                 SetLookTowards(mod.GetTargetPos(), mod.Space);
                 return;
@@ -517,13 +525,17 @@ public class AI_UNIT : NetworkBehaviour
             CREW WoundedAlly2 = GetClosestWoundedAlly();
             if (WoundedAlly2)
             {
-                SetAIMoveTowards(GetPointAwayFromPoint(WoundedAlly2.transform.position, 2f), WoundedAlly2.Space);
-                SetLookTowards(WoundedAlly2.transform.position, WoundedAlly2.Space);
-                if (Dist(WoundedAlly2.transform.position) < 4f)
+                if (Dist(WoundedAlly2.transform.position) < 24f)
                 {
-                    Unit.EquipMedkitRpc();
-                    Unit.UseItem1Rpc();
+                    SetAIMoveTowards(GetPointAwayFromPoint(WoundedAlly2.transform.position, 2f), WoundedAlly2.Space);
+                    SetLookTowards(WoundedAlly2.transform.position, WoundedAlly2.Space);
+                    if (Dist(WoundedAlly2.transform.position) < 4f)
+                    {
+                        Unit.EquipMedkitRpc();
+                        Unit.UseItem1Rpc();
+                    }
                 }
+                    
                 return;
             }
             SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);

@@ -18,7 +18,7 @@ MonoBehaviour:
     Resource_Supplies: 0
     Resource_Ammunition: 0
     Resource_Technology: 0
-    Resource_XP: 0
+    Resource_XP: 5
     ItemDrop: {fileID: 0}
   ReputationChanges: []
   TotalLootDrops: 2
