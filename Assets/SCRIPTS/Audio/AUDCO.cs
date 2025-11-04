@@ -151,6 +151,10 @@ public class AUDCO : NetworkBehaviour
 
     [Header("SFX Clips")]
     public AudioClip[] Block_Shield;
+    public AudioClip Upgrade;
+    public AudioClip Purchase;
+    public AudioClip EquipItem;
+    public AudioClip Salvage;
     public AudioClip Press;
     public AudioClip Fail;
 }
