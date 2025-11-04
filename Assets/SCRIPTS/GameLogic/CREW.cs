@@ -141,22 +141,27 @@ public class CREW : NetworkBehaviour, iDamageable
         }
     }
 
-    private List<GameObject> BuffParticles = new();
+    private List<ParticleBuff> BuffParticles = new();
 
     [Rpc(SendTo.ClientsAndHost)]
     private void AddBuffParticlesRpc(CO_SPAWNER.BuffParticles type)
     {
-        GameObject BuffPart = CO_SPAWNER.co.BuffParticleList[((int)type-1)];
-        GameObject newBuffPart = Instantiate(BuffPart, transform);
+        ParticleBuff BuffPart = GetBuff(type);
+        ParticleBuff newBuffPart = Instantiate(BuffPart, transform);
         BuffParticles.Add(newBuffPart);
+    }
+
+    private ParticleBuff GetBuff(CO_SPAWNER.BuffParticles type)
+    {
+        return CO_SPAWNER.co.BuffParticleList[((int)type - 1)];
     }
     [Rpc(SendTo.ClientsAndHost)]
     private void RemoveBuffParticlesRpc(CO_SPAWNER.BuffParticles type)
     {
-        GameObject BuffPart = CO_SPAWNER.co.BuffParticleList[((int)type - 1)];
-        foreach (GameObject obj in new List<GameObject>(BuffParticles))
+        ParticleBuff BuffPart = GetBuff(type);
+        foreach (ParticleBuff obj in new List<ParticleBuff>(BuffParticles))
         {
-            if (obj.name.Equals(BuffPart.name))
+            if (obj.ParticleType == BuffPart.ParticleType)
             {
                 Destroy(obj.gameObject);
                 BuffParticles.Remove(obj);
@@ -1326,6 +1331,11 @@ public class CREW : NetworkBehaviour, iDamageable
                     if ((transform.position - HomeDrifter.MedicalModule.transform.position).magnitude > 8)
                     {
                         transform.position = HomeDrifter.MedicalModule.transform.position + new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-3f, 3f));
+                        if (Space != HomeDrifter.Space)
+                        {
+                            Space.RemoveCrew(this);
+                            HomeDrifter.Space.AddCrew(this);
+                        }
                     }
                     BleedingTime.Value -= CO.co.GetWorldSpeedDelta();
                     if (BleedingTime.Value < -20 || CO.co.IsSafe())

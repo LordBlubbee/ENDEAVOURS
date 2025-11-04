@@ -15,11 +15,18 @@ MonoBehaviour:
   StoryTexts:
   - BaseText: Ah, of course. Most certainly! We are transferring a portion of our
       supplies to your vessel as a donation.
-    Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
+    Speaker: {fileID: 11400000, guid: c12e8202c96f7ab4a945141bce148e0f, type: 2}
+    Alternatives: []
+  - BaseText: The supplies are plentiful. The captain recounts a time they were assaulted
+      by Stingers, but were saved by a passing Hunter like your own crew member.
+    Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
+    Alternatives: []
+  - BaseText: Good deeds beget a good reputation.
+    Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
-      BaseText: Thank you.
+      BaseText: We should thank them and move on.
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []

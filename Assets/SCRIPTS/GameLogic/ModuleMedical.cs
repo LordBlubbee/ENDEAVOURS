@@ -18,6 +18,15 @@ public class ModuleMedical : Module
 
         StartCoroutine(RegenAura());
     }
+
+    public float GetRegenAura()
+    {
+        return RegenAuraRange + RegenAuraPerLevel * ModuleLevel.Value;
+    }
+    public float GetRegenAmount()
+    {
+        return RegenAmount + RegenAmountPerLevel * ModuleLevel.Value;
+    }
     IEnumerator RegenAura()
     {
         while (true)
@@ -29,11 +38,11 @@ public class ModuleMedical : Module
                     if (crew.GetFaction() != GetFaction()) continue;
                     if (crew.isDead()) continue;
                     float Dist = Vector3.Distance(crew.transform.position, transform.position);
-                    if (Dist < RegenAuraRange + RegenAuraPerLevel * ModuleLevel.Value)
+                    if (Dist < GetRegenAura())
                     {
                         float Divide = 4f;
                         if (Dist < 10f) Divide = 2f;
-                        crew.Heal((RegenAmount + RegenAmountPerLevel * ModuleLevel.Value) / Divide);
+                        crew.Heal(GetRegenAmount() / Divide);
                     }
                 }
             }

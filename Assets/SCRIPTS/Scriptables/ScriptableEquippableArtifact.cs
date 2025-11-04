@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/SpawnScriptableArtifact", order = 1)]
 public class ScriptableEquippableArtifact : ScriptableEquippable
 {
+    public int ItemSupplyWorth;
     public EquipTypes EquipType;
     public enum EquipTypes
     {

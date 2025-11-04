@@ -25,10 +25,11 @@ public class CO_SPAWNER : NetworkBehaviour
     public GameObject SparkMedium;
     public GameObject ImpactSparks;
 
-    public GameObject[] BuffParticleList;
+    public ParticleBuff[] BuffParticleList;
     public enum BuffParticles
     {
-        NONE
+        NONE,
+        FROST
     }
 
     [Header("BACKGROUND")]

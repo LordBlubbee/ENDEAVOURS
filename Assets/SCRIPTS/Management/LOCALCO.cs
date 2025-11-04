@@ -31,6 +31,7 @@ public class LOCALCO : NetworkBehaviour
         return Player;
     }
 
+
     public ModuleWeapon GetWeapon()
     {
         return UsingWeapon;
@@ -247,14 +248,14 @@ public class LOCALCO : NetworkBehaviour
     {
         if (CurrentControlMode == ControlModes.PLAYER) return;
         CurrentControlMode = ControlModes.PLAYER;
-        CAM.cam.SetCameraMode(Player.transform, 13f+ Player.GetATT_COMMUNOPATHY(), 8f, 20f+Player.GetATT_COMMUNOPATHY());
+        CAM.cam.SetCameraMode(Player.transform, CAM.cam.GetPlayerZoom(), 8f, Mathf.Min(20f + Player.GetATT_COMMUNOPATHY(),29));
     }
 
     public void SetCameraToCommand()
     {
         if (CurrentControlMode == ControlModes.COMMAND) return;
         CurrentControlMode = ControlModes.COMMAND;
-        CAM.cam.SetCameraMode(CO.co.PlayerMainDrifter.transform, 150f, 30f, 150f);
+        CAM.cam.SetCameraMode(CO.co.PlayerMainDrifter.transform, CAM.cam.GetFarZoom(), 30f, 150f);
     }
 
     Transform DraggingObject;

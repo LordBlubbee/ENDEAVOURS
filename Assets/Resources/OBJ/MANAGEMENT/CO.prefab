@@ -369,7 +369,8 @@ MonoBehaviour:
   SparkSmall: {fileID: 9192043369650961900, guid: 5c5b067d31320454f9bb5cf5a8d4badb, type: 3}
   SparkMedium: {fileID: 9192043369650961900, guid: cf983e25fbd0194488d565e850e1c1ef, type: 3}
   ImpactSparks: {fileID: 9192043369650961900, guid: 544de0d72e32c7e43b79f0f2cfc56db9, type: 3}
-  BuffParticleList: []
+  BuffParticleList:
+  - {fileID: -7748507754934260247, guid: 2cc09f35618b7f9499ee24603e185dab, type: 3}
   NebulaSparks:
   - {fileID: 4494465091476783932, guid: 428b525702503f34a87c3c14d132d698, type: 3}
   - {fileID: 4494465091476783932, guid: 428b525702503f34a87c3c14d132d698, type: 3}

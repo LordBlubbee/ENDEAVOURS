@@ -23,4 +23,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5642e483e89de7d4a84827c6e73bac61, type: 2}
   EquippableModules:
   - {fileID: 11400000, guid: ecf400006c4c4aa47afd56f85fab16f5, type: 2}
-  HullIncreasePerLevelup: 200
+  HullIncreasePerLevelup: 300

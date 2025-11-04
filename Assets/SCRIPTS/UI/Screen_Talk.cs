@@ -98,16 +98,96 @@ public class Screen_Talk : MonoBehaviour
             for (int i = 0; i < ChoiceTex.Length; i++)
             {
                 string str = CO_STORY.co.GetCurrentChoice(i);
-                StartCoroutine(SetChoiceText(ChoiceTex[i], str, Color.cyan, false, 0.5f));
+                StartCoroutine(SetChoiceText(ChoiceTex[i], str, Color.white, false, 0.5f));
                 ChoiceButtonVotes[i].text = CO_STORY.co.VoteResultAmount(i).ToString();
                 ChoiceButton[i].gameObject.SetActive(str != "");
             }
         }
     }
 
+    bool isSpeaking = false;
+    bool completeSpeakingNow = false;
     int speakID = 0;
     int speakLetter = 0;
     IEnumerator SetMainText(TextMeshProUGUI tex, string text, Color col, bool Speak, float delay = 0)
+    {
+        isSpeaking = true;
+        speakID++;
+        int ID = speakID;
+
+        tex.color = col;
+        tex.text = text;
+        tex.maxVisibleCharacters = 0;
+
+        float Timer = 0f;
+        yield return new WaitForSeconds(delay);
+
+        int totalChars = text.Length;
+        int visibleCount = 0;
+        speakLetter = 0;
+
+        while (visibleCount < totalChars)
+        {
+            while (Timer > 0f && !completeSpeakingNow)
+            {
+                Timer -= Time.deltaTime;
+                yield return null;
+            }
+
+            if (ID != speakID) yield break; // text was replaced
+
+            Timer += 0.015f;
+            visibleCount++;
+            if (completeSpeakingNow)
+            {
+                visibleCount = totalChars;
+                completeSpeakingNow = false;
+            }
+            tex.maxVisibleCharacters = visibleCount;
+
+            if (CurrentSpeaker && Speak)
+            {
+                char c = text[Mathf.Clamp(visibleCount - 1, 0, totalChars - 1)];
+                if (CurrentSpeaker.Voice.Length > 0 && char.IsLetterOrDigit(c))
+                {
+                    speakLetter--;
+                    if (speakLetter < 0)
+                    {
+                        speakLetter = Random.Range(2, 4);
+                        AudioClip clip = CurrentSpeaker.Voice[Random.Range(0, CurrentSpeaker.Voice.Length)];
+                        AUDCO.aud.PlaySFX(clip);
+                    }
+                }
+            }
+        }
+        isSpeaking = false;
+    }
+    IEnumerator SetChoiceText(TextMeshProUGUI tex, string text, Color col, bool Speak, float delay = 0)
+    {
+        tex.color = col;
+        tex.text = text;
+        tex.maxVisibleCharacters = 0;
+
+        float Timer = 0f;
+        yield return new WaitForSeconds(delay);
+
+        int totalChars = text.Length;
+        int visibleCount = 0;
+        speakLetter = 0;
+
+        while (visibleCount < totalChars)
+        {
+            while (Timer > 0f)
+            {
+                Timer -= Time.deltaTime;
+                yield return null;
+            }
+            Timer += 0.015f;
+            visibleCount++;
+            tex.maxVisibleCharacters = visibleCount;
+        }
+    }
+    /*IEnumerator SetMainText(TextMeshProUGUI tex, string text, Color col, bool Speak, float delay = 0)
     {
         speakID++;
         int ID = speakID;
@@ -140,35 +220,14 @@ public class Screen_Talk : MonoBehaviour
                 }
             }
         }
-    }
-    IEnumerator SetChoiceText(TextMeshProUGUI tex, string text, Color col, bool Speak, float delay = 0)
-    {
-        string keepTex = "";
-        tex.text = keepTex;
-        yield return new WaitForSeconds(delay);
-        foreach (char c in text)
-        {
-            if (tex.text != keepTex) yield break;
-            keepTex += c;
-            tex.text = keepTex;
-            if (CurrentSpeaker && Speak)
-            {
-                if (CurrentSpeaker.Voice.Length > 0 && char.IsLetterOrDigit(c))
-                {
-                    speakLetter--;
-                    if (speakLetter < 0)
-                    {
-                        speakLetter = Random.Range(2, 4);
-                        AudioClip clip = CurrentSpeaker.Voice[Random.Range(0, CurrentSpeaker.Voice.Length)];
-                        AUDCO.aud.PlaySFX(clip);
-                    }
-                }
-            }
-            yield return new WaitForSeconds(0.02f);
-        }
-    }
+    }*/
     public void NextPage()
     {
+        if (isSpeaking)
+        {
+            completeSpeakingNow = true;
+            return;
+        }
         if (CO_STORY.co.IsLastMainStoryText(CurrentPage)) return;
         CurrentPage++;
         UpdateData();

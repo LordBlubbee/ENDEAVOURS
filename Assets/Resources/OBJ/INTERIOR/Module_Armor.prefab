@@ -421,13 +421,13 @@ MonoBehaviour:
   ModuleType: 5
   IconSprite: {fileID: 21300000, guid: f6dcf1b64a817a4419e34b2fccbf5ab5, type: 3}
   ShowAsModule: {fileID: 11400000, guid: ecf400006c4c4aa47afd56f85fab16f5, type: 2}
-  MaxHealth: 200
+  MaxHealth: 100
   HitboxRadius: 16
   ModuleWorth: 50
-  ModuleUpgradeMaterials: 2800000050000000780000009600000096000000
-  ModuleUpgradeTechs: 00000000000000000000000000000000
+  ModuleUpgradeMaterials: 1e0000003200000041000000500000006400000078000000
+  ModuleUpgradeTechs: 000000000000000000000000000000000000000000000000
   CenterPos: {fileID: 0}
   MaxArmor: 100
   ArmorPerUpgrade: 100
-  ArmorRegenPerUpgrade: 5
+  ArmorRegenPerUpgrade: 10
   ArmorRegen: 20

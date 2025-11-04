@@ -15,6 +15,7 @@ public class UI : MonoBehaviour
     public Screen_Map MapUI;
     public Screen_Talk TalkUI;
     public Screen_Reward RewardUI;
+    public Screen_Settings SettingsUI;
     public Image Crosshair;
     private GameObject PreviousScreen;
 
@@ -22,7 +23,10 @@ public class UI : MonoBehaviour
     public Image BlackScreen;
     public Image WhiteScreen;
 
-
+    private void Start()
+    {
+        SettingsUI.Init();
+    }
     public void OpenTalkScreenFancy(GameObject ob)
     {
         ob.transform.localScale = Vector3.zero;

@@ -43,6 +43,7 @@ public class Screen_GameUI : MonoBehaviour
     public GameObject CommsMapButton;
     public TextMeshProUGUI CommsTex;
     public GameObject InventoryButton;
+    public TextMeshProUGUI InventoryTex;
     public InventorySlot[] InventoryWeaponSlots;
     public InventorySlot InventoryGrappleSlot;
     public InventorySlot InventoryToolsSlot;
@@ -55,6 +56,11 @@ public class Screen_GameUI : MonoBehaviour
     public void PressRespawnButton()
     {
         if (LOCALCO.local.GetPlayer().BleedingTime.Value > 0) LOCALCO.local.GetPlayer().RespawnASAPRpc();
+    }
+
+    public void PressQuitGame()
+    {
+        LOBBY.lobby.PressQuitServer();
     }
     void Update()
     {
@@ -96,7 +102,17 @@ public class Screen_GameUI : MonoBehaviour
             else if (CO_STORY.co.IsCommsActive()) CommsTex.text = "[U] COMMS";
             else CommsTex.text = "[U] MAP";
 
-            CommsMapButton.gameObject.SetActive(true);
+            if (player.SkillPoints.Value > 2)
+            {
+                InventoryTex.text = "[I] LEVEL UP";
+                InventoryTex.color = Color.cyan;
+            } else
+            {
+                InventoryTex.text = "[I] ARMORY";
+                InventoryTex.color = Color.green;
+            }
+
+                CommsMapButton.gameObject.SetActive(true);
             InventoryButton.gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.I)) UI.ui.OpenTalkScreenFancy(UI.ui.InventoryUI.gameObject);
             if (Input.GetKeyDown(KeyCode.U)) OpenMissionScreen();
@@ -214,11 +230,31 @@ public class Screen_GameUI : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
     }
+    public void ForceMissionScreenAfterStoryEnd()
+    {
+        if (gameObject.activeSelf)
+        {
+            UI.ui.OpenTalkScreenFancy(UI.ui.MapUI.gameObject);
+        }
+        else
+        {
+            UI.ui.SelectScreen(UI.ui.MapUI.gameObject);
+        }
+    }
     public void OpenMissionScreen()
     {
-        if (UI.ui.RewardUI.RewardActive) UI.ui.OpenTalkScreenFancy(UI.ui.RewardUI.gameObject);
-        else if (CO_STORY.co.IsCommsActive()) UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
-        else UI.ui.OpenTalkScreenFancy(UI.ui.MapUI.gameObject);
+        if (gameObject.activeSelf)
+        {
+            if (UI.ui.RewardUI.RewardActive) UI.ui.OpenTalkScreenFancy(UI.ui.RewardUI.gameObject);
+            else if (CO_STORY.co.IsCommsActive()) UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
+            else if (CO.co.IsSafe()) UI.ui.OpenTalkScreenFancy(UI.ui.MapUI.gameObject);
+        }
+        else
+        {
+            if (UI.ui.RewardUI.RewardActive) UI.ui.SelectScreen(UI.ui.RewardUI.gameObject);
+            else if (CO_STORY.co.IsCommsActive()) UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
+            else if (CO.co.IsSafe()) UI.ui.SelectScreen(UI.ui.MapUI.gameObject);
+        }
     }
     public void EquipWeaponUI(int ID)
     {

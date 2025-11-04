@@ -394,8 +394,10 @@ public class Screen_Inventory : MonoBehaviour
     public GameObject SubscreenModuleEditor;
     public TextMeshProUGUI ModuleTitle;
     public TextMeshProUGUI ModuleDesc;
-    public TextMeshProUGUI DrifterModuleBuy;
-    public TextMeshProUGUI DrifterModuleSell;
+    public GameObject DrifterModuleBuy;
+    public GameObject DrifterModuleSell;
+    public TextMeshProUGUI DrifterModuleBuyTex;
+    public TextMeshProUGUI DrifterModuleSellTex;
     private DrifterInventorySlot SelectedDrifterSlot = null;
 
     private void DeselectDrifterSlot()
@@ -493,10 +495,68 @@ public class Screen_Inventory : MonoBehaviour
         {
             ModuleTitle.text = "[DISMANTLED]";
             ModuleDesc.text = "";
+            DrifterModuleBuy.SetActive(false);
+            DrifterModuleSell.SetActive(false);
         } else
         {
             ModuleTitle.text = SelectedDrifterSlot.GetEquippedItem().ItemName;
-            ModuleDesc.text = SelectedDrifterSlot.GetEquippedItem().ItemDesc;
+
+            string Data = "\n";
+            Data += $"\nHEALTH: {SelectedDrifterSlot.ModuleLink.GetMaxHealth().ToString("0")}";
+            Data += $"<color=green> (+100)</color>";
+            switch (SelectedDrifterSlot.ModuleLink.ModuleType)
+            {
+                case Module.ModuleTypes.WEAPON:
+                    ModuleWeapon wep = (ModuleWeapon)SelectedDrifterSlot.ModuleLink;
+                    Data += $"\nDAMAGE: {wep.GetDamage().ToString("0")}";
+                    if (wep.DamagePerLevel != 0) Data += $"<color=green> (+{wep.DamagePerLevel})</color>";
+                    Data += $"\nVOLLEY: {wep.GetProjectileCount()}";
+                    if (wep.ProjectilesPerLevel != 0) Data += $"<color=green> (+{wep.ProjectilesPerLevel})</color>";
+                    Data += $"\nFIRERATE: {wep.GetFireCooldown().ToString("0.0")}";
+                    if (wep.CooldownPerLevel != 0) Data += $"<color=green> ({wep.CooldownPerLevel})</color>";
+                    Data += $"\nAMMO SIZE: {wep.MaxAmmo}";
+                    break;
+                case Module.ModuleTypes.ENGINES:
+                    Data += $"\nDODGE: {(CO.co.PlayerMainDrifter.GetDodgeChance()*100f).ToString("0.0")}%";
+                    Data += $"<color=green> (+5%)</color>";
+                    break;
+                case Module.ModuleTypes.NAVIGATION:
+                    break;
+                case Module.ModuleTypes.ARMOR:
+                    ModuleArmor armor = (ModuleArmor)SelectedDrifterSlot.ModuleLink;
+                    Data += $"\nARMOR: {armor.GetMaxArmor().ToString("0")}";
+                    if (armor.ArmorPerUpgrade != 0) Data += $"<color=green> (+{armor.ArmorPerUpgrade})</color>";
+                    Data += $"\nREGEN: {armor.GetArmorRegen().ToString("0.0")}/s";
+                    if (armor.ArmorRegenPerUpgrade != 0) Data += $"<color=green> (+{armor.ArmorRegenPerUpgrade}/s)</color>";
+                    break;
+                case Module.ModuleTypes.MEDICAL:
+                    ModuleMedical med = (ModuleMedical)SelectedDrifterSlot.ModuleLink;
+                    Data += $"\nREGEN: {med.GetRegenAmount().ToString("0.0")}/s";
+                    if (med.RegenAmountPerLevel != 0) Data += $"<color=green> (+{med.RegenAmountPerLevel}/s)</color>";
+                    Data += $"\nAURA SIZE: {med.GetRegenAura().ToString("0.0")}";
+                    if (med.RegenAuraPerLevel != 0) Data += $"<color=green> (+{med.RegenAuraPerLevel.ToString("0.0")})</color>";
+                    break;
+
+            }
+
+            ModuleDesc.text = SelectedDrifterSlot.GetEquippedItem().ItemDesc+Data;
+           
+            DrifterModuleSell.SetActive(true);
+            if (SelectedDrifterSlot.ModuleLink.ModuleUpgradeMaterials.Length <= SelectedDrifterSlot.ModuleLink.ModuleLevel.Value) {
+                DrifterModuleBuy.SetActive(false);
+            } else
+            {
+                DrifterModuleBuy.SetActive(true);
+                int MaterialsNeeded = SelectedDrifterSlot.ModuleLink.ModuleUpgradeMaterials[SelectedDrifterSlot.ModuleLink.ModuleLevel.Value];
+                int TechNeeded = SelectedDrifterSlot.ModuleLink.ModuleUpgradeTechs[SelectedDrifterSlot.ModuleLink.ModuleLevel.Value];
+                if (TechNeeded > 0) DrifterModuleBuyTex.text = $"UPGRADE \n<color=yellow>[-{MaterialsNeeded}M]</color> <color=#00FFFF>[-{TechNeeded}T]</color>";
+                else DrifterModuleBuyTex.text = $"UPGRADE \n<color=yellow>[-{MaterialsNeeded}M]</color>";
+            }
+            int MaterialsSalvage = SelectedDrifterSlot.ModuleLink.GetMaterialSalvageWorth();
+            int TechSalvage = SelectedDrifterSlot.ModuleLink.GetTechSalvageWorth();
+            if (TechSalvage > 0) DrifterModuleSellTex.text = $"DISMANTLE \n<color=yellow>[+{MaterialsSalvage}M]</color> <color=#00FFFF>[+{TechSalvage}T]</color>";
+            else if (MaterialsSalvage > 0) DrifterModuleSellTex.text = $"DISMANTLE \n<color=yellow>[+{MaterialsSalvage}M]</color>";
+            else DrifterModuleSellTex.text = $"DISMANTLE";
         } 
     }
     public void PressRepairButton()

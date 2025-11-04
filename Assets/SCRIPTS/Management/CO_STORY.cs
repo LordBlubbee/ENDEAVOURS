@@ -201,7 +201,7 @@ public class CO_STORY : NetworkBehaviour
         {
             local.CurrentDialogVote.Value = -1;
         }
-        ForceUpdateRpc();
+        ForceOpenRpc();
     }
 
     private ScriptableDialog CurrentDialog;
@@ -231,7 +231,7 @@ public class CO_STORY : NetworkBehaviour
         {
             local.CurrentDialogVote.Value = -1;
         }
-        ForceUpdateRpc();
+        ForceUpdateStoryRpc();
     }
     string ReturnDialogPart(DialogPart showChoice)
     {
@@ -253,11 +253,16 @@ public class CO_STORY : NetworkBehaviour
         if (local.CurrentDialogVote.Value == choiceIndex) local.CurrentDialogVote.Value = -1;
         else local.CurrentDialogVote.Value = choiceIndex;
     }
-
     [Rpc(SendTo.ClientsAndHost)]
-    private void ForceUpdateRpc()
+    private void ForceUpdateStoryRpc()
     {
         ShouldUpdate = true;
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ForceOpenRpc()
+    {
+        ShouldUpdate = true;
+        UI.ui.MainGameplayUI.ForceMissionScreenAfterStoryEnd();
     }
     private void Update()
     {

@@ -15,9 +15,9 @@ MonoBehaviour:
   BiomeName: Far South
   BiomeDescription: 
   BiomeBaseDifficulty: 1
-  BiomeCalmRatio: 0.25
-  BiomeHostileRatio: 0.45
-  BiomeSize: 6
+  BiomeCalmRatio: 0.3
+  BiomeHostileRatio: 0.4
+  BiomeSize: 5
   PossiblePointsCalm:
   - {fileID: 11400000, guid: a9d5a661b376ddf409fa5ea73de558eb, type: 2}
   - {fileID: 11400000, guid: 83773a7b191572240a47836f4bc465b1, type: 2}
@@ -26,8 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: effe71cc36396474da5ee9c3e84f9100, type: 2}
   PossiblePointsHostile:
   - {fileID: 11400000, guid: c184cc73d9ac5f946a00f24ce252bdf6, type: 2}
-  - {fileID: 11400000, guid: 5ef372c309fa95c499c3c0004ae786dd, type: 2}
   - {fileID: 11400000, guid: b098bda5f29ca8043af26c68c5318ad9, type: 2}
+  - {fileID: 11400000, guid: 5ef372c309fa95c499c3c0004ae786dd, type: 2}
   PossiblePointsRest:
   - {fileID: 11400000, guid: ec342651a76558a46a57768798a836b5, type: 2}
   PossiblePointsArrival:

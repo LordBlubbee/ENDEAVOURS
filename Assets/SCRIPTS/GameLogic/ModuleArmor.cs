@@ -7,7 +7,8 @@ public class ModuleArmor : Module
     public float MaxArmor = 100;
     public float ArmorPerUpgrade = 100;
     public float ArmorRegenPerUpgrade = 2;
-    public float ArmorRegen = 10;
+    public float ArmorRegen = 10; 
+    public bool ScaleArmorWithHealth = true;
     float WaitWithRegen = 0f;
     [NonSerialized] public NetworkVariable<float> CurArmor = new();
     public override void Init()
@@ -35,12 +36,14 @@ public class ModuleArmor : Module
             WaitWithRegen -= CO.co.GetWorldSpeedDelta();
             return;
         }
-        CurArmor.Value = Mathf.Clamp(CurArmor.Value + (ArmorRegen + ArmorRegenPerUpgrade* ModuleLevel.Value) * CO.co.GetWorldSpeedDelta(), 0, GetMaxArmor());
+        CurArmor.Value = Mathf.Clamp(CurArmor.Value + GetArmorRegen() * CO.co.GetWorldSpeedDelta(), 0, GetMaxArmor());
     }
     public void TakeArmorDamage(float fl, Vector3 impact)
     {
-        CurArmor.Value = Mathf.Clamp(CurArmor.Value - fl, 0, GetMaxArmor());
-        if (fl > 50) WaitWithRegen = 1f + 0.02f * fl;
+        float max = GetMaxArmor();
+        if (ScaleArmorWithHealth) max = Mathf.Min(max, GetMaxHealth());
+        CurArmor.Value = Mathf.Clamp(CurArmor.Value - fl, 0, max);
+        if (fl > 50) WaitWithRegen = 0.5f + 0.02f * fl;
         CO_SPAWNER.co.SpawnArmorDMGRpc(fl, impact);
     }
     public override void Heal(float fl)
@@ -61,5 +64,9 @@ public class ModuleArmor : Module
     public float GetArmor()
     {
         return CurArmor.Value;
+    }
+    public float GetArmorRegen()
+    {
+        return ArmorRegen + ArmorRegenPerUpgrade * ModuleLevel.Value;
     }
 }

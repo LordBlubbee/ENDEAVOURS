@@ -15,29 +15,7 @@ MonoBehaviour:
   ItemName: Engine Control
   ItemDesc: 'These advanced levers and pumps control the Drifter''s buoyancy and
     its engines. While active, Engines maneuver your Drifter and provide a dodging
-    chance against incoming projectiles. They are essential against projectiles capable
-    of penetrating your Armor and for overall defense.
-
-
-    LEVEL 0: 200 HP. 10%
-    Dodge chance.
-
-    LEVEL 1: 300 HP. 15% Dodge chance.
-
-    LEVEL 2: 400 HP. 20%
-    Dodge chance.
-
-    LEVEL 3: 500 HP. 25% Dodge chance.
-
-    LEVEL 4: 600 HP. 30%
-    Dodge chance.
-
-    LEVEL 5: 700 HP. 35% Dodge chance.
-
-    LEVEL 6: 800 HP. 40%
-    Dodge chance.
-
-    LEVEL 7: 900 HP. 45% Dodge chance.
+    chance against incoming projectiles.
 
 
 '

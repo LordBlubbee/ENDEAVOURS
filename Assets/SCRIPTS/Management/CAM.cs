@@ -56,12 +56,26 @@ public class CAM : MonoBehaviour
         {
             float Scroll = Input.mouseScrollDelta.y * -50f * (10f + TargetOrtho * 0.25f) * Time.deltaTime;
             TargetOrtho = Mathf.Clamp(TargetOrtho + Scroll, minOrtho, maxOrtho);
+            if (TargetOrtho < 30) playerZoom = TargetOrtho;
+            else farZoom = TargetOrtho;
         }
         if (TargetOrtho != camob.orthographicSize)
         {
             if (TargetOrtho > camob.orthographicSize) camob.orthographicSize = Mathf.Clamp(camob.orthographicSize+((TargetOrtho - camob.orthographicSize) * 4f + 10f) * Time.deltaTime,4,TargetOrtho);
             else camob.orthographicSize = Mathf.Clamp(camob.orthographicSize + ((TargetOrtho - camob.orthographicSize) * 4f - 10f) * Time.deltaTime, TargetOrtho, 9999);
         }
+    }
+
+    float playerZoom = 15f;
+    float farZoom = 100f;
+
+    public float GetPlayerZoom()
+    {
+        return playerZoom;
+    }
+    public float GetFarZoom()
+    {
+        return farZoom;
     }
 
     bool isShaking = false;

@@ -330,6 +330,7 @@ MonoBehaviour:
   InnerIconImage: {fileID: 2623445598698421681}
   ImageBorder: {fileID: 8695800577831443142}
   DefaultEquipState: 7
+  ModuleLink: {fileID: 0}
   UpgradeBoxes:
   - {fileID: 8317379600020550971}
   - {fileID: 4476107671052524428}

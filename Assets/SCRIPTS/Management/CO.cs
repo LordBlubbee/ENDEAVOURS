@@ -63,7 +63,7 @@ public class CO : NetworkBehaviour
     [NonSerialized] public NetworkVariable<int> Resource_Supplies = new();
     [NonSerialized] public NetworkVariable<int> Resource_Ammo = new();
     [NonSerialized] public NetworkVariable<int> Resource_Tech = new();
-    [NonSerialized] public Dictionary<Faction, int> Resource_Reputation;
+    [NonSerialized] public Dictionary<Faction, int> Resource_Reputation = new();
     public enum Faction
     {
         LOGIPEDES_INVICTUS,
@@ -658,8 +658,8 @@ public class CO : NetworkBehaviour
             for (int amn = 0; amn < max; amn++)
             {
                 // Reversed Y-direction (top to bottom)
-                float step = MapWidth / max;
-                float yPos = MapWidth - ((amn + 1) * step - step);
+                float step = MapWidth / (max + 1);
+                float yPos = MapWidth - step * (amn + 1);
                 Vector3 tryPos = new Vector3(xSteps * GetPointStep(), yPos);
 
                 mapPoint = CO_SPAWNER.co.CreateMapPoint(tryPos);
@@ -746,6 +746,9 @@ public class CO : NetworkBehaviour
             if (map.transform.position.x > center.x - 0.5f + GetPointStep() && map.transform.position.x < center.x + 0.5f + GetPointStep()) list.Add(map);
         }
         if (list.Count == 0) return GetFarPoints(center, us);
+        //ChatGPT, could you make it resort list to go from top to bottom (in y position)?
+        list.Sort((a, b) => b.transform.position.y.CompareTo(a.transform.position.y));
+
         return list;
     }
     private List<MapPoint> GetFarPoints(Vector3 center, MapPoint us = null)
@@ -1170,6 +1173,7 @@ public class CO : NetworkBehaviour
         OpenRewardScreenRpc(ChangeMaterials, ChangeSupplies, ChangeAmmo, ChangeTech, ChangeXP, Factions.ToArray(), FactionChanges.ToArray(), ItemTranslate.ToArray());
         //Send report to clients with all faction rep changes
     }
+
     [Rpc(SendTo.ClientsAndHost)]
     private void OpenRewardScreenRpc(int Materials, int Supplies, int Ammo, int Tech, int XP, Faction[] Facs, int[] FacChanges, FixedString64Bytes[] RewardItemsGained)
     {

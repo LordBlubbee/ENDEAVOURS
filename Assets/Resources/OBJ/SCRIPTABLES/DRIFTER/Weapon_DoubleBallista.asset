@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Weapon_DoubleBallista
   m_EditorClassIdentifier: 
   ItemName: Double Ballista
-  ItemDesc: Ballistas provide reliable firepower against any target. The Republican
-    double ballista reloads a bit slower but has double the firepower.
+  ItemDesc: Ballistas provide reliable firepower against any target. Ballistas must
+    penetrate Armor before they are able to deal damage to the enemy hull and critical
+    systems. This Double Ballista is Republican tech that decimates enemy vessels
+    of any kind.
   ItemIcon: {fileID: 21300000, guid: aa1a4ba3835c1b54bb69868e67b7d2f3, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Weapon_DoubleBallista
   ItemResourceIDShort: Weapon_DoubleBallista

@@ -68,6 +68,21 @@ public class UI_CommandInterface : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
     }
+    UI_Module lastSelectedMod = null;
+
+    private void DeselectModule()
+    {
+        if (lastSelectedMod)
+        {
+            lastSelectedMod = null;
+        }
+    }
+    private void PressModule(UI_Module mod)
+    {
+        DeselectModule();
+        lastSelectedMod = mod;
+        mod.PressModule();
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -82,43 +97,45 @@ public class UI_CommandInterface : MonoBehaviour
         {
             PressTabButton(2);
         }
-        switch ( SelectedTab)
+        switch (SelectedTab)
         {
             case 0:
-                if (Input.GetKeyDown(KeyCode.Alpha1)) Modules[0].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha2)) Modules[1].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha3)) Modules[2].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha4)) Modules[3].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha5)) Modules[4].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha6)) Modules[5].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha7)) Modules[6].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha8)) Modules[7].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha9)) Modules[8].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha0)) Modules[9].PressModule();
+                if (Input.GetKeyDown(KeyCode.Alpha1)) PressModule(Modules[0]);
+                if (Input.GetKeyDown(KeyCode.Alpha2)) PressModule(Modules[1]);
+                if (Input.GetKeyDown(KeyCode.Alpha3)) PressModule(Modules[2]);
+                if (Input.GetKeyDown(KeyCode.Alpha4)) PressModule(Modules[3]);
+                if (Input.GetKeyDown(KeyCode.Alpha5)) PressModule(Modules[4]);
+                if (Input.GetKeyDown(KeyCode.Alpha6)) PressModule(Modules[5]);
+                if (Input.GetKeyDown(KeyCode.Alpha7)) PressModule(Modules[6]);
+                if (Input.GetKeyDown(KeyCode.Alpha8)) PressModule(Modules[7]);
+                if (Input.GetKeyDown(KeyCode.Alpha9)) PressModule(Modules[8]);
+                if (Input.GetKeyDown(KeyCode.Alpha0)) PressModule(Modules[9]);
                 break;
+
             case 1:
-                if (Input.GetKeyDown(KeyCode.Alpha1)) Weapons[0].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha2)) Weapons[1].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha3)) Weapons[2].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha4)) Weapons[3].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha5)) Weapons[4].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha6)) Weapons[5].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha7)) Weapons[6].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha8)) Weapons[7].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha9)) Weapons[8].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha0)) Weapons[9].PressModule();
+                if (Input.GetKeyDown(KeyCode.Alpha1)) PressModule(Weapons[0]);
+                if (Input.GetKeyDown(KeyCode.Alpha2)) PressModule(Weapons[1]);
+                if (Input.GetKeyDown(KeyCode.Alpha3)) PressModule(Weapons[2]);
+                if (Input.GetKeyDown(KeyCode.Alpha4)) PressModule(Weapons[3]);
+                if (Input.GetKeyDown(KeyCode.Alpha5)) PressModule(Weapons[4]);
+                if (Input.GetKeyDown(KeyCode.Alpha6)) PressModule(Weapons[5]);
+                if (Input.GetKeyDown(KeyCode.Alpha7)) PressModule(Weapons[6]);
+                if (Input.GetKeyDown(KeyCode.Alpha8)) PressModule(Weapons[7]);
+                if (Input.GetKeyDown(KeyCode.Alpha9)) PressModule(Weapons[8]);
+                if (Input.GetKeyDown(KeyCode.Alpha0)) PressModule(Weapons[9]);
                 break;
+
             case 2:
-                if (Input.GetKeyDown(KeyCode.Alpha1)) Crews[0].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha2)) Crews[1].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha3)) Crews[2].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha4)) Crews[3].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha5)) Crews[4].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha6)) Crews[5].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha7)) Crews[6].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha8)) Crews[7].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha9)) Crews[8].PressModule();
-                if (Input.GetKeyDown(KeyCode.Alpha0)) Crews[9].PressModule();
+                if (Input.GetKeyDown(KeyCode.Alpha1)) PressModule(Crews[0]);
+                if (Input.GetKeyDown(KeyCode.Alpha2)) PressModule(Crews[1]);
+                if (Input.GetKeyDown(KeyCode.Alpha3)) PressModule(Crews[2]);
+                if (Input.GetKeyDown(KeyCode.Alpha4)) PressModule(Crews[3]);
+                if (Input.GetKeyDown(KeyCode.Alpha5)) PressModule(Crews[4]);
+                if (Input.GetKeyDown(KeyCode.Alpha6)) PressModule(Crews[5]);
+                if (Input.GetKeyDown(KeyCode.Alpha7)) PressModule(Crews[6]);
+                if (Input.GetKeyDown(KeyCode.Alpha8)) PressModule(Crews[7]);
+                if (Input.GetKeyDown(KeyCode.Alpha9)) PressModule(Crews[8]);
+                if (Input.GetKeyDown(KeyCode.Alpha0)) PressModule(Crews[9]);
                 break;
         }
         if (IsOrdering())
@@ -210,6 +227,7 @@ public class UI_CommandInterface : MonoBehaviour
         CurrentOrderMarker.DeselectOrderMarker();
         CurrentOrderMarker.gameObject.SetActive(false);
         CurrentOrderMarker = null;
+        CurrentModuleSelected.SetDeselect();
         RefreshCommandInterface();
         
     }
@@ -251,6 +269,7 @@ public class UI_CommandInterface : MonoBehaviour
         }
         CurrentOrderMarker.DeselectOrderMarker();
         CurrentOrderMarker = null;
+        CurrentModuleSelected.SetDeselect();
         RefreshCommandInterface();
     }
 
@@ -262,7 +281,9 @@ public class UI_CommandInterface : MonoBehaviour
     {
         CurrentOrderMarker = mod.OrderMarker;
         CurrentOrderMarker.SelectOrderMarker();
+        if (CurrentModuleSelected) CurrentModuleSelected.SetDeselect();
         CurrentModuleSelected = mod;
+        CurrentModuleSelected.SetSelect();
         RefreshCommandInterface();
     }
 

@@ -112,20 +112,31 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public void SalvageRpc()
     {
         if (Space.CoreModules.Contains(this)) return;
-        int Worth = 0;
-        int TechWorth = 0;
-        for (int i = 0; i < ModuleLevel.Value; i++) {
-            Worth += ModuleUpgradeMaterials[i];
-            TechWorth += ModuleUpgradeTechs[i];
-        }
-        CO.co.Resource_Materials.Value += Mathf.RoundToInt(Worth*0.6f);
-        CO.co.Resource_Tech.Value += Mathf.RoundToInt(Worth * 0.6f);
+        CO.co.Resource_Materials.Value += GetMaterialSalvageWorth();
+        CO.co.Resource_Tech.Value += GetTechSalvageWorth();
         CO.co.AddInventoryItem(ShowAsModule);
         Space.RemoveModule(this);
 
         NetworkObject.Despawn();
     }
-
+    public int GetMaterialSalvageWorth()
+    {
+        int Worth = 0;
+        for (int i = 0; i < ModuleLevel.Value; i++)
+        {
+            Worth += ModuleUpgradeMaterials[i];
+        }
+        return Mathf.RoundToInt(Worth * 0.5f);
+    }
+    public int GetTechSalvageWorth()
+    {
+        int Worth = 0;
+        for (int i = 0; i < ModuleLevel.Value; i++)
+        {
+            Worth += ModuleUpgradeTechs[i];
+        }
+        return Mathf.RoundToInt(Worth * 0.5f);
+    }
 
     [Header("STATS")]
     public float MaxHealth = 100f;

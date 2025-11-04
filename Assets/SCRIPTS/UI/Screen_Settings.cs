@@ -16,7 +16,8 @@ public class Screen_Settings : MonoBehaviour
     public TextMeshProUGUI SFX_Tex;
     public TextMeshProUGUI OST_Tex;
     public AudioMixer AudioMixer;
-    private void Start()
+
+    public void Init()
     {
         VCX_Vol.value = GO.g.VCX_Vol;
         SFX_Vol.value = GO.g.SFX_Vol;

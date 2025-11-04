@@ -16,7 +16,7 @@ public class MapPointButton : MonoBehaviour
         if (NameVisible)
         {
             if (pon.AssociatedPoint.UniqueName != "") Texto.text = pon.GetNameAndData();
-            Texto.text = pon.GetData();
+            else Texto.text = pon.GetData();
         }
     }
     public void SetDefaultColor(Color col)

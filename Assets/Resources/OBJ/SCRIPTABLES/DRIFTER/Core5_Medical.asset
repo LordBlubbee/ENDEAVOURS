@@ -15,20 +15,7 @@ MonoBehaviour:
   ItemName: Medical
   ItemDesc: 'The primary medical chambers are an essential defensive tool, healing
     your crew while they are nearby. When your crew die on board your own Drifter,
-    they are capable of respawning at the Medical chambers. While the Medical chamber
-    survives, your crew will!
-
-
-    LEVEL 0: 200 HP. Restores up to 10 HP/s in a
-    2.5 tile radius.
-
-    LEVEL 1: 300 HP. Restores up to 15 HP/s in a 3 tile radius.
-
-    LEVEL
-    2: 400 HP. Restores up to 20 HP/s in a 3.5 tile radius.
-
-    LEVEL 3: 500 HP.
-    Restores up to 25 HP/s in a 4 tile radius.
+    they are capable of respawning at the Medical chambers.
 
 
 '

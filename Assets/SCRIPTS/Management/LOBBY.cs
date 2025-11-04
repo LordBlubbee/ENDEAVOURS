@@ -12,6 +12,7 @@ using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LOBBY : MonoBehaviour
@@ -138,6 +139,12 @@ public class LOBBY : MonoBehaviour
         if (StartedJoining) return;
         StartedJoining = true;
         JoinLobby(ID);
+    }
+    public void PressQuitServer()
+    {
+        StartedJoining = false;
+        NetworkManager.Singleton.Shutdown();
+        SceneManager.LoadScene(0);
     }
     public void PressPlayAlone()
     {

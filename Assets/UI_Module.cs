@@ -48,6 +48,15 @@ public class UI_Module : MonoBehaviour
     {
         NumID = ID;
     }
+
+    public void SetSelect()
+    {
+        IconBorder.color = Color.green;
+    }
+    public void SetDeselect()
+    {
+        IconBorder.color = Color.white;
+    }
     public void SetOff()
     {
         gameObject.SetActive(false);

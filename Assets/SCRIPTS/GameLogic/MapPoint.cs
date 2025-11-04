@@ -44,6 +44,7 @@ public class MapPoint : NetworkBehaviour
         if (HasInitialized()) return;
         Initialized = true;
         AssociatedPoint = Dialog;
+        if (!AssociatedPoint) Debug.Log("Warning: Received NULL");
         if (IsServer)
         {
             if (Dialog.UniqueName == "") PointName.Value = $"POINT-{UnityEngine.Random.Range(0, 10)}{UnityEngine.Random.Range(0, 10)}-{UnityEngine.Random.Range(0, 10)}{UnityEngine.Random.Range(0, 10)}";
