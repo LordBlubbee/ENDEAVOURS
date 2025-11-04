@@ -415,6 +415,23 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         return ATT.Value;
     }
+    public int GetATT_Total(int ID)
+    {
+        NetworkVariable<int> ATT;
+        switch (ID)
+        {
+            case 0: ATT = ATT_PHYSIQUE; break;
+            case 1: ATT = ATT_ARMS; break;
+            case 2: ATT = ATT_DEXTERITY; break;
+            case 3: ATT = ATT_COMMUNOPATHY; break;
+            case 4: ATT = ATT_COMMAND; break;
+            case 5: ATT = ATT_ENGINEERING; break;
+            case 6: ATT = ATT_ALCHEMY; break;
+            case 7: ATT = ATT_MEDICAL; break;
+            default: return 0; // Invalid ID, do nothing
+        }
+        return ATT.Value + CharacterBackground.Background_ATT_BONUS[ID] + ModifyAttributes[ID];
+    }
 
     // ==========================
     // INCREASE FUNCTIONS (RPC only increments by +1)

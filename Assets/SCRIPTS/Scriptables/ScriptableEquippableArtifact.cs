@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/SpawnScriptableArtifact", order = 1)]
 public class ScriptableEquippableArtifact : ScriptableEquippable
 {
-    public int ItemSupplyWorth;
     public EquipTypes EquipType;
     public enum EquipTypes
     {
@@ -32,8 +31,6 @@ public class ScriptableEquippableArtifact : ScriptableEquippable
         }
         return false;
     }
-
-    public int[] MinimumAttributes;
 
     [Header("PHYS, ARM, DEX, COM, CMD, ENG, ALC, MED")]
     public int[] ModifyAttributes;

@@ -56,17 +56,8 @@ public class Screen_CharacterCreator : MonoBehaviour
             case 6:
                 LevelNeed = 5;
                 break;
-            case 7:
-                LevelNeed = 6;
-                break;
-            case 8:
-                LevelNeed = 7;
-                break;
-            case 9:
-                LevelNeed = 8;
-                break;
             default:
-                LevelNeed = 999;
+                LevelNeed = 6;
                 break;
         }
         if (SkillPoints < LevelNeed) return;

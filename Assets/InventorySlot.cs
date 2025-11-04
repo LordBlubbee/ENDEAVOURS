@@ -29,7 +29,7 @@ public class InventorySlot : MonoBehaviour
         {
             InnerIconImage.sprite = equippable.ItemIcon;
 
-            Tool.Tooltip = equippable.ItemDesc;
+            Tool.Tooltip = $"{equippable.ItemName} \n\n{equippable.ItemDesc}";
         }
         else
         {

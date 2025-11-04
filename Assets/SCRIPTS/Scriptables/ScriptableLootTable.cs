@@ -13,6 +13,11 @@ public class ScriptableLootTable : ScriptableObject
     [Header("RANDOM LOOT")]
     public int TotalLootDrops = 1;
     public List<RandomLootItem> RandomLoot = new();
+
+    [Header("SHOP DROPS")]
+    public int MinimumShopDrops = 0;
+    public int MaximumShopDrops = 0;
+    public List<WeightedShopItem> PossibleShopDrops = new();
 }
 [Serializable]
 public class LootItem
@@ -22,6 +27,7 @@ public class LootItem
     public int Resource_Supplies; //Normal factor: 1:4
     public int Resource_Ammunition; //Normal factor: 1:4
     public int Resource_Technology; //Normal factor: 1:1
+    public int Resource_Repairs;
     public int Resource_XP; //Normal factor: 1:1
     public ScriptableLootItemList ItemDrop;
 }
@@ -32,3 +38,9 @@ public class RandomLootItem : LootItem
     public int Weight = 10;
 }
 
+[Serializable]
+public class WeightedShopItem
+{
+    public ScriptableShopitem Item;
+    public int Weight;
+}

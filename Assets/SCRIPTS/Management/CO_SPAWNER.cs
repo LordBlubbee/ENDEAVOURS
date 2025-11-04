@@ -13,6 +13,11 @@ public class CO_SPAWNER : NetworkBehaviour
     public TOOL PrefabGrappleSilent;
     public Sprite GrappleCursor;
     public ResourceCrate PrefabAmmoCrate;
+    public ShopItem PrefabShopItem;
+    public Sprite ShopItemMaterialDeal;
+    public Sprite ShopItemSupplyDeal;
+    public Sprite ShopItemAmmoDeal;
+    public Sprite ShopItemTechnologyDeal;
 
     [Header("VFX")]
     public PART ArmorImpact;

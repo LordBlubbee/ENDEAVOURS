@@ -10,7 +10,7 @@ public class Screen_Reward : MonoBehaviour
     public bool RewardActive = false;
     public TextMeshProUGUI MaterialGain;
     public List<InventorySlot> InventorySlots;
-    public void OpenRewardScreen(int Materials, int Supplies, int Ammo, int Tech, int XP, FactionReputation[] Facs, FixedString64Bytes[] RewardItemsGained)
+    public void OpenRewardScreen(int Materials, int Supplies, int Ammo, int Tech, int HP, int XP, FactionReputation[] Facs, FixedString64Bytes[] RewardItemsGained)
     {
         RewardActive = true;
         MaterialGain.text = "";
@@ -23,6 +23,7 @@ public class Screen_Reward : MonoBehaviour
         else if (Ammo < 0) MaterialGain.text += $"<color=red>AMMUNITION: {Ammo}</color>\n";
         if (Tech > 0) MaterialGain.text += $"<color=green>TECHNOLOGY: +{Tech}</color>\n";
         else if (Tech < 0) MaterialGain.text += $"<color=red>TECHNOLOGY: {Tech}</color>\n";
+        if (HP != 0) MaterialGain.text += $"<color=green>Repairs: +{HP}</color>\n";
 
         foreach (FactionReputation fac in Facs)
         {

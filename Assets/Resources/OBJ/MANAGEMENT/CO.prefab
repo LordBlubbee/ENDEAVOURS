@@ -360,6 +360,11 @@ MonoBehaviour:
   PrefabGrappleSilent: {fileID: 8311341897716400573, guid: f731be7339e17ee4399b86044f2ad2b7, type: 3}
   GrappleCursor: {fileID: 21300000, guid: 60f878be486a87a4ca9baaf1ee6e18e7, type: 3}
   PrefabAmmoCrate: {fileID: 5275543212453673670, guid: 8384cb1ea12c4dd46a5c2c2072f30029, type: 3}
+  PrefabShopItem: {fileID: 555142459187643347, guid: b1fb234dbf69e4744a05666ade6e8c9b, type: 3}
+  ShopItemMaterialDeal: {fileID: 21300000, guid: ad35b3711c0acf94293132facffca22e, type: 3}
+  ShopItemSupplyDeal: {fileID: 21300000, guid: f4f0572014414ec4bb873a84a94c2b57, type: 3}
+  ShopItemAmmoDeal: {fileID: 21300000, guid: 1da9d80f090359644bf1aaa85ff30106, type: 3}
+  ShopItemTechnologyDeal: {fileID: 21300000, guid: a7dff9a1e3302ca43a64ebfdd1e4a784, type: 3}
   ArmorImpact: {fileID: 1759800388499967267, guid: 52ce5ea45dc461346bed82ea78a64521, type: 3}
   ExplosionSmall: {fileID: 1759800388499967267, guid: 7f7f15c6c27261d438e11d44c34555b3, type: 3}
   ExplosionMedium: {fileID: 1759800388499967267, guid: 70d93878a36b8c54292e0c86ba038037, type: 3}

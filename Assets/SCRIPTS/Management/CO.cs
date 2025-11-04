@@ -59,6 +59,41 @@ public class CO : NetworkBehaviour
         }
     }
 
+    private List<ShopItem> ShopItems = new();
+    public List<ShopItem> GetShopItems() { return ShopItems; }
+    public void AddShopItem(ShopItem item) { ShopItems.Add(item); }
+    public void RemoveShopItem(ShopItem item) { ShopItems.Remove(item); }
+    public void CreateShopItem(ScriptableShopitem item)
+    {
+        ShopItem shop = Instantiate(CO_SPAWNER.co.PrefabShopItem,Vector3.zero,Quaternion.identity);
+        shop.Init(item); //This also adds to list
+
+        float Factor = 1f;
+        if (item.IsCrafted)
+        {
+            int AlchemySkill = 0;
+            foreach (CREW crew in GetAlliedCrew())
+            {
+                AlchemySkill = Mathf.Max(AlchemySkill, crew.GetATT_ALCHEMY());
+            }
+            Factor = 1.1f - AlchemySkill * 0.04f;
+        }
+        shop.MaterialCost.Value = Mathf.RoundToInt(UnityEngine.Random.Range(0.8f,1.2f)* item.DealMaterialsCost * Factor);
+        shop.SupplyCost.Value = Mathf.RoundToInt(UnityEngine.Random.Range(0.8f, 1.2f) * item.DealSuppliesCost * Factor);
+        shop.AmmoCost.Value = Mathf.RoundToInt(UnityEngine.Random.Range(0.8f, 1.2f) * item.DealAmmoCost * Factor);
+        shop.TechCost.Value = Mathf.RoundToInt(UnityEngine.Random.Range(0.8f, 1.2f) * item.DealTechCost * Factor);
+        shop.NetworkObject.Spawn();
+    }
+
+    public void ResetShopList()
+    {
+        foreach (ShopItem shop in new List<ShopItem>(GetShopItems()))
+        {
+            shop.NetworkObject.Despawn();
+        }
+        ShopItems = new();
+    }
+
     [NonSerialized] public NetworkVariable<int> Resource_Materials = new();
     [NonSerialized] public NetworkVariable<int> Resource_Supplies = new();
     [NonSerialized] public NetworkVariable<int> Resource_Ammo = new();
@@ -499,6 +534,7 @@ public class CO : NetworkBehaviour
     {
         ShouldDriftersMove = true;
         AreWeResting.Value = false;
+        ResetShopList();
         Vector3 moveDirection = destination.transform.position - GetPlayerMapPoint().transform.position;
         PlayerMainDrifter.SetLookTowards(moveDirection);
         PlayerMainDrifter.SetMoveInput(moveDirection);
@@ -1140,6 +1176,7 @@ public class CO : NetworkBehaviour
         int ChangeSupplies = 0;
         int ChangeTech = 0;
         int ChangeXP = 0;
+        int ChangeHP = 0;
         List<FixedString64Bytes> ItemTranslate = new();
         foreach (LootItem item in list)
         {
@@ -1147,6 +1184,7 @@ public class CO : NetworkBehaviour
             ChangeMaterials += Mathf.RoundToInt(item.Resource_Materials * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
             ChangeSupplies += Mathf.RoundToInt(item.Resource_Supplies * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
             ChangeTech += Mathf.RoundToInt(item.Resource_Technology * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
+            ChangeHP += Mathf.RoundToInt(item.Resource_Repairs * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
             ChangeXP += Mathf.RoundToInt(item.Resource_XP * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod * GetCommanderExperienceFactor());
             if (item.ItemDrop)
             {
@@ -1162,20 +1200,44 @@ public class CO : NetworkBehaviour
                 ItemTranslate.Add(newItem.GetItemResourceIDFull());
             }
         }
-        Resource_Ammo.Value += ChangeAmmo;
-        Resource_Materials.Value += ChangeMaterials;
-        Resource_Supplies.Value += ChangeSupplies;
-        Resource_Tech.Value += ChangeTech;
-        foreach (CREW crew in GetAlliedCrew())
+        if (list.Count > 0)
         {
-            crew.AddXP(ChangeXP);
+            Resource_Ammo.Value += ChangeAmmo;
+            Resource_Materials.Value += ChangeMaterials;
+            Resource_Supplies.Value += ChangeSupplies;
+            Resource_Tech.Value += ChangeTech;
+            if (ChangeHP > 0) PlayerMainDrifter.Heal(ChangeHP);
+            foreach (CREW crew in GetAlliedCrew())
+            {
+                crew.AddXP(ChangeXP);
+            }
+            //Send report to clients with all faction rep changes
+            OpenRewardScreenRpc(ChangeMaterials, ChangeSupplies, ChangeAmmo, ChangeTech, ChangeHP, ChangeXP, Factions.ToArray(), FactionChanges.ToArray(), ItemTranslate.ToArray());
         }
-        OpenRewardScreenRpc(ChangeMaterials, ChangeSupplies, ChangeAmmo, ChangeTech, ChangeXP, Factions.ToArray(), FactionChanges.ToArray(), ItemTranslate.ToArray());
-        //Send report to clients with all faction rep changes
+
+        if (table.MinimumShopDrops > 0)
+        {
+            ResetShopList();
+            int Drops = UnityEngine.Random.Range(table.MinimumShopDrops, table.MaximumShopDrops);
+            ResetWeights();
+            int i2 = 0;
+            List<ScriptableShopitem> ShopItemList = new();
+            foreach (WeightedShopItem item in table.PossibleShopDrops)
+            {
+                AddWeights(i, item.Weight);
+                ShopItemList.Add(item.Item);
+                i2++;
+            }
+            for (i2 = 0; i2 < Drops; i2++)
+            {
+                ScriptableShopitem shopItem = ShopItemList[GetWeight()];
+                CreateShopItem(shopItem);
+            }
+        }
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    private void OpenRewardScreenRpc(int Materials, int Supplies, int Ammo, int Tech, int XP, Faction[] Facs, int[] FacChanges, FixedString64Bytes[] RewardItemsGained)
+    private void OpenRewardScreenRpc(int Materials, int Supplies, int Ammo, int Tech, int HP, int XP, Faction[] Facs, int[] FacChanges, FixedString64Bytes[] RewardItemsGained)
     {
         List<FactionReputation> list = new();
         for (int i = 0; i < Facs.Length ;i++)
@@ -1185,7 +1247,7 @@ public class CO : NetworkBehaviour
             newfac.Amount = FacChanges[i];
             list.Add(newfac);
         }
-        UI.ui.RewardUI.OpenRewardScreen(Materials, Supplies, Ammo, Tech, XP, list.ToArray(), RewardItemsGained);
+        UI.ui.RewardUI.OpenRewardScreen(Materials, Supplies, Ammo, Tech, HP, XP, list.ToArray(), RewardItemsGained);
     }
     /// <summary>
     /// Clears all weights.

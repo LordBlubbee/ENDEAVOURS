@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,7 +18,6 @@ public class Screen_Inventory : MonoBehaviour
     public InventorySlot[] InventoryArtifacts;
     public InventorySlot[] InventoryCargo;
     public TextMeshProUGUI SubscreenCharacterButtonTex;
-    public GameObject SubscreenRestButton;
     public Slider DrifterHealthSlider;
     public TextMeshProUGUI DrifterHealthTex;
     public TextMeshProUGUI DrifterRepairTex;
@@ -75,18 +75,7 @@ public class Screen_Inventory : MonoBehaviour
         RefreshDrifterStats();
     }
 
-    void RefreshRest()
-    {
-        if (!CO.co.AreWeResting.Value)
-        {
-            OpenSubscreen(SubscreenDrifter);
-            return;
-        }
-        DrifterHealthSlider.value = CO.co.PlayerMainDrifter.GetHealthRelative();
-        DrifterHealthTex.text = $"{CO.co.PlayerMainDrifter.GetHealth().ToString("0")}/{CO.co.PlayerMainDrifter.GetMaxHealth().ToString("0")}";
-        DrifterHealthTex.color = CO.co.PlayerMainDrifter.GetHealthRelative() > 0.75 ? Color.green : (CO.co.PlayerMainDrifter.GetHealthRelative() > 0.25 ? Color.yellow : Color.red);
-        DrifterRepairTex.color = CO.co.PlayerMainDrifter.GetHealthRelative() < 1f ? Color.white : Color.gray;
-    }
+   
     /*public void PressCraftAmmo()
     {
         if (CO.co.Resource_Ammo.Value < 10) return;
@@ -111,7 +100,21 @@ public class Screen_Inventory : MonoBehaviour
 
     void RefreshDrifterStats()
     {
-        SubscreenRestButton.gameObject.SetActive(CO.co.AreWeResting.Value);
+        if (CO.co.AreWeResting.Value)
+        {
+            SubscreenRestButton.gameObject.SetActive(true);
+            SubscreenRestButtonTex.text = "REST";
+            SubscreenRestButtonTex.color = Color.cyan;
+        }
+        else if (CO.co.GetShopItems().Count > 0)
+        {
+            SubscreenRestButton.gameObject.SetActive(true);
+            SubscreenRestButtonTex.text = "DEALS";
+            SubscreenRestButtonTex.color = Color.yellow;
+        } else
+        {
+            SubscreenRestButton.gameObject.SetActive(false);
+        }
         DrifterTexResources.text = $"MATERIALS: {CO.co.Resource_Materials.Value}";
         DrifterTexSupplies.text = $"SUPPLIES: {CO.co.Resource_Supplies.Value}";
         DrifterTexAmmunition.text = $"AMMUNITION: {CO.co.Resource_Ammo.Value}";
@@ -285,6 +288,13 @@ public class Screen_Inventory : MonoBehaviour
         {
             ScriptableEquippable slotSwap = slot.GetEquippedItem();
             if (!doesItemFitInSlot(HoldingItem, slot)) return;
+            for (int i = 0; i < HoldingItem.MinimumAttributes.Length; i++)
+            {
+                if (HoldingItem.MinimumAttributes[i] > LOCALCO.local.GetPlayer().GetATT_Total(i))
+                {
+                    return;
+                }
+            }
             if (!doesItemFitInSlot(slotSwap, CurrentDraggingSlot)) return;
             slot.SetInventoryItem(HoldingItem);
             UpdateEquipmentBasedOnItem(slot);
@@ -538,7 +548,6 @@ public class Screen_Inventory : MonoBehaviour
                     break;
 
             }
-
             ModuleDesc.text = SelectedDrifterSlot.GetEquippedItem().ItemDesc+Data;
            
             DrifterModuleSell.SetActive(true);
@@ -549,15 +558,39 @@ public class Screen_Inventory : MonoBehaviour
                 DrifterModuleBuy.SetActive(true);
                 int MaterialsNeeded = SelectedDrifterSlot.ModuleLink.ModuleUpgradeMaterials[SelectedDrifterSlot.ModuleLink.ModuleLevel.Value];
                 int TechNeeded = SelectedDrifterSlot.ModuleLink.ModuleUpgradeTechs[SelectedDrifterSlot.ModuleLink.ModuleLevel.Value];
-                if (TechNeeded > 0) DrifterModuleBuyTex.text = $"UPGRADE \n<color=yellow>[-{MaterialsNeeded}M]</color> <color=#00FFFF>[-{TechNeeded}T]</color>";
-                else DrifterModuleBuyTex.text = $"UPGRADE \n<color=yellow>[-{MaterialsNeeded}M]</color>";
+                if (TechNeeded > 0) DrifterModuleBuyTex.text = $"UPGRADE \n<color=yellow>-{MaterialsNeeded}M</color> <color=#0077FF>-{TechNeeded}T</color>";
+                else DrifterModuleBuyTex.text = $"UPGRADE \n<color=yellow>-{MaterialsNeeded}M</color>";
             }
             int MaterialsSalvage = SelectedDrifterSlot.ModuleLink.GetMaterialSalvageWorth();
             int TechSalvage = SelectedDrifterSlot.ModuleLink.GetTechSalvageWorth();
-            if (TechSalvage > 0) DrifterModuleSellTex.text = $"DISMANTLE \n<color=yellow>[+{MaterialsSalvage}M]</color> <color=#00FFFF>[+{TechSalvage}T]</color>";
-            else if (MaterialsSalvage > 0) DrifterModuleSellTex.text = $"DISMANTLE \n<color=yellow>[+{MaterialsSalvage}M]</color>";
+            if (TechSalvage > 0) DrifterModuleSellTex.text = $"DISMANTLE \n<color=yellow>+{MaterialsSalvage}M</color> <color=#0077FF>+{TechSalvage}T</color>";
+            else if (MaterialsSalvage > 0) DrifterModuleSellTex.text = $"DISMANTLE \n<color=yellow>+{MaterialsSalvage}M</color>";
             else DrifterModuleSellTex.text = $"DISMANTLE";
         } 
+    }
+
+    [Header("Rest Menu")]
+    public GameObject SubscreenRestButton;
+    public TextMeshProUGUI SubscreenRestButtonTex;
+    public GameObject RestRepairButton;
+    public TextMeshProUGUI RestMenuTitleTex;
+    public List<ShopItemButton> ShopItems;
+    public void OpenRest()
+    {
+        if (!CO.co.AreWeResting.Value && CO.co.GetShopItems().Count == 0)
+        {
+            return;
+        }
+        for (int i = 0; i < ShopItems.Count; i++)
+        {
+            ShopItem shopLink = null;
+            if (CO.co.GetShopItems().Count > i)
+            {
+                shopLink = CO.co.GetShopItems()[i];
+            }
+            ShopItems[i].Init(shopLink);
+        }
+        OpenSubscreen(SubscreenRest);
     }
     public void PressRepairButton()
     {
@@ -569,5 +602,19 @@ public class Screen_Inventory : MonoBehaviour
                 return;
             }
         }
+    }
+    void RefreshRest()
+    {
+        if (!CO.co.AreWeResting.Value && CO.co.GetShopItems().Count == 0)
+        {
+            OpenSubscreen(SubscreenDrifter);
+            return;
+        }
+        RestRepairButton.SetActive(CO.co.AreWeResting.Value);
+        DrifterHealthSlider.value = CO.co.PlayerMainDrifter.GetHealthRelative();
+        DrifterHealthTex.text = $"DRIFTER INTEGRITY: {CO.co.PlayerMainDrifter.GetHealth().ToString("0")}/{CO.co.PlayerMainDrifter.GetMaxHealth().ToString("0")}";
+        DrifterHealthTex.color = CO.co.PlayerMainDrifter.GetHealthRelative() > 0.75 ? Color.green : (CO.co.PlayerMainDrifter.GetHealthRelative() > 0.25 ? Color.yellow : Color.red);
+        DrifterRepairTex.color = CO.co.PlayerMainDrifter.GetHealthRelative() < 1f ? Color.white : Color.gray;
+
     }
 }

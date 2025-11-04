@@ -9,6 +9,8 @@ public class ScriptableEquippable : ScriptableObject
     public Sprite ItemIcon;
     public string ItemResourceIDFull;
     public string ItemResourceIDShort;
+
+    public int[] MinimumAttributes;
     public string GetItemResourceIDFull()
     {
         return ItemResourceIDFull;
