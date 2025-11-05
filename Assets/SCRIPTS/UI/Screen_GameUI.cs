@@ -178,14 +178,15 @@ public class Screen_GameUI : MonoBehaviour
                 } else
                 {
                 }*/
-                if (player.Space != CO.co.PlayerMainDrifter.Interior)
+                /*if (player.Space != CO.co.PlayerMainDrifter.Interior)
                 {
                     BleedingTex.text = "-CANNOT RESPAWN- \nEliminate all threats";
                 }
                 else
                 {
                     BleedingTex.text = $"-RESPAWNING- \n{(20 + player.BleedingTime.Value).ToString("0")}";
-                }
+                }*/
+                BleedingTex.text = $"-RESPAWNING- \n{(20 + player.BleedingTime.Value).ToString("0")}";
             }
             else BleedingTex.text = $"-BLEEDING OUT- \n{player.BleedingTime.Value.ToString("0")}";
             if (UI_CommandInterface.co.IsCommandingTabOpen())

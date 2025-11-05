@@ -6,6 +6,7 @@ using UnityEngine;
 public class SPACE : NetworkBehaviour
 {
     public DRIFTER Drifter;
+    public DUNGEON Dungeon;
     [NonSerialized] public NetworkVariable<int> SpaceID = new();
     [NonSerialized] public List<CREW> CrewInSpace = new();
     private List<Module> Modules = new();
@@ -104,10 +105,14 @@ public class SPACE : NetworkBehaviour
 
         if (!IsServer) return;
 
-        foreach (ScriptableEquippableModule mod in Drifter.StartingModules)
+        if (Drifter)
         {
-            AddModule(mod, true);
+            foreach (ScriptableEquippableModule mod in Drifter.StartingModules)
+            {
+                AddModule(mod, true);
+            }
         }
+        
         /*
         for (int i = 0; i < StartingModuleList.Count; i++)
         {
@@ -329,20 +334,35 @@ public class SPACE : NetworkBehaviour
         int index = UnityEngine.Random.Range(0, RoomTiles.Count);
         return RoomTiles[index];
     }
+    public WalkableTile GetRandomUnboardableGrid()
+    {
+        if (RoomTiles == null || RoomTiles.Count == 0)
+            return null;
+
+        List<WalkableTile> tiles = new();
+        foreach (WalkableTile tile in RoomTiles)
+        {
+            if (!tile.canBeBoarded) tiles.Add(tile);
+        }
+        int index = UnityEngine.Random.Range(0, tiles.Count);
+        return tiles[index];
+    }
     public void AddCrew(CREW crew)
     {
         if (CrewInSpace.Contains(crew)) return;
         CrewInSpace.Add(crew);
-        crew.Space = this;
+        crew.Space = this; //This does nothing ;~;
         if (IsServer)
         {
             crew.SpaceID.Value = SpaceID.Value;
+            Debug.Log($"Adding {crew.name} to space {this.name} with ID {SpaceID.Value}");
             crew.transform.SetParent(transform);
             crew.transform.localPosition = new Vector3(crew.transform.localPosition.x, crew.transform.localPosition.y, -0.5f);
         }
     }
     public void RemoveCrew(CREW crew)
     {
+        Debug.Log("Removing crew: " + crew.name);
         CrewInSpace.Remove(crew);
         if (IsServer)
         {

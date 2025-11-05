@@ -518,7 +518,10 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     
     [NonSerialized] public NetworkVariable<int> SpaceID = new();
-    public SPACE Space { get { return CO.co.GetSpace(SpaceID.Value); } set { } }
+    public SPACE Space { get {
+            Debug.Log($"{name} SpaceID = {SpaceID.Value}");
+            return CO.co.GetSpace(SpaceID.Value); 
+        } set { } }
 
     bool hasInitialized = false;
 
@@ -639,6 +642,7 @@ public class CREW : NetworkBehaviour, iDamageable
         while (true)
         {
             CharacterNameTag.SetPlayerAndName(this, CharacterName.Value.ToString(), new Color(CharacterNameColor.Value.x, CharacterNameColor.Value.y, CharacterNameColor.Value.z));
+            UpdateColorBasedOnLife();
             yield return new WaitForSeconds(1);
         }
     }
@@ -797,6 +801,7 @@ public class CREW : NetworkBehaviour, iDamageable
 
     public void AddToSpace(SPACE newSpace)
     {
+        Debug.Log($"{this.name} Adding to {newSpace}");
         newSpace.AddCrew(this);
         AddToSpaceRpc(newSpace.SpaceID.Value);
     }
@@ -814,6 +819,7 @@ public class CREW : NetworkBehaviour, iDamageable
         AnimationComboWeapon2 = 0;
         AddToSpace(tile.Space);
         StartCoroutine(GrappleNum(tile.transform));
+        Debug.Log($"{this.name} Using grapple!");
     }
     /*Use Inputs*/
     public void Dash()
@@ -1343,7 +1349,7 @@ public class CREW : NetworkBehaviour, iDamageable
             }
             else if (HomeDrifter)
             {
-                if (!HomeDrifter.MedicalModule.IsDisabled() && (Space == HomeDrifter.Space || (GetFaction() == 1 && CO.co.IsSafe())))
+                if (!HomeDrifter.MedicalModule.IsDisabled() && (Space == HomeDrifter.Space))
                 {
                     if ((transform.position - HomeDrifter.MedicalModule.transform.position).magnitude > 8)
                     {
@@ -1358,7 +1364,7 @@ public class CREW : NetworkBehaviour, iDamageable
                     if (BleedingTime.Value < -20 || CO.co.IsSafe())
                     {
                         DeadForever.Value = false;
-                        Alive.Value = true;
+                        SetAlive();
                         Heal(1);
                     }
                 }
@@ -1376,6 +1382,27 @@ public class CREW : NetworkBehaviour, iDamageable
     {
          return AnimationController.getAnimationState();
     }
+    public void SetAlive()
+    {
+        Alive.Value = true;
+        setAnimationIfNotAlready(ANIM.AnimationState.MI_IDLE);
+        SetColorAliveRpc();
+    }
+    private void UpdateColorBasedOnLife()
+    {
+        Spr.color = isDead() ? new Color(0.5f,0.3f,0.3f) : Color.white;
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void SetColorAliveRpc()
+    {
+        Spr.color = Color.white;
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    private void SetColorDeadRpc()
+    {
+        Spr.color = new Color(0.5f, 0.3f, 0.3f);
+    }
     private void MoveAndLook()
     {
         if (!CanFunction())
@@ -1384,8 +1411,7 @@ public class CREW : NetworkBehaviour, iDamageable
             {
                 if (GetHealth() > 50)
                 {
-                    Alive.Value = true;
-                    setAnimationIfNotAlready(ANIM.AnimationState.MI_IDLE);
+                    SetAlive();
                 }
             }
             return;
@@ -1598,7 +1624,7 @@ public class CREW : NetworkBehaviour, iDamageable
         Diff -= CurHealth.Value;
         if (CurHealth.Value > 49 && isDead())
         {
-            Alive.Value = true;
+            SetAlive();
         }
         if (Diff > -1) return;
         CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
@@ -1784,7 +1810,9 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         Alive.Value = false;
         BleedingTime.Value = 60;
+        EquipWeapon1Rpc();
         setAnimationRpc(ANIM.AnimationState.MI_DEAD1);
+        SetColorDeadRpc();
     }
     public void AddStamina(float fl)
     {
@@ -1847,5 +1875,24 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         if (space != Space) return false;
         return !isDead();
+    } 
+    // Returns true if there is a clear line of sight to the target position (no obstacles in between)
+    public bool HasLineOfSight(Vector3 target)
+    {
+        Vector3 origin = transform.position;
+        Vector2 direction = (target - origin).normalized;
+        float distance = (target - origin).magnitude;
+
+        // Raycast to check for obstacles
+        RaycastHit2D[] hit = Physics2D.RaycastAll(origin, direction, distance);
+        foreach (RaycastHit2D h in hit)
+        {
+            if (h.collider.gameObject.tag.Equals("LOSBlocker"))
+            {
+                // Hit something that is not self and not a trigger, so line of sight is blocked
+                return false;
+            }
+        }
+        return true;
     }
 }

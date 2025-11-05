@@ -16,8 +16,14 @@ public class ScriptableEnemyGroup : ScriptableObject
     public int CrewQualityLevel = 100;
     public List<EnemyCrewWithWeight> GuaranteedCrewList;
     public List<EnemyCrewWithWeight> SpawnCrewList;
+
+    [Header("DRIFTER")]
     public int DrifterQualityLevel = 100;
     public List<ScriptableEnemyDrifter> SpawnDrifter;
+
+    [Header("DUNGEON")]
+    public int DungeonQualityLevel = 100;
+    public DUNGEON SpawnDungeon;
 
     [Header("SPAWNING GROUP")]
     public float SpawnGroupRange = 10f; //Area in which the group is spawned

@@ -18,6 +18,7 @@ public class AI_GROUP : MonoBehaviour
 
     [NonSerialized] public int Faction;
     [NonSerialized] public DRIFTER HomeDrifter;
+    [NonSerialized] public DUNGEON HomeDungeon;
     [NonSerialized] public SPACE HomeSpace;
     private Vector3 MainPoint;
     private float MainObjectiveTimer = 0f;
@@ -36,7 +37,6 @@ public class AI_GROUP : MonoBehaviour
     {
         MainPoint = vec;
     }
-
     public void Add(AI_UNIT unit)
     {
         unit.AddToGroup(this);
@@ -44,6 +44,11 @@ public class AI_GROUP : MonoBehaviour
     public void SetAIHome(DRIFTER dr)
     {
         HomeDrifter = dr;
+        HomeSpace = dr.Space;
+    }
+    public void SetAIHome(DUNGEON dr)
+    {
+        HomeDungeon = dr;
         HomeSpace = dr.Space;
     }
     public void SetAIHome(SPACE dr)
@@ -71,7 +76,7 @@ public class AI_GROUP : MonoBehaviour
          */
         while (true)
         {
-            if (Units.Count == 0 && HomeDrifter == null)
+            if (Units.Count == 0 && HomeDrifter == null && HomeDungeon == null)
             {
                 Destroy(this.gameObject);
                 yield break;
@@ -264,7 +269,7 @@ public class AI_GROUP : MonoBehaviour
                 {
                     if (unit.GetObjectiveDistance() < 3f)
                     {
-                        unit.SetObjectiveTarget(GetRandomPointAround(MainPoint, 12f), unit.getSpace());
+                        unit.SetObjectiveTarget(HomeDungeon.Space.GetRandomUnboardableGrid().transform.position, unit.getSpace());
                     }
                 }
                 break;
@@ -283,13 +288,11 @@ public class AI_GROUP : MonoBehaviour
                 }
                 break;
             case AI_OBJECTIVES.ENGAGE: //Move towards random rooms of nearest enemy drifter
-                Debug.Log("Engage...");
                 foreach (AI_UNIT unit in Units)
                 {
                     if (unit == null) continue;
                     if (unit.GetObjectiveDistance() < 4f)
                     {
-                        Debug.Log("Setting target");
                         DRIFTER enem = unit.GetClosestEnemyDrifter();
                         if (enem) unit.SetObjectiveTarget(enem.Interior.GetRandomGrid().transform, enem.Interior);
                     }

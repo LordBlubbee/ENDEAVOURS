@@ -279,9 +279,34 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         return getLookVector(transform.rotation);
     }
+    public Vector3 getRightVector()
+    {
+        return getRightVector(transform.rotation);
+    }
+
+    public Vector3 getLeftVector()
+    {
+        return getLeftVector(transform.rotation);
+    }
+
     protected Vector3 getLookVector(Quaternion rotref)
     {
         float rot = Mathf.Deg2Rad * rotref.eulerAngles.z;
+        float dxf = Mathf.Cos(rot);
+        float dyf = Mathf.Sin(rot);
+        return new Vector3(dxf, dyf, 0);
+    }
+    protected Vector3 getRightVector(Quaternion rotref)
+    {
+        float rot = Mathf.Deg2Rad * (rotref.eulerAngles.z - 90f); // rotate -90° for right
+        float dxf = Mathf.Cos(rot);
+        float dyf = Mathf.Sin(rot);
+        return new Vector3(dxf, dyf, 0);
+    }
+
+    protected Vector3 getLeftVector(Quaternion rotref)
+    {
+        float rot = Mathf.Deg2Rad * (rotref.eulerAngles.z + 90f); // rotate +90° for left
         float dxf = Mathf.Cos(rot);
         float dyf = Mathf.Sin(rot);
         return new Vector3(dxf, dyf, 0);

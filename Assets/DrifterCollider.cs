@@ -3,14 +3,13 @@ using UnityEngine;
 public class DrifterCollider : MonoBehaviour
 {
     public Collider2D Collider;
-    public DRIFTER Drifter;
 
     // Set this to the layer your Drifter GameObjects use
     public LayerMask DrifterLayer;
 
     private Collider2D[] results = new Collider2D[8];
 
-    private void Update()
+    private void FixedUpdate()
     {
         var filter = new ContactFilter2D
         {
@@ -26,9 +25,9 @@ public class DrifterCollider : MonoBehaviour
             Collider2D col = results[i];
             if (col == Collider) continue; // Skip self
 
-            Vector3 away = (Drifter.transform.position - col.transform.position).normalized;
+            Vector3 away = (transform.position - col.transform.position).normalized;
 
-            Drifter.transform.position += away * -Collider.Distance(col).distance * CO.co.GetWorldSpeedDeltaFixed();
+            transform.position += away * -Collider.Distance(col).distance * CO.co.GetWorldSpeedDeltaFixed();
         }
     }
 }   

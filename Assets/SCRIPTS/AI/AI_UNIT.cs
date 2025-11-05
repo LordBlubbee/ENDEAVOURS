@@ -1116,21 +1116,7 @@ public class AI_UNIT : NetworkBehaviour
     // Returns true if there is a clear line of sight to the target position (no obstacles in between)
     public bool HasLineOfSight(Vector3 target)
     {
-        Vector3 origin = transform.position;
-        Vector2 direction = (target - origin).normalized;
-        float distance = (target - origin).magnitude;
-
-        // Raycast to check for obstacles
-        RaycastHit2D[] hit = Physics2D.RaycastAll(origin, direction, distance);
-        foreach (RaycastHit2D h in hit)
-        {
-            if (h.collider.gameObject.tag.Equals("LOSBlocker"))
-            {
-                // Hit something that is not self and not a trigger, so line of sight is blocked
-                return false;
-            }
-        }
-        return true;
+        return Unit.HasLineOfSight(target);
     }
 
     // Returns all visible enemies within a given radius

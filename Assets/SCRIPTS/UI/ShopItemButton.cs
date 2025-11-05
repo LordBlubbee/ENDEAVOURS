@@ -58,7 +58,12 @@ public class ShopItemButton : MonoBehaviour
     {
         if (ItemLink)
         {
-            if (ItemLink.CanBeBought()) Icon.color = Color.gray;
+            if (ItemLink.MaterialCost.Value == -1)
+            {
+                Icon.color = Color.gray;
+                Cost.text = "<color=green>[BOUGHT]";
+            }
+            else if (ItemLink.CanBeBought()) Icon.color = Color.gray;
             else Icon.color = Color.white;
         } else
         {

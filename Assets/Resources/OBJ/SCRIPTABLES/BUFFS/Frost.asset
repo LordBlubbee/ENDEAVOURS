@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxStacks: 5
   Duration: 5
+  BuffParticles: 1
   ModifyHealthMax: 0
   ModifyHealthRegen: 0
   ModifyStaminaMax: 0

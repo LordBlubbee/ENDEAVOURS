@@ -78,7 +78,7 @@ public class CO : NetworkBehaviour
             }
             Factor = 1.1f - AlchemySkill * 0.04f;
         }
-        shop.MaterialCost.Value = Mathf.RoundToInt(UnityEngine.Random.Range(0.8f,1.2f)* item.DealMaterialsCost * Factor);
+        shop.MaterialCost.Value = Mathf.RoundToInt(UnityEngine.Random.Range(0.8f,1.2f) * item.DealMaterialsCost * Factor);
         shop.SupplyCost.Value = Mathf.RoundToInt(UnityEngine.Random.Range(0.8f, 1.2f) * item.DealSuppliesCost * Factor);
         shop.AmmoCost.Value = Mathf.RoundToInt(UnityEngine.Random.Range(0.8f, 1.2f) * item.DealAmmoCost * Factor);
         shop.TechCost.Value = Mathf.RoundToInt(UnityEngine.Random.Range(0.8f, 1.2f) * item.DealTechCost * Factor);
@@ -955,6 +955,7 @@ public class CO : NetworkBehaviour
         {
             SpaceID++;
             Space.SpaceID.Value = SpaceID;
+            Debug.Log($"Registering new SPACE of {Space.name} at ID {SpaceID}");
         }
     }
     public void UnregisterSpace(SPACE Space)
@@ -971,6 +972,11 @@ public class CO : NetworkBehaviour
     /*GAME EVENTS*/
     ScriptableEvent CurrentEvent = null;
 
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ForceOpenMissionScreenRpc()
+    {
+        UI.ui.MainGameplayUI.ForceMissionScreenAfterStoryEnd();
+    }
 
     public void PerformEvent(ScriptableEvent even)
     {
@@ -979,11 +985,16 @@ public class CO : NetworkBehaviour
         string str = even.EventController;
         switch (str)
         {
+            case "":
+                ForceOpenMissionScreenRpc();
+                break;
             case "GenericRest":
                 StartCoroutine(Event_GenericRest());
+                ForceOpenMissionScreenRpc();
                 break;
             case "GenericLoot":
                 StartCoroutine(Event_GenericLoot());
+                ForceOpenMissionScreenRpc();
                 break;
             case "GenericBattle":
                 StartCoroutine(Event_GenericBattle());

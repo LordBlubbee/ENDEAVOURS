@@ -201,7 +201,7 @@ public class CO_STORY : NetworkBehaviour
         {
             local.CurrentDialogVote.Value = -1;
         }
-        ForceOpenRpc();
+        ForceUpdateStoryRpc();
     }
 
     private ScriptableDialog CurrentDialog;
@@ -257,12 +257,6 @@ public class CO_STORY : NetworkBehaviour
     private void ForceUpdateStoryRpc()
     {
         ShouldUpdate = true;
-    }
-    [Rpc(SendTo.ClientsAndHost)]
-    private void ForceOpenRpc()
-    {
-        ShouldUpdate = true;
-        UI.ui.MainGameplayUI.ForceMissionScreenAfterStoryEnd();
     }
     private void Update()
     {

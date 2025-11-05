@@ -253,6 +253,23 @@ public class CO_SPAWNER : NetworkBehaviour
         drift.CrewGroup.Add(enem.GetComponent<AI_UNIT>());
         return enem;
     }
+    public CREW SpawnUnitInDungeon(CREW Prefab, DUNGEON drift, int Faction = 2)
+    {
+        CREW enem = Instantiate(Prefab, drift.Space.GetRandomUnboardableGrid().transform.position, Quaternion.identity);
+        enem.NetworkObject.Spawn();
+        enem.Faction.Value = Faction;
+        if (Prefab.CharacterBackground)
+        {
+            enem.CharacterName.Value = Faction == 1 ? Prefab.CharacterBackground.GetRandomName() : Prefab.CharacterBackground.GetRandomNameEnemy();
+            Color col = Prefab.CharacterBackground.BackgroundColor;
+            enem.CharacterNameColor.Value = new Vector3(col.r, col.g, col.b);
+        }
+        enem.EquipWeapon1Rpc();
+        enem.Init();
+        drift.Space.AddCrew(enem);
+        drift.AI.Add(enem.GetComponent<AI_UNIT>());
+        return enem;
+    }
     public DRIFTER SpawnEnemyGroup(ScriptableEnemyGroup gr, int Faction = 2)
     {
         float Degrees = UnityEngine.Random.Range(0, 360);
@@ -269,8 +286,43 @@ public class CO_SPAWNER : NetworkBehaviour
         Debug.Log($"Spawning enemy group with crew amount {CrewWorthPoints} and crew quality {CrewQualityPoints} and Drfiter quality {DrifterQualityPoints}");
         AI_GROUP group;
         List<AI_UNIT> members = new();
+        if (gr.SpawnDungeon)
+        {
+            /*
+             * SPAWN GROUP IN DUNGEON
+             */
+
+            DUNGEON dun = Instantiate(gr.SpawnDungeon, Vector3.zero, Quaternion.identity);
+            dun.SetDungeonVariant();
+            dun.NetworkObject.Spawn();
+            dun.Init();
+
+            ResetWeights();
+            i = 0;
+            foreach (EnemyCrewWithWeight weight in gr.SpawnCrewList)
+            {
+                AddWeights(i, weight.GetWeight(CrewQualityPoints));
+                PossibleSpawns.Add(weight.Crew);
+                i++;
+            }
+            while (CrewWorthPoints > 0)
+            {
+                Vector3 tryPos = dun.Space.GetRandomUnboardableGrid().transform.position;
+                ScriptableEnemyCrew enemyType = PossibleSpawns[GetWeight()];
+                CREW crew = SpawnUnitInDungeon(enemyType.SpawnCrew, dun);
+                SetQualityLevelOfCrew(crew, enemyType, CrewQualityPoints);
+                CrewWorthPoints -= enemyType.Worth;
+            }
+            group = dun.AI;
+            group.SetAI(gr.AI_Type, gr.AI_Group, 2, members);
+            return null;
+        }
+
         if (gr.SpawnDrifter.Count == 0)
         {
+            /*
+             * SPAWN GROUP IN NEBULA
+             */
             group = Instantiate(PrefabAIGROUP);
 
             ResetWeights();
@@ -301,6 +353,11 @@ public class CO_SPAWNER : NetworkBehaviour
             group.SetAIHome(Spawn);
             return null;
         }
+        
+
+        /*
+         * SPAWN GROUP IN DRIFTER
+         */
         ResetWeights();
         i = 0;
         List<ScriptableEnemyDrifter> PossibleDrifterSpawns = new();
