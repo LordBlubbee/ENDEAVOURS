@@ -1,8 +1,10 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using static iDamageable;
 
 public class DUNGEON : NetworkBehaviour
 {
@@ -14,15 +16,20 @@ public class DUNGEON : NetworkBehaviour
         Init();
     }
     bool hasInitialized = false;
-    private NetworkVariable<int> DungeonVariant = new();
-    public int MaximumDungeonVariants = 1;
-    public List<DungeonTiles> Variants = new List<DungeonTiles>();
-    [Serializable] public struct DungeonTiles
+    private NetworkVariable<FixedString32Bytes> DungeonVariantData = new();
+    public List<DungeonAlteration> Alterations = new List<DungeonAlteration>();
+    public List<WalkableTile> MainObjectivePossibilities;
+    public List<WalkableTile> TrapPossibilities;
+
+    [Serializable]
+    public struct DungeonAlteration
+    {
+        public List<DungeonVariants> Variants;
+    }
+    [Serializable] public struct DungeonVariants
     {
         public List<WalkableTile> WalkablesRemoved;
         public List<SpriteRenderer> SpritesRemoved;
-        public List<WalkableTile> MainObjectivePossibilities;
-        public List<WalkableTile> TrapPossibilities;
     }
     public void Init()
     {
@@ -55,36 +62,69 @@ public class DUNGEON : NetworkBehaviour
         GenerateDungeon();
         Space.Init();
     }
-
-    public void SetDungeonVariant()
-    {
-        DungeonVariant.Value = UnityEngine.Random.Range(1, MaximumDungeonVariants);
-    }
     private void GenerateDungeon()
     {
         //Dungeon is preset, but has different components that can be taken out/removed
-        if (DungeonVariant.Value == 0)
+        string Data = DungeonVariantData.Value.ToString();
+        Debug.Log($"Receiving dungeon data {Data}");
+        int i = 0;
+        foreach (DungeonAlteration alt in Alterations)
         {
-            Debug.Log("Error: Variant 0");
-            return;
+            char c = Data[i];
+            int ID = c - '0';
+            Debug.Log($"Digit {i} equals {ID}");
+            if (ID == 0)
+            {
+                Debug.Log("Error: Variant 0");
+                return;
+            }
+            //Remove different extra rooms
+            DungeonVariants ChosenVar = alt.Variants[ID-1];
+            foreach (WalkableTile tile in ChosenVar.WalkablesRemoved)
+            {
+                if (tile == null) continue;
+                Space.RoomTiles.Remove(tile);
+                MainObjectivePossibilities.Remove(tile);
+                TrapPossibilities.Remove(tile);
+                tile.gameObject.SetActive(false);
+            }
+            foreach (SpriteRenderer tile in ChosenVar.SpritesRemoved)
+            {
+                if (tile == null) continue;
+                tile.gameObject.SetActive(false);
+            }
+            i++;
         }
-
-        //Remove different extra rooms
-        foreach (WalkableTile tile in Variants[DungeonVariant.Value-1].WalkablesRemoved)
+    }
+    public void Impact(PROJ fl, Vector3 ImpactArea)
+    {
+        float Damage = fl.AttackDamage;
+        float AbsorbableDamage = fl.AttackDamage * fl.ArmorAbsorptionModifier;
+        Damage -= AbsorbableDamage;
+        foreach (CREW mod in Space.GetCrew())
         {
-            if (tile == null) continue;
-            Space.RoomTiles.Remove(tile);
-            tile.gameObject.SetActive(false);
+            float Dist = (mod.transform.position - ImpactArea).magnitude;
+            if (Dist < fl.CrewDamageSplash)
+            {
+                mod.TakeDamage(Damage * fl.CrewDamageModifier, mod.transform.position, DamageType.TRUE);
+            }
         }
-        foreach (SpriteRenderer tile in Variants[DungeonVariant.Value - 1].SpritesRemoved)
+    }
+    public void SetDungeonVariant()
+    {
+        string str = "";
+        foreach (DungeonAlteration alter in Alterations)
         {
-            if (tile == null) continue;
-            tile.gameObject.SetActive(false);
+            int ID = UnityEngine.Random.Range(0, alter.Variants.Count) + 1;
+            str += ID.ToString();
         }
-
-        if (IsServer)
-        {
-            //Spawn different traps, rooms, or objectives
-        }
+        DungeonVariantData.Value = str;
+        Debug.Log($"Setting dungeon data {DungeonVariantData.Value}");
+    }
+    public void DespawnAndUnregister()
+    {
+        Debug.Log("Despawn and unregister");
+        CO.co.UnregisterSpace(Space);
+        NetworkObject.Despawn();
     }
 }

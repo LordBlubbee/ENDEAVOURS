@@ -453,7 +453,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         foreach (CREW mod in Interior.GetCrew())
         {
             float Dist = (mod.transform.position - ImpactArea).magnitude;
-            if (Dist < 4f)
+            if (Dist < fl.CrewDamageSplash)
             {
                 mod.TakeDamage(Damage * fl.CrewDamageModifier, mod.transform.position, DamageType.TRUE);
             }

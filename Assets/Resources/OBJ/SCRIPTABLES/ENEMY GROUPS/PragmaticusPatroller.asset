@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486074c487becad41a25117778c346f8, type: 3}
   m_Name: PragmaticusPatroller
   m_EditorClassIdentifier: 
-  AI_Type: 1
-  AI_Group: 3
+  AI_Type: 2
+  AI_Group: 2
   CrewAmountLevel: 800
   CrewQualityLevel: 150
   GuaranteedCrewList: []
@@ -31,6 +31,8 @@ MonoBehaviour:
   DrifterQualityLevel: 100
   SpawnDrifter:
   - {fileID: 11400000, guid: 196726e5de15a4445812c8215072c986, type: 2}
+  DungeonQualityLevel: 100
+  SpawnDungeon: {fileID: 0}
   SpawnGroupRange: 10
   SpawnDistanceMin: 100
   SpawnDistanceMax: 200

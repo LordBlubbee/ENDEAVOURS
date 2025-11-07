@@ -17,6 +17,11 @@ public class Darkness : MonoBehaviour
         while (true)
         {
             CREW play = LOCALCO.local.GetPlayer();
+            if (Input.GetKey(KeyCode.N))
+            {
+                TargetFade = 0f;
+                yield break;
+            }
             if (play.HasLineOfSight(transform.position)) TargetFade = (play.transform.position-transform.position).magnitude*0.06f-0.6f;
             else TargetFade = 1f;
             yield return new WaitForSeconds(0.2f);

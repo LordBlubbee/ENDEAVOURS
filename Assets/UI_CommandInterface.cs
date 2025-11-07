@@ -246,9 +246,10 @@ public class UI_CommandInterface : MonoBehaviour
             }
             if (CurrentModuleSelected.Mode == UI_Module.UIModuleModes.MODULEWEAPON)
             {
-                if (col.GetComponent<CREW>() != null)
+                CREW crew = col.GetComponent<CREW>();
+                if (crew != null)
                 {
-                    Hit = true;
+                    if (crew.Space == null) Hit = true;
                     break;
                 }
             }

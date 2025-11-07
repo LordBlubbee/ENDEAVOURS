@@ -601,6 +601,14 @@ public class CO : NetworkBehaviour
                 drift.DespawnAndUnregister();
             }
         }
+        foreach (SPACE space in new List<SPACE>(GetAllSpaces()))
+        {
+            DUNGEON drift = space.GetComponent<DUNGEON>();
+            if (drift)
+            {
+                drift.DespawnAndUnregister();
+            }
+        }
     }
     /*
     [Rpc(SendTo.Server)]

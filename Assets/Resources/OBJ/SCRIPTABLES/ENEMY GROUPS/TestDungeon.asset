@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486074c487becad41a25117778c346f8, type: 3}
   m_Name: TestDungeon
   m_EditorClassIdentifier: 
-  AI_Type: 2
+  AI_Type: 0
   AI_Group: 0
-  CrewAmountLevel: 1200
-  CrewQualityLevel: 100
+  CrewAmountLevel: 2500
+  CrewQualityLevel: 120
   GuaranteedCrewList: []
   SpawnCrewList:
   - Weight: 20

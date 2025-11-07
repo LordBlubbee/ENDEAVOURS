@@ -192,6 +192,16 @@ public class PROJ : NetworkBehaviour
                 BulletImpact();
             }
             return;
+        } else
+        {
+            DUNGEON dung = collision.GetComponent<DUNGEON>();
+            if (dung != null)
+            {
+                dung.Impact(this, Tip.position);
+                if (ImpactSFX.Length > 0) ImpactSFXRpc();
+                BulletImpact();
+                return;
+            }
         }
         if (Space != null)
         {

@@ -8,7 +8,6 @@ public class ModuleArmor : Module
     public float ArmorPerUpgrade = 100;
     public float ArmorRegenPerUpgrade = 2;
     public float ArmorRegen = 10; 
-    public bool ScaleArmorWithHealth = true;
     float WaitWithRegen = 0f;
     [NonSerialized] public NetworkVariable<float> CurArmor = new();
     public override void Init()
@@ -41,9 +40,8 @@ public class ModuleArmor : Module
     public void TakeArmorDamage(float fl, Vector3 impact)
     {
         float max = GetMaxArmor();
-        if (ScaleArmorWithHealth) max = Mathf.Min(max, GetMaxHealth());
         CurArmor.Value = Mathf.Clamp(CurArmor.Value - fl, 0, max);
-        if (fl > 50) WaitWithRegen = 0.5f + 0.02f * fl;
+        if (fl > 50) WaitWithRegen = 1f + 0.01f * fl;
         CO_SPAWNER.co.SpawnArmorDMGRpc(fl, impact);
     }
     public override void Heal(float fl)

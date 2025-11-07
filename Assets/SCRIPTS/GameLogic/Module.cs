@@ -32,8 +32,10 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         }
         foreach (Collider2D col in Physics2D.OverlapCircleAll(vec,0.1f))
         {
-            if (col.GetComponent<CREW>() != null) {
-                OrderTransform = col.GetComponent<SPACE>();
+            CREW crew = col.GetComponent<CREW>();
+            if (crew != null) {
+                if (crew.Space) continue;
+                OrderTransform = null;
                 if (OrderTransform)
                 {
                     OrderPointLocal = OrderTransform.transform.InverseTransformPoint(vec);

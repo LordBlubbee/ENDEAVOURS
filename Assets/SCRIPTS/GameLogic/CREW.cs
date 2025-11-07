@@ -519,7 +519,6 @@ public class CREW : NetworkBehaviour, iDamageable
     
     [NonSerialized] public NetworkVariable<int> SpaceID = new();
     public SPACE Space { get {
-            Debug.Log($"{name} SpaceID = {SpaceID.Value}");
             return CO.co.GetSpace(SpaceID.Value); 
         } set { } }
 

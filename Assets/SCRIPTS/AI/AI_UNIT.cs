@@ -153,7 +153,9 @@ public class AI_UNIT : NetworkBehaviour
         CIRCLE,
         SABOTAGE,
         RETREAT,
-        HEAL_ALLIES
+        HEAL_ALLIES,
+        DORMANT,
+        PATROL
     }
     public enum AI_UNIT_TYPES
     {
@@ -603,6 +605,34 @@ public class AI_UNIT : NetworkBehaviour
         Module mod;
         if (getSpace())
         {
+            switch (AI_Tactic)
+            {
+                case AI_TACTICS.DORMANT:
+                    if (Unit.GetHealthRelative() < 1f) break;
+                    return;
+                case AI_TACTICS.PATROL:
+                    SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
+                    StopLooking();
+                    if (DistToObjective(transform.position) > 1)
+                    {
+                       
+                    }
+                    CREW crew = GetClosestVisibleEnemyInCone(35f, 90f);
+                    if (crew)
+                    {
+                        StopMoving();
+                        SetLookTowards(crew.transform.position, ObjectiveSpace);
+                        EnemyTargetTimer += 0.5f;
+                        if (EnemyTargetTimer > 2f || Unit.GetHealthRelative() < 1f)
+                        {
+                            SetEnemyTarget(crew);
+                            SwitchTacticsLooncrab();
+                            break;
+                        }
+                    }
+                    else EnemyTargetTimer = 0;
+                    return;
+            }
             if (!EnemyTarget || EnemyTargetTimer < 0 || EnemyTarget.isDead())
             {
                 EnemyTarget = GetClosestVisibleEnemy();
@@ -610,6 +640,16 @@ public class AI_UNIT : NetworkBehaviour
             }
             if (EnemyTarget)
             {
+                if (Group.AI_Objective == AI_OBJECTIVES.DORMANT)
+                {
+                    foreach (AI_UNIT crew in Group.GetUnits())
+                    {
+                        if (Dist(crew.transform.position) < 16f && (crew.AI_Tactic == AI_TACTICS.DORMANT || crew.AI_Tactic == AI_TACTICS.PATROL))
+                        {
+                            crew.SetTactic(AI_TACTICS.NONE, 0f);
+                        }
+                    }
+                }
                 AttemptBoard(EnemyTarget.Space);
 
                 if (AI_TacticTimer < 0) SwitchTacticsLooncrab();
@@ -641,6 +681,11 @@ public class AI_UNIT : NetworkBehaviour
                         break;
                     case AI_TACTICS.SABOTAGE:
                         mod = GetClosestEnemyModule();
+                        if (!mod)
+                        {
+                            AI_TacticTimer = 0;
+                            break;
+                        }
                         SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
                         if (Dist(mod.transform.position) < 8f)
                         {
@@ -1060,8 +1105,25 @@ public class AI_UNIT : NetworkBehaviour
         Vector3 myPos = transform.position;
         foreach (var enemy in enemies)
         {
-            if (enemy == Unit) continue; // skip self
             float dist = (enemy.getPos() - myPos).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = enemy;
+            }
+        }
+        return closest;
+    }
+    public CREW GetClosestVisibleEnemyInCone(float dis, float cone)
+    {
+        List<CREW> enemies = GetVisibleEnemies();
+        CREW closest = null;
+        float minDist = dis;
+        Vector3 myPos = transform.position;
+        foreach (var enemy in enemies)
+        {
+            if (Mathf.Abs(Unit.AngleBetweenPoints(enemy.getPos())) > cone) continue;
+            float dist = (enemy.getPos() - myPos).magnitude;
             if (dist < minDist)
             {
                 minDist = dist;

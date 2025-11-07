@@ -57,14 +57,14 @@ public class AI_GROUP : MonoBehaviour
     }
     public enum AI_TYPES
     {
+        SWARM,
         SHIP_DEFENSIVE,
         SHIP_BOARDING,
-        SWARM
+        SHIP_PRAGMATICUS_BOARDING
     }
     public enum AI_OBJECTIVES
     {
-        WANDER,
-        PATROL,
+        DORMANT,
         ENGAGE,
         SHIP
     }
@@ -74,6 +74,30 @@ public class AI_GROUP : MonoBehaviour
          The AI here does nothing but assign each unit in the group to a specific location. There, the AI executes whatever makes sense to it.
          
          */
+
+        switch (AI_Objective)
+        {
+            case AI_OBJECTIVES.DORMANT:
+                int amountToSelect = Mathf.RoundToInt(Units.Count * 0.3f);
+                List<AI_UNIT> copy = new List<AI_UNIT>(Units);
+
+                // Shuffle and take the first N units
+                foreach (AI_UNIT unit in copy)
+                {
+                    unit.SetTactic(AI_UNIT.AI_TACTICS.DORMANT, 0);
+                }
+                for (int i = 0; i < amountToSelect; i++)
+                {
+                    if (copy.Count == 0)
+                        break;
+
+                    int index = UnityEngine.Random.Range(0, copy.Count);
+                    copy[index].SetTactic(AI_UNIT.AI_TACTICS.PATROL,0);
+                    copy.Remove(copy[index]);
+                }
+
+                break;
+        }
         while (true)
         {
             if (Units.Count == 0 && HomeDrifter == null && HomeDungeon == null)
@@ -173,7 +197,7 @@ public class AI_GROUP : MonoBehaviour
         int WantMarines = 0;
         if (AI_Type == AI_TYPES.SHIP_BOARDING)
         {
-            WantMarines = UsableUnits.Count - 1;
+            WantMarines = Mathf.FloorToInt(UsableUnits.Count*0.7f);
         }
 
         Vector3 PointOfInterest;
@@ -264,26 +288,12 @@ public class AI_GROUP : MonoBehaviour
     {
         switch (AI_Objective)
         {
-            case AI_OBJECTIVES.WANDER:
+            case AI_OBJECTIVES.DORMANT:
                 foreach (AI_UNIT unit in Units)
                 {
-                    if (unit.GetObjectiveDistance() < 3f)
+                    if (unit.GetObjectiveDistance() < 3f && UnityEngine.Random.Range(0f,1f) < 0.1f)
                     {
                         unit.SetObjectiveTarget(HomeDungeon.Space.GetRandomUnboardableGrid().transform.position, unit.getSpace());
-                    }
-                }
-                break;
-            case AI_OBJECTIVES.PATROL:
-                if (MainObjectiveTimer < 0)
-                {
-                    MainObjectiveTimer = UnityEngine.Random.Range(10, 15);
-                    MainPoint = GetRandomPointAround(GetGroupCenter(), 30f, 40f);
-                }
-                foreach (AI_UNIT unit in Units)
-                {
-                    if (unit.GetObjectiveDistance() < 3f)
-                    {
-                        unit.SetObjectiveTarget(GetRandomPointAround(MainPoint, 12f), unit.getSpace());
                     }
                 }
                 break;

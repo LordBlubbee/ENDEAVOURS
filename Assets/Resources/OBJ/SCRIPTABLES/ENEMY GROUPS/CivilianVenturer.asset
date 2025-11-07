@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486074c487becad41a25117778c346f8, type: 3}
   m_Name: CivilianVenturer
   m_EditorClassIdentifier: 
-  AI_Type: 0
-  AI_Group: 3
+  AI_Type: 1
+  AI_Group: 2
   CrewAmountLevel: 600
   CrewQualityLevel: 100
   GuaranteedCrewList: []
@@ -41,6 +41,8 @@ MonoBehaviour:
   DrifterQualityLevel: 90
   SpawnDrifter:
   - {fileID: 11400000, guid: 1b0e38ebf9d06ac42ba60e6fb629cd55, type: 2}
+  DungeonQualityLevel: 100
+  SpawnDungeon: {fileID: 0}
   SpawnGroupRange: 10
   SpawnDistanceMin: 100
   SpawnDistanceMax: 200
