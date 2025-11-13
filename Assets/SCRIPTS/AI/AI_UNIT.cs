@@ -608,7 +608,11 @@ public class AI_UNIT : NetworkBehaviour
             switch (AI_Tactic)
             {
                 case AI_TACTICS.DORMANT:
-                    if (Unit.GetHealthRelative() < 1f) break;
+                    if (Unit.GetHealthRelative() < 1f)
+                    {
+                        Unit.IsNeutral = false;
+                        break;
+                    }
                     return;
                 case AI_TACTICS.PATROL:
                     SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
@@ -627,6 +631,7 @@ public class AI_UNIT : NetworkBehaviour
                         {
                             SetEnemyTarget(crew);
                             SwitchTacticsLooncrab();
+                            Unit.IsNeutral = false;
                             break;
                         }
                     }
@@ -646,6 +651,7 @@ public class AI_UNIT : NetworkBehaviour
                     {
                         if (Dist(crew.transform.position) < 16f && (crew.AI_Tactic == AI_TACTICS.DORMANT || crew.AI_Tactic == AI_TACTICS.PATROL))
                         {
+                            crew.Unit.IsNeutral = false;
                             crew.SetTactic(AI_TACTICS.NONE, 0f);
                         }
                     }

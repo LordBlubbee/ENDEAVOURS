@@ -192,7 +192,7 @@ public class PROJ : NetworkBehaviour
                 BulletImpact();
             }
             return;
-        } else
+        } else if (UseAltitude)
         {
             DUNGEON dung = collision.GetComponent<DUNGEON>();
             if (dung != null)

@@ -99,8 +99,6 @@ public class DUNGEON : NetworkBehaviour
     public void Impact(PROJ fl, Vector3 ImpactArea)
     {
         float Damage = fl.AttackDamage;
-        float AbsorbableDamage = fl.AttackDamage * fl.ArmorAbsorptionModifier;
-        Damage -= AbsorbableDamage;
         foreach (CREW mod in Space.GetCrew())
         {
             float Dist = (mod.transform.position - ImpactArea).magnitude;

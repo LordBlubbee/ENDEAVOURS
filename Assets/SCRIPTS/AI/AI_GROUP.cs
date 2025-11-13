@@ -85,6 +85,7 @@ public class AI_GROUP : MonoBehaviour
                 foreach (AI_UNIT unit in copy)
                 {
                     unit.SetTactic(AI_UNIT.AI_TACTICS.DORMANT, 0);
+                    unit.Unit.IsNeutral = true;
                 }
                 for (int i = 0; i < amountToSelect; i++)
                 {

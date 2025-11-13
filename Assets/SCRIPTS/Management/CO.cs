@@ -651,6 +651,19 @@ public class CO : NetworkBehaviour
         }
         return num;
     }
+
+    public int VoteAmount()
+    {
+        int num = 0;
+        foreach (LOCALCO local in GetLOCALCO())
+        {
+            if (local.CurrentMapVote.Value != -1 || local.CurrentDialogVote.Value != -1)
+            {
+                num++;
+            }
+        }
+        return num;
+    }
     public int VoteResultAmount(int num)
     {
         int count = 0;
@@ -847,6 +860,18 @@ public class CO : NetworkBehaviour
             LOCALCO_IDCOUNT++;
         }
     }
+    public List<CREW> GetEnemyNonDormantCrew(int fac = 1)
+    {
+        List<CREW> list = new();
+        foreach (CREW loc in GetEnemyCrew(fac))
+        {
+            if (!loc.IsNeutral)
+            {
+                list.Add(loc);
+            }
+        }
+        return list;
+    }
     public List<CREW> GetEnemyCrew(int fac = 1)
     {
         List<CREW> list = new();
@@ -1007,6 +1032,9 @@ public class CO : NetworkBehaviour
             case "GenericBattle":
                 StartCoroutine(Event_GenericBattle());
                 break;
+            case "DungeonStorage":
+                StartCoroutine(Event_DungeonStorage());
+                break;
             case "GenericSurvival":
                 StartCoroutine(Event_GenericSurvival());
                 break;
@@ -1066,6 +1094,62 @@ public class CO : NetworkBehaviour
                 EnemyBarRelative.Value = enemyDrifter.GetHealthRelative();
                 if (enemyDrifter.isDead()) EnemyBarString.Value = $"DRIFTER DISABLED";
                 else EnemyBarString.Value = $"INTEGRITY: {enemyDrifter.GetHealth().ToString("0")}";
+            }
+        }
+
+        EnemyBarRelative.Value = -1;
+
+        if (enemyDrifter)
+        {
+            enemyDrifter.Disable();
+        }
+
+        yield return new WaitForSeconds(4f);
+        LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
+        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
+
+        yield return new WaitForSeconds(3f);
+        if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
+        AreWeInDanger.Value = false;
+        ProcessLootTable(CurrentEvent.LootTable, 1f);
+    }
+    IEnumerator Event_DungeonStorage()
+    {
+        ShouldDriftersMove = false;
+        AreWeInDanger.Value = false;
+        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
+        ResetWeights();
+        int i = 0;
+        List<EnemyGroupWithWeight> Groups = new();
+        foreach (EnemyGroupWithWeight weighted in CurrentEvent.EnemyWave.SpawnEnemyGroupList)
+        {
+            Groups.Add(weighted);
+            AddWeights(i, weighted.Weight);
+            i++;
+        }
+        ScriptableEnemyGroup EnemyGroup = Groups[GetWeight()].EnemyGroup;
+        DRIFTER enemyDrifter = CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
+
+        float Death = 0f;
+        while (Death < 1)
+        {
+            yield return new WaitForSeconds(0.5f);
+            int DeadAmount = GroupDeathAmount(GetEnemyCrew());
+            int AliveAmount = GetEnemyCrew().Count - DeadAmount;
+            Death = (float)DeadAmount / (float)GetEnemyCrew().Count;
+
+            int Threats = GetEnemyNonDormantCrew().Count;
+
+            EnemyBarRelative.Value = 1f - Death;
+            if (Threats > 0)
+            {
+                AreWeInDanger.Value = true; 
+                EnemyBarString.Value = $"THREATS: {Threats}";
+            } else
+            {
+                AreWeInDanger.Value = false; 
+                EnemyBarRelative.Value = 1f - Death;
+                EnemyBarString.Value = $"EXPLORE DUNGEON";
             }
         }
 

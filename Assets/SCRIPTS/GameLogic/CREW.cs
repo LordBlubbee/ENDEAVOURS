@@ -13,6 +13,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public SpriteRenderer Spr;
     public SpriteRenderer Stripes;
     public bool ControlledByPlayer = false;
+    public bool IsNeutral = false;
     public ANIM AnimationController { get; private set; }
     private List<AnimTransform> AnimTransforms = new List<AnimTransform>();
     private ANIM.AnimationState animDefaultIdle = ANIM.AnimationState.MI_IDLE;

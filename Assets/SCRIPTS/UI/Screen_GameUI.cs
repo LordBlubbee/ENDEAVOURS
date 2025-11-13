@@ -42,6 +42,7 @@ public class Screen_GameUI : MonoBehaviour
     public GameObject PauseMenu;
     public GameObject CommsMapButton;
     public TextMeshProUGUI CommsTex;
+    public TextMeshProUGUI CommsReadyTex;
     public GameObject InventoryButton;
     public TextMeshProUGUI InventoryTex;
     public InventorySlot[] InventoryWeaponSlots;
@@ -90,6 +91,7 @@ public class Screen_GameUI : MonoBehaviour
                 if (UI.ui.RewardUI.RewardActive) CommsTex.text = "[U] REWARDS";
                 else if (CO_STORY.co.IsCommsActive()) CommsTex.text = "[U] COMMS";
                 else CommsTex.text = "[U] MAP";
+                CommsReadyTex.text = $"READY {CO.co.VoteAmount()}/{CO.co.GetLOCALCO().Count}";
             }
             
 
@@ -101,6 +103,7 @@ public class Screen_GameUI : MonoBehaviour
             if (UI.ui.RewardUI.RewardActive) CommsTex.text = "[U] REWARDS";
             else if (CO_STORY.co.IsCommsActive()) CommsTex.text = "[U] COMMS";
             else CommsTex.text = "[U] MAP";
+            CommsReadyTex.text = $"READY {CO.co.VoteAmount()}/{CO.co.GetLOCALCO().Count}";
 
             if (player.SkillPoints.Value > 2)
             {
