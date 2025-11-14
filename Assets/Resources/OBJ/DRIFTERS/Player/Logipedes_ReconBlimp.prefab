@@ -1,5 +1,97 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1203639299349341969
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4146268417893284853}
+  - component: {fileID: 5659427365928073115}
+  m_Layer: 6
+  m_Name: DoorPlaceholder (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4146268417893284853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203639299349341969}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -28, y: -8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6931310550981957108}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &5659427365928073115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203639299349341969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 637a2dbdc74856c47aaa95b42032a417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Drifter: {fileID: 1453653842865150193}
+  Door: {fileID: 4255643745049972001, guid: da076f1ebcd9a6f43b7a29e7271d490a, type: 3}
+--- !u!1 &1564568884469061669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2271977409679705612}
+  - component: {fileID: 1081790464476156423}
+  m_Layer: 6
+  m_Name: DoorPlaceholder (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2271977409679705612
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564568884469061669}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -28, y: 8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6931310550981957108}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &1081790464476156423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564568884469061669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 637a2dbdc74856c47aaa95b42032a417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Drifter: {fileID: 1453653842865150193}
+  Door: {fileID: 4255643745049972001, guid: da076f1ebcd9a6f43b7a29e7271d490a, type: 3}
 --- !u!1 &2215013079113221082
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,6 +195,52 @@ MonoBehaviour:
   Drifter: {fileID: 1453653842865150193}
   PhaseSpeedMax: 32
   Phase: 1
+--- !u!1 &3207616412058420134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8038148323434478324}
+  - component: {fileID: 6914542363954688590}
+  m_Layer: 6
+  m_Name: DoorPlaceholder (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8038148323434478324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3207616412058420134}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 44, y: 8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6931310550981957108}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &6914542363954688590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3207616412058420134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 637a2dbdc74856c47aaa95b42032a417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Drifter: {fileID: 1453653842865150193}
+  Door: {fileID: 4255643745049972001, guid: da076f1ebcd9a6f43b7a29e7271d490a, type: 3}
 --- !u!1 &3388606262696114643
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,6 +385,12 @@ Transform:
   - {fileID: 345264674740894455}
   - {fileID: 9092633134017661206}
   - {fileID: 7836346996515736046}
+  - {fileID: 2662633617991896677}
+  - {fileID: 8038148323434478324}
+  - {fileID: 4470997392240869030}
+  - {fileID: 4210099214052352117}
+  - {fileID: 4146268417893284853}
+  - {fileID: 2271977409679705612}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7590115494558501324
@@ -414,6 +558,7 @@ MonoBehaviour:
   MovementSpeed: 8
   AccelerationSpeedMod: 0.3
   RotationBaseSpeed: 15
+  MaximumCrew: 9
   DeathExplosionsFrequency: 0.2
   DeathTime: 5
 --- !u!114 &8365398891127652454
@@ -430,6 +575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   Drifter: {fileID: 1453653842865150193}
+  Dungeon: {fileID: 0}
   RoomTiles:
   - {fileID: 7514273931490449556}
   - {fileID: 745592871558566845}
@@ -587,7 +733,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Collider: {fileID: 9194372623321583771}
-  Drifter: {fileID: 1453653842865150193}
   DrifterLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -770,6 +915,98 @@ MonoBehaviour:
   Drifter: {fileID: 1453653842865150193}
   PhaseSpeedMax: 32
   Phase: 1
+--- !u!1 &6680443694406487949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2662633617991896677}
+  - component: {fileID: 5143014627460918081}
+  m_Layer: 6
+  m_Name: DoorPlaceholder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2662633617991896677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6680443694406487949}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4, y: 24, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6931310550981957108}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5143014627460918081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6680443694406487949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 637a2dbdc74856c47aaa95b42032a417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Drifter: {fileID: 1453653842865150193}
+  Door: {fileID: 4255643745049972001, guid: da076f1ebcd9a6f43b7a29e7271d490a, type: 3}
+--- !u!1 &7335464086384110514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4470997392240869030}
+  - component: {fileID: 2239487026657651518}
+  m_Layer: 6
+  m_Name: DoorPlaceholder (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4470997392240869030
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7335464086384110514}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 44, y: -8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6931310550981957108}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &2239487026657651518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7335464086384110514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 637a2dbdc74856c47aaa95b42032a417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Drifter: {fileID: 1453653842865150193}
+  Door: {fileID: 4255643745049972001, guid: da076f1ebcd9a6f43b7a29e7271d490a, type: 3}
 --- !u!1 &7509174443097077569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,7 +1259,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Collider: {fileID: 3210840482066066598}
-  Drifter: {fileID: 1453653842865150193}
   DrifterLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -1063,6 +1299,52 @@ CapsuleCollider2D:
   m_Offset: {x: 3, y: 0}
   m_Size: {x: 145, y: 88}
   m_Direction: 1
+--- !u!1 &8799214343563483831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4210099214052352117}
+  - component: {fileID: 5225546108833415162}
+  m_Layer: 6
+  m_Name: DoorPlaceholder (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4210099214052352117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8799214343563483831}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 4, y: -16, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6931310550981957108}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &5225546108833415162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8799214343563483831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 637a2dbdc74856c47aaa95b42032a417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Drifter: {fileID: 1453653842865150193}
+  Door: {fileID: 4255643745049972001, guid: da076f1ebcd9a6f43b7a29e7271d490a, type: 3}
 --- !u!1001 &106637527082582228
 PrefabInstance:
   m_ObjectHideFlags: 0

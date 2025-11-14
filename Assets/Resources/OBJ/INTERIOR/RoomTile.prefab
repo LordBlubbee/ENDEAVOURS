@@ -102,7 +102,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spr: {fileID: 4511574632909210950}
-  Darkness: {fileID: 0}
   canBeBoarded: 0
 --- !u!61 &-4195201601500893666
 BoxCollider2D:

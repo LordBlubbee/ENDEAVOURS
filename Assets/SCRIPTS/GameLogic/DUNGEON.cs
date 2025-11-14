@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
@@ -36,6 +37,7 @@ public class DUNGEON : NetworkBehaviour
         if (hasInitialized) return;
         hasInitialized = true;
 
+        StartCoroutine(CreateSoundwaves());
         if (IsServer)
         {
             AI.SetAIHome(this);
@@ -61,6 +63,27 @@ public class DUNGEON : NetworkBehaviour
         }
         GenerateDungeon();
         Space.Init();
+    }
+    IEnumerator CreateSoundwaves()
+    {
+        float Timer = 0f;
+        while (true)
+        {
+            Timer -= CO.co.GetWorldSpeedDelta();
+            if (Timer < 0f)
+            {
+                foreach (CREW Crew in Space.GetCrew())
+                {
+                    float Dis = (LOCALCO.local.GetPlayer().transform.position - Crew.transform.position).magnitude;
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.6f && Dis < 45)
+                    {
+                        CO_SPAWNER.co.SpawnSoundwave(Crew.transform.position, 1.5f - Dis/45f);
+                    }
+                }
+                Timer = UnityEngine.Random.Range(2f, 5f);
+            }
+            yield return null;
+        }
     }
     private void GenerateDungeon()
     {

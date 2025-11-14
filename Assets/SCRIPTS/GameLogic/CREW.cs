@@ -945,6 +945,7 @@ public class CREW : NetworkBehaviour, iDamageable
             foreach (RaycastHit2D col in hit)
             {
                 if (col.collider.gameObject == gameObject) continue;
+                if (!col.collider.gameObject.tag.Equals("LOSBlocker")) continue;
                 // Stop the dash at the hit point (slightly before, to avoid clipping)
                 newPos = new Vector3(col.point.x, col.point.y) - dir * 0.05f;
                 transform.position = newPos;
@@ -1282,7 +1283,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 iDamageable crew = col.GetComponent<iDamageable>();
                 if (crew != null)
                 {
-                    if (crew.GetFaction() != GetFaction()) continue;
+                    if (crew.GetFaction() != GetFaction() && crew.GetFaction() != 0) continue;
                     if (crew.Space != Space) continue;
                     if (!(crew is Module)) continue; 
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;

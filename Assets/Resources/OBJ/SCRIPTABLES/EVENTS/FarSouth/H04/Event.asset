@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a8717e7279b88409550c597721d3ae, type: 3}
   m_Name: Event
   m_EditorClassIdentifier: 
-  EventController: GenericBattle
+  EventController: DungeonStorage
   EnemyWave: {fileID: 11400000, guid: 81804936722872d4a98f4b42355fce75, type: 2}
   AdditionalDialogs: []
   LootTable: {fileID: 11400000, guid: 8a62dfc80a75f954891e9444b79f0d26, type: 2}

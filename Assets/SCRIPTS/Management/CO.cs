@@ -640,6 +640,8 @@ public class CO : NetworkBehaviour
     private int HasVoteResult()
     {
         int num = -1;
+        if (PlayerMainDrifter == null) return -1;
+        if (GetAlliedAICrew().Count > PlayerMainDrifter.MaximumCrew) return -1;
         foreach (LOCALCO local in GetLOCALCO())
         {
             if (local.CurrentMapVote.Value != -1)
@@ -1034,6 +1036,8 @@ public class CO : NetworkBehaviour
             case "":
                 ForceOpenMissionScreenRpc();
                 break;
+            case "CombatDebrief":
+                break;
             case "GenericRest":
                 StartCoroutine(Event_GenericRest());
                 ForceOpenMissionScreenRpc();
@@ -1047,6 +1051,9 @@ public class CO : NetworkBehaviour
                 break;
             case "DungeonStorage":
                 StartCoroutine(Event_DungeonStorage());
+                break;
+            case "DungeonExtermination":
+                StartCoroutine(Event_DungeonExtermination());
                 break;
             case "GenericSurvival":
                 StartCoroutine(Event_GenericSurvival());
@@ -1126,6 +1133,26 @@ public class CO : NetworkBehaviour
         AreWeInDanger.Value = false;
         ProcessLootTable(CurrentEvent.LootTable, 1f);
     }
+
+    private bool AreCrewAwayFromHome()
+    {
+        foreach (CREW Crew in GetEnemyCrew())
+        {
+            if (Crew.isDead()) continue;
+            if (Crew.Space == PlayerMainDrifter.Space) return true;
+        }
+        foreach (CREW Crew in GetAlliedCrew())
+        {
+            if (Crew.Space != PlayerMainDrifter.Space) return true;
+        }
+        return false;
+    }
+
+    DUNGEON CurrentDungeon = null;
+    public void SetCurrentDungeon(DUNGEON Current)
+    {
+        CurrentDungeon = Current;
+    }
     IEnumerator Event_DungeonStorage()
     {
         ShouldDriftersMove = false;
@@ -1141,12 +1168,14 @@ public class CO : NetworkBehaviour
             i++;
         }
         ScriptableEnemyGroup EnemyGroup = Groups[GetWeight()].EnemyGroup;
-        DRIFTER enemyDrifter = CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
+        CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
 
+        List<Vault> Vaults = CO_SPAWNER.co.SpawnVaultObjectives(CurrentDungeon);
+
+        bool MissionCompleted = false;
         float Death = 0f;
-        while (Death < 1)
+        while (Death < 1 || !MissionCompleted)
         {
-            yield return new WaitForSeconds(0.5f);
             int DeadAmount = GroupDeathAmount(GetEnemyCrew());
             int AliveAmount = GetEnemyCrew().Count - DeadAmount;
             Death = (float)DeadAmount / (float)GetEnemyCrew().Count;
@@ -1154,33 +1183,106 @@ public class CO : NetworkBehaviour
             int Threats = GetEnemyNonDormantCrew().Count;
 
             EnemyBarRelative.Value = 1f - Death;
-            if (Threats > 0)
+            if (AreCrewAwayFromHome())
             {
                 AreWeInDanger.Value = true; 
-                EnemyBarString.Value = $"THREATS: {Threats}";
+                if (Threats > 0) EnemyBarString.Value = $"THREATS: {Threats}";
             } else
             {
                 AreWeInDanger.Value = false; 
                 EnemyBarRelative.Value = 1f - Death;
-                EnemyBarString.Value = $"EXPLORE DUNGEON";
+                EnemyBarString.Value = $"REPAIR VAULT";
+            }
+            if (Vaults[0].GetHealthRelative() >= 1)
+            {
+                EnemyBarString.Value = $"VAULT SECURED";
+                if (!MissionCompleted)
+                {
+                    MissionCompleted = true;
+                    CommunicationGamePaused.Value = true;
+                    if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
+                }
+            }
+            yield return new WaitForSeconds(0.5f);
+            if (ShouldDriftersMove)
+            {
+                break;
             }
         }
 
         EnemyBarRelative.Value = -1;
-
-        if (enemyDrifter)
+        if (!ShouldDriftersMove)
         {
-            enemyDrifter.Disable();
+            yield return new WaitForSeconds(4f);
+            if (Death >= 1)
+            {
+                LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
+            }
+            AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
+
+            yield return new WaitForSeconds(3f);
+            AreWeInDanger.Value = false;
+            if (MissionCompleted) ProcessLootTable(CurrentEvent.LootTable, 1f);
+        }
+      
+    }
+    IEnumerator Event_DungeonExtermination()
+    {
+        ShouldDriftersMove = false;
+        AreWeInDanger.Value = false;
+        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
+        ResetWeights();
+        int i = 0;
+        List<EnemyGroupWithWeight> Groups = new();
+        foreach (EnemyGroupWithWeight weighted in CurrentEvent.EnemyWave.SpawnEnemyGroupList)
+        {
+            Groups.Add(weighted);
+            AddWeights(i, weighted.Weight);
+            i++;
+        }
+        ScriptableEnemyGroup EnemyGroup = Groups[GetWeight()].EnemyGroup;
+        CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
+
+        bool MissionCompleted = false;
+        float Death = 0f;
+        while (Death < 1 && !ShouldDriftersMove)
+        {
+            int DeadAmount = GroupDeathAmount(GetEnemyCrew());
+            int AliveAmount = GetEnemyCrew().Count - DeadAmount;
+            Death = (float)DeadAmount / (float)GetEnemyCrew().Count;
+
+            int Threats = GetEnemyNonDormantCrew().Count;
+
+            EnemyBarRelative.Value = 1f - Death;
+            if (AreCrewAwayFromHome())
+            {
+                AreWeInDanger.Value = true;
+                if (Threats > 0) EnemyBarString.Value = $"THREATS: {Threats}";
+            }
+            else
+            {
+                AreWeInDanger.Value = false;
+                EnemyBarRelative.Value = 1f - Death;
+                EnemyBarString.Value = $"EXPLORE DUNGEON";
+            }
+            yield return new WaitForSeconds(0.5f);
         }
 
-        yield return new WaitForSeconds(4f);
-        LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
-        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
+        EnemyBarRelative.Value = -1;
+        if (!ShouldDriftersMove)
+        {
+            yield return new WaitForSeconds(4f);
+            if (Death >= 1)
+            {
+                LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
+            }
+            AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
 
-        yield return new WaitForSeconds(3f);
-        if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
-        AreWeInDanger.Value = false;
-        ProcessLootTable(CurrentEvent.LootTable, 1f);
+            yield return new WaitForSeconds(3f);
+            if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
+            AreWeInDanger.Value = false;
+            if (MissionCompleted) ProcessLootTable(CurrentEvent.LootTable, 1f);
+        }
     }
     IEnumerator Event_GenericSurvival()
     {
@@ -1266,6 +1368,12 @@ public class CO : NetworkBehaviour
         List<Faction> Factions = new();
         List<int> FactionChanges = new();
 
+        CREW NewCrew = table.GetNewCrew();
+        if (NewCrew)
+        {
+            CO_SPAWNER.co.SpawnUnitOnShip(NewCrew, CO.co.PlayerMainDrifter);
+        }
+
         foreach (FactionReputation rep in table.ReputationChanges)
         {
             Resource_Reputation[rep.Fac] += rep.Amount;
@@ -1328,7 +1436,9 @@ public class CO : NetworkBehaviour
                 crew.AddXP(ChangeXP);
             }
             //Send report to clients with all faction rep changes
-            OpenRewardScreenRpc(ChangeMaterials, ChangeSupplies, ChangeAmmo, ChangeTech, ChangeHP, ChangeXP, Factions.ToArray(), FactionChanges.ToArray(), ItemTranslate.ToArray());
+            FixedString64Bytes NewCrewLink = NewCrew == null ? null : NewCrew.name;
+            Debug.Log($"NewCrewLink is {NewCrewLink}");
+            OpenRewardScreenRpc(ChangeMaterials, ChangeSupplies, ChangeAmmo, ChangeTech, ChangeHP, ChangeXP, Factions.ToArray(), FactionChanges.ToArray(), ItemTranslate.ToArray(), NewCrewLink);
         }
 
         if (table.MinimumShopDrops > 0)
@@ -1353,7 +1463,7 @@ public class CO : NetworkBehaviour
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    private void OpenRewardScreenRpc(int Materials, int Supplies, int Ammo, int Tech, int HP, int XP, Faction[] Facs, int[] FacChanges, FixedString64Bytes[] RewardItemsGained)
+    private void OpenRewardScreenRpc(int Materials, int Supplies, int Ammo, int Tech, int HP, int XP, Faction[] Facs, int[] FacChanges, FixedString64Bytes[] RewardItemsGained, FixedString64Bytes NewCrew)
     {
         List<FactionReputation> list = new();
         for (int i = 0; i < Facs.Length ;i++)
@@ -1363,7 +1473,7 @@ public class CO : NetworkBehaviour
             newfac.Amount = FacChanges[i];
             list.Add(newfac);
         }
-        UI.ui.RewardUI.OpenRewardScreen(Materials, Supplies, Ammo, Tech, HP, XP, list.ToArray(), RewardItemsGained);
+        UI.ui.RewardUI.OpenRewardScreen(Materials, Supplies, Ammo, Tech, HP, XP, list.ToArray(), RewardItemsGained, NewCrew);
     }
     /// <summary>
     /// Clears all weights.

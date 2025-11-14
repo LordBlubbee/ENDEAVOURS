@@ -308,26 +308,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  UnitName: Pragmaticus Enforcer
+  UnitDescription: The infamous core of the Pragmaticus' peacekeeping operations,
+    Enforcers are heavily-armored soldiers specialized in the arrestation and containment
+    of threats to the Republic. True followers of the Stipulations, any abnormalities
+    in the Peregrini Suspicion Index, require their immediate attention. Lately,
+    the Pragmaticus have been cracking down on the Peregrini- their word for "outsiders".
+  UnitRarity: 0
+  HealthIncreasePerLevelup: 25
+  PointIncreasePerLevelup:
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0.5
+  - 0.5
+  - 0.5
   Spr: {fileID: 5632965166791697770}
   Stripes: {fileID: 2877882561032477406}
+  ControlledByPlayer: 0
+  IsNeutral: 0
   MaxHealth: 100
   NaturalStaminaRegen: 5
   MovementSpeed: 7
   RotationDistanceFactor: 4
   RotationBaseSpeed: 90
   BleedOut: 1
-  ModifyAttributes: 
-  ModifyHealthMax: 0
-  ModifyHealthRegen: 0
-  ModifyStaminaMax: 0
-  ModifyStaminaRegen: 0
-  ModifyMovementSpeed: 0
-  ModifyMovementSlow: 0
-  ModifyAnimationSpeed: 0
-  ModifyAnimationSlow: 0
-  ModifyMeleeDamage: 0
-  ModifyRangedDamage: 0
-  ModifySpellDamage: 0
   ATT_PHYSIQUE:
     m_InternalValue: 2
   ATT_ARMS:

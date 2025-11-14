@@ -7,9 +7,9 @@ public class DrifterCollider : MonoBehaviour
     // Set this to the layer your Drifter GameObjects use
     public LayerMask DrifterLayer;
 
-    private Collider2D[] results = new Collider2D[8];
+    private Collider2D[] results = new Collider2D[32];
 
-    private void FixedUpdate()
+    private void Update()
     {
         var filter = new ContactFilter2D
         {
@@ -26,8 +26,8 @@ public class DrifterCollider : MonoBehaviour
             if (col == Collider) continue; // Skip self
 
             Vector3 away = (transform.position - col.transform.position).normalized;
-
-            transform.position += away * -Collider.Distance(col).distance * CO.co.GetWorldSpeedDeltaFixed();
+            Debug.Log($"Pushing away: {away * -Collider.Distance(col).distance} per second");
+            transform.position += away * -Collider.Distance(col).distance * CO.co.GetWorldSpeedDelta();
         }
     }
 }   

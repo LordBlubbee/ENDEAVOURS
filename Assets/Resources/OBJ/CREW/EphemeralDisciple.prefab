@@ -308,8 +308,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  UnitName: Ephemeral Disciple
+  UnitDescription: A devoted Ephemeral with limited but very real power in their
+    hands. Their faith in the Nebula allows them to wield it as a weapon, making
+    them dangerous spellcasters. They live free from chains and with the promise
+    of salvation as their guiding light.
+  UnitRarity: 0
+  HealthIncreasePerLevelup: 25
+  PointIncreasePerLevelup:
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0.5
+  - 0.5
+  - 0.5
   Spr: {fileID: 5632965166791697770}
   Stripes: {fileID: 2877882561032477406}
+  ControlledByPlayer: 0
+  IsNeutral: 0
   MaxHealth: 100
   NaturalStaminaRegen: 5
   MovementSpeed: 7

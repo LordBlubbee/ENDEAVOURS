@@ -365,6 +365,7 @@ MonoBehaviour:
   ShopItemSupplyDeal: {fileID: 21300000, guid: f4f0572014414ec4bb873a84a94c2b57, type: 3}
   ShopItemAmmoDeal: {fileID: 21300000, guid: 1da9d80f090359644bf1aaa85ff30106, type: 3}
   ShopItemTechnologyDeal: {fileID: 21300000, guid: a7dff9a1e3302ca43a64ebfdd1e4a784, type: 3}
+  VaultObjectiveObject: {fileID: 3455235200430234361, guid: 1718159036bdc3a4e92f1d7fb67695ed, type: 3}
   ArmorImpact: {fileID: 1759800388499967267, guid: 52ce5ea45dc461346bed82ea78a64521, type: 3}
   ExplosionSmall: {fileID: 1759800388499967267, guid: 7f7f15c6c27261d438e11d44c34555b3, type: 3}
   ExplosionMedium: {fileID: 1759800388499967267, guid: 70d93878a36b8c54292e0c86ba038037, type: 3}
@@ -374,6 +375,7 @@ MonoBehaviour:
   SparkSmall: {fileID: 9192043369650961900, guid: 5c5b067d31320454f9bb5cf5a8d4badb, type: 3}
   SparkMedium: {fileID: 9192043369650961900, guid: cf983e25fbd0194488d565e850e1c1ef, type: 3}
   ImpactSparks: {fileID: 9192043369650961900, guid: 544de0d72e32c7e43b79f0f2cfc56db9, type: 3}
+  Soundwave: {fileID: 7178822272740056672, guid: ebb45558f9055b94298134e4ff2fc63a, type: 3}
   BuffParticleList:
   - {fileID: -7748507754934260247, guid: 2cc09f35618b7f9499ee24603e185dab, type: 3}
   NebulaSparks:
@@ -445,5 +447,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 128ce9b5df12c374692187bce97c1a91, type: 3}
   - {fileID: 8300000, guid: c8844442e2432fa43bb75c44161bffa3, type: 3}
   - {fileID: 8300000, guid: d2c767fff8b682e408bf049710db5f0b, type: 3}
+  Upgrade: {fileID: 0}
+  Purchase: {fileID: 0}
+  EquipItem: {fileID: 0}
+  Salvage: {fileID: 0}
   Press: {fileID: 8300000, guid: 073470b33aec19e4c865cfd95b1f1826, type: 3}
   Fail: {fileID: 8300000, guid: 495918dd49237ef43937939db15742eb, type: 3}

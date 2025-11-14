@@ -308,26 +308,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  UnitName: Pragmaticus Arbalest
+  UnitDescription: These Arbalests specialize in using heavy suppression weapons
+    against enemies of the Pragmaticus. Rigid battle routines and unwavering loyalty
+    to the Stipulation's words- be they close-minded bigots or protectors of civilization,
+    standing on the opposite end of the Pragmaticus is a dangerous situation.
+  UnitRarity: 0
+  HealthIncreasePerLevelup: 25
+  PointIncreasePerLevelup:
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0.5
+  - 0.5
+  - 0.5
   Spr: {fileID: 5632965166791697770}
   Stripes: {fileID: 2877882561032477406}
+  ControlledByPlayer: 0
+  IsNeutral: 0
   MaxHealth: 100
   NaturalStaminaRegen: 5
   MovementSpeed: 7
   RotationDistanceFactor: 4
   RotationBaseSpeed: 90
   BleedOut: 1
-  ModifyAttributes: 
-  ModifyHealthMax: 0
-  ModifyHealthRegen: 0
-  ModifyStaminaMax: 0
-  ModifyStaminaRegen: 0
-  ModifyMovementSpeed: 0
-  ModifyMovementSlow: 0
-  ModifyAnimationSpeed: 0
-  ModifyAnimationSlow: 0
-  ModifyMeleeDamage: 0
-  ModifyRangedDamage: 0
-  ModifySpellDamage: 0
   ATT_PHYSIQUE:
     m_InternalValue: 2
   ATT_ARMS:

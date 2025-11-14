@@ -15,6 +15,7 @@ public class Screen_Map : MonoBehaviour
     public GameObject[] ChoiceButton;
     public TextMeshProUGUI[] ChoiceButtonVotes;
     public TextMeshProUGUI[] ChoiceTex;
+    public TextMeshProUGUI WarningTex;
 
     private void OnEnable()
     {
@@ -36,6 +37,14 @@ public class Screen_Map : MonoBehaviour
                 ChoiceButtonVotes[i].text = Votes.ToString();
                 ChoiceButtonVotes[i].color = (LOCALCO.local.CurrentMapVote.Value == i) ? Color.cyan : Color.white;
             }
+        }
+        if (CO.co.GetAlliedAICrew().Count > CO.co.PlayerMainDrifter.MaximumCrew)
+        {
+            WarningTex.gameObject.SetActive(true);
+            WarningTex.text = "CANNOT CONTINUE: CREW FULL!";
+        } else
+        {
+            WarningTex.gameObject.SetActive(false);
         }
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.U))
         {

@@ -27,6 +27,13 @@ public class GamerTag : MonoBehaviour
         Destroy(FarIcon.gameObject);
         Destroy(FarHealth.gameObject);
     }
+
+    private bool DamagedOnly = false;
+    public void SetDamagedOnly()
+    {
+        DamagedOnly = true;
+        UseFarIcon = false;
+    }
     public void SetModuleObject(Module trans)
     {
         //
@@ -81,7 +88,12 @@ public class GamerTag : MonoBehaviour
         }
         if (Mod)
         {
-            if (Mod.PermanentlyDead.Value)
+            if (FollowObject.GetHealthRelative() >= 1 && DamagedOnly)
+            {
+                Health.text = "";
+                return;
+            }
+            else if (Mod.PermanentlyDead.Value)
             {
                 Health.text = $"DESTROYED";
                 Health.color = new Color(0.5f, 0, 0);

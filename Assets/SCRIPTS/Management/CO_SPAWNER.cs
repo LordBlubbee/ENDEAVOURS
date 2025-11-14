@@ -18,6 +18,7 @@ public class CO_SPAWNER : NetworkBehaviour
     public Sprite ShopItemSupplyDeal;
     public Sprite ShopItemAmmoDeal;
     public Sprite ShopItemTechnologyDeal;
+    public Vault VaultObjectiveObject;
 
     [Header("VFX")]
     public PART ArmorImpact;
@@ -29,6 +30,7 @@ public class CO_SPAWNER : NetworkBehaviour
     public GameObject SparkSmall;
     public GameObject SparkMedium;
     public GameObject ImpactSparks;
+    public GameObject Soundwave;
 
     public ParticleBuff[] BuffParticleList;
     public enum BuffParticles
@@ -296,6 +298,7 @@ public class CO_SPAWNER : NetworkBehaviour
             dun.SetDungeonVariant();
             dun.NetworkObject.Spawn();
             dun.Init();
+            CO.co.SetCurrentDungeon(dun);
 
             ResetWeights();
             i = 0;
@@ -396,7 +399,30 @@ public class CO_SPAWNER : NetworkBehaviour
         group.SetAI(gr.AI_Type, gr.AI_Group, 2, members);
         return drifter;
     }
-
+    public List<Vault> SpawnVaultObjectives(DUNGEON Dungeon)
+    {
+        List<Vault> List = new();
+        List<WalkableTile> ObjectivePositions = new(Dungeon.MainObjectivePossibilities);
+        foreach (WalkableTile tile in new List<WalkableTile>(ObjectivePositions))
+        {
+            if (!tile.gameObject.activeSelf)
+            {
+                ObjectivePositions.Remove(tile);
+            }
+        }
+        WalkableTile SelectedTile = ObjectivePositions[UnityEngine.Random.Range(0, ObjectivePositions.Count)];
+        ObjectivePositions.Remove(SelectedTile);
+        Vault vault = Instantiate(VaultObjectiveObject, SelectedTile.transform.position, SelectedTile.transform.rotation);
+        vault.MaxHealth = 100 + CO.co.GetLOCALCO().Count * 100;
+        vault.NetworkObject.Spawn();
+        vault.transform.SetParent(Dungeon.Space.transform);
+        vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;
+        vault.Faction = 0;
+        vault.Init();
+        vault.TakeDamage(9999, vault.transform.position, iDamageable.DamageType.TRUE);
+        List.Add(vault);
+        return List;
+    }
     private void SetQualityLevelOfDrifter(DRIFTER drifter, ScriptableEnemyDrifter drifterData, float Quality)
     {
         float Levelup = Quality-100;
@@ -561,6 +587,12 @@ public class CO_SPAWNER : NetworkBehaviour
         part.transform.SetParent(CO.co.GetTransformAtPoint(pos));
         part.transform.localScale = new Vector3(Trans, Trans, 1);
         part.FadeChange *= Fade;
+    }
+    public void SpawnSoundwave(Vector3 pos, float Trans)
+    {
+        GameObject part = Instantiate(Soundwave, pos, Quaternion.identity);
+        part.transform.SetParent(CO.co.GetTransformAtPoint(pos));
+        part.transform.localScale = new Vector3(Trans, Trans, 1);
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnImpactRpc(Vector3 pos)

@@ -195,6 +195,7 @@ public class CO_STORY : NetworkBehaviour
     public void SetStoryEnd()
     {
         CommsActive.Value = false;
+        CO.co.CommunicationGamePaused.Value = false;
         SetCurrentChoices(new());
         SetMainStoryText(new(), new());
         foreach (LOCALCO local in CO.co.GetLOCALCO())

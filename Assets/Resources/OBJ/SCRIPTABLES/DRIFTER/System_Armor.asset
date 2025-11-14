@@ -15,13 +15,16 @@ MonoBehaviour:
   ItemName: Heavy Plating
   ItemDesc: 'Armor is the primary means for your Drifter to stay alive. Whenever
     your Drifter is hit, the nearest Armor plate absorbs the damage instead. When
-    the Armor goes down, your Drifter can take very heavy damage. Protect Armor at
-    all costs!
+    the Armor goes down, your Drifter can take very heavy damage. Armor is highly
+    resistant to damage from Drifter bombardment and is a priority target for any
+    invaders.
 
 
 '
   ItemIcon: {fileID: 21300000, guid: f6dcf1b64a817a4419e34b2fccbf5ab5, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/System_Armor
   ItemResourceIDShort: System_Armor
+  ItemRarity: 0
+  MinimumAttributes: 
   PrefabModule: {fileID: 7985907672111993197, guid: e219ead882b24cd4e811b6b099420f4d, type: 3}
   EquipType: 2

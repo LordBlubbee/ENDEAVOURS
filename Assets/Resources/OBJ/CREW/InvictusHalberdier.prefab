@@ -308,26 +308,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  UnitName: Invictus Halberdier
+  UnitDescription: A Legislatus Invictus soldier that wields a powerful halberd.
+    Logipedes training routine involves the memorization of hundreds of synchronized
+    battle maneuvers over dedicated physical training. Halberdiers serve as a vanguard,
+    protecting the other soldiers that prefer ranged weaponry.
+  UnitRarity: 0
+  HealthIncreasePerLevelup: 25
+  PointIncreasePerLevelup:
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0.5
+  - 0.5
+  - 0.5
   Spr: {fileID: 5632965166791697770}
   Stripes: {fileID: 2877882561032477406}
+  ControlledByPlayer: 0
+  IsNeutral: 0
   MaxHealth: 100
   NaturalStaminaRegen: 5
   MovementSpeed: 7
   RotationDistanceFactor: 4
   RotationBaseSpeed: 90
   BleedOut: 1
-  ModifyAttributes: 
-  ModifyHealthMax: 0
-  ModifyHealthRegen: 0
-  ModifyStaminaMax: 0
-  ModifyStaminaRegen: 0
-  ModifyMovementSpeed: 0
-  ModifyMovementSlow: 0
-  ModifyAnimationSpeed: 0
-  ModifyAnimationSlow: 0
-  ModifyMeleeDamage: 0
-  ModifyRangedDamage: 0
-  ModifySpellDamage: 0
   ATT_PHYSIQUE:
     m_InternalValue: 2
   ATT_ARMS:

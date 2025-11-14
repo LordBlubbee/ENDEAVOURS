@@ -249,8 +249,12 @@ public class UI_CommandInterface : MonoBehaviour
                 CREW crew = col.GetComponent<CREW>();
                 if (crew != null)
                 {
-                    if (crew.Space == null) Hit = true;
-                    break;
+                    if (crew.Space == null)
+                    {
+                        Hit = true;
+                        break;
+                    }
+                    continue;
                 }
             }
         }

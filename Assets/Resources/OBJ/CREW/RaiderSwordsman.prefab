@@ -308,26 +308,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  UnitName: Raider Swordsman
+  UnitDescription: A trained Nomaden warrior from a Fog Raider clan. While many Raiders
+    have allied themselves with the Bakuto Insurrection, others have used the failing
+    patrols in many regions as an opportunity to advance piracy. Raiders often fight
+    in large groups to make up for their lack of formal strategic training.
+  UnitRarity: 0
+  HealthIncreasePerLevelup: 20
+  PointIncreasePerLevelup:
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0.5
+  - 0.5
+  - 0.5
   Spr: {fileID: 5632965166791697770}
   Stripes: {fileID: 2877882561032477406}
+  ControlledByPlayer: 0
+  IsNeutral: 0
   MaxHealth: 90
   NaturalStaminaRegen: 10
   MovementSpeed: 7.5
   RotationDistanceFactor: 4
   RotationBaseSpeed: 90
   BleedOut: 1
-  ModifyAttributes: 
-  ModifyHealthMax: 0
-  ModifyHealthRegen: 0
-  ModifyStaminaMax: 0
-  ModifyStaminaRegen: 0
-  ModifyMovementSpeed: 0
-  ModifyMovementSlow: 0
-  ModifyAnimationSpeed: 0
-  ModifyAnimationSlow: 0
-  ModifyMeleeDamage: 0
-  ModifyRangedDamage: 0
-  ModifySpellDamage: 0
   ATT_PHYSIQUE:
     m_InternalValue: 2
   ATT_ARMS:

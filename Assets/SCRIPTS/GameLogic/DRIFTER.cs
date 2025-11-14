@@ -448,7 +448,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             float Dist = (mod.transform.position - ImpactArea).magnitude;
             if (Dist < mod.HitboxRadius)
             {
-                mod.TakeDamage(Damage * fl.ModuleDamageModifier, mod.transform.position, DamageType.TRUE);
+                mod.TakeDamage(Damage * fl.ModuleDamageModifier, mod.transform.position, DamageType.BOMBARDMENT);
             }
         }
         foreach (CREW mod in Interior.GetCrew())
@@ -456,7 +456,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             float Dist = (mod.transform.position - ImpactArea).magnitude;
             if (Dist < fl.CrewDamageSplash)
             {
-                mod.TakeDamage(Damage * fl.CrewDamageModifier, mod.transform.position, DamageType.TRUE);
+                mod.TakeDamage(Damage * fl.CrewDamageModifier, mod.transform.position, DamageType.BOMBARDMENT);
             }
         }
     }

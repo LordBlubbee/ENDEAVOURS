@@ -308,14 +308,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  UnitName: Invictus Marine
+  UnitDescription: These Invictus Marines are the forefront of the Logipedes' forces,
+    training in Drifter-to-Drifter combat. Logipedan soldiers are known for their
+    rigid battle routines and their professional attitudes, though the long-lasting
+    peace of the Republic has made their battle experience rather stagnant.
+  UnitRarity: 0
+  HealthIncreasePerLevelup: 25
+  PointIncreasePerLevelup:
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0.5
+  - 0.5
+  - 0.5
   Spr: {fileID: 5632965166791697770}
   Stripes: {fileID: 2877882561032477406}
+  ControlledByPlayer: 0
+  IsNeutral: 0
   MaxHealth: 100
   NaturalStaminaRegen: 5
   MovementSpeed: 7
   RotationDistanceFactor: 4
   RotationBaseSpeed: 90
-  GrappleCooldown: 10
+  BleedOut: 1
   ATT_PHYSIQUE:
     m_InternalValue: 2
   ATT_ARMS:

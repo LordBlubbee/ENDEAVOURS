@@ -38,7 +38,6 @@ public class InventorySlot : MonoBehaviour
         }
         SetEquipColors(equippable);
     }
-
     private void SetEquipColors(ScriptableEquippable equippable)
     {
         if (DefaultEquipState == EquipStates.INVENTORY_SWITCH)

@@ -9,6 +9,13 @@ public class ScriptableLootTable : ScriptableObject
 {
     public List<LootItem> GuaranteedLoot = new();
     public List<FactionReputation> ReputationChanges = new();
+    public List<CREW> RecruitCrewmembers = new();
+
+    public CREW GetNewCrew()
+    {
+        if (RecruitCrewmembers.Count == 0) return null;
+        return RecruitCrewmembers[UnityEngine.Random.Range(0,RecruitCrewmembers.Count)];
+    }
 
     [Header("RANDOM LOOT")]
     public int TotalLootDrops = 1;

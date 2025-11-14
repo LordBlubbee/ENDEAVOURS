@@ -17,7 +17,7 @@ public class Legs : MonoBehaviour
         float sped = Crew.GetCurrentSpeed();
         if (sped > 0)
         {
-            sped *= CO.co.GetWorldSpeedDelta() * LegDirection;
+            sped *= CO.co.GetWorldSpeedDelta() * LegDirection * LegRotSpeed;
             transform.Rotate(Vector3.forward, sped);
             LegRotCurrent += sped;
             if (LegRotCurrent > MaximumLegRot && LegDirection > 0) LegDirection *= -1;

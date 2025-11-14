@@ -9,6 +9,9 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 {
     // Damageable and Interactable Module
     [NonSerialized] public NetworkVariable<Vector3> OrderPoint = new();
+    public bool HealthOnlyWhileDamaged = false;
+    public bool HarmDrifterWhenDisabled = true;
+    public float OutsideDamageResistance = 1f;
     private Vector3 OrderPointLocal;
     private SPACE OrderTransform;
     public Vector3 GetOrderPoint()
@@ -85,7 +88,9 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         ENGINES,
         MEDICAL,
         LOON_NAVIGATION,
-        DRAGGABLE
+        DRAGGABLE,
+        VAULT,
+        DOOR
     }
     public ModuleTypes GetInteractableType()
     {
@@ -176,6 +181,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
             GamerTag CharacterNameTag = Instantiate(CO_SPAWNER.co.PrefabGamerTag);
             CharacterNameTag.SetModuleObject(this);
             CharacterNameTag.SetFarIcon(IconSprite);
+            if (HealthOnlyWhileDamaged) CharacterNameTag.SetDamagedOnly();
         }
         switch (ModuleType) {
 
@@ -204,6 +210,8 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
                     case ModuleTypes.MAPCOMMS:
                         Space.CoreModules.Add(this);
                         break;
+                    case ModuleTypes.DOOR:
+                        break;
                     default:
                         Space.SystemModules.Add(this);
                         break;
@@ -226,7 +234,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         {
             if (OrderTransform != null) OrderPoint.Value = OrderTransform.transform.TransformPoint(OrderPointLocal);
 
-            if (HomeDrifter && IsDisabled() && !CO.co.IsSafe())
+            if (HomeDrifter && IsDisabled() && !CO.co.IsSafe() && HarmDrifterWhenDisabled)
             {
                 TakeDamageFromDisablement += 1f * CO.co.GetWorldSpeedDelta();
                 if (TakeDamageFromDisablement > 15f)
@@ -268,6 +276,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public void TakeDamage(float fl, Vector3 src, DamageType type)
     {
         if (MaxHealth < 1) return;
+        if (type == DamageType.BOMBARDMENT) fl *= OutsideDamageResistance;
         CurHealth.Value -= fl;
         if (CurHealth.Value < 0.1f)
         {

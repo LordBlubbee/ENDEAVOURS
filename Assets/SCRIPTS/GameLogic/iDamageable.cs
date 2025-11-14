@@ -17,7 +17,8 @@ public interface iDamageable
         TRUE,
         MELEE,
         RANGED,
-        SPELL
+        SPELL,
+        BOMBARDMENT
     }
     public Transform transform { get; }
 
