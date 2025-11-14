@@ -8,6 +8,65 @@ using UnityEngine.Events;
 
 public class CREW : NetworkBehaviour, iDamageable
 {
+    [Header("LOGISTICS")]
+    public string UnitName;
+    [TextArea(3,8)]
+    public string UnitDescription;
+    public ScriptableEquippable.Rarities UnitRarity;
+
+    public float HealthIncreasePerLevelup;
+    public float[] PointIncreasePerLevelup;
+
+    [Rpc(SendTo.Server)]
+    public void BuyLevelupRpc()
+    {
+        int Cost = GetLevelupCost();
+        if (CO.co.Resource_Supplies.Value < Cost) return;
+        CO.co.Resource_Supplies.Value -= Cost;
+        AddUpgradeLevel(1);
+    }
+
+    public int GetLevelupCost(int num = -1) {
+        if (num == -1) num = UpgradeLevel.Value;
+        switch (num)
+        {
+            case 0:
+                return 30;
+            case 1:
+                return 50;
+            case 2:
+                return 70;
+            case 3:
+                return 80;
+            case 4:
+                return 90;
+            case 5:
+                return 100;
+            case 6:
+                return 120;
+            case 7:
+                return 140;
+        }
+        return 150;
+    }
+    public void AddUpgradeLevel(int Levels)
+    {
+        CREW crew = this;
+        UpgradeLevel.Value = Levels;
+        crew.ModifyHealthMax += crew.HealthIncreasePerLevelup * Levels;
+        crew.AddAttributes(
+                Mathf.FloorToInt(crew.PointIncreasePerLevelup[0] * Levels),
+                 Mathf.FloorToInt(crew.PointIncreasePerLevelup[1] * Levels),
+                  Mathf.FloorToInt(crew.PointIncreasePerLevelup[2] * Levels),
+                   Mathf.FloorToInt(crew.PointIncreasePerLevelup[3] * Levels),
+                    Mathf.FloorToInt(crew.PointIncreasePerLevelup[4] * Levels),
+                     Mathf.FloorToInt(crew.PointIncreasePerLevelup[5] * Levels),
+                      Mathf.FloorToInt(crew.PointIncreasePerLevelup[6] * Levels),
+                       Mathf.FloorToInt(crew.PointIncreasePerLevelup[7] * Levels)
+            );
+    }
+
+    [Header("REFERENCES")]
     private Rigidbody2D Rigid;
     private Collider2D Col;
     public SpriteRenderer Spr;
@@ -25,6 +84,7 @@ public class CREW : NetworkBehaviour, iDamageable
 
     [NonSerialized] public NetworkVariable<int> PlayerController = new(); //0 = No Player Controller
     [NonSerialized] public NetworkVariable<int> Faction = new();
+    [NonSerialized] public NetworkVariable<int> UpgradeLevel = new();
     [NonSerialized] public NetworkVariable<float> BleedingTime = new();
     public bool IsPlayer()
     {
@@ -671,6 +731,25 @@ public class CREW : NetworkBehaviour, iDamageable
         if (Space) Space.RemoveCrew(this);
         CO.co.UnregisterCrew(this);
         NetworkObject.Despawn();
+    }
+
+    [Rpc(SendTo.Server)]
+    public void DismissCrewmemberRpc()
+    {
+        CO.co.Resource_Supplies.Value += GetDismissValue();
+        DespawnAndUnregister();
+    }
+
+    public int GetDismissValue()
+    {
+        int num = 20;
+        int Level = UpgradeLevel.Value;
+        while (Level > 0)
+        {
+            Level--;
+            num += GetLevelupCost()/2;
+        }
+        return num;
     }
 
     /*Decide Inputs*/

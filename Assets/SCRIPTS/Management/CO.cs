@@ -896,6 +896,19 @@ public class CO : NetworkBehaviour
         }
         return list;
     }
+    public List<CREW> GetAlliedAICrew()
+    {
+        List<CREW> list = new();
+        foreach (CREW loc in GetAllCrews())
+        {
+            if (loc.IsPlayer()) continue;
+            if (loc.GetFaction() == 1)
+            {
+                list.Add(loc);
+            }
+        }
+        return list;
+    }
 
     List<CREW> RegisteredCREW = new();
     public List<CREW> GetAllCrews()

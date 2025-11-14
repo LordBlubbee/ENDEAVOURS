@@ -507,17 +507,7 @@ public class CO_SPAWNER : NetworkBehaviour
         }
         if (Levels > 0)
         {
-            crew.ModifyHealthMax += crewData.HealthIncreasePerLevelup * Levels;
-            crew.AddAttributes(
-                    Mathf.FloorToInt(crewData.PointIncreasePerLevelup[0] * Levels),
-                     Mathf.FloorToInt(crewData.PointIncreasePerLevelup[1] * Levels),
-                      Mathf.FloorToInt(crewData.PointIncreasePerLevelup[2] * Levels),
-                       Mathf.FloorToInt(crewData.PointIncreasePerLevelup[3] * Levels),
-                        Mathf.FloorToInt(crewData.PointIncreasePerLevelup[4] * Levels),
-                         Mathf.FloorToInt(crewData.PointIncreasePerLevelup[5] * Levels),
-                          Mathf.FloorToInt(crewData.PointIncreasePerLevelup[6] * Levels),
-                           Mathf.FloorToInt(crewData.PointIncreasePerLevelup[7] * Levels)
-                );
+            crew.AddUpgradeLevel(Levels);
         }
     }
 

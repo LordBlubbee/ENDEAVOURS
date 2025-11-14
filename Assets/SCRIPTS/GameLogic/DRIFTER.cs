@@ -47,6 +47,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     public float MovementSpeed = 5;
     public float AccelerationSpeedMod = 0.25f;
     public float RotationBaseSpeed = 30f;
+    public int MaximumCrew = 9;
 
     [Header("DEATH")]
     public float DeathExplosionsFrequency = 0.2f;

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class Screen_Inventory : MonoBehaviour
     public GameObject SubscreenAttributes;
     public GameObject SubscreenDrifterWeapons;
     public GameObject SubscreenRest;
+    public GameObject SubscreenCrew;
     public InventorySlot[] InventoryWeapons;
     public InventorySlot InventoryArmor;
     public InventorySlot[] InventoryArtifacts;
@@ -71,6 +73,10 @@ public class Screen_Inventory : MonoBehaviour
         if (SubscreenAttributes.activeSelf)
         {
             SkillRefresh();
+        }
+        if (SubscreenCrew.activeSelf)
+        {
+            UpdateCrewScreen();
         }
         RefreshDrifterStats();
     }
@@ -261,6 +267,7 @@ public class Screen_Inventory : MonoBehaviour
     }
     public void OpenSubscreen(GameObject ob)
     {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         DeselectDrifterSlot();
         foreach (GameObject sub in Subscreens)
         {
@@ -424,11 +431,12 @@ public class Screen_Inventory : MonoBehaviour
         int TechNeeded = SelectedDrifterSlot.ModuleLink.ModuleUpgradeTechs[SelectedDrifterSlot.ModuleLink.ModuleLevel.Value];
         if (TechNeeded > CO.co.Resource_Tech.Value) return;
         SelectedDrifterSlot.ModuleLink.SendUpgradeRpc();
+        AUDCO.aud.PlaySFX(AUDCO.aud.Upgrade);
     }
     public void PressDismantleDrifterSlot()
     {
         if (!SelectedDrifterSlot.ModuleLink) return;
-
+        AUDCO.aud.PlaySFX(AUDCO.aud.Salvage);
         SelectedDrifterSlot.ModuleLink.SalvageRpc();
        // CO.co.AddInventoryItemRpc(SelectedDrifterSlot.GetEquippedItem().ItemResourceID);
        // SelectedDrifterSlot.SetInventoryItem(null);
@@ -490,8 +498,10 @@ public class Screen_Inventory : MonoBehaviour
     {
         if (slot.GetEquippedItem() == null)
         {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
             return;
         }
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         DeselectDrifterSlot();
         SelectedDrifterSlot = slot;
         SelectedDrifterSlot.SelectedBox.gameObject.SetActive(false);
@@ -598,10 +608,12 @@ public class Screen_Inventory : MonoBehaviour
         {
             if (CO.co.Resource_Materials.Value > 5)
             {
+                AUDCO.aud.PlaySFX(AUDCO.aud.Upgrade);
                 CO.co.RepairOurDrifterRpc();
                 return;
             }
         }
+        AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
     }
     void RefreshRest()
     {
@@ -616,5 +628,78 @@ public class Screen_Inventory : MonoBehaviour
         DrifterHealthTex.color = CO.co.PlayerMainDrifter.GetHealthRelative() > 0.75 ? Color.green : (CO.co.PlayerMainDrifter.GetHealthRelative() > 0.25 ? Color.yellow : Color.red);
         DrifterRepairTex.color = CO.co.PlayerMainDrifter.GetHealthRelative() < 1f ? Color.white : Color.gray;
 
+    }
+
+    [Header("CREW SCREEN")]
+    public UI_CrewButton[] CrewListButtons;
+    public GameObject CrewScreen;
+    public Image CrewOuter;
+    public Image CrewIcon;
+    public Image CrewStripes;
+    public TextMeshProUGUI CrewMaxTex;
+    public TextMeshProUGUI CrewName;
+    public TextMeshProUGUI CrewDescription;
+    public TextMeshProUGUI CrewUpgradeTex;
+    public TextMeshProUGUI CrewDismissTex;
+    CREW SelectedCrew;
+
+    private void UpdateCrewScreen()
+    {
+        List<CREW> Allies = CO.co.GetAlliedAICrew();
+        CrewMaxTex.text = $"CREW MEMBERS ({Allies.Count}/{CO.co.PlayerMainDrifter.MaximumCrew})";
+        CrewMaxTex.color = Allies.Count > CO.co.PlayerMainDrifter.MaximumCrew ? Color.red : Color.white;
+        for (int i = 0; i < CrewListButtons.Length; i++)
+        {
+            if (Allies.Count > i)
+            {
+                CrewListButtons[i].gameObject.SetActive(true);
+                CrewListButtons[i].SetCrew(Allies[i]);
+            } else
+            {
+                CrewListButtons[i].gameObject.SetActive(false);
+            }
+        }
+        if (CrewScreen.gameObject.activeSelf)
+        {
+            if (SelectedCrew == null) CrewScreen.gameObject.SetActive(false);
+        }
+    }
+    public void PressCrewButton(CREW Crew)
+    {
+        if (Crew == null) return;
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
+        SelectedCrew = Crew;
+        CrewOuter.color = ScriptableEquippable.GetRarityColor(Crew.UnitRarity);
+        CrewIcon.sprite = Crew.CharacterBackground.Sprite_Player;
+        CrewStripes.sprite = Crew.CharacterBackground.Sprite_Stripes;
+        CrewStripes.color = Crew.CharacterBackground.BackgroundColor;
+        CrewName.text = $"{Crew.UnitName} {Crew.CharacterName.Value}";
+        CrewName.color = Crew.CharacterBackground.BackgroundColor;
+        CrewDescription.text = $"{Crew.UnitDescription}";
+
+        CrewUpgradeTex.text = $"PROMOTE \n<color=green>-{Crew.GetLevelupCost()}S</color>";
+        CrewDismissTex.text = $"DISMISS \n<color=green>+{Crew.GetDismissValue()}S</color>";
+
+        CrewScreen.gameObject.SetActive(true);
+    }
+
+    public void PressCrewPromote()
+    {
+        if (SelectedCrew == null) return;
+        if (CO.co.Resource_Supplies.Value < SelectedCrew.GetLevelupCost())
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
+        AUDCO.aud.PlaySFX(AUDCO.aud.Upgrade);
+        SelectedCrew.BuyLevelupRpc();
+    }
+
+    public void PressCrewDismiss()
+    {
+        if (SelectedCrew == null) return;
+        CrewScreen.gameObject.SetActive(false);
+        AUDCO.aud.PlaySFX(AUDCO.aud.Salvage);
+        SelectedCrew.DismissCrewmemberRpc();
     }
 }

@@ -12,7 +12,4 @@ public class ScriptableEnemyCrew : ScriptableObject
     public CREW SpawnCrew;
 
     public int Worth;
-
-    public float HealthIncreasePerLevelup;
-    public float[] PointIncreasePerLevelup;
 }
