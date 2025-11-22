@@ -350,7 +350,7 @@ MonoBehaviour:
     m_InternalValue: 2
   ATT_MEDICAL:
     m_InternalValue: 2
-  CharacterBackground: {fileID: 11400000, guid: ccf425a6572612149808e2c5b75d3ae0, type: 2}
+  CharacterBackground: {fileID: 11400000, guid: 44e1beb63f95b2144832a795be0530f3, type: 2}
   DefaultToolset: 1
   EquippedWeapons:
   - {fileID: 11400000, guid: 35b663fc985b5524981ef0bb6a7b3620, type: 2}

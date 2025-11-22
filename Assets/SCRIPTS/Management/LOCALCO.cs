@@ -116,10 +116,15 @@ public class LOCALCO : NetworkBehaviour
                         UI.ui.SetCrosshairRotateReset();
                     }
                     UI.ui.SetCrosshair(CrosshairPoint);
-                    if (Input.GetKey(KeyCode.W)) mov += new Vector3(0, 1);
-                    if (Input.GetKey(KeyCode.S)) mov += new Vector3(0, -1);
-                    if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
-                    if (Input.GetKey(KeyCode.D)) mov += new Vector3(1, 0);
+
+                    if (!UI.ui.ChatUI.ChatScreen.activeSelf)
+                    {
+                        if (Input.GetKey(KeyCode.W)) mov += new Vector3(0, 1);
+                        if (Input.GetKey(KeyCode.S)) mov += new Vector3(0, -1);
+                        if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
+                        if (Input.GetKey(KeyCode.D)) mov += new Vector3(1, 0);
+                    }
+                   
                     if (!IsServer) GetPlayer().SetMoveInputRpc(mov);
                     if (!IsServer) GetPlayer().SetLookTowardsRpc(Mouse);
                     GetPlayer().SetMoveInput(mov);
@@ -496,5 +501,10 @@ public class LOCALCO : NetworkBehaviour
         CAM.cam.SetCameraMode(vec, 150f, 150f, 150f);
         yield return new WaitForSeconds(dur);
         SetCameraToPlayer();
+    }
+
+    internal void SetChatMessageToEveryoneElseRpc(string messageForOthers)
+    {
+        UI.ui.ChatUI.CreateChatMessage(messageForOthers);
     }
 }

@@ -603,6 +603,11 @@ public class CO : NetworkBehaviour
         }
         foreach (SPACE space in new List<SPACE>(GetAllSpaces()))
         {
+            if (space == null)
+            {
+                GetAllSpaces().Remove(space);
+                continue;
+            }
             DUNGEON drift = space.GetComponent<DUNGEON>();
             if (drift)
             {
@@ -1153,6 +1158,22 @@ public class CO : NetworkBehaviour
     {
         CurrentDungeon = Current;
     }
+
+    public DUNGEON GetDungeon()
+    {
+        return CurrentDungeon;
+    }
+
+    public bool CanRespawn(CREW un)
+    {
+        if (!AreWeInDanger.Value)
+        {
+            return un.GetFaction() == 1;
+        }
+        if (GetDungeon() == null) return true;
+        if (PlayerMainDrifter.MedicalModule.IsDisabled()) return false;
+        return true;
+    }
     IEnumerator Event_DungeonStorage()
     {
         ShouldDriftersMove = false;
@@ -1224,7 +1245,7 @@ public class CO : NetworkBehaviour
             AreWeInDanger.Value = false;
             if (MissionCompleted) ProcessLootTable(CurrentEvent.LootTable, 1f);
         }
-      
+        SetCurrentDungeon(null);
     }
     IEnumerator Event_DungeonExtermination()
     {
@@ -1436,7 +1457,7 @@ public class CO : NetworkBehaviour
                 crew.AddXP(ChangeXP);
             }
             //Send report to clients with all faction rep changes
-            FixedString64Bytes NewCrewLink = NewCrew == null ? null : NewCrew.name;
+            FixedString64Bytes NewCrewLink = NewCrew == null ? "" : NewCrew.name;
             Debug.Log($"NewCrewLink is {NewCrewLink}");
             OpenRewardScreenRpc(ChangeMaterials, ChangeSupplies, ChangeAmmo, ChangeTech, ChangeHP, ChangeXP, Factions.ToArray(), FactionChanges.ToArray(), ItemTranslate.ToArray(), NewCrewLink);
         }

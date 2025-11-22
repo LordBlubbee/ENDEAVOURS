@@ -17,6 +17,7 @@ public class UI : MonoBehaviour
     public Screen_Reward RewardUI;
     public Screen_Settings SettingsUI;
     public Image Crosshair;
+    public ChatModule ChatUI;
     private GameObject PreviousScreen;
 
     public TextMeshProUGUI CinematicTex;

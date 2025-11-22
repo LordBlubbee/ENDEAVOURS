@@ -1418,19 +1418,24 @@ public class CREW : NetworkBehaviour, iDamageable
 
         if (isDead())
         {
+            //We are dead
             if (!isDeadForever())
             {
+                //We are bleeding out...
                 BleedingTime.Value -= CO.co.GetWorldSpeedDelta();
                 if (BleedingTime.Value < 0)
                 {
+                    //We have bled out!
                     DeadForever.Value = true;
                     BleedingTime.Value = 0;
                 }
             }
             else if (HomeDrifter)
             {
-                if (!HomeDrifter.MedicalModule.IsDisabled() && (Space == HomeDrifter.Space))
+                //If HomeDrifter exists
+                if (CO.co.CanRespawn(this))
                 {
+                    //If Medical Module is functional and we are in the same space
                     if ((transform.position - HomeDrifter.MedicalModule.transform.position).magnitude > 8)
                     {
                         transform.position = HomeDrifter.MedicalModule.transform.position + new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-3f, 3f));
@@ -1450,6 +1455,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 }
                 else
                 {
+                    //Bleeding time is stuck on zero
                     BleedingTime.Value = 0;
                 }
             }
