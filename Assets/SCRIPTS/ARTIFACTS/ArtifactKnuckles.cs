@@ -6,7 +6,7 @@ public class ArtifactKnuckles : ArtifactAbility
     {
     }
 
-    public override void OnDamaged(CREW us)
+    public override void OnDamaged()
     {
         ScriptableBuff buff = new();
         buff.name = "KnucklesRage";
@@ -15,6 +15,6 @@ public class ArtifactKnuckles : ArtifactAbility
         buff.ModifyAnimationSpeed = 0.3f;
         buff.ModifyMovementSpeed = 0.3f;
         buff.ModifyMeleeDamage = 3;
-        us.AddBuff(buff);
+        User.AddBuff(buff);
     }
 }

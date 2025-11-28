@@ -417,7 +417,7 @@ MonoBehaviour:
   StartingCrew: []
   Spr: {fileID: 7590115494558501324}
   IsLoon: 0
-  MaxHealth: 1400
+  MaxHealth: 1500
   RadiusX: 60
   RadiusY: 45
   MovementSpeed: 8

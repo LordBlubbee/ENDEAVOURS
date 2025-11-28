@@ -18,7 +18,9 @@ public interface iDamageable
         MELEE,
         RANGED,
         SPELL,
-        BOMBARDMENT
+        BOMBARDMENT,
+        ENVIRONMENT_FIRE,
+        ENVIRONMENT_MIST
     }
     public Transform transform { get; }
 

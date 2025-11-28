@@ -425,7 +425,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
                 }
             }
         }
-        if (ClosestArmor)
+        if (ClosestArmor && UnityEngine.Random.Range(0f,1f) > fl.ArmorCriticalChance)
         {
             if (ClosestArmor.CanAbsorbArmor())
             {

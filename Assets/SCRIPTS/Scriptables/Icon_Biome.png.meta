@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Icon_Biome_0: 9207777120273729216
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

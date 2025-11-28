@@ -171,6 +171,7 @@ MonoBehaviour:
   CanHitWalls: 0
   AltitudeInacurracyFactor: 0.1
   AltitudeDirectHitCeiling: 1
+  DamageType: 2
   ImpactVFX: {fileID: 7178822272740056672, guid: 7f7f15c6c27261d438e11d44c34555b3, type: 3}
   LaunchVFX: {fileID: 0}
   ImpactSFX:
@@ -183,11 +184,14 @@ MonoBehaviour:
   ModuleDamageModifier: 1
   ArmorDamageModifier: 1
   ArmorAbsorptionModifier: 1
+  ArmorCriticalChance: 0.05
   CrewDamageModifier: 0.3
   CrewDamageModifierDirect: 1
   CrewDamageSplash: 6
   DealSplash: 0
   ApplyBuff: {fileID: 0}
+  ZoneImpact: {fileID: 8610778180045330575, guid: 85c3301a84d6a15419f7bd462c555d6b, type: 3}
+  ZoneChance: 0.05
 --- !u!114 &1279859445198227217
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -430,7 +430,7 @@ MonoBehaviour:
   ModuleUpgradeMaterials: 1e0000003200000041000000500000006400000078000000
   ModuleUpgradeTechs: 000000000000000000000000000000000000000000000000
   CenterPos: {fileID: 0}
-  MaxArmor: 100
+  MaxArmor: 200
   ArmorPerUpgrade: 100
   ArmorRegenPerUpgrade: 10
   ArmorRegen: 20

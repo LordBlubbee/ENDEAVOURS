@@ -7,6 +7,8 @@ public class BUFF
     private int Stacks;
     private float Duration;
     public CO_SPAWNER.BuffParticles BuffParticles;
+
+    public float TemporaryHitpoints = 0;
     public ScriptableBuff GetScriptable()
     {
         return buff;
@@ -35,6 +37,9 @@ public class BUFF
         crew.ModifyMeleeDamage += buff.ModifyMeleeDamage;
         crew.ModifyRangedDamage += buff.ModifyRangedDamage;
         crew.ModifySpellDamage += buff.ModifySpellDamage;
+
+        crew.ModifyDamageTaken += buff.ModifyDamageTaken;
+        TemporaryHitpoints = buff.TemporaryHitpoints;
     }
     public void RemoveBuff(CREW crew)
     {
@@ -52,6 +57,8 @@ public class BUFF
             crew.ModifyMeleeDamage -= buff.ModifyMeleeDamage;
             crew.ModifyRangedDamage -= buff.ModifyRangedDamage;
             crew.ModifySpellDamage -= buff.ModifySpellDamage;
+
+            crew.ModifyDamageTaken -= buff.ModifyDamageTaken;
         }
     }
     public bool IsExpired()

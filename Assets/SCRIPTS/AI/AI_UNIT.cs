@@ -3,12 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using static AI_GROUP;
-using static UnityEngine.EventSystems.EventTrigger;
-using static UnityEngine.GraphicsBuffer;
 
 public class AI_UNIT : NetworkBehaviour
 {
@@ -393,72 +389,22 @@ public class AI_UNIT : NetworkBehaviour
             }
             return;
         }
+        if (OutOfCombatCrewBehavior()) return;
+        if (ObjectiveSpace != getSpace())
+        {
+            if (!AttemptBoard(ObjectiveSpace))
+            {
+                SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(ObjectiveSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
+                SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
+            }
+            return;
+        }
         if (getSpace() == Group.HomeSpace)
         {
             //We are at home
 
             //We are not in combat
-            CREW WoundedAlly = GetClosestCriticallyWoundedAllyInSpace();
-            if (!WoundedAlly)
-            {
-                WoundedAlly = GetClosestWoundedAlly();
-                if (WoundedAlly)
-                {
-                    if (Dist(WoundedAlly.transform.position) > 24f)
-                    {
-                        WoundedAlly = null;
-                    }
-                }
-            }
-            if (WoundedAlly)
-            {
-                if (WoundedAlly.Space != getSpace())
-                {
-                    if (!AttemptBoard(WoundedAlly.Space))
-                    {
-                        SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(WoundedAlly.Space.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
-                        SetLookTowards(GetObjectiveTarget(), WoundedAlly.Space);
-                    }
-                } else
-                {
-                    SetAIMoveTowards(GetPointAwayFromPoint(WoundedAlly.transform.position, 2f), WoundedAlly.Space);
-                    SetLookTowards(WoundedAlly.transform.position, WoundedAlly.Space);
-                    if (Dist(WoundedAlly.transform.position) < 4f)
-                    {
-                        Unit.EquipMedkitRpc();
-                        Unit.UseItem1Rpc();
-                    }
-                }
-                   
-                return;
-            }
-            if (Unit.GetHealthRelative() < 1f)
-            {
-                if (Group.HomeDrifter.MedicalModule)
-                {
-                    SetAIMoveTowards(Group.HomeDrifter.MedicalModule.transform.position, getSpace());
-                    StopLooking();
-                    Unit.Dash();
-                } else
-                {
-                    StopMoving();
-                    StopLooking();
-                }
-                Unit.EquipMedkitRpc();
-                Unit.UseItem2Rpc();
-                return;
-            }
-            if (ObjectiveSpace != getSpace())
-            {
-                if (!AttemptBoard(ObjectiveSpace))
-                {
-                    SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(ObjectiveSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
-                    SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
-                }
-                return;
-            }
            
-
             SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
             if (DistToObjective(transform.position) > 16)
             {
@@ -467,6 +413,7 @@ public class AI_UNIT : NetworkBehaviour
                 Unit.EquipWeapon1Rpc();
                 return;
             }
+            //Repair behavior
             mod = GetClosestFriendlyModule();
             if (mod.GetHealthRelative() < 1)
             {
@@ -483,7 +430,6 @@ public class AI_UNIT : NetworkBehaviour
                 }
                 return;
             }
-           
             if (mod is ModuleWeapon)
             {
                 if (((ModuleWeapon)mod).EligibleForReload())
@@ -502,53 +448,131 @@ public class AI_UNIT : NetworkBehaviour
             }
             return;
         }
+        //We are boarding an enemy vessel!!
+        Unit.EquipWeapon1Rpc();
         if (Unit.IsEnemyInFront(GetAttackDistance()))
         {
             Unit.UseItem1Rpc();
         }
-        //We are in a hostile vessel
-        //Engage!
-        //Retreat!
-        if (ObjectiveSpace != getSpace() || Unit.GetHealthRelative() < 0.3f)
-        {
-            if (!AttemptBoard(Group.HomeSpace))
-            {
-                SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position, getSpace());
-                StopLooking();
-                //SetLookTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.transform.position).transform.position, getSpace());
-            }
-        } else
-        {
-            mod = GetClosestEnemyModule(); 
-            if (mod && (Dist(mod.transform.position) < 8 || DistToObjective(mod.transform.position) < 24))
-            {
-                Unit.EquipWeapon1Rpc();
-                SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
-                SetLookTowards(mod.GetTargetPos(), mod.Space);
-                return;
-            }
-            CREW WoundedAlly2 = GetClosestWoundedAlly();
-            if (WoundedAlly2)
-            {
-                if (Dist(WoundedAlly2.transform.position) < 24f)
-                {
-                    SetAIMoveTowards(GetPointAwayFromPoint(WoundedAlly2.transform.position, 2f), WoundedAlly2.Space);
-                    SetLookTowards(WoundedAlly2.transform.position, WoundedAlly2.Space);
-                    if (Dist(WoundedAlly2.transform.position) < 4f)
-                    {
-                        Unit.EquipMedkitRpc();
-                        Unit.UseItem1Rpc();
-                    }
-                    return;
-                } 
-            }
-            SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
-            StopLooking();
-            //SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
-
-        }
     }
 
+    private bool OutOfCombatCrewBehavior()
+    {
+        if (AI_TacticTimer < 0) SwitchTacticsCrewOutOfCombat();
+
+        Vector3 point;
+        Module mod;
+        switch (AI_Tactic)
+        {
+            default:
+                break;
+            case AI_TACTICS.RETREAT:
+                Unit.EquipMedkitRpc();
+                if (Unit.GetHealthRelative() > 0.9f)
+                {
+                    AI_TacticTimer = 0f;
+                    break;
+                }
+                if (Group.HomeDrifter.MedicalModule)
+                {
+                    point = Group.HomeDrifter.MedicalModule.transform.position;
+                    if (getSpace() != Group.HomeSpace) SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
+                    else SetAIMoveTowards(point, Group.HomeSpace);
+                    SetLookTowards(point, Group.HomeSpace);
+                }
+                if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();
+                Unit.UseItem2Rpc();
+                return true;
+            case AI_TACTICS.HEAL_ALLIES:
+                CREW WoundedAlly = GetClosestWoundedAlly();
+                if (!WoundedAlly)
+                {
+                    AI_TacticTimer = 0f;
+                    break;
+                }
+                if (Dist(WoundedAlly.transform.position) > 20f)
+                {
+                    AI_TacticTimer = 0f;
+                    break;
+                }
+                SetAIMoveTowards(GetPointAwayFromPoint(WoundedAlly.transform.position, 2f), WoundedAlly.Space);
+                SetLookTowards(WoundedAlly.transform.position, WoundedAlly.Space);
+                Unit.EquipMedkitRpc();
+                Unit.UseItem1Rpc();
+                if (Dist(WoundedAlly.transform.position) < 8f)
+                {
+                }
+                else
+                {
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
+                }
+                return true;
+            case AI_TACTICS.SABOTAGE:
+                mod = GetClosestEnemyModule();
+                if (mod == null)
+                {
+                    AI_TacticTimer = 0f;
+                    break;
+                }
+                SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+                if (Dist(mod.transform.position) < 8f)
+                {
+                    SetLookTowards(mod.GetTargetPos(), mod.Space);
+                }
+                else
+                {
+                    Unit.UseItem2Rpc();
+                    SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                    Unit.Dash();
+                }
+                return true;
+        }
+        return false;
+    }
+
+    private void SwitchTacticsCrewOutOfCombat()
+    {
+        ResetWeights();
+        switch (AI_Unit_Type)
+        {
+            case AI_UNIT_TYPES.CREW:
+                AddWeights(0, 30);
+                int RetreatFactor = Mathf.RoundToInt((0.8f - Unit.GetHealthRelative()) * 50);
+                if (RetreatFactor > 0) AddWeights(3, RetreatFactor); //Retreat
+                CREW Ally = GetClosestWoundedAlly();
+                if (Ally != null)
+                {
+                    if (Dist(Ally.transform.position) < 20f) AddWeights(1, Mathf.RoundToInt((1f-Ally.GetHealthRelative())*50));
+                }
+                Ally = GetClosestCriticallyWoundedAllyInSpace();
+                if (Ally != null)
+                {
+                    if (Dist(Ally.transform.position) < 20f) AddWeights(1, 30);
+                }
+                Module mod = GetClosestEnemyModule();
+                if (mod != null)
+                {
+                    if (Dist(mod.transform.position) < 16f) AddWeights(2, 50);
+                    else if (Dist(mod.transform.position) < 40f) AddWeights(2, 25);
+                }
+                switch (GetWeight())
+                {
+                    case 0:
+                        SetTactic(AI_TACTICS.SKIRMISH, UnityEngine.Random.Range(4, 8));
+                        break;
+                    case 1:
+                        SetTactic(AI_TACTICS.HEAL_ALLIES, UnityEngine.Random.Range(17, 19));
+                        break;
+                    case 2:
+                        SetTactic(AI_TACTICS.SABOTAGE, UnityEngine.Random.Range(17, 19));
+                        break;
+                    case 3:
+                        SetTactic(AI_TACTICS.RETREAT, UnityEngine.Random.Range(17, 19));
+                        break;
+                }
+                break;
+        }
+    }
     private void SwitchTacticsCrew()
     {
         ResetWeights();
@@ -557,7 +581,7 @@ public class AI_UNIT : NetworkBehaviour
             case AI_UNIT_TYPES.CREW:
                 AddWeights(0, 20);
                 if (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) > 16f) AddWeights(1, 25);
-                else AddWeights(1, 10);
+                else AddWeights(1, 12);
                 if (Unit.GetHealthRelative() < 0.4f) AddWeights(2, 40);
                 CREW Ally = GetClosestWoundedAlly();
                 if (Ally != null)
@@ -580,13 +604,13 @@ public class AI_UNIT : NetworkBehaviour
                         SetTactic(AI_TACTICS.SKIRMISH, UnityEngine.Random.Range(4, 8));
                         break;
                     case 1:
-                        SetTactic(AI_TACTICS.CIRCLE, UnityEngine.Random.Range(4, 8));
+                        SetTactic(AI_TACTICS.CIRCLE, UnityEngine.Random.Range(3, 5));
                         break;
                     case 2:
                         SetTactic(AI_TACTICS.RETREAT, UnityEngine.Random.Range(8, 12));
                         break;
                     case 3:
-                        SetTactic(AI_TACTICS.HEAL_ALLIES, UnityEngine.Random.Range(22, 26));
+                        SetTactic(AI_TACTICS.HEAL_ALLIES, UnityEngine.Random.Range(17, 19));
                         break;
                     case 4:
                         SetTactic(AI_TACTICS.SABOTAGE, UnityEngine.Random.Range(6, 8));

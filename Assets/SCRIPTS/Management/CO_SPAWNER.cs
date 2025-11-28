@@ -313,7 +313,7 @@ public class CO_SPAWNER : NetworkBehaviour
                 Vector3 tryPos = dun.Space.GetRandomUnboardableGrid().transform.position;
                 ScriptableEnemyCrew enemyType = PossibleSpawns[GetWeight()];
                 CREW crew = SpawnUnitInDungeon(enemyType.SpawnCrew, dun);
-                SetQualityLevelOfCrew(crew, enemyType, CrewQualityPoints);
+                SetQualityLevelOfCrew(crew, CrewQualityPoints);
                 CrewWorthPoints -= enemyType.Worth;
             }
             group = dun.AI;
@@ -347,7 +347,7 @@ public class CO_SPAWNER : NetworkBehaviour
                 enem.NetworkObject.Spawn();
                 enem.Faction.Value = Faction;
                 enem.transform.Rotate(Vector3.forward, Degrees + UnityEngine.Random.Range(-30f, 30f));
-                SetQualityLevelOfCrew(enem, enemyType, CrewQualityPoints);
+                SetQualityLevelOfCrew(enem, CrewQualityPoints);
                 enem.Init();
                 members.Add(enem.GetComponent<AI_UNIT>());
             }
@@ -392,7 +392,7 @@ public class CO_SPAWNER : NetworkBehaviour
             Vector3 tryPos = drifter.Interior.GetRandomGrid().transform.position;
             ScriptableEnemyCrew enemyType = PossibleSpawns[GetWeight()];
             CREW crew = SpawnUnitOnShip(enemyType.SpawnCrew, drifter);
-            SetQualityLevelOfCrew(crew, enemyType, CrewQualityPoints);
+            SetQualityLevelOfCrew(crew, CrewQualityPoints);
             CrewWorthPoints -= enemyType.Worth;
         }
         group = drifter.CrewGroup;
@@ -521,17 +521,18 @@ public class CO_SPAWNER : NetworkBehaviour
             }
         }
     }
-    private void SetQualityLevelOfCrew(CREW crew, ScriptableEnemyCrew crewData, float Quality)
+    public void SetQualityLevelOfCrew(CREW crew, float Quality)
     {
         Quality -= 100;
         Quality *= UnityEngine.Random.Range(0.6f, 1.4f);
         int Levels = 0;
+        if (Quality < 50) Levels--;
         while (Quality > 100)
         {
             Quality -= 100;
             Levels++;
         }
-        if (Levels > 0)
+        if (Levels != 0)
         {
             crew.AddUpgradeLevel(Levels);
         }
@@ -697,4 +698,42 @@ public class CO_SPAWNER : NetworkBehaviour
     }
 
     /**/
+    [Header("SPELLS")]
+    public GameObject FloralImpactVFX;
+    public GameObject PragmaticusRestrainImpactVFX;
+    public PROJ BakutoSword;
+    public GameObject WaywardConsumptionVFX;
+    public GameObject PragmaticusShieldImpactVFX;
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnFloralImpactRpc(Vector3 pos)
+    {
+        GameObject ob = Instantiate(FloralImpactVFX, pos, Quaternion.identity);
+        Transform trans = CO.co.GetTransformAtPoint(pos);
+        if (trans) ob.transform.SetParent(trans);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnPragmaticusRestrainImpactRpc(Vector3 pos)
+    {
+        GameObject ob = Instantiate(PragmaticusRestrainImpactVFX, pos, Quaternion.identity);
+        Transform trans = CO.co.GetTransformAtPoint(pos);
+        if (trans) ob.transform.SetParent(trans);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnWaywardConsumptionRpc(Vector3 pos)
+    {
+        GameObject ob = Instantiate(WaywardConsumptionVFX, pos, Quaternion.identity);
+        Transform trans = CO.co.GetTransformAtPoint(pos);
+        if (trans) ob.transform.SetParent(trans);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnPragmaticusShieldImpactRpc(Vector3 pos)
+    {
+        GameObject ob = Instantiate(PragmaticusShieldImpactVFX, pos, Quaternion.identity);
+        Transform trans = CO.co.GetTransformAtPoint(pos);
+        if (trans) ob.transform.SetParent(trans);
+    }
+
 }

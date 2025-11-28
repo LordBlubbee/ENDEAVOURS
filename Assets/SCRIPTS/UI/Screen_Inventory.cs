@@ -32,7 +32,7 @@ public class Screen_Inventory : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.Escape) || (Input.GetKeyDown(KeyCode.I) && !UI.ui.ChatUI.ChatScreen.activeSelf))
         {
             UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
         }
@@ -309,7 +309,7 @@ public class Screen_Inventory : MonoBehaviour
             UpdateEquipmentBasedOnItem(CurrentDraggingSlot);
             CO.co.RequestPeriodicInventoryUpdateRpc();
             Debug.Log($"We moved FROM {CurrentDraggingSlot} item: {CurrentDraggingSlot.GetEquippedItem()} (Supposed to be {slotSwap})");
-            Debug.Log($"We moved TO {slot} item: {slot.GetEquippedItem()}  (Supposed to be {HoldingItem})");
+            Debug.Log($"We moved TO {slot} item: {slot.GetEquippedItem()} (Supposed to be {HoldingItem})");
 
             if (HoldingItem is ScriptableEquippableModule)
             {

@@ -154,6 +154,8 @@ public class AI_GROUP : MonoBehaviour
         wep.StopRpc();
     }
      */
+
+    private float IntruderThreatTimer = 0f;
     private void ShipAI()
     {
         if (!HomeDrifter) return;
@@ -194,11 +196,20 @@ public class AI_GROUP : MonoBehaviour
             if (mod.EligibleForReload()) ManModules.Add(mod);
         }
         List<CREW> Intruders = new List<CREW>(EnemiesInSpace(HomeDrifter.Space));
+        int WantDefenders = Intruders.Count;
+        if (WantDefenders > 0)
+        {
+            IntruderThreatTimer += 0.5f;
+            WantDefenders += Mathf.FloorToInt(UsableUnits.Count/(IntruderThreatTimer /120f));
+        } else
+        {
+            IntruderThreatTimer = 0f;
+        }
 
-        int WantMarines = 0;
+            int WantMarines = 0;
         if (AI_Type == AI_TYPES.SHIP_BOARDING)
         {
-            WantMarines = Mathf.FloorToInt(UsableUnits.Count*0.7f);
+            WantMarines = Mathf.FloorToInt(UsableUnits.Count*0.6f);
         }
 
         Vector3 PointOfInterest;
@@ -214,12 +225,13 @@ public class AI_GROUP : MonoBehaviour
                 ManModules.Remove(ManModules[0]);
                 continue;
             }
-            if (Intruders.Count > 0)
+            if (WantDefenders > 0)
             {
                 PointOfInterest = Intruders[0].transform.position;
                 Closest = GetClosestUnitInGroup(PointOfInterest, UsableUnits);
                 Closest.SetObjectiveTarget(Closest.getSpace().GetNearestGridToPoint(PointOfInterest).transform, HomeSpace);
                 UsableUnits.Remove(Closest);
+                WantDefenders--;
                 continue;
             }
             DRIFTER EnemyDrifter = GetClosestEnemyDrifter(HomeDrifter.transform.position);

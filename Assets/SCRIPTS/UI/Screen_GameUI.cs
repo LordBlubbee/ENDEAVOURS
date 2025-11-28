@@ -97,7 +97,7 @@ public class Screen_GameUI : MonoBehaviour
 
             CommsMapButton.gameObject.SetActive(CommsEnabled);
             InventoryButton.gameObject.SetActive(false);
-            if (CommsEnabled && Input.GetKeyDown(KeyCode.M)) OpenMissionScreen();
+            if (CommsEnabled && Input.GetKeyDown(KeyCode.M) && !UI.ui.ChatUI.ChatScreen.activeSelf) OpenMissionScreen();
         } else
         {
             if (UI.ui.RewardUI.RewardActive) CommsTex.text = "[U] REWARDS";
@@ -117,8 +117,11 @@ public class Screen_GameUI : MonoBehaviour
 
                 CommsMapButton.gameObject.SetActive(true);
             InventoryButton.gameObject.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.I)) UI.ui.OpenTalkScreenFancy(UI.ui.InventoryUI.gameObject);
-            if (Input.GetKeyDown(KeyCode.U)) OpenMissionScreen();
+            if (!UI.ui.ChatUI.ChatScreen.activeSelf)
+            {
+                if (Input.GetKeyDown(KeyCode.I)) UI.ui.OpenTalkScreenFancy(UI.ui.InventoryUI.gameObject);
+                if (Input.GetKeyDown(KeyCode.U)) OpenMissionScreen();
+            }
         }
         if (ActiveUI.gameObject.activeSelf)
         {

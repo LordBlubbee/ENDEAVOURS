@@ -151,16 +151,16 @@ MonoBehaviour:
   RotateCrosshair: 0
   ActionUse1: 2
   attackAnimations1: 0d000000
-  UsageStamina1: 50
+  UsageStamina1: 0
   Action1_SFX:
   - {fileID: 8300000, guid: 9e9dd386944e2cb4390ea93b9afab6d1, type: 3}
   - {fileID: 8300000, guid: 84e54f64f3f8e9e40829a1ac68afbe5a, type: 3}
   - {fileID: 8300000, guid: 9dc3212dc1148b44ab55cef301872c60, type: 3}
   Action1_SFX_Hit: []
-  Action1_SFX_Block: []
   attackDamage1: 0
   RangedPrefab1: {fileID: 1533413245747138546, guid: da0cb37a1719c8b4f98132f97c5efc3e, type: 3}
   Reload1: 1
+  ApplyBuff: {fileID: 0}
   ActionUse2: 0
   attackAnimations2: 
   UsageStamina2: 5

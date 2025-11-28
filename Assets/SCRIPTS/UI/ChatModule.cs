@@ -39,16 +39,21 @@ public class ChatModule : MonoBehaviour
     IEnumerator UpdateCanvas()
     {
         yield return null;
-        Canvas.ForceUpdateCanvases();
+        CAM.cam.camob.orthographicSize += 0.01f;
+        yield return null;
+        CAM.cam.camob.orthographicSize -= 0.01f;
     }
     private void Update()
     {
+        if (ChatScreen.activeSelf)
+        {
+            ChatInputField.Select();
+            ChatInputField.ActivateInputField();
+        }
         if (Input.GetKeyDown(KeyCode.Return))
         {
             if (ChatScreen.activeSelf)
             {
-                ChatInputField.Select();
-                ChatInputField.ActivateInputField();
                 if (ChatInputField.text.Length > 0)
                 {
                     string hex2 = ColorUtility.ToHtmlStringRGB(LOCALCO.local.GetPlayer().CharacterBackground.BackgroundColor);

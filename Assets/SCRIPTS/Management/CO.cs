@@ -155,29 +155,29 @@ public class CO : NetworkBehaviour
                 ProgressDiff = 1f;
                 break;
             case 1:
-                ProgressDiff = 1.5f;
-                break;
-            case 2:
                 ProgressDiff = 2f;
                 break;
+            case 2:
+                ProgressDiff = 2.5f;
+                break;
             case 3:
-                ProgressDiff = 2.8f;
+                ProgressDiff = 3.8f;
                 break;
             case 4:
-                ProgressDiff = 3.5f;
+                ProgressDiff = 4.5f;
                 break;
             case 5:
-                ProgressDiff = 5f;
+                ProgressDiff = 6f;
                 break;
             case 6:
-                ProgressDiff = 5.5f;
+                ProgressDiff = 6.5f;
                 break;
         }
         float PlayerDiff = 1f;
         switch (GetLOCALCO().Count)
         {
             case 1:
-                PlayerDiff = 0.9f;
+                PlayerDiff = 0.8f;
                 break;
             case 2:
                 PlayerDiff = 1f;
@@ -205,6 +205,69 @@ public class CO : NetworkBehaviour
                 break;
             case 10:
                 PlayerDiff = 2f;
+                break;
+        }
+        return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
+    }
+    public float GetNewFriendlyCrewModifier()
+    {
+        float ProgressDiff = 1f;
+        switch (BiomeProgress)
+        {
+            case 0:
+                ProgressDiff = 1f;
+                break;
+            case 1:
+                ProgressDiff = 2f;
+                break;
+            case 2:
+                ProgressDiff = 3f;
+                break;
+            case 3:
+                ProgressDiff = 3.8f;
+                break;
+            case 4:
+                ProgressDiff = 4.5f;
+                break;
+            case 5:
+                ProgressDiff = 6f;
+                break;
+            case 6:
+                ProgressDiff = 6.5f;
+                break;
+        }
+        float PlayerDiff = 1f;
+        switch (GetLOCALCO().Count)
+        {
+            case 1:
+                PlayerDiff = 1f;
+                break;
+            case 2:
+                PlayerDiff = 1f;
+                break;
+            case 3:
+                PlayerDiff = 1.1f;
+                break;
+            case 4:
+                PlayerDiff = 1.2f;
+                break;
+            case 5:
+                PlayerDiff = 1.25f;
+                break;
+            case 6:
+                PlayerDiff = 1.3f;
+                break;
+            case 7:
+                PlayerDiff = 1.35f;
+                break;
+            case 8:
+                PlayerDiff = 1.4f;
+                break;
+            case 9:
+                PlayerDiff = 1.45f;
+                break;
+            case 10:
+                PlayerDiff = 1.5f;
                 break;
         }
         return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
@@ -240,7 +303,7 @@ public class CO : NetworkBehaviour
         switch (GetLOCALCO().Count)
         {
             case 1:
-                PlayerDiff = 0.95f;
+                PlayerDiff = 0.9f;
                 break;
             case 2:
                 PlayerDiff = 1f;
@@ -278,13 +341,13 @@ public class CO : NetworkBehaviour
         switch (BiomeProgress)
         {
             case 0:
-                ProgressDiff = 0.8f;
+                ProgressDiff = 0.85f;
                 break;
             case 1:
                 ProgressDiff = 1f;
                 break;
             case 2:
-                ProgressDiff = 1.25f;
+                ProgressDiff = 1.2f;
                 break;
             case 3:
                 ProgressDiff = 1.5f;
@@ -303,16 +366,16 @@ public class CO : NetworkBehaviour
         switch (GetLOCALCO().Count)
         {
             case 1:
-                PlayerDiff = 0.7f;
+                PlayerDiff = 0.6f;
                 break;
             case 2:
-                PlayerDiff = 1f;
+                PlayerDiff = 0.9f;
                 break;
             case 3:
-                PlayerDiff = 1.3f;
+                PlayerDiff = 1.2f;
                 break;
             case 4:
-                PlayerDiff = 1.5f;
+                PlayerDiff = 1.4f;
                 break;
             case 5:
                 PlayerDiff = 1.7f;
@@ -1389,10 +1452,12 @@ public class CO : NetworkBehaviour
         List<Faction> Factions = new();
         List<int> FactionChanges = new();
 
-        CREW NewCrew = table.GetNewCrew();
-        if (NewCrew)
+        CREW NewCrewPrefab = table.GetNewCrew();
+        CREW NewCrew = null;
+        if (NewCrewPrefab)
         {
-            CO_SPAWNER.co.SpawnUnitOnShip(NewCrew, CO.co.PlayerMainDrifter);
+            NewCrew = CO_SPAWNER.co.SpawnUnitOnShip(NewCrewPrefab, CO.co.PlayerMainDrifter);
+            CO_SPAWNER.co.SetQualityLevelOfCrew(NewCrew, 120*GetNewFriendlyCrewModifier());
         }
 
         foreach (FactionReputation rep in table.ReputationChanges)
@@ -1435,12 +1500,12 @@ public class CO : NetworkBehaviour
             {
                 ResetWeights();
                 i = 0;
-                foreach (WeightedLootItem weighted in item.ItemDrop.PossibleDrops)
+                foreach (WeightedLootItem weighted in item.ItemDrop.GetPossibleDrops())
                 {
                     AddWeights(i, weighted.Weight);
                     i++;
                 }
-                ScriptableEquippable newItem = item.ItemDrop.PossibleDrops[GetWeight()].Item;
+                ScriptableEquippable newItem = item.ItemDrop.GetPossibleDrops()[GetWeight()].Item;
                 AddInventoryItem(newItem);
                 ItemTranslate.Add(newItem.GetItemResourceIDFull());
             }

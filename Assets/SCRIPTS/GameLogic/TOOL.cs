@@ -12,10 +12,17 @@ public class TOOL : MonoBehaviour
     public List<Transform> strikePoints;
     public List<BlockAttacks> Blockers;
     public ToolAI AI;
+    public bool isConsumable = false;
+    public ToolAI GetUsageAI()
+    {
+        return AI;
+    }
     public enum ToolAI
     {
         MELEE,
-        RANGED
+        RANGED,
+        MELEE_AND_SHIELD,
+        TARGET_ALLIES
     }
 
     [Header("CROSSHAIR")]
@@ -33,6 +40,7 @@ public class TOOL : MonoBehaviour
 
     public float attackDamage1 = 10f;
     public PROJ RangedPrefab1;
+    public UniqueSpell UniqueSpell1;
     public float Reload1 = 0f;
     public ScriptableBuff ApplyBuff;
 
@@ -44,6 +52,7 @@ public class TOOL : MonoBehaviour
 
     public float attackDamage2 = 10f;
     public PROJ RangedPrefab2;
+    public UniqueSpell UniqueSpell2;
     public float Reload2 = 0f;
 
     private CREW Crew;
@@ -62,7 +71,8 @@ public class TOOL : MonoBehaviour
         HEAL_OTHERS,
         HEAL_SELF,
         SPELL_ATTACK,
-        MELEE_AND_BLOCK
+        MELEE_AND_BLOCK,
+        UNIQUE_SPELL
     }
 
 

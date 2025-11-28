@@ -8,6 +8,11 @@ public class ArtifactAbility
     {
         User = crew;
     }
+
+    public virtual void PeriodicEffect()
+    {
+
+    }
     public virtual void OnMelee()
     {
 
@@ -24,7 +29,7 @@ public class ArtifactAbility
     {
 
     }
-    public virtual void OnDamaged(CREW us)
+    public virtual void OnDamaged()
     {
 
     }

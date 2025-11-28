@@ -174,6 +174,8 @@ public class CREW : NetworkBehaviour, iDamageable
     [NonSerialized] public float ModifyRangedDamage;
     [NonSerialized] public float ModifySpellDamage;
 
+    [NonSerialized] public float ModifyDamageTaken;
+
     private List<BUFF> Buffs = new();
     public void AddBuff(ScriptableBuff buf)
     {
@@ -281,7 +283,13 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         Debug.Log("ERROR: Artifact ability to remove not found");
     }
-
+    private void ArtifactPeriodic()
+    {
+        foreach (ArtifactAbility ability in ArtifactAbilities)
+        {
+            ability.PeriodicEffect();
+        }
+    }
     private void ArtifactOnMelee()
     {
         foreach (ArtifactAbility ability in ArtifactAbilities)
@@ -360,7 +368,7 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         foreach (ArtifactAbility ability in ArtifactAbilities)
         {
-            ability.OnDamaged(this);
+            ability.OnDamaged();
         }
     }
     public void ArtifactOnKill(CREW crew)
@@ -557,6 +565,10 @@ public class CREW : NetworkBehaviour, iDamageable
     private NetworkVariable<bool> Alive = new();
     private NetworkVariable<bool> DeadForever = new();
 
+    [NonSerialized] public NetworkVariable<float> Slot1Cooldown = new();
+    [NonSerialized] public NetworkVariable<float> Slot2Cooldown = new();
+    [NonSerialized] public NetworkVariable<float> Slot3Cooldown = new();
+
     public bool isDead()
     {
         return !Alive.Value;
@@ -679,6 +691,8 @@ public class CREW : NetworkBehaviour, iDamageable
         while (true)
         {
             yield return new WaitForSeconds(0.5f);
+            while (isDead()) yield return new WaitForSeconds(0.5f);
+            ArtifactPeriodic();
             NearbyCommander = 0;
             Vector3 checkHit = transform.position;
             foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 25f))
@@ -692,6 +706,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 }
                 if (trt.Space != Space) continue;
                 if (trt.GetFaction() != GetFaction()) continue;
+                if (trt.isDead()) continue;
                 NearbyCommander = Mathf.Max(trt.GetATT_COMMAND(),NearbyCommander);
             }
             BuffTick(0.5f);
@@ -1116,6 +1131,10 @@ public class CREW : NetworkBehaviour, iDamageable
                         if (!canStrikeMelee) return;
                         StrikeHealSelf();
                         break;
+                    case TOOL.ToolActionType.UNIQUE_SPELL:
+                        if (!canStrikeMelee) return;
+                        StrikeUniqueSpell(LookTowards);
+                        break;
                     case TOOL.ToolActionType.BLOCK:
                         foreach (BlockAttacks blocker in EquippedToolObject.Blockers)
                         {
@@ -1131,6 +1150,12 @@ public class CREW : NetworkBehaviour, iDamageable
                         ArtifactOnMelee();
                         StrikeMelee();
                         break;
+                }
+                if (EquippedToolObject.isConsumable)
+                {
+                    //Have to test this still
+                    EquipWeaponRpc(CurrentToolID, null);
+                    return;
                 }
             }
             if (SelectedWeaponAbility == 0 && !hasCreatedSound)
@@ -1271,6 +1296,12 @@ public class CREW : NetworkBehaviour, iDamageable
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
         reload /= 0.4f + 0.08f * GetATT_COMMUNOPATHY() + 0.08f * GetATT_ALCHEMY();
         StartCoroutine(AttackCooldown(reload));
+        ArtifactOnSpell();
+    }
+    private void StrikeUniqueSpell(Vector3 trt)
+    {
+        UniqueSpell spell = SelectedWeaponAbility == 0 ? EquippedToolObject.UniqueSpell1 : EquippedToolObject.UniqueSpell2;
+        spell.UseUniqueSpell(this, trt);
         ArtifactOnSpell();
     }
     private void StrikeRepair()
@@ -1719,6 +1750,7 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         if (isDeadForever()) return;
         if (isDashing) return;
+       
         if (DashingDamageBuff > 0f) fl *= 0.5f;
         switch (type)
         {
@@ -1731,6 +1763,27 @@ public class CREW : NetworkBehaviour, iDamageable
             case iDamageable.DamageType.SPELL:
                 fl = ArtifactOnPreventDamageSpell(fl);
                 break;
+            case iDamageable.DamageType.ENVIRONMENT_FIRE:
+                fl = GetEnvironmentalDamageMod();
+                break;
+            case iDamageable.DamageType.ENVIRONMENT_MIST:
+                fl = GetEnvironmentalDamageMod();
+                break;
+        }
+        fl *= 1f + ModifyDamageTaken;
+        foreach (BUFF buff in new List<BUFF>(Buffs))
+        {
+            if (buff.TemporaryHitpoints > 0)
+            {
+                float reduce = Mathf.Min(buff.TemporaryHitpoints, fl);
+                buff.TemporaryHitpoints -= reduce;
+                fl -= reduce;
+                if (buff.TemporaryHitpoints <= 0)
+                {
+                    buff.RemoveBuff(this);
+                }
+                if (fl <= 0) return;
+            }
         }
         lastDamageTime = 7f;
         CurHealth.Value -= fl;
@@ -1742,6 +1795,10 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         CO_SPAWNER.co.SpawnDMGRpc(fl, src);
         ArtifactOnDamaged();
+    }
+    public float GetEnvironmentalDamageMod()
+    {
+        return 1f / (GetATT_ENGINEERING()*0.2f);
     }
 
     public void EquipWeapon(int slot, ScriptableEquippableWeapon wep)

@@ -20,7 +20,11 @@ public class ScriptableBuff : ScriptableObject
     public float ModifyAnimationSpeed;
     public float ModifyAnimationSlow;
 
+    public float ModifyDamageTaken;
+
     public float ModifyMeleeDamage;
     public float ModifyRangedDamage;
     public float ModifySpellDamage;
+
+    public float TemporaryHitpoints;
 }

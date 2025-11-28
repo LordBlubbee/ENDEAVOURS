@@ -32,7 +32,7 @@ public class Screen_Reward : MonoBehaviour
             else if (fac.Amount < 0) MaterialGain.text += $"<color=red>{fac.Fac} {fac.Amount}</color>\n";
         }
 
-        int StartAt = CrewLink == null ? 0 : 1;
+        int StartAt = CrewLink == "" ? 0 : 1;
         if (StartAt == 1) InventorySlots[0].gameObject.SetActive(false);
         for (int i = StartAt; i < InventorySlots.Count; i++)
         {

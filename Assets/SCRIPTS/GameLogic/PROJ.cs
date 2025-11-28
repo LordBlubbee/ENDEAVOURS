@@ -27,16 +27,20 @@ public class PROJ : NetworkBehaviour
     public GameObject LaunchVFX;
     public AudioClip[] ImpactSFX;
     public float BlockPenetration = 0f;
+    [Tooltip("Lower is better")]
     public float DodgeModifier = 1f;
     public float HullDamageModifier = 1f; //Which factor of damage is done to modules
     public float ModuleDamageModifier = 1f; //Which factor of damage is done to modules
     public float ArmorDamageModifier = 1f; //Which factor of damage is done to armor
     public float ArmorAbsorptionModifier = 1f; //Which factor of damage is taken by armor
+    public float ArmorCriticalChance = 0.05f; //Chance to ignore armor
     public float CrewDamageModifier = 1f; //Which facotr of damage is done to nearby crew members
     public float CrewDamageModifierDirect = 1f; //Which facotr of damage is done to nearby crew members
     public float CrewDamageSplash = 1f; //Which factor of damage is done to nearby crew members
     public bool DealSplash = false;
     public ScriptableBuff ApplyBuff;
+    public DamagingZone ZoneImpact;
+    public float ZoneChance = 0f;
     [NonSerialized] public CREW CrewOwner;
 
     private float Expire = 10;
@@ -62,6 +66,14 @@ public class PROJ : NetworkBehaviour
         if (Space) transform.SetParent(Space.transform);
     }
 
+    private void AttemptSpawnZone(Vector3 vec, Transform trans)
+    {
+        if (UnityEngine.Random.Range(0f, 1f) > ZoneChance) return;
+        DamagingZone Zone = Instantiate(ZoneImpact, vec, Quaternion.identity);
+        Zone.transform.SetParent(trans);
+        Zone.NetworkObject.Spawn();
+        Zone.Init(1f);
+    }
     private void Start()
     {
         if (LaunchVFX) LaunchVFXAnimation();
@@ -135,6 +147,7 @@ public class PROJ : NetworkBehaviour
                 if (UnityEngine.Random.Range(0f, 1f) > Mathf.Min(drifter.GetDodgeChance() * DodgeModifier,0.9f))
                 {
                     drifter.Impact(this, Tip.position);
+                    AttemptSpawnZone(Tip.position, drifter.Interior.transform);
                     isActive = false;
                 } else
                 {
