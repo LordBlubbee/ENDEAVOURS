@@ -42,6 +42,7 @@ public class TOOL : MonoBehaviour
     public PROJ RangedPrefab1;
     public UniqueSpell UniqueSpell1;
     public float Reload1 = 0f;
+    public float ExtendedCooldown1 = 0f;
     public ScriptableBuff ApplyBuff;
 
     [Header("ACTION 2")]
@@ -54,6 +55,7 @@ public class TOOL : MonoBehaviour
     public PROJ RangedPrefab2;
     public UniqueSpell UniqueSpell2;
     public float Reload2 = 0f;
+    public float ExtendedCooldown2 = 0f;
 
     private CREW Crew;
 

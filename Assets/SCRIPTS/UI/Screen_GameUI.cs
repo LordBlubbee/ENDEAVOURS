@@ -28,6 +28,11 @@ public class Screen_GameUI : MonoBehaviour
     public Image AmmoColor;
     public GameObject NoAmmoOverlay;
 
+    public Image CooldownGrapple;
+    public Image CooldownItem1;
+    public Image CooldownItem2;
+    public Image CooldownItem3;
+
     [Header("BOSS BARS")]
     public Slider OurDrifterIntegritySlider;
     public TextMeshProUGUI OurDrifterIntegrityTex;
@@ -63,6 +68,33 @@ public class Screen_GameUI : MonoBehaviour
     {
         LOBBY.lobby.PressQuitServer();
     }
+
+    private float GetPlayerCooldown(CREW player, int ID)
+    {
+        float max;
+        float cool;
+        switch (ID)
+        {
+            default:
+                max = player.SlotGrappleCooldownMaximum.Value;
+                cool = player.SlotGrappleCooldown.Value;
+                break;
+            case 0:
+                max = player.Slot1CooldownMaximum.Value;
+                cool = player.Slot1Cooldown.Value;
+                break;
+            case 1:
+                max = player.Slot2CooldownMaximum.Value;
+                cool = player.Slot2Cooldown.Value;
+                break;
+            case 2:
+                max = player.Slot3CooldownMaximum.Value;
+                cool = player.Slot3Cooldown.Value;
+                break;
+        }
+        if (max == 0) return 0;
+        return cool / max;
+    }
     void Update()
     {
         if (!LOCALCO.local)
@@ -76,6 +108,10 @@ public class Screen_GameUI : MonoBehaviour
             ActiveUI.gameObject.SetActive(false);
             return;
         }
+        CooldownGrapple.fillAmount = GetPlayerCooldown(player, -1);
+        CooldownItem1.fillAmount = GetPlayerCooldown(player, 0);
+        CooldownItem2.fillAmount = GetPlayerCooldown(player, 1);
+        CooldownItem3.fillAmount = GetPlayerCooldown(player, 2);
         if (CO.co.AreWeInDanger.Value)
         {
             bool CommsEnabled = CO.co.CommunicationGamePaused.Value && !LOCALCO.local.IsArrivingAnimation();
@@ -223,6 +259,10 @@ public class Screen_GameUI : MonoBehaviour
 
     private void OnEnable()
     {
+        CooldownGrapple.gameObject.SetActive(true);
+        CooldownItem1.gameObject.SetActive(true);
+        CooldownItem2.gameObject.SetActive(true);
+        CooldownItem3.gameObject.SetActive(true);
         StartCoroutine(RefreshWeaponUINum());
     }
 

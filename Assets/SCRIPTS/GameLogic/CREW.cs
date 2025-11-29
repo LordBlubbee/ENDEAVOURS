@@ -560,14 +560,19 @@ public class CREW : NetworkBehaviour, iDamageable
 
     private NetworkVariable<float> CurHealth = new();
     private NetworkVariable<float> CurStamina = new();
-    private NetworkVariable<float> CurGrappleCooldown = new();
 
     private NetworkVariable<bool> Alive = new();
     private NetworkVariable<bool> DeadForever = new();
 
+    [NonSerialized] public NetworkVariable<float> SlotGrappleCooldown = new();
     [NonSerialized] public NetworkVariable<float> Slot1Cooldown = new();
     [NonSerialized] public NetworkVariable<float> Slot2Cooldown = new();
     [NonSerialized] public NetworkVariable<float> Slot3Cooldown = new();
+    [NonSerialized] public NetworkVariable<float> SlotGrappleCooldownMaximum = new();
+    [NonSerialized] public NetworkVariable<float> Slot1CooldownMaximum = new();
+    [NonSerialized] public NetworkVariable<float> Slot2CooldownMaximum = new();
+    [NonSerialized] public NetworkVariable<float> Slot3CooldownMaximum = new();
+
 
     public bool isDead()
     {
@@ -584,10 +589,6 @@ public class CREW : NetworkBehaviour, iDamageable
     public bool CanFunction()
     {
         return !isDead();
-    }
-    public float GetGrappleCooldown()
-    {
-        return CurGrappleCooldown.Value;
     }
     
     [NonSerialized] public NetworkVariable<int> SpaceID = new();
@@ -1011,6 +1012,7 @@ public class CREW : NetworkBehaviour, iDamageable
         if (!CanFunction()) return;
         if (EquippedToolObject == null) return;
         if (EquippedToolObject.ActionUse1 == TOOL.ToolActionType.NONE) return;
+        if (IsItemOnExtendedCooldown()) return;
         SelectedWeaponAbility = 0;
         if (AnimationComboWeapon1 >= EquippedToolObject.attackAnimations1.Count)
         {
@@ -1056,11 +1058,28 @@ public class CREW : NetworkBehaviour, iDamageable
             AUDCO.aud.PlaySFX(EquippedToolObject.Action1_SFX_Hit, transform.position, 0.1f);
         }
     }
+
+    private bool IsItemOnExtendedCooldown()
+    {
+        switch (CurrentToolID)
+        {
+            case -1:
+                return SlotGrappleCooldown.Value > 0;
+            case 0:
+                return Slot1Cooldown.Value > 0;
+            case 1:
+                return Slot2Cooldown.Value > 0;
+            case 2:
+                return Slot3Cooldown.Value > 0;
+        }
+        return false;
+    }
     public void UseItem2()
     {
         if (!CanFunction()) return;
         if (EquippedToolObject == null) return;
         if (EquippedToolObject.ActionUse2 == TOOL.ToolActionType.NONE) return;
+        if (IsItemOnExtendedCooldown()) return;
         SelectedWeaponAbility = 1;
         if (AnimationComboWeapon2 >= EquippedToolObject.attackAnimations2.Count)
         {
@@ -1098,6 +1117,10 @@ public class CREW : NetworkBehaviour, iDamageable
 
     private void StrikeUpdate()
     {
+        if (SlotGrappleCooldown.Value > 0) SlotGrappleCooldown.Value -= CO.co.GetWorldSpeedDelta();
+        if (Slot1Cooldown.Value > 0) Slot1Cooldown.Value -= CO.co.GetWorldSpeedDelta();
+        if (Slot2Cooldown.Value > 0) Slot2Cooldown.Value -= CO.co.GetWorldSpeedDelta();
+        if (Slot3Cooldown.Value > 0) Slot3Cooldown.Value -= CO.co.GetWorldSpeedDelta();
         if (EquippedToolObject == null) return;
         if (EquippedToolObject.strikePoints.Count == 0) return;
         if (AnimationController.isCurrentlyStriking())
@@ -1151,6 +1174,7 @@ public class CREW : NetworkBehaviour, iDamageable
                         StrikeMelee();
                         break;
                 }
+                
                 if (EquippedToolObject.isConsumable)
                 {
                     //Have to test this still
@@ -1164,6 +1188,35 @@ public class CREW : NetworkBehaviour, iDamageable
                 if (EquippedToolObject.Action1_SFX.Length > 0) WeaponSFXRpc();
             }
             return;
+        }
+    }
+
+    private void SetExtendedCooldown(float mod)
+    {
+        float cool = SelectedWeaponAbility == 0 ? EquippedToolObject.ExtendedCooldown1 : EquippedToolObject.ExtendedCooldown2;
+        cool *= mod;
+        if (cool > 0)
+        {
+            switch (CurrentToolID)
+            {
+                case -1:
+                    //Grapple
+                    SlotGrappleCooldown.Value = cool;
+                    SlotGrappleCooldownMaximum.Value = cool;
+                    break;
+                case 0:
+                    Slot1Cooldown.Value = cool;
+                    Slot1CooldownMaximum.Value = cool;
+                    break;
+                case 1:
+                    Slot2Cooldown.Value = cool;
+                    Slot2CooldownMaximum.Value = cool;
+                    break;
+                case 2:
+                    Slot3Cooldown.Value = cool;
+                    Slot3CooldownMaximum.Value = cool;
+                    break;
+            }
         }
     }
 
@@ -1278,23 +1331,34 @@ public class CREW : NetworkBehaviour, iDamageable
         proj.Init(dmg, GetFaction(), Space, trt);
         proj.CrewOwner = this;
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
-        reload /= 0.6f + 0.05f * GetATT_ARMS() + 0.05f * GetATT_ALCHEMY();
+        float reloadMod = 1f / (0.6f + 0.05f * GetATT_ARMS() + 0.05f * GetATT_ALCHEMY());
+        reload *= reloadMod;
+        SetExtendedCooldown(reload);
         StartCoroutine(AttackCooldown(reload));
         ArtifactOnRanged();
     }
     private void StrikeSpell(Vector3 trt)
     {
-        PROJ proj = Instantiate(SelectedWeaponAbility == 0 ? EquippedToolObject.RangedPrefab1 : EquippedToolObject.RangedPrefab2, EquippedToolObject.strikePoints[0].position, EquippedToolObject.transform.rotation);
-        float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
-        dmg += ModifySpellDamage;
-        dmg *= AnimationController.CurrentStrikePower();
-        dmg *= 0.7f + 0.1f * GetATT_COMMUNOPATHY() + 0.02f * GetCurrentCommanderLevel();
-        if (GetATT_COMMUNOPATHY() < 4) dmg *= 0.25f * GetATT_COMMUNOPATHY();
-        proj.NetworkObject.Spawn();
-        proj.Init(dmg, GetFaction(), Space, trt);
-        proj.CrewOwner = this;
+        UniqueSpell Unique = SelectedWeaponAbility == 0 ? EquippedToolObject.UniqueSpell1 : EquippedToolObject.UniqueSpell2;
+        if (Unique)
+        {
+            Unique.UseUniqueSpell(this, trt);
+        } else
+        {
+            PROJ proj = Instantiate(SelectedWeaponAbility == 0 ? EquippedToolObject.RangedPrefab1 : EquippedToolObject.RangedPrefab2, EquippedToolObject.strikePoints[0].position, EquippedToolObject.transform.rotation);
+            float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
+            dmg += ModifySpellDamage;
+            dmg *= AnimationController.CurrentStrikePower();
+            dmg *= 0.7f + 0.1f * GetATT_COMMUNOPATHY() + 0.02f * GetCurrentCommanderLevel();
+            if (GetATT_COMMUNOPATHY() < 4) dmg *= 0.25f * GetATT_COMMUNOPATHY();
+            proj.NetworkObject.Spawn();
+            proj.Init(dmg, GetFaction(), Space, trt);
+            proj.CrewOwner = this;
+        }
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
-        reload /= 0.4f + 0.08f * GetATT_COMMUNOPATHY() + 0.08f * GetATT_ALCHEMY();
+        float reloadMod = 1f / (0.4f + 0.08f * GetATT_COMMUNOPATHY() + 0.08f * GetATT_ALCHEMY());
+        reload *= reloadMod;
+        SetExtendedCooldown(reload);
         StartCoroutine(AttackCooldown(reload));
         ArtifactOnSpell();
     }
