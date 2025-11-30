@@ -161,6 +161,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     //Modified attributes from equipment and buffs
     [NonSerialized] public int[] ModifyAttributes = new int[8];
+    [NonSerialized] public float HealthChangePerSecond = 0f;
     [NonSerialized] public float ModifyHealthMax;
     [NonSerialized] public float ModifyHealthRegen;
     [NonSerialized] public float ModifyStaminaMax;
@@ -184,36 +185,51 @@ public class CREW : NetworkBehaviour, iDamageable
             if (buff.GetScriptable() == buf)
             {
                 buff.AddBuff(buf, this);
+                if (buf.BuffParticles != CO_SPAWNER.BuffParticles.NONE) AddBuffParticlesRpc(buf.BuffParticles, buff.GetStacks());
                 return;
             }
         }
-        if (buf.BuffParticles != CO_SPAWNER.BuffParticles.NONE) AddBuffParticlesRpc(buf.BuffParticles);
+        if (buf.BuffParticles != CO_SPAWNER.BuffParticles.NONE) AddBuffParticlesRpc(buf.BuffParticles, 1);
         Buffs.Add(new BUFF(buf, this));
     }
     public void BuffTick(float time)
     {
-        foreach (BUFF buf in new List<BUFF>(Buffs))
+        if (HealthChangePerSecond > 0)
         {
-            buf.TickBuff(time);
-            if (buf.IsExpired())
-            {
-                buf.RemoveBuff(this);
-                if (buf.BuffParticles != CO_SPAWNER.BuffParticles.NONE) RemoveBuffParticlesRpc(buf.BuffParticles);
-                Buffs.Remove(buf);
-            }
+            Heal(HealthChangePerSecond * time);
+        } else if (HealthChangePerSecond < 0)
+        {
+            TakeDamage(-HealthChangePerSecond * time, transform.position, iDamageable.DamageType.TRUE);
         }
+        foreach (BUFF buf in new List<BUFF>(Buffs))
+            {
+                buf.TickBuff(time);
+                if (buf.IsExpired())
+                {
+                    buf.RemoveBuff(this);
+                    if (buf.BuffParticles != CO_SPAWNER.BuffParticles.NONE) RemoveBuffParticlesRpc(buf.BuffParticles);
+                    Buffs.Remove(buf);
+                }
+            }
     }
 
     private List<ParticleBuff> BuffParticles = new();
 
     [Rpc(SendTo.ClientsAndHost)]
-    private void AddBuffParticlesRpc(CO_SPAWNER.BuffParticles type)
+    private void AddBuffParticlesRpc(CO_SPAWNER.BuffParticles type, int Stacks)
     {
         ParticleBuff BuffPart = GetBuff(type);
+        UI.ui.MainGameplayUI.AddBuff(BuffPart, Stacks);
+        foreach (ParticleBuff obj in new List<ParticleBuff>(BuffParticles))
+        {
+            if (obj.ParticleType == type)
+            {
+                return;
+            }
+        }
         ParticleBuff newBuffPart = Instantiate(BuffPart, transform);
         BuffParticles.Add(newBuffPart);
     }
-
     private ParticleBuff GetBuff(CO_SPAWNER.BuffParticles type)
     {
         return CO_SPAWNER.co.BuffParticleList[((int)type - 1)];
@@ -222,6 +238,7 @@ public class CREW : NetworkBehaviour, iDamageable
     private void RemoveBuffParticlesRpc(CO_SPAWNER.BuffParticles type)
     {
         ParticleBuff BuffPart = GetBuff(type);
+        UI.ui.MainGameplayUI.RemoveBuff(BuffPart);
         foreach (ParticleBuff obj in new List<ParticleBuff>(BuffParticles))
         {
             if (obj.ParticleType == BuffPart.ParticleType)
@@ -262,6 +279,18 @@ public class CREW : NetworkBehaviour, iDamageable
                 return new ArtifactRedPowder(this);
             case ScriptableEquippableArtifact.ArtifactAbilityTypes.CANDLE_BLAST:
                 return new ArtifactFaithfulCandle(this, art);
+            case ScriptableEquippableArtifact.ArtifactAbilityTypes.ENFORCEMENT_ORDER:
+                return new ArtifactEnforcementOrder(this);
+            case ScriptableEquippableArtifact.ArtifactAbilityTypes.SKIRMISH_ORDER:
+                return new ArtifactSkirmishOrder(this);
+            case ScriptableEquippableArtifact.ArtifactAbilityTypes.SHAMANIC_HEAL:
+                return new ArtifactTraditionsPromise(this);
+            case ScriptableEquippableArtifact.ArtifactAbilityTypes.TOKEN_OF_VENGEANCE:
+                return new ArtifactTokenOfVengeance(this);
+            case ScriptableEquippableArtifact.ArtifactAbilityTypes.STEEL_INSCRIPTION:
+                return new ArtifactBakutoBlade(this);
+            case ScriptableEquippableArtifact.ArtifactAbilityTypes.STIPULATION_OF_RIGHTS:
+                return new ArtifactStipulationOfRights(this);
         }
     } 
     private void AddArtifactAbility(ArtifactAbility ability)
@@ -689,12 +718,15 @@ public class CREW : NetworkBehaviour, iDamageable
     int NearbyCommander = 0;
     IEnumerator PeriodicUpdateCommander()
     {
+        int wasPreviouslyActive = 0;
         while (true)
         {
             yield return new WaitForSeconds(0.5f);
             while (isDead()) yield return new WaitForSeconds(0.5f);
             ArtifactPeriodic();
+            wasPreviouslyActive = NearbyCommander;
             NearbyCommander = 0;
+            CREW CommanderAlly = null;
             Vector3 checkHit = transform.position;
             foreach (Collider2D col in Physics2D.OverlapCircleAll(checkHit, 25f))
             {
@@ -708,8 +740,21 @@ public class CREW : NetworkBehaviour, iDamageable
                 if (trt.Space != Space) continue;
                 if (trt.GetFaction() != GetFaction()) continue;
                 if (trt.isDead()) continue;
+                if (trt.GetATT_COMMAND() < 3) continue;
+                CommanderAlly = trt;
                 NearbyCommander = Mathf.Max(trt.GetATT_COMMAND(),NearbyCommander);
             }
+            if (NearbyCommander != wasPreviouslyActive)
+            {
+                if (CommanderAlly != null && wasPreviouslyActive < NearbyCommander)
+                {
+                    CO_SPAWNER.co.SpawnCommandVFXRpc(CommanderAlly.transform.position);
+                    CO_SPAWNER.co.SpawnCommandVFXRpc(transform.position);
+                }
+                if (NearbyCommander > 0) AddBuffParticlesRpc(CO_SPAWNER.BuffParticles.COMMAND, NearbyCommander);
+                else RemoveBuffParticlesRpc(CO_SPAWNER.BuffParticles.COMMAND);
+            }
+           
             BuffTick(0.5f);
         }
     }
@@ -1339,22 +1384,15 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     private void StrikeSpell(Vector3 trt)
     {
-        UniqueSpell Unique = SelectedWeaponAbility == 0 ? EquippedToolObject.UniqueSpell1 : EquippedToolObject.UniqueSpell2;
-        if (Unique)
-        {
-            Unique.UseUniqueSpell(this, trt);
-        } else
-        {
-            PROJ proj = Instantiate(SelectedWeaponAbility == 0 ? EquippedToolObject.RangedPrefab1 : EquippedToolObject.RangedPrefab2, EquippedToolObject.strikePoints[0].position, EquippedToolObject.transform.rotation);
-            float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
-            dmg += ModifySpellDamage;
-            dmg *= AnimationController.CurrentStrikePower();
-            dmg *= 0.7f + 0.1f * GetATT_COMMUNOPATHY() + 0.02f * GetCurrentCommanderLevel();
-            if (GetATT_COMMUNOPATHY() < 4) dmg *= 0.25f * GetATT_COMMUNOPATHY();
-            proj.NetworkObject.Spawn();
-            proj.Init(dmg, GetFaction(), Space, trt);
-            proj.CrewOwner = this;
-        }
+        PROJ proj = Instantiate(SelectedWeaponAbility == 0 ? EquippedToolObject.RangedPrefab1 : EquippedToolObject.RangedPrefab2, EquippedToolObject.strikePoints[0].position, EquippedToolObject.transform.rotation);
+        float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
+        dmg += ModifySpellDamage;
+        dmg *= AnimationController.CurrentStrikePower();
+        dmg *= 0.7f + 0.1f * GetATT_COMMUNOPATHY() + 0.02f * GetCurrentCommanderLevel();
+        if (GetATT_COMMUNOPATHY() < 4) dmg *= 0.25f * GetATT_COMMUNOPATHY();
+        proj.NetworkObject.Spawn();
+        proj.Init(dmg, GetFaction(), Space, trt);
+        proj.CrewOwner = this;
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
         float reloadMod = 1f / (0.4f + 0.08f * GetATT_COMMUNOPATHY() + 0.08f * GetATT_ALCHEMY());
         reload *= reloadMod;

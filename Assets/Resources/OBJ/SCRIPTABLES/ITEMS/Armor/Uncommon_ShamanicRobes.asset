@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93d0c18050b8a5c4b9f50e941cfea295, type: 3}
+  m_Name: Uncommon_ShamanicRobes
+  m_EditorClassIdentifier: 
+  ItemName: Life-weaver Robes
+  ItemDesc: 'Intricately woven robes reserved for the most powerful shamans of the
+    more religious Nomaden clans.
+
+
+    Every 25 seconds, it is able to restore the
+    health of a nearby wounded ally based on your MEDICAL skill. Cooldown scales
+    with ALCHEMY.
+
+
+    <color=yellow>Requires ENG (5)
+
+    <color=green>
+
+    Health
+    +40
+
+    COM +1
+
+    MED +1'
+  ItemIcon: {fileID: 21300000, guid: 1fe43a589877fe14ea119a039028de15, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/Uncommon_ShamanicRobes
+  ItemResourceIDShort: Uncommon_ShamanicRobes
+  ItemRarity: 1
+  MinimumAttributes: 0000000000000000000000000000000000000000040000000000000000000000
+  EquipType: 0
+  Ability: 4
+  AbilityPrefab1: {fileID: 0}
+  ModifyAttributes: 0000000000000000000000000100000000000000000000000000000001000000
+  ModifyHealthMax: 40
+  ModifyHealthRegen: 0
+  ModifyStaminaMax: 0
+  ModifyStaminaRegen: 0
+  ModifyMovementSpeed: 0
+  ModifyMeleeDamage: 0
+  ModifyRangedDamage: 0
+  ModifySpellDamage: 0

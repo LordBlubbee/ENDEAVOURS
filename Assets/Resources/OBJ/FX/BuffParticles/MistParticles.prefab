@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8676353416557172910}
   - component: {fileID: -7748507754934260247}
   m_Layer: 0
-  m_Name: FrostParticles
+  m_Name: MistParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -871,7 +871,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 6
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4781,7 +4781,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ab7f5e468e04394ebba9d1222f47a5d, type: 2}
+  - {fileID: 2100000, guid: bec47bd07ef3433438e947cc4f72fbe8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4846,4 +4846,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c449a731e11be1b4598493c6306e9a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParticleType: 1
+  ParticleType: 3
+  ExpectedDuration: 10
+  BuffIcon: {fileID: 21300000, guid: b76ea5d9b24b73a4597737cc454793d0, type: 3}
+  BuffDesc: The Mist is consuming you...
+  BuffColor: {r: 1, g: 0, b: 0, a: 1}

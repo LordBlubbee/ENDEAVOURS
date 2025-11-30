@@ -16,6 +16,7 @@ public class ArtifactTraditionsPromise : ArtifactAbility
             if (User == allies) continue;
             if ((User.transform.position - allies.transform.position).magnitude > 16f) continue;
             if (allies.GetHealthRelative() > 0.5f) continue;
+            CO_SPAWNER.co.SpawnFloralImpactRpc(allies.transform.position);
             allies.Heal(20f + User.GetATT_MEDICAL() * 4f);
             User.StartCoroutine(Cooldown());
         }
@@ -23,7 +24,7 @@ public class ArtifactTraditionsPromise : ArtifactAbility
     private float CooldownTimer = 0f;
     IEnumerator Cooldown()
     {
-        CooldownTimer = 20f / (0.9f + User.GetATT_COMMAND() * 0.1f);
+        CooldownTimer = 25f / (0.9f + User.GetATT_ALCHEMY() * 0.1f);
         while (CooldownTimer > 0f)
         {
             yield return new WaitForSeconds(1);

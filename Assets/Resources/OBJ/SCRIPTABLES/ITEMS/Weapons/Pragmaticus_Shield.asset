@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6d31fc802706642abd802c670bd89e, type: 3}
+  m_Name: Pragmaticus_Shield
+  m_EditorClassIdentifier: 
+  ItemName: 'Command: Protect'
+  ItemDesc: 'Using the Stipulations, one creates a sanctuary of law magics that protect
+    an ally from incoming damage.
+
+
+    Skill: COMMUNOPATHY
+
+    Base Stun: 3 seconds
+
+    Base
+    Cooldown: 12.0'
+  ItemIcon: {fileID: -8202198960766395539, guid: 515226711d579dd4d9cff0a6a04be3ff, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Pragmaticus_Shield
+  ItemResourceIDShort: Pragmaticus_Shield
+  ItemRarity: 0
+  MinimumAttributes: 
+  ToolPrefab: {fileID: 8311341897716400573, guid: 393df9648d661f445aeca702e9d2de3b, type: 3}

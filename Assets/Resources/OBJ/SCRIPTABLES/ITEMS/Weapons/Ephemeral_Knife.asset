@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6d31fc802706642abd802c670bd89e, type: 3}
+  m_Name: Ephemeral_Knife
+  m_EditorClassIdentifier: 
+  ItemName: Ritual Dagger
+  ItemDesc: 'Infused with their faith in the Mist, this dagger flays the skin of
+    those struck by it with controlled Mist particles, dealing a large amount of
+    damage over time.
+
+
+    Skill: DEXTERITY
+
+    Base damage: 8
+
+    Mist damage:
+    40
+
+
+    SECONDARY: Power strike'
+  ItemIcon: {fileID: -2604675264708228931, guid: 12e90a27133eb0d44ba30ce1aeab6840, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Ephemeral_Knife
+  ItemResourceIDShort: Ephemeral_Knife
+  ItemRarity: 0
+  MinimumAttributes: 
+  ToolPrefab: {fileID: 8311341897716400573, guid: a6282961b0d57664d98f7d522dae40af, type: 3}

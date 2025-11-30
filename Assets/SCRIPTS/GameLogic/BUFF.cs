@@ -8,6 +8,11 @@ public class BUFF
     private float Duration;
     public CO_SPAWNER.BuffParticles BuffParticles;
 
+    public int GetStacks()
+    {
+        return Stacks;
+    }
+
     public float TemporaryHitpoints = 0;
     public ScriptableBuff GetScriptable()
     {
@@ -24,6 +29,8 @@ public class BUFF
         Duration = buf.Duration;
         if (Stacks >= buf.MaxStacks) return;
         Stacks = Mathf.Clamp(Stacks + 1, 1, buf.MaxStacks);
+
+        crew.HealthChangePerSecond += buff.HealthChangePerSecond;
 
         crew.ModifyHealthMax += buff.ModifyHealthMax;
         crew.ModifyHealthRegen += buff.ModifyHealthRegen;
@@ -45,6 +52,8 @@ public class BUFF
     {
         for (int i = 0; i < Stacks;i++)
         {
+            crew.HealthChangePerSecond -= buff.HealthChangePerSecond;
+
             crew.ModifyHealthMax -= buff.ModifyHealthMax;
             crew.ModifyHealthRegen -= buff.ModifyHealthRegen;
             crew.ModifyStaminaMax -= buff.ModifyStaminaMax;

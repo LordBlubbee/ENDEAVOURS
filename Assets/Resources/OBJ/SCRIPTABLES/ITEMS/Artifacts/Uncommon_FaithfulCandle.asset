@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93d0c18050b8a5c4b9f50e941cfea295, type: 3}
-  m_Name: Common_FaithfulCandle
+  m_Name: Uncommon_FaithfulCandle
   m_EditorClassIdentifier: 
   ItemName: Faithful Candle
   ItemDesc: 'An old candle with metallic particles sprinkled over its top, making
@@ -22,12 +22,13 @@ MonoBehaviour:
     at your cursor. Its damage scales with your Communopathy. Cooldown scales with
     Alchemy.'
   ItemIcon: {fileID: 21300000, guid: bba6756d73d819f418a6471d9c0c82f0, type: 3}
-  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Common_FaithfulCandle
-  ItemResourceIDShort: Common_FaithfulCandle
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Uncommon_FaithfulCandle
+  ItemResourceIDShort: Uncommon_FaithfulCandle
+  ItemRarity: 1
+  MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   EquipType: 1
   Ability: 3
   AbilityPrefab1: {fileID: 3001503892985889442, guid: e17655c0080bd6448979e406efe2fbbc, type: 3}
-  MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyHealthMax: 0
   ModifyHealthRegen: 0

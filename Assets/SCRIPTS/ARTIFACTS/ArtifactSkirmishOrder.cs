@@ -20,6 +20,7 @@ public class ArtifactSkirmishOrder : ArtifactAbility
             buff.name = "SkirmishOrder";
             buff.MaxStacks = 1;
             buff.Duration = 5;
+            buff.BuffParticles = CO_SPAWNER.BuffParticles.SKIRMISH_BUFF;
             buff.ModifyMovementSpeed = 0.2f + User.GetATT_COMMAND() * 0.03f;
             buff.ModifyMeleeDamage = 0.2f + User.GetATT_COMMAND() * 0.03f;
             allies.AddBuff(buff);

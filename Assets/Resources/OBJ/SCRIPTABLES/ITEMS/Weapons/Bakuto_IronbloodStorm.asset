@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6d31fc802706642abd802c670bd89e, type: 3}
+  m_Name: Bakuto_IronbloodStorm
+  m_EditorClassIdentifier: 
+  ItemName: Ironblood Storm
+  ItemDesc: "Fury and rage become blood and steel- sacrifices a small portion of
+    your health to fling a flurry of blades forward that decimate your enemies. \n\nSkill:
+    COMMUNOPATHY, PHYSIQUE, ALCHEMY\nBase damage: 20"
+  ItemIcon: {fileID: -2722047151274526662, guid: 12006913d963ee74182fb85de0d0ec00, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Bakuto_IronbloodStorm
+  ItemResourceIDShort: Bakuto_IronbloodStorm
+  ItemRarity: 0
+  MinimumAttributes: 
+  ToolPrefab: {fileID: 8311341897716400573, guid: 8b6325dba56054342a321422c86002a3, type: 3}

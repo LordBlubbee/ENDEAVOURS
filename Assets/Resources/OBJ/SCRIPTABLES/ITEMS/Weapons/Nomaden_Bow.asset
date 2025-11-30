@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6d31fc802706642abd802c670bd89e, type: 3}
+  m_Name: Nomaden_Bow
+  m_EditorClassIdentifier: 
+  ItemName: Bow
+  ItemDesc: 'A popular ranged weapon that bombards your enemy with arrows. Compared
+    to Crossbows, bows require more constant stamina but naturally fire a lot faster,
+    making them more efficient with a lower Dexterity.
+
+
+    Skill: ARMS
+
+    Base
+    damage: 14
+
+    Base Cooldown: 1.0'
+  ItemIcon: {fileID: -275687926064039405, guid: a4c00467f6c88ad489576d4daa3d5601, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Nomaden_Bow
+  ItemResourceIDShort: Nomaden_Bow
+  ItemRarity: 0
+  MinimumAttributes: 
+  ToolPrefab: {fileID: 8311341897716400573, guid: 192bdc1b2fffd5944bfa11ea2ef364b0, type: 3}

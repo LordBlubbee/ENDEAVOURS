@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6d31fc802706642abd802c670bd89e, type: 3}
+  m_Name: GlaiveShield
+  m_EditorClassIdentifier: 
+  ItemName: Glaive & Buckler
+  ItemDesc: 'Bakuto warriors use their Glaive to deal heavy damage from a long range,
+    while the Buckler makes them expert frontline fighters, though it is not able
+    to sustain all hits.
+
+
+    Skill: PHYSICAL
+
+    Base damage: 9
+
+
+    SECONDARY:
+    Block'
+  ItemIcon: {fileID: -2432561370845387463, guid: 0b8e2f74c32a1544082a55e9022864e7, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/GlaiveShield
+  ItemResourceIDShort: GlaiveShield
+  ItemRarity: 0
+  MinimumAttributes: 
+  ToolPrefab: {fileID: 8311341897716400573, guid: dd15b1ba4d1ec0e4fbe2ead0d39181e7, type: 3}

@@ -4,7 +4,6 @@ public class SpellPragmaticusShield : UniqueSpell
 {
     public override void UseUniqueSpell(CREW Caster, Vector3 AimTowards)
     {
-        CO_SPAWNER.co.SpawnPragmaticusShieldImpactRpc(Caster.transform.position);
         float MaxDis = 4f;
         CREW Target = null;
         foreach (CREW allies in CO.co.GetAlliedCrew(Caster.GetFaction()))
@@ -18,6 +17,7 @@ public class SpellPragmaticusShield : UniqueSpell
         }
         if (Target)
         {
+            CO_SPAWNER.co.SpawnPragmaticusShieldImpactRpc(Target.transform.position);
             ScriptableBuff buff = new();
             buff.name = "PragmaticusShieldSpell";
             buff.MaxStacks = 1;

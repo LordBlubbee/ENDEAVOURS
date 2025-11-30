@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 5726049725718902465}
   - component: {fileID: 8311341897716400573}
   m_Layer: 0
-  m_Name: Ephemeral_Bolt_Spell
+  m_Name: Spell_EphemeralBolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,6 +145,7 @@ MonoBehaviour:
   - {fileID: 8362816068341079287}
   Blockers: []
   AI: 1
+  isConsumable: 0
   CrosshairSprite: {fileID: 21300000, guid: 4315d5c2465eee14a91cabd7593bbb6a, type: 3}
   CrosshairMaxRange: 999
   CrosshairMinRange: -1
@@ -157,14 +158,19 @@ MonoBehaviour:
   Action1_SFX_Hit: []
   attackDamage1: 25
   RangedPrefab1: {fileID: 8910635656682413825, guid: e17655c0080bd6448979e406efe2fbbc, type: 3}
+  UniqueSpell1: {fileID: 0}
   Reload1: 2.5
+  ExtendedCooldown1: 0
+  ApplyBuff: {fileID: 0}
   ActionUse2: 0
   attackAnimations2: 070000000800000009000000
   UsageStamina2: 25
   Action2_SFX: []
   attackDamage2: 30
   RangedPrefab2: {fileID: 8910635656682413825, guid: e17655c0080bd6448979e406efe2fbbc, type: 3}
+  UniqueSpell2: {fileID: 0}
   Reload2: 2.5
+  ExtendedCooldown2: 0
 --- !u!1 &6403120744721419714
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class ArtifactKnuckles : ArtifactAbility
         buff.name = "KnucklesRage";
         buff.MaxStacks = 3;
         buff.Duration = 5;
+        buff.BuffParticles = CO_SPAWNER.BuffParticles.KNUCKLES_BUFF;
         buff.ModifyAnimationSpeed = 0.3f;
         buff.ModifyMovementSpeed = 0.3f;
         buff.ModifyMeleeDamage = 3;

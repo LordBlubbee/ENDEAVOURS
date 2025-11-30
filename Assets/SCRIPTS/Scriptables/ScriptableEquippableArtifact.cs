@@ -18,7 +18,14 @@ public class ScriptableEquippableArtifact : ScriptableEquippable
         NONE,
         KNUCKLE_RAGE,
         RED_POWDER,
-        CANDLE_BLAST
+        CANDLE_BLAST,
+        SHAMANIC_HEAL,
+        GUARDIAN_ARMOR,
+        TOKEN_OF_VENGEANCE,
+        STIPULATION_OF_RIGHTS,
+        ENFORCEMENT_ORDER,
+        SKIRMISH_ORDER,
+        STEEL_INSCRIPTION
     }
 
     public bool CanWear(CREW crew)

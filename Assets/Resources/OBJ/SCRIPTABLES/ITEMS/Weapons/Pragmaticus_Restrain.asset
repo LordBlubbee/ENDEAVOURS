@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6d31fc802706642abd802c670bd89e, type: 3}
+  m_Name: Pragmaticus_Restrain
+  m_EditorClassIdentifier: 
+  ItemName: 'Command: Restrain'
+  ItemDesc: 'The unwavering believe in the Stipulations'' Truth allows you to command
+    an opponent to restrain themselves, preventing their movement and allowing you
+    to strike them freely.
+
+
+    Skill: COMMUNOPATHY
+
+    Base Stun: 3 seconds
+
+    Base
+    Cooldown: 12.0'
+  ItemIcon: {fileID: 2322184774791884214, guid: c32c198a28f111446a4679e951112cc6, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Pragmaticus_Restrain
+  ItemResourceIDShort: Pragmaticus_Restrain
+  ItemRarity: 0
+  MinimumAttributes: 
+  ToolPrefab: {fileID: 8311341897716400573, guid: 393df9648d661f445aeca702e9d2de3b, type: 3}

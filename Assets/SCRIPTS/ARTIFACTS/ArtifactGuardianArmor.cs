@@ -17,7 +17,7 @@ public class ArtifactGuardianArmor : ArtifactAbility
     private float CooldownTimer = 0f;
     IEnumerator Cooldown()
     {
-        CooldownTimer = 20f / (0.9f + User.GetATT_COMMAND() * 0.1f);
+        CooldownTimer = 30f / (0.9f + User.GetATT_COMMAND() * 0.1f);
         while (CooldownTimer > 0f)
         {
             yield return new WaitForSeconds(1);

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6d31fc802706642abd802c670bd89e, type: 3}
+  m_Name: DualKatanas
+  m_EditorClassIdentifier: 
+  ItemName: Dual Katanas
+  ItemDesc: 'Highly aggressive combat style favoured by the Bakuto Clan, these elite
+    steel-forged weapons can massacre enemies from close range- if its user is able
+    to avoid damage.
+
+
+    Skill: PHYSICAL
+
+    Base damage: 9
+
+
+    SECONDARY: Power
+    strike'
+  ItemIcon: {fileID: -523024417087210977, guid: 1755685362c60264d8aa41fc2349cabd, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/DualKatanas
+  ItemResourceIDShort: DualKatanas
+  ItemRarity: 0
+  MinimumAttributes: 
+  ToolPrefab: {fileID: 8311341897716400573, guid: d48a38789e18d7f46843445851396322, type: 3}

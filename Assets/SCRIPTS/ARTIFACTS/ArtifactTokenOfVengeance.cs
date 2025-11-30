@@ -14,6 +14,7 @@ public class ArtifactTokenOfVengeance : ArtifactAbility
             ScriptableBuff buff = new();
             buff.name = "TokenOfVengeance";
             buff.MaxStacks = 5;
+            buff.BuffParticles = CO_SPAWNER.BuffParticles.VENGEANCE;
             buff.Duration = 3;
             buff.ModifyDamageTaken += 0.2f+User.GetATT_ALCHEMY()*0.04f;
             allies.AddBuff(buff);

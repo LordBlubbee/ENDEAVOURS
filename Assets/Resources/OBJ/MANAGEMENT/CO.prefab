@@ -378,6 +378,12 @@ MonoBehaviour:
   Soundwave: {fileID: 7178822272740056672, guid: ebb45558f9055b94298134e4ff2fc63a, type: 3}
   BuffParticleList:
   - {fileID: -7748507754934260247, guid: 2cc09f35618b7f9499ee24603e185dab, type: 3}
+  - {fileID: -7748507754934260247, guid: 731777fad0dd04343a02acffc8ea8ccb, type: 3}
+  - {fileID: -7748507754934260247, guid: c211e366728525e42a0888bb4d11add2, type: 3}
+  - {fileID: -7748507754934260247, guid: 84a6ab671eb8291469ff9c34296b1e62, type: 3}
+  - {fileID: -7748507754934260247, guid: c0a5673a6f8f20f47b9b8a23da02f5aa, type: 3}
+  - {fileID: -7748507754934260247, guid: 7b976e0f107db2246ae696e498f7b000, type: 3}
+  - {fileID: -7748507754934260247, guid: 63f5e49e9695d5d42bbd189fa9700ff9, type: 3}
   NebulaSparks:
   - {fileID: 4494465091476783932, guid: 428b525702503f34a87c3c14d132d698, type: 3}
   - {fileID: 4494465091476783932, guid: 428b525702503f34a87c3c14d132d698, type: 3}
@@ -399,6 +405,12 @@ MonoBehaviour:
   PrefabAIGROUP: {fileID: 3831634758814928319, guid: cb606a21fdafac54faa6d61495604d6e, type: 3}
   PlayerPrefab: {fileID: 5867427934140877094, guid: e0e5452e1cb9d2a419680a1f263400a1, type: 3}
   LandscapeObjects: []
+  CommandVFX: {fileID: 9192043369650961900, guid: c0a5673a6f8f20f47b9b8a23da02f5aa, type: 3}
+  FloralImpactVFX: {fileID: 7178822272740056672, guid: 08141c87165688a44aac95e0b1d1d896, type: 3}
+  FloralHealSpellImpactVFX: {fileID: 7178822272740056672, guid: 93f7d0f99be04294d9fbe7a0051ec69d, type: 3}
+  WaywardConsumptionVFX: {fileID: 7178822272740056672, guid: f7d18939f0f1fdf439fbb6f7ae79e76a, type: 3}
+  PragmaticusRestrainImpactVFX: {fileID: 7178822272740056672, guid: 3ac2e8a470396ba40a521c3686a6b2e0, type: 3}
+  PragmaticusShieldImpactVFX: {fileID: 7178822272740056672, guid: cdfa88dff6565394a9d7441cf332fca9, type: 3}
 --- !u!114 &794797818192831452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,9 +459,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 128ce9b5df12c374692187bce97c1a91, type: 3}
   - {fileID: 8300000, guid: c8844442e2432fa43bb75c44161bffa3, type: 3}
   - {fileID: 8300000, guid: d2c767fff8b682e408bf049710db5f0b, type: 3}
-  Upgrade: {fileID: 0}
-  Purchase: {fileID: 0}
-  EquipItem: {fileID: 0}
-  Salvage: {fileID: 0}
+  Upgrade: {fileID: 8300000, guid: 461f6c824653b8c43bcc2f47bfb9601f, type: 3}
+  Purchase: {fileID: 8300000, guid: d1e04759322ae4e4cbd29543ff3416df, type: 3}
+  EquipItem: {fileID: 8300000, guid: 6000c5f5141c8c54484abe9da5261b0f, type: 3}
+  Salvage: {fileID: 8300000, guid: 48ec2ac8b9fe21344adaceee3648bbec, type: 3}
   Press: {fileID: 8300000, guid: 073470b33aec19e4c865cfd95b1f1826, type: 3}
   Fail: {fileID: 8300000, guid: 495918dd49237ef43937939db15742eb, type: 3}

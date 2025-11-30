@@ -36,7 +36,13 @@ public class CO_SPAWNER : NetworkBehaviour
     public enum BuffParticles
     {
         NONE,
-        FROST
+        FROST,
+        VENGEANCE,
+        MIST,
+        PRAGMATICUS_SHIELD,
+        COMMAND,
+        KNUCKLES_BUFF,
+        SKIRMISH_BUFF
     }
 
     [Header("BACKGROUND")]
@@ -699,11 +705,20 @@ public class CO_SPAWNER : NetworkBehaviour
 
     /**/
     [Header("SPELLS")]
+    public GameObject CommandVFX;
     public GameObject FloralImpactVFX;
-    public GameObject PragmaticusRestrainImpactVFX;
-    public PROJ BakutoSword;
+    public GameObject FloralHealSpellImpactVFX;
     public GameObject WaywardConsumptionVFX;
+    public GameObject PragmaticusRestrainImpactVFX;
     public GameObject PragmaticusShieldImpactVFX;
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnCommandVFXRpc(Vector3 pos)
+    {
+        GameObject ob = Instantiate(CommandVFX, pos, Quaternion.identity);
+        Transform trans = CO.co.GetTransformAtPoint(pos);
+        if (trans) ob.transform.SetParent(trans);
+    }
 
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnFloralImpactRpc(Vector3 pos)
@@ -713,9 +728,9 @@ public class CO_SPAWNER : NetworkBehaviour
         if (trans) ob.transform.SetParent(trans);
     }
     [Rpc(SendTo.ClientsAndHost)]
-    public void SpawnPragmaticusRestrainImpactRpc(Vector3 pos)
+    public void SpawnFloralHealSpellImpactRpc(Vector3 pos)
     {
-        GameObject ob = Instantiate(PragmaticusRestrainImpactVFX, pos, Quaternion.identity);
+        GameObject ob = Instantiate(FloralHealSpellImpactVFX, pos, Quaternion.identity);
         Transform trans = CO.co.GetTransformAtPoint(pos);
         if (trans) ob.transform.SetParent(trans);
     }
@@ -724,6 +739,13 @@ public class CO_SPAWNER : NetworkBehaviour
     public void SpawnWaywardConsumptionRpc(Vector3 pos)
     {
         GameObject ob = Instantiate(WaywardConsumptionVFX, pos, Quaternion.identity);
+        Transform trans = CO.co.GetTransformAtPoint(pos);
+        if (trans) ob.transform.SetParent(trans);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnPragmaticusRestrainImpactRpc(Vector3 pos)
+    {
+        GameObject ob = Instantiate(PragmaticusRestrainImpactVFX, pos, Quaternion.identity);
         Transform trans = CO.co.GetTransformAtPoint(pos);
         if (trans) ob.transform.SetParent(trans);
     }

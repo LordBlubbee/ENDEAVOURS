@@ -11,6 +11,8 @@ public class ScriptableBuff : ScriptableObject
     public float Duration;
     public CO_SPAWNER.BuffParticles BuffParticles;
 
+    public float HealthChangePerSecond;
+
     public float ModifyHealthMax;
     public float ModifyHealthRegen;
     public float ModifyStaminaMax;

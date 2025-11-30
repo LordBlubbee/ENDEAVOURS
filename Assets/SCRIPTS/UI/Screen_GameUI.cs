@@ -1,4 +1,5 @@
 using NUnit;
+using NUnit.Framework;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -336,5 +337,30 @@ public class Screen_GameUI : MonoBehaviour
         InteractActive = true;
         InteractTex.text = tex;
         InteractTex.color = col;
+    }
+
+    [Header("Buffs")]
+    public UI_Buff[] BuffIcons;
+    public void AddBuff(ParticleBuff buff, int Stacks)
+    {
+        foreach (UI_Buff buffIcon in BuffIcons)
+        {
+            if (buffIcon.GetCurrentBuff().Equals(buff) || buffIcon.GetCurrentBuff() == null)
+            {
+                buffIcon.SetBuff(buff, Stacks);
+                break;
+            }
+        }
+    }
+    public void RemoveBuff(ParticleBuff buff)
+    {
+        foreach (UI_Buff buffIcon in BuffIcons)
+        {
+            if (buffIcon.GetCurrentBuff().Equals(buff))
+            {
+                buffIcon.SetBuff(null,0);
+                break;
+            }
+        }
     }
 }

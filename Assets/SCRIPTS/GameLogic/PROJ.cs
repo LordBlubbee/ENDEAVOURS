@@ -10,6 +10,8 @@ public class PROJ : NetworkBehaviour
     public SpriteRenderer Spr;
     public Transform Tip;
     public float ProjectileSpeed;
+    public float AccelProjectile;
+    public float AccelMaximum;
     public float InaccuracyDegrees;
     public float MaximumRange = -1;
     public bool StickToWalls;
@@ -88,6 +90,7 @@ public class PROJ : NetworkBehaviour
             Kill();
             return;
         }
+        if (ProjectileSpeed < AccelMaximum) ProjectileSpeed += AccelProjectile * CO.co.GetWorldSpeedDeltaFixed();
         float step = ProjectileSpeed * CO.co.GetWorldSpeedDeltaFixed();
         transform.position += step * getLookVector();
         if (MaximumRange > 0)

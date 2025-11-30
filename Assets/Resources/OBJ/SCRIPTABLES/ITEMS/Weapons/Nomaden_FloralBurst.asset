@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6d31fc802706642abd802c670bd89e, type: 3}
+  m_Name: Nomaden_FloralBurst
+  m_EditorClassIdentifier: 
+  ItemName: Floral Burst
+  ItemDesc: 'Channels your faith in life itself to restore the wounds of allies in
+    an area.
+
+
+    Skill: COMMUNOPATHY, MEDICAL
+
+    Base Heal: 15
+
+    Base Cooldown:
+    7'
+  ItemIcon: {fileID: -2473860874038997393, guid: 1fa3b4cbfc7793e4a8afc222b00dc3c9, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Nomaden_Floralburst
+  ItemResourceIDShort: Nomaden_Floralburst
+  ItemRarity: 0
+  MinimumAttributes: 
+  ToolPrefab: {fileID: 8311341897716400573, guid: 6891cdd36cd16794c82c5d74283d5371, type: 3}
