@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93d0c18050b8a5c4b9f50e941cfea295, type: 3}
+  m_Name: Uncommon_TraditionsPromise
+  m_EditorClassIdentifier: 
+  ItemName: Tradition's Promise
+  ItemDesc: 'A serene amulet depicting a "Sea", a river rumoured to exist under the
+    Nebula that is so large that one cannot see the other end, one that stretches
+    more than half of Unitas. By holding onto the ways of old, we will one day find
+    our way back to that paradise.
+
+
+    <color=green>Every 25 seconds, this artifact
+    heals a nearby ally excluding yourself that has less than half their health remaining.
+    Can target wounded allies. The cooldown and power of this healing scales with
+    ALCHEMY and MEDICAL.'
+  ItemIcon: {fileID: 21300000, guid: e9ca2eebbc90af74ba25591b0e3d7468, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Uncommon_TraditionsPromise
+  ItemResourceIDShort: Uncommon_TraditionsPromise
+  ItemRarity: 1
+  MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
+  EquipType: 1
+  Ability: 4
+  AbilityPrefab1: {fileID: 0}
+  ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
+  ModifyHealthMax: 0
+  ModifyHealthRegen: 0
+  ModifyStaminaMax: 0
+  ModifyStaminaRegen: 0
+  ModifyMovementSpeed: 0
+  ModifyMeleeDamage: 0
+  ModifyRangedDamage: 0
+  ModifySpellDamage: 0

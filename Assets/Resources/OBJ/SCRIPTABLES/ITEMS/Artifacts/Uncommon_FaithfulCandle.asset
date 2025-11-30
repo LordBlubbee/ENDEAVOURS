@@ -19,8 +19,8 @@ MonoBehaviour:
 
 
     <color=green>(Short cooldown) Whenever you attack, fire a Mist Bolt
-    at your cursor. Its damage scales with your Communopathy. Cooldown scales with
-    Alchemy.'
+    at your cursor. Its damage scales with your COMMUNOPATHY. Cooldown scales with
+    ALCHEMY.'
   ItemIcon: {fileID: 21300000, guid: bba6756d73d819f418a6471d9c0c82f0, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Uncommon_FaithfulCandle
   ItemResourceIDShort: Uncommon_FaithfulCandle

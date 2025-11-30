@@ -345,7 +345,7 @@ public class Screen_GameUI : MonoBehaviour
     {
         foreach (UI_Buff buffIcon in BuffIcons)
         {
-            if (buffIcon.GetCurrentBuff().Equals(buff) || buffIcon.GetCurrentBuff() == null)
+            if (buffIcon.GetCurrentBuff() == buff || buffIcon.GetCurrentBuff() == null)
             {
                 buffIcon.SetBuff(buff, Stacks);
                 break;
@@ -356,7 +356,7 @@ public class Screen_GameUI : MonoBehaviour
     {
         foreach (UI_Buff buffIcon in BuffIcons)
         {
-            if (buffIcon.GetCurrentBuff().Equals(buff))
+            if (buffIcon.GetCurrentBuff() == buff)
             {
                 buffIcon.SetBuff(null,0);
                 break;

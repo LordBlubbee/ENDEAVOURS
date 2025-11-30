@@ -159,7 +159,7 @@ MonoBehaviour:
   RangedPrefab1: {fileID: 0}
   UniqueSpell1: {fileID: 7064938071813115557}
   Reload1: 2.5
-  ExtendedCooldown1: 10
+  ExtendedCooldown1: 8
   ApplyBuff: {fileID: 0}
   ActionUse2: 0
   attackAnimations2: 070000000800000009000000

@@ -219,7 +219,7 @@ public class CREW : NetworkBehaviour, iDamageable
     private void AddBuffParticlesRpc(CO_SPAWNER.BuffParticles type, int Stacks)
     {
         ParticleBuff BuffPart = GetBuff(type);
-        UI.ui.MainGameplayUI.AddBuff(BuffPart, Stacks);
+        if (LOCALCO.local.GetPlayer() == this) UI.ui.MainGameplayUI.AddBuff(BuffPart, Stacks);
         foreach (ParticleBuff obj in new List<ParticleBuff>(BuffParticles))
         {
             if (obj.ParticleType == type)
@@ -238,7 +238,7 @@ public class CREW : NetworkBehaviour, iDamageable
     private void RemoveBuffParticlesRpc(CO_SPAWNER.BuffParticles type)
     {
         ParticleBuff BuffPart = GetBuff(type);
-        UI.ui.MainGameplayUI.RemoveBuff(BuffPart);
+        if (LOCALCO.local.GetPlayer() == this) UI.ui.MainGameplayUI.RemoveBuff(BuffPart);
         foreach (ParticleBuff obj in new List<ParticleBuff>(BuffParticles))
         {
             if (obj.ParticleType == BuffPart.ParticleType)
@@ -746,15 +746,17 @@ public class CREW : NetworkBehaviour, iDamageable
             }
             if (NearbyCommander != wasPreviouslyActive)
             {
-                if (CommanderAlly != null && wasPreviouslyActive < NearbyCommander)
+                if (LOCALCO.local.GetPlayer() == this)
                 {
-                    CO_SPAWNER.co.SpawnCommandVFXRpc(CommanderAlly.transform.position);
-                    CO_SPAWNER.co.SpawnCommandVFXRpc(transform.position);
+                    if (CommanderAlly != null && wasPreviouslyActive < NearbyCommander)
+                    {
+                        CO_SPAWNER.co.SpawnCommandVFXRpc(CommanderAlly.transform.position);
+                        CO_SPAWNER.co.SpawnCommandVFXRpc(transform.position);
+                    }
+                    if (NearbyCommander > 0) AddBuffParticlesRpc(CO_SPAWNER.BuffParticles.COMMAND, NearbyCommander);
+                    else RemoveBuffParticlesRpc(CO_SPAWNER.BuffParticles.COMMAND);
                 }
-                if (NearbyCommander > 0) AddBuffParticlesRpc(CO_SPAWNER.BuffParticles.COMMAND, NearbyCommander);
-                else RemoveBuffParticlesRpc(CO_SPAWNER.BuffParticles.COMMAND);
             }
-           
             BuffTick(0.5f);
         }
     }
@@ -1167,7 +1169,7 @@ public class CREW : NetworkBehaviour, iDamageable
         if (Slot2Cooldown.Value > 0) Slot2Cooldown.Value -= CO.co.GetWorldSpeedDelta();
         if (Slot3Cooldown.Value > 0) Slot3Cooldown.Value -= CO.co.GetWorldSpeedDelta();
         if (EquippedToolObject == null) return;
-        if (EquippedToolObject.strikePoints.Count == 0) return;
+        //if (EquippedToolObject.strikePoints.Count == 0) return;
         if (AnimationController.isCurrentlyStriking())
         {
             if (AnimationController.CurrentStrikePower() > 0.1f)
@@ -1200,7 +1202,7 @@ public class CREW : NetworkBehaviour, iDamageable
                         StrikeHealSelf();
                         break;
                     case TOOL.ToolActionType.UNIQUE_SPELL:
-                        if (!canStrikeMelee) return;
+                        if (!canStrike) return;
                         StrikeUniqueSpell(LookTowards);
                         break;
                     case TOOL.ToolActionType.BLOCK:
@@ -1403,7 +1405,18 @@ public class CREW : NetworkBehaviour, iDamageable
     private void StrikeUniqueSpell(Vector3 trt)
     {
         UniqueSpell spell = SelectedWeaponAbility == 0 ? EquippedToolObject.UniqueSpell1 : EquippedToolObject.UniqueSpell2;
+        if (spell == null)
+        {
+            Debug.Log($"Error: Unique spell not found on object {spell.gameObject.name}");
+            return;
+        }
+        Debug.Log("Casting unique spell...");
         spell.UseUniqueSpell(this, trt);
+        float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
+        float reloadMod = 1f / (0.6f + 0.06f * GetATT_COMMUNOPATHY() + 0.06f * GetATT_ALCHEMY());
+        reload *= reloadMod;
+        SetExtendedCooldown(reload);
+        StartCoroutine(AttackCooldown(reload));
         ArtifactOnSpell();
     }
     private void StrikeRepair()
@@ -1850,7 +1863,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public void TakeDamage(float fl, Vector3 src, iDamageable.DamageType type)
     {
-        if (isDeadForever()) return;
+        if (isDead()) return;
         if (isDashing) return;
        
         if (DashingDamageBuff > 0f) fl *= 0.5f;

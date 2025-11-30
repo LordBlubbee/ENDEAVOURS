@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using Unity.VisualScripting;
+using UnityEditorInternal.VersionControl;
 using UnityEngine;
 
 public class CO : NetworkBehaviour
@@ -460,6 +461,8 @@ public class CO : NetworkBehaviour
         UI.ui.InventoryUI.RefreshDrifterSubscreen();
         UI.ui.InventoryUI.RefreshDrifterWeaponSubscreen();
     }
+
+    public ScriptableLootItemList Test_StartingLoot;
     public void StartGame()
     {
         GenerateMap();
@@ -470,6 +473,17 @@ public class CO : NetworkBehaviour
         Resource_Supplies.Value = 50;
         Resource_Ammo.Value = 50;
         Resource_Tech.Value = 0;
+
+        if (Test_StartingLoot != null)
+        {
+            int test = 0;
+            foreach (WeightedLootItem lootItem in Test_StartingLoot.CommonDrops)
+            {
+                test++;
+                if (test < 15) continue;
+                AddInventoryItem(lootItem.Item);
+            }
+        }
 
         CO_STORY.co.SetStory(GetPlayerMapPoint().AssociatedPoint.InitialDialog);
         AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);

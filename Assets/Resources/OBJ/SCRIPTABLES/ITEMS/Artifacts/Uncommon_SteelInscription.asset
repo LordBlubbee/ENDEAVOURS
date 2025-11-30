@@ -10,24 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93d0c18050b8a5c4b9f50e941cfea295, type: 3}
-  m_Name: Uncommon_RedPowder
+  m_Name: Uncommon_SteelInscription
   m_EditorClassIdentifier: 
-  ItemName: Impact Powder
-  ItemDesc: 'Certainly not passing Logipedan safety standards, this powder was crafted
-    by a Clan of pirates to grant projectiles explosive properties.
+  ItemName: Steel Inscription
+  ItemDesc: 'An unfinished sheet of Bakuto steel with a powerful inscription written
+    on it in the Clan''s most ancient languages, speaking words of flame, conviction,
+    and redemption.
 
 
-    <color=green>(Short
-    cooldown) Whenever you hit an enemy with a ranged attack, create a small blast
-    that deals explosive damage centered on that enemy. Cooldown and damage scale
-    with ALCHEMY.'
-  ItemIcon: {fileID: 21300000, guid: 6543705337f40b741a9e7e9aab5cfbfb, type: 3}
-  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Uncommon_RedPowder
-  ItemResourceIDShort: Uncommon_RedPowder
+    <color=green>Melee damage +2
+
+    <color=green>Whenever
+    you hit an enemy with a melee attack, you have a base chance of 5% to instantly
+    gain 50 Stamina. The chance scales with ALCHEMY.'
+  ItemIcon: {fileID: 21300000, guid: fc09d1c7e97457240baf81de7c444f20, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Uncommon_SteelInscription
+  ItemResourceIDShort: Uncommon_SteelInscription
   ItemRarity: 1
   MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   EquipType: 1
-  Ability: 2
+  Ability: 10
   AbilityPrefab1: {fileID: 0}
   ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyHealthMax: 0
@@ -35,6 +37,6 @@ MonoBehaviour:
   ModifyStaminaMax: 0
   ModifyStaminaRegen: 0
   ModifyMovementSpeed: 0
-  ModifyMeleeDamage: 0
+  ModifyMeleeDamage: 2
   ModifyRangedDamage: 0
   ModifySpellDamage: 0

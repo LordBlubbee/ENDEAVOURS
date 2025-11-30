@@ -28,4 +28,4 @@ MonoBehaviour:
   ItemResourceIDShort: Pragmaticus_Shield
   ItemRarity: 0
   MinimumAttributes: 
-  ToolPrefab: {fileID: 8311341897716400573, guid: 393df9648d661f445aeca702e9d2de3b, type: 3}
+  ToolPrefab: {fileID: 8311341897716400573, guid: b609e0d9fc32cd84d8137c7c503648f0, type: 3}

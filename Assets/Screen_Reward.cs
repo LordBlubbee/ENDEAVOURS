@@ -51,7 +51,7 @@ public class Screen_Reward : MonoBehaviour
 
     public void OpenRewardScreenCrew(FixedString64Bytes CrewLink)
     {
-        if (CrewLink == null)
+        if (CrewLink == "")
         {
             CrewOuter.gameObject.SetActive(false);
             return;

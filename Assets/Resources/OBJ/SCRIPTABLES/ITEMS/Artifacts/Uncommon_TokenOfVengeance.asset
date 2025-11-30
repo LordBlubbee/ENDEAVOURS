@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93d0c18050b8a5c4b9f50e941cfea295, type: 3}
-  m_Name: Uncommon_RedPowder
+  m_Name: Uncommon_TokenOfVengeance
   m_EditorClassIdentifier: 
-  ItemName: Impact Powder
-  ItemDesc: 'Certainly not passing Logipedan safety standards, this powder was crafted
-    by a Clan of pirates to grant projectiles explosive properties.
+  ItemName: Token of Vengeance
+  ItemDesc: 'Words so hateful and full of spite that your hands shake while staring
+    at them. Luckily, the intricate swear words written on here in Bakuto-Nomaden
+    dialect aren''t legible to most.
 
 
-    <color=green>(Short
-    cooldown) Whenever you hit an enemy with a ranged attack, create a small blast
-    that deals explosive damage centered on that enemy. Cooldown and damage scale
-    with ALCHEMY.'
-  ItemIcon: {fileID: 21300000, guid: 6543705337f40b741a9e7e9aab5cfbfb, type: 3}
-  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Uncommon_RedPowder
-  ItemResourceIDShort: Uncommon_RedPowder
+    <color=green>Whenever you are struck with
+    an attack, enemies near you take 20% additional damage for 5 seconds. The power
+    of this debuff scales with ALCHEMY.'
+  ItemIcon: {fileID: 21300000, guid: 0535e88d735040f45aaea8e4a7fcc5cf, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Uncommon_TokenOfVengeance
+  ItemResourceIDShort: Uncommon_TokenOfVengeance
   ItemRarity: 1
   MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   EquipType: 1
-  Ability: 2
+  Ability: 6
   AbilityPrefab1: {fileID: 0}
   ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyHealthMax: 0

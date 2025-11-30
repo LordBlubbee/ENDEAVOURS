@@ -10,24 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93d0c18050b8a5c4b9f50e941cfea295, type: 3}
-  m_Name: Uncommon_RedPowder
+  m_Name: Uncommon_EnforcementOrder
   m_EditorClassIdentifier: 
-  ItemName: Impact Powder
-  ItemDesc: 'Certainly not passing Logipedan safety standards, this powder was crafted
-    by a Clan of pirates to grant projectiles explosive properties.
+  ItemName: Skirmish Order
+  ItemDesc: 'A Pragmaticus order detailing the right to enforce law, how to enforce
+    law, and against whom the law may be enforced. Depending on certain index factors
+    centered around Stipulation 20-16-55, the Pragmaticus can arrest nearly anyone
+    for anything.
 
 
-    <color=green>(Short
-    cooldown) Whenever you hit an enemy with a ranged attack, create a small blast
-    that deals explosive damage centered on that enemy. Cooldown and damage scale
-    with ALCHEMY.'
-  ItemIcon: {fileID: 21300000, guid: 6543705337f40b741a9e7e9aab5cfbfb, type: 3}
-  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Uncommon_RedPowder
-  ItemResourceIDShort: Uncommon_RedPowder
+    <color=green>Whenever you hit an enemy with a non-spell melee
+    or ranged attack, you have a base 5% chance to deal 10 extra damage and heavily
+    slow your target for 3 seconds. The chance and damage scales with COMMAND.'
+  ItemIcon: {fileID: 21300000, guid: 0f2313ec3cbb89d49b4e874eb49064bd, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Uncommon_EnforcementOrder
+  ItemResourceIDShort: Uncommon_EnforcementOrder
   ItemRarity: 1
   MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   EquipType: 1
-  Ability: 2
+  Ability: 8
   AbilityPrefab1: {fileID: 0}
   ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyHealthMax: 0

@@ -21,14 +21,16 @@ public class SpellBakutoSwords : UniqueSpell
     IEnumerator Storm(CREW Caster)
     {
         int Swords = Mathf.FloorToInt(0.3f * (Caster.GetATT_COMMUNOPATHY() + Caster.GetATT_PHYSIQUE() + Caster.GetATT_ALCHEMY()));
-        Swords = Mathf.Min(1, Swords);
+        Swords = Mathf.Max(2, Swords);
         float TimePerSword = 0.9f / (float)Swords;
         float Timer = 0f;
-        for (int i = 0; i < Swords; i++)
+        int i = 0;
+        while (i < Swords)
         {
             Timer -= CO.co.GetWorldSpeedDelta();
             if (Timer < 0f)
             {
+                i++;
                 Timer += TimePerSword;
                 PROJ proj = Instantiate(BakutoSwordPrefab, GetBakutoStrikePoint(), Caster.transform.rotation);
                 float dmg = 20f;

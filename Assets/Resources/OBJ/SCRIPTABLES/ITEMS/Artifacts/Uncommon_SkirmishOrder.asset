@@ -10,24 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93d0c18050b8a5c4b9f50e941cfea295, type: 3}
-  m_Name: Uncommon_RedPowder
+  m_Name: Uncommon_SkirmishOrder
   m_EditorClassIdentifier: 
-  ItemName: Impact Powder
-  ItemDesc: 'Certainly not passing Logipedan safety standards, this powder was crafted
-    by a Clan of pirates to grant projectiles explosive properties.
+  ItemName: Skirmish Order
+  ItemDesc: 'A Pragmaticus order detailing military strategy in battle in signature
+    overly bureaucratic language. Every muscle joint''s movement is optimized.
 
 
-    <color=green>(Short
-    cooldown) Whenever you hit an enemy with a ranged attack, create a small blast
-    that deals explosive damage centered on that enemy. Cooldown and damage scale
-    with ALCHEMY.'
-  ItemIcon: {fileID: 21300000, guid: 6543705337f40b741a9e7e9aab5cfbfb, type: 3}
-  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Uncommon_RedPowder
-  ItemResourceIDShort: Uncommon_RedPowder
+    <color=green>Whenever
+    you hit an enemy with a melee attack, allies near you excluding yourself gain
+    a 20% buff to movement and melee damage. The power scales with COMMAND.'
+  ItemIcon: {fileID: 21300000, guid: 786cbc15880521d42b72bcd8a08fe928, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Uncommon_SkirmishOrder
+  ItemResourceIDShort: Uncommon_SkirmishOrder
   ItemRarity: 1
   MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   EquipType: 1
-  Ability: 2
+  Ability: 9
   AbilityPrefab1: {fileID: 0}
   ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyHealthMax: 0

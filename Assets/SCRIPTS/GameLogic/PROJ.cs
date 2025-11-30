@@ -72,8 +72,8 @@ public class PROJ : NetworkBehaviour
     {
         if (UnityEngine.Random.Range(0f, 1f) > ZoneChance) return;
         DamagingZone Zone = Instantiate(ZoneImpact, vec, Quaternion.identity);
-        Zone.transform.SetParent(trans);
         Zone.NetworkObject.Spawn();
+        Zone.transform.SetParent(trans);
         Zone.Init(1f);
     }
     private void Start()

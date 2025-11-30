@@ -21,7 +21,8 @@ public class SpellPragmaticusShield : UniqueSpell
             ScriptableBuff buff = new();
             buff.name = "PragmaticusShieldSpell";
             buff.MaxStacks = 1;
-            buff.Duration = 8;
+            buff.BuffParticles = CO_SPAWNER.BuffParticles.PRAGMATICUS_SHIELD;
+            buff.Duration = 10f;
             buff.TemporaryHitpoints = 20f + Caster.GetATT_COMMUNOPATHY() * 5f;
             Target.AddBuff(buff);
         }
