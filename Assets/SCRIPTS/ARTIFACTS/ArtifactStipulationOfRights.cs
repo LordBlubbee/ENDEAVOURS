@@ -14,6 +14,7 @@ public class ArtifactStipulationOfRights : ArtifactAbility
         if (User.GetHealthRelative() > 0.5f) return;
         ScriptableBuff buff = new();
         buff.name = "StipulationOfRights";
+        buff.BuffParticles = CO_SPAWNER.BuffParticles.PRAGMATICUS_SHIELD;
         buff.MaxStacks = 1;
         buff.Duration = 10;
         buff.TemporaryHitpoints = 30f + User.GetATT_COMMAND()*10f;

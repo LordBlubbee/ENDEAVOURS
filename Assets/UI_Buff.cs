@@ -40,7 +40,7 @@ public class UI_Buff : MonoBehaviour
     private void Update()
     {
         if (MaxCooldown < 0) return;
-        Cooldownleft -= LastUpdate - Time.time;
+        Cooldownleft -= Time.time - LastUpdate;
         Cooldown.fillAmount = Cooldownleft/MaxCooldown;
         LastUpdate = Time.time;
     }

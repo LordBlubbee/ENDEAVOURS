@@ -454,6 +454,14 @@ public class AI_UNIT : NetworkBehaviour
         {
             Unit.UseItem1Rpc();
         }
+        SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
+        if (DistToObjective(transform.position) > 16)
+        {
+            StopLooking();
+            //SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
+            Unit.EquipWeapon1Rpc();
+            return;
+        }
     }
 
     private bool OutOfCombatCrewBehavior()
@@ -521,8 +529,8 @@ public class AI_UNIT : NetworkBehaviour
                 }
                 else
                 {
+                    StopLooking();
                     Unit.UseItem2Rpc();
-                    SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
                     Unit.Dash();
                 }
                 return true;

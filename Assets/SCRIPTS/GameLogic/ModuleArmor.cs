@@ -43,6 +43,8 @@ public class ModuleArmor : Module
         CurArmor.Value = Mathf.Clamp(CurArmor.Value - fl, 0, max);
         if (fl > 50) WaitWithRegen = 1f + 0.01f * fl;
         CO_SPAWNER.co.SpawnArmorDMGRpc(fl, impact);
+
+        TakeDamage(fl*0.25f, impact, iDamageable.DamageType.BOMBARDMENT);
     }
     public override void Heal(float fl)
     {

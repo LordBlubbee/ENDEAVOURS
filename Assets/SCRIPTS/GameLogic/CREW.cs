@@ -964,6 +964,11 @@ public class CREW : NetworkBehaviour, iDamageable
         Debug.Log($"{this.name} Using grapple!");
     }
     /*Use Inputs*/
+
+    public bool IsDashing()
+    {
+        return isDashing;
+    }
     public void Dash()
     {
         if (!isMoving.Value) return;
@@ -1542,6 +1547,16 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         AnimationController.setAnimation(stat, pr);
     }
+
+    public void TeleportCrewMember(Vector3 pos, SPACE spac)
+    {
+        transform.position = pos;
+        if (Space != spac)
+        {
+            Space.RemoveCrew(this);
+            spac.AddCrew(this);
+        }
+    }
     private void Update()
     {
         AnimationUpdate();
@@ -1569,6 +1584,7 @@ public class CREW : NetworkBehaviour, iDamageable
             {
                 //We are bleeding out...
                 BleedingTime.Value -= CO.co.GetWorldSpeedDelta();
+                if (CO.co.IsSafe() && GetFaction() == 1) BleedingTime.Value = -1;
                 if (BleedingTime.Value < 0)
                 {
                     //We have bled out!
@@ -1584,12 +1600,7 @@ public class CREW : NetworkBehaviour, iDamageable
                     //If Medical Module is functional and we are in the same space
                     if ((transform.position - HomeDrifter.MedicalModule.transform.position).magnitude > 8)
                     {
-                        transform.position = HomeDrifter.MedicalModule.transform.position + new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-3f, 3f));
-                        if (Space != HomeDrifter.Space)
-                        {
-                            Space.RemoveCrew(this);
-                            HomeDrifter.Space.AddCrew(this);
-                        }
+                        TeleportCrewMember(HomeDrifter.MedicalModule.transform.position + new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-3f, 3f)), HomeDrifter.Space);
                     }
                     BleedingTime.Value -= CO.co.GetWorldSpeedDelta();
                     if (BleedingTime.Value < -20 || CO.co.IsSafe())
@@ -1606,7 +1617,6 @@ public class CREW : NetworkBehaviour, iDamageable
                 }
             }
         }
-
         DamageHealingUpdate();
     }
 

@@ -24,6 +24,7 @@ public class ArtifactEnforcementOrder : ArtifactAbility
         buff.Duration = 3;
         buff.ModifyMovementSlow = 1f;
         buff.ModifyAnimationSlow = 1f;
+        buff.BuffParticles = CO_SPAWNER.BuffParticles.FROST;
         crew.TakeDamage(10f + User.GetATT_COMMAND() * 2f, crew.transform.position, iDamageable.DamageType.TRUE);
         crew.AddBuff(buff);
     }

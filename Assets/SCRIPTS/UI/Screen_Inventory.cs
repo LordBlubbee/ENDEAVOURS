@@ -662,13 +662,14 @@ public class Screen_Inventory : MonoBehaviour
         if (CrewScreen.gameObject.activeSelf)
         {
             if (SelectedCrew == null) CrewScreen.gameObject.SetActive(false);
+            else UpdateCrewButton();
         }
     }
-    public void PressCrewButton(CREW Crew)
+
+    private void UpdateCrewButton()
     {
-        if (Crew == null) return;
-        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
-        SelectedCrew = Crew;
+        CREW Crew = SelectedCrew;
+
         CrewOuter.color = ScriptableEquippable.GetRarityColor(Crew.UnitRarity);
         CrewIcon.sprite = Crew.CharacterBackground.Sprite_Player;
         CrewStripes.sprite = Crew.CharacterBackground.Sprite_Stripes;
@@ -679,7 +680,14 @@ public class Screen_Inventory : MonoBehaviour
 
         CrewUpgradeTex.text = $"PROMOTE \n<color=green>-{Crew.GetLevelupCost()}S</color>";
         CrewDismissTex.text = $"DISMISS \n<color=green>+{Crew.GetDismissValue()}S</color>";
+    }
+    public void PressCrewButton(CREW Crew)
+    {
+        if (Crew == null) return;
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
+        SelectedCrew = Crew;
 
+        UpdateCrewButton();
         CrewScreen.gameObject.SetActive(true);
     }
 

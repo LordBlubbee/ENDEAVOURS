@@ -15,6 +15,7 @@ public class Legs : MonoBehaviour
     void Update()
     {
         float sped = Crew.GetCurrentSpeed();
+        if (Crew.IsDashing()) sped *= 3f;
         if (sped > 0)
         {
             sped *= CO.co.GetWorldSpeedDelta() * LegDirection * LegRotSpeed;

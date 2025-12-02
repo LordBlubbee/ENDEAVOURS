@@ -220,7 +220,7 @@ MonoBehaviour:
   Stripes: {fileID: 0}
   ControlledByPlayer: 0
   IsNeutral: 0
-  MaxHealth: 150
+  MaxHealth: 200
   NaturalStaminaRegen: 50
   MovementSpeed: 4
   RotationDistanceFactor: 4
@@ -315,7 +315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Crew: {fileID: 5867427934140877094}
   MaximumLegRot: 15
-  LegRotSpeed: 180
+  LegRotSpeed: 30
   LegRotCurrent: 0
   LegDirection: 1
 --- !u!212 &5765796471213650820
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Crew: {fileID: 5867427934140877094}
   MaximumLegRot: 15
-  LegRotSpeed: 180
+  LegRotSpeed: 30
   LegRotCurrent: 15
   LegDirection: 1
 --- !u!212 &1921450066542728920
@@ -615,7 +615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Crew: {fileID: 5867427934140877094}
   MaximumLegRot: 15
-  LegRotSpeed: 180
+  LegRotSpeed: 30
   LegRotCurrent: 0
   LegDirection: -1
 --- !u!212 &2640513213925169465

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d0c18050b8a5c4b9f50e941cfea295, type: 3}
   m_Name: Uncommon_EnforcementOrder
   m_EditorClassIdentifier: 
-  ItemName: Skirmish Order
+  ItemName: Enforcement Order
   ItemDesc: 'A Pragmaticus order detailing the right to enforce law, how to enforce
     law, and against whom the law may be enforced. Depending on certain index factors
     centered around Stipulation 20-16-55, the Pragmaticus can arrest nearly anyone

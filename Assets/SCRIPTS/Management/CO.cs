@@ -667,7 +667,7 @@ public class CO : NetworkBehaviour
             }
             else if (crew.Space != PlayerMainDrifter.Space || crew.isDead())
             {
-                if (crew.GetFaction() == 1) transform.position = PlayerMainDrifter.Interior.Bridge;
+                if (crew.GetFaction() == 1) crew.TeleportCrewMember(PlayerMainDrifter.Interior.transform.TransformPoint( PlayerMainDrifter.Interior.Bridge), PlayerMainDrifter.Interior);
                 else crew.DespawnAndUnregister();
             }
         }
@@ -1247,8 +1247,8 @@ public class CO : NetworkBehaviour
         {
             return un.GetFaction() == 1;
         }
-        if (GetDungeon() == null) return true;
         if (PlayerMainDrifter.MedicalModule.IsDisabled()) return false;
+        if (GetDungeon() == null) return true;
         return true;
     }
     IEnumerator Event_DungeonStorage()

@@ -153,7 +153,7 @@ MonoBehaviour:
   attackAnimations1: 070000000800000009000000
   UsageStamina1: 40
   Action1_SFX:
-  - {fileID: 8300000, guid: 68c77946a4f547544b7c239aa1d59c9a, type: 3}
+  - {fileID: 8300000, guid: 25f05de24593b7b4cbab2e7aef1fe334, type: 3}
   Action1_SFX_Hit: []
   attackDamage1: 25
   RangedPrefab1: {fileID: 0}
