@@ -221,6 +221,7 @@ public class CO_SPAWNER : NetworkBehaviour
         drifter.IsMainDrifter.Value = true;
         drifter.NetworkObject.Spawn();
         drifter.Faction.Value = 1;
+        drifter.SetHealth(drifter.GetMaxHealth() * 0.75f);
         drifter.Init();
         CO.co.PlayerMainDrifter = drifter;
 

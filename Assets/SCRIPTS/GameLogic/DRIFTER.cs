@@ -316,6 +316,11 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         CurHealth.Value = Mathf.Min(MaxHealth, CurHealth.Value + fl);
     }
+
+    public void SetHealth(float health)
+    {
+        CurHealth.Value = health;
+    }
     public void TakeDamage(float fl, Vector3 ImpactArea, DamageType type)
     {
         if (isDead()) return;

@@ -16,6 +16,7 @@ public class UI : MonoBehaviour
     public Screen_Talk TalkUI;
     public Screen_Reward RewardUI;
     public Screen_Settings SettingsUI;
+    public Screen_Cinematic CinematicUI;
     public Image Crosshair;
     public ChatModule ChatUI;
     private GameObject PreviousScreen;
@@ -27,6 +28,9 @@ public class UI : MonoBehaviour
     private void Start()
     {
         SettingsUI.Init();
+
+        SelectScreen(CurrentlySelectedScreen);
+        CinematicUI.PlayIntroCinematic();
     }
     public void OpenTalkScreenFancy(GameObject ob)
     {
@@ -99,7 +103,6 @@ public class UI : MonoBehaviour
     private void Awake()
     {
         ui = this;
-        SelectScreen(CurrentlySelectedScreen);
     }
 
     public void QuitGame()

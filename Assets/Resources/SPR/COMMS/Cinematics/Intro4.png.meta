@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 410dcaa22239acb47b7373b6c4358ba0
+guid: d7f47ccd9feb4204b954791216ffcd85
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 539290097007262091
-    second: Coalition1_0
+      213: 9062190614823450305
+    second: Intro4_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Coalition1_0
+      name: Intro4_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b89f0076c71fb7700800000000000000
-      internalID: 539290097007262091
+      spriteID: 1c63e63c95e53cd70800000000000000
+      internalID: 9062190614823450305
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Coalition1_0: 539290097007262091
+      Intro4_0: 9062190614823450305
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
