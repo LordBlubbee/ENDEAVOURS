@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class AUDCO : NetworkBehaviour
+public class AUDCO : MonoBehaviour
 {
     public AudioSource OST1;
     public AudioSource OST2;
@@ -27,12 +27,7 @@ public class AUDCO : NetworkBehaviour
 
     public AudioClip[] SoundtrackCalm;
     public AudioClip[] SoundtrackIntense;
-    public NetworkVariable<int> CurrentSoundtrackID = new(-1);
-
-    public void SetCurrentSoundtrack(Soundtrack track)
-    {
-        CurrentSoundtrackID.Value = (int)track;
-    }
+   
 
     private List<AUD> ActiveAudio = new();
 
@@ -56,20 +51,25 @@ public class AUDCO : NetworkBehaviour
         otherOST = OST2;
         StartCoroutine(SoundManager());
     }
-
+    private void Update()
+    {
+    }
     IEnumerator SoundManager()
     {
         yield return new WaitForSeconds(1);
         while (true)
         {
-            switch (CurrentSoundtrackID.Value)
+            if (CO.co)
             {
-                case -1:
-                    setOST(null);
-                    break;
-                default:
-                    setOST(CO.co.IsSafe() ? SoundtrackCalm[CurrentSoundtrackID.Value] : SoundtrackIntense[CurrentSoundtrackID.Value]);
-                    break;
+                switch (CO.co.CurrentSoundtrackID.Value)
+                {
+                    case -1:
+                        setOST(null);
+                        break;
+                    default:
+                        setOST(CO.co.IsSafe() ? SoundtrackCalm[CO.co.CurrentSoundtrackID.Value] : SoundtrackIntense[CO.co.CurrentSoundtrackID.Value]);
+                        break;
+                }
             }
             yield return new WaitForSeconds(1);
         }

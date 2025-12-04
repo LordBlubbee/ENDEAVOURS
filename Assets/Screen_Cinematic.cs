@@ -71,7 +71,7 @@ public class Screen_Cinematic : MonoBehaviour
         SetImage(Intro_Images[4]); //Starlight Endeavour Fleet
         yield return new WaitForSeconds(3f);
         SetText("They would launch the <color=#FF00FF>STARLIGHT ENDEAVOUR</color. A top-secret mission...");
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(6f); //87
         SetText("...To delve under the <color=#FF00FF>MIST</color>, to find the source, and to destroy it.");
         yield return new WaitForSeconds(7f);
         SetText("");
@@ -98,7 +98,7 @@ public class Screen_Cinematic : MonoBehaviour
         SetText("The <color=#00FFAA>NEXUS POINT</color>.");
         yield return new WaitForSeconds(4f);
         SetText("YOU are the only one to have escaped the disaster.");
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(6f); //148
         SetText("");
         yield return new WaitForSeconds(1f);
         SetImage(Intro_Images[8]); //Governments Failing
@@ -110,17 +110,17 @@ public class Screen_Cinematic : MonoBehaviour
         SetText("");
         yield return new WaitForSeconds(1f);
         SetImage(Intro_Images[9]); //Map to Nexus Point
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3f); //171
         SetText("Lead all that remains of us to the <color=#00FFAA>NEXUS POINT</color>...");
         yield return new WaitForSeconds(6f);
         SetText("Uncover the truth. Free Humanity from the Mist. Go now, and be swift...");
         yield return new WaitForSeconds(6f);
         SetText("Save us from this <color=#FF00FF>MISTWORLD</color>.");
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(4f); 
         SetImage(null);
         yield return new WaitForSeconds(2f);
         SetText("");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f); //191 seconds
         //SetImage(Intro_Images[10]); //Title Screen
 
         //Ending

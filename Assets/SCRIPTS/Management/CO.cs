@@ -7,6 +7,7 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEditorInternal.VersionControl;
 using UnityEngine;
+using static AUDCO;
 
 public class CO : NetworkBehaviour
 {
@@ -486,7 +487,7 @@ public class CO : NetworkBehaviour
         }
 
         CO_STORY.co.SetStory(GetPlayerMapPoint().AssociatedPoint.InitialDialog);
-        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
+        SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
     }
     [Rpc(SendTo.Server)]
     public void AddInventoryItemRpc(FixedString64Bytes moduleLink)
@@ -632,7 +633,7 @@ public class CO : NetworkBehaviour
         }
         CO_SPAWNER.co.CreateLandscape(destination.AssociatedPoint.BackgroundType);
         if (destination.AssociatedPoint.InitialDialog) CO_STORY.co.SetStory(destination.AssociatedPoint.InitialDialog);
-        AUDCO.aud.SetCurrentSoundtrack(destination.AssociatedPoint.InitialSoundtrack);
+        SetCurrentSoundtrack(destination.AssociatedPoint.InitialSoundtrack);
 
         //UpdatePlayerMapPointRpc(destination.transform.position);
         foreach (LOCALCO local in GetLOCALCO())
@@ -1160,7 +1161,7 @@ public class CO : NetworkBehaviour
     {
         ShouldDriftersMove = true;
         AreWeInDanger.Value = true;
-        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
+        SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
         ResetWeights();
         int i = 0;
         List<EnemyGroupWithWeight> Groups = new();
@@ -1208,7 +1209,7 @@ public class CO : NetworkBehaviour
 
         yield return new WaitForSeconds(4f);
         LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
-        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
+        SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
 
         yield return new WaitForSeconds(3f);
         if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
@@ -1255,7 +1256,7 @@ public class CO : NetworkBehaviour
     {
         ShouldDriftersMove = false;
         AreWeInDanger.Value = false;
-        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
+        SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
         ResetWeights();
         int i = 0;
         List<EnemyGroupWithWeight> Groups = new();
@@ -1316,7 +1317,7 @@ public class CO : NetworkBehaviour
             {
                 LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
             }
-            AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
+            SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
 
             yield return new WaitForSeconds(3f);
             AreWeInDanger.Value = false;
@@ -1328,7 +1329,7 @@ public class CO : NetworkBehaviour
     {
         ShouldDriftersMove = false;
         AreWeInDanger.Value = false;
-        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
+        SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
         ResetWeights();
         int i = 0;
         List<EnemyGroupWithWeight> Groups = new();
@@ -1374,7 +1375,7 @@ public class CO : NetworkBehaviour
             {
                 LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
             }
-            AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
+            SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
 
             yield return new WaitForSeconds(3f);
             if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
@@ -1386,7 +1387,7 @@ public class CO : NetworkBehaviour
     {
         ShouldDriftersMove = true;
         AreWeInDanger.Value = true;
-        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
+        SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
         ResetWeights();
         int i = 0;
         List<EnemyGroupWithWeight> Groups = new();
@@ -1421,7 +1422,7 @@ public class CO : NetworkBehaviour
 
         yield return new WaitForSeconds(4f);
         LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
-        AUDCO.aud.SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
+       SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
 
         yield return new WaitForSeconds(3f);
         if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
@@ -1618,4 +1619,10 @@ public class CO : NetworkBehaviour
     }
 
     /**/
+
+    public NetworkVariable<int> CurrentSoundtrackID = new(-1);
+    public void SetCurrentSoundtrack(Soundtrack track)
+    {
+        CurrentSoundtrackID.Value = (int)track;
+    }
 }
