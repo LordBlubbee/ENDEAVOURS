@@ -29,15 +29,17 @@ public class Screen_Cinematic : MonoBehaviour
         StartCoroutine(SkipTextRoutine());
         yield return new WaitForSeconds(3f);
         SetText("Long ago, the <color=#00AAFF>ORDER OF THE STORM</color> had united humanity.");
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         SetImage(Intro_Images[0]); //Peaceful Catali world
         yield return new WaitForSeconds(5f);
         SetText("In an era of peace, they invented the <color=#FF00FF>MIST</color>. A substance that would repair the planet's atmosphere...");
         yield return new WaitForSeconds(6f);
         SetText("But something was wrong.");
         yield return new WaitForSeconds(4f);
+        SetText("");
+        yield return new WaitForSeconds(1f);
         SetImage(Intro_Images[1]); //Mist incident
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         SetText("The Mist consumed all life. It took every man, every plant, every animal...");
         yield return new WaitForSeconds(6f);
         SetText("It consumed the world.");
@@ -46,35 +48,45 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(7f);
         SetText("Destiny was taken from humanity. Only the mountains remained safe.");
         yield return new WaitForSeconds(6f);
+        SetText("");
+        yield return new WaitForSeconds(1f);
         SetImage(Intro_Images[2]); //Purple planet
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         SetText("One hundred and eighteen years later.");
         yield return new WaitForSeconds(5f);
         SetText("Humanity had survived.");
         yield return new WaitForSeconds(4f);
+        SetText("");
+        yield return new WaitForSeconds(1f);
         SetImage(Intro_Images[3]); //Logipedes
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         SetText("They are gathered under the <color=#EEDD33>LOGIPEDES REPUBLIC</color>, obsessed bureaucrats who invented the Drifters...");
         yield return new WaitForSeconds(7f);
         SetText("...From their seats in CAPITOLIS.");
         yield return new WaitForSeconds(5f);
-        SetText("Finally, remnants of the <color=#00AAFF>ORDER OF THE STORM</color> have finally convinced the <color=#EEDD33>THREE LEGISLATES</color>.");
+        SetText("Finally, remnants of the <color=#00AAFF>ORDER OF THE STORM</color> had convinced the <color=#EEDD33>THREE LEGISLATES</color> and the <color=#22DD22>NOMADEN COALITION</color>.");
         yield return new WaitForSeconds(7f);
+        SetText("");
+        yield return new WaitForSeconds(1f);
         SetImage(Intro_Images[4]); //Starlight Endeavour Fleet
-        yield return new WaitForSeconds(2f);
-        SetText("YOU have been selected for the STARLIGHT ENDEAVOUR. A top-secret mission...");
+        yield return new WaitForSeconds(3f);
+        SetText("They would launch the <color=#FF00FF>STARLIGHT ENDEAVOUR</color. A top-secret mission...");
         yield return new WaitForSeconds(6f);
         SetText("...To delve under the <color=#FF00FF>MIST</color>, to find the source, and to destroy it.");
         yield return new WaitForSeconds(7f);
+        SetText("");
+        yield return new WaitForSeconds(1f);
         SetImage(Intro_Images[5]); //Fleet Underway
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         SetText("The Expedition travelled for two months before they found a strange signal in the far south.");
         yield return new WaitForSeconds(6f);
-        SetText("The fleet moved in...");
-        yield return new WaitForSeconds(4f);
+        SetText("The fleet moved in, tracking it deep into mountain caverns...");
+        yield return new WaitForSeconds(6f);
+        SetText("");
+        yield return new WaitForSeconds(1f);
         SetImage(Intro_Images[6]); //Seeker Ambush
-        yield return new WaitForSeconds(2f);
-        SetText("...But was attacked from below, blasts from the deep obliterating the proud Drifters!");
+        yield return new WaitForSeconds(3f);
+        SetText("...But was attacked from below, blasts from the deep piercing through the armour of our proud Drifters!");
         yield return new WaitForSeconds(6f);
         SetText("The fleet fought back. With all they could... But they were no match for the mysterious force that had assailed them.");
         yield return new WaitForSeconds(8f);
@@ -82,19 +94,23 @@ public class Screen_Cinematic : MonoBehaviour
         SetText("All they had found was a single coordinate. Far from here, with an unknown purpose...");
         yield return new WaitForSeconds(7f);
         SetImage(Intro_Images[7]); //Nexus Points
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         SetText("The <color=#00FFAA>NEXUS POINT</color>.");
         yield return new WaitForSeconds(4f);
         SetText("YOU are the only one to have escaped the disaster.");
         yield return new WaitForSeconds(6f);
+        SetText("");
+        yield return new WaitForSeconds(1f);
         SetImage(Intro_Images[8]); //Governments Failing
-        yield return new WaitForSeconds(2f);
-        SetText("A revolution has broken out. Evidence that the Mist is rising has been confirmed.");
+        yield return new WaitForSeconds(3f);
+        SetText("A revolution has broken out. Evidence that the <color=#FF00FF>MIST</color> is rising has been confirmed.");
         yield return new WaitForSeconds(8f);
         SetText("The governments can no longer support the Starlight Endeavour.");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(7f);
+        SetText("");
+        yield return new WaitForSeconds(1f);
         SetImage(Intro_Images[9]); //Map to Nexus Point
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         SetText("Lead all that remains of us to the <color=#00FFAA>NEXUS POINT</color>...");
         yield return new WaitForSeconds(6f);
         SetText("Uncover the truth. Free Humanity from the Mist. Go now, and be swift...");
@@ -141,13 +157,13 @@ public class Screen_Cinematic : MonoBehaviour
         while (isSwitchingText) yield return null;
         while (SkipTex.color.a < 1)
         {
-            SkipTex.color = new Color(1, 1, 1, Mathf.Clamp01(SkipTex.color.a - Time.deltaTime));
+            SkipTex.color = new Color(1, 0, 0, Mathf.Clamp01(SkipTex.color.a - Time.deltaTime));
             yield return null;
         }
         yield return new WaitForSeconds(5f);
         while (SkipTex.color.a > 0)
         {
-            SkipTex.color = new Color(1, 1, 1, Mathf.Clamp01(SkipTex.color.a + Time.deltaTime));
+            SkipTex.color = new Color(1, 0, 0, Mathf.Clamp01(SkipTex.color.a + Time.deltaTime));
             yield return null;
         }
     }
