@@ -27695,7 +27695,7 @@ Transform:
   m_GameObject: {fileID: 1215325486}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -27714,7 +27714,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 3b7468fea2320d5428dbec9d7fbbb4e9, type: 3}
   m_Resource: {fileID: 8300000, guid: 3b7468fea2320d5428dbec9d7fbbb4e9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.6
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -28446,7 +28446,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 2000
+    maxNumParticles: 5000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -28593,7 +28593,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 100
+      value: 400
       mode: 0
       spread: 0
       speed:
@@ -28712,7 +28712,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1500
+      scalar: 4000
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -37070,7 +37070,7 @@ Transform:
   m_GameObject: {fileID: 1434333695}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -37724,7 +37724,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 2000
+    maxNumParticles: 5000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -37871,7 +37871,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 100
+      value: 400
       mode: 0
       spread: 0
       speed:
@@ -37990,7 +37990,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 250
+      scalar: 1250
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -41889,7 +41889,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 445e7bdcd8997ae4db33f93e210f06e7, type: 3}
   m_Resource: {fileID: 8300000, guid: 445e7bdcd8997ae4db33f93e210f06e7, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.6
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -46718,7 +46718,7 @@ Transform:
   m_GameObject: {fileID: 1622770111}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47372,7 +47372,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 2000
+    maxNumParticles: 5000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -47519,7 +47519,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 100
+      value: 400
       mode: 0
       spread: 0
       speed:
@@ -47638,7 +47638,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1500
+      scalar: 4000
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -51537,7 +51537,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 4db12785f70e2004a88b96331d2d410d, type: 3}
   m_Resource: {fileID: 8300000, guid: 4db12785f70e2004a88b96331d2d410d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.6
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0

@@ -27,13 +27,13 @@ public class CAM : MonoBehaviour
         switch (time)
         {
             case CO.DayTimes.DAY:
-                MainLight.color = new Color(0.95f, 0.95f, 0.95f);
+                MainLight.color = new Color(1f, 1f, 1f);
                 break;
             case CO.DayTimes.DUSK:
                 MainLight.color = new Color(0.69f, 0.35f, 0f);
                 break;
             case CO.DayTimes.NIGHT:
-                MainLight.color = new Color(0.2f, 0.24f, 0.3f);
+                MainLight.color = new Color(0.1f, 0.12f, 0.18f);
                 break;
         }
         float Factor;
