@@ -19,4 +19,5 @@ MonoBehaviour:
   InitialMapData: SIGNAL
   InitialDialog: {fileID: 11400000, guid: 0ad586d384d9770408cbf7dba52f98e8, type: 2}
   BackgroundType: 1
+  WeatherSelectors: 1
   GateToBiome: {fileID: 0}

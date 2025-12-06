@@ -529,6 +529,10 @@ public class CO : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         co = this;
+        if (!IsServer)
+        {
+            RefreshWeather(TerrainDaytime.Value, TerrainWeather.Value);
+        }
     }
     /*CHOOSE MAP*/
     private void Update()
@@ -634,6 +638,69 @@ public class CO : NetworkBehaviour
         BackgroundTransform.back.AddPosition(BackgroundSpeed * CO.co.GetWorldSpeedDelta() * 5f);
     }
 
+    [NonSerialized] public NetworkVariable<int> TerrainDaytime = new();
+    [NonSerialized] public NetworkVariable<int> TerrainWeather = new();
+
+    public enum DayTimes
+    {
+        DAY,
+        DUSK,
+        NIGHT
+    }
+    public enum WeatherTypes
+    {
+        CLEAR,
+        SOME_CLOUDS,
+        CLOUDY,
+        DRIZZLE,
+        RAIN,
+        THUNDERSTORM
+    }
+
+    public enum MapWeatherSelectors
+    {
+        RANDOM_MILD,
+        RANDOM_CLEAR,
+        RANDOM_HEAVY,
+        ALWAYS_DUSK,
+        ALWAYS_THUNDER,
+        RANDOM_MILD_NIGHT,
+        RANDOM_CLEAR_NIGHT,
+        RANDOM_HEAVY_NIGHT,
+    }
+    private void RefreshWeather(int Daytime, int Weather)
+    {
+        CAM.cam.SetTimeOfDay((DayTimes)Daytime, (WeatherTypes)Weather);
+        if ((WeatherTypes)Weather == WeatherTypes.THUNDERSTORM && !IsManagingThunder)
+        {
+            StartCoroutine(ThunderManager());
+        }
+    }
+
+    bool IsManagingThunder = false;
+    IEnumerator ThunderManager()
+    {
+        //Runs on server
+        IsManagingThunder = true;
+        float Timer = UnityEngine.Random.Range(5f,30f);
+        while (TerrainWeather.Value == (int)WeatherTypes.THUNDERSTORM)
+        {
+            Timer -= CO.co.GetWorldSpeedDelta();
+            if (Timer < 0f)
+            {
+                Timer = UnityEngine.Random.Range(2f, 60f);
+                CO_SPAWNER.co.SpawnThunderRpc(new Vector3(UnityEngine.Random.Range(-200f, 200f), UnityEngine.Random.Range(-200f, 200f)));
+            }
+            yield return null;
+        }
+        IsManagingThunder = false;
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void RefreshWeatherRpc(int Daytime, int Weather)
+    {
+        RefreshWeather(Daytime,Weather);
+    }
     IEnumerator Travel(MapPoint destination)
     {
         ShouldDriftersMove = true;
@@ -650,6 +717,81 @@ public class CO : NetworkBehaviour
         }
         yield return new WaitForSeconds(2.5f);
         GenerateLevel();
+
+        ResetWeights();
+        switch (destination.AssociatedPoint.WeatherSelectors)
+        {
+            default:
+                AddWeights((int)DayTimes.DAY, 60);
+                AddWeights((int)DayTimes.NIGHT, 30);
+                AddWeights((int)DayTimes.DUSK, 10);
+                break;
+            case MapWeatherSelectors.ALWAYS_DUSK:
+                AddWeights((int)DayTimes.DUSK, 100);
+                break;
+            case MapWeatherSelectors.ALWAYS_THUNDER:
+                AddWeights((int)DayTimes.DAY, 20);
+                AddWeights((int)DayTimes.NIGHT, 80);
+                break;
+            case MapWeatherSelectors.RANDOM_MILD_NIGHT:
+                AddWeights((int)DayTimes.NIGHT, 100);
+                break;
+            case MapWeatherSelectors.RANDOM_CLEAR_NIGHT:
+                AddWeights((int)DayTimes.NIGHT, 100);
+                break;
+            case MapWeatherSelectors.RANDOM_HEAVY_NIGHT:
+                AddWeights((int)DayTimes.NIGHT, 100);
+                break;
+        }
+        TerrainDaytime.Value = GetWeight();
+        ResetWeights();
+        switch (destination.AssociatedPoint.WeatherSelectors)
+        {
+            case MapWeatherSelectors.RANDOM_MILD:
+                AddWeights((int)WeatherTypes.CLEAR, 40);
+                AddWeights((int)WeatherTypes.SOME_CLOUDS, 25);
+                AddWeights((int)WeatherTypes.CLOUDY, 15);
+                AddWeights((int)WeatherTypes.DRIZZLE, 10);
+                AddWeights((int)WeatherTypes.RAIN, 10);
+                break;
+            case MapWeatherSelectors.RANDOM_CLEAR:
+                AddWeights((int)WeatherTypes.CLEAR, 70);
+                AddWeights((int)WeatherTypes.SOME_CLOUDS, 30);
+                break;
+            case MapWeatherSelectors.RANDOM_HEAVY:
+                AddWeights((int)WeatherTypes.CLOUDY, 30);
+                AddWeights((int)WeatherTypes.RAIN, 50);
+                AddWeights((int)WeatherTypes.THUNDERSTORM, 20);
+                break;
+            case MapWeatherSelectors.RANDOM_MILD_NIGHT:
+                AddWeights((int)WeatherTypes.CLEAR, 35);
+                AddWeights((int)WeatherTypes.SOME_CLOUDS, 25);
+                AddWeights((int)WeatherTypes.CLOUDY, 15);
+                AddWeights((int)WeatherTypes.DRIZZLE, 10);
+                AddWeights((int)WeatherTypes.RAIN, 10);
+                break;
+            case MapWeatherSelectors.RANDOM_CLEAR_NIGHT:
+                AddWeights((int)WeatherTypes.CLEAR, 70);
+                AddWeights((int)WeatherTypes.SOME_CLOUDS, 30);
+                break;
+            case MapWeatherSelectors.RANDOM_HEAVY_NIGHT:
+                AddWeights((int)WeatherTypes.CLOUDY, 30);
+                AddWeights((int)WeatherTypes.RAIN, 50);
+                AddWeights((int)WeatherTypes.THUNDERSTORM, 20);
+                break;
+            case MapWeatherSelectors.ALWAYS_DUSK:
+                AddWeights((int)WeatherTypes.CLEAR, 40);
+                AddWeights((int)WeatherTypes.SOME_CLOUDS, 15);
+                AddWeights((int)WeatherTypes.CLOUDY, 15);
+                AddWeights((int)WeatherTypes.DRIZZLE, 25);
+                AddWeights((int)WeatherTypes.RAIN, 5);
+                break;
+            case MapWeatherSelectors.ALWAYS_THUNDER:
+                AddWeights((int)WeatherTypes.THUNDERSTORM, 100);
+                break;
+        }
+        TerrainWeather.Value = GetWeight();
+        RefreshWeatherRpc(TerrainDaytime.Value, TerrainWeather.Value);
 
         if (destination.AssociatedPoint.GateToBiome)
         {

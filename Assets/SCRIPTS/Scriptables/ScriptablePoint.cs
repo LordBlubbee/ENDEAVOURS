@@ -16,6 +16,7 @@ public class ScriptablePoint : ScriptableObject
     public string InitialMapData = "";
     public ScriptableDialog InitialDialog;
     public CO_SPAWNER.BackgroundType BackgroundType = CO_SPAWNER.BackgroundType.RANDOM_ROCK;
+    public CO.MapWeatherSelectors WeatherSelectors = CO.MapWeatherSelectors.RANDOM_MILD;
 
     [Header("Optional")]
     public ScriptableBiome GateToBiome;

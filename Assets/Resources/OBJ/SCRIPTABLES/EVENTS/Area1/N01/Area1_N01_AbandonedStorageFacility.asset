@@ -19,4 +19,5 @@ MonoBehaviour:
   InitialMapData: LAND
   InitialDialog: {fileID: 11400000, guid: 8a97177aa70713b4fb4ce96e969d9eb3, type: 2}
   BackgroundType: 3
+  WeatherSelectors: 2
   GateToBiome: {fileID: 0}

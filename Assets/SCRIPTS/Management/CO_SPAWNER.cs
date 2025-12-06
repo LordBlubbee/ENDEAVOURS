@@ -31,6 +31,7 @@ public class CO_SPAWNER : NetworkBehaviour
     public GameObject SparkMedium;
     public GameObject ImpactSparks;
     public GameObject Soundwave;
+    public GameObject Thunderstruck;
 
     public ParticleBuff[] BuffParticleList;
     public enum BuffParticles
@@ -724,6 +725,11 @@ public class CO_SPAWNER : NetworkBehaviour
         }
         return -1;
     }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnThunderRpc(Vector3 pos)
+    {
+        GameObject ob = Instantiate(Thunderstruck, pos, Quaternion.identity);
+    }
 
     /**/
     [Header("SPELLS")]
@@ -779,5 +785,6 @@ public class CO_SPAWNER : NetworkBehaviour
         Transform trans = CO.co.GetTransformAtPoint(pos);
         if (trans) ob.transform.SetParent(trans);
     }
+
 
 }

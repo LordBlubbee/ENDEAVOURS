@@ -7,6 +7,9 @@ public class CAM : MonoBehaviour
     public static CAM cam;
     public Light2D MainLight;
     public Camera camob;
+    public ParticleSystem Weather_Drizzle;
+    public ParticleSystem Weather_Rain;
+    public ParticleSystem Weather_ThunderRain;
     private Transform FollowObject;
     private Vector3 FollowVector;
     private Vector3 CameraShake = Vector3.zero;
@@ -19,24 +22,42 @@ public class CAM : MonoBehaviour
         cam = this;
     }
 
-    public enum DayTimes
-    {
-        DAY,
-        DUSK,
-        NIGHT
-    }
-    public void SetTimeOfDay(DayTimes time)
+    public void SetTimeOfDay(CO.DayTimes time, CO.WeatherTypes weather)
     {
         switch (time)
         {
-            case DayTimes.DAY:
+            case CO.DayTimes.DAY:
                 MainLight.color = new Color(0.95f, 0.95f, 0.95f);
                 break;
-            case DayTimes.DUSK:
+            case CO.DayTimes.DUSK:
                 MainLight.color = new Color(0.69f, 0.35f, 0f);
                 break;
-            case DayTimes.NIGHT:
+            case CO.DayTimes.NIGHT:
                 MainLight.color = new Color(0.2f, 0.24f, 0.3f);
+                break;
+        }
+        float Factor;
+        Weather_Drizzle.gameObject.SetActive(false);
+        Weather_Rain.gameObject.SetActive(false);
+        Weather_ThunderRain.gameObject.SetActive(false);
+        switch (weather)
+        {
+            case CO.WeatherTypes.DRIZZLE:
+                Weather_Drizzle.gameObject.SetActive(true);
+                break;
+            case CO.WeatherTypes.CLOUDY:
+                Factor = 0.85f;
+                MainLight.color = new Color(MainLight.color.r * Factor, MainLight.color.g * Factor, MainLight.color.b * Factor);
+                break;
+            case CO.WeatherTypes.RAIN:
+                Weather_Rain.gameObject.SetActive(true);
+                Factor = 0.85f;
+                MainLight.color = new Color(MainLight.color.r * Factor, MainLight.color.g * Factor, MainLight.color.b * Factor);
+                break;
+            case CO.WeatherTypes.THUNDERSTORM:
+                Weather_ThunderRain.gameObject.SetActive(true);
+                Factor = 0.7f;
+                MainLight.color = new Color(MainLight.color.r* Factor, MainLight.color.g* Factor, MainLight.color.b* Factor);
                 break;
         }
     }

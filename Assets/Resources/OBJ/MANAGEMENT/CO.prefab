@@ -118,6 +118,7 @@ MonoBehaviour:
   SparkMedium: {fileID: 9192043369650961900, guid: cf983e25fbd0194488d565e850e1c1ef, type: 3}
   ImpactSparks: {fileID: 9192043369650961900, guid: 544de0d72e32c7e43b79f0f2cfc56db9, type: 3}
   Soundwave: {fileID: 7178822272740056672, guid: ebb45558f9055b94298134e4ff2fc63a, type: 3}
+  Thunderstruck: {fileID: 7558680910570880005, guid: ceeb5e28453168e4886987f55efaa0bd, type: 3}
   BuffParticleList:
   - {fileID: -7748507754934260247, guid: 2cc09f35618b7f9499ee24603e185dab, type: 3}
   - {fileID: -7748507754934260247, guid: 731777fad0dd04343a02acffc8ea8ccb, type: 3}
