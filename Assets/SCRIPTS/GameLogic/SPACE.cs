@@ -102,11 +102,12 @@ public class SPACE : NetworkBehaviour
                 }
             }
         }
+        CO.co.RegisterSpace(this);
+
         foreach (DoorPlaceholder door in DoorPlacerholders)
         {
-            door.InitDoor();
+            door.InitDoor(this);
         }
-        CO.co.RegisterSpace(this);
 
         if (!IsServer) return;
 

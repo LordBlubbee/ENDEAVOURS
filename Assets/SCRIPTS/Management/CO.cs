@@ -1301,7 +1301,7 @@ public class CO : NetworkBehaviour
         switch (str)
         {
             case "":
-                ForceOpenMapScreenRpc();
+                ForceOpenRewardScreenRpc();
                 break;
             case "NotIdle":
                 break;

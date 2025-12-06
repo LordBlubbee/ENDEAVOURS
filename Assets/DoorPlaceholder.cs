@@ -5,7 +5,7 @@ public class DoorPlaceholder : MonoBehaviour
 {
     public DRIFTER Drifter;
     public DoorSystem Door;
-    public void InitDoor()
+    public void InitDoor(SPACE space)
     {
         if (!Drifter.IsServer)
         {
@@ -14,12 +14,12 @@ public class DoorPlaceholder : MonoBehaviour
         }
         DoorSystem mod = Instantiate(Door, transform.position, transform.rotation);
         mod.NetworkObject.Spawn();
-        mod.transform.SetParent(Drifter.Space.transform);
-        mod.SpaceID.Value = Drifter.Space.SpaceID.Value;
+        mod.transform.SetParent(space.transform);
+        mod.SpaceID.Value = space.SpaceID.Value;
         mod.Faction = Drifter.GetFaction();
         mod.SetHomeDrifter(Drifter);
         mod.Init();
-        mod.Space.GetModules().Add(mod);
+        space.GetModules().Add(mod);
         Destroy(gameObject);
     }
 }
