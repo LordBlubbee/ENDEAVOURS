@@ -20,9 +20,20 @@ public class AUDCO : MonoBehaviour
     public enum Soundtrack
     {
         NONE = -1,
-        TEST1 = 0, 
-        TEST2 = 1,
-        TEST3 = 2,
+        WASTES = 0, 
+        NEBULOID = 1,
+        EERIE = 2,
+        RESPITE = 3,
+        PRAGMATICUS = 4,
+        INVICTUS = 5,
+        STELLAE = 6,
+        COALITION = 7,
+        NOMADEN = 8,
+        BAKUTO = 9,
+        EPHEMERAL = 10,
+        ROYALISTS = 11,
+        DEMOCRATS = 12,
+        SEEKERS = 13
     }
 
     public AudioClip[] SoundtrackCalm;
@@ -88,12 +99,13 @@ public class AUDCO : MonoBehaviour
             mainOST = OST1;
         }
         mainOST.clip = clip;
-        mainOST.Play();
-        StartCoroutine(regulateOSTDir());
+        mainOST.Stop();
+       StartCoroutine(regulateOSTDir());
     }
     bool isRegulatingOSTDir = false;
     IEnumerator regulateOSTDir()
     {
+        while (isRegulatingOSTDir) yield return null;
         isRegulatingOSTDir = true;
         mainOST.volume = 0f;
         while (otherOST.volume > 0f)
@@ -102,14 +114,16 @@ public class AUDCO : MonoBehaviour
             yield return null;
         }
         otherOST.volume = 0f;
-        while (mainOST.volume < 1f)
+        /*while (mainOST.volume < 1f)
         {
             mainOST.volume += Time.deltaTime * 0.5f; 
             otherOST.volume = 0f;
             yield return null;
-        }
+        }*/
         mainOST.volume = 1f;
         otherOST.volume = 0f;
+        otherOST.Stop();
+        mainOST.Play();
         isRegulatingOSTDir = false;
     }
     public void PlaySFX(AudioClip clip, float pitchshift = 0f)

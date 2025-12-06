@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Area1_C03_Traders_AskResourcesCombat
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: Your request for resources is sent, but your Gubernator states that
+      the signal is weak, and that no reply comes your way, until a minute later.
+    Speaker: {fileID: 11400000, guid: a76193bce8f537b43a2443543883bc33, type: 2}
+    Alternatives: []
+  - BaseText: We knew something was up, pirate scum! We won't stand for this blatant
+      extortion!
+    Speaker: {fileID: 11400000, guid: c12e8202c96f7ab4a945141bce148e0f, type: 2}
+    Alternatives: []
+  - BaseText: They do not respond to further hails. Their weapons are revealed behind
+      hatches, and their trading blimp moves into engagement range. Though it was
+      not your intention, your message has sparked conflict.
+    Speaker: {fileID: 11400000, guid: 7dc646993301e0e4c9c314ed58e365c0, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Prepare for battle.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: f74e622aa011d314080335eb1ab1dc8a, type: 2}

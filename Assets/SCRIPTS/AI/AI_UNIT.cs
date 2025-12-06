@@ -792,12 +792,12 @@ public class AI_UNIT : NetworkBehaviour
         {
             AI_TacticTimer = UnityEngine.Random.Range(4, 9);
             AI_MoveSpeed = UnityEngine.Random.Range(0.8f, 1.2f);
-            if (Unit.IsEnemyInFront(GetAttackDistance()) && dr && UnityEngine.Random.Range(0f, 1f) < 0.05f)
+            if (Unit.IsEnemyInFront(GetAttackDistance()) && dr && UnityEngine.Random.Range(0f, 1f) < 0.3f)
             {
                 Unit.UseGrapple(dr.Space.GetNearestGridToPoint(transform.position));
             }
         }
-        AttemptBoard(dr.Space);
+        //AttemptBoard(dr.Space);
         SetLookTowards(dr.transform.position, dr.Space);
         if (Unit.IsEnemyInFront(GetAttackDistance()))
         {

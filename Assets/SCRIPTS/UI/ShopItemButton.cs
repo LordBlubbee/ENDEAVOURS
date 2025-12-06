@@ -24,7 +24,12 @@ public class ShopItemButton : MonoBehaviour
         {
             Icon.sprite = item.Item.Equippable.ItemIcon;
             Tool.Tooltip = $"{item.Item.Equippable.ItemName} \n\n{item.Item.Equippable.ItemDesc}";
-        } else
+        } else if (item.Item.BuyCrew)
+        {
+            Icon.sprite = item.Item.BuyCrew.CharacterBackground.MainIcon;
+            Tool.Tooltip = $"{item.Item.BuyCrew.UnitName} \n\n{item.Item.BuyCrew.UnitDescription}";
+        }
+        else
         {
             Tool.Tooltip = "A deal with which you can exchange or craft resources.";
             if (item.Item.DealMaterialsGain > 0)

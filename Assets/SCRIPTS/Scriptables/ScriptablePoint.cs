@@ -10,8 +10,8 @@ public class ScriptablePoint : ScriptableObject
     }
     public string UniqueName = "";
     public string ResourceLink = "";
-    public Soundtrack InitialSoundtrack = Soundtrack.TEST1;
-    public Soundtrack CombatSoundtrack = Soundtrack.TEST1;
+    public Soundtrack InitialSoundtrack = Soundtrack.WASTES;
+    public Soundtrack CombatSoundtrack = Soundtrack.WASTES;
     [TextArea(3, 10)]
     public string InitialMapData = "";
     public ScriptableDialog InitialDialog;

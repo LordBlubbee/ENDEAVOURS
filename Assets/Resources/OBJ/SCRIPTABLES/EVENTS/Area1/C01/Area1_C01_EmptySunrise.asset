@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UniqueName: 
   ResourceLink: Area/C01
-  InitialSoundtrack: 1
-  CombatSoundtrack: 1
+  InitialSoundtrack: 0
+  CombatSoundtrack: 0
   InitialMapData: NO DATA
   InitialDialog: {fileID: 11400000, guid: 7091a2a2eabfedf4293eed034555d424, type: 2}
   BackgroundType: 0

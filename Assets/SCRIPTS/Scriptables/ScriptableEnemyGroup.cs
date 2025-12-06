@@ -26,6 +26,13 @@ public class ScriptableEnemyGroup : ScriptableObject
     public DUNGEON SpawnDungeon;
 
     [Header("SPAWNING GROUP")]
+ 
+    public int SpawnGroupAmountMin = 1;
+    public int SpawnGroupAmountMax = 1; 
+    public int GetSpawnGroupAmount()
+    {
+        return UnityEngine.Random.Range(SpawnGroupAmountMin, SpawnGroupAmountMax);
+    }
     public float SpawnGroupRange = 10f; //Area in which the group is spawned
     public float SpawnDistanceMin = 100f; //Distance away from players
     public float SpawnDistanceMax = 100f;

@@ -20,5 +20,5 @@ MonoBehaviour:
   AlternativeDebriefs:
   - ReplaceDialog: {fileID: 11400000, guid: 0204121a5b180cf448fb71250b551481, type: 2}
     Prerequisites:
-    - {fileID: 11400000, guid: b32172dce6df9864b9d23047a4235f27, type: 2}
+    - {fileID: 11400000, guid: f4a726ea53451f14cb5bdc1771f8e6a7, type: 2}
     AlternativeLoot: {fileID: 11400000, guid: 53c313fe75eb952478e4a3265f276a2c, type: 2}

@@ -1,9 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class CAM : MonoBehaviour
 {
     public static CAM cam;
+    public Light2D MainLight;
     public Camera camob;
     private Transform FollowObject;
     private Vector3 FollowVector;
@@ -15,6 +17,28 @@ public class CAM : MonoBehaviour
     private void Awake()
     {
         cam = this;
+    }
+
+    public enum DayTimes
+    {
+        DAY,
+        DUSK,
+        NIGHT
+    }
+    public void SetTimeOfDay(DayTimes time)
+    {
+        switch (time)
+        {
+            case DayTimes.DAY:
+                MainLight.color = new Color(0.95f, 0.95f, 0.95f);
+                break;
+            case DayTimes.DUSK:
+                MainLight.color = new Color(0.69f, 0.35f, 0f);
+                break;
+            case DayTimes.NIGHT:
+                MainLight.color = new Color(0.2f, 0.24f, 0.3f);
+                break;
+        }
     }
     public void SetCameraMode(Transform followTarget, float mod, float min, float max)
     {

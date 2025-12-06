@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Area1_N02_Stellae_EscortEncounter
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: The Stellae are glad to have you on board, and with a contract signed,
+      your vessel moves out, trailing in front of the Stellae vessel.
+    Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
+    Alternatives: []
+  - BaseText: The road to battle itself is silent, as Flux transmissions are kept
+      to a minimum as to not acquire unwanted attention.
+    Speaker: {fileID: 11400000, guid: a76193bce8f537b43a2443543883bc33, type: 2}
+    Alternatives: []
+  - BaseText: After a few hours and halfway to the destination, forms emerge on the
+      horizon. A fleet of raiders is operating nearby. They seem distracted by something,
+      but two vessels breaks formation to move towards you!
+    Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
+    Alternatives: []
+  - BaseText: Breaking radio silence. Come in, allies! Peregrini <color=#BBFFBB>Fog
+      Raiders</color> are approaching! Requesting immediate support!
+    Speaker: {fileID: 11400000, guid: 1c299f2d4cf2fad4580e98383e4b09f5, type: 2}
+    Alternatives: []
+  - BaseText: The pirates approach, and you move into position to protect that Stellae
+      transport. It seems both you and the Stellae have boarding parties to face.
+    Speaker: {fileID: 11400000, guid: c40c04091c58e3741991105df408e96f, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Prepare for combat.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: f41d759bbf5462848913916835f6b979, type: 2}

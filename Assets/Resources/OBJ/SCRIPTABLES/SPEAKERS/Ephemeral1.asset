@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f0e6fff80922414d9e1c017e477478b, type: 3}
+  m_Name: Ephemeral1
+  m_EditorClassIdentifier: 
+  NameColor: {r: 0.5882109, g: 0.13705944, b: 0.8301887, a: 1}
+  Portrait: {fileID: 539290097007262091, guid: 410dcaa22239acb47b7373b6c4358ba0, type: 3}
+  Voice:
+  - {fileID: 8300000, guid: 11142fe96529ecd478e1d70e474cf1bf, type: 3}

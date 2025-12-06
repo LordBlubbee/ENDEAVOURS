@@ -343,20 +343,27 @@ public class CO_SPAWNER : NetworkBehaviour
                 PossibleSpawns.Add(weight.Crew);
                 i++;
             }
-          
-            while (CrewWorthPoints > 0)
+
+            int SpawnAmount = gr.GetSpawnGroupAmount();
+            for (int sp = 0; sp < SpawnAmount; sp++)
             {
-                Debug.Log("Spawning creature...");
-                Vector3 tryPos = Spawn + new Vector3(UnityEngine.Random.Range(-Radius, Radius), UnityEngine.Random.Range(-Radius, Radius));
-                ScriptableEnemyCrew enemyType = PossibleSpawns[GetWeight()];
-                CREW enem = Instantiate(enemyType.SpawnCrew, tryPos, Quaternion.identity);
-                CrewWorthPoints -= enemyType.Worth;
-                enem.NetworkObject.Spawn();
-                enem.Faction.Value = Faction;
-                enem.transform.Rotate(Vector3.forward, Degrees + UnityEngine.Random.Range(-30f, 30f));
-                SetQualityLevelOfCrew(enem, CrewQualityPoints);
-                enem.Init();
-                members.Add(enem.GetComponent<AI_UNIT>());
+                Offset = UnityEngine.Random.insideUnitCircle.normalized * Dist;
+                Spawn = CO.co.PlayerMainDrifter.transform.position + Offset;
+                CrewWorthPoints = CO.co.GetEncounterSizeModifier() * gr.CrewAmountLevel / SpawnAmount;
+                while (CrewWorthPoints > 0)
+                {
+                    Debug.Log("Spawning creature...");
+                    Vector3 tryPos = Spawn + new Vector3(UnityEngine.Random.Range(-Radius, Radius), UnityEngine.Random.Range(-Radius, Radius));
+                    ScriptableEnemyCrew enemyType = PossibleSpawns[GetWeight()];
+                    CREW enem = Instantiate(enemyType.SpawnCrew, tryPos, Quaternion.identity);
+                    CrewWorthPoints -= enemyType.Worth;
+                    enem.NetworkObject.Spawn();
+                    enem.Faction.Value = Faction;
+                    enem.transform.Rotate(Vector3.forward, Degrees + UnityEngine.Random.Range(-30f, 30f));
+                    SetQualityLevelOfCrew(enem, CrewQualityPoints);
+                    enem.Init();
+                    members.Add(enem.GetComponent<AI_UNIT>());
+                }
             }
 
             group.SetAI(gr.AI_Type, gr.AI_Group, 2, members);

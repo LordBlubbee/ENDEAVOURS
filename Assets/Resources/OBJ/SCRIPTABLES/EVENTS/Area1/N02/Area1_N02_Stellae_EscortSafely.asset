@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Area1_N02_Stellae_EscortSafely
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: The Stellae are glad to have you on board, and with a contract signed,
+      your vessel moves out, trailing in front of the Stellae vessel.
+    Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
+    Alternatives: []
+  - BaseText: The road to battle itself is silent, as Flux transmissions are kept
+      to a minimum as to not acquire unwanted attention.
+    Speaker: {fileID: 11400000, guid: a76193bce8f537b43a2443543883bc33, type: 2}
+    Alternatives: []
+  - BaseText: The Stellae safely arrive at their destination, and your reward is
+      given.
+    Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
+    Alternatives: []
+  - BaseText: Our level three thanks for honouring your word, Gubernator. We will
+      rest at this point and continue the journey into safe space elsewhere.
+    Speaker: {fileID: 11400000, guid: 1c299f2d4cf2fad4580e98383e4b09f5, type: 2}
+    Alternatives: []
+  - BaseText: Be wary on your journey towards the north. The <color=red>Bakuto Insurrection</color>
+      is active in some of the regions up ahead, against the Invictus and Pragmaticus
+      fleets. They are merciless and seek only to destroy.
+    Speaker: {fileID: 11400000, guid: 1c299f2d4cf2fad4580e98383e4b09f5, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Our journey continues.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: 6af91218a67f7e6409461cf73a020a7f, type: 2}

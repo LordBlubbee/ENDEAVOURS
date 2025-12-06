@@ -15,4 +15,4 @@ MonoBehaviour:
   NameColor: {r: 0.62352943, g: 1, b: 0.62352943, a: 1}
   Portrait: {fileID: 539290097007262091, guid: 410dcaa22239acb47b7373b6c4358ba0, type: 3}
   Voice:
-  - {fileID: 8300000, guid: 66c274a115c8ee94c98da142f97f479f, type: 3}
+  - {fileID: 8300000, guid: e613f51cb1f02ac4b802abbd21ce9462, type: 3}

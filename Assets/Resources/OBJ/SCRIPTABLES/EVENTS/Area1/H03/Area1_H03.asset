@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69a8717e7279b88409550c597721d3ae, type: 3}
+  m_Name: Area1_H03
+  m_EditorClassIdentifier: 
+  EventController: GenericBattle
+  EnemyWave: {fileID: 11400000, guid: 323f2ba274a31bb408bd247183c693ce, type: 2}
+  AdditionalEventDialogs: []
+  LootTable: {fileID: 11400000, guid: f3910ff0f21868b4d80beb7a8223bca5, type: 2}
+  DebriefDialog: {fileID: 11400000, guid: 6a2800022ded0a448ba1f1a80d60023e, type: 2}
+  AlternativeDebriefs:
+  - ReplaceDialog: {fileID: 11400000, guid: 0d22bb1086d5df943bc39629a1e3b992, type: 2}
+    Prerequisites:
+    - {fileID: 11400000, guid: f4a726ea53451f14cb5bdc1771f8e6a7, type: 2}
+    AlternativeLoot: {fileID: 11400000, guid: 0d68ba7e5cefa4a418f2a2fb269ed03e, type: 2}

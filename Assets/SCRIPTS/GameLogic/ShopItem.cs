@@ -63,6 +63,11 @@ public class ShopItem : NetworkBehaviour
         {
             CO.co.AddInventoryItem(Item.Equippable);
         }
+        if (Item.BuyCrew)
+        {
+            CREW NewCrew = CO_SPAWNER.co.SpawnUnitOnShip(Item.BuyCrew, CO.co.PlayerMainDrifter);
+            CO_SPAWNER.co.SetQualityLevelOfCrew(NewCrew, 120 * CO.co.GetNewFriendlyCrewModifier());
+        }
         CO.co.Resource_Materials.Value -= Item.DealMaterialsCost;
         CO.co.Resource_Supplies.Value -= Item.DealSuppliesCost;
         CO.co.Resource_Ammo.Value -= Item.DealAmmoCost;

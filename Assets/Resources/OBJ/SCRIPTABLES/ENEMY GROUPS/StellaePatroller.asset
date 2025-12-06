@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 486074c487becad41a25117778c346f8, type: 3}
+  m_Name: StellaePatroller
+  m_EditorClassIdentifier: 
+  AI_Type: 1
+  AI_Group: 2
+  CrewAmountLevel: 800
+  CrewQualityLevel: 100
+  GuaranteedCrewList: []
+  SpawnCrewList:
+  - Weight: 30
+    WeightIncreaseOverQualityGradient: 0
+    MinimumQuality: 0
+    MaximumQuality: 0
+    Crew: {fileID: 11400000, guid: 06da3eac44f90c94c9ff09a62d6265d7, type: 2}
+  - Weight: 20
+    WeightIncreaseOverQualityGradient: 0
+    MinimumQuality: 0
+    MaximumQuality: 0
+    Crew: {fileID: 11400000, guid: c8f8d549a99863f4680b0331a6e2c0f5, type: 2}
+  DrifterQualityLevel: 100
+  SpawnDrifter:
+  - {fileID: 11400000, guid: 8c165e37271e2d74097179429a47e166, type: 2}
+  DungeonQualityLevel: 100
+  SpawnDungeon: {fileID: 0}
+  SpawnGroupAmountMin: 1
+  SpawnGroupAmountMax: 1
+  SpawnGroupRange: 10
+  SpawnDistanceMin: 100
+  SpawnDistanceMax: 200
