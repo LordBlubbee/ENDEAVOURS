@@ -35,4 +35,4 @@ MonoBehaviour:
     Prerequisites: []
     DialogResult: {fileID: 0}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: cbd8b5cc701a7a24ca0d291ae1ccae28, type: 2}
+    TriggerEvent: {fileID: 11400000, guid: 6bca475fd4620c9488a47da99f68ff7a, type: 2}

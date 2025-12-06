@@ -281,6 +281,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  HealthOnlyWhileDamaged: 0
+  HarmDrifterWhenDisabled: 1
+  OutsideDamageResistance: 1
   ModuleTag: 
   ModuleType: 1
   IconSprite: {fileID: 21300000, guid: aa1a4ba3835c1b54bb69868e67b7d2f3, type: 3}
@@ -309,9 +312,9 @@ MonoBehaviour:
   ReloadCooldown: 12
   ProjectileCount: 2
   AdditionalProjectileDelay: 0.2
-  DamagePerLevel: 0
-  ProjectilesPerLevel: 1
-  CooldownPerLevel: 0
+  DamagePerLevel: 25
+  ProjectilesPerLevel: 0
+  CooldownPerLevel: -1
 --- !u!114 &-427056032657588051
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -125,8 +125,8 @@ public class Screen_GameUI : MonoBehaviour
              */
             if (CommsEnabled)
             {
-                if (UI.ui.RewardUI.RewardActive) CommsTex.text = "[U] REWARDS";
-                else if (CO_STORY.co.IsCommsActive()) CommsTex.text = "[U] COMMS";
+                if (CO_STORY.co.IsCommsActive()) CommsTex.text = "[U] COMMS";
+                else if (UI.ui.RewardUI.RewardActive) CommsTex.text = "[U] REWARDS";
                 else CommsTex.text = "[U] MAP";
                 CommsReadyTex.text = $"READY {CO.co.VoteAmount()}/{CO.co.GetLOCALCO().Count}";
             }
@@ -137,8 +137,8 @@ public class Screen_GameUI : MonoBehaviour
             if (CommsEnabled && Input.GetKeyDown(KeyCode.M) && !UI.ui.ChatUI.ChatScreen.activeSelf) OpenMissionScreen();
         } else
         {
-            if (UI.ui.RewardUI.RewardActive) CommsTex.text = "[U] REWARDS";
-            else if (CO_STORY.co.IsCommsActive()) CommsTex.text = "[U] COMMS";
+            if (CO_STORY.co.IsCommsActive()) CommsTex.text = "[U] COMMS";
+            else if (UI.ui.RewardUI.RewardActive) CommsTex.text = "[U] REWARDS";
             else CommsTex.text = "[U] MAP";
             CommsReadyTex.text = $"READY {CO.co.VoteAmount()}/{CO.co.GetLOCALCO().Count}";
 
@@ -278,9 +278,26 @@ public class Screen_GameUI : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
     }
-    public void ForceMissionScreenAfterStoryEnd()
+    public void OpenAllRestScreens()
     {
-        if (!CO.co.IsSafe()) return;
+        if (gameObject.activeSelf)
+        {
+            UI.ui.OpenTalkScreenFancy(UI.ui.InventoryUI.gameObject);
+        }
+    }
+    public void OpenAllTalkScreens()
+    {
+        if (gameObject.activeSelf)
+        {
+            UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
+        }
+        else
+        {
+            UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
+        }
+    }
+    public void OpenAllMapScreens()
+    {
         if (gameObject.activeSelf)
         {
             UI.ui.OpenTalkScreenFancy(UI.ui.MapUI.gameObject);
@@ -288,6 +305,17 @@ public class Screen_GameUI : MonoBehaviour
         else
         {
             UI.ui.SelectScreen(UI.ui.MapUI.gameObject);
+        }
+    }
+    public void OpenAllRewardScreens()
+    {
+        if (gameObject.activeSelf)
+        {
+            UI.ui.OpenTalkScreenFancy(UI.ui.RewardUI.gameObject);
+        }
+        else
+        {
+            UI.ui.SelectScreen(UI.ui.RewardUI.gameObject);
         }
     }
     public void OpenMissionScreen()

@@ -283,7 +283,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
             //Death
             Die();
         }
-        if (fl > 1) CO_SPAWNER.co.SpawnDMGRpc(fl, src);
+        if (fl > 1 && fl < 1000) CO_SPAWNER.co.SpawnDMGRpc(fl, src);
     }
 
     public void Die(bool Permanent = false)

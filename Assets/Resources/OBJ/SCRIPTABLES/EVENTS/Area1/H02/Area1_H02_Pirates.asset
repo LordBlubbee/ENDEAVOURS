@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Area1_H02_Pirates
   m_EditorClassIdentifier: 
   UniqueName: 
-  ResourceLink: Area/H02
+  ResourceLink: Area1/H02
   InitialSoundtrack: 8
   CombatSoundtrack: 8
   InitialMapData: SIGNAL
   InitialDialog: {fileID: 11400000, guid: c036ce1aa2d88cc499f3261ff5a60372, type: 2}
   BackgroundType: 1
+  WeatherSelectors: 0
   GateToBiome: {fileID: 0}

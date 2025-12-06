@@ -580,6 +580,13 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   Drifter: {fileID: 1453653842865150193}
   Dungeon: {fileID: 0}
+  DoorPlacerholders:
+  - {fileID: 5143014627460918081}
+  - {fileID: 6914542363954688590}
+  - {fileID: 2239487026657651518}
+  - {fileID: 5225546108833415162}
+  - {fileID: 5659427365928073115}
+  - {fileID: 1081790464476156423}
   RoomTiles:
   - {fileID: 7514273931490449556}
   - {fileID: 745592871558566845}

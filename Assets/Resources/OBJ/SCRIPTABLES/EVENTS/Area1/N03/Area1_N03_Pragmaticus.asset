@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6713958396d342478460fae2111cc58, type: 3}
-  m_Name: Area1_H01_Looncrabs
+  m_Name: Area1_N03_Pragmaticus
   m_EditorClassIdentifier: 
   UniqueName: 
-  ResourceLink: Area1/H01
-  InitialSoundtrack: 1
-  CombatSoundtrack: 1
-  InitialMapData: LAND
-  InitialDialog: {fileID: 11400000, guid: e49e226a087289e4ba3ea8c35c86d7ae, type: 2}
-  BackgroundType: 3
-  WeatherSelectors: 0
+  ResourceLink: Area1/N03
+  InitialSoundtrack: 4
+  CombatSoundtrack: 4
+  InitialMapData: SIGNAL
+  InitialDialog: {fileID: 11400000, guid: ea5226dae32865d4998a8c94bb258a59, type: 2}
+  BackgroundType: 1
+  WeatherSelectors: 2
   GateToBiome: {fileID: 0}

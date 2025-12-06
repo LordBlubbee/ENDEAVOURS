@@ -5,7 +5,7 @@ public class DoorPlaceholder : MonoBehaviour
 {
     public DRIFTER Drifter;
     public DoorSystem Door;
-    void Start()
+    public void InitDoor()
     {
         if (!Drifter.IsServer)
         {

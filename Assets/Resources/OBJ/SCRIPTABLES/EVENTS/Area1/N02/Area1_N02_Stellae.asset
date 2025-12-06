@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Area1_N02_Stellae
   m_EditorClassIdentifier: 
   UniqueName: 
-  ResourceLink: Area/N02
+  ResourceLink: Area1/N02
   InitialSoundtrack: 6
   CombatSoundtrack: 6
   InitialMapData: SIGNAL
   InitialDialog: {fileID: 11400000, guid: 95dece60574acdb4c932e870395c428f, type: 2}
   BackgroundType: 1
+  WeatherSelectors: 0
   GateToBiome: {fileID: 0}

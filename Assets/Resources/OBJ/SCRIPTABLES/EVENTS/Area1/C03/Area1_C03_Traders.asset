@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Area1_C03_Traders
   m_EditorClassIdentifier: 
   UniqueName: 
-  ResourceLink: Area/C03
+  ResourceLink: Area1/C03
   InitialSoundtrack: 8
   CombatSoundtrack: 8
   InitialMapData: SIGNAL

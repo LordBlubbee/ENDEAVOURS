@@ -18,7 +18,7 @@ MonoBehaviour:
     Speaker: {fileID: 11400000, guid: 6eae2d8b178491744873b10786c471bd, type: 2}
     Alternatives: []
   - BaseText: A small docking point is inhabited by a small exploration Blimp with
-      the icon of the <color=orange>Legislatis Stellae</color> perched on the side
+      the icon of the <color=orange>Legislatus Stellae</color> perched on the side
       of its hull. They are equipped with a Sub-Nebulan drill capable of obtaining
       materials and artifacts from the ruined cities under the Mist- they are a Delver.
     Speaker: {fileID: 11400000, guid: 6eae2d8b178491744873b10786c471bd, type: 2}

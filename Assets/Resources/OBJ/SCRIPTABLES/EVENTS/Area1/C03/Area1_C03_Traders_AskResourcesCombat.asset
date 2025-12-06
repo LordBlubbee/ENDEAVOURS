@@ -17,13 +17,13 @@ MonoBehaviour:
       the signal is weak, and that no reply comes your way, until a minute later.
     Speaker: {fileID: 11400000, guid: a76193bce8f537b43a2443543883bc33, type: 2}
     Alternatives: []
-  - BaseText: We knew something was up, pirate scum! We won't stand for this blatant
-      extortion!
+  - BaseText: Important mission? Starlight Endeavour? So the rumours of some sort
+      of artifact-hunting mission were true. You will give your cargo to us instead!
     Speaker: {fileID: 11400000, guid: c12e8202c96f7ab4a945141bce148e0f, type: 2}
     Alternatives: []
   - BaseText: They do not respond to further hails. Their weapons are revealed behind
-      hatches, and their trading blimp moves into engagement range. Though it was
-      not your intention, your message has sparked conflict.
+      hatches, and their trading blimp moves into engagement range. Revealing the
+      cause of the Endeavour does not always invite friendliness...
     Speaker: {fileID: 11400000, guid: 7dc646993301e0e4c9c314ed58e365c0, type: 2}
     Alternatives: []
   ChoicePathDialogs:

@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Area1_N03_Pragmaticus_Initial
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: 'Weather: Heavy. Clouds have gathered near the lower altitudes. To
+      compensate, we are ascending.'
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  - BaseText: A Logipedan Nebula Excavator has been detected up ahead. A massive
+      pole built into the Mist, this one is a water extractor that distills water
+      from below.
+    Speaker: {fileID: 11400000, guid: 6eae2d8b178491744873b10786c471bd, type: 2}
+    Alternatives: []
+  - BaseText: The device has been rendered inoperational, and its maintenance platform
+      is partly submerged. Looting its steam core will allow us to obtain valuable
+      technology.
+    Speaker: {fileID: 11400000, guid: 6eae2d8b178491744873b10786c471bd, type: 2}
+    Alternatives: []
+  - BaseText: 'Alert. Semirigid detected from behind! Brace for potential contact.
+      This Drifter  bears the markings of the <color=#CCCCCC>Legislatus Pragmaticus</color>!
+      We are being hailed. '
+    Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
+    Alternatives: []
+  - BaseText: Stand by, unknown Drifter. You are violating protected Republic airspace
+      as per Stipulation 05-18-25 "Defense of Property". Motives of looting are not
+      permitted.
+    Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
+    Alternatives: []
+  - BaseText: Failure to comply will result in mandatory boarding action and potential
+      offensive action. You have been warned.
+    Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: We apologize. We are on a high priority mission. We are willing to
+        submit to inspection to prove this- please allow us to scavenge for materials
+        here.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 11400000, guid: 49400bf1f02ffbf44a306f3d7e8d267d, type: 2}
+    AlternativeResults:
+    - ReplaceDialog: {fileID: 11400000, guid: c10d8a0720912e14aa9558401f60bcd8, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: 8aacf088a5b85dd45aad083dabd7d82a, type: 2}
+      - {fileID: 11400000, guid: 51be009e44a001748a883f99359c81a4, type: 2}
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: We hear you loud and clear. We will leave immediately.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 11400000, guid: aedec36c72640b54eb50ac5edf37ffb3, type: 2}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: Violated your airspace? How about I go violate <i>your</i> airspace
+        instead, Pragmaticus pigs!
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 11400000, guid: 40934b21194f9d54ea3d9b6d9ebccccc, type: 2}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: <color=yellow>[Pragmatice] According to civil Stipulation 52-81-84
+        and level 4 mission clearance, we have calculated that it is the optimal
+        action to salvage this Excavator.</color>
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites:
+    - {fileID: 11400000, guid: 71e95b8ab59cccf499ccb90cd02a459e, type: 2}
+    DialogResult: {fileID: 11400000, guid: 43aaad27116d70a4c899074bc39a102e, type: 2}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}

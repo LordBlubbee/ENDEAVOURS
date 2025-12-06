@@ -1273,9 +1273,24 @@ public class CO : NetworkBehaviour
     ScriptableEvent CurrentEvent = null;
 
     [Rpc(SendTo.ClientsAndHost)]
-    private void ForceOpenMissionScreenRpc()
+    private void ForceOpenMapScreenRpc()
     {
-        UI.ui.MainGameplayUI.ForceMissionScreenAfterStoryEnd();
+        UI.ui.MainGameplayUI.OpenAllMapScreens();
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ForceOpenTalkScreenRpc()
+    {
+        UI.ui.MainGameplayUI.OpenAllTalkScreens();
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ForceOpenRestScreenRpc()
+    {
+        UI.ui.MainGameplayUI.OpenAllRestScreens();
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ForceOpenRewardScreenRpc()
+    {
+        UI.ui.MainGameplayUI.OpenAllRewardScreens();
     }
 
     public void PerformEvent(ScriptableEvent even)
@@ -1286,17 +1301,17 @@ public class CO : NetworkBehaviour
         switch (str)
         {
             case "":
-                ForceOpenMissionScreenRpc();
+                ForceOpenMapScreenRpc();
                 break;
-            case "CombatDebrief":
+            case "NotIdle":
                 break;
             case "GenericRest":
                 StartCoroutine(Event_GenericRest());
-                ForceOpenMissionScreenRpc();
+                ForceOpenRestScreenRpc();
                 break;
             case "GenericLoot":
                 StartCoroutine(Event_GenericLoot());
-                ForceOpenMissionScreenRpc();
+                ForceOpenRewardScreenRpc();
                 break;
             case "GenericBattle":
                 StartCoroutine(Event_GenericBattle());
@@ -1369,7 +1384,7 @@ public class CO : NetworkBehaviour
                 else EnemyBarString.Value = $"INTEGRITY: {enemyDrifter.GetHealth().ToString("0")}";
             }
         }
-
+        AreWeInDanger.Value = false;
         EnemyBarRelative.Value = -1;
 
         if (enemyDrifter)
@@ -1479,7 +1494,7 @@ public class CO : NetworkBehaviour
                 break;
             }
         }
-
+        AreWeInDanger.Value = false;
         EnemyBarRelative.Value = -1;
         if (!ShouldDriftersMove)
         {
@@ -1538,7 +1553,7 @@ public class CO : NetworkBehaviour
             if (Death == 1) MissionCompleted = true;
             yield return new WaitForSeconds(0.5f);
         }
-
+        AreWeInDanger.Value = false;
         EnemyBarRelative.Value = -1;
         if (!ShouldDriftersMove)
         {
@@ -1582,7 +1597,7 @@ public class CO : NetworkBehaviour
             EnemyBarRelative.Value = Timer/MaxTimer;
             EnemyBarString.Value = $"SURVIVE: {Timer.ToString("0")}";
         }
-
+        AreWeInDanger.Value = false;
         EnemyBarRelative.Value = -1;
 
         if (enemyDrifter)

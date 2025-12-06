@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Area1_N01_AbandonedStorageFacility
   m_EditorClassIdentifier: 
   UniqueName: 
-  ResourceLink: Area/N01
+  ResourceLink: Area1/N01
   InitialSoundtrack: 1
   CombatSoundtrack: 1
   InitialMapData: LAND

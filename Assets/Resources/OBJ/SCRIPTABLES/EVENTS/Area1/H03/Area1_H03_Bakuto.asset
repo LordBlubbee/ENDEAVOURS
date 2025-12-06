@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Area1_H03_Bakuto
   m_EditorClassIdentifier: 
   UniqueName: 
-  ResourceLink: Area/H03
+  ResourceLink: Area1/H03
   InitialSoundtrack: 9
   CombatSoundtrack: 9
   InitialMapData: NO DATA
-  InitialDialog: {fileID: 11400000, guid: c036ce1aa2d88cc499f3261ff5a60372, type: 2}
+  InitialDialog: {fileID: 11400000, guid: 03b1b3632c205cb4f9338e0c60182cfc, type: 2}
   BackgroundType: 0
   WeatherSelectors: 7
   GateToBiome: {fileID: 0}

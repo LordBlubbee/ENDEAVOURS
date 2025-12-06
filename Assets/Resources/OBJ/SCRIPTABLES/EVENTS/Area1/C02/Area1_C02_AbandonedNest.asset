@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Area1_C02_AbandonedNest
   m_EditorClassIdentifier: 
   UniqueName: 
-  ResourceLink: Area/C02
+  ResourceLink: Area1/C02
   InitialSoundtrack: 1
   CombatSoundtrack: 1
   InitialMapData: LAND
   InitialDialog: {fileID: 11400000, guid: 2f341010ef5604b498b66af5b8dc7b9b, type: 2}
   BackgroundType: 3
+  WeatherSelectors: 0
   GateToBiome: {fileID: 0}

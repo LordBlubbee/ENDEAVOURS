@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Area1_C01_EmptySunrise
   m_EditorClassIdentifier: 
   UniqueName: 
-  ResourceLink: Area/C01
+  ResourceLink: Area1/C01
   InitialSoundtrack: 0
   CombatSoundtrack: 0
   InitialMapData: NO DATA

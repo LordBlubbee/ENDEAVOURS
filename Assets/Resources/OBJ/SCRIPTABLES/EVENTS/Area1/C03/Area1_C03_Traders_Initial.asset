@@ -35,9 +35,9 @@ MonoBehaviour:
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
-      BaseText: Sadly, we have no news from the inner cities for you. We are part
-        of a level 4 secret expedition and need all the help we can get. We request
-        that you transfer some excess materials to us for this mission.
+      BaseText: We are part of a level 4 secret expedition and need all the help
+        we can get. We request that you help us by transferring a surplus of resources,
+        if you can.
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []

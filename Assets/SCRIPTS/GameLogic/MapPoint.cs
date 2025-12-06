@@ -68,7 +68,8 @@ public class MapPoint : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     public void SetInitRpc(string str)
     {
-        if (IsServer) return;
+        if (IsServer) return; //OBJ/SCRIPTABLES/EVENTS/
+        Debug.Log($"Loading point OBJ/SCRIPTABLES/EVENTS/{str}");
         Init(Resources.Load<ScriptablePoint>($"OBJ/SCRIPTABLES/EVENTS/{str}"));
     }
 }

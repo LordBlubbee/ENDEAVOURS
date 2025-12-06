@@ -489,7 +489,7 @@ public class LOCALCO : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     public void CinematicTexRpc(string str)
     {
-        if (!IsOwner) return;
+        //Called on LOCALCO.local of the main server like a weirdo
         UI.ui.SetCinematicTex(str, Color.green, 4f, 1f);
     }
     [Rpc(SendTo.ClientsAndHost)]

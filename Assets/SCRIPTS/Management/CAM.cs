@@ -10,6 +10,9 @@ public class CAM : MonoBehaviour
     public ParticleSystem Weather_Drizzle;
     public ParticleSystem Weather_Rain;
     public ParticleSystem Weather_ThunderRain;
+    public ParticleSystem Weather_SmallClouds;
+    public ParticleSystem Weather_LargeClouds;
+    public ParticleSystem Weather_ThunderClouds;
     private Transform FollowObject;
     private Vector3 FollowVector;
     private Vector3 CameraShake = Vector3.zero;
@@ -40,23 +43,33 @@ public class CAM : MonoBehaviour
         Weather_Drizzle.gameObject.SetActive(false);
         Weather_Rain.gameObject.SetActive(false);
         Weather_ThunderRain.gameObject.SetActive(false);
+        Weather_SmallClouds.gameObject.SetActive(false);
+        Weather_LargeClouds.gameObject.SetActive(false);
+        Weather_ThunderClouds.gameObject.SetActive(false);
         switch (weather)
         {
             case CO.WeatherTypes.DRIZZLE:
                 Weather_Drizzle.gameObject.SetActive(true);
+                Weather_SmallClouds.gameObject.SetActive(true);
+                break;
+            case CO.WeatherTypes.SOME_CLOUDS:
+                Weather_SmallClouds.gameObject.SetActive(true);
                 break;
             case CO.WeatherTypes.CLOUDY:
-                Factor = 0.85f;
+                Factor = 0.8f;
+                Weather_LargeClouds.gameObject.SetActive(true);
                 MainLight.color = new Color(MainLight.color.r * Factor, MainLight.color.g * Factor, MainLight.color.b * Factor);
                 break;
             case CO.WeatherTypes.RAIN:
                 Weather_Rain.gameObject.SetActive(true);
-                Factor = 0.85f;
+                Weather_LargeClouds.gameObject.SetActive(true);
+                Factor = 0.8f;
                 MainLight.color = new Color(MainLight.color.r * Factor, MainLight.color.g * Factor, MainLight.color.b * Factor);
                 break;
             case CO.WeatherTypes.THUNDERSTORM:
                 Weather_ThunderRain.gameObject.SetActive(true);
-                Factor = 0.7f;
+                Weather_ThunderClouds.gameObject.SetActive(true);
+                Factor = 0.5f;
                 MainLight.color = new Color(MainLight.color.r* Factor, MainLight.color.g* Factor, MainLight.color.b* Factor);
                 break;
         }

@@ -9,6 +9,7 @@ public class SPACE : NetworkBehaviour
     public DUNGEON Dungeon;
     [NonSerialized] public NetworkVariable<int> SpaceID = new();
     [NonSerialized] public List<CREW> CrewInSpace = new();
+    public List<DoorPlaceholder> DoorPlacerholders = new();
     private List<Module> Modules = new();
     public List<WalkableTile> RoomTiles = new();
     public List<GameObject> EmptyTiles = new();
@@ -100,6 +101,10 @@ public class SPACE : NetworkBehaviour
                     }
                 }
             }
+        }
+        foreach (DoorPlaceholder door in DoorPlacerholders)
+        {
+            door.InitDoor();
         }
         CO.co.RegisterSpace(this);
 
