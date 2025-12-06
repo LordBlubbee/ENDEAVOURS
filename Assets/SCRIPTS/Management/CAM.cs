@@ -51,24 +51,29 @@ public class CAM : MonoBehaviour
             case CO.WeatherTypes.DRIZZLE:
                 Weather_Drizzle.gameObject.SetActive(true);
                 Weather_SmallClouds.gameObject.SetActive(true);
+                Weather_SmallClouds.Play();
                 break;
             case CO.WeatherTypes.SOME_CLOUDS:
                 Weather_SmallClouds.gameObject.SetActive(true);
+                Weather_SmallClouds.Play();
                 break;
             case CO.WeatherTypes.CLOUDY:
                 Factor = 0.8f;
                 Weather_LargeClouds.gameObject.SetActive(true);
+                Weather_LargeClouds.Play();
                 MainLight.color = new Color(MainLight.color.r * Factor, MainLight.color.g * Factor, MainLight.color.b * Factor);
                 break;
             case CO.WeatherTypes.RAIN:
                 Weather_Rain.gameObject.SetActive(true);
                 Weather_LargeClouds.gameObject.SetActive(true);
+                Weather_LargeClouds.Play();
                 Factor = 0.8f;
                 MainLight.color = new Color(MainLight.color.r * Factor, MainLight.color.g * Factor, MainLight.color.b * Factor);
                 break;
             case CO.WeatherTypes.THUNDERSTORM:
                 Weather_ThunderRain.gameObject.SetActive(true);
                 Weather_ThunderClouds.gameObject.SetActive(true);
+                Weather_ThunderClouds.Play();
                 Factor = 0.5f;
                 MainLight.color = new Color(MainLight.color.r* Factor, MainLight.color.g* Factor, MainLight.color.b* Factor);
                 break;
