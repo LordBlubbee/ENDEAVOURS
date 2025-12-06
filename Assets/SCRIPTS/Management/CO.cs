@@ -16,6 +16,7 @@ public class CO : NetworkBehaviour
     [NonSerialized] public NetworkVariable<bool> HasShipBeenLaunched = new();
     [NonSerialized] public NetworkVariable<bool> AreWeInDanger = new();
     [NonSerialized] public NetworkVariable<bool> AreWeResting = new();
+    [NonSerialized] public NetworkVariable<bool> AreWeCrafting = new();
     [NonSerialized] public NetworkVariable<bool> CommunicationGamePaused = new();
     [NonSerialized] public NetworkVariable<float> EnemyBarRelative = new(-1);
     [NonSerialized] public NetworkVariable<FixedString32Bytes> EnemyBarString = new("");
@@ -48,14 +49,19 @@ public class CO : NetworkBehaviour
         return PlayerMainDrifter.Space;
     }
 
+    public int GetDrifterRepairCost()
+    {
+        return 4;
+    }
+
     [Rpc(SendTo.Server)]
     public void RepairOurDrifterRpc()
     {
         if (PlayerMainDrifter.GetHealthRelative() < 1)
         {
-            if (Resource_Materials.Value > 5)
+            if (Resource_Materials.Value > GetDrifterRepairCost())
             {
-                Resource_Materials.Value -= 5;
+                Resource_Materials.Value -= GetDrifterRepairCost();
                 PlayerMainDrifter.Heal(100);
             }
         }
@@ -73,18 +79,38 @@ public class CO : NetworkBehaviour
         float Factor = 1f;
         if (item.IsCrafted)
         {
-            int AlchemySkill = 0;
-            foreach (CREW crew in GetAlliedCrew())
-            {
-                AlchemySkill = Mathf.Max(AlchemySkill, crew.GetATT_ALCHEMY());
-            }
-            Factor = 1.1f - AlchemySkill * 0.04f;
+            Factor = GetAlchemyCraftingModifier();
         }
         shop.MaterialCost.Value = Mathf.RoundToInt(UnityEngine.Random.Range(0.8f,1.2f) * item.DealMaterialsCost * Factor);
         shop.SupplyCost.Value = Mathf.RoundToInt(UnityEngine.Random.Range(0.8f, 1.2f) * item.DealSuppliesCost * Factor);
         shop.AmmoCost.Value = Mathf.RoundToInt(UnityEngine.Random.Range(0.8f, 1.2f) * item.DealAmmoCost * Factor);
         shop.TechCost.Value = Mathf.RoundToInt(UnityEngine.Random.Range(0.8f, 1.2f) * item.DealTechCost * Factor);
         shop.NetworkObject.Spawn();
+    }
+    public float GetAlchemyCraftingModifier()
+    {
+        int AlchemySkill = 0;
+        foreach (CREW crew in GetAlliedCrew())
+        {
+            AlchemySkill = Mathf.Max(AlchemySkill, crew.GetATT_ALCHEMY());
+        }
+        float Factor;
+        switch (AlchemySkill)
+        {
+            case < 1:
+                Factor = 1f;
+                break;
+            case 1:
+                Factor = 0.99f;
+                break;
+            case 2:
+                Factor = 0.98f;
+                break;
+            default:
+                Factor = 1.08f - AlchemySkill * 0.04f;
+                break;
+        }
+        return Mathf.Clamp(Factor,0.25f,1f);
     }
 
     public void ResetShopList()
@@ -612,6 +638,7 @@ public class CO : NetworkBehaviour
     {
         ShouldDriftersMove = true;
         AreWeResting.Value = false;
+        AreWeCrafting.Value = false;
         ResetShopList();
         Vector3 moveDirection = destination.transform.position - GetPlayerMapPoint().transform.position;
         PlayerMainDrifter.SetLookTowards(moveDirection);
@@ -1153,6 +1180,7 @@ public class CO : NetworkBehaviour
     {
         ShouldDriftersMove = false;
         AreWeResting.Value = true;
+        AreWeCrafting.Value = true;
         if (CurrentEvent.LootTable) ProcessLootTable(CurrentEvent.LootTable, 1f);
 
         yield break;
@@ -1212,9 +1240,7 @@ public class CO : NetworkBehaviour
         SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
 
         yield return new WaitForSeconds(3f);
-        if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
-        AreWeInDanger.Value = false;
-        ProcessLootTable(CurrentEvent.LootTable, 1f);
+        EndEvent();
     }
 
     private bool AreCrewAwayFromHome()
@@ -1270,7 +1296,7 @@ public class CO : NetworkBehaviour
         CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
 
         List<Vault> Vaults = CO_SPAWNER.co.SpawnVaultObjectives(CurrentDungeon);
-
+        AlternativeDebriefDialog Debrief = null;
         bool MissionCompleted = false;
         float Death = 0f;
         while (Death < 1 || !MissionCompleted)
@@ -1299,7 +1325,10 @@ public class CO : NetworkBehaviour
                 {
                     MissionCompleted = true;
                     CommunicationGamePaused.Value = true;
-                    if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
+                    if (CurrentEvent.HasDebrief()) {
+                        Debrief = CurrentEvent.GetDebrief();
+                        CO_STORY.co.SetStory(Debrief.ReplaceDialog);
+                    }
                 }
             }
             yield return new WaitForSeconds(0.5f);
@@ -1321,7 +1350,7 @@ public class CO : NetworkBehaviour
 
             yield return new WaitForSeconds(3f);
             AreWeInDanger.Value = false;
-            if (MissionCompleted) ProcessLootTable(CurrentEvent.LootTable, 1f);
+            if (Debrief != null) ProcessLootTable(Debrief.AlternativeLoot, 1f);
         }
         SetCurrentDungeon(null);
     }
@@ -1364,6 +1393,7 @@ public class CO : NetworkBehaviour
                 EnemyBarRelative.Value = 1f - Death;
                 EnemyBarString.Value = $"EXPLORE DUNGEON";
             }
+            if (Death == 1) MissionCompleted = true;
             yield return new WaitForSeconds(0.5f);
         }
 
@@ -1378,9 +1408,7 @@ public class CO : NetworkBehaviour
             SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
 
             yield return new WaitForSeconds(3f);
-            if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
-            AreWeInDanger.Value = false;
-            if (MissionCompleted) ProcessLootTable(CurrentEvent.LootTable, 1f);
+            EndEvent(MissionCompleted);
         }
     }
     IEnumerator Event_GenericSurvival()
@@ -1425,9 +1453,15 @@ public class CO : NetworkBehaviour
        SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
 
         yield return new WaitForSeconds(3f);
-        if (CurrentEvent.DebriefDialog) CO_STORY.co.SetStory(CurrentEvent.DebriefDialog);
+        EndEvent();
+    }
+
+    private void EndEvent(bool giveLoot = true)
+    {
+        AlternativeDebriefDialog Debrief = CurrentEvent.GetDebrief();
+        if (CurrentEvent.HasDebrief()) CO_STORY.co.SetStory(Debrief.ReplaceDialog);
         AreWeInDanger.Value = false;
-        ProcessLootTable(CurrentEvent.LootTable, 1f);
+        if (giveLoot) ProcessLootTable(Debrief.AlternativeLoot, 1f);
     }
 
     private int GroupDeathAmount(List<CREW> crewList)
@@ -1549,10 +1583,10 @@ public class CO : NetworkBehaviour
             ResetWeights();
             int i2 = 0;
             List<ScriptableShopitem> ShopItemList = new();
-            foreach (WeightedShopItem item in table.PossibleShopDrops)
+            foreach (ScriptableShopitem item in table.PossibleShopDrops.GetPossibleDrops())
             {
-                AddWeights(i, item.Weight);
-                ShopItemList.Add(item.Item);
+                AddWeights(i2, item.Weight);
+                ShopItemList.Add(item);
                 i2++;
             }
             for (i2 = 0; i2 < Drops; i2++)

@@ -25,7 +25,7 @@ public class DrifterCollider : MonoBehaviour
             Collider2D col = results[i];
             if (col == Collider) continue; // Skip self
 
-            Vector3 away = (transform.position - col.transform.position).normalized;
+            Vector3 away = (transform.position - col.transform.position).normalized * 3f;
             Debug.Log($"Pushing away: {away * -Collider.Distance(col).distance} per second");
             transform.position += away * -Collider.Distance(col).distance * CO.co.GetWorldSpeedDelta();
         }

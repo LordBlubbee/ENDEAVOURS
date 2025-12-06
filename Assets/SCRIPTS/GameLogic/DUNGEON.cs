@@ -75,12 +75,12 @@ public class DUNGEON : NetworkBehaviour
                 foreach (CREW Crew in Space.GetCrew())
                 {
                     float Dis = (LOCALCO.local.GetPlayer().transform.position - Crew.transform.position).magnitude;
-                    if (UnityEngine.Random.Range(0f, 1f) < 0.6f && Dis < 45)
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.7f && Dis < 45)
                     {
                         CO_SPAWNER.co.SpawnSoundwave(Crew.transform.position, 1.5f - Dis/45f);
                     }
                 }
-                Timer = UnityEngine.Random.Range(2f, 5f);
+                Timer = UnityEngine.Random.Range(1f, 4f);
             }
             yield return null;
         }
@@ -142,8 +142,14 @@ public class DUNGEON : NetworkBehaviour
         DungeonVariantData.Value = str;
         Debug.Log($"Setting dungeon data {DungeonVariantData.Value}");
     }
+
+    [NonSerialized] public List<NetworkObject> DungeonNetworkObjects = new();
     public void DespawnAndUnregister()
     {
+        foreach (NetworkObject networkObject in DungeonNetworkObjects)
+        {
+            networkObject.Despawn();
+        }
         Debug.Log("Despawn and unregister");
         CO.co.UnregisterSpace(Space);
         NetworkObject.Despawn();

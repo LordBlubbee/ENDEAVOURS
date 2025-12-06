@@ -33,7 +33,7 @@ public class ArtifactRedPowder : ArtifactAbility
                 }
             }
         }
-        CO_SPAWNER.co.SpawnExplosionSmallRpc(crew.transform.position);
+        CO_SPAWNER.co.SpawnExplosionTinyRpc(crew.transform.position);
         User.StartCoroutine(Cooldown());
     }
 }

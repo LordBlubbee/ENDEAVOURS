@@ -7,6 +7,8 @@ public class ScriptableShopitem : ScriptableObject
     public ScriptableEquippable Equippable;
 
     public int AlchemySkillRequirement = 0;
+    public int Weight = 10;
+
     public bool IsCrafted = false;
     public int DealMaterialsCost;
     public int DealSuppliesCost;

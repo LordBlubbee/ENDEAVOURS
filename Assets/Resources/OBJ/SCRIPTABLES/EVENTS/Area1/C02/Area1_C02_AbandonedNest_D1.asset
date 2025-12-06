@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Area1_C02_AbandonedNest_D1
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: The terrain becomes mountainous, and multiple small peaks stick out
+      of the raised Mist. One peak leads into a small cave system, which is marked
+      by a Nomaden sign for "Danger".
+    Speaker: {fileID: 11400000, guid: 86c7399f1aefa0c4cac215b5af8a21f0, type: 2}
+    Alternatives: []
+  - BaseText: Inside, your team finds a Looncrab nest. There had been a scuffle here
+      between desperate survivors and the rather territorial Nebuloid.
+    Speaker: {fileID: 11400000, guid: 86c7399f1aefa0c4cac215b5af8a21f0, type: 2}
+    Alternatives: []
+  - BaseText: There are no survivors. You loot what you can among the discarded weapons
+      and edible meat.
+    Speaker: {fileID: 11400000, guid: 86c7399f1aefa0c4cac215b5af8a21f0, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Our journey continues.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: 1797d89edb065a645b6ea0386c6898ce, type: 2}
+  - ChoiceText:
+      BaseText: <color=yellow>[Hunter] This looks like a temporary nest. If we go
+        slightly deeper into the caves, we can find additional loot.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites:
+    - {fileID: 11400000, guid: be702b80db15674498962f09c40ddbf8, type: 2}
+    DialogResult: {fileID: 11400000, guid: a8d4150aa2b889e458959fcfba8200fe, type: 2}
+    AlternativeResults:
+    - ReplaceDialog: {fileID: 11400000, guid: f95e648317c72f44dbf46cb56e583fd0, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: b32172dce6df9864b9d23047a4235f27, type: 2}
+    TriggerEvent: {fileID: 0}

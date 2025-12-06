@@ -583,6 +583,7 @@ public class Screen_Inventory : MonoBehaviour
     public GameObject SubscreenRestButton;
     public TextMeshProUGUI SubscreenRestButtonTex;
     public GameObject RestRepairButton;
+    public TextMeshProUGUI RepairButtonTex;
     public TextMeshProUGUI RestMenuTitleTex;
     public List<ShopItemButton> ShopItems;
     public void OpenRest()
@@ -606,7 +607,7 @@ public class Screen_Inventory : MonoBehaviour
     {
         if (CO.co.PlayerMainDrifter.GetHealthRelative() < 1)
         {
-            if (CO.co.Resource_Materials.Value > 5)
+            if (CO.co.Resource_Materials.Value >= CO.co.GetDrifterRepairCost())
             {
                 AUDCO.aud.PlaySFX(AUDCO.aud.Upgrade);
                 CO.co.RepairOurDrifterRpc();
@@ -623,11 +624,25 @@ public class Screen_Inventory : MonoBehaviour
             return;
         }
         RestRepairButton.SetActive(CO.co.AreWeResting.Value);
+        RepairButtonTex.text = $"REPAIR <color=green>(100)\r\n<color=yellow>-{CO.co.GetDrifterRepairCost()}M";
         DrifterHealthSlider.value = CO.co.PlayerMainDrifter.GetHealthRelative();
         DrifterHealthTex.text = $"DRIFTER INTEGRITY: {CO.co.PlayerMainDrifter.GetHealth().ToString("0")}/{CO.co.PlayerMainDrifter.GetMaxHealth().ToString("0")}";
         DrifterHealthTex.color = CO.co.PlayerMainDrifter.GetHealthRelative() > 0.75 ? Color.green : (CO.co.PlayerMainDrifter.GetHealthRelative() > 0.25 ? Color.yellow : Color.red);
         DrifterRepairTex.color = CO.co.PlayerMainDrifter.GetHealthRelative() < 1f ? Color.white : Color.gray;
-
+        if (CO.co.GetShopItems().Count > 0)
+        {
+            if (CO.co.AreWeCrafting.Value)
+            {
+                RestMenuTitleTex.text = $"CRAFTING \n<color=green>-{((1f-CO.co.GetAlchemyCraftingModifier())*100f).ToString("0")}% PRICE</color>";
+            }
+            else
+            {
+                RestMenuTitleTex.text = "TRADING";
+            }
+        } else
+        {
+            RestMenuTitleTex.text = "RESTING";
+        }   
     }
 
     [Header("CREW SCREEN")]
@@ -674,7 +689,7 @@ public class Screen_Inventory : MonoBehaviour
         CrewIcon.sprite = Crew.CharacterBackground.Sprite_Player;
         CrewStripes.sprite = Crew.CharacterBackground.Sprite_Stripes;
         CrewStripes.color = Crew.CharacterBackground.BackgroundColor;
-        CrewName.text = $"{Crew.UnitName} {Crew.CharacterName.Value}";
+        CrewName.text = $"{Crew.UnitName} {Crew.CharacterName.Value} - LEVEL {Crew.GetUnitUpgradeLevel()}";
         CrewName.color = Crew.CharacterBackground.BackgroundColor;
         CrewDescription.text = $"{Crew.UnitDescription}";
 

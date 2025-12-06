@@ -63,8 +63,8 @@ public class ShopItemButton : MonoBehaviour
                 Icon.color = Color.gray;
                 Cost.text = "<color=green>[BOUGHT]";
             }
-            else if (ItemLink.CanBeBought()) Icon.color = Color.gray;
-            else Icon.color = Color.white;
+            else if (ItemLink.CanBeBought()) Icon.color = Color.white;
+            else Icon.color = Color.gray;
         } else
         {
             gameObject.SetActive(false);
@@ -73,7 +73,12 @@ public class ShopItemButton : MonoBehaviour
     public void WhenPressed()
     {
         if (!ItemLink) return;
-        if (!ItemLink.CanBeBought()) return;
+        if (!ItemLink.CanBeBought())
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
+        AUDCO.aud.PlaySFX(AUDCO.aud.Purchase);
         ItemLink.BuyShopItemRpc();
     }
 }

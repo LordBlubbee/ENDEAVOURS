@@ -19,16 +19,14 @@ MonoBehaviour:
   BiomeHostileRatio: 0.4
   BiomeSize: 5
   PossiblePointsCalm:
-  - {fileID: 11400000, guid: a9d5a661b376ddf409fa5ea73de558eb, type: 2}
-  - {fileID: 11400000, guid: 83773a7b191572240a47836f4bc465b1, type: 2}
+  - {fileID: 11400000, guid: 0e3ec5f71bdffec408503e0ab7c62634, type: 2}
+  - {fileID: 11400000, guid: affd20759cceaa044a39629fff2b413c, type: 2}
   PossiblePointsNeutral:
-  - {fileID: 11400000, guid: fd8e1b72a935ec7468d2f279941a64c1, type: 2}
-  - {fileID: 11400000, guid: effe71cc36396474da5ee9c3e84f9100, type: 2}
+  - {fileID: 11400000, guid: f85614dc02f2ee24084a89dac701ca18, type: 2}
   PossiblePointsHostile:
-  - {fileID: 11400000, guid: c184cc73d9ac5f946a00f24ce252bdf6, type: 2}
-  - {fileID: 11400000, guid: b098bda5f29ca8043af26c68c5318ad9, type: 2}
-  - {fileID: 11400000, guid: 5ef372c309fa95c499c3c0004ae786dd, type: 2}
+  - {fileID: 11400000, guid: 8c19b85e954f1444eaf22bc3ef113e4e, type: 2}
+  - {fileID: 11400000, guid: f3abea5c1db978c4486df9572f33c218, type: 2}
   PossiblePointsRest:
-  - {fileID: 11400000, guid: ec342651a76558a46a57768798a836b5, type: 2}
+  - {fileID: 11400000, guid: 673c942ec81d9974bb7787062baa9987, type: 2}
   PossiblePointsArrival:
-  - {fileID: 11400000, guid: 763090235f45ba04cb01dd2a02041f4c, type: 2}
+  - {fileID: 11400000, guid: 10e9d257f3ab6eb4aa09701a0bebdd11, type: 2}

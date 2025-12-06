@@ -24,7 +24,7 @@ public class ScriptableLootTable : ScriptableObject
     [Header("SHOP DROPS")]
     public int MinimumShopDrops = 0;
     public int MaximumShopDrops = 0;
-    public List<WeightedShopItem> PossibleShopDrops = new();
+    public ScriptableShopItemList PossibleShopDrops;
 }
 [Serializable]
 public class LootItem
@@ -43,11 +43,4 @@ public class LootItem
 public class RandomLootItem : LootItem
 {
     public int Weight = 10;
-}
-
-[Serializable]
-public class WeightedShopItem
-{
-    public ScriptableShopitem Item;
-    public int Weight;
 }

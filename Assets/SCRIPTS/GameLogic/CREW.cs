@@ -26,10 +26,16 @@ public class CREW : NetworkBehaviour, iDamageable
         AddUpgradeLevel(1);
     }
 
+    public int GetUnitUpgradeLevel()
+    {
+        return UpgradeLevel.Value;
+    }
     public int GetLevelupCost(int num = -1) {
         if (num == -1) num = UpgradeLevel.Value;
         switch (num)
         {
+            case -1:
+                return 20;
             case 0:
                 return 30;
             case 1:
@@ -1295,6 +1301,24 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         return false;
     }
+
+    public void SetParry(float dur)
+    {
+        ParryTime = dur;
+        if (!isParrying) StartCoroutine(ParryNumerator());
+    }
+
+    bool isParrying = false;
+    float ParryTime = 0f;
+    IEnumerator ParryNumerator()
+    {
+        isParrying = true;
+        while (ParryTime > 0f) {
+            ParryTime -= CO.co.GetWorldSpeedDelta();
+            yield return null;
+        }
+        isParrying = false;
+    }
     private void StrikeMelee()
     {
         foreach (Transform hitTrans in EquippedToolObject.strikePoints)
@@ -1317,12 +1341,13 @@ public class CREW : NetworkBehaviour, iDamageable
                     if (!Blocker.tool.GetCrew().CanBeTargeted(Space)) continue;
                     MeleeHits.Add(Blocker.gameObject);
                     float Penetration = 0;
-                    if (DashingDamageBuff > 0) Penetration += 0.3f;
+                    if (DashingDamageBuff > 0 || isParrying) Penetration += 0.3f;
                     bool isBlocked = UnityEngine.Random.Range(0f, 1f) + Penetration < Blocker.BlockChanceMelee;
                     if (isBlocked)
                     {
                         if (Blocker.BlockSound != AUDCO.BlockSoundEffects.NONE) AUDCO.aud.PlayBlockSFXRpc(Blocker.BlockSound, transform.position);
                         else WeaponHitSFXRpc();
+                        if (Blocker.ParryDuration > 0f) Blocker.tool.GetCrew().SetParry(Blocker.ParryDuration);
                         if (Blocker.ReduceDamageModMelee < 1f)
                         {
                             float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
@@ -1345,9 +1370,10 @@ public class CREW : NetworkBehaviour, iDamageable
         dmg += ModifyMeleeDamage;
         dmg *= AnimationController.CurrentStrikePower();
         dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE() + 0.02f * GetCurrentCommanderLevel();
-        if (DashingDamageBuff > 0)
+        if (DashingDamageBuff > 0 || isParrying)
         {
             DashingDamageBuff = 0;
+            ParryTime = 0;
             dmg *= 2;
         }
         if (crew is DRIFTER) ((DRIFTER)crew).Impact(dmg * 0.5f, checkHit);

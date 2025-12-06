@@ -179,15 +179,13 @@ MonoBehaviour:
   OST2: {fileID: 7587355540660797396}
   spawnSFX: {fileID: 6261859860495128718, guid: 0b4a93330e28c1d438836d4cb2beac53, type: 3}
   SoundtrackCalm:
-  - {fileID: 8300000, guid: 72f15decb631a2846a4273d03b9099d5, type: 3}
-  - {fileID: 8300000, guid: c3b96d74168b5524e99cdcf46f6b34d0, type: 3}
-  - {fileID: 8300000, guid: 8f3f601541670664fafbfaf4feed5e6d, type: 3}
+  - {fileID: 8300000, guid: 2f5b5b0f696a09a43a0175c81c972ca8, type: 3}
+  - {fileID: 8300000, guid: 2f5b5b0f696a09a43a0175c81c972ca8, type: 3}
+  - {fileID: 8300000, guid: 2f5b5b0f696a09a43a0175c81c972ca8, type: 3}
   SoundtrackIntense:
-  - {fileID: 8300000, guid: 001979dbb4b9bb649958183d7dc44c7b, type: 3}
-  - {fileID: 8300000, guid: 242483acecbd1774487e35bfc332a4d9, type: 3}
-  - {fileID: 8300000, guid: 9dd2ed974230ac143b1c4c72ddbd5206, type: 3}
-  CurrentSoundtrackID:
-    m_InternalValue: -1
+  - {fileID: 8300000, guid: 322ef87462f5fba439f5b8d228742e25, type: 3}
+  - {fileID: 8300000, guid: 322ef87462f5fba439f5b8d228742e25, type: 3}
+  - {fileID: 8300000, guid: 322ef87462f5fba439f5b8d228742e25, type: 3}
   Block_Shield:
   - {fileID: 8300000, guid: 6a7428bbd6fbdac44b4907b97f61fd12, type: 3}
   - {fileID: 8300000, guid: 21fc6e48e0f719b4095a8f52e910af0e, type: 3}

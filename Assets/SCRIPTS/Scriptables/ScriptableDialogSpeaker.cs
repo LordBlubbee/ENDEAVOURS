@@ -4,7 +4,6 @@ using UnityEngine;
 public class ScriptableDialogSpeaker : ScriptableObject
 {
     //This is a SPEAKER, an animated/speaking entity that does the animation for a piece of text tied to it.
-    public string Name;
     public Color NameColor;
     public Sprite Portrait;
     public AudioClip[] Voice;

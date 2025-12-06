@@ -78,7 +78,9 @@ MonoBehaviour:
   TotalZoneProgress: 0
   NextBiomePoints:
   - {fileID: 11400000, guid: c5c1a9e590b5bb44dbfa78fa871eb545, type: 2}
-  Test_StartingLoot: {fileID: 11400000, guid: 0a70c805b4206b04dad2f4c4d74456c6, type: 2}
+  Test_StartingLoot: {fileID: 0}
+  CurrentSoundtrackID:
+    m_InternalValue: -1
 --- !u!114 &5031945110435053922
 MonoBehaviour:
   m_ObjectHideFlags: 0

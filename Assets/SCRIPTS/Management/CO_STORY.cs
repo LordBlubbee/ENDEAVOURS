@@ -215,7 +215,7 @@ public class CO_STORY : NetworkBehaviour
         foreach (DialogPart line in Dialog.StoryTexts)
         {
             StoryList.Add(ReturnDialogPart(line));
-            SpeakerLinks.Add(line.Speaker.Name);
+            SpeakerLinks.Add(line.Speaker.name);
         }
         SetMainStoryText(StoryList, SpeakerLinks);
         StoryList = new();

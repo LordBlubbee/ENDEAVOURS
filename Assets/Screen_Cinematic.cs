@@ -21,13 +21,15 @@ public class Screen_Cinematic : MonoBehaviour
     }
     IEnumerator PlayIntro()
     {
-        if (Intro_OST) AUDCO.aud.setOST(Intro_OST);
 
         SetImage(null);
         SetImage(null);
         yield return new WaitForSeconds(1f);
+
         StartCoroutine(SkipTextRoutine());
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
+        if (Intro_OST) AUDCO.aud.setOST(Intro_OST);
+        yield return new WaitForSeconds(2f);
         SetText("Long ago, the <color=#00AAFF>ORDER OF THE STORM</color> had united humanity.");
         yield return new WaitForSeconds(5f);
         SetImage(Intro_Images[0]); //Peaceful Catali world
@@ -37,8 +39,8 @@ public class Screen_Cinematic : MonoBehaviour
         SetText("But something was wrong.");
         yield return new WaitForSeconds(4f);
         SetText("");
-        yield return new WaitForSeconds(1f);
-        SetImage(Intro_Images[1]); //Mist incident
+        yield return new WaitForSeconds(1f); 
+        SetImage(Intro_Images[1]); //Mist incident (23)
         yield return new WaitForSeconds(3f);
         SetText("The Mist consumed all life. It took every man, every plant, every animal...");
         yield return new WaitForSeconds(6f);
@@ -50,7 +52,7 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(6f);
         SetText("");
         yield return new WaitForSeconds(1f);
-        SetImage(Intro_Images[2]); //Purple planet
+        SetImage(Intro_Images[2]); //Purple planet (50)
         yield return new WaitForSeconds(3f);
         SetText("One hundred and eighteen years later.");
         yield return new WaitForSeconds(5f);
@@ -68,10 +70,10 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(7f);
         SetText("");
         yield return new WaitForSeconds(1f);
-        SetImage(Intro_Images[4]); //Starlight Endeavour Fleet
+        SetImage(Intro_Images[4]); //Starlight Endeavour Fleet (86)
         yield return new WaitForSeconds(3f);
-        SetText("They would launch the <color=#FF00FF>STARLIGHT ENDEAVOUR</color. A top-secret mission...");
-        yield return new WaitForSeconds(6f); //87
+        SetText("They would launch the <color=#FF00FF>STARLIGHT ENDEAVOUR</color>. A top-secret mission...");
+        yield return new WaitForSeconds(6f);
         SetText("...To delve under the <color=#FF00FF>MIST</color>, to find the source, and to destroy it.");
         yield return new WaitForSeconds(7f);
         SetText("");
@@ -84,43 +86,47 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(6f);
         SetText("");
         yield return new WaitForSeconds(1f);
-        SetImage(Intro_Images[6]); //Seeker Ambush
+        SetImage(Intro_Images[6]); //Seeker Ambush (119)
         yield return new WaitForSeconds(3f);
-        SetText("...But was attacked from below, blasts from the deep piercing through the armour of our proud Drifters!");
+        SetText("But then, an ambush, blasts from the deep piercing through the armour of our proud Drifters!");
         yield return new WaitForSeconds(6f);
         SetText("The fleet fought back. With all they could... But they were no match for the mysterious force that had assailed them.");
         yield return new WaitForSeconds(8f);
 
         SetText("All they had found was a single coordinate. Far from here, with an unknown purpose...");
         yield return new WaitForSeconds(7f);
-        SetImage(Intro_Images[7]); //Nexus Points
+        SetText("");
+        yield return new WaitForSeconds(1f);
+        SetImage(Intro_Images[7]); //Nexus Points (144)
         yield return new WaitForSeconds(3f);
         SetText("The <color=#00FFAA>NEXUS POINT</color>.");
         yield return new WaitForSeconds(4f);
-        SetText("YOU are the only one to have escaped the disaster.");
-        yield return new WaitForSeconds(6f); //148
+        SetText("One coordinate left behind on rocks, deep within the darkness, far to the north...");
+        yield return new WaitForSeconds(6f);
         SetText("");
         yield return new WaitForSeconds(1f);
         SetImage(Intro_Images[8]); //Governments Failing
         yield return new WaitForSeconds(3f);
         SetText("A revolution has broken out. Evidence that the <color=#FF00FF>MIST</color> is rising has been confirmed.");
-        yield return new WaitForSeconds(8f);
-        SetText("The governments can no longer support the Starlight Endeavour.");
+        yield return new WaitForSeconds(7f);
+        SetText("The governments can no longer support a mission for the good of all humanity when their internal struggles overtake them.");
         yield return new WaitForSeconds(7f);
         SetText("");
         yield return new WaitForSeconds(1f);
-        SetImage(Intro_Images[9]); //Map to Nexus Point
-        yield return new WaitForSeconds(3f); //171
-        SetText("Lead all that remains of us to the <color=#00FFAA>NEXUS POINT</color>...");
-        yield return new WaitForSeconds(6f);
-        SetText("Uncover the truth. Free Humanity from the Mist. Go now, and be swift...");
-        yield return new WaitForSeconds(6f);
+        SetImage(Intro_Images[9]); //Map to Nexus Point (177)
+        yield return new WaitForSeconds(3f);
+        SetText("YOU are the only known survivor of the Expedition. Lead all that remains of us to the <color=#00FFAA>NEXUS POINT</color>...");
+        yield return new WaitForSeconds(7f);
+        SetText("Uncover the truth. Free Humanity from the <color=#FF00FF>MIST</color>. Before we are consumed, before we destroy ourselves.");
+        yield return new WaitForSeconds(7f);
         SetText("Save us from this <color=#FF00FF>MISTWORLD</color>.");
-        yield return new WaitForSeconds(4f); 
+        yield return new WaitForSeconds(3f); 
         SetImage(null);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         SetText("");
-        yield return new WaitForSeconds(2f); //191 seconds
+        yield return new WaitForSeconds(2f);
+        //202
+
         //SetImage(Intro_Images[10]); //Title Screen
 
         //Ending
@@ -160,7 +166,7 @@ public class Screen_Cinematic : MonoBehaviour
             SkipTex.color = new Color(1, 0, 0, Mathf.Clamp01(SkipTex.color.a - Time.deltaTime));
             yield return null;
         }
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(7f);
         while (SkipTex.color.a > 0)
         {
             SkipTex.color = new Color(1, 0, 0, Mathf.Clamp01(SkipTex.color.a + Time.deltaTime));

@@ -162,6 +162,7 @@ public class AI_UNIT : NetworkBehaviour
     {
         if (!IsServer) return;
         if (!ObjectiveSpace) ObjectiveSpace = getSpace();
+        if (ObjectiveTarget == Vector3.zero) SetObjectiveTarget(transform.position, getSpace());
         StartCoroutine(RunAI());
     }
 
@@ -389,11 +390,18 @@ public class AI_UNIT : NetworkBehaviour
             }
             return;
         }
+       
         if (OutOfCombatCrewBehavior()) return;
+        if (Unit.IsEnemyInFront(GetAttackDistance()))
+        {
+            Unit.EquipWeapon1Rpc();
+            Unit.UseItem1Rpc();
+        }
         if (ObjectiveSpace != getSpace())
         {
             if (!AttemptBoard(ObjectiveSpace))
             {
+                //Find the nearest boarding point in THIS space to the nearest boarding tile in the OTHER space
                 SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(ObjectiveSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
                 SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
             }
@@ -449,11 +457,7 @@ public class AI_UNIT : NetworkBehaviour
             return;
         }
         //We are boarding an enemy vessel!!
-        Unit.EquipWeapon1Rpc();
-        if (Unit.IsEnemyInFront(GetAttackDistance()))
-        {
-            Unit.UseItem1Rpc();
-        }
+      
         SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
         if (DistToObjective(transform.position) > 16)
         {
@@ -468,6 +472,7 @@ public class AI_UNIT : NetworkBehaviour
     {
         if (AI_TacticTimer < 0) SwitchTacticsCrewOutOfCombat();
 
+       
         Vector3 point;
         Module mod;
         switch (AI_Tactic)
@@ -488,7 +493,14 @@ public class AI_UNIT : NetworkBehaviour
                     else SetAIMoveTowards(point, Group.HomeSpace);
                     SetLookTowards(point, Group.HomeSpace);
                 }
+             
                 if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();
+                if (Unit.IsEnemyInFront(GetAttackDistance()))
+                {
+                    Unit.EquipWeapon1Rpc();
+                    Unit.UseItem1Rpc();
+                    break;
+                }
                 Unit.UseItem2Rpc();
                 return true;
             case AI_TACTICS.HEAL_ALLIES:
@@ -503,8 +515,15 @@ public class AI_UNIT : NetworkBehaviour
                     AI_TacticTimer = 0f;
                     break;
                 }
+               
                 SetAIMoveTowards(GetPointAwayFromPoint(WoundedAlly.transform.position, 2f), WoundedAlly.Space);
                 SetLookTowards(WoundedAlly.transform.position, WoundedAlly.Space);
+                if (Unit.IsEnemyInFront(GetAttackDistance()))
+                {
+                    Unit.EquipWeapon1Rpc();
+                    Unit.UseItem1Rpc();
+                    return true;
+                }
                 Unit.EquipMedkitRpc();
                 Unit.UseItem1Rpc();
                 if (Dist(WoundedAlly.transform.position) < 8f)
@@ -523,9 +542,16 @@ public class AI_UNIT : NetworkBehaviour
                     break;
                 }
                 SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+              
                 if (Dist(mod.transform.position) < 8f)
                 {
                     SetLookTowards(mod.GetTargetPos(), mod.Space);
+                    if (Unit.IsEnemyInFront(GetAttackDistance()))
+                    {
+                        Unit.EquipWeapon1Rpc();
+                        Unit.UseItem1Rpc();
+                        return true;
+                    }
                 }
                 else
                 {

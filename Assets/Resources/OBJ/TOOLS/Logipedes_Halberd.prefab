@@ -182,6 +182,7 @@ MonoBehaviour:
   Blockers:
   - {fileID: 7437231586876515039}
   AI: 0
+  isConsumable: 0
   CrosshairSprite: {fileID: 21300000, guid: b2087bbfc192e8041bd4924a70def55c, type: 3}
   CrosshairMaxRange: 5
   CrosshairMinRange: 4
@@ -221,7 +222,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9c3f5d2aeaf86144a8fad531e16ad498, type: 3}
   attackDamage1: 15
   RangedPrefab1: {fileID: 0}
+  UniqueSpell1: {fileID: 0}
   Reload1: 0
+  ExtendedCooldown1: 0
   ApplyBuff: {fileID: 0}
   ActionUse2: 3
   attackAnimations2: 10000000
@@ -229,7 +232,9 @@ MonoBehaviour:
   Action2_SFX: []
   attackDamage2: 10
   RangedPrefab2: {fileID: 0}
+  UniqueSpell2: {fileID: 0}
   Reload2: 0
+  ExtendedCooldown2: 0
 --- !u!61 &3740242466005506562
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -295,6 +300,7 @@ MonoBehaviour:
   BlockChanceMelee: 1
   BlockChanceRanged: 0.8
   ReflectProjectileChance: 0
+  ParryDuration: 0.8
   isActive: 0
   isAlwaysActive: 0
   BlockSound: 1

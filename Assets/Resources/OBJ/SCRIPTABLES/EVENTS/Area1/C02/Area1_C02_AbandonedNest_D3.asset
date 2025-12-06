@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Area1_C02_AbandonedNest_D3
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: It is true. The Looncrabs had come from deeper into the caves, and
+      items looted from human fighters has been stashed here. Why Looncrabs do this
+      remains unknown.
+    Speaker: {fileID: 11400000, guid: 86c7399f1aefa0c4cac215b5af8a21f0, type: 2}
+    Alternatives: []
+  - BaseText: However, before you can react, skittering and chirping echoes through
+      the caves. Your team evacuates, running back to your Drifter as soon as possible...
+    Speaker: {fileID: 11400000, guid: 86c7399f1aefa0c4cac215b5af8a21f0, type: 2}
+    Alternatives:
+    - AlternativeText: 
+      Prerequisites: []
+  - BaseText: When your team delivers the news to your Gubernator, it is too late.
+      Looncrabs start emerging from the nearby Mist!
+    Speaker: {fileID: 11400000, guid: 1b51eea723c68724a9eba9f02b38fc91, type: 2}
+    Alternatives:
+    - AlternativeText: 
+      Prerequisites: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Prepare to ward off the Nebuloid!
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: 3caf131f30f11494dbf455af56a53736, type: 2}

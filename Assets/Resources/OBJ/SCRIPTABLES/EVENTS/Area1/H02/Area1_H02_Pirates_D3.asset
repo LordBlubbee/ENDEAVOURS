@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Area1_H02_Pirates_D3
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: Nah, actually, your vessel's pretty big. I think we'll be takin' it
+      all, yar har har!
+    Speaker: {fileID: 11400000, guid: f2895f0ec963c244e9bb999bac9369a3, type: 2}
+    Alternatives: []
+  - BaseText: The Raiders close the distance, boarding parties ready. Though they
+      are poorly trained, these brutish people will stop at nothing to burn you and
+      everything down.
+    Speaker: {fileID: 11400000, guid: c40c04091c58e3741991105df408e96f, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Prepare for battle.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: bcc16abe4c7aba847af3c9df349b527d, type: 2}

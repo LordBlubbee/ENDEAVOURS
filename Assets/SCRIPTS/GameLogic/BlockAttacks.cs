@@ -11,6 +11,7 @@ public class BlockAttacks : MonoBehaviour
     public float BlockChanceMelee = 1f;
     public float BlockChanceRanged = 1f;
     public float ReflectProjectileChance = 0f;
+    public float ParryDuration = 0f;
     public bool isActive;
     public bool isAlwaysActive = false;
     public AUDCO.BlockSoundEffects BlockSound;

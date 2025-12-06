@@ -63,6 +63,10 @@ public class ShopItem : NetworkBehaviour
         {
             CO.co.AddInventoryItem(Item.Equippable);
         }
+        CO.co.Resource_Materials.Value -= Item.DealMaterialsCost;
+        CO.co.Resource_Supplies.Value -= Item.DealSuppliesCost;
+        CO.co.Resource_Ammo.Value -= Item.DealAmmoCost;
+        CO.co.Resource_Tech.Value -= Item.DealTechCost;
         CO.co.Resource_Materials.Value += Item.DealMaterialsGain;
         CO.co.Resource_Supplies.Value += Item.DealSuppliesGain;
         CO.co.Resource_Ammo.Value += Item.DealAmmoGain;

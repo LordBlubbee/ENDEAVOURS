@@ -6,7 +6,7 @@ public class ScriptablePoint : ScriptableObject
 {
     public string GetResourceLink()
     {
-        return ResourceLink;
+        return $"{ResourceLink}/{name}";
     }
     public string UniqueName = "";
     public string ResourceLink = "";

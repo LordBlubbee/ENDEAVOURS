@@ -221,8 +221,8 @@ public class CO_SPAWNER : NetworkBehaviour
         drifter.IsMainDrifter.Value = true;
         drifter.NetworkObject.Spawn();
         drifter.Faction.Value = 1;
-        drifter.SetHealth(drifter.GetMaxHealth() * 0.75f);
         drifter.Init();
+        drifter.SetHealth(drifter.GetMaxHealth() * 0.75f);
         CO.co.PlayerMainDrifter = drifter;
 
         foreach (CREW Prefab in drifter.StartingCrew)
@@ -427,6 +427,7 @@ public class CO_SPAWNER : NetworkBehaviour
         vault.Faction = 0;
         vault.Init();
         vault.TakeDamage(9999, vault.transform.position, iDamageable.DamageType.TRUE);
+        Dungeon.DungeonNetworkObjects.Add(vault.NetworkObject);
         List.Add(vault);
         return List;
     }
@@ -439,7 +440,7 @@ public class CO_SPAWNER : NetworkBehaviour
             Levelup -= 100;
             drifter.MaxHealth += drifterData.HullIncreasePerLevelup;
         }
-        float Budget = drifterData.BaseWeaponBudgetMod * Quality;
+        float Budget = drifterData.BaseWeaponBudgetMod * Quality + 40;
         int Tries = 10;
         while (Budget > 0)
         {
@@ -546,6 +547,19 @@ public class CO_SPAWNER : NetworkBehaviour
     }
 
     /*VFX*/
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnExplosionTinyRpc(Vector3 pos)
+    {
+        float Trans = UnityEngine.Random.Range(0.5f, 0.7f);
+        float Fade = UnityEngine.Random.Range(0.8f, 1.2f);
+        PART part = Instantiate(ExplosionSmall, pos, Quaternion.identity);
+        part.transform.SetParent(CO.co.GetTransformAtPoint(pos));
+        part.transform.localScale = new Vector3(Trans, Trans, 1);
+        part.FadeChange *= Fade;
+
+        float ExplosionPower = 10f - CAM.cam.Dis(pos) * 0.15f;
+        if (ExplosionPower > 2) CAM.cam.ShakeCamera(ExplosionPower * 0.5f);
+    }
 
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnExplosionSmallRpc(Vector3 pos)
@@ -558,7 +572,7 @@ public class CO_SPAWNER : NetworkBehaviour
         part.FadeChange *= Fade;
 
         float ExplosionPower = 10f - CAM.cam.Dis(pos) * 0.15f;
-        if (ExplosionPower > 2) CAM.cam.ShakeCamera(ExplosionPower * 0.7f);
+        if (ExplosionPower > 2) CAM.cam.ShakeCamera(ExplosionPower * 0.6f);
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnExplosionMediumRpc(Vector3 pos)

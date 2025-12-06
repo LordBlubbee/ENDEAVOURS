@@ -4909,7 +4909,7 @@ MonoBehaviour:
   ParticleSystem: {fileID: 273074317841944583}
   Duration: 30
   DamagePerSecond: 10
-  DamageRadius: 0
+  DamageRadius: 4
   DamageType: 5
   ModuleDamageMod: 1
 --- !u!114 &79363158191438067
