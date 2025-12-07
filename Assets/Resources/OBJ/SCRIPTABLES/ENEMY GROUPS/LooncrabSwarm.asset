@@ -27,7 +27,7 @@ MonoBehaviour:
   SpawnDrifter: []
   DungeonQualityLevel: 100
   SpawnDungeon: {fileID: 0}
-  SpawnGroupAmountMin: 1
+  SpawnGroupAmountMin: 2
   SpawnGroupAmountMax: 4
   SpawnGroupRange: 30
   SpawnDistanceMin: 150

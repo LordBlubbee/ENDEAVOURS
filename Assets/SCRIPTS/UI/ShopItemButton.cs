@@ -26,7 +26,7 @@ public class ShopItemButton : MonoBehaviour
             Tool.Tooltip = $"{item.Item.Equippable.ItemName} \n\n{item.Item.Equippable.ItemDesc}";
         } else if (item.Item.BuyCrew)
         {
-            Icon.sprite = item.Item.BuyCrew.CharacterBackground.MainIcon;
+            Icon.sprite = item.Item.BuyCrew.Spr.sprite;
             Tool.Tooltip = $"{item.Item.BuyCrew.UnitName} \n\n{item.Item.BuyCrew.UnitDescription}";
         }
         else

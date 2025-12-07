@@ -34,7 +34,6 @@ public class ArtifactFaithfulCandle : ArtifactAbility
 
     private void ProcAbility()
     {
-        Debug.Log("Proccing...");
         if (CooldownTimer > 0) return;
 
         PROJ proj = (PROJ)GameObject.Instantiate(Artifact.AbilityPrefab1.GetComponent<PROJ>(), User.transform.position + User.getLookVector() * 0.5f, User.transform.rotation);

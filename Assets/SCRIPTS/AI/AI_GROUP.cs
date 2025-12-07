@@ -68,6 +68,8 @@ public class AI_GROUP : MonoBehaviour
         ENGAGE,
         SHIP
     }
+
+    private List<AI_UNIT> UnitListPatrollers = new();
     IEnumerator RunAI()
     {
         /*
@@ -75,10 +77,11 @@ public class AI_GROUP : MonoBehaviour
          
          */
 
+        //Init
         switch (AI_Objective)
         {
             case AI_OBJECTIVES.DORMANT:
-                int amountToSelect = Mathf.RoundToInt(Units.Count * 0.3f);
+                int amountToSelect = Mathf.RoundToInt(3+Units.Count * 0.05f);
                 List<AI_UNIT> copy = new List<AI_UNIT>(Units);
 
                 // Shuffle and take the first N units
@@ -94,6 +97,7 @@ public class AI_GROUP : MonoBehaviour
 
                     int index = UnityEngine.Random.Range(0, copy.Count);
                     copy[index].SetTactic(AI_UNIT.AI_TACTICS.PATROL,0);
+                    UnitListPatrollers.Add(copy[index]);
                     copy.Remove(copy[index]);
                 }
 
@@ -307,6 +311,11 @@ public class AI_GROUP : MonoBehaviour
                     if (unit.GetObjectiveDistance() < 3f && UnityEngine.Random.Range(0f,1f) < 0.1f)
                     {
                         unit.SetObjectiveTarget(HomeDungeon.Space.GetRandomUnboardableGrid().transform.position, unit.getSpace());
+                        if (unit.GetTactic() != AI_UNIT.AI_TACTICS.DORMANT && unit.GetTactic() != AI_UNIT.AI_TACTICS.PATROL)
+                        {
+                            if (UnitListPatrollers.Contains(unit)) unit.SetTactic(AI_UNIT.AI_TACTICS.PATROL, 999f);
+                            else unit.SetTactic(AI_UNIT.AI_TACTICS.DORMANT, 999f);
+                        }
                     }
                 }
                 break;

@@ -49,6 +49,11 @@ public class AI_UNIT : NetworkBehaviour
         AI_TacticTimer = timer;
         AI_MoveTimer = 0;
     }
+
+    public AI_TACTICS GetTactic()
+    {
+        return AI_Tactic;
+    }
     public void SetObjectiveTarget(Vector3 target, SPACE space)
     {
         if (space == null) ObjectiveTarget = target;
@@ -675,17 +680,17 @@ public class AI_UNIT : NetworkBehaviour
                 case AI_TACTICS.PATROL:
                     SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
                     StopLooking();
-                    if (DistToObjective(transform.position) > 1)
+                    /*if (DistToObjective(transform.position) > 1)
                     {
                        
-                    }
-                    CREW crew = GetClosestVisibleEnemyInCone(35f, 90f);
+                    }*/
+                    CREW crew = GetClosestVisibleEnemyInCone(25f, 90f);
                     if (crew)
                     {
                         StopMoving();
                         SetLookTowards(crew.transform.position, ObjectiveSpace);
                         EnemyTargetTimer += 0.5f;
-                        if (EnemyTargetTimer > 2f || Unit.GetHealthRelative() < 1f)
+                        if (EnemyTargetTimer > 2.5f || Unit.GetHealthRelative() < 1f)
                         {
                             SetEnemyTarget(crew);
                             SwitchTacticsLooncrab();
@@ -1045,6 +1050,7 @@ public class AI_UNIT : NetworkBehaviour
         {
             if (!enemy.CanBeTargeted(getSpace())) continue;
             if (enemy.Faction == Unit.GetFaction()) continue;
+            if (enemy is DoorSystem) continue;
             float dist = (enemy.transform.position - myPos).sqrMagnitude;
             if (dist < minDist)
             {

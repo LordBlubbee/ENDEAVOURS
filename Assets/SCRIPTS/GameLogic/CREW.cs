@@ -58,6 +58,11 @@ public class CREW : NetworkBehaviour, iDamageable
     public void AddUpgradeLevel(int Levels)
     {
         CREW crew = this;
+        if (Levels == 0)
+        {
+            CurHealth.Value = GetMaxHealth();
+            return;
+        }
         UpgradeLevel.Value += Levels;
         crew.ModifyHealthMax += crew.HealthIncreasePerLevelup * Levels;
         crew.AddAttributes(
@@ -752,19 +757,22 @@ public class CREW : NetworkBehaviour, iDamageable
             }
             if (NearbyCommander != wasPreviouslyActive)
             {
-                if (LOCALCO.local.GetPlayer() == this)
+                if (CommanderAlly != null && wasPreviouslyActive < NearbyCommander)
                 {
-                    if (CommanderAlly != null && wasPreviouslyActive < NearbyCommander)
-                    {
-                        CO_SPAWNER.co.SpawnCommandVFXRpc(CommanderAlly.transform.position);
-                        CO_SPAWNER.co.SpawnCommandVFXRpc(transform.position);
-                    }
-                    if (NearbyCommander > 0) AddBuffParticlesRpc(CO_SPAWNER.BuffParticles.COMMAND, NearbyCommander);
-                    else RemoveBuffParticlesRpc(CO_SPAWNER.BuffParticles.COMMAND);
+                    CommanderAlly.SpawnCommandVFXRpc();
+                    SpawnCommandVFXRpc();
                 }
+                if (NearbyCommander > 0) AddBuffParticlesRpc(CO_SPAWNER.BuffParticles.COMMAND, NearbyCommander);
+                else RemoveBuffParticlesRpc(CO_SPAWNER.BuffParticles.COMMAND);
             }
             BuffTick(0.5f);
         }
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnCommandVFXRpc()
+    {
+        CO_SPAWNER.co.SpawnCommandVFX(this);
     }
     IEnumerator PeriodicUpdates()
     {
@@ -811,7 +819,7 @@ public class CREW : NetworkBehaviour, iDamageable
 
     public int GetDismissValue()
     {
-        int num = 20;
+        int num = 25;
         int Level = UpgradeLevel.Value;
         while (Level > 0)
         {
@@ -1296,7 +1304,7 @@ public class CREW : NetworkBehaviour, iDamageable
             {
                 if (!IsTargetEnemy(crew)) continue;
                 if (!crew.CanBeTargeted(Space)) continue;
-                if (crew.Space == null) continue;
+                if (Space != null && crew is DRIFTER) continue;
                 return true;
             }
         }
@@ -1370,7 +1378,9 @@ public class CREW : NetworkBehaviour, iDamageable
         if (!crew.CanBeTargeted(Space)) return false;
         dmg += ModifyMeleeDamage;
         dmg *= AnimationController.CurrentStrikePower();
-        dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE() + 0.02f * GetCurrentCommanderLevel();
+        dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE();
+        dmg *= 1f + 0.03f * GetCurrentCommanderLevel();
+        if (IsPlayer()) dmg /= 0.7f;
         if (DashingDamageBuff > 0 || isParrying)
         {
             DashingDamageBuff = 0;
@@ -1405,7 +1415,9 @@ public class CREW : NetworkBehaviour, iDamageable
         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
         dmg += ModifyRangedDamage;
         dmg *= AnimationController.CurrentStrikePower();
-        dmg *= 0.7f + 0.1f * GetATT_ARMS() + 0.02f * GetCurrentCommanderLevel();
+        dmg *= 0.7f + 0.1f * GetATT_ARMS();
+        dmg *= 1f + 0.03f * GetCurrentCommanderLevel();
+        if (IsPlayer()) dmg /= 0.7f;
         proj.NetworkObject.Spawn();
         proj.Init(dmg, GetFaction(), Space, trt);
         proj.CrewOwner = this;
@@ -1414,7 +1426,7 @@ public class CREW : NetworkBehaviour, iDamageable
         reload *= reloadMod;
         SetExtendedCooldown(reload);
         StartCoroutine(AttackCooldown(reload));
-        ArtifactOnRanged();
+        if (!(proj is PROJ_Grapple)) ArtifactOnRanged();
     }
     private void StrikeSpell(Vector3 trt)
     {
@@ -1422,7 +1434,9 @@ public class CREW : NetworkBehaviour, iDamageable
         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
         dmg += ModifySpellDamage;
         dmg *= AnimationController.CurrentStrikePower();
-        dmg *= 0.7f + 0.1f * GetATT_COMMUNOPATHY() + 0.02f * GetCurrentCommanderLevel();
+        dmg *= 0.7f + 0.1f * GetATT_COMMUNOPATHY();
+        dmg *= 1f + 0.03f * GetCurrentCommanderLevel();
+        if (IsPlayer()) dmg /= 0.7f;
         if (GetATT_COMMUNOPATHY() < 4) dmg *= 0.25f * GetATT_COMMUNOPATHY();
         proj.NetworkObject.Spawn();
         proj.Init(dmg, GetFaction(), Space, trt);
@@ -1466,7 +1480,8 @@ public class CREW : NetworkBehaviour, iDamageable
                     if (!(crew is Module)) continue; 
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
-                    dmg *= 0.4f + 0.2f * GetATT_ENGINEERING() + 0.05f * GetCurrentCommanderLevel();
+                    dmg *= 0.4f + 0.2f * GetATT_ENGINEERING();
+                    dmg *= 1f + 0.05f * GetCurrentCommanderLevel();
                     if (CO.co.IsSafe()) dmg *= 5;
                     crew.Heal(dmg);
                     canStrikeMelee = false; //Turn off until animation ends
@@ -1568,6 +1583,11 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         if (!hasInitialized) return;
         AnimationController.setAnimation(stat, pr);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void setAnimationIfNotAlreadyRpc(ANIM.AnimationState stat, int pr = 99)
+    {
+        setAnimationIfNotAlready(stat, pr);
     }
     [Rpc(SendTo.NotServer)]
     public void setAnimationToClientsOnlyRpc(ANIM.AnimationState stat, int pr = 99)
@@ -1722,7 +1742,10 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         if (isMoving.Value)
         {
-            if (IsServer) setAnimationIfNotAlready(animDefaultMove, 1);
+            if (IsServer)
+            {
+                if (GetCurrentAnimation() != animDefaultMove) setAnimationIfNotAlreadyRpc(animDefaultMove, 1);
+            }
             float towardsang = Mathf.Abs(AngleTowards(MoveInput));
             float towardsfactor = 1.1f - Mathf.Clamp((towardsang - 70f) * 0.005f, 0, 0.5f); //The more you look in the correct direction, the faster you move!
             transform.position += MoveInput * GetSpeed() * towardsfactor * delta;
@@ -1908,12 +1931,18 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             case iDamageable.DamageType.MELEE:
                 fl = ArtifactOnPreventDamageMelee(fl);
+                fl *= 0.7f; //Standard crew-to-crew damage boost
+                if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.RANGED:
                 fl = ArtifactOnPreventDamageRanged(fl);
+                fl *= 0.7f; //Standard crew-to-crew damage boost
+                if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.SPELL:
                 fl = ArtifactOnPreventDamageSpell(fl);
+                fl *= 0.7f; //Standard crew-to-crew damage boost
+                if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.ENVIRONMENT_FIRE:
                 fl = GetEnvironmentalDamageMod();
@@ -1923,7 +1952,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 break;
         }
         fl *= 1f + ModifyDamageTaken;
-        fl *= 0.7f; //Standard crew-to-crew damage boost
+     
         foreach (BUFF buff in new List<BUFF>(Buffs))
         {
             if (buff.TemporaryHitpoints > 0)
@@ -2125,7 +2154,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetSpeed()
     {
-        return MovementSpeed * (0.8f+GetATT_DEXTERITY()*0.08f) * (1f+ ModifyMovementSpeed) / (1f + ModifyMovementSlow);
+        return MovementSpeed * (0.8f+GetATT_DEXTERITY()*0.1f) * (1f+ ModifyMovementSpeed) / (1f + ModifyMovementSlow);
     }
     public float GetCurrentSpeed()
     {

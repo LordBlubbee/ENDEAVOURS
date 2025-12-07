@@ -85,18 +85,22 @@ public class UI_CommandInterface : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (!UI.ui.ChatUI.ChatScreen.activeSelf)
         {
-            PressTabButton(0);
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                PressTabButton(0);
+            }
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                PressTabButton(1);
+            }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                PressTabButton(2);
+            }
         }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            PressTabButton(1);
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            PressTabButton(2);
-        }
+      
         switch (SelectedTab)
         {
             case 0:

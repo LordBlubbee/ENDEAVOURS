@@ -10,7 +10,7 @@ public class ShopItem : NetworkBehaviour
     [NonSerialized] public NetworkVariable<int> SupplyCost = new();
     [NonSerialized] public NetworkVariable<int> AmmoCost = new();
     [NonSerialized] public NetworkVariable<int> TechCost = new();
-    public NetworkVariable<FixedString32Bytes> ShopItemLink = new();
+    [NonSerialized] public NetworkVariable<FixedString64Bytes> ShopItemLink = new();
     [NonSerialized] public ScriptableShopitem Item;
     private void Start()
     {
@@ -18,8 +18,10 @@ public class ShopItem : NetworkBehaviour
     }
     public void Init(ScriptableShopitem item)
     {
+        //Called only on server
         Item = item;
         CO.co.AddShopItem(this);
+        ShopItemLink.Value = item.GetResourceLink();
     }
     IEnumerator FindShopItem()
     {

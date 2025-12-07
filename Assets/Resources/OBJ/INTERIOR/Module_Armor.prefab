@@ -427,10 +427,10 @@ MonoBehaviour:
   MaxHealth: 200
   HitboxRadius: 16
   ModuleWorth: 50
-  ModuleUpgradeMaterials: 1e0000003200000041000000500000006400000078000000
+  ModuleUpgradeMaterials: 1e0000002d0000003c0000004b0000005a0000006e000000
   ModuleUpgradeTechs: 000000000000000000000000000000000000000000000000
   CenterPos: {fileID: 0}
   MaxArmor: 200
   ArmorPerUpgrade: 100
-  ArmorRegenPerUpgrade: 10
+  ArmorRegenPerUpgrade: 4
   ArmorRegen: 20

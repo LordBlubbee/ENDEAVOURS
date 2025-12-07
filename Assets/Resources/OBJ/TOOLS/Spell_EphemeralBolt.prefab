@@ -156,7 +156,7 @@ MonoBehaviour:
   Action1_SFX:
   - {fileID: 8300000, guid: 68c77946a4f547544b7c239aa1d59c9a, type: 3}
   Action1_SFX_Hit: []
-  attackDamage1: 25
+  attackDamage1: 24
   RangedPrefab1: {fileID: 8910635656682413825, guid: e17655c0080bd6448979e406efe2fbbc, type: 3}
   UniqueSpell1: {fileID: 0}
   Reload1: 2.5

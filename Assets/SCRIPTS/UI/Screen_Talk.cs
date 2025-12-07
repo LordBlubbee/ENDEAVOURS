@@ -17,6 +17,7 @@ public class Screen_Talk : MonoBehaviour
     public TextMeshProUGUI[] ChoiceTex;
     public Image SpeakerImage;
     public Image SpeakerFader;
+    public GameObject OverrideVoteButton;
     private int CurrentPage = 0;
     private ScriptableDialogSpeaker CurrentSpeaker;
     private void OnEnable()
@@ -29,7 +30,7 @@ public class Screen_Talk : MonoBehaviour
         SpeakerFader.color = Color.white;
         while (SpeakerFader.color.a > 0)
         {
-            SpeakerFader.color = new Color(1, 1, 1, SpeakerFader.color.a - CO.co.GetWorldSpeedDelta() * 4f);
+            SpeakerFader.color = new Color(1, 1, 1, SpeakerFader.color.a - Time.deltaTime * 4f);
             yield return null;
         }
         SpeakerFader.color = Color.clear;
@@ -41,9 +42,10 @@ public class Screen_Talk : MonoBehaviour
             UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
             return;
         }
-        if (CO_STORY.co.ShouldUpdate)
+        string StoryID = CO_STORY.co.GetMainStoryText(0);
+        if (PreviousTex != StoryID)
         {
-            CO_STORY.co.ShouldUpdate = false; 
+            PreviousTex = StoryID;
             CurrentPage = 0;
             UpdateData();
         }
@@ -60,7 +62,15 @@ public class Screen_Talk : MonoBehaviour
         {
             UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
         }
+        OverrideVoteButton.gameObject.SetActive(LOCALCO.local.CurrentDialogVote.Value > -1 && CO.co.IsHost);
     }
+
+    public void PressOverrideButton()
+    {
+        CO_STORY.co.OverrideTalkResult = true;
+    }
+
+    string PreviousTex = "";
     private void UpdateData()
     {
         string curText = CO_STORY.co.GetMainStoryText(CurrentPage);

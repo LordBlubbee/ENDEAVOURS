@@ -18,9 +18,9 @@ MonoBehaviour:
       Clan</color>, well-known Nomaden traders.
     Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
     Alternatives: []
-  - BaseText: A collection of Nomaden survivors that have survived through piracy,
-      subterfuge, and constant conflict amongst themselves. Your crew moves to battle
-      stations as a Flux transmission comes in.
+  - BaseText: Affiliated with the Coalition, their pragmatic inscrutability have
+      always given them an immunity to the political fluctuations of the world. You
+      contact them.
     Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
     Alternatives: []
   - BaseText: May the Sun bless your day today, travellers! We are returning from

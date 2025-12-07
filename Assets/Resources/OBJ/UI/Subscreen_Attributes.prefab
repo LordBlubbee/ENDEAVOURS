@@ -776,12 +776,12 @@ PrefabInstance:
         -Your maximum health by approximately
         5%.
 
-        -Your team''s loot gain from Biological sources by approximately
-        5%.
+        -Your maximum stamina by 5.
 
 
-        Your MEDICAL attribute might also be helpful in certain encounters
-        related to creatures, knowledge, and anatomy.'
+        Your MEDICAL attribute
+        might also be helpful in certain encounters related to creatures, knowledge,
+        and anatomy.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1795,25 +1795,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: Tooltip
-      value: 'Each point in COMMAND increases:
+      value: 'If you have at least (3) Command, you become able to increase the stats
+        of all nearby allies by approximately 3%. XP gained by your team also increases
+        by 5%.
 
-        -Your team''s XP gain by
-        5%
-
-        -The efficiency of buying items sold by merchants by 2%
-
-        -The
-        stamina regeneration of allies near you.
+        The highest number is taken into effect. Your team thus requires
+        only a single Commander.
 
 
-        The highest number is
-        taken into effect. Your team thus requires only a single Commander.
-
-
-        Some
-        powerful Artifacts require a certain amount of COMMAND to be used. COMMAND
-        also represents your charisma and can be helpful  in certain encounters,
-        allowing you to find diplomatic solutions more easily.'
+        Some powerful Artifacts require a certain
+        amount of COMMAND to be used. COMMAND also represents your charisma and can
+        be helpful  in certain encounters, allowing you to find diplomatic solutions
+        more easily.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -14,14 +14,16 @@ public class Screen_Cinematic : MonoBehaviour
     [Header("IMAGES")]
     public AudioClip Intro_OST;
     public Sprite[] Intro_Images;
+
+    bool isRunningCinematic = false;
     public void PlayIntroCinematic()
     {
         UI.ui.SelectScreen(gameObject);
-        StartCoroutine(PlayIntro());
+        if (!isRunningCinematic) StartCoroutine(PlayIntro());
     }
     IEnumerator PlayIntro()
     {
-
+        isRunningCinematic = true;
         SetImage(null);
         SetImage(null);
         yield return new WaitForSeconds(1f);
@@ -130,6 +132,7 @@ public class Screen_Cinematic : MonoBehaviour
         //SetImage(Intro_Images[10]); //Title Screen
 
         //Ending
+        isRunningCinematic = false;
         UI.ui.GoBackToPreviousScreen();
     }
 
@@ -152,7 +155,7 @@ public class Screen_Cinematic : MonoBehaviour
         {
             while (CinematicTex.color.a < 1)
             {
-                CinematicTex.color = new Color(1, 1, 1, Mathf.Clamp01(CinematicTex.color.a + Time.deltaTime));
+                CinematicTex.color = new Color(1, 1, 1, Mathf.Clamp01(CinematicTex.color.a + Time.deltaTime * 1.2f));
                 yield return null;
             }
         }

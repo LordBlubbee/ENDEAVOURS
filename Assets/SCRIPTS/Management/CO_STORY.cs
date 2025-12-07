@@ -139,6 +139,10 @@ public class CO_STORY : NetworkBehaviour
     }
     private int HasVoteResult()
     {
+        if (OverrideTalkResult)
+        {
+            if (LOCALCO.local.CurrentDialogVote.Value != -1) return LOCALCO.local.CurrentDialogVote.Value;
+        }
         int num = -1;
         foreach (LOCALCO local in CO.co.GetLOCALCO())
         {
@@ -259,12 +263,16 @@ public class CO_STORY : NetworkBehaviour
     {
         ShouldUpdate = true;
     }
+
+    [NonSerialized] public bool OverrideTalkResult = false;
+    
     private void Update()
     {
         if (!IsServer) return;
         if (HasVoteResult() != -1)
         {
             int result = HasVoteResult();
+            OverrideTalkResult = false;
             foreach (LOCALCO local in CO.co.GetLOCALCO())
             {
                 local.CurrentDialogVote.Value = -1;

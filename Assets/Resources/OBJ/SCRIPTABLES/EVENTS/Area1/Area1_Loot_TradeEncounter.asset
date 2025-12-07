@@ -19,12 +19,14 @@ MonoBehaviour:
     Resource_Ammunition: 0
     Resource_Technology: 0
     Resource_Repairs: 0
-    Resource_XP: 5
+    Resource_XP: 10
     ItemDrop: {fileID: 0}
+  MultiplayerLootList: {fileID: 0}
+  MultiplayerLootModifier: 0
   ReputationChanges: []
   RecruitCrewmembers: []
   TotalLootDrops: 0
   RandomLoot: []
-  MinimumShopDrops: 6
-  MaximumShopDrops: 8
+  MinimumShopDrops: 7
+  MaximumShopDrops: 11
   PossibleShopDrops: {fileID: 11400000, guid: 000983790ec19f9469993b1480147d54, type: 2}

@@ -28,8 +28,8 @@ public class Screen_Reward : MonoBehaviour
 
         foreach (FactionReputation fac in Facs)
         {
-            if (fac.Amount > 0) MaterialGain.text += $"<color=green>{fac.Fac} +{fac.Amount}</color>\n";
-            else if (fac.Amount < 0) MaterialGain.text += $"<color=red>{fac.Fac} {fac.Amount}</color>\n";
+            if (fac.Amount > 0) MaterialGain.text += $"<color=green>{fac.Fac} REP +{fac.Amount}</color>\n";
+            else if (fac.Amount < 0) MaterialGain.text += $"<color=red>{fac.Fac} REP {fac.Amount}</color>\n";
         }
 
         int StartAt = CrewLink == "" ? 0 : 1;
@@ -76,7 +76,7 @@ public class Screen_Reward : MonoBehaviour
         if (CO.co.GetShopItems().Count > 0)
         {
             UI.ui.SelectScreen(UI.ui.InventoryUI.gameObject);
-            UI.ui.InventoryUI.OpenSubscreen(UI.ui.InventoryUI.SubscreenRest);
+            UI.ui.InventoryUI.OpenRest();
         }
         else if (CO_STORY.co.IsCommsActive()) UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
         else UI.ui.SelectScreen(UI.ui.MapUI.gameObject);

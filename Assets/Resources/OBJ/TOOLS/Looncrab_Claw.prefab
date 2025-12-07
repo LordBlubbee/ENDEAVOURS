@@ -148,6 +148,7 @@ MonoBehaviour:
   - {fileID: 45618210612621375}
   - {fileID: 3283311129704126905}
   AI: 0
+  isConsumable: 0
   CrosshairSprite: {fileID: 0}
   CrosshairMaxRange: 999
   CrosshairMinRange: -1
@@ -169,9 +170,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c6a5ec4416bf6ce4fb7d5093feea6b94, type: 3}
   - {fileID: 8300000, guid: a50b10eb73e96634bbc7cc6e13105e8d, type: 3}
   Action1_SFX_Hit: []
-  attackDamage1: 20
+  attackDamage1: 18
   RangedPrefab1: {fileID: 0}
+  UniqueSpell1: {fileID: 0}
   Reload1: 0
+  ExtendedCooldown1: 0
   ApplyBuff: {fileID: 0}
   ActionUse2: 3
   attackAnimations2: 11000000
@@ -179,7 +182,9 @@ MonoBehaviour:
   Action2_SFX: []
   attackDamage2: 10
   RangedPrefab2: {fileID: 0}
+  UniqueSpell2: {fileID: 0}
   Reload2: 0
+  ExtendedCooldown2: 0
 --- !u!50 &7510945368497231780
 Rigidbody2D:
   serializedVersion: 5
@@ -272,6 +277,7 @@ MonoBehaviour:
   BlockChanceMelee: 1
   BlockChanceRanged: 1
   ReflectProjectileChance: 0
+  ParryDuration: 0
   isActive: 0
   isAlwaysActive: 0
   BlockSound: 1
@@ -458,6 +464,7 @@ MonoBehaviour:
   BlockChanceMelee: 1
   BlockChanceRanged: 1
   ReflectProjectileChance: 0
+  ParryDuration: 0
   isActive: 0
   isAlwaysActive: 0
   BlockSound: 1

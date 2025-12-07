@@ -4,8 +4,14 @@ using UnityEngine;
 public class ScriptableShopitem : ScriptableObject
 {
     //This is a SPEAKER, an animated/speaking entity that does the animation for a piece of text tied to it.
+    public string ResourcePath;
+
+    public string GetResourceLink()
+    {
+        return $"{ResourcePath}/{name}";
+    }
+
     public ScriptableEquippable Equippable;
-    public CREW BuyCrew;
 
     public int AlchemySkillRequirement = 0;
     public int Weight = 10;
@@ -22,4 +28,6 @@ public class ScriptableShopitem : ScriptableObject
     public int DealAmmoGain;
     public int DealTechGain;
 
+    [Header("CREW")]
+    public CREW BuyCrew;
 }

@@ -19,8 +19,10 @@ MonoBehaviour:
     Resource_Ammunition: 0
     Resource_Technology: 0
     Resource_Repairs: 0
-    Resource_XP: 15
-    ItemDrop: {fileID: 0}
+    Resource_XP: 20
+    ItemDrop: {fileID: 11400000, guid: 0a70c805b4206b04dad2f4c4d74456c6, type: 2}
+  MultiplayerLootList: {fileID: 11400000, guid: 0a70c805b4206b04dad2f4c4d74456c6, type: 2}
+  MultiplayerLootModifier: 0.6
   ReputationChanges: []
   RecruitCrewmembers: []
   TotalLootDrops: 3

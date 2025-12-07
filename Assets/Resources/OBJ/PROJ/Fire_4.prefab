@@ -4911,7 +4911,7 @@ MonoBehaviour:
   DamagePerSecond: 10
   DamageRadius: 4
   DamageType: 5
-  ModuleDamageMod: 1
+  ModuleDamageMod: 0.8
 --- !u!114 &79363158191438067
 MonoBehaviour:
   m_ObjectHideFlags: 0

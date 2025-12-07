@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f0e6fff80922414d9e1c017e477478b, type: 3}
   m_Name: Stellae1
   m_EditorClassIdentifier: 
-  NameColor: {r: 0.8207547, g: 0.5844625, b: 0.12001601, a: 1}
+  NameColor: {r: 1, g: 0.746741, b: 0, a: 1}
   Portrait: {fileID: -1771806665566077938, guid: 74245e36ec7e4264da310e0dfc23c87b, type: 3}
   Voice:
   - {fileID: 8300000, guid: 375e1107904bfeb4fba32f967dd2bf9a, type: 3}

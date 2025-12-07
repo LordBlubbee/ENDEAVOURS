@@ -264,6 +264,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  HealthOnlyWhileDamaged: 0
+  HarmDrifterWhenDisabled: 1
+  OutsideDamageResistance: 1
   ModuleTag: 
   ModuleType: 7
   IconSprite: {fileID: 21300000, guid: 9a63fee83a4087e499b62524ba4692c4, type: 3}
@@ -271,9 +274,8 @@ MonoBehaviour:
   MaxHealth: 200
   HitboxRadius: 16
   ModuleWorth: 50
-  MaxModuleLevel: 4
-  ModuleUpgradeMaterials: 280000003c00000064000000c8000000
-  ModuleUpgradeTechs: 00000000000000000000000000000000
+  ModuleUpgradeMaterials: 280000003c0000005000000082000000
+  ModuleUpgradeTechs: 00000000140000001e00000028000000
   CenterPos: {fileID: 4179111860458812673}
   RegenAuraRange: 20
   RegenAmount: 10

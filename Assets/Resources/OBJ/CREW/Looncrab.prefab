@@ -209,7 +209,7 @@ MonoBehaviour:
   UnitName: 
   UnitDescription: 
   UnitRarity: 0
-  HealthIncreasePerLevelup: 50
+  HealthIncreasePerLevelup: 40
   PointIncreasePerLevelup:
   - 1
   - 1
@@ -223,11 +223,11 @@ MonoBehaviour:
   Stripes: {fileID: 0}
   ControlledByPlayer: 0
   IsNeutral: 0
-  MaxHealth: 250
+  MaxHealth: 180
   NaturalStaminaRegen: 50
   MovementSpeed: 4
   RotationDistanceFactor: 4
-  RotationBaseSpeed: 60
+  RotationBaseSpeed: 45
   BleedOut: 0
   ATT_PHYSIQUE:
     m_InternalValue: 2

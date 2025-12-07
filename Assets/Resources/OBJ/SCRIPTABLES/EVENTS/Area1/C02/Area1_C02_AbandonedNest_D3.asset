@@ -21,15 +21,11 @@ MonoBehaviour:
   - BaseText: However, before you can react, skittering and chirping echoes through
       the caves. Your team evacuates, running back to your Drifter as soon as possible...
     Speaker: {fileID: 11400000, guid: 86c7399f1aefa0c4cac215b5af8a21f0, type: 2}
-    Alternatives:
-    - AlternativeText: 
-      Prerequisites: []
+    Alternatives: []
   - BaseText: When your team delivers the news to your Gubernator, it is too late.
       Looncrabs start emerging from the nearby Mist!
     Speaker: {fileID: 11400000, guid: 1b51eea723c68724a9eba9f02b38fc91, type: 2}
-    Alternatives:
-    - AlternativeText: 
-      Prerequisites: []
+    Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
       BaseText: Prepare to ward off the Nebuloid!

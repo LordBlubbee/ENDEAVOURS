@@ -24,11 +24,12 @@ MonoBehaviour:
     Alternatives: []
   - BaseText: If we find the central storage vault in the middle of the facility
       without being overrun by the creatures, we could discover its contents by repairing
-      its mechanisms. We are preparing to dock.
+      its mechanisms.
     Speaker: {fileID: 11400000, guid: 6eae2d8b178491744873b10786c471bd, type: 2}
-    Alternatives:
-    - AlternativeText: 
-      Prerequisites: []
+    Alternatives: []
+  - BaseText: We are preparing to dock.
+    Speaker: {fileID: 11400000, guid: 6eae2d8b178491744873b10786c471bd, type: 2}
+    Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
       BaseText: We will investigate as far as we can.

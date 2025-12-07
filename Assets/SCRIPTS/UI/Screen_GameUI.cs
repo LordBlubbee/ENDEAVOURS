@@ -129,6 +129,7 @@ public class Screen_GameUI : MonoBehaviour
                 else if (UI.ui.RewardUI.RewardActive) CommsTex.text = "[U] REWARDS";
                 else CommsTex.text = "[U] MAP";
                 CommsReadyTex.text = $"READY {CO.co.VoteAmount()}/{CO.co.GetLOCALCO().Count}";
+                if (Input.GetKeyDown(KeyCode.U)) OpenMissionScreen();
             }
             
 

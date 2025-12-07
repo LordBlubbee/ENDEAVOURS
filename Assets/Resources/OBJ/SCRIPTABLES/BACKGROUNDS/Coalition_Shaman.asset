@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7e2d111c92f9ac4584f40d8399107e1, type: 3}
+  m_Name: Coalition_Shaman
+  m_EditorClassIdentifier: 
+  BackgroundName: Coalition Shaman
+  ResourcePath: Coalition_Shaman
+  MainIcon: {fileID: 21300000, guid: 293a29ca2bc1d1d4b8cf13c46fd24855, type: 3}
+  Sprite_Player: {fileID: 21300000, guid: b260ac191d3e36d40a889de36cbe84a6, type: 3}
+  Sprite_Stripes: {fileID: 21300000, guid: 4d8ef81f05d5ad54e8c0bbf661fd1f2d, type: 3}
+  ShortDesc: 'What each of the Clan''s many religions have in common is the faith
+    in their people, their ancestors, and the spirit of nature. '
+  LongDesc: 'What each of the Clan''s many religions have in common is the faith
+    in their people, their ancestors, and the spirit of nature. As a shaman, you
+    are capable of communing with it, healing your allies from a distance and striking
+    enemies where you must.
+
+
+    STARTING ITEMS: BLADE, FLORAL HEAL
+
+    MED +2
+
+    ALC
+    +1
+
+    PHYS +1'
+  BackgroundColor: {r: 0.26782268, g: 0.7924528, b: 0.16820934, a: 1}
+  Background_ATT_BONUS: 0000000000000000000000000000000001000000000000000100000002000000
+  Background_StartingWeapon: {fileID: 11400000, guid: 35b663fc985b5524981ef0bb6a7b3620, type: 2}
+  Background_StartingWeapon2: {fileID: 11400000, guid: eebfb9e43ec084641bb23604ae23cb97, type: 2}
+  Background_StartingArtifact: {fileID: 0}
+  Background_StartingArmor: {fileID: 0}
+  Background_ReputationEffect:
+  - Fac: 7
+    Amount: 1
+  - Fac: 6
+    Amount: 1
+  NameCategory: 4

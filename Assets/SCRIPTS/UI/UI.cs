@@ -138,7 +138,7 @@ public class UI : MonoBehaviour
         {
             CinematicTexScale = Mathf.Max((CinematicTexScale - 0.8f) * Time.deltaTime * 4f, 1);
             CinematicTex.transform.localScale = new Vector3(CinematicTexScale, CinematicTexScale, 1);
-            CinematicTex.color = new Color(CinematicTex.color.r, CinematicTex.color.g, CinematicTex.color.b, CinematicTex.color.a - Time.deltaTime * 1f);
+            CinematicTex.color = new Color(CinematicTex.color.r, CinematicTex.color.g, CinematicTex.color.b, CinematicTex.color.a - Time.deltaTime * 1.2f);
             yield return null;
         }
         CinematicTex.color = Color.clear;

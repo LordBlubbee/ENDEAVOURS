@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6d31fc802706642abd802c670bd89e, type: 3}
+  m_Name: CataliSwordShield
+  m_EditorClassIdentifier: 
+  ItemName: Catali Shield & Sword
+  ItemDesc: 'Frontline warriors of the Catali prefer defensive weaponry to protect
+    the people with, using their massive shield to block incoming attacks.
+
+
+    Skill:
+    PHYSICAL
+
+    Base damage: 7
+
+
+    SECONDARY: BLOCK'
+  ItemIcon: {fileID: 21300000, guid: 6cd4f096a7d0a5f448e64f50a964d18c, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/CataliSwordShield
+  ItemResourceIDShort: CataliSwordShield
+  ItemRarity: 0
+  MinimumAttributes: 
+  ToolPrefab: {fileID: 8311341897716400573, guid: 358a0ce823730524ba79a24db6688a34, type: 3}

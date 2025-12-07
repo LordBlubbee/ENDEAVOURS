@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class LOCALCO : NetworkBehaviour
 {
@@ -50,6 +51,11 @@ public class LOCALCO : NetworkBehaviour
         StartCoroutine(Register());
     }
 
+    public override void OnNetworkDespawn()
+    {
+        base.OnNetworkDespawn();
+    }
+
     private IEnumerator Register()
     {
         while (CO.co == null) yield return null;
@@ -71,6 +77,8 @@ public class LOCALCO : NetworkBehaviour
             {
                 GetPlayer().SetMoveInput(mov);
                 GetPlayer().SetMoveInputRpc(Vector3.zero);
+                if (Input.GetMouseButtonUp(0)) GetPlayer().StopItem1Rpc();
+                if (Input.GetMouseButtonUp(1)) GetPlayer().StopItem2Rpc();
                 Cursor.visible = true;
                 return;
             }
@@ -124,7 +132,8 @@ public class LOCALCO : NetworkBehaviour
                         if (Input.GetKey(KeyCode.A)) mov += new Vector3(-1, 0);
                         if (Input.GetKey(KeyCode.D)) mov += new Vector3(1, 0);
                     }
-                   
+
+
                     if (!IsServer) GetPlayer().SetMoveInputRpc(mov);
                     if (!IsServer) GetPlayer().SetLookTowardsRpc(Mouse);
                     GetPlayer().SetMoveInput(mov);
@@ -250,7 +259,14 @@ public class LOCALCO : NetworkBehaviour
         crew.SetHomeDrifter(CO.co.PlayerMainDrifter);
         crew.RegisterPlayerOnLOCALCORpc();
         Player.EquipWeapon(0, back.Background_StartingWeapon);
+        if (back.Background_StartingWeapon2) Player.EquipWeapon(1, back.Background_StartingWeapon2);
         //Player.EquipWeaponPrefab(0);
+
+        foreach (FactionReputation rep in back.Background_ReputationEffect)
+        {
+            CO.co.Resource_Reputation[rep.Fac] = (CO.co.Resource_Reputation.ContainsKey(rep.Fac) ? CO.co.Resource_Reputation[rep.Fac] : 0) + rep.Amount;
+        }
+
         CO.co.PlayerMainDrifter.Interior.AddCrew(crew);
     }
     public void SetCameraToPlayer()

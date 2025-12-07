@@ -8,6 +8,9 @@ using UnityEngine;
 public class ScriptableLootTable : ScriptableObject
 {
     public List<LootItem> GuaranteedLoot = new();
+    public ScriptableLootItemList MultiplayerLootList;
+    public float MultiplayerLootModifier = 0f;
+
     public List<FactionReputation> ReputationChanges = new();
     public List<CREW> RecruitCrewmembers = new();
 
@@ -36,6 +39,7 @@ public class LootItem
     public int Resource_Technology; //Normal factor: 1:1
     public int Resource_Repairs;
     public int Resource_XP; //Normal factor: 1:1
+
     public ScriptableLootItemList ItemDrop;
 }
 

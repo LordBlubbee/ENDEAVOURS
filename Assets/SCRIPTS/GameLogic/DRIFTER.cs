@@ -242,9 +242,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
                 RotationTurbulence = UnityEngine.Random.Range(-Turb, Turb);
             }
         }
-
     }
-
 
     [Rpc(SendTo.Server)]
     public void CreateAmmoCrateRpc(Vector3 vec)
@@ -497,7 +495,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             }
         }
         Damage += AbsorbableDamage;
-        TakeDamage(Damage * 0.8f, ImpactArea, DamageType.TRUE);
+        TakeDamage(Damage * 0.5f, ImpactArea, DamageType.TRUE);
     }
     public int GetFaction()
     {

@@ -19,7 +19,7 @@ MonoBehaviour:
     Resource_Ammunition: 0
     Resource_Technology: 0
     Resource_Repairs: 0
-    Resource_XP: 5
+    Resource_XP: 10
     ItemDrop: {fileID: 0}
   ReputationChanges: []
   RecruitCrewmembers:

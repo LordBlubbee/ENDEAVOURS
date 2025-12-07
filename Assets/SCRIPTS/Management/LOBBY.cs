@@ -189,7 +189,7 @@ public class LOBBY : MonoBehaviour
         if (name == "") name = "Main Lobby";
         Debug.Log($"Lobby created: {name}");
         string lobbyName = name;
-        int maxPlayers = 6;
+        int maxPlayers = 8;
         CreateLobbyOptions options = new CreateLobbyOptions();
         options.IsPrivate = false;
 

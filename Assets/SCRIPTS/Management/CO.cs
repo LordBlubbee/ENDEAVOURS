@@ -49,7 +49,14 @@ public class CO : NetworkBehaviour
 
     public int GetDrifterRepairCost()
     {
-        return 4;
+        switch (BiomeProgress)
+        {
+            case > 4:
+                return 4;
+            case > 2:
+                return 3;
+        }
+        return 2;
     }
 
     [Rpc(SendTo.Server)]
@@ -127,18 +134,15 @@ public class CO : NetworkBehaviour
     [NonSerialized] public Dictionary<Faction, int> Resource_Reputation = new();
     public enum Faction
     {
-        LOGIPEDES_INVICTUS,
-        LOGIPEDES_PRAGMATICUS,
-        LOGIPEDES_STELLAE,
-        EPHEMERAL_EYE,
-        ORDER_OF_THE_STORM,
-        DEMOCRATIC_CATALI,
-        NOMADEN_COALITION,
-        NOMADEN_CLANS,
-        NOMADEN_INSURRECTION,
-        AESPERIANS,
-        PHOS,
-        SEEKERS
+        INVICTUS,
+        PRAGMATICUS,
+        STELLAE,
+        EPHEMERALS,
+        ROYALISTS,
+        DEMOCRATS,
+        COALITION,
+        CLANS,
+        INSURRECTION
     }
     [NonSerialized] public List<ScriptableEquippable> Drifter_Inventory = new();
 
@@ -172,6 +176,89 @@ public class CO : NetworkBehaviour
         return NextBiomePoints;
     }
 
+    public int GetEncounterShopSizeExtra()
+    {
+        int Extras = 0;
+        switch (GetLOCALCO().Count)
+        {
+            case > 6:
+                Extras += 4;
+                break;
+            case > 4:
+                Extras += 3;
+                break;
+            case > 2:
+                Extras += 2;
+                break;
+            case > 1:
+                Extras++;
+                break;
+        }
+        return Extras;
+    }
+    public float GetEncounterLootModifier()
+    {
+        float ProgressDiff = 1f;
+        switch (BiomeProgress)
+        {
+            case 0:
+                ProgressDiff = 1f;
+                break;
+            case 1:
+                ProgressDiff = 1.1f;
+                break;
+            case 2:
+                ProgressDiff = 1.25f;
+                break;
+            case 3:
+                ProgressDiff = 1.4f;
+                break;
+            case 4:
+                ProgressDiff = 1.5f;
+                break;
+            case 5:
+                ProgressDiff = 1.6f;
+                break;
+            case 6:
+                ProgressDiff = 1.7f;
+                break;
+        }
+        float PlayerDiff = 1f;
+        switch (GetLOCALCO().Count)
+        {
+            case 1:
+                PlayerDiff = 1f;
+                break;
+            case 2:
+                PlayerDiff = 1.05f;
+                break;
+            case 3:
+                PlayerDiff = 1.1f;
+                break;
+            case 4:
+                PlayerDiff = 1.15f;
+                break;
+            case 5:
+                PlayerDiff = 1.2f;
+                break;
+            case 6:
+                PlayerDiff = 1.25f;
+                break;
+            case 7:
+                PlayerDiff = 1.3f;
+                break;
+            case 8:
+                PlayerDiff = 1.35f;
+                break;
+            case 9:
+                PlayerDiff = 1.4f;
+                break;
+            case 10:
+                PlayerDiff = 1.45f;
+                break;
+        }
+        return 1f * ProgressDiff * PlayerDiff;
+    }
     public float GetEncounterDifficultyModifier()
     {
         float ProgressDiff = 1f;
@@ -181,13 +268,13 @@ public class CO : NetworkBehaviour
                 ProgressDiff = 1f;
                 break;
             case 1:
-                ProgressDiff = 2f;
+                ProgressDiff = 1.6f;
                 break;
             case 2:
                 ProgressDiff = 2.5f;
                 break;
             case 3:
-                ProgressDiff = 3.8f;
+                ProgressDiff = 3.5f;
                 break;
             case 4:
                 ProgressDiff = 4.5f;
@@ -212,25 +299,25 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 1.15f;
                 break;
             case 4:
-                PlayerDiff = 1.3f;
+                PlayerDiff = 1.25f;
                 break;
             case 5:
-                PlayerDiff = 1.4f;
+                PlayerDiff = 1.35f;
                 break;
             case 6:
-                PlayerDiff = 1.5f;
+                PlayerDiff = 1.45f;
                 break;
             case 7:
-                PlayerDiff = 1.6f;
+                PlayerDiff = 1.5f;
                 break;
             case 8:
-                PlayerDiff = 1.7f;
+                PlayerDiff = 1.55f;
                 break;
             case 9:
-                PlayerDiff = 1.9f;
+                PlayerDiff = 1.65f;
                 break;
             case 10:
-                PlayerDiff = 2f;
+                PlayerDiff = 1.7f;
                 break;
         }
         return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
@@ -244,22 +331,22 @@ public class CO : NetworkBehaviour
                 ProgressDiff = 1f;
                 break;
             case 1:
-                ProgressDiff = 2f;
+                ProgressDiff = 1.6f;
                 break;
             case 2:
-                ProgressDiff = 3f;
+                ProgressDiff = 2.2f;
                 break;
             case 3:
-                ProgressDiff = 3.8f;
+                ProgressDiff = 3.0f;
                 break;
             case 4:
-                ProgressDiff = 4.5f;
+                ProgressDiff = 4.0f;
                 break;
             case 5:
-                ProgressDiff = 6f;
+                ProgressDiff = 5.0f;
                 break;
             case 6:
-                ProgressDiff = 6.5f;
+                ProgressDiff = 6.0f;
                 break;
         }
         float PlayerDiff = 1f;
@@ -329,34 +416,34 @@ public class CO : NetworkBehaviour
         switch (GetLOCALCO().Count)
         {
             case 1:
-                PlayerDiff = 0.9f;
-                break;
-            case 2:
                 PlayerDiff = 1f;
                 break;
-            case 3:
+            case 2:
                 PlayerDiff = 1.05f;
                 break;
-            case 4:
+            case 3:
                 PlayerDiff = 1.1f;
                 break;
-            case 5:
+            case 4:
                 PlayerDiff = 1.15f;
                 break;
-            case 6:
+            case 5:
                 PlayerDiff = 1.2f;
                 break;
-            case 7:
+            case 6:
                 PlayerDiff = 1.25f;
                 break;
-            case 8:
+            case 7:
                 PlayerDiff = 1.3f;
                 break;
-            case 9:
+            case 8:
                 PlayerDiff = 1.35f;
                 break;
-            case 10:
+            case 9:
                 PlayerDiff = 1.4f;
+                break;
+            case 10:
+                PlayerDiff = 1.45f;
                 break;
         }
         return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
@@ -373,29 +460,29 @@ public class CO : NetworkBehaviour
                 ProgressDiff = 1f;
                 break;
             case 2:
-                ProgressDiff = 1.2f;
+                ProgressDiff = 1.15f;
                 break;
             case 3:
-                ProgressDiff = 1.5f;
+                ProgressDiff = 1.3f;
                 break;
             case 4:
-                ProgressDiff = 1.8f;
+                ProgressDiff = 1.5f;
                 break;
             case 5:
-                ProgressDiff = 2.0f;
+                ProgressDiff = 1.7f;
                 break;
             case 6:
-                ProgressDiff = 2.2f;
+                ProgressDiff = 1.9f;
                 break;
         }
         float PlayerDiff = 1f;
         switch (GetLOCALCO().Count)
         {
             case 1:
-                PlayerDiff = 0.6f;
+                PlayerDiff = 0.7f;
                 break;
             case 2:
-                PlayerDiff = 0.9f;
+                PlayerDiff = 1f;
                 break;
             case 3:
                 PlayerDiff = 1.2f;
@@ -404,22 +491,22 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 1.4f;
                 break;
             case 5:
-                PlayerDiff = 1.7f;
+                PlayerDiff = 1.6f;
                 break;
             case 6:
-                PlayerDiff = 1.9f;
+                PlayerDiff = 1.8f;
                 break;
             case 7:
-                PlayerDiff = 2.1f;
+                PlayerDiff = 2.0f;
                 break;
             case 8:
-                PlayerDiff = 2.25f;
+                PlayerDiff = 2.1f;
                 break;
             case 9:
-                PlayerDiff = 2.4f;
+                PlayerDiff = 2.2f;
                 break;
             case 10:
-                PlayerDiff = 2.5f;
+                PlayerDiff = 2.3f;
                 break;
         }
         return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
@@ -546,8 +633,8 @@ public class CO : NetworkBehaviour
         HandleGravity();
         if (HasVoteResult() != -1)
         {
-
             Debug.Log("Moving to point!");
+            OverrideMapVote = false;
             MapPoint destination = GetPlayerMapPoint().ConnectedPoints[HasVoteResult()];
             StartCoroutine(Travel(destination));
             PlayerMapPointID.Value = destination.PointID.Value;
@@ -884,8 +971,14 @@ public class CO : NetworkBehaviour
         PlayerMapPoint = nearest;
         UI.ui.MapUI.UpdateMap();
     }*/
+
+    [NonSerialized] public bool OverrideMapVote = false;
     private int HasVoteResult()
     {
+        if (OverrideMapVote)
+        {
+            if (LOCALCO.local.CurrentMapVote.Value > -1) return LOCALCO.local.CurrentMapVote.Value;
+        }
         int num = -1;
         if (PlayerMainDrifter == null) return -1;
         if (GetAlliedAICrew().Count > PlayerMainDrifter.MaximumCrew) return -1;
@@ -1074,6 +1167,13 @@ public class CO : NetworkBehaviour
 
     public List<LOCALCO> GetLOCALCO()
     {
+        foreach (LOCALCO local in new List<LOCALCO>(RegisteredLOCALCO))
+        {
+            if (local == null)
+            {
+                RegisteredLOCALCO.Remove(local);
+            }
+        }
         return RegisteredLOCALCO;
     }
 
@@ -1213,6 +1313,10 @@ public class CO : NetworkBehaviour
     List<MapPoint> RegisteredMapPoints = new();
     public List<MapPoint> GetMapPoints()
     {
+        foreach (MapPoint point in new List<MapPoint>(RegisteredMapPoints))
+        {
+            if (point == null) RegisteredMapPoints.Remove(point);
+        }
         return RegisteredMapPoints;
     }
     public void RegisterMapPoint(MapPoint crew)
@@ -1380,7 +1484,6 @@ public class CO : NetworkBehaviour
                 else EnemyBarString.Value = $"INTEGRITY: {enemyDrifter.GetHealth().ToString("0")}";
             }
         }
-        AreWeInDanger.Value = false;
         EnemyBarRelative.Value = -1;
 
         if (enemyDrifter)
@@ -1423,12 +1526,12 @@ public class CO : NetworkBehaviour
 
     public bool CanRespawn(CREW un)
     {
-        if (!AreWeInDanger.Value)
+        if (CO.co.IsSafe())
         {
             return un.GetFaction() == 1;
         }
-        if (PlayerMainDrifter.MedicalModule.IsDisabled()) return false;
-        if (GetDungeon() == null) return true;
+        if (un.GetHomeDrifter()) if (un.GetHomeDrifter().MedicalModule.IsDisabled()) return false;
+        if (GetDungeon() && un.Space != un.GetHomeDrifter().Space) return false;
         return true;
     }
     IEnumerator Event_DungeonStorage()
@@ -1481,6 +1584,7 @@ public class CO : NetworkBehaviour
                     if (CurrentEvent.HasDebrief()) {
                         Debrief = CurrentEvent.GetDebrief();
                         CO_STORY.co.SetStory(Debrief.ReplaceDialog);
+                        //if (CurrentEvent.HasDebrief()) CO_STORY.co.SetStory(Debrief.ReplaceDialog);
                     }
                 }
             }
@@ -1490,7 +1594,6 @@ public class CO : NetworkBehaviour
                 break;
             }
         }
-        AreWeInDanger.Value = false;
         EnemyBarRelative.Value = -1;
         if (!ShouldDriftersMove)
         {
@@ -1648,6 +1751,17 @@ public class CO : NetworkBehaviour
         }
         return null;
     }
+    public Transform GetCrewTransformAtPoint(Vector3 vec)
+    {
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(vec, 0.5f))
+        {
+            if (col.GetComponent<CREW>() != null)
+            {
+                return col.transform;
+            }
+        }
+        return null;
+    }
     private void ProcessLootTable(ScriptableLootTable table, float LootLevelMod)
     {
         List<LootItem> list = new List<LootItem>();
@@ -1664,7 +1778,7 @@ public class CO : NetworkBehaviour
 
         foreach (FactionReputation rep in table.ReputationChanges)
         {
-            Resource_Reputation[rep.Fac] += rep.Amount;
+            Resource_Reputation[rep.Fac] = (Resource_Reputation.ContainsKey(rep.Fac) ? Resource_Reputation[rep.Fac] : 0) + rep.Amount;
             Factions.Add(rep.Fac);
             FactionChanges.Add(rep.Amount);
         }
@@ -1689,6 +1803,9 @@ public class CO : NetworkBehaviour
         int ChangeTech = 0;
         int ChangeXP = 0;
         int ChangeHP = 0;
+
+        LootLevelMod *= GetEncounterLootModifier();
+
         List<FixedString64Bytes> ItemTranslate = new();
         foreach (LootItem item in list)
         {
@@ -1712,6 +1829,53 @@ public class CO : NetworkBehaviour
                 ItemTranslate.Add(newItem.GetItemResourceIDFull());
             }
         }
+        if (table.MultiplayerLootList)
+        {
+            int MultiPlayers = GetLOCALCO().Count;
+            if (MultiPlayers > 1)
+            {
+                float PlayerModifier = 0f;
+                switch (MultiPlayers)
+                {
+                    case 2:
+                        PlayerModifier = 0.8f;
+                        break;
+                    case 3:
+                        PlayerModifier = 1.1f;
+                        break;
+                    case 4:
+                        PlayerModifier = 1.4f;
+                        break;
+                    case 5:
+                        PlayerModifier = 1.7f;
+                        break;
+                    case 6:
+                        PlayerModifier = 2f;
+                        break;
+                    case 7:
+                        PlayerModifier = 2.3f;
+                        break;
+                    case >7:
+                        PlayerModifier = 2.6f;
+                        break;
+                }
+                int ExtraItemDrops = Mathf.FloorToInt(PlayerModifier * table.MultiplayerLootModifier + UnityEngine.Random.Range(-1f,1f));
+                for (int i2 = 0; i2 < ExtraItemDrops; i2++)
+                {
+                    ResetWeights();
+                    i = 0;
+                    foreach (WeightedLootItem weighted in table.MultiplayerLootList.GetPossibleDrops())
+                    {
+                        AddWeights(i, weighted.Weight);
+                        i++;
+                    }
+                    ScriptableEquippable newItem = table.MultiplayerLootList.GetPossibleDrops()[GetWeight()].Item;
+                    AddInventoryItem(newItem);
+                    ItemTranslate.Add(newItem.GetItemResourceIDFull());
+                }
+            }
+        }
+       
         if (list.Count > 0)
         {
             Resource_Ammo.Value += ChangeAmmo;
@@ -1724,7 +1888,7 @@ public class CO : NetworkBehaviour
                 crew.AddXP(ChangeXP);
             }
             //Send report to clients with all faction rep changes
-            FixedString64Bytes NewCrewLink = NewCrew == null ? "" : NewCrew.name;
+            FixedString64Bytes NewCrewLink = NewCrew == null ? "" : NewCrewPrefab.name;
             Debug.Log($"NewCrewLink is {NewCrewLink}");
             OpenRewardScreenRpc(ChangeMaterials, ChangeSupplies, ChangeAmmo, ChangeTech, ChangeHP, ChangeXP, Factions.ToArray(), FactionChanges.ToArray(), ItemTranslate.ToArray(), NewCrewLink);
         }
@@ -1732,7 +1896,7 @@ public class CO : NetworkBehaviour
         if (table.MinimumShopDrops > 0)
         {
             ResetShopList();
-            int Drops = UnityEngine.Random.Range(table.MinimumShopDrops, table.MaximumShopDrops);
+            int Drops = UnityEngine.Random.Range(table.MinimumShopDrops, table.MaximumShopDrops) + GetEncounterShopSizeExtra();
             ResetWeights();
             int i2 = 0;
             List<ScriptableShopitem> ShopItemList = new();

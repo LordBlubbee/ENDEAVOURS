@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fd06a1e258358141a85ea7069bb0d50, type: 3}
   m_Name: Deal_30SuppliesToTech
   m_EditorClassIdentifier: 
+  ResourcePath: ShopDeals
   Equippable: {fileID: 0}
-  BuyCrew: {fileID: 0}
   AlchemySkillRequirement: 0
   Weight: 30
   IsCrafted: 0
@@ -25,3 +25,4 @@ MonoBehaviour:
   DealSuppliesGain: 0
   DealAmmoGain: 0
   DealTechGain: 20
+  BuyCrew: {fileID: 0}

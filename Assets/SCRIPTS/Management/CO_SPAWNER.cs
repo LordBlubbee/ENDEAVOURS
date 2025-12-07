@@ -548,10 +548,7 @@ public class CO_SPAWNER : NetworkBehaviour
             Quality -= 100;
             Levels++;
         }
-        if (Levels != 0)
-        {
-            crew.AddUpgradeLevel(Levels);
-        }
+        crew.AddUpgradeLevel(Levels);
     }
 
     /*VFX*/
@@ -564,9 +561,6 @@ public class CO_SPAWNER : NetworkBehaviour
         part.transform.SetParent(CO.co.GetTransformAtPoint(pos));
         part.transform.localScale = new Vector3(Trans, Trans, 1);
         part.FadeChange *= Fade;
-
-        float ExplosionPower = 10f - CAM.cam.Dis(pos) * 0.15f;
-        if (ExplosionPower > 2) CAM.cam.ShakeCamera(ExplosionPower * 0.5f);
     }
 
     [Rpc(SendTo.ClientsAndHost)]
@@ -740,11 +734,10 @@ public class CO_SPAWNER : NetworkBehaviour
     public GameObject PragmaticusRestrainImpactVFX;
     public GameObject PragmaticusShieldImpactVFX;
 
-    [Rpc(SendTo.ClientsAndHost)]
-    public void SpawnCommandVFXRpc(Vector3 pos)
+    public void SpawnCommandVFX(CREW crew)
     {
-        GameObject ob = Instantiate(CommandVFX, pos, Quaternion.identity);
-        Transform trans = CO.co.GetTransformAtPoint(pos);
+        GameObject ob = Instantiate(CommandVFX, crew.transform.position, Quaternion.identity);
+        Transform trans = crew.transform;
         if (trans) ob.transform.SetParent(trans);
     }
 

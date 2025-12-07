@@ -13,10 +13,16 @@ MonoBehaviour:
   m_Name: Weapon_RepeaterCrossbow
   m_EditorClassIdentifier: 
   ItemName: Repeater Crossbow
-  ItemDesc: A heavy crossbow station that constantly suppresses Nebuloids and Drifter
+  ItemDesc: 'A heavy crossbow station that constantly suppresses Nebuloids and Drifter
     armor plating, but deals very low damage to modules and hull.
-  ItemIcon: {fileID: 21300000, guid: aa1a4ba3835c1b54bb69868e67b7d2f3, type: 3}
+
+
+    Fire chance:
+    5%'
+  ItemIcon: {fileID: 21300000, guid: c6c068ebf52b69d479050e1cf0432ac1, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Weapon_RepeaterCrossbow
   ItemResourceIDShort: Weapon_RepeaterCrossbow
+  ItemRarity: 0
+  MinimumAttributes: 
   PrefabModule: {fileID: 2733437315669949757, guid: a694036d6781fec40bcc0a08607779fe, type: 3}
   EquipType: 1

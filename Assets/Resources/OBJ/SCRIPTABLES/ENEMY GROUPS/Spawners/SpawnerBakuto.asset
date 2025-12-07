@@ -15,5 +15,5 @@ MonoBehaviour:
   SpawnEnemyGroupList:
   - EnemyGroup: {fileID: 11400000, guid: c1311bc0a44b6ef4ab559a3a41a52d77, type: 2}
     Weight: 10
-  EnemyAmountModifier: 1.1
-  EnemyQualityModifier: 1.1
+  EnemyAmountModifier: 1
+  EnemyQualityModifier: 1

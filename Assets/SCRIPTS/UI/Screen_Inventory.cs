@@ -657,7 +657,6 @@ public class Screen_Inventory : MonoBehaviour
     public TextMeshProUGUI CrewUpgradeTex;
     public TextMeshProUGUI CrewDismissTex;
     CREW SelectedCrew;
-
     private void UpdateCrewScreen()
     {
         List<CREW> Allies = CO.co.GetAlliedAICrew();
@@ -680,7 +679,6 @@ public class Screen_Inventory : MonoBehaviour
             else UpdateCrewButton();
         }
     }
-
     private void UpdateCrewButton()
     {
         CREW Crew = SelectedCrew;
@@ -705,7 +703,6 @@ public class Screen_Inventory : MonoBehaviour
         UpdateCrewButton();
         CrewScreen.gameObject.SetActive(true);
     }
-
     public void PressCrewPromote()
     {
         if (SelectedCrew == null) return;
@@ -717,7 +714,6 @@ public class Screen_Inventory : MonoBehaviour
         AUDCO.aud.PlaySFX(AUDCO.aud.Upgrade);
         SelectedCrew.BuyLevelupRpc();
     }
-
     public void PressCrewDismiss()
     {
         if (SelectedCrew == null) return;

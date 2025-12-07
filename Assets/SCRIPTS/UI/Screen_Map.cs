@@ -15,7 +15,8 @@ public class Screen_Map : MonoBehaviour
     public GameObject[] ChoiceButton;
     public TextMeshProUGUI[] ChoiceButtonVotes;
     public TextMeshProUGUI[] ChoiceTex;
-    public TextMeshProUGUI WarningTex;
+    public TextMeshProUGUI WarningTex; 
+    public GameObject OverrideVoteButton;
 
     private void OnEnable()
     {
@@ -50,6 +51,12 @@ public class Screen_Map : MonoBehaviour
         {
             UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
         }
+        OverrideVoteButton.gameObject.SetActive(LOCALCO.local.CurrentMapVote.Value > -1 && CO.co.IsHost);
+    }
+
+    public void PressOverrideButton()
+    {
+        CO.co.OverrideMapVote = true;
     }
     public void UpdateMap()
     {

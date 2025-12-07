@@ -64,7 +64,7 @@ public class DUNGEON : NetworkBehaviour
         GenerateDungeon();
         Space.Init();
     }
-    IEnumerator CreateSoundwaves()
+    IEnumerator CreateSoundwaves() //Runs on client
     {
         float Timer = 0f;
         while (true)
@@ -75,7 +75,7 @@ public class DUNGEON : NetworkBehaviour
                 foreach (CREW Crew in Space.GetCrew())
                 {
                     float Dis = (LOCALCO.local.GetPlayer().transform.position - Crew.transform.position).magnitude;
-                    if (UnityEngine.Random.Range(0f, 1f) < 0.7f && Dis < 45)
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.7f && Dis < 45 && Crew.GetCurrentSpeed() > 0.1f)
                     {
                         CO_SPAWNER.co.SpawnSoundwave(Crew.transform.position, 1.5f - Dis/45f);
                     }
