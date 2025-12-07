@@ -1296,8 +1296,7 @@ public class CREW : NetworkBehaviour, iDamageable
             {
                 if (!IsTargetEnemy(crew)) continue;
                 if (!crew.CanBeTargeted(Space)) continue;
-                DRIFTER drift = col.GetComponent<DRIFTER>();
-                if (drift != null) continue;
+                if (crew.Space == null) continue;
                 return true;
             }
         }
