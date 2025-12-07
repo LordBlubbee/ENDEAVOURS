@@ -15,3 +15,4 @@ MonoBehaviour:
   Backgrounds:
   - {fileID: 11400000, guid: ccf425a6572612149808e2c5b75d3ae0, type: 2}
   - {fileID: 11400000, guid: 2ecc52428c217d64fabb3128630782ed, type: 2}
+  - {fileID: 11400000, guid: 44e1beb63f95b2144832a795be0530f3, type: 2}

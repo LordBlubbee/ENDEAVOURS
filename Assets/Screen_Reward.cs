@@ -73,7 +73,12 @@ public class Screen_Reward : MonoBehaviour
     public void CloseRewardScreen()
     {
         RewardActive = false;
-        if (CO_STORY.co.IsCommsActive()) UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
+        if (CO.co.GetShopItems().Count > 0)
+        {
+            UI.ui.SelectScreen(UI.ui.InventoryUI.gameObject);
+            UI.ui.InventoryUI.OpenSubscreen(UI.ui.InventoryUI.SubscreenRest);
+        }
+        else if (CO_STORY.co.IsCommsActive()) UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
         else UI.ui.SelectScreen(UI.ui.MapUI.gameObject);
     }
     public void CloseRewardScreenInventory()

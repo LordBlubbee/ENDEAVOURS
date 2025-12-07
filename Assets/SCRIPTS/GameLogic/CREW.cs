@@ -58,7 +58,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public void AddUpgradeLevel(int Levels)
     {
         CREW crew = this;
-        UpgradeLevel.Value = Levels;
+        UpgradeLevel.Value += Levels;
         crew.ModifyHealthMax += crew.HealthIncreasePerLevelup * Levels;
         crew.AddAttributes(
                 Mathf.FloorToInt(crew.PointIncreasePerLevelup[0] * Levels),
@@ -1099,7 +1099,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 AUDCO.aud.PlaySFX(EquippedToolObject.Action1_SFX, transform.position, 0.1f);
             }
         }
-        else if (SelectedWeaponAbility == 1)
+        else //if (SelectedWeaponAbility == 1)
         {
             if (EquippedToolObject.Action2_SFX.Length > 0)
             {

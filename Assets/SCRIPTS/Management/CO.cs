@@ -4,8 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
-using Unity.VisualScripting;
-using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using static AUDCO;
 
@@ -503,11 +501,8 @@ public class CO : NetworkBehaviour
 
         if (Test_StartingLoot != null)
         {
-            int test = 0;
             foreach (WeightedLootItem lootItem in Test_StartingLoot.CommonDrops)
             {
-                test++;
-                if (test < 15) continue;
                 AddInventoryItem(lootItem.Item);
             }
         }
@@ -1300,10 +1295,11 @@ public class CO : NetworkBehaviour
         string str = even.EventController;
         switch (str)
         {
-            case "":
+            case "ShowLoot":
                 ForceOpenRewardScreenRpc();
                 break;
-            case "NotIdle":
+            case "ShowMap":
+                ForceOpenMapScreenRpc();
                 break;
             case "GenericRest":
                 StartCoroutine(Event_GenericRest());

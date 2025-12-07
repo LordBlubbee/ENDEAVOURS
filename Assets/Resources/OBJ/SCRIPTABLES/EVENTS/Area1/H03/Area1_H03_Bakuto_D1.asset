@@ -32,7 +32,7 @@ MonoBehaviour:
       towards us in a straight line.
     Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
     Alternatives: []
-  - BaseText: Vessel of the <color=magenta>Starlight Endeavour</color>. You have
+  - BaseText: Vessel of the <color=#FF00FF>Starlight Endeavour</color>. You have
       come far enough. If you are not Logipedan, choose a god and say your prayers.
     Speaker: {fileID: 11400000, guid: 5a28b60138a32ef4ca104943cc75855b, type: 2}
     Alternatives: []

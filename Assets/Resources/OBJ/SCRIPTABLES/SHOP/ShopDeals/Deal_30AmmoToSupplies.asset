@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fd06a1e258358141a85ea7069bb0d50, type: 3}
+  m_Name: Deal_30AmmoToSupplies
+  m_EditorClassIdentifier: 
+  Equippable: {fileID: 0}
+  BuyCrew: {fileID: 0}
+  AlchemySkillRequirement: 0
+  Weight: 40
+  IsCrafted: 0
+  DealMaterialsCost: 0
+  DealSuppliesCost: 0
+  DealAmmoCost: 30
+  DealTechCost: 0
+  DealMaterialsGain: 0
+  DealSuppliesGain: 25
+  DealAmmoGain: 0
+  DealTechGain: 0

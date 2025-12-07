@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69a8717e7279b88409550c597721d3ae, type: 3}
-  m_Name: CommonNotIdle
+  m_Name: CommonShowNothing
   m_EditorClassIdentifier: 
-  EventController: NotIdle
+  EventController: ShowNothing
   EnemyWave: {fileID: 0}
   AdditionalEventDialogs: []
   LootTable: {fileID: 0}

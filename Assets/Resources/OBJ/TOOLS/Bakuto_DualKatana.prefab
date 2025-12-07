@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5202963169351329839}
   - component: {fileID: 995083125999850606}
+  - component: {fileID: 2795016466294217325}
+  - component: {fileID: 230365718461389796}
+  - component: {fileID: 7512086986170636700}
   m_Layer: 0
   m_Name: BladeTwo
   m_TagString: Untagged
@@ -25,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 469914707198800441}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: 0.8870109, w: -0.46174863}
-  m_LocalPosition: {x: 1.3, y: -1.7, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.17364825, w: 0.9848078}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -89,6 +92,102 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &2795016466294217325
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469914707198800441}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!61 &230365718461389796
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469914707198800441}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 2.7, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.1, y: 0.5}
+    oldSize: {x: 4.9, y: 0.7}
+    newSize: {x: 3.1, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 3, y: 0.6}
+  m_EdgeRadius: 0
+--- !u!114 &7512086986170636700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469914707198800441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f0e23cc8af66364c9a0dbf49065b5dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tool: {fileID: 8311341897716400573}
+  col: {fileID: 230365718461389796}
+  ReduceDamageModMelee: 1
+  ReduceDamageModRanged: 0.6
+  BlockChanceMelee: 0.5
+  BlockChanceRanged: 1
+  ReflectProjectileChance: 0
+  ParryDuration: 0.3
+  isActive: 0
+  isAlwaysActive: 0
+  BlockSound: 1
 --- !u!1 &2900509096496761821
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,9 +356,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4af8441bd33cbf54196ce825168d3493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localX: 1.6
-  localY: -0.7
-  localRot: 180
+  localX: 0.4
+  localY: -1
+  localRot: -170
   Tool2: {fileID: 5202963169351329839}
   handPoints:
   - {fileID: 8339970041961610142}
@@ -276,7 +375,7 @@ MonoBehaviour:
   CrosshairMinRange: 3
   RotateCrosshair: 1
   ActionUse1: 1
-  attackAnimations1: 160000001700000018000000
+  attackAnimations1: 1a0000001b0000001c0000001d000000
   UsageStamina1: 0
   Action1_SFX:
   - {fileID: 8300000, guid: 9c2383bc4ed45004ab33551957b114fd, type: 3}
@@ -314,9 +413,9 @@ MonoBehaviour:
   Reload1: 0
   ExtendedCooldown1: 0
   ApplyBuff: {fileID: 0}
-  ActionUse2: 3
-  attackAnimations2: 19000000
-  UsageStamina2: 0
+  ActionUse2: 8
+  attackAnimations2: 1e000000
+  UsageStamina2: 30
   Action2_SFX:
   - {fileID: 8300000, guid: 9c2383bc4ed45004ab33551957b114fd, type: 3}
   - {fileID: 8300000, guid: 3c4650b8745018d448f9341f6f909961, type: 3}
@@ -330,7 +429,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f1d0d43891aa22e47a5d6b4fa239c5da, type: 3}
   - {fileID: 8300000, guid: c6a5ec4416bf6ce4fb7d5093feea6b94, type: 3}
   - {fileID: 8300000, guid: a50b10eb73e96634bbc7cc6e13105e8d, type: 3}
-  attackDamage2: 9
+  attackDamage2: 25
   RangedPrefab2: {fileID: 0}
   UniqueSpell2: {fileID: 0}
   Reload2: 0
@@ -396,10 +495,11 @@ MonoBehaviour:
   tool: {fileID: 8311341897716400573}
   col: {fileID: 3740242466005506562}
   ReduceDamageModMelee: 1
-  ReduceDamageModRanged: 0.6
-  BlockChanceMelee: 1
-  BlockChanceRanged: 0.8
+  ReduceDamageModRanged: 1
+  BlockChanceMelee: 0.5
+  BlockChanceRanged: 0.5
   ReflectProjectileChance: 0
+  ParryDuration: 0.3
   isActive: 0
   isAlwaysActive: 0
   BlockSound: 1

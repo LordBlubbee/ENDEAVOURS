@@ -30,7 +30,8 @@ public class ScriptableBackground : ScriptableObject
         LOGIPEDAN,
         CATALI,
         EPHEMERAL,
-        NOMADEN
+        NOMADEN,
+        BAKUTO
     }
     public NameCategories NameCategory;
     public string GetRandomName()
@@ -48,6 +49,12 @@ public class ScriptableBackground : ScriptableObject
                 list.Add("Ally");
                 break;
             case NameCategories.NOMADEN:
+                list.Add("Ally");
+                break;
+            case NameCategories.BAKUTO:
+                list.Add("Ally");
+                break;
+            default:
                 list.Add("Ally");
                 break;
         }
@@ -69,6 +76,9 @@ public class ScriptableBackground : ScriptableObject
                 break;
             case NameCategories.NOMADEN:
                 list.Add("Nomaden");
+                break;
+            case NameCategories.BAKUTO:
+                list.Add("Bakuto");
                 break;
         }
         return list.Count == 0 ? "" : list[UnityEngine.Random.Range(0, list.Count)];

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811518c451d40d44ea0fcaf32cdde66c, type: 3}
+  m_Name: TestLoot
+  m_EditorClassIdentifier: 
+  CommonDrops:
+  - Item: {fileID: 11400000, guid: 166787dba1c508641bd72e4fd51e46e0, type: 2}
+    Weight: 0
+  - Item: {fileID: 11400000, guid: 94331255bdf77974a95e9aa0ff10aa02, type: 2}
+    Weight: 0
+  - Item: {fileID: 11400000, guid: 3b837c639764cda47bf40d0913f5a4e7, type: 2}
+    Weight: 0
+  - Item: {fileID: 11400000, guid: acdc84f7aedc49344a581b4ed33a3453, type: 2}
+    Weight: 0
+  UncommonDrops: []
+  RareDrops: []

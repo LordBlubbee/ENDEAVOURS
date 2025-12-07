@@ -286,7 +286,7 @@ MonoBehaviour:
   OutsideDamageResistance: 1
   ModuleTag: 
   ModuleType: 1
-  IconSprite: {fileID: 21300000, guid: aa1a4ba3835c1b54bb69868e67b7d2f3, type: 3}
+  IconSprite: {fileID: 21300000, guid: c6c068ebf52b69d479050e1cf0432ac1, type: 3}
   ShowAsModule: {fileID: 11400000, guid: 5642e483e89de7d4a84827c6e73bac61, type: 2}
   MaxHealth: 100
   HitboxRadius: 16

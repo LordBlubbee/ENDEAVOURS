@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: EnfZones_AR_Dialog
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: After days of travel, a new zone has been reached. We are picking up
+      Flux transmissions on a public frequency.
+    Speaker: {fileID: 11400000, guid: 9d5807a3bec7ac546807c3709018eaf7, type: 2}
+    Alternatives: []
+  - BaseText: This voice speaks with the authority of the Legislatus Pragmaticus.
+      Due to new protocols instantiated by Stipulation 01-05-03 "Disaster Prevention"...
+    Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
+    Alternatives: []
+  - BaseText: ...This zone has been deemed a potential disaster area. All Peregrini
+      are urged to announce themselves at one of eight control centers set up by
+      our Enforcement Fleet.
+    Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
+    Alternatives: []
+  - BaseText: Food, water, and safety are guaranteed with a 7% error ratio upon your
+      arrival. Those who resist this decree will be deemed enemies of the Republic.
+      Repeat...
+    Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
+    Alternatives: []
+  - BaseText: This area is home to many independent Nomaden Clans, some of which
+      have allied with the Bakuto Insurrection.
+    Speaker: {fileID: 11400000, guid: 2b41c72ed0b156a4e8df29cc297a36f7, type: 2}
+    Alternatives: []
+  - BaseText: It seems that as a preventive measure, the Pragmaticus have decided
+      to pre-emptively disarm and arrest important members of Clans here.
+    Speaker: {fileID: 11400000, guid: 96f3fa33f08a69c4e9da2f4d333f781c, type: 2}
+    Alternatives: []
+  - BaseText: 'Communications are chaotic. The Enforcement Fleet is facing resistance
+      from all fronts. '
+    Speaker: {fileID: 11400000, guid: 96f3fa33f08a69c4e9da2f4d333f781c, type: 2}
+    Alternatives: []
+  - BaseText: From the Bakuto, from Coalition members attempting to seek peace, and
+      mostly from local Clans.
+    Speaker: {fileID: 11400000, guid: 96f3fa33f08a69c4e9da2f4d333f781c, type: 2}
+    Alternatives: []
+  - BaseText: We must make sure our papers are in order, and our stances are clear.
+      Conflict and prejudice are a disease in these regions.
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: We must begin our journey.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: cbd8b5cc701a7a24ca0d291ae1ccae28, type: 2}
