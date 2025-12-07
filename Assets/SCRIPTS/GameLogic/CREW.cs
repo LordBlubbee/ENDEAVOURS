@@ -1296,6 +1296,8 @@ public class CREW : NetworkBehaviour, iDamageable
             {
                 if (!IsTargetEnemy(crew)) continue;
                 if (!crew.CanBeTargeted(Space)) continue;
+                DRIFTER drift = col.GetComponent<DRIFTER>();
+                if (drift != null) continue;
                 return true;
             }
         }
@@ -1922,6 +1924,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 break;
         }
         fl *= 1f + ModifyDamageTaken;
+        fl *= 0.7f; //Standard crew-to-crew damage boost
         foreach (BUFF buff in new List<BUFF>(Buffs))
         {
             if (buff.TemporaryHitpoints > 0)

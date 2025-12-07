@@ -223,7 +223,7 @@ MonoBehaviour:
   Stripes: {fileID: 0}
   ControlledByPlayer: 0
   IsNeutral: 0
-  MaxHealth: 200
+  MaxHealth: 250
   NaturalStaminaRegen: 50
   MovementSpeed: 4
   RotationDistanceFactor: 4
