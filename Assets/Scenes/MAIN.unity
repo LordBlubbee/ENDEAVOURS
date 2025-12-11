@@ -76092,13 +76092,16 @@ MonoBehaviour:
 
       HEAVY ARMOR x3
 
-      HEAVY BALLISTA
+      STEAM REACTOR x1
+
+
+      HEAVY
+      BALLISTA
 
       DUAL BALLISTA
 
 
-      CREW:
-      x3 INVICTUS SOLDIERS'
+      CREW: x3 INVICTUS SOLDIERS'
   SpawnShipButton: {fileID: 7138139254657096576, guid: 881cc0b48813c6b4da5cc18d3d21fe27, type: 3}
   ShipList: {fileID: 454403149}
   Background: {fileID: 575933686}

@@ -1,7 +1,29 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class ModuleIncendiaryCrates : ModuleEffector
 {
+    public AudioClip ActivateSFX;
+    public AudioClip DeactivateSFX;
+    protected override void Activation()
+    {
+        ActivationRpc();
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ActivationRpc()
+    {
+        AUDCO.aud.PlaySFXLoud(ActivateSFX, transform.position);
+    }
+    protected override void Deactivation()
+    {
+        DeactivationRpc();
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    private void DeactivationRpc()
+    {
+        AUDCO.aud.PlaySFXLoud(DeactivateSFX, transform.position);
+    }
     public float GetFlameBoost()
     {
         return 0.4f + ModuleLevel.Value * 0.1f;

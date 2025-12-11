@@ -66,7 +66,10 @@ public class ModuleEffector : Module
     {
        
     }
+    protected virtual void Deactivation()
+    {
 
+    }
     public void SetCooldown()
     {
         if (IsEffectActive()) return;
@@ -76,11 +79,13 @@ public class ModuleEffector : Module
     protected IEnumerator ActivateCooldown()
     {
         EffectActive.Value = GetEffectDuration();
-        while (EffectActive.Value > 0f)
+        while (EffectActive.Value > 0f && !IsDisabled())
         {
             yield return null;
             EffectActive.Value -= CO.co.GetWorldSpeedDelta();
         }
+        Deactivation();
+        EffectActive.Value = 0;
         EffectCooldown.Value = GetEffectCooldownMax();
         while (EffectCooldown.Value > 0f)
         {

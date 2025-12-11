@@ -542,7 +542,7 @@ public class Screen_Inventory : MonoBehaviour
                     break;
                 case Module.ModuleTypes.NAVIGATION:
                     Data += $"\nDAMAGE REDUCTION: {((1f - CO.co.PlayerMainDrifter.GetHullDamageRatio()) * 100f).ToString("0")}%";
-                    Data += $"<color=green> (+5%)</color>";
+                    Data += $"<color=green> (+10%)</color>";
                     break;
                 case Module.ModuleTypes.ARMOR:
                     ModuleArmor armor = (ModuleArmor)SelectedDrifterSlot.ModuleLink;

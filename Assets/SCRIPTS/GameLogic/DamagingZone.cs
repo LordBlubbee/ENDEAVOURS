@@ -15,7 +15,16 @@ public class DamagingZone : NetworkBehaviour
     {
         DamagePerSecond *= DamageMod;
         StartCoroutine(DamageTick());
+        if (SpawnSFX) PlaySpawnSFXRpc();
     }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void PlaySpawnSFXRpc()
+    {
+        AUDCO.aud.PlaySFX(SpawnSFX, transform.position, 0.1f);
+    }
+
+    public AudioClip SpawnSFX;
     IEnumerator DamageTick()
     {
         DurationLeft = Duration;

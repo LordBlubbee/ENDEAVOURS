@@ -143,6 +143,15 @@ public class AUDCO : MonoBehaviour
         //Debug.Log($"Sound effect {clip.name} was {Dist} away resulting in sound level {Mathf.Clamp01((70f - Dist) * 0.04f)}");
         aud.PlayAUD(clip, pitchshift, Mathf.Clamp01((70f-Dist)*0.04f));
     }
+    public void PlaySFXLoud(AudioClip clip, Vector3 trt, float pitchshift = 0f)
+    {
+        trt = new Vector3(trt.x, trt.y, CAM.cam.transform.position.z);
+        AUD aud = Instantiate(spawnSFX, trt, Quaternion.identity);
+        aud.transform.SetParent(CAM.cam.transform);
+        float Dist = (CAM.cam.transform.position - trt).magnitude;
+        //Debug.Log($"Sound effect {clip.name} was {Dist} away resulting in sound level {Mathf.Clamp01((70f - Dist) * 0.04f)}");
+        aud.PlayAUD(clip, pitchshift, Mathf.Clamp01(0.4f+(70f - Dist) * 0.04f));
+    }
     public void PlaySFX(AudioClip[] clips, Vector3 trt, float pitchshift = 0f)
     {
         PlaySFX(clips[Random.Range(0, clips.Length)], trt, pitchshift);
@@ -171,4 +180,5 @@ public class AUDCO : MonoBehaviour
     public AudioClip Salvage;
     public AudioClip Press;
     public AudioClip Fail;
+    public AudioClip IncendiaryFireAttack;
 }

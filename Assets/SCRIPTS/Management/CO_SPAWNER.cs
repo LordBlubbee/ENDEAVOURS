@@ -504,7 +504,7 @@ public class CO_SPAWNER : NetworkBehaviour
                 Tries = 10;
             }
         }
-        Budget = drifterData.BaseModuleBudgetMod * Quality + 40;
+        Budget = drifterData.BaseModuleBudgetMod * 1.2f * Quality + 40;
         Tries = 10;
         while (Budget > 0)
         {

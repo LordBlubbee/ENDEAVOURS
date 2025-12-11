@@ -493,7 +493,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         if (!NavModule) return 1.2f;
         if (NavModule.IsDisabled()) return 1.2f;
-        return 1f - NavModule.ModuleLevel.Value*0.05f;
+        return 1f - NavModule.ModuleLevel.Value*0.1f;
     }
     public void Impact(float Damage, Vector3 ImpactArea)
     {

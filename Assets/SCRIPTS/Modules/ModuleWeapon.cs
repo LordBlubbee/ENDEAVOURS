@@ -180,6 +180,13 @@ public class ModuleWeapon : Module
             AUDCO.aud.PlaySFX(Fire_SFX, transform.position, 0.1f);
         }
     }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void IncendiarySFXRpc()
+    {
+        AUDCO.aud.PlaySFX(AUDCO.aud.IncendiaryFireAttack, transform.position, 0.1f);
+    }
+
+
     IEnumerator FireSequence(Vector3 mouse)
     {
         canFire = false;
@@ -195,6 +202,7 @@ public class ModuleWeapon : Module
                     ModuleIncendiaryCrates mod2 = (ModuleIncendiaryCrates)mod;
                     proj.AttackDamage *= mod2.GetDamageBonusMod();
                     proj.ZoneChance += mod2.GetFlameBoost();
+                    IncendiarySFXRpc();
                 }
             }
            

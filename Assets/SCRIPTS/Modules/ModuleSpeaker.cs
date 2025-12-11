@@ -1,7 +1,26 @@
+using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
 public class ModuleSpeaker : ModuleEffector
 {
+    public GameObject ActivateVFXPrefab;
+    public AudioClip ActivateSFX;
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ActivationRpc()
+    {
+        AUDCO.aud.PlaySFXLoud(ActivateSFX, transform.position);
+        StartCoroutine(SpeakerWaves());
+    }
+    IEnumerator SpeakerWaves()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Instantiate(ActivateVFXPrefab, transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
     public float GetBuffEffectPower()
     {
         switch (speakerType)
@@ -24,6 +43,7 @@ public class ModuleSpeaker : ModuleEffector
     public SpeakerTypes speakerType;
     protected override void Activation()
     {
+        ActivationRpc();
         switch (speakerType)
         {
             case SpeakerTypes.INVICTUS:
