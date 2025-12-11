@@ -291,7 +291,7 @@ MonoBehaviour:
   MaxHealth: 200
   HitboxRadius: 16
   ModuleWorth: 50
-  ModuleUpgradeMaterials: 1e0000003200000050000000
+  ModuleUpgradeMaterials: 1e0000003200000046000000
   ModuleUpgradeTechs: 00000000000000001e000000
   CenterPos: {fileID: 0}
   WeaponName: HEAVY BALLISTA
@@ -307,7 +307,7 @@ MonoBehaviour:
   ResourceType: 2
   Damage: 100
   RotationBaseSpeed: 75
-  MaxAmmo: 50
+  MaxAmmo: 40
   FireCooldown: 9
   ReloadCooldown: 9
   ProjectileCount: 1

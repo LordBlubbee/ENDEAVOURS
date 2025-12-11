@@ -291,8 +291,8 @@ MonoBehaviour:
   MaxHealth: 200
   HitboxRadius: 16
   ModuleWorth: 100
-  ModuleUpgradeMaterials: 320000005000000078000000
-  ModuleUpgradeTechs: 14000000280000003c000000
+  ModuleUpgradeMaterials: 280000003c00000050000000
+  ModuleUpgradeTechs: 140000001e00000032000000
   CenterPos: {fileID: 0}
   WeaponName: HEAVY CANNON
   WeaponTransform: {fileID: 1669101256883187062}
@@ -305,14 +305,14 @@ MonoBehaviour:
   ResourceType: 2
   Damage: 200
   RotationBaseSpeed: 45
-  MaxAmmo: 15
-  FireCooldown: 15
-  ReloadCooldown: 15
+  MaxAmmo: 10
+  FireCooldown: 16
+  ReloadCooldown: 16
   ProjectileCount: 1
   AdditionalProjectileDelay: 0
   DamagePerLevel: 100
   ProjectilesPerLevel: 0
-  CooldownPerLevel: 0
+  CooldownPerLevel: -1
 --- !u!114 &-427056032657588051
 MonoBehaviour:
   m_ObjectHideFlags: 0

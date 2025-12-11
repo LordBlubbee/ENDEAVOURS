@@ -550,6 +550,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ecf400006c4c4aa47afd56f85fab16f5, type: 2}
   - {fileID: 11400000, guid: ecf400006c4c4aa47afd56f85fab16f5, type: 2}
   - {fileID: 11400000, guid: ecf400006c4c4aa47afd56f85fab16f5, type: 2}
+  - {fileID: 11400000, guid: 42aa2949b6f140f4d97d65278abdb3e6, type: 2}
+  - {fileID: 11400000, guid: 960194b980bc1a64f9225910ad9d6de0, type: 2}
+  - {fileID: 11400000, guid: f4a79d7d8115dae47bc2186299f35909, type: 2}
   StartingCrew:
   - {fileID: 5867427934140877094, guid: cdd8c25b41a9ba047bfcff676f5e543c, type: 3}
   - {fileID: 5867427934140877094, guid: e3648a6c91d53c448b023e06c981efeb, type: 3}
@@ -726,7 +729,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0
+  - 180
   - 0
   PrefabWall: {fileID: 9019574874123161817, guid: b50d1ee3a96087846b72c40f9c11f28b, type: 3}
   PrefabCorner: {fileID: 5844972831535844615, guid: cbfb38767837270468660a6e7cb3ecbb, type: 3}
@@ -1754,6 +1757,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile (32)
@@ -2035,6 +2042,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile (40)
@@ -2107,6 +2118,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
@@ -2607,6 +2622,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile (15)
@@ -2679,6 +2698,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
@@ -3759,6 +3782,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
@@ -5212,6 +5239,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile_Turrets (3)
@@ -5873,6 +5904,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile (44)
@@ -6220,6 +6255,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile_Turrets (5)
@@ -6493,6 +6532,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
@@ -7064,6 +7107,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile (42)
@@ -7433,6 +7480,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile_Turrets (1)
@@ -7578,6 +7629,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
@@ -8285,6 +8340,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile (37)
@@ -8501,6 +8560,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
@@ -8781,6 +8844,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name

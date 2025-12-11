@@ -27,6 +27,10 @@ MonoBehaviour:
   RecruitCrewmembers: []
   TotalLootDrops: 0
   RandomLoot: []
-  MinimumShopDrops: 7
-  MaximumShopDrops: 11
-  PossibleShopDrops: {fileID: 11400000, guid: e6ed3e146d833c0498e18f44c7c10bb6, type: 2}
+  ShopDrops:
+  - DropList: {fileID: 11400000, guid: e6ed3e146d833c0498e18f44c7c10bb6, type: 2}
+    MinimumShopDrops: 5
+    MaximumShopDrops: 8
+  - DropList: {fileID: 11400000, guid: 7448204ed6e234d4285d1b5ee8087894, type: 2}
+    MinimumShopDrops: 2
+    MaximumShopDrops: 4

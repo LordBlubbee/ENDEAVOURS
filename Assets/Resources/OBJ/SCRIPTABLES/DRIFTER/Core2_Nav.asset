@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: Core2_Nav
   m_EditorClassIdentifier: 
   ItemName: Gubernator Chambers
-  ItemDesc: 'The candles and strings that surround the Drifter''s steering equipment
+  ItemDesc: "The candles and strings that surround the Drifter's steering equipment
     allow a Gubernator to feel the vibrations around the Drifter as if they had become
-    one with it. It is from here that the vessel is navigated.
-
-
-'
+    one with it. It is from here that the vessel is navigated. When the Chambers
+    are destroyed, hull damage taken by the Drifter is heavily increased, as it slips
+    into the Mist more easily. \n\n"
   ItemIcon: {fileID: 21300000, guid: 40e74035ea3ce8643843327a94785e44, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Core2_Nav
   ItemResourceIDShort: Core2_Nav
+  ItemRarity: 0
+  MinimumAttributes: 
   PrefabModule: {fileID: 6313021248617021957, guid: 444c5c76f86db5c4a8b595cabd2ca5d4, type: 3}
   EquipType: 0

@@ -20,6 +20,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5e327c34dc8e8044db4ecf9d321d5743, type: 2}
   - {fileID: 11400000, guid: acdc84f7aedc49344a581b4ed33a3453, type: 2}
   - {fileID: 11400000, guid: a070b50b714195f4bac819a3003f3a4a, type: 2}
+  - {fileID: 11400000, guid: 5642e483e89de7d4a84827c6e73bac61, type: 2}
   EquippableModules:
-  - {fileID: 11400000, guid: ecf400006c4c4aa47afd56f85fab16f5, type: 2}
+  - {fileID: 11400000, guid: 42aa2949b6f140f4d97d65278abdb3e6, type: 2}
+  - {fileID: 11400000, guid: d59f55781dce66445b31a1bd9cc23a4e, type: 2}
+  - {fileID: 11400000, guid: 83befffd464f76b43bff6b31e49e7e52, type: 2}
   HullIncreasePerLevelup: 400

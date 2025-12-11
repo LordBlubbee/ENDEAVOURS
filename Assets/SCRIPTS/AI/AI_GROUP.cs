@@ -184,6 +184,10 @@ public class AI_GROUP : MonoBehaviour
             }
         }
         List<Module> ManModules = new List<Module>();
+        foreach (ModuleWeapon mod in HomeDrifter.Space.WeaponModules)
+        {
+            if (mod.EligibleForReload()) ManModules.Add(mod);
+        }
         foreach (Module mod in HomeDrifter.Space.GetModules())
         {
             if (mod.GetHealthRelative() < 1)
@@ -195,10 +199,7 @@ public class AI_GROUP : MonoBehaviour
                 ManModules.Add(mod);
             }
         }
-        foreach (ModuleWeapon mod in HomeDrifter.Space.WeaponModules)
-        {
-            if (mod.EligibleForReload()) ManModules.Add(mod);
-        }
+        
         List<CREW> Intruders = new List<CREW>(EnemiesInSpace(HomeDrifter.Space));
         int WantDefenders = Intruders.Count;
         if (WantDefenders > 0)
@@ -299,6 +300,16 @@ public class AI_GROUP : MonoBehaviour
                 continue;
             }
             wep.Stop();
+        }
+        if (CO.co.IsSafe()) return;
+        foreach (Module mod in HomeDrifter.Interior.SystemModules)
+        {
+            if (!(mod is ModuleEffector)) continue;
+            ModuleEffector effector = mod as ModuleEffector;
+            if (effector.IsEffectAutomatic())
+            {
+                effector.ActivateEffect();
+            }
         }
     }
     private void SwarmAI()

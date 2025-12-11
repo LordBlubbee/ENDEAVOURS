@@ -180,9 +180,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: db31ebc7c3602e7458e7c6e7bc52bccc, type: 3}
   BlockPenetration: 0
   DodgeModifier: 1
-  HullDamageModifier: 1
+  HullDamageModifier: 0.2
   ModuleDamageModifier: 1
-  ArmorDamageModifier: 1
+  ArmorDamageModifier: 0.2
   ArmorAbsorptionModifier: 1
   ArmorCriticalChance: 0.05
   CrewDamageModifier: 1

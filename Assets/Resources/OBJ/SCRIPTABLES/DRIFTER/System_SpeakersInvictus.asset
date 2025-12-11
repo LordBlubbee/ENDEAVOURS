@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45863f5fd7c6c2c479b9205aecac2490, type: 3}
+  m_Name: System_SpeakersInvictus
+  m_EditorClassIdentifier: 
+  ItemName: Formation Speakers
+  ItemDesc: These loud speakers broadcast Stipulation-written formation commands
+    to your allies, briefly increasing the melee- and ranged damage of your team
+    heavily!
+  ItemIcon: {fileID: 21300000, guid: 2f2cfb9f63eae3d4f90549b7a9ca25b9, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/System_SpeakersInvictus
+  ItemResourceIDShort: System_SpeakersInvictus
+  SellMaterials: 0
+  SellSupplies: 0
+  SellTech: 0
+  ItemRarity: 0
+  MinimumAttributes: 
+  PrefabModule: {fileID: 8823647709206889408, guid: a5fd4096d8f659a4192eae1cad2dc088, type: 3}
+  EquipType: 2

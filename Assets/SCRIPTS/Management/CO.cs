@@ -290,34 +290,34 @@ public class CO : NetworkBehaviour
         switch (GetLOCALCO().Count)
         {
             case 1:
-                PlayerDiff = 0.8f;
+                PlayerDiff = 0.9f;
                 break;
             case 2:
-                PlayerDiff = 1f;
+                PlayerDiff = 1.1f;
                 break;
             case 3:
-                PlayerDiff = 1.15f;
-                break;
-            case 4:
                 PlayerDiff = 1.25f;
                 break;
-            case 5:
+            case 4:
                 PlayerDiff = 1.35f;
                 break;
-            case 6:
+            case 5:
                 PlayerDiff = 1.45f;
                 break;
-            case 7:
-                PlayerDiff = 1.5f;
-                break;
-            case 8:
+            case 6:
                 PlayerDiff = 1.55f;
                 break;
-            case 9:
+            case 7:
+                PlayerDiff = 1.6f;
+                break;
+            case 8:
                 PlayerDiff = 1.65f;
                 break;
+            case 9:
+                PlayerDiff = 1.75f;
+                break;
             case 10:
-                PlayerDiff = 1.7f;
+                PlayerDiff = 1.8f;
                 break;
         }
         return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
@@ -394,16 +394,16 @@ public class CO : NetworkBehaviour
                 ProgressDiff = 1f;
                 break;
             case 1:
-                ProgressDiff = 1.5f;
+                ProgressDiff = 1.6f;
                 break;
             case 2:
-                ProgressDiff = 2f;
+                ProgressDiff = 2.2f;
                 break;
             case 3:
-                ProgressDiff = 2.8f;
+                ProgressDiff = 3.1f;
                 break;
             case 4:
-                ProgressDiff = 3.5f;
+                ProgressDiff = 4f;
                 break;
             case 5:
                 ProgressDiff = 5.5f;
@@ -419,28 +419,28 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 1f;
                 break;
             case 2:
-                PlayerDiff = 1.05f;
+                PlayerDiff = 1.06f;
                 break;
             case 3:
-                PlayerDiff = 1.1f;
+                PlayerDiff = 1.12f;
                 break;
             case 4:
-                PlayerDiff = 1.15f;
+                PlayerDiff = 1.18f;
                 break;
             case 5:
-                PlayerDiff = 1.2f;
+                PlayerDiff = 1.24f;
                 break;
             case 6:
-                PlayerDiff = 1.25f;
-                break;
-            case 7:
                 PlayerDiff = 1.3f;
                 break;
+            case 7:
+                PlayerDiff = 1.34f;
+                break;
             case 8:
-                PlayerDiff = 1.35f;
+                PlayerDiff = 1.38f;
                 break;
             case 9:
-                PlayerDiff = 1.4f;
+                PlayerDiff = 1.42f;
                 break;
             case 10:
                 PlayerDiff = 1.45f;
@@ -479,7 +479,7 @@ public class CO : NetworkBehaviour
         switch (GetLOCALCO().Count)
         {
             case 1:
-                PlayerDiff = 0.7f;
+                PlayerDiff = 0.75f;
                 break;
             case 2:
                 PlayerDiff = 1f;
@@ -798,6 +798,14 @@ public class CO : NetworkBehaviour
             local.ShipTransportFadeAwayRpc(destination.GetNameOnly());
         }
         yield return new WaitForSeconds(2.5f);
+        foreach (ModuleWeapon wep in PlayerMainDrifter.Interior.WeaponModules)
+        {
+            wep.SetOrderPointRpc(Vector3.zero);
+        }
+        foreach (CREW crew in GetAllCrews())
+        {
+            crew.SetOrderPointRpc(Vector3.zero);
+        }
         GenerateLevel();
 
         ResetWeights();
@@ -1214,6 +1222,7 @@ public class CO : NetworkBehaviour
         List<CREW> list = new();
         foreach (CREW loc in GetEnemyCrew(fac))
         {
+            if (loc.isDead()) continue;
             if (!loc.IsNeutral)
             {
                 list.Add(loc);
@@ -1420,11 +1429,22 @@ public class CO : NetworkBehaviour
                 StartCoroutine(Event_DungeonStorage());
                 break;
             case "DungeonExtermination":
-                StartCoroutine(Event_DungeonExtermination());
                 break;
             case "GenericSurvival":
                 StartCoroutine(Event_GenericSurvival());
                 break;
+        }
+        foreach (DRIFTER drift in GetAllDrifters())
+        {
+            foreach (ModuleWeapon weapons in drift.Interior.WeaponModules)
+            {
+                weapons.LoadWeaponsNow();
+            }
+            foreach (Module mod in drift.Interior.SystemModules)
+            {
+                if (!(mod is ModuleEffector)) continue;
+                ((ModuleEffector)mod).SetCooldown();
+            }
         }
     }
     IEnumerator Event_GenericLoot()
@@ -1552,10 +1572,10 @@ public class CO : NetworkBehaviour
         CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
 
         List<Vault> Vaults = CO_SPAWNER.co.SpawnVaultObjectives(CurrentDungeon);
-        AlternativeDebriefDialog Debrief = null;
+        AlternativeDebriefDialog Debrief = CurrentEvent.GetDebrief();
         bool MissionCompleted = false;
         float Death = 0f;
-        while (Death < 1 || !MissionCompleted)
+        while (Death < 1)
         {
             int DeadAmount = GroupDeathAmount(GetEnemyCrew());
             int AliveAmount = GetEnemyCrew().Count - DeadAmount;
@@ -1582,8 +1602,8 @@ public class CO : NetworkBehaviour
                     MissionCompleted = true;
                     CommunicationGamePaused.Value = true;
                     if (CurrentEvent.HasDebrief()) {
-                        Debrief = CurrentEvent.GetDebrief();
                         CO_STORY.co.SetStory(Debrief.ReplaceDialog);
+                        StartCoroutine(RewardOnceSafe(CurrentEvent.LootTable));
                         //if (CurrentEvent.HasDebrief()) CO_STORY.co.SetStory(Debrief.ReplaceDialog);
                     }
                 }
@@ -1606,66 +1626,14 @@ public class CO : NetworkBehaviour
 
             yield return new WaitForSeconds(3f);
             AreWeInDanger.Value = false;
-            if (Debrief != null) ProcessLootTable(Debrief.AlternativeLoot, 1f);
+          
         }
         SetCurrentDungeon(null);
     }
-    IEnumerator Event_DungeonExtermination()
+    IEnumerator RewardOnceSafe(ScriptableLootTable loot)
     {
-        ShouldDriftersMove = false;
-        AreWeInDanger.Value = false;
-        SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
-        ResetWeights();
-        int i = 0;
-        List<EnemyGroupWithWeight> Groups = new();
-        foreach (EnemyGroupWithWeight weighted in CurrentEvent.EnemyWave.SpawnEnemyGroupList)
-        {
-            Groups.Add(weighted);
-            AddWeights(i, weighted.Weight);
-            i++;
-        }
-        ScriptableEnemyGroup EnemyGroup = Groups[GetWeight()].EnemyGroup;
-        CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
-
-        bool MissionCompleted = false;
-        float Death = 0f;
-        while (Death < 1 && !ShouldDriftersMove)
-        {
-            int DeadAmount = GroupDeathAmount(GetEnemyCrew());
-            int AliveAmount = GetEnemyCrew().Count - DeadAmount;
-            Death = (float)DeadAmount / (float)GetEnemyCrew().Count;
-
-            int Threats = GetEnemyNonDormantCrew().Count;
-
-            EnemyBarRelative.Value = 1f - Death;
-            if (AreCrewAwayFromHome())
-            {
-                AreWeInDanger.Value = true;
-                if (Threats > 0) EnemyBarString.Value = $"THREATS: {Threats}";
-            }
-            else
-            {
-                AreWeInDanger.Value = false;
-                EnemyBarRelative.Value = 1f - Death;
-                EnemyBarString.Value = $"EXPLORE DUNGEON";
-            }
-            if (Death == 1) MissionCompleted = true;
-            yield return new WaitForSeconds(0.5f);
-        }
-        AreWeInDanger.Value = false;
-        EnemyBarRelative.Value = -1;
-        if (!ShouldDriftersMove)
-        {
-            yield return new WaitForSeconds(4f);
-            if (Death >= 1)
-            {
-                LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
-            }
-            SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
-
-            yield return new WaitForSeconds(3f);
-            EndEvent(MissionCompleted);
-        }
+        while (!CO.co.IsSafe()) yield return null;
+        ProcessLootTable(loot, 1f);
     }
     IEnumerator Event_GenericSurvival()
     {
@@ -1893,23 +1861,32 @@ public class CO : NetworkBehaviour
             OpenRewardScreenRpc(ChangeMaterials, ChangeSupplies, ChangeAmmo, ChangeTech, ChangeHP, ChangeXP, Factions.ToArray(), FactionChanges.ToArray(), ItemTranslate.ToArray(), NewCrewLink);
         }
 
-        if (table.MinimumShopDrops > 0)
+        if (table.ShopDrops.Count > 0)
         {
             ResetShopList();
-            int Drops = UnityEngine.Random.Range(table.MinimumShopDrops, table.MaximumShopDrops) + GetEncounterShopSizeExtra();
-            ResetWeights();
-            int i2 = 0;
-            List<ScriptableShopitem> ShopItemList = new();
-            foreach (ScriptableShopitem item in table.PossibleShopDrops.GetPossibleDrops())
+            bool first = true;
+            foreach (ShopDrop drop in table.ShopDrops)
             {
-                AddWeights(i2, item.Weight);
-                ShopItemList.Add(item);
-                i2++;
-            }
-            for (i2 = 0; i2 < Drops; i2++)
-            {
-                ScriptableShopitem shopItem = ShopItemList[GetWeight()];
-                CreateShopItem(shopItem);
+                int Drops = UnityEngine.Random.Range(drop.MinimumShopDrops, drop.MaximumShopDrops);
+                if (first)
+                {
+                    Drops += GetEncounterShopSizeExtra();
+                    first = false;
+                }
+                ResetWeights();
+                int i2 = 0;
+                List<ScriptableShopitem> ShopItemList = new();
+                foreach (ScriptableShopitem item in drop.DropList.GetPossibleDrops())
+                {
+                    AddWeights(i2, item.Weight);
+                    ShopItemList.Add(item);
+                    i2++;
+                }
+                for (i2 = 0; i2 < Drops; i2++)
+                {
+                    ScriptableShopitem shopItem = ShopItemList[GetWeight()];
+                    CreateShopItem(shopItem);
+                }
             }
         }
     }

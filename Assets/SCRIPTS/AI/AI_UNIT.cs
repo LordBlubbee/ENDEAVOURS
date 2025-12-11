@@ -430,7 +430,7 @@ public class AI_UNIT : NetworkBehaviour
             mod = GetClosestFriendlyModule();
             if (mod.GetHealthRelative() < 1)
             {
-                if (DistToObjective(mod.transform.position) < 8)
+                if (DistToObjective(mod.transform.position) < 16)
                 {
                     SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
                     SetLookTowards(mod.GetTargetPos(), ObjectiveSpace);
@@ -684,7 +684,9 @@ public class AI_UNIT : NetworkBehaviour
                     {
                        
                     }*/
-                    CREW crew = GetClosestVisibleEnemyInCone(25f, 90f);
+                    CREW crew;
+                    if (EnemyTargetTimer > 0.5f) crew = GetClosestVisibleEnemyInCone(25f, 120f);
+                    else crew = GetClosestVisibleEnemyInCone(25f, 70f);
                     if (crew)
                     {
                         StopMoving();

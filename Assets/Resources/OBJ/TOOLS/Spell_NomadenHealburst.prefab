@@ -158,7 +158,7 @@ MonoBehaviour:
   attackDamage1: 25
   RangedPrefab1: {fileID: 0}
   UniqueSpell1: {fileID: 124129010523531472}
-  Reload1: 2
+  Reload1: 0.5
   ExtendedCooldown1: 5
   ApplyBuff: {fileID: 0}
   ActionUse2: 0

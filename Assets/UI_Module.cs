@@ -74,8 +74,21 @@ public class UI_Module : MonoBehaviour
         IconBorder.sprite = CO_SPAWNER.co.DefaultInventorySprite;
         Icon.sprite = wep.IconSprite;
         Icon.color = new Color(1f - wep.GetHealthRelative(), wep.GetHealthRelative(), 0);
-        Button1.SetActive(false);
-        Button2.SetActive(false);
+
+        ModuleEffector effector = null;
+        if (wep is ModuleEffector)
+        {
+            effector = (ModuleEffector)wep;
+            Button1.SetActive(true);
+            if (effector.IsEffectAutomatic()) Button1Tex.text = "<color=yellow>AUTO ON";
+            else Button1Tex.text = "<color=#888888>AUTO OFF";
+            Button2.SetActive(true);
+            Button2Tex.text = effector.IsEffectActive() ? "<color=green>ACTIVE" : (effector.IsEffectOnCooldown() ? "<color=#AAAAAA>COOLDOWN" : "ACTIVATE");
+        } else
+        {
+            Button1.SetActive(false);
+            Button2.SetActive(false);
+        }
 
         switch (wep.ModuleType)
         {
@@ -87,7 +100,8 @@ public class UI_Module : MonoBehaviour
             case Module.ModuleTypes.ENGINES:
                 MainTex.text = $"{GetUseNumber()}ENGINES";
                 Color EngineColor = new Color(1f - wep.GetHealthRelative(), wep.GetHealthRelative(), 0);
-                int Dodge = Mathf.RoundToInt((10 + wep.ModuleLevel.Value * 5) * ((0.8f * wep.GetHealthRelative()) + 0.2f));
+                int Dodge = Mathf.RoundToInt(CO.co.PlayerMainDrifter.GetDodgeChance()*100f);
+                //int Dodge = Mathf.RoundToInt((10 + wep.ModuleLevel.Value * 5) * ((0.8f * wep.GetHealthRelative()) + 0.2f));
                 if (wep.IsDisabled())
                 {
                     EngineColor = Color.red;
@@ -111,6 +125,141 @@ public class UI_Module : MonoBehaviour
                 MainTex.text = $"{GetUseNumber()}MEDICAL";
                 StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")}";
                 StatusTex.color = Icon.color;
+                break;
+            case Module.ModuleTypes.STEAM_REACTOR:
+                MainTex.text = $"{GetUseNumber()}STEAM REACTOR";
+                StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")}";
+                if (effector.IsDisabled())
+                {
+                    StatusTex.text += $" | <color=red>DISABLED</color>";
+                }
+                else if (effector.IsEffectActive())
+                {
+                    StatusTex.text += $" | <color=green>ACTIVE ({effector.GetEffectActive().ToString("0.0")})</color>";
+                }
+                else if (effector.IsEffectOnCooldown())
+                {
+                    StatusTex.text += $" | <color=#AAAAAA>COOLING ({effector.GetEffectCooldown().ToString("0.0")})</color>";
+                } else
+                {
+                    StatusTex.text += $" | <color=yellow>GREEN</color>";
+                }
+                StatusTex.color = Icon.color;
+                break;
+            case Module.ModuleTypes.INCENDIARY_STORAGE:
+                MainTex.text = $"{GetUseNumber()}INCENDIARY LOADER";
+                StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")}";
+                StatusTex.color = Icon.color;
+
+                if (effector.IsDisabled())
+                {
+                    StatusTex.text += $" | <color=red>DISABLED</color>";
+                }
+                else if (effector.IsEffectActive())
+                {
+                    StatusTex.text += $" | <color=green>ACTIVE ({effector.GetEffectActive().ToString("0.0")})</color>";
+                }
+                else if (effector.IsEffectOnCooldown())
+                {
+                    StatusTex.text += $" | <color=#AAAAAA>COOLING ({effector.GetEffectCooldown().ToString("0.0")})</color>";
+                }
+                else
+                {
+                    StatusTex.text += $" | <color=yellow>GREEN</color>";
+                }
+                break;
+            case Module.ModuleTypes.VENGEANCE_PLATING:
+                MainTex.text = $"{GetUseNumber()}VENGEANCE MUNITIONS";
+                StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")}";
+                StatusTex.color = Icon.color;
+
+                if (wep.IsDisabled())
+                {
+                    StatusTex.text += $" | <color=red>DISABLED";
+                } else
+                {
+                    StatusTex.text += $" | <color=green>ACTIVE";
+                }
+                break;
+            case Module.ModuleTypes.DOOR_CONTROLLER:
+                MainTex.text = $"{GetUseNumber()}DOOR CONTROLLER";
+                StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")}";
+                StatusTex.color = Icon.color;
+
+                if (wep.IsDisabled())
+                {
+                    StatusTex.text += $" | <color=red>DISABLED";
+                }
+                else
+                {
+                    StatusTex.text += $" | <color=green>+{150+150*wep.ModuleLevel.Value} DOOR HEALTH";
+                }
+                break;
+            case Module.ModuleTypes.SPEAKERS_BUFF:
+                MainTex.text = $"{GetUseNumber()}FORMATION SPEAKERS";
+                StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")}";
+                StatusTex.color = Icon.color;
+
+                if (effector.IsDisabled())
+                {
+                    StatusTex.text += $" | <color=red>DISABLED</color>";
+                }
+                else if (effector.IsEffectActive())
+                {
+                    StatusTex.text += $" | <color=green>ACTIVE ({effector.GetEffectActive().ToString("0.0")})</color>";
+                }
+                else if (effector.IsEffectOnCooldown())
+                {
+                    StatusTex.text += $" | <color=#AAAAAA>COOLING ({effector.GetEffectCooldown().ToString("0.0")})</color>";
+                }
+                else
+                {
+                    StatusTex.text += $" | <color=yellow>GREEN</color>";
+                }
+                break;
+            case Module.ModuleTypes.SPEAKERS_DEBUFF:
+                MainTex.text = $"{GetUseNumber()}PERSECUTION SPEAKERS";
+                StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")}";
+                StatusTex.color = Icon.color;
+
+                if (effector.IsDisabled())
+                {
+                    StatusTex.text += $" | <color=red>DISABLED</color>";
+                }
+                else if (effector.IsEffectActive())
+                {
+                    StatusTex.text += $" | <color=green>ACTIVE ({effector.GetEffectActive().ToString("0.0")})</color>";
+                }
+                else if (effector.IsEffectOnCooldown())
+                {
+                    StatusTex.text += $" | <color=#AAAAAA>COOLING ({effector.GetEffectCooldown().ToString("0.0")})</color>";
+                }
+                else
+                {
+                    StatusTex.text += $" | <color=yellow>GREEN</color>";
+                }
+                break;
+            case Module.ModuleTypes.SPEAKERS_HEAL:
+                MainTex.text = $"{GetUseNumber()}INSPIRATION SPEAKERS";
+                StatusTex.text = $"INTEGRITY {(wep.GetHealth()).ToString("0")}";
+                StatusTex.color = Icon.color;
+
+                if (effector.IsDisabled())
+                {
+                    StatusTex.text += $" | <color=red>DISABLED</color>";
+                }
+                else if (effector.IsEffectActive())
+                {
+                    StatusTex.text += $" | <color=green>ACTIVE ({effector.GetEffectActive().ToString("0.0")})</color>";
+                }
+                else if (effector.IsEffectOnCooldown())
+                {
+                    StatusTex.text += $" | <color=#AAAAAA>COOLING ({effector.GetEffectCooldown().ToString("0.0")})</color>";
+                }
+                else
+                {
+                    StatusTex.text += $" | <color=yellow>GREEN</color>";
+                }
                 break;
         }
     }
@@ -233,6 +382,7 @@ public class UI_Module : MonoBehaviour
     }
     public void PressButton1()
     {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         switch (Mode)
         {
             case UIModuleModes.CREW:
@@ -243,6 +393,12 @@ public class UI_Module : MonoBehaviour
                     case Module.ModuleTypes.ENGINES:
                         CO.co.BoardingManeuverRpc();
                         break;
+                    default:
+                        if (Module is ModuleEffector)
+                        {
+                            ((ModuleEffector)Module).ChangeAutomaticRpc(!((ModuleEffector)Module).IsEffectAutomatic());
+                        }
+                        break;
                 }
                 break;
             case UIModuleModes.MODULEWEAPON:
@@ -252,6 +408,7 @@ public class UI_Module : MonoBehaviour
     }
     public void PressButton2()
     {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         switch (Mode)
         {
             case UIModuleModes.CREW:
@@ -261,6 +418,12 @@ public class UI_Module : MonoBehaviour
                 {
                     case Module.ModuleTypes.ENGINES:
                         CO.co.EvasiveManeuverRpc();
+                        break;
+                    default:
+                        if (Module is ModuleEffector)
+                        {
+                            ((ModuleEffector)Module).ActivateEffectRpc();
+                        }
                         break;
                 }
                 break;

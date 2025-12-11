@@ -9,6 +9,12 @@ public class ScriptableEquippable : ScriptableObject
     public Sprite ItemIcon;
     public string ItemResourceIDFull;
     public string ItemResourceIDShort;
+
+    [Header("Sell Worth")]
+    public int SellMaterials = 0;
+    public int SellSupplies = 0;
+    public int SellTech = 0;
+
     public Rarities ItemRarity;
     public enum Rarities
     {

@@ -43,7 +43,10 @@ public class CO_SPAWNER : NetworkBehaviour
         PRAGMATICUS_SHIELD,
         COMMAND,
         KNUCKLES_BUFF,
-        SKIRMISH_BUFF
+        SKIRMISH_BUFF,
+        SPEAKER_PRAGMATICUS,
+        SPEAKER_INVICTUS,
+        SPEAKER_STELLAE
     }
 
     [Header("BACKGROUND")]
@@ -428,7 +431,7 @@ public class CO_SPAWNER : NetworkBehaviour
         WalkableTile SelectedTile = ObjectivePositions[UnityEngine.Random.Range(0, ObjectivePositions.Count)];
         ObjectivePositions.Remove(SelectedTile);
         Vault vault = Instantiate(VaultObjectiveObject, SelectedTile.transform.position, SelectedTile.transform.rotation);
-        vault.MaxHealth = 100 + CO.co.GetLOCALCO().Count * 100;
+        vault.ExtraMaxHealth.Value = CO.co.GetLOCALCO().Count * 100;
         vault.NetworkObject.Spawn();
         vault.transform.SetParent(Dungeon.Space.transform);
         vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;
@@ -501,25 +504,45 @@ public class CO_SPAWNER : NetworkBehaviour
                 Tries = 10;
             }
         }
-        Budget = drifterData.BaseModuleBudgetMod * Quality;
+        Budget = drifterData.BaseModuleBudgetMod * Quality + 40;
         Tries = 10;
         while (Budget > 0)
         {
             float ChanceForNewModule = 0f;
+            int AmountOfNonArmorModules = 0;
+            foreach (Module mod in drifter.Interior.SystemModules)
+            {
+                if (!(mod is ModuleArmor)) AmountOfNonArmorModules++;
+            }
+            switch (AmountOfNonArmorModules)
+            {
+                case 0:
+                    ChanceForNewModule = 0.7f;
+                    break;
+                case 1:
+                    ChanceForNewModule = 0.4f;
+                    break;
+                case 2:
+                    ChanceForNewModule = 0.4f;
+                    break;
+                default:
+                    ChanceForNewModule = 0f;
+                    break;
+            }
             float Cost;
             if (UnityEngine.Random.Range(0f, 1f) < ChanceForNewModule)
             {
-                /*ScriptableEquippableModule equip = drifterData.EquippableWeapons[UnityEngine.Random.Range(0, drifterData.EquippableWeapons.Count)];
-                Cost = equip.PrefabModule.ModuleWorth * 1.2f;
+                ScriptableEquippableModule equip = drifterData.EquippableModules[UnityEngine.Random.Range(0, drifterData.EquippableModules.Count)];
+                Cost = equip.PrefabModule.ModuleWorth;
                 if (Cost > Budget && Tries > 0)
                 {
                     Tries--;
-                    if (Tries == 0 && drifter.Interior.WeaponModules.Count > 0) break;
+                    if (Tries == 0) break;
                     continue;
                 }
                 drifter.Interior.AddModule(equip, true);
                 Budget -= Cost;
-                Tries = 10;*/
+                Tries = 10;
             }
             else
             {

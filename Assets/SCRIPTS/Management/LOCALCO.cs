@@ -97,14 +97,14 @@ public class LOCALCO : NetworkBehaviour
                     if (SpecialCrosshair)
                     {
                         float Dist = (Mouse - GetPlayer().transform.position).magnitude;
-                        if (Dist < GetPlayer().EquippedToolObject.CrosshairMinRange)
+                        /*if (Dist < GetPlayer().EquippedToolObject.CrosshairMinRange)
                         {
                             CrosshairPoint = GetPlayer().transform.position + (Mouse - GetPlayer().transform.position).normalized * GetPlayer().EquippedToolObject.CrosshairMinRange;
                         }
                         else if (Dist > GetPlayer().EquippedToolObject.CrosshairMaxRange)
                         {
                             CrosshairPoint = GetPlayer().transform.position + (Mouse - GetPlayer().transform.position).normalized * GetPlayer().EquippedToolObject.CrosshairMaxRange;
-                        }
+                        }*/
                         if (GetPlayer().EquippedToolObject.RotateCrosshair)
                         {
                             UI.ui.SetCrosshairRotateTowards(CrosshairPoint, GetPlayer().transform.position);

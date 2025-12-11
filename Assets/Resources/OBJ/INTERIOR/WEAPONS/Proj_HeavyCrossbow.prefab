@@ -184,7 +184,7 @@ MonoBehaviour:
   BlockPenetration: 0
   DodgeModifier: 1
   HullDamageModifier: 0.5
-  ModuleDamageModifier: 0
+  ModuleDamageModifier: 0.5
   ArmorDamageModifier: 1
   ArmorAbsorptionModifier: 1
   ArmorCriticalChance: 0.05

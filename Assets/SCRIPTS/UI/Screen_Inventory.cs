@@ -537,10 +537,12 @@ public class Screen_Inventory : MonoBehaviour
                     Data += $"\nAMMO SIZE: {wep.MaxAmmo}";
                     break;
                 case Module.ModuleTypes.ENGINES:
-                    Data += $"\nDODGE: {(CO.co.PlayerMainDrifter.GetDodgeChance()*100f).ToString("0.0")}%";
+                    Data += $"\nDODGE: {(CO.co.PlayerMainDrifter.GetDodgeChanceUnboosted()*100f).ToString("0")}%";
                     Data += $"<color=green> (+5%)</color>";
                     break;
                 case Module.ModuleTypes.NAVIGATION:
+                    Data += $"\nDAMAGE REDUCTION: {((1f - CO.co.PlayerMainDrifter.GetHullDamageRatio()) * 100f).ToString("0")}%";
+                    Data += $"<color=green> (+5%)</color>";
                     break;
                 case Module.ModuleTypes.ARMOR:
                     ModuleArmor armor = (ModuleArmor)SelectedDrifterSlot.ModuleLink;
@@ -555,6 +557,79 @@ public class Screen_Inventory : MonoBehaviour
                     if (med.RegenAmountPerLevel != 0) Data += $"<color=green> (+{med.RegenAmountPerLevel}/s)</color>";
                     Data += $"\nAURA SIZE: {med.GetRegenAura().ToString("0.0")}";
                     if (med.RegenAuraPerLevel != 0) Data += $"<color=green> (+{med.RegenAuraPerLevel.ToString("0.0")})</color>";
+                    break;
+                case Module.ModuleTypes.STEAM_REACTOR:
+                    ModuleSteamReactor steam = (ModuleSteamReactor)SelectedDrifterSlot.ModuleLink;
+                    Data += $"\nDURATION: {steam.GetEffectDuration().ToString("0.0")}";
+                    Data += $"<color=green> (+{steam.EffectDurationPerLevel})</color>";
+                    Data += $"\nCOOLDOWN: {steam.GetEffectCooldownMax().ToString("0.0")}";
+                    Data += $"<color=green> ({steam.EffectCooldownReductionPerLevel})</color>";
+
+                    //Unique
+                    Data += $"\nDODGE BOOST: +{(steam.GetDodgeBoost()*100f).ToString("0")}%";
+                    Data += $"<color=green> (+5%)</color>";
+                    Data += $"\nARMOR REGEN: +{steam.GetArmorBoost().ToString("0")}/s";
+                    Data += $"<color=green> (+5/s)</color>";
+                    break;
+                case Module.ModuleTypes.INCENDIARY_STORAGE:
+                    ModuleIncendiaryCrates incin = (ModuleIncendiaryCrates)SelectedDrifterSlot.ModuleLink;
+                    Data += $"\nDURATION: {incin.GetEffectDuration().ToString("0.0")}";
+                    Data += $"<color=green> (+{incin.EffectDurationPerLevel})</color>";
+                    Data += $"\nCOOLDOWN: {incin.GetEffectCooldownMax().ToString("0.0")}";
+                    Data += $"<color=green> ({incin.EffectCooldownReductionPerLevel})</color>";
+
+                    //Unique
+                    Data += $"\nDAMAGE BOOST: +{((incin.GetDamageBonusMod()-1f)*100f).ToString("0")}%";
+                    Data += $"<color=green> (+10%)</color>";
+                    Data += $"\nFIRE CHANCE: (+{(incin.GetFlameBoost()*100f).ToString("0")}%";
+                    Data += $"<color=green> (+10%)</color>";
+                    break;
+                case Module.ModuleTypes.SPEAKERS_BUFF:
+                    ModuleSpeaker speakb = (ModuleSpeaker)SelectedDrifterSlot.ModuleLink;
+                    Data += $"\nDURATION: {speakb.GetEffectDuration().ToString("0.0")}";
+                    Data += $"<color=green> (+{speakb.EffectDurationPerLevel})</color>";
+                    Data += $"\nCOOLDOWN: {speakb.GetEffectCooldownMax().ToString("0.0")}";
+                    Data += $"<color=green> ({speakb.EffectCooldownReductionPerLevel})</color>";
+
+                    //Unique
+                    Data += $"\nMELEE DAMAGE: +{speakb.GetBuffEffectPower().ToString("0")}%";
+                    Data += $"<color=green> (+4)</color>";
+                    Data += $"\nRANGED DAMAGE: +{speakb.GetBuffEffectPower().ToString("0")}%";
+                    Data += $"<color=green> (+4)</color>";
+                    break;
+                case Module.ModuleTypes.SPEAKERS_DEBUFF:
+                    ModuleSpeaker speakd = (ModuleSpeaker)SelectedDrifterSlot.ModuleLink;
+                    Data += $"\nDURATION: {speakd.GetEffectDuration().ToString("0.0")}";
+                    Data += $"<color=green> (+{speakd.EffectDurationPerLevel})</color>";
+                    Data += $"\nCOOLDOWN: {speakd.GetEffectCooldownMax().ToString("0.0")}";
+                    Data += $"<color=green> ({speakd.EffectCooldownReductionPerLevel})</color>";
+
+                    //Unique
+                    Data += $"\nSLOWNESS: +{(speakd.GetBuffEffectPower() * 100f).ToString("0")}%";
+                    Data += $"<color=green> (+50%)</color>";
+                    break;
+                case Module.ModuleTypes.SPEAKERS_HEAL:
+                    ModuleSpeaker speakh = (ModuleSpeaker)SelectedDrifterSlot.ModuleLink;
+                    Data += $"\nDURATION: {speakh.GetEffectDuration().ToString("0.0")}";
+                    Data += $"<color=green> (+{speakh.EffectDurationPerLevel})</color>";
+                    Data += $"\nCOOLDOWN: {speakh.GetEffectCooldownMax().ToString("0.0")}";
+                    Data += $"<color=green> ({speakh.EffectCooldownReductionPerLevel})</color>";
+
+                    //Unique
+                    Data += $"\nHEALING: +{speakh.GetBuffEffectPower().ToString("0")}/s";
+                    Data += $"<color=green> (+2/s)</color>";
+                    break;
+                case Module.ModuleTypes.VENGEANCE_PLATING:
+                    ModuleVengeancePlating vengeance = (ModuleVengeancePlating)SelectedDrifterSlot.ModuleLink;
+                    Data += $"\nDAMAGE: {vengeance.GetShrapnelDamage().ToString("0")}";
+                    Data += $"<color=green> (+20)</color>";
+                    Data += $"\nCHANCE: {(vengeance.GetShrapnelChance()*100f).ToString("0")}%";
+                    Data += $"<color=green> (+10%)</color>";
+                    break;
+                case Module.ModuleTypes.DOOR_CONTROLLER:
+                    ModuleDoorControls doorcontroller = (ModuleDoorControls)SelectedDrifterSlot.ModuleLink;
+                    Data += $"\nDOOR HEALTH: +{doorcontroller.GetDoorBuff().ToString("0")}";
+                    Data += $"<color=green> (+150)</color>";
                     break;
 
             }

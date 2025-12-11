@@ -90,7 +90,14 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         LOON_NAVIGATION,
         DRAGGABLE,
         VAULT,
-        DOOR
+        DOOR,
+        DOOR_CONTROLLER,
+        STEAM_REACTOR,
+        SPEAKERS_BUFF,
+        SPEAKERS_DEBUFF,
+        SPEAKERS_HEAL,
+        INCENDIARY_STORAGE,
+        VENGEANCE_PLATING
     }
     public ModuleTypes GetInteractableType()
     {
@@ -111,8 +118,11 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 
     public void UpgradeLevel()
     {
+        DeactivateModule();
         ModuleLevel.Value++;
         if (CO.co.IsSafe() || GetFaction() != 1) Heal(999);
+
+        ActivateModule();
     }
 
     [Rpc(SendTo.Server)]
@@ -123,6 +133,8 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         CO.co.Resource_Tech.Value += GetTechSalvageWorth();
         CO.co.AddInventoryItem(ShowAsModule);
         Space.RemoveModule(this);
+
+        DeactivateModule();
 
         NetworkObject.Despawn();
     }
@@ -151,6 +163,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     [NonSerialized] public int Faction;
     [NonSerialized] public NetworkVariable<bool> isDisabled = new();
     [NonSerialized] public NetworkVariable<bool> PermanentlyDead = new();
+    [NonSerialized] public NetworkVariable<float> ExtraMaxHealth = new();
 
     protected NetworkVariable<float> CurHealth = new();
 
@@ -224,7 +237,14 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
             Debug.Log($"{Space} now has {Space.GetModules().Count} modules");
             return;
         }
-        
+    }
+    protected virtual void ActivateModule()
+    {
+        //When upgraded or when first activated
+    }
+    protected virtual void DeactivateModule()
+    {
+        //When disabled or despawned
     }
 
     float TakeDamageFromDisablement = 0f;
@@ -265,12 +285,17 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 
         if (!IsServer) return;
         CurHealth.Value = MaxHealth;
+        ActivateModule();
     }
     public virtual void Heal(float fl)
     {
         if (IsDisabledForever()) return;
         CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
-        if (CurHealth.Value > 99) isDisabled.Value = false;
+        if (CurHealth.Value > 99)
+        {
+            isDisabled.Value = false;
+            ActivateModule();
+        }
         if (fl > 1) CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
     }
     public void TakeDamage(float fl, Vector3 src, DamageType type)
@@ -291,6 +316,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         CurHealth.Value = 0f;
         isDisabled.Value = true;
         PermanentlyDead.Value = Permanent;
+        DeactivateModule();
     }
     public int GetFaction()
     {
@@ -317,7 +343,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 
     public float GetMaxHealth()
     {
-        return MaxHealth + ModuleLevel.Value * 100f;
+        return MaxHealth + ModuleLevel.Value * 100f + ExtraMaxHealth.Value;
     }
 
     public float GetHealthRelative()

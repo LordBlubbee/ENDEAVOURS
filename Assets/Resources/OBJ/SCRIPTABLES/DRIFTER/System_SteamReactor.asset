@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45863f5fd7c6c2c479b9205aecac2490, type: 3}
+  m_Name: System_SteamReactor
+  m_EditorClassIdentifier: 
+  ItemName: Steam Reactor
+  ItemDesc: The Steam Reactor is a Logipedan invention that pumps a surge of kinetic
+    steam energy throughout the Drifter's defensive systems. Your Engines output
+    maximally, heavily increasing your dodge chance, and your Armor plating regenerates
+    more effectively.
+  ItemIcon: {fileID: 21300000, guid: 58ddf0c78f9e9e04bb4cfae560a0d75e, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/System_SteamReactor
+  ItemResourceIDShort: System_SteamReactor
+  SellMaterials: 0
+  SellSupplies: 0
+  SellTech: 0
+  ItemRarity: 0
+  MinimumAttributes: 
+  PrefabModule: {fileID: 5864517463648654257, guid: b35bbb1a5ac28204383c19a0321d688c, type: 3}
+  EquipType: 2

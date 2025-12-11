@@ -18,13 +18,28 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         CurrentLocationPoint = point;
     }
-
+    public float GetDodgeChanceUnboosted()
+    {
+        if (EngineModule)
+        {
+            if (EnginesDown()) return 0f;
+            float DodgeChance = (0.1f + EngineModule.ModuleLevel.Value * 0.05f) * ((EngineModule.GetHealthRelative() * 0.8f) + 0.2f);
+            return Mathf.Min(DodgeChance, 0.9f);
+        }
+        return 0.1f;
+    }
     public float GetDodgeChance()
     {
         if (EngineModule)
         {
             if (EnginesDown()) return 0f;
-            return (0.1f + EngineModule.ModuleLevel.Value * 0.05f) * ((EngineModule.GetHealthRelative() * 0.8f) + 0.2f);
+            float DodgeChance = (0.1f + EngineModule.ModuleLevel.Value * 0.05f) * ((EngineModule.GetHealthRelative() * 0.8f) + 0.2f);
+            foreach (Module mod in ModulesWithAbilityActive(Module.ModuleTypes.STEAM_REACTOR))
+            {
+                ModuleSteamReactor mod2 = (ModuleSteamReactor)mod;
+                DodgeChance += mod2.GetDodgeBoost();
+            }
+            return Mathf.Min(DodgeChance,0.9f);
         }
         return 0.1f;
     }
@@ -329,6 +344,14 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             //Death
             Die();
         }
+        if (fl > 10)
+        {
+            foreach (Module mod in ModulesWithAbilityActive(Module.ModuleTypes.VENGEANCE_PLATING))
+            {
+                ModuleVengeancePlating mod2 = (ModuleVengeancePlating)mod;
+                mod2.FireShrapnel(ImpactArea);
+            }
+        }
         if (fl > 1) CO_SPAWNER.co.SpawnDMGRpc(fl, ImpactArea);
     }
 
@@ -412,6 +435,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         float Damage = fl.AttackDamage;
         float AbsorbableDamage = fl.AttackDamage * fl.ArmorAbsorptionModifier;
+        float DamageToHull = fl.AttackDamage;
         Damage -= AbsorbableDamage;
         ModuleArmor ClosestArmor = null;
         float MaxDis = 9999f;
@@ -428,11 +452,12 @@ public class DRIFTER : NetworkBehaviour, iDamageable
                 }
             }
         }
-        if (ClosestArmor && UnityEngine.Random.Range(0f,1f) > fl.ArmorCriticalChance)
+        if (ClosestArmor)
         {
             if (ClosestArmor.CanAbsorbArmor())
             {
                 AbsorbableDamage *= fl.ArmorDamageModifier; //Say, we deal 80 damage with +50% modifier = 120
+                DamageToHull -= ClosestArmor.GetArmor();
                 float DamageNeeded = Mathf.Min(ClosestArmor.CurArmor.Value, AbsorbableDamage); //Say, we need only 80 damage
                 ClosestArmor.TakeArmorDamage(AbsorbableDamage, ClosestArmor.transform.position);
                 AbsorbableDamage -= DamageNeeded; //We have 40 damage left
@@ -445,7 +470,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             CO_SPAWNER.co.SpawnArmorImpactRpc(ImpactArea);
             return;
         }
-        TakeDamage(Damage * fl.HullDamageModifier, ImpactArea, DamageType.TRUE);
+        if (DamageToHull > 0) TakeDamage(DamageToHull * fl.HullDamageModifier * GetHullDamageRatio(), ImpactArea, DamageType.TRUE);
         foreach (Module mod in Interior.GetModules())
         {
             float Dist = (mod.transform.position - ImpactArea).magnitude;
@@ -462,6 +487,13 @@ public class DRIFTER : NetworkBehaviour, iDamageable
                 mod.TakeDamage(Damage * fl.CrewDamageModifier, mod.transform.position, DamageType.BOMBARDMENT);
             }
         }
+    }
+
+    public float GetHullDamageRatio()
+    {
+        if (!NavModule) return 1.2f;
+        if (NavModule.IsDisabled()) return 1.2f;
+        return 1f - NavModule.ModuleLevel.Value*0.05f;
     }
     public void Impact(float Damage, Vector3 ImpactArea)
     {
@@ -536,6 +568,37 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             mod.NetworkObject.Despawn();
         }
         NetworkObject.Despawn();
+    }
+
+    /*public Type GetModuleType(Module.ModuleTypes type)
+    {
+        return type switch
+        {
+
+            Module.ModuleTypes.DOOR_CONTROLLER => typeof(ModuleDoorControls),
+            _ => typeof(Module)
+        };
+    }*/
+    public List<Module> ModulesWithAbilityActive(Module.ModuleTypes Type)
+    {
+        List<Module> modules = new List<Module>();
+        foreach (Module mod in Interior.SystemModules)
+        {
+            if (mod.ModuleType == Type)
+            {
+                if (mod is ModuleEffector)
+                {
+                    if (((ModuleEffector)mod).IsEffectActive())
+                    {
+                        modules.Add(mod);
+                    }
+                } else
+                {
+                    modules.Add(mod);
+                }
+            }
+        }
+        return modules;
     }
 }
 public class DrifterModule

@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811518c451d40d44ea0fcaf32cdde66c, type: 3}
+  m_Name: CommonModules
+  m_EditorClassIdentifier: 
+  CommonDrops:
+  - Item: {fileID: 11400000, guid: 83befffd464f76b43bff6b31e49e7e52, type: 2}
+    Weight: 15
+  - Item: {fileID: 11400000, guid: f4a79d7d8115dae47bc2186299f35909, type: 2}
+    Weight: 10
+  - Item: {fileID: 11400000, guid: 6cdd62fb709df6f4eb4011ab3780adcb, type: 2}
+    Weight: 5
+  - Item: {fileID: 11400000, guid: 42aa2949b6f140f4d97d65278abdb3e6, type: 2}
+    Weight: 5
+  - Item: {fileID: 11400000, guid: 960194b980bc1a64f9225910ad9d6de0, type: 2}
+    Weight: 5
+  - Item: {fileID: 11400000, guid: d59f55781dce66445b31a1bd9cc23a4e, type: 2}
+    Weight: 12
+  - Item: {fileID: 11400000, guid: df311f49a5a0b3140a2953d61900940b, type: 2}
+    Weight: 10
+  UncommonDrops:
+  - Item: {fileID: 11400000, guid: 83befffd464f76b43bff6b31e49e7e52, type: 2}
+    Weight: 15
+  - Item: {fileID: 11400000, guid: f4a79d7d8115dae47bc2186299f35909, type: 2}
+    Weight: 10
+  - Item: {fileID: 11400000, guid: 6cdd62fb709df6f4eb4011ab3780adcb, type: 2}
+    Weight: 5
+  - Item: {fileID: 11400000, guid: 42aa2949b6f140f4d97d65278abdb3e6, type: 2}
+    Weight: 5
+  - Item: {fileID: 11400000, guid: 960194b980bc1a64f9225910ad9d6de0, type: 2}
+    Weight: 5
+  - Item: {fileID: 11400000, guid: d59f55781dce66445b31a1bd9cc23a4e, type: 2}
+    Weight: 12
+  - Item: {fileID: 11400000, guid: df311f49a5a0b3140a2953d61900940b, type: 2}
+    Weight: 10
+  RareDrops:
+  - Item: {fileID: 11400000, guid: 83befffd464f76b43bff6b31e49e7e52, type: 2}
+    Weight: 15
+  - Item: {fileID: 11400000, guid: f4a79d7d8115dae47bc2186299f35909, type: 2}
+    Weight: 10
+  - Item: {fileID: 11400000, guid: 6cdd62fb709df6f4eb4011ab3780adcb, type: 2}
+    Weight: 5
+  - Item: {fileID: 11400000, guid: 42aa2949b6f140f4d97d65278abdb3e6, type: 2}
+    Weight: 5
+  - Item: {fileID: 11400000, guid: 960194b980bc1a64f9225910ad9d6de0, type: 2}
+    Weight: 5
+  - Item: {fileID: 11400000, guid: d59f55781dce66445b31a1bd9cc23a4e, type: 2}
+    Weight: 12
+  - Item: {fileID: 11400000, guid: df311f49a5a0b3140a2953d61900940b, type: 2}
+    Weight: 10

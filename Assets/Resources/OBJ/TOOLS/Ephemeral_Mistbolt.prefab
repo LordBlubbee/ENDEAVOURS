@@ -163,6 +163,8 @@ MonoBehaviour:
   Spr: {fileID: 5573374972207478105}
   Tip: {fileID: 1926082290725974325}
   ProjectileSpeed: 30
+  AccelProjectile: 0
+  AccelMaximum: 0
   InaccuracyDegrees: 5
   MaximumRange: -1
   StickToWalls: 0
@@ -178,15 +180,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e65858ce6f0843548b28176ca445c4c4, type: 3}
   BlockPenetration: 9
   DodgeModifier: 1
-  HullDamageModifier: 1
+  HullDamageModifier: 0.25
   ModuleDamageModifier: 1
-  ArmorDamageModifier: 1
+  ArmorDamageModifier: 0.25
   ArmorAbsorptionModifier: 1
+  ArmorCriticalChance: 0.05
   CrewDamageModifier: 1
   CrewDamageModifierDirect: 1
   CrewDamageSplash: 3
   DealSplash: 1
   ApplyBuff: {fileID: 0}
+  ZoneImpact: {fileID: 0}
+  ZoneChance: 0
 --- !u!114 &1279859445198227217
 MonoBehaviour:
   m_ObjectHideFlags: 0

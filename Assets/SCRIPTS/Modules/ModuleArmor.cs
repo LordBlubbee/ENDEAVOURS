@@ -46,6 +46,12 @@ public class ModuleArmor : Module
 
         TakeDamage(fl*0.25f, impact, iDamageable.DamageType.BOMBARDMENT);
     }
+    public void HealArmor(float fl)
+    {
+        float max = GetMaxArmor();
+        CurArmor.Value = Mathf.Clamp(CurArmor.Value + fl, 0, max);
+        CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
+    }
     public override void Heal(float fl)
     {
         if (IsDisabledForever()) return;

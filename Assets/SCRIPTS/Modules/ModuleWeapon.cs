@@ -110,6 +110,11 @@ public class ModuleWeapon : Module
         StartCoroutine(AttackReloadAmmo());
     }
 
+    public void LoadWeaponsNow()
+    {
+        StartCoroutine(LoadWeapons());
+    }
+
     public bool EligibleForReload()
     {
         if (CO.co.Resource_Ammo.Value < 10 && GetFaction() == 1) return false;
@@ -183,6 +188,16 @@ public class ModuleWeapon : Module
             LoadedAmmo.Value--;
             PROJ proj = Instantiate(FireProjectile, FirePoint.position, WeaponTransform.rotation);
             proj.Init(GetDamage(), Faction, null, mouse);
+            if (proj.ZoneImpact)
+            {
+                foreach (Module mod in Space.Drifter.ModulesWithAbilityActive(Module.ModuleTypes.INCENDIARY_STORAGE))
+                {
+                    ModuleIncendiaryCrates mod2 = (ModuleIncendiaryCrates)mod;
+                    proj.AttackDamage *= mod2.GetDamageBonusMod();
+                    proj.ZoneChance += mod2.GetFlameBoost();
+                }
+            }
+           
             proj.NetworkObject.Spawn();
 
             WeaponSFXRpc();
@@ -195,6 +210,19 @@ public class ModuleWeapon : Module
             }
         }
         CurCooldown.Value = GetFireCooldown();
+        while (CurCooldown.Value > 0f)
+        {
+            CurCooldown.Value -= CO.co.GetWorldSpeedDelta();
+            yield return null;
+        }
+        canFire = true;
+    }
+
+    IEnumerator LoadWeapons()
+    {
+        CurCooldown.Value = GetFireCooldown();
+        if (!canFire) yield break;
+        canFire = false;
         while (CurCooldown.Value > 0f)
         {
             CurCooldown.Value -= CO.co.GetWorldSpeedDelta();

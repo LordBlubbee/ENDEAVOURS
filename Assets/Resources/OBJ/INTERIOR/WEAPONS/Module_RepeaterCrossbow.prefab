@@ -291,7 +291,7 @@ MonoBehaviour:
   MaxHealth: 100
   HitboxRadius: 16
   ModuleWorth: 50
-  ModuleUpgradeMaterials: 1e0000003200000050000000
+  ModuleUpgradeMaterials: 1e0000003200000046000000
   ModuleUpgradeTechs: 000000000000000000000000
   CenterPos: {fileID: 0}
   WeaponName: REPEATER CROSSBOW

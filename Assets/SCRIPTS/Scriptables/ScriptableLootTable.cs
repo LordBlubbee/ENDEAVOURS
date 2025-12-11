@@ -25,10 +25,17 @@ public class ScriptableLootTable : ScriptableObject
     public List<RandomLootItem> RandomLoot = new();
 
     [Header("SHOP DROPS")]
+    public List<ShopDrop> ShopDrops = new();
+}
+
+[Serializable]
+public class ShopDrop
+{
+    public ScriptableShopItemList DropList;
     public int MinimumShopDrops = 0;
     public int MaximumShopDrops = 0;
-    public ScriptableShopItemList PossibleShopDrops;
 }
+
 [Serializable]
 public class LootItem
 {

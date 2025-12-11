@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45863f5fd7c6c2c479b9205aecac2490, type: 3}
+  m_Name: Weapon_ShrapnelCannon
+  m_EditorClassIdentifier: 
+  ItemName: Shrapnel Cannon
+  ItemDesc: 'The Shrapnel Cannon has a very low rate of fire and is inaccurate, but
+    its devastating salvo fires a blast of metal and rock. Ineffective against hull
+    and modules but extremely effective at wearing down armor, setting fires, and
+    killing crew.
+
+
+    Fire chance: 10%'
+  ItemIcon: {fileID: 21300000, guid: 1a116005be3ced948a04d4c99a29ff5f, type: 3}
+  ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Weapon_ShrapnelCannon
+  ItemResourceIDShort: Weapon_ShrapnelCannon
+  ItemRarity: 0
+  MinimumAttributes: 
+  PrefabModule: {fileID: 2733437315669949757, guid: 5e4346260f8f9db4ca1b61cf43319472, type: 3}
+  EquipType: 1

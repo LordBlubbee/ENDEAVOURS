@@ -152,6 +152,7 @@ public class PROJ : NetworkBehaviour
                     drifter.Impact(this, Tip.position);
                     AttemptSpawnZone(Tip.position, drifter.Interior.transform);
                     isActive = false;
+                    StickToWalls = false;
                 } else
                 {
                     CO_SPAWNER.co.SpawnWordsRpc("MISS", transform.position);
@@ -259,6 +260,7 @@ public class PROJ : NetworkBehaviour
                     }
                     else
                     {
+                        CO_SPAWNER.co.SpawnDMGRpc(0, transform.position);
                     }
                     BulletImpact();
                 }

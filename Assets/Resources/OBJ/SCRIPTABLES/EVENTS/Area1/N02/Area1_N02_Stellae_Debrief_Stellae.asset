@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Area1_N02_Stellae_Debrief_Stellae
   m_EditorClassIdentifier: 
   StoryTexts:
-  - BaseText: The pirate Drifter has been cut in twain and its flimsy hull is causing
-      it to sink.
+  - BaseText: The explorer's main Flux systems have failed. It is unknown if they
+      transmitted anything before their demise.
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
-  - BaseText: No one will miss them. You have done the world a favour by destroying
-      them.
+  - BaseText: The well-made hull is easy to scrap. However, a sinking feeling sticks
+      with you. The Stellae are not known for causing trouble- attacking them is
+      almost always a grave crime...
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
   ChoicePathDialogs:

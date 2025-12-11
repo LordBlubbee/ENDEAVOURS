@@ -291,7 +291,7 @@ MonoBehaviour:
   MaxHealth: 200
   HitboxRadius: 16
   ModuleWorth: 100
-  ModuleUpgradeMaterials: 280000004600000064000000
+  ModuleUpgradeMaterials: 28000000460000005a000000
   ModuleUpgradeTechs: 00000000000000001e000000
   CenterPos: {fileID: 0}
   WeaponName: DOUBLE BALLISTA

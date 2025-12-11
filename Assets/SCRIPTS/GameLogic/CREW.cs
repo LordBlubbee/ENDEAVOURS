@@ -39,19 +39,19 @@ public class CREW : NetworkBehaviour, iDamageable
             case 0:
                 return 30;
             case 1:
-                return 50;
+                return 40;
             case 2:
-                return 70;
+                return 50;
             case 3:
-                return 80;
+                return 60;
             case 4:
-                return 90;
+                return 70;
             case 5:
-                return 100;
+                return 85;
             case 6:
-                return 120;
+                return 100;
             case 7:
-                return 140;
+                return 120;
         }
         return 150;
     }
@@ -1028,6 +1028,7 @@ public class CREW : NetworkBehaviour, iDamageable
             {
                 if (col.collider.gameObject == gameObject) continue;
                 if (!col.collider.gameObject.tag.Equals("LOSBlocker")) continue;
+                if (!col.collider.gameObject.tag.Equals("MoveBlocker")) continue;
                 // Stop the dash at the hit point (slightly before, to avoid clipping)
                 newPos = new Vector3(col.point.x, col.point.y) - dir * 0.05f;
                 transform.position = newPos;
@@ -1364,6 +1365,7 @@ public class CREW : NetworkBehaviour, iDamageable
                         }
                         else
                         {
+                            CO_SPAWNER.co.SpawnDMGRpc(0, checkHit);
                             CO_SPAWNER.co.SpawnImpactRpc(checkHit);
                         }
                         canStrikeMelee = false;
@@ -1635,7 +1637,10 @@ public class CREW : NetworkBehaviour, iDamageable
                 if (BleedingTime.Value < 0)
                 {
                     //We have bled out!
-                    DeadForever.Value = true;
+                    if (!CO.co.GetDungeon())
+                    {
+                        DeadForever.Value = true;
+                    }
                     BleedingTime.Value = 0;
                 }
             }
@@ -2198,7 +2203,11 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public bool CanBeTargeted(SPACE space)
     {
-        if (space != Space) return false;
+        SPACE ourSpace = Space;
+        if (ourSpace != null)
+        {
+            if (space != ourSpace) return false;
+        }
         return !isDead();
     } 
     // Returns true if there is a clear line of sight to the target position (no obstacles in between)
@@ -2213,6 +2222,11 @@ public class CREW : NetworkBehaviour, iDamageable
         foreach (RaycastHit2D h in hit)
         {
             if (h.collider.gameObject.tag.Equals("LOSBlocker"))
+            {
+                // Hit something that is not self and not a trigger, so line of sight is blocked
+                return false;
+            }
+            if (h.collider.gameObject.tag.Equals("MoveBlocker"))
             {
                 // Hit something that is not self and not a trigger, so line of sight is blocked
                 return false;

@@ -1093,6 +1093,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile
@@ -1593,6 +1597,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile_ToTheLeft (17)
@@ -1738,6 +1746,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
@@ -2018,6 +2030,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
@@ -2601,6 +2617,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile (2)
@@ -3172,6 +3192,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
@@ -3956,6 +3980,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile_ToTheLeft (15)
@@ -4028,6 +4056,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
@@ -4392,6 +4424,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile_ToTheLeft (18)
@@ -4618,6 +4654,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
@@ -5407,6 +5447,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile_ToTheLeft (19)
@@ -5553,6 +5597,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile_Bridge (3)
@@ -5626,6 +5674,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
       value: RoomTile_ToTheLeft (20)
@@ -5698,6 +5750,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
@@ -6133,6 +6189,10 @@ PrefabInstance:
     - target: {fileID: 6555163656901737279, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495731578331654452, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
+      propertyPath: canBeBoarded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986802024713289282, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Name
