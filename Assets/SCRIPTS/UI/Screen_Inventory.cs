@@ -357,6 +357,8 @@ public class Screen_Inventory : MonoBehaviour
             CurrentDraggingSlot.SetInventoryItem(null);
             UpdateEquipmentBasedOnItem(CurrentDraggingSlot);
             CO.co.RequestPeriodicInventoryUpdateRpc();
+
+            AUDCO.aud.PlaySFX(AUDCO.aud.Salvage);
         }
         StopHoldingItem();
     }
