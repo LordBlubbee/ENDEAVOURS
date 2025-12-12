@@ -129,6 +129,12 @@ public class InventorySlot : MonoBehaviour
                 UI.ui.InventoryUI.DepositItem(slot);
                 return;
             }
+            if (result.gameObject.GetComponent<UI_SellSlot>() != null)
+            {
+                Debug.Log($"Selling item!");
+                UI.ui.InventoryUI.DepositItemInSell();
+                return;
+            }
         }
 
         // If nothing valid found

@@ -30,6 +30,9 @@ MonoBehaviour:
   ItemIcon: {fileID: -2604675264708228931, guid: 12e90a27133eb0d44ba30ce1aeab6840, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Ephemeral_Knife
   ItemResourceIDShort: Ephemeral_Knife
+  SellMaterials: 4
+  SellSupplies: 4
+  SellTech: 0
   ItemRarity: 0
   MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: a6282961b0d57664d98f7d522dae40af, type: 3}

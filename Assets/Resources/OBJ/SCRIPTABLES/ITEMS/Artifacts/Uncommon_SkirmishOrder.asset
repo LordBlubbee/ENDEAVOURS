@@ -23,6 +23,9 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: 786cbc15880521d42b72bcd8a08fe928, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Uncommon_SkirmishOrder
   ItemResourceIDShort: Uncommon_SkirmishOrder
+  SellMaterials: 0
+  SellSupplies: 8
+  SellTech: 0
   ItemRarity: 1
   MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   EquipType: 1

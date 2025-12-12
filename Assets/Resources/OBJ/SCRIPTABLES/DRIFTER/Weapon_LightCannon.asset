@@ -22,6 +22,9 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: c3db03c5f1340ad4c914d8dc050f612b, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Weapon_LightCannon
   ItemResourceIDShort: Weapon_LightCannon
+  SellMaterials: 25
+  SellSupplies: 0
+  SellTech: 0
   ItemRarity: 0
   MinimumAttributes: 
   PrefabModule: {fileID: 2733437315669949757, guid: 8a0c94dd0daec69439e0a2375164532c, type: 3}

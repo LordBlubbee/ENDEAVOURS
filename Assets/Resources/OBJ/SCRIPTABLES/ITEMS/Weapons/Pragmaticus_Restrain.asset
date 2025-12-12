@@ -27,6 +27,9 @@ MonoBehaviour:
   ItemIcon: {fileID: 2322184774791884214, guid: c32c198a28f111446a4679e951112cc6, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Pragmaticus_Restrain
   ItemResourceIDShort: Pragmaticus_Restrain
+  SellMaterials: 0
+  SellSupplies: 5
+  SellTech: 2
   ItemRarity: 0
   MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: 393df9648d661f445aeca702e9d2de3b, type: 3}

@@ -26,6 +26,9 @@ MonoBehaviour:
   ItemIcon: {fileID: -6021952670078666841, guid: bef3b280a50ecb24bb2b1c4eb1326fae, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Ephemeral_Wayward
   ItemResourceIDShort: Ephemeral_Wayward
+  SellMaterials: 0
+  SellSupplies: 5
+  SellTech: 2
   ItemRarity: 0
   MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: a22ca396f4f3a26459fa5516f49df061, type: 3}

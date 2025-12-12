@@ -20,7 +20,7 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: f26005d8a6fa07e4a905939f6cedb0ef, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/System_SpeakersStellae
   ItemResourceIDShort: System_SpeakersStellae
-  SellMaterials: 0
+  SellMaterials: 25
   SellSupplies: 0
   SellTech: 0
   ItemRarity: 0

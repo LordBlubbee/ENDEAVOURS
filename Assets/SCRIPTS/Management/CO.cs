@@ -556,6 +556,14 @@ public class CO : NetworkBehaviour
     {
         SendPeriodicInventoryUpdate();
     }
+
+    [Rpc(SendTo.Server)]
+    public void RequestSellingItemRpc(int mat, int sup, int tech)
+    {
+        Resource_Materials.Value += mat;
+        Resource_Supplies.Value += sup;
+        Resource_Tech.Value += tech;
+    }
     public void SendPeriodicInventoryUpdate()
     {
         if (PlayerMainDrifter == null) return;

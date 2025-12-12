@@ -19,7 +19,7 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: 449f99d20c7f24046ae2c0ea00e7d06c, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/System_DoorControls
   ItemResourceIDShort: System_DoorControls
-  SellMaterials: 0
+  SellMaterials: 20
   SellSupplies: 0
   SellTech: 0
   ItemRarity: 0
