@@ -54,6 +54,10 @@ MonoBehaviour:
     Resource_XP: 0
     ItemDrop: {fileID: 11400000, guid: 0a70c805b4206b04dad2f4c4d74456c6, type: 2}
     Weight: 5
-  MinimumShopDrops: 6
-  MaximumShopDrops: 8
-  PossibleShopDrops: {fileID: 11400000, guid: 000983790ec19f9469993b1480147d54, type: 2}
+  ShopDrops:
+  - DropList: {fileID: 11400000, guid: e6ed3e146d833c0498e18f44c7c10bb6, type: 2}
+    MinimumShopDrops: 6
+    MaximumShopDrops: 9
+  - DropList: {fileID: 11400000, guid: eecfa057e4df4e14c8df740dc30e518c, type: 2}
+    MinimumShopDrops: 0
+    MaximumShopDrops: 3

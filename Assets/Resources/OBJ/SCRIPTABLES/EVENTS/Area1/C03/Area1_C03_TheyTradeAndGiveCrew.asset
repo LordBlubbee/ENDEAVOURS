@@ -21,6 +21,8 @@ MonoBehaviour:
     Resource_Repairs: 0
     Resource_XP: 10
     ItemDrop: {fileID: 0}
+  MultiplayerLootList: {fileID: 0}
+  MultiplayerLootModifier: 0
   ReputationChanges: []
   RecruitCrewmembers:
   - {fileID: 5867427934140877094, guid: e2fa9b353c37ecf418df9893e6b2af53, type: 3}
@@ -29,6 +31,10 @@ MonoBehaviour:
   - {fileID: 5867427934140877094, guid: cdd8c25b41a9ba047bfcff676f5e543c, type: 3}
   TotalLootDrops: 0
   RandomLoot: []
-  MinimumShopDrops: 6
-  MaximumShopDrops: 8
-  PossibleShopDrops: {fileID: 11400000, guid: 000983790ec19f9469993b1480147d54, type: 2}
+  ShopDrops:
+  - DropList: {fileID: 11400000, guid: e6ed3e146d833c0498e18f44c7c10bb6, type: 2}
+    MinimumShopDrops: 6
+    MaximumShopDrops: 9
+  - DropList: {fileID: 11400000, guid: eecfa057e4df4e14c8df740dc30e518c, type: 2}
+    MinimumShopDrops: 0
+    MaximumShopDrops: 3

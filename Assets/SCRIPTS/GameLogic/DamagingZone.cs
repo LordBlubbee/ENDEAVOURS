@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamagingZone : NetworkBehaviour
 {
-    public ParticleSystem ParticleSystem;
+    public ParticleSystem[] ParticleSystem;
     public float Duration = 10f;
     public float DamagePerSecond = 20f;
     public float DamageRadius = 0f;
@@ -58,11 +58,19 @@ public class DamagingZone : NetworkBehaviour
             }
             yield return null;
         }
-        if (ParticleSystem)
+        if (ParticleSystem.Length > 0)
         {
-            ParticleSystem.Stop();
-            while (ParticleSystem.particleCount > 0) yield return null;
-            yield return new WaitForSeconds(2f);
+            bool Wait = true;
+            while (Wait)
+            {
+                yield return new WaitForSeconds(0.2f);
+                Wait = false; 
+                foreach (ParticleSystem sys in ParticleSystem)
+                {
+                    if (sys.isPlaying) sys.Stop();
+                    if (sys.particleCount > 0) Wait = true;
+                }
+            }
         }
         NetworkObject.Despawn();
     }

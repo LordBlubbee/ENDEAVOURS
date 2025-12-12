@@ -505,6 +505,7 @@ public class CO_SPAWNER : NetworkBehaviour
             }
         }
         Budget = drifterData.BaseModuleBudgetMod * 1.2f * Quality + 40;
+        float TotalBudget = Budget;
         Tries = 10;
         while (Budget > 0)
         {
@@ -517,13 +518,13 @@ public class CO_SPAWNER : NetworkBehaviour
             switch (AmountOfNonArmorModules)
             {
                 case 0:
-                    ChanceForNewModule = 0.7f;
+                    ChanceForNewModule = 0.4f;
                     break;
                 case 1:
-                    ChanceForNewModule = 0.4f;
+                    ChanceForNewModule = 0.3f;
                     break;
                 case 2:
-                    ChanceForNewModule = 0.4f;
+                    ChanceForNewModule = 0.3f;
                     break;
                 default:
                     ChanceForNewModule = 0f;

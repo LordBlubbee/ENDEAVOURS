@@ -163,7 +163,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   HealthOnlyWhileDamaged: 0
   HarmDrifterWhenDisabled: 1
-  OutsideDamageResistance: 1
+  OutsideDamageResistance: 0.5
   ModuleTag: 
   ModuleType: 0
   IconSprite: {fileID: 21300000, guid: 40e74035ea3ce8643843327a94785e44, type: 3}

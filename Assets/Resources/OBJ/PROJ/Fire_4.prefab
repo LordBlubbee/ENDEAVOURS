@@ -9758,7 +9758,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  ParticleSystem: {fileID: 273074317841944583}
+  ParticleSystem:
+  - {fileID: 2235160177139535446}
+  - {fileID: 273074317841944583}
   Duration: 30
   DamagePerSecond: 10
   DamageRadius: 4

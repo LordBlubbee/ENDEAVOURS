@@ -397,19 +397,19 @@ public class CO : NetworkBehaviour
                 ProgressDiff = 1.6f;
                 break;
             case 2:
-                ProgressDiff = 2.2f;
+                ProgressDiff = 2.5f;
                 break;
             case 3:
-                ProgressDiff = 3.1f;
+                ProgressDiff = 3.8f;
                 break;
             case 4:
-                ProgressDiff = 4f;
+                ProgressDiff = 5f;
                 break;
             case 5:
-                ProgressDiff = 5.5f;
+                ProgressDiff = 6.5f;
                 break;
             case 6:
-                ProgressDiff = 6f;
+                ProgressDiff = 7.5f;
                 break;
         }
         float PlayerDiff = 1f;
