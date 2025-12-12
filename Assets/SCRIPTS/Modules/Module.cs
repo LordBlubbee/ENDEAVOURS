@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System;
 using System.Linq;
 using Unity.Netcode;
@@ -9,6 +10,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 {
     // Damageable and Interactable Module
     [NonSerialized] public NetworkVariable<Vector3> OrderPoint = new();
+
     public bool HealthOnlyWhileDamaged = false;
     public bool HarmDrifterWhenDisabled = true;
     public float OutsideDamageResistance = 1f;
@@ -138,6 +140,11 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 
         NetworkObject.Despawn();
     }
+
+    public override void OnNetworkDespawn()
+    {
+        Space.RemoveModule(this);
+    }
     public int GetMaterialSalvageWorth()
     {
         int Worth = 0;
@@ -187,6 +194,8 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     {
         HomeDrifter = drifter;
     }
+
+    [NonSerialized] public NetworkVariable<int> ListPositionModuleSublist = new();
     private void Start()
     {
         if (MaxHealth > 0)
@@ -226,9 +235,19 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
                     case ModuleTypes.DOOR:
                         break;
                     default:
+                        /*while (Space.SystemModules.Count <= ListPositionModuleSublist.Value)
+                        {
+                            Space.SystemModules.Add(null);
+                        }
+                        Space.SystemModules[ListPositionModuleSublist.Value] = this;*/
                         Space.SystemModules.Add(this);
                         break;
                     case ModuleTypes.WEAPON:
+                       /* while (Space.WeaponModules.Count <= ListPositionModuleSublist.Value)
+                        {
+                            Space.WeaponModules.Add(null);
+                        }
+                        Space.WeaponModules[ListPositionModuleSublist.Value] = this;*/
                         Space.WeaponModules.Add(this as ModuleWeapon);
                         break;
                 }
