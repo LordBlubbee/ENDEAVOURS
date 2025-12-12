@@ -162,7 +162,6 @@ public class SPACE : NetworkBehaviour
                         vec = CoreModuleLocations[CoreModules.Count];
                         rot = CoreModuleRotations[CoreModules.Count];
                         CoreModules.Add(mod);
-                        mod.ListPositionModuleSublist.Value = CoreModules.Count - 1;
                         if (mod.ModuleType == Module.ModuleTypes.ENGINES) Drifter.EngineModule = mod;
                         else if (mod.ModuleType == Module.ModuleTypes.NAVIGATION) Drifter.NavModule = mod;
                         else if (mod.ModuleType == Module.ModuleTypes.MEDICAL) Drifter.MedicalModule = mod;
@@ -188,7 +187,6 @@ public class SPACE : NetworkBehaviour
                         vec = WeaponModuleLocations[WeaponModules.Count];
                         rot = WeaponModuleRotations[WeaponModules.Count];
                         WeaponModules.Add(mod);
-                        mod.ListPositionModuleSublist.Value = WeaponModules.Count - 1;
                         break;
                     }
                 }
@@ -212,7 +210,6 @@ public class SPACE : NetworkBehaviour
                         vec = SystemModuleLocations[SystemModules.Count];
                         rot = SystemModuleRotations[SystemModules.Count];
                         SystemModules.Add(mod);
-                        mod.ListPositionModuleSublist.Value = SystemModules.Count - 1;
                         break;
                     }
                 }
@@ -407,22 +404,11 @@ public class SPACE : NetworkBehaviour
         if (WeaponModules.Contains(mod))
         {
             WeaponModules.Remove(mod);
-            /*int i = 0;
-            foreach (ModuleWeapon module in WeaponModules)
-            {
-                module.ListPositionModuleSublist.Value = i;
-                i++;
-            }*/
+           
         }
         if (SystemModules.Contains(mod))
         {
             SystemModules.Remove(mod);
-            /*int i = 0;
-            foreach (Module module in SystemModules)
-            {
-                module.ListPositionModuleSublist.Value = i;
-                i++;
-            }*/
         }
     }
     public Module NearestModule(Vector3 vec)

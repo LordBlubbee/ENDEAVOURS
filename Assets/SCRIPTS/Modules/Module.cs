@@ -194,8 +194,6 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     {
         HomeDrifter = drifter;
     }
-
-    [NonSerialized] public NetworkVariable<int> ListPositionModuleSublist = new();
     private void Start()
     {
         if (MaxHealth > 0)
