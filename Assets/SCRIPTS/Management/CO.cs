@@ -168,7 +168,6 @@ public class CO : NetworkBehaviour
     public ScriptableBiome CurrentBiome;
     public int BiomeProgress;
     public int TotalZoneProgress;
-    private float BaseDifficulty = 1f;
     public List<ScriptablePoint> NextBiomePoints = new();
 
     public List<ScriptablePoint> GetPossibleDestinations()
@@ -176,6 +175,15 @@ public class CO : NetworkBehaviour
         return NextBiomePoints;
     }
 
+    private GameDifficulties Difficulty;
+    public enum GameDifficulties
+    {
+        ADVANTAGED,
+        MEDIUM,
+        HARD,
+        INSANE,
+        IMPOSSIBLE
+    }
     public int GetEncounterShopSizeExtra()
     {
         int Extras = 0;
@@ -257,6 +265,22 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 1.45f;
                 break;
         }
+        switch (Difficulty)
+        {
+            case GameDifficulties.ADVANTAGED:
+                break;
+            case GameDifficulties.MEDIUM:
+                break;
+            case GameDifficulties.HARD:
+                ProgressDiff *= 0.9f;
+                break;
+            case GameDifficulties.INSANE:
+                ProgressDiff *= 0.9f;
+                break;
+            case GameDifficulties.IMPOSSIBLE:
+                ProgressDiff *= 0.8f;
+                break;
+        }
         return 1f * ProgressDiff * PlayerDiff;
     }
     public float GetEncounterDifficultyModifier()
@@ -320,7 +344,24 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 1.8f;
                 break;
         }
-        return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
+        switch (Difficulty)
+        {
+            case GameDifficulties.ADVANTAGED:
+                ProgressDiff *= 0.8f;
+                break;
+            case GameDifficulties.MEDIUM:
+                break;
+            case GameDifficulties.HARD:
+                ProgressDiff *= 1.2f;
+                break;
+            case GameDifficulties.INSANE:
+                ProgressDiff *= 1.4f;
+                break;
+            case GameDifficulties.IMPOSSIBLE:
+                ProgressDiff *= 1.8f;
+                break;
+        }
+        return 1f * ProgressDiff * PlayerDiff * CurrentBiome.BiomeBaseDifficulty;
     }
     public float GetNewFriendlyCrewModifier()
     {
@@ -383,7 +424,7 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 1.5f;
                 break;
         }
-        return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
+        return 1f * ProgressDiff * PlayerDiff * CurrentBiome.BiomeBaseDifficulty;
     }
     public float GetDrifterDifficultyModifier()
     {
@@ -446,7 +487,24 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 1.45f;
                 break;
         }
-        return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
+        switch (Difficulty)
+        {
+            case GameDifficulties.ADVANTAGED:
+                ProgressDiff *= 0.85f;
+                break;
+            case GameDifficulties.MEDIUM:
+                break;
+            case GameDifficulties.HARD:
+                ProgressDiff *= 1.15f;
+                break;
+            case GameDifficulties.INSANE:
+                ProgressDiff *= 1.25f;
+                break;
+            case GameDifficulties.IMPOSSIBLE:
+                ProgressDiff *= 1.4f;
+                break;
+        }
+        return 1f * ProgressDiff * PlayerDiff * CurrentBiome.BiomeBaseDifficulty;
     }
     public float GetEncounterSizeModifier()
     {
@@ -509,7 +567,24 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 2.3f;
                 break;
         }
-        return 1f * ProgressDiff * PlayerDiff * BaseDifficulty * CurrentBiome.BiomeBaseDifficulty;
+        switch (Difficulty)
+        {
+            case GameDifficulties.ADVANTAGED:
+                ProgressDiff *= 0.9f;
+                break;
+            case GameDifficulties.MEDIUM:
+                break;
+            case GameDifficulties.HARD:
+                ProgressDiff *= 1.1f;
+                break;
+            case GameDifficulties.INSANE:
+                ProgressDiff *= 1.15f;
+                break;
+            case GameDifficulties.IMPOSSIBLE:
+                ProgressDiff *= 1.25f;
+                break;
+        }
+        return 1f * ProgressDiff * PlayerDiff * CurrentBiome.BiomeBaseDifficulty;
     }
     private void Start()
     {
@@ -585,6 +660,7 @@ public class CO : NetworkBehaviour
     public ScriptableLootItemList Test_StartingLoot;
     public void StartGame()
     {
+        Difficulty = (GameDifficulties)GO.g.preferredGameDifficulty;
         GenerateMap();
         CO_SPAWNER.co.CreateLandscape(CO_SPAWNER.BackgroundType.BARREN);
 

@@ -20,8 +20,8 @@ public class GO : MonoBehaviour
     public int screenShakeLevel;
     public int resolutionConfig;
 
-    public int SelectedGameDifficulty;
-    public int SelectedGamePlayers;
+    public int preferredGameDifficulty;
+    public string preferredLobbyName;
 
     public string localUsername;
     public Color localColor;
@@ -30,6 +30,29 @@ public class GO : MonoBehaviour
     public string CurrentSave;
     public int ZoneProgress;
     public List<savedObject> SavedObjects;
+    /*
+     Everything that must be saved:
+     -PLAYER NAME
+           -PLAYER FULL INVENTORY
+           -PLAYER BACKGROUND
+           -PLAYER APPEARANCE
+           -PLAYER ATTRIBUTES
+     -MAIN DRIFTER
+           -All resources
+           -All modules
+           -
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     */
     private void Awake()
     {
         if (GO.g == null) { GO.g = this; } else { Destroy(this); return; }
@@ -53,6 +76,8 @@ public class GO : MonoBehaviour
         OST_Vol = 0.8f;
         VCX_Vol = 0.8f;
         SFX_Vol = 0.8f;
+        preferredGameDifficulty = 0;
+        preferredLobbyName = "";
     }
     public void loadSettings()
     {
@@ -178,7 +203,8 @@ public class dataSettings
     public float arrowScrollSpeed;
     public int screenShakeLevel;
     public int resolutionConfig;
-
+    public int preferredGameDifficulty;
+    public string preferredLobbyName;
     public void loadSettings()
     {
         GO.g.localUsername = localUsername;
@@ -190,6 +216,8 @@ public class dataSettings
         GO.g.arrowScrollSpeed = arrowScrollSpeed;
         GO.g.screenShakeLevel = screenShakeLevel;
         GO.g.resolutionConfig = resolutionConfig;
+        GO.g.preferredGameDifficulty = preferredGameDifficulty;
+        GO.g.preferredLobbyName = preferredLobbyName;
         //Set GO variables to n. variables
     }
     public dataSettings()
@@ -206,6 +234,8 @@ public class dataSettings
         arrowScrollSpeed = GO.g.arrowScrollSpeed;
         screenShakeLevel = GO.g.screenShakeLevel;
         resolutionConfig = GO.g.resolutionConfig;
+        preferredGameDifficulty = GO.g.preferredGameDifficulty;
+        preferredLobbyName = GO.g.preferredLobbyName;
     }
 }
 

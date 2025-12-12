@@ -240,6 +240,7 @@ public class SPACE : NetworkBehaviour
         if (mod == null) return false;
         mod.NetworkObject.Spawn();
         mod.transform.SetParent(transform);
+        mod.transform.localRotation = Quaternion.identity;
         mod.transform.localPosition = vec;
         mod.transform.Rotate(Vector3.forward, rot);
         mod.SpaceID.Value = SpaceID.Value;
