@@ -488,7 +488,6 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             }
         }
     }
-
     public float GetHullDamageRatio()
     {
         if (!NavModule) return 1.2f;

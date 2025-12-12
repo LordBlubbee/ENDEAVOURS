@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.GraphicsBuffer;
 
 public class CREW : NetworkBehaviour, iDamageable
 {
@@ -594,6 +595,10 @@ public class CREW : NetworkBehaviour, iDamageable
     [NonSerialized] public NetworkVariable<FixedString64Bytes> CharacterName = new();
     [NonSerialized] public NetworkVariable<Vector3> CharacterNameColor = new();
 
+    public Color GetCharacterColor()
+    {
+        return new Color(CharacterNameColor.Value.x, CharacterNameColor.Value.y, CharacterNameColor.Value.z);
+    }
     private GamerTag CharacterNameTag;
 
     public TOOL EquippedToolObject { protected set; get; }
@@ -1015,8 +1020,11 @@ public class CREW : NetworkBehaviour, iDamageable
 
         while (Speed > 0f && UsePhysics())
         {
-            float mov = 5f * MovementSpeed * Speed * CO.co.GetWorldSpeedDeltaFixed();
+            float mov = 5f * GetDashSpeed() * Speed * CO.co.GetWorldSpeedDeltaFixed();
 
+            MoveCrew(dir * mov);
+
+            /*
             // Predict the new position
             Vector3 newPos = transform.position + mov * dir;
 
@@ -1027,8 +1035,7 @@ public class CREW : NetworkBehaviour, iDamageable
             foreach (RaycastHit2D col in hit)
             {
                 if (col.collider.gameObject == gameObject) continue;
-                if (!col.collider.gameObject.tag.Equals("LOSBlocker")) continue;
-                if (!col.collider.gameObject.tag.Equals("MoveBlocker")) continue;
+                if (!col.collider.gameObject.tag.Equals("LOSBlocker") && !col.collider.gameObject.tag.Equals("MoveBlocker")) continue;
                 // Stop the dash at the hit point (slightly before, to avoid clipping)
                 newPos = new Vector3(col.point.x, col.point.y) - dir * 0.05f;
                 transform.position = newPos;
@@ -1041,7 +1048,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 // Move normally if no obstacle was hit
                 transform.position = newPos;
                 Rigid.MovePosition(newPos);
-            }
+            }*/
 
             Speed -= CO.co.GetWorldSpeedDeltaFixed() * 3f;
             yield return new WaitForFixedUpdate();
@@ -1065,8 +1072,7 @@ public class CREW : NetworkBehaviour, iDamageable
         float Speed = 1f;
         while (Speed > 0f && !isDashing && UsePhysics())
         {
-            transform.position += 2f * Power * Speed * CO.co.GetWorldSpeedDeltaFixed() * dir;
-            Rigid.MovePosition(transform.position);
+            MoveCrew(2f * Power * Speed * CO.co.GetWorldSpeedDeltaFixed() * dir);
             Speed -= CO.co.GetWorldSpeedDeltaFixed() / Duration;
             yield return new WaitForFixedUpdate();
         }
@@ -1565,7 +1571,7 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             if (AnimationController.getAnimationMoveForward() != 0)
             {
-                transform.position += AnimationController.getAnimationMoveForward() * getLookVector() * CO.co.GetWorldSpeedDelta() * (1f+ModifyMovementSpeed) / (1f + ModifyMovementSlow);
+                MoveCrew(AnimationController.getAnimationMoveForward() * getLookVector() * CO.co.GetWorldSpeedDelta() * (1f + ModifyMovementSpeed) / (1f + ModifyMovementSlow));
             }
         }
     }
@@ -1753,15 +1759,129 @@ public class CREW : NetworkBehaviour, iDamageable
             }
             float towardsang = Mathf.Abs(AngleTowards(MoveInput));
             float towardsfactor = 1.1f - Mathf.Clamp((towardsang - 70f) * 0.005f, 0, 0.5f); //The more you look in the correct direction, the faster you move!
-            transform.position += MoveInput * GetSpeed() * towardsfactor * delta;
-            Rigid.MovePosition(transform.position);
-            //Rigid.MovePosition(transform.position + MoveInput * GetSpeed() * towardsfactor * CO.co.GetWorldSpeedDelta());
+            MoveCrew(MoveInput * GetSpeed() * towardsfactor * delta);
+            //Rigid.MovePosition(transform.position + MoveInput * GetSpeed() * towardsfactor * delta);
 
         }
         else
         {
             if (IsServer) setAnimationRpc(animDefaultIdle, 1);
         }
+    }
+
+    /*private bool MoveCrew(Vector3 vec)
+    {
+        //transform.position += vec;
+        //Rigid.MovePosition(transform.position);
+
+        Vector2 move = vec; // Drop the 3rd dimension, it's a 2D game
+
+        Vector2 start = transform.position;
+        Vector2 direction = move.normalized;
+        float distance = move.magnitude;
+
+        // CircleCast parameters
+        float radius = ((CircleCollider2D)Col).radius;
+        int layerMask = LayerMask.GetMask("DrifterInterior"); // or whatever your walls belong to
+
+        RaycastHit2D hit = Physics2D.CircleCast(start, radius, direction, distance, layerMask);
+
+        if (hit)
+        {
+            // Blocked - clamp movement to just before the collision
+            float safeDist = hit.distance - 0.01f;
+            if (safeDist < 0f)
+                safeDist = 0f;
+
+            Vector2 safePos = start + direction * safeDist;
+            transform.position = safePos;
+            Debug.Log($"Limiting movement: {safeDist} of {move} moved");
+            Rigid.MovePosition(transform.position);
+            return false;
+        }
+        else
+        {
+            // Free movement
+            transform.position = start+move;
+            Rigid.MovePosition(transform.position);
+            return true;
+        }
+    }*/
+    private bool MoveCrew(Vector3 vec)
+    {
+        Vector2 move = vec;
+        if (move.sqrMagnitude < 0.0001f)
+            return true;
+
+        Vector2 start = transform.position;
+        Vector2 direction = move.normalized;
+        float distance = move.magnitude;
+
+        float radius = ((CircleCollider2D)Col).radius;
+
+        int layerMask = LayerMask.GetMask("DrifterInterior");
+
+        // First sweep in desired direction
+        RaycastHit2D hit = Physics2D.CircleCast(start, radius, direction, distance, layerMask);
+
+        if (!hit)
+        {
+            // Nothing blocking → move normally
+            Vector2 target = start + move;
+            transform.position = target;
+           // Rigid.MovePosition(transform.position);
+            return true;
+        }
+
+        Debug.Log("We are colliding...");
+
+        // --- BLOCKED → SLIDING LOGIC ---
+
+        // 1. How far can we move BEFORE the block?
+        float safeDist = Mathf.Max(hit.distance - 0.01f, 0f);
+        Vector2 safePart = direction * safeDist;
+
+        // 2. Compute the wall's tangent direction (slide direction)
+        // Two possible tangents; pick the one closest to desired move
+        Vector2 tangent1 = new Vector2(-hit.normal.y, hit.normal.x);  // Perpendicular
+        Vector2 tangent2 = new Vector2(hit.normal.y, -hit.normal.x); // Opposite perpendicular
+
+        Vector2 tangent =
+            Vector2.Dot(tangent1, move) > Vector2.Dot(tangent2, move)
+            ? tangent1
+            : tangent2;
+
+        tangent.Normalize();
+
+        // 3. Project the remaining movement onto the tangent
+        float remainingDist = distance - safeDist;
+        float slideAmount = Vector2.Dot(move.normalized, tangent) * remainingDist;
+        Vector2 slideMove = tangent * slideAmount;
+
+        // 4. Safety cast to ensure the slide direction is valid
+        RaycastHit2D slideHit = Physics2D.CircleCast(
+            start + safePart,
+            radius,
+            tangent,
+            Mathf.Abs(slideAmount),
+            layerMask
+        );
+
+        if (slideHit)
+        {
+            // even slide direction is blocked → stop
+            Vector2 finalPos = start + safePart;
+            transform.position = finalPos;
+           // Rigid.MovePosition(transform.position);
+            return false;
+        }
+
+        // 5. Combine safe direct movement + sliding
+        Vector2 finalPosition = start + safePart + slideMove;
+        transform.position = finalPosition;
+       // Rigid.MovePosition(transform.position);
+
+        return true;
     }
 
     /*WEAPONS*/
@@ -2160,6 +2280,10 @@ public class CREW : NetworkBehaviour, iDamageable
     public float GetSpeed()
     {
         return MovementSpeed * (0.8f+GetATT_DEXTERITY()*0.1f) * (1f+ ModifyMovementSpeed) / (1f + ModifyMovementSlow);
+    }
+    public float GetDashSpeed()
+    {
+        return MovementSpeed * (1f + GetATT_DEXTERITY() * 0.02f) * (1f + ModifyMovementSpeed) / (1f + ModifyMovementSlow);
     }
     public float GetCurrentSpeed()
     {

@@ -193,6 +193,7 @@ public class PROJ : NetworkBehaviour
             if (DealSplash)
             {
                 hasHitTarget = true;
+                AttackDamage *= 0.7f;
             }
             else if (StickToWalls)
             {

@@ -260,7 +260,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
                 if (TakeDamageFromDisablement > 15f)
                 {
                     TakeDamageFromDisablement -= 5f;
-                    HomeDrifter.TakeDamage(10f, transform.position, DamageType.TRUE);
+                    HomeDrifter.TakeDamage(5f, transform.position, DamageType.TRUE);
                 }
             }
         }

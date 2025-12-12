@@ -718,8 +718,9 @@ public class CO : NetworkBehaviour
         if (HasVoteResult() != -1)
         {
             Debug.Log("Moving to point!");
-            OverrideMapVote = false;
             MapPoint destination = GetPlayerMapPoint().ConnectedPoints[HasVoteResult()];
+
+            OverrideMapVote = false;
             StartCoroutine(Travel(destination));
             PlayerMapPointID.Value = destination.PointID.Value;
             ResetMapVotes();

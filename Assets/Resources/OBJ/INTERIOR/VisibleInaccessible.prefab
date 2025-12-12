@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6555163656901737279}
   - component: {fileID: 4511574632909210950}
   - component: {fileID: 6981213055278704175}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: VisibleInaccessible
   m_TagString: LOSBlocker
   m_Icon: {fileID: 0}
