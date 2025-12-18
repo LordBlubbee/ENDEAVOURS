@@ -240,12 +240,15 @@ public class SPACE : NetworkBehaviour
         if (mod == null) return false;
         mod.NetworkObject.Spawn();
         mod.transform.SetParent(transform);
+        mod.transform.localRotation = Quaternion.identity;
         mod.transform.localPosition = vec;
         mod.transform.Rotate(Vector3.forward, rot);
         mod.SpaceID.Value = SpaceID.Value;
         mod.Faction = Drifter.GetFaction();
         mod.SetHomeDrifter(Drifter);
+
         Modules.Add(mod);
+
         mod.Init();
         if (mod is ModuleWeapon weaponMod && Initial)
         {
@@ -396,9 +399,17 @@ public class SPACE : NetworkBehaviour
             Debug.Log("Error: Removing core module");
             return;
         }
+        if (!Modules.Contains(mod)) return;
         Modules.Remove(mod);
-        if (WeaponModules.Contains(mod)) WeaponModules.Remove(mod);
-        if (SystemModules.Contains(mod)) SystemModules.Remove(mod);
+        if (WeaponModules.Contains(mod))
+        {
+            WeaponModules.Remove(mod);
+           
+        }
+        if (SystemModules.Contains(mod))
+        {
+            SystemModules.Remove(mod);
+        }
     }
     public Module NearestModule(Vector3 vec)
     {

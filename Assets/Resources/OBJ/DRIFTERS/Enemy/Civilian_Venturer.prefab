@@ -546,9 +546,15 @@ MonoBehaviour:
   SystemModuleLocations:
   - {x: 8, y: -16, z: 0}
   - {x: 8, y: 16, z: 0}
+  - {x: 40, y: 8, z: 0}
+  - {x: 40, y: -8, z: 0}
+  - {x: -40, y: 0, z: 0}
   SystemModuleRotations:
   - 0
   - 0
+  - 90
+  - -90
+  - 180
   PrefabWall: {fileID: 9019574874123161817, guid: b50d1ee3a96087846b72c40f9c11f28b, type: 3}
   PrefabCorner: {fileID: 5844972831535844615, guid: cbfb38767837270468660a6e7cb3ecbb, type: 3}
   PrefabEmpty: {fileID: 8986802024713289282, guid: ddf8d1bce74a9fd4bae3dc20715d2bdb, type: 3}

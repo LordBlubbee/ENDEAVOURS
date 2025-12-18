@@ -27,7 +27,7 @@ public class PART : MonoBehaviour
         } else
         {
             Fade += FadeChange * CO.co.GetWorldSpeedDelta();
-            spr.color = new Color(1, 1, 1, Fade);
+            spr.color = new Color(spr.color.r, spr.color.g, spr.color.b, Fade);
             if (Fade < 0)
             {
                 Destroy(gameObject);

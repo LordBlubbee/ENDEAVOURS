@@ -24,10 +24,14 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: 064c6928ce902444d9583b15f1e55b9c, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/Common_MediumChain
   ItemResourceIDShort: Common_MediumChain
+  SellMaterials: 6
+  SellSupplies: 6
+  SellTech: 0
+  ItemRarity: 0
+  MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   EquipType: 0
   Ability: 0
   AbilityPrefab1: {fileID: 0}
-  MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   ModifyHealthMax: 40
   ModifyHealthRegen: 0

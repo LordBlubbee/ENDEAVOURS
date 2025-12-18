@@ -26,4 +26,9 @@ MonoBehaviour:
   ItemIcon: {fileID: -3121528104570643317, guid: 6145d55218492bd43a8b563804b4109f, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Logipedes_Crossbow
   ItemResourceIDShort: Logipedes_Crossbow
+  SellMaterials: 4
+  SellSupplies: 4
+  SellTech: 0
+  ItemRarity: 0
+  MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: b9cabbcc33d9e6e4bb51d1e635599682, type: 3}

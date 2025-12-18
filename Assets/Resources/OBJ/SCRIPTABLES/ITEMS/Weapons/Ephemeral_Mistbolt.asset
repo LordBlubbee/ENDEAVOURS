@@ -27,4 +27,9 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: b76ea5d9b24b73a4597737cc454793d0, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Ephemeral_Mistbolt
   ItemResourceIDShort: Ephemeral_Mistbolt
+  SellMaterials: 0
+  SellSupplies: 5
+  SellTech: 2
+  ItemRarity: 0
+  MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: 3da5e0a7c70368647a08eeea241a3810, type: 3}

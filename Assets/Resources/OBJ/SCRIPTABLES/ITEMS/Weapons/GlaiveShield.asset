@@ -28,6 +28,9 @@ MonoBehaviour:
   ItemIcon: {fileID: -2432561370845387463, guid: 0b8e2f74c32a1544082a55e9022864e7, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/GlaiveShield
   ItemResourceIDShort: GlaiveShield
+  SellMaterials: 4
+  SellSupplies: 4
+  SellTech: 0
   ItemRarity: 0
   MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: dd15b1ba4d1ec0e4fbe2ead0d39181e7, type: 3}

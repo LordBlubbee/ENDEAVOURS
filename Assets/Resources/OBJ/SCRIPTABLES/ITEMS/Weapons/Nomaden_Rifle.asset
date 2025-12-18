@@ -26,4 +26,9 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: e6f35ef3de4884a4fac3c08b2111c998, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Nomaden_Rifle
   ItemResourceIDShort: Nomaden_Rifle
+  SellMaterials: 4
+  SellSupplies: 4
+  SellTech: 0
+  ItemRarity: 0
+  MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: bf01785d50761ba4da4f2a36943d0a71, type: 3}

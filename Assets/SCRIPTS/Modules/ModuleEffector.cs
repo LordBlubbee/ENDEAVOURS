@@ -58,34 +58,50 @@ public class ModuleEffector : Module
     }
     public void ActivateEffect()
     {
+        if (IsEffectActive()) return;
         if (IsEffectOnCooldown()) return;
-        SetCooldown();
+        SetActive();
         Activation();
     }
     protected virtual void Activation()
     {
        
     }
+    protected virtual void Deactivation()
+    {
 
-    public void SetCooldown()
+    }
+    public void SetActive()
     {
         if (IsEffectActive()) return;
         if (IsEffectOnCooldown()) return;
         StartCoroutine(ActivateCooldown());
     }
-    protected IEnumerator ActivateCooldown()
+    public void SetCooldown()
     {
-        EffectActive.Value = GetEffectDuration();
-        while (EffectActive.Value > 0f)
-        {
-            yield return null;
-            EffectActive.Value -= CO.co.GetWorldSpeedDelta();
-        }
+        if (IsEffectActive()) return;
+        if (IsEffectOnCooldown()) return;
+        StartCoroutine(CooldownOnly());
+    }
+    protected IEnumerator CooldownOnly()
+    {
         EffectCooldown.Value = GetEffectCooldownMax();
         while (EffectCooldown.Value > 0f)
         {
             yield return null;
             EffectCooldown.Value -= CO.co.GetWorldSpeedDelta();
         }
+    }
+    protected IEnumerator ActivateCooldown()
+    {
+        EffectActive.Value = GetEffectDuration();
+        while (EffectActive.Value > 0f && !IsDisabled())
+        {
+            yield return null;
+            EffectActive.Value -= CO.co.GetWorldSpeedDelta();
+        }
+        Deactivation();
+        EffectActive.Value = 0;
+        StartCoroutine(CooldownOnly());
     }
 }

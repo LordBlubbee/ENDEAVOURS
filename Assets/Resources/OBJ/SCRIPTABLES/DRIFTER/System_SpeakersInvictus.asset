@@ -19,7 +19,7 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: 2f2cfb9f63eae3d4f90549b7a9ca25b9, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/System_SpeakersInvictus
   ItemResourceIDShort: System_SpeakersInvictus
-  SellMaterials: 0
+  SellMaterials: 20
   SellSupplies: 0
   SellTech: 0
   ItemRarity: 0

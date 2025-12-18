@@ -277,6 +277,8 @@ public class Screen_Inventory : MonoBehaviour
         if (ob == SubscreenEquipment || ob == SubscreenDrifter || ob == SubscreenDrifterWeapons) SubscreenInventory.SetActive(true);
     }
 
+    public GameObject SellButton;
+    public TextMeshProUGUI SellTex;
     InventorySlot CurrentDraggingSlot;
     ScriptableEquippable HoldingItem = null;
     Image HoldingItemTile;
@@ -287,8 +289,13 @@ public class Screen_Inventory : MonoBehaviour
         HoldingItem = eq;
         HoldingItemTile = img;
         img.transform.SetParent(transform);
-    }
 
+        SellButton.gameObject.SetActive(true);
+        SellTex.text = $"SCRAP\n";
+        if (HoldingItem.SellMaterials > 0) SellTex.text += "<color=yellow>[+10M]</color> ";
+        if (HoldingItem.SellSupplies > 0) SellTex.text += "<color=green>[+10S]</color> ";
+        if (HoldingItem.SellTech > 0) SellTex.text += "<color=#00AAFF>[+10T]</color> ";
+    }
     public void DepositItem(InventorySlot slot)
     {
         if (HoldingItemTile)
@@ -299,7 +306,27 @@ public class Screen_Inventory : MonoBehaviour
             {
                 if (HoldingItem.MinimumAttributes[i] > LOCALCO.local.GetPlayer().GetATT_Total(i))
                 {
+                    AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
                     return;
+                }
+            }
+            if (HoldingItem is ScriptableEquippableModule)
+            {
+                ScriptableEquippableModule module = (ScriptableEquippableModule)HoldingItem;
+                if (module.EquipType == ScriptableEquippableModule.EquipTypes.WEAPON)
+                {
+                    if (CO.co.PlayerMainDrifter.Interior.WeaponModuleLocations.Count <= CO.co.PlayerMainDrifter.Interior.WeaponModules.Count)
+                    {
+                        AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+                        return;
+                    }
+                } else
+                {
+                    if (CO.co.PlayerMainDrifter.Interior.SystemModuleLocations.Count <= CO.co.PlayerMainDrifter.Interior.SystemModules.Count)
+                    {
+                        AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+                        return;
+                    }
                 }
             }
             if (!doesItemFitInSlot(slotSwap, CurrentDraggingSlot)) return;
@@ -313,8 +340,25 @@ public class Screen_Inventory : MonoBehaviour
 
             if (HoldingItem is ScriptableEquippableModule)
             {
+                AUDCO.aud.PlaySFX(AUDCO.aud.Upgrade);
                 CO.co.PlayerMainDrifter.Interior.AddModuleRpc(HoldingItem.GetItemResourceIDFull());
             }
+        }
+        StopHoldingItem();
+    }
+    public void DepositItemInSell()
+    {
+        if (HoldingItemTile)
+        {
+            int MaterialSellReward = CurrentDraggingSlot.GetEquippedItem().SellMaterials;
+            int SuppliesSellReward = CurrentDraggingSlot.GetEquippedItem().SellSupplies;
+            int TechSellReward = CurrentDraggingSlot.GetEquippedItem().SellTech;
+            CO.co.RequestSellingItemRpc(MaterialSellReward, SuppliesSellReward, TechSellReward);
+            CurrentDraggingSlot.SetInventoryItem(null);
+            UpdateEquipmentBasedOnItem(CurrentDraggingSlot);
+            CO.co.RequestPeriodicInventoryUpdateRpc();
+
+            AUDCO.aud.PlaySFX(AUDCO.aud.Salvage);
         }
         StopHoldingItem();
     }
@@ -403,6 +447,7 @@ public class Screen_Inventory : MonoBehaviour
         }
         HoldingItem = null;
         HoldingItemTile = null;
+        SellButton.gameObject.SetActive(false);
     }
 
     [Header("Drifter Modules")]
@@ -436,6 +481,13 @@ public class Screen_Inventory : MonoBehaviour
     public void PressDismantleDrifterSlot()
     {
         if (!SelectedDrifterSlot.ModuleLink) return;
+        if (SelectedDrifterSlot.ModuleLink.ModuleType == Module.ModuleTypes.NAVIGATION
+            || SelectedDrifterSlot.ModuleLink.ModuleType == Module.ModuleTypes.ENGINES
+            || SelectedDrifterSlot.ModuleLink.ModuleType == Module.ModuleTypes.MEDICAL)
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
         AUDCO.aud.PlaySFX(AUDCO.aud.Salvage);
         SelectedDrifterSlot.ModuleLink.SalvageRpc();
        // CO.co.AddInventoryItemRpc(SelectedDrifterSlot.GetEquippedItem().ItemResourceID);
@@ -459,14 +511,23 @@ public class Screen_Inventory : MonoBehaviour
                 Module mod = CO.co.PlayerMainDrifter.Interior.GetModules()[ID];
                 if (mod is ModuleWeapon) continue;
                 if (!mod.ShowAsModule) continue;
+                slot.gameObject.SetActive(true);
                 slot.SetInventoryItem(mod.ShowAsModule); 
                 slot.UpdateInventorySlot(mod);
                 i++;
             } else
             {
                 i++;
-                slot.SetInventoryItem(null);
-                slot.UpdateInventorySlot(null);
+                if (CO.co.PlayerMainDrifter.Interior.SystemModuleLocations.Count+4 > i)
+                {
+                    slot.gameObject.SetActive(true);
+                    slot.SetInventoryItem(null);
+                    slot.UpdateInventorySlot(null);
+                }
+                else
+                {
+                    slot.gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -481,7 +542,8 @@ public class Screen_Inventory : MonoBehaviour
             if (CO.co.PlayerMainDrifter.Interior.WeaponModules.Count > ID)
             {
                 Module mod = CO.co.PlayerMainDrifter.Interior.WeaponModules[ID];
-                if (!mod.ShowAsModule) continue;
+                if (!mod.ShowAsModule) continue; 
+                slot.gameObject.SetActive(true);
                 slot.SetInventoryItem(mod.ShowAsModule);
                 slot.UpdateInventorySlot(mod);
                 i++;
@@ -489,8 +551,15 @@ public class Screen_Inventory : MonoBehaviour
             else
             {
                 i++;
-                slot.SetInventoryItem(null);
-                slot.UpdateInventorySlot(null);
+                if (CO.co.PlayerMainDrifter.Interior.WeaponModuleLocations.Count > ID)
+                {
+                    slot.gameObject.SetActive(true);
+                    slot.SetInventoryItem(null);
+                    slot.UpdateInventorySlot(null);
+                } else
+                {
+                    slot.gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -537,12 +606,12 @@ public class Screen_Inventory : MonoBehaviour
                     Data += $"\nAMMO SIZE: {wep.MaxAmmo}";
                     break;
                 case Module.ModuleTypes.ENGINES:
-                    Data += $"\nDODGE: {(CO.co.PlayerMainDrifter.GetDodgeChanceUnboosted()*100f).ToString("0")}%";
+                    Data += $"\nDODGE: {(10+ SelectedDrifterSlot.ModuleLink.ModuleLevel.Value*5).ToString("0")}%";
                     Data += $"<color=green> (+5%)</color>";
                     break;
                 case Module.ModuleTypes.NAVIGATION:
-                    Data += $"\nDAMAGE REDUCTION: {((1f - CO.co.PlayerMainDrifter.GetHullDamageRatio()) * 100f).ToString("0")}%";
-                    Data += $"<color=green> (+5%)</color>";
+                    Data += $"\nDAMAGE REDUCTION: {(0+ SelectedDrifterSlot.ModuleLink.ModuleLevel.Value * 10).ToString("0")}%";
+                    Data += $"<color=green> (+10%)</color>";
                     break;
                 case Module.ModuleTypes.ARMOR:
                     ModuleArmor armor = (ModuleArmor)SelectedDrifterSlot.ModuleLink;
@@ -574,14 +643,14 @@ public class Screen_Inventory : MonoBehaviour
                 case Module.ModuleTypes.INCENDIARY_STORAGE:
                     ModuleIncendiaryCrates incin = (ModuleIncendiaryCrates)SelectedDrifterSlot.ModuleLink;
                     Data += $"\nDURATION: {incin.GetEffectDuration().ToString("0.0")}";
-                    Data += $"<color=green> (+{incin.EffectDurationPerLevel})</color>";
+                    Data += $"<color=green> (+{incin.EffectDurationPerLevel})</color>)";
                     Data += $"\nCOOLDOWN: {incin.GetEffectCooldownMax().ToString("0.0")}";
-                    Data += $"<color=green> ({incin.EffectCooldownReductionPerLevel})</color>";
+                    Data += $"<color=green> ({incin.EffectCooldownReductionPerLevel})</color>)";
 
                     //Unique
                     Data += $"\nDAMAGE BOOST: +{((incin.GetDamageBonusMod()-1f)*100f).ToString("0")}%";
                     Data += $"<color=green> (+10%)</color>";
-                    Data += $"\nFIRE CHANCE: (+{(incin.GetFlameBoost()*100f).ToString("0")}%";
+                    Data += $"\nFIRE CHANCE: +{(incin.GetFlameBoost()*100f).ToString("0")}%";
                     Data += $"<color=green> (+10%)</color>";
                     break;
                 case Module.ModuleTypes.SPEAKERS_BUFF:
@@ -758,10 +827,11 @@ public class Screen_Inventory : MonoBehaviour
     {
         CREW Crew = SelectedCrew;
 
-        CrewOuter.color = ScriptableEquippable.GetRarityColor(Crew.UnitRarity);
+        Color col = Crew.CharacterBackground.BackgroundColor;
+        CrewOuter.color = new Color(col.r * 0.4f, col.g * 0.4f, col.b * 0.4f);
         CrewIcon.sprite = Crew.CharacterBackground.Sprite_Player;
         CrewStripes.sprite = Crew.CharacterBackground.Sprite_Stripes;
-        CrewStripes.color = Crew.CharacterBackground.BackgroundColor;
+        CrewStripes.color = col;
         CrewName.text = $"{Crew.UnitName} {Crew.CharacterName.Value} - LEVEL {Crew.GetUnitUpgradeLevel()}";
         CrewName.color = Crew.CharacterBackground.BackgroundColor;
         CrewDescription.text = $"{Crew.UnitDescription}";

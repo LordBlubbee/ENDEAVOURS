@@ -33,4 +33,4 @@ MonoBehaviour:
   PossiblePointsRest:
   - {fileID: 11400000, guid: 673c942ec81d9974bb7787062baa9987, type: 2}
   PossiblePointsArrival:
-  - {fileID: 11400000, guid: f85614dc02f2ee24084a89dac701ca18, type: 2}
+  - {fileID: 11400000, guid: 10e9d257f3ab6eb4aa09701a0bebdd11, type: 2}

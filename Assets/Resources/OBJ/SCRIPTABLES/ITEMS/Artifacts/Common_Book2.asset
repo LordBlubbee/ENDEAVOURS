@@ -21,9 +21,14 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: a870d2e821a3ff64bbb523887ee10d4b, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Common_Book2
   ItemResourceIDShort: Common_Book2
+  SellMaterials: 0
+  SellSupplies: 5
+  SellTech: 0
+  ItemRarity: 0
+  MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
   EquipType: 1
   Ability: 0
-  MinimumAttributes: 0000000000000000000000000000000000000000000000000000000000000000
+  AbilityPrefab1: {fileID: 0}
   ModifyAttributes: 0000000001000000000000000000000000000000000000000000000000000000
   ModifyHealthMax: 0
   ModifyHealthRegen: 0

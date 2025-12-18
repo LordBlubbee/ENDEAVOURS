@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 773029183256521562}
   - component: {fileID: 3483618067162760091}
   - component: {fileID: 2142339988460766890}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Door1
   m_TagString: LOSBlocker
   m_Icon: {fileID: 0}
@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 6743448392288811743}
   - component: {fileID: 8020960343255046298}
   - component: {fileID: 1030108386009422331}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Door2
   m_TagString: LOSBlocker
   m_Icon: {fileID: 0}

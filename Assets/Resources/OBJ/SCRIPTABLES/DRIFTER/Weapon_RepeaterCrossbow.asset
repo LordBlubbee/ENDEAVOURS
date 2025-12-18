@@ -22,6 +22,9 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: c6c068ebf52b69d479050e1cf0432ac1, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/Weapon_RepeaterCrossbow
   ItemResourceIDShort: Weapon_RepeaterCrossbow
+  SellMaterials: 20
+  SellSupplies: 0
+  SellTech: 0
   ItemRarity: 0
   MinimumAttributes: 
   PrefabModule: {fileID: 2733437315669949757, guid: a694036d6781fec40bcc0a08607779fe, type: 3}

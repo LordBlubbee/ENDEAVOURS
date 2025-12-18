@@ -223,6 +223,7 @@ MonoBehaviour:
   Salvage: {fileID: 8300000, guid: 48ec2ac8b9fe21344adaceee3648bbec, type: 3}
   Press: {fileID: 8300000, guid: 073470b33aec19e4c865cfd95b1f1826, type: 3}
   Fail: {fileID: 8300000, guid: 495918dd49237ef43937939db15742eb, type: 3}
+  IncendiaryFireAttack: {fileID: 8300000, guid: a1f54dce1a97a724bb5f8034353f8830, type: 3}
 --- !u!1 &5097112085914320806
 GameObject:
   m_ObjectHideFlags: 0

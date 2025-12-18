@@ -33,6 +33,9 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: 93756e9c2a7dfa2408f8c5421fcf24bc, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/Common_HeavyChain
   ItemResourceIDShort: Common_HeavyChain
+  SellMaterials: 8
+  SellSupplies: 8
+  SellTech: 0
   ItemRarity: 0
   MinimumAttributes: 0000000000000000000000000000000000000000050000000000000000000000
   EquipType: 0

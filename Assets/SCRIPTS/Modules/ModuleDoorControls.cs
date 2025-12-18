@@ -19,6 +19,7 @@ public class ModuleDoorControls : Module
                 if (mod is DoorSystem)
                 {
                     mod.ExtraMaxHealth.Value += GetDoorBuff();
+                    mod.Heal(GetDoorBuff());
                 }
             }
         }

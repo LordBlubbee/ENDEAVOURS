@@ -83,13 +83,13 @@ public class Screen_Cinematic : MonoBehaviour
         SetImage(Intro_Images[5]); //Fleet Underway
         yield return new WaitForSeconds(3f);
         SetText("The Expedition travelled for two months before they found a strange signal in the far south.");
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(7f);
         SetText("The fleet moved in, tracking it deep into mountain caverns...");
         yield return new WaitForSeconds(6f);
         SetText("");
         yield return new WaitForSeconds(1f);
         SetImage(Intro_Images[6]); //Seeker Ambush (119)
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         SetText("But then, an ambush, blasts from the deep piercing through the armour of our proud Drifters!");
         yield return new WaitForSeconds(6f);
         SetText("The fleet fought back. With all they could... But they were no match for the mysterious force that had assailed them.");
@@ -143,7 +143,7 @@ public class Screen_Cinematic : MonoBehaviour
     bool isSwitchingText = false;
     IEnumerator SwitchTextRoutine(string tex)
     {
-        while (isSwitchingText) yield return null;
+       // while (isSwitchingText) yield return null;
         isSwitchingText = true;
         while (CinematicTex.color.a > 0)
         {
@@ -155,7 +155,7 @@ public class Screen_Cinematic : MonoBehaviour
         {
             while (CinematicTex.color.a < 1)
             {
-                CinematicTex.color = new Color(1, 1, 1, Mathf.Clamp01(CinematicTex.color.a + Time.deltaTime * 1.2f));
+                CinematicTex.color = new Color(1, 1, 1, Mathf.Clamp01(CinematicTex.color.a + Time.deltaTime * 1.4f));
                 yield return null;
             }
         }
@@ -163,7 +163,6 @@ public class Screen_Cinematic : MonoBehaviour
     }
     IEnumerator SkipTextRoutine()
     {
-        while (isSwitchingText) yield return null;
         while (SkipTex.color.a < 1)
         {
             SkipTex.color = new Color(1, 0, 0, Mathf.Clamp01(SkipTex.color.a - Time.deltaTime));

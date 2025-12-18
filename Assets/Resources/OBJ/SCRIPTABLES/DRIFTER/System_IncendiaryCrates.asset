@@ -21,7 +21,7 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: 72486b2b7290f784dab947e7299fe729, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/System_IncendiaryCrates
   ItemResourceIDShort: System_IncendiaryCrates
-  SellMaterials: 0
+  SellMaterials: 10
   SellSupplies: 0
   SellTech: 0
   ItemRarity: 0

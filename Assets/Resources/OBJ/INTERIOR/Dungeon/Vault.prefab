@@ -256,7 +256,7 @@ MonoBehaviour:
   ModuleType: 10
   IconSprite: {fileID: 0}
   ShowAsModule: {fileID: 0}
-  MaxHealth: 250
+  MaxHealth: 100
   HitboxRadius: 16
   ModuleWorth: 0
   ModuleUpgradeMaterials: 

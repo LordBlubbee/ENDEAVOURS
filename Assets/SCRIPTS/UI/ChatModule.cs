@@ -39,9 +39,6 @@ public class ChatModule : MonoBehaviour
     IEnumerator UpdateCanvas()
     {
         yield return null;
-        CAM.cam.camob.orthographicSize += 0.01f;
-        yield return null;
-        CAM.cam.camob.orthographicSize -= 0.01f;
     }
     private void Update()
     {
@@ -56,7 +53,7 @@ public class ChatModule : MonoBehaviour
             {
                 if (ChatInputField.text.Length > 0)
                 {
-                    string hex2 = ColorUtility.ToHtmlStringRGB(LOCALCO.local.GetPlayer().CharacterBackground.BackgroundColor);
+                    string hex2 = ColorUtility.ToHtmlStringRGB(LOCALCO.local.GetPlayer().GetCharacterColor());
                     string Sender = $"<color=#{hex2}>{LOCALCO.local.GetPlayer().CharacterName.Value}</color>";
                     string MessageForSelf = $"{Sender}: {ChatInputField.text}";
                     CreateChatMessage(MessageForSelf);

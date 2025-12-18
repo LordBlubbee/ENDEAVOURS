@@ -26,4 +26,9 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: 4acaf5e4ab2f05f49aac3ab0742463f1, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Blade
   ItemResourceIDShort: Blade
+  SellMaterials: 4
+  SellSupplies: 4
+  SellTech: 0
+  ItemRarity: 0
+  MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: f1f5e532f7c7f2c4bb6dcec2a15d8ce0, type: 3}

@@ -24,6 +24,9 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: f6dcf1b64a817a4419e34b2fccbf5ab5, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/DRIFTER/System_Armor
   ItemResourceIDShort: System_Armor
+  SellMaterials: 25
+  SellSupplies: 0
+  SellTech: 0
   ItemRarity: 0
   MinimumAttributes: 
   PrefabModule: {fileID: 7985907672111993197, guid: e219ead882b24cd4e811b6b099420f4d, type: 3}

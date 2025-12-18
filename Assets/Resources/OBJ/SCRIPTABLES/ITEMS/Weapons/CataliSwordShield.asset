@@ -27,6 +27,9 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: 6cd4f096a7d0a5f448e64f50a964d18c, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/CataliSwordShield
   ItemResourceIDShort: CataliSwordShield
+  SellMaterials: 4
+  SellSupplies: 4
+  SellTech: 0
   ItemRarity: 0
   MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: 358a0ce823730524ba79a24db6688a34, type: 3}

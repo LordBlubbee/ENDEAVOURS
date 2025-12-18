@@ -27,4 +27,9 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: e5a326e82f8aa5945b20fa8ce12076d4, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Revenant_Blade
   ItemResourceIDShort: Revenant_Blade
+  SellMaterials: 4
+  SellSupplies: 4
+  SellTech: 0
+  ItemRarity: 0
+  MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: 4ed98f51f7c7ee34395cccf3adad3d8e, type: 3}

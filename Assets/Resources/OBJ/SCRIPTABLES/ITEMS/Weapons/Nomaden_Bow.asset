@@ -27,6 +27,9 @@ MonoBehaviour:
   ItemIcon: {fileID: -275687926064039405, guid: a4c00467f6c88ad489576d4daa3d5601, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Nomaden_Bow
   ItemResourceIDShort: Nomaden_Bow
+  SellMaterials: 4
+  SellSupplies: 4
+  SellTech: 0
   ItemRarity: 0
   MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: 192bdc1b2fffd5944bfa11ea2ef364b0, type: 3}

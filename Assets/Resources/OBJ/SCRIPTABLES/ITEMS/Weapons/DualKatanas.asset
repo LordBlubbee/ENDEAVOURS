@@ -28,6 +28,9 @@ MonoBehaviour:
   ItemIcon: {fileID: -523024417087210977, guid: 1755685362c60264d8aa41fc2349cabd, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/DualKatanas
   ItemResourceIDShort: DualKatanas
+  SellMaterials: 4
+  SellSupplies: 4
+  SellTech: 0
   ItemRarity: 0
   MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: d48a38789e18d7f46843445851396322, type: 3}

@@ -184,7 +184,7 @@ MonoBehaviour:
   DodgeModifier: 1.3
   HullDamageModifier: 0.25
   ModuleDamageModifier: 0.25
-  ArmorDamageModifier: 1.5
+  ArmorDamageModifier: 2
   ArmorAbsorptionModifier: 0.5
   ArmorCriticalChance: 0.05
   CrewDamageModifier: 0.6

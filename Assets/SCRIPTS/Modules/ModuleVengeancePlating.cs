@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEditor.Experimental;
 using UnityEngine;
 
 public class ModuleVengeancePlating : Module
 {
     public PROJ ShrapnelPrefab;
+    public GameObject ShrapnelVFX;
     public float GetShrapnelChance()
     {
         return 0.5f + ModuleLevel.Value * 0.1f;
@@ -16,6 +18,7 @@ public class ModuleVengeancePlating : Module
     public void FireShrapnel(Vector3 origin)
     {
         if (UnityEngine.Random.Range(0f, 1f) > GetShrapnelChance()) return;
+        PlayShrapnelVFXRpc(origin);
         Vector3 Target = GetClosestEnemyPositionInNebula(origin);
         if (Target == Vector3.zero) return;
         PROJ proj = (PROJ)GameObject.Instantiate(ShrapnelPrefab, origin, Quaternion.identity);
@@ -28,6 +31,12 @@ public class ModuleVengeancePlating : Module
         float dmg = GetShrapnelDamage();
         proj.NetworkObject.Spawn();
         proj.Init(dmg, GetHomeDrifter().GetFaction(), null, Target);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void PlayShrapnelVFXRpc(Vector3 vec)
+    {
+        Instantiate(ShrapnelVFX, vec, Quaternion.identity);
     }
     public Vector3 GetClosestEnemyPositionInNebula(Vector3 vec)
     {

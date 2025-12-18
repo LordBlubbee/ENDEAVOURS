@@ -27,4 +27,9 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: 3eabccfd12e65bd4ab8fb4f3b5485285, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/PragmaticusSwordShield
   ItemResourceIDShort: PragmaticusSwordShield
+  SellMaterials: 4
+  SellSupplies: 4
+  SellTech: 0
+  ItemRarity: 0
+  MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: fefe8fdbbb69f27418b0bb772800d04c, type: 3}
