@@ -18,7 +18,7 @@ public class UI_CrewButton : MonoBehaviour
         CrewIcon.sprite = Crew.CharacterBackground.Sprite_Player;
         CrewStripes.sprite = Crew.CharacterBackground.Sprite_Stripes;
         CrewStripes.color = col;
-        CrewName.text = $"{Crew.UnitName} \n{Crew.CharacterName.Value}";
+        CrewName.text = $"{Crew.UnitName} \n{Crew.CharacterName.Value} ({Crew.GetUnitUpgradeLevel()})";
         CrewName.color = Crew.CharacterBackground.BackgroundColor;
         Tool.Tooltip = $"{Crew.UnitName} {Crew.CharacterName.Value} \n\n{Crew.UnitDescription}";
     }

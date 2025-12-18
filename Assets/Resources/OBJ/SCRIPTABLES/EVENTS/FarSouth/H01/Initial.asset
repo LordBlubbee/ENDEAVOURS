@@ -15,7 +15,7 @@ MonoBehaviour:
   StoryTexts:
   - BaseText: 'Alert: Nebula density strength has reached abnormal levels. Due to
       weather conditions, we are forced to move near to the Nebula''s surface.'
-    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []
   - BaseText: Abnormal movements detected. Resident Looncrabs have gathered and display
       territorial behaviour.
@@ -29,6 +29,7 @@ MonoBehaviour:
       BaseText: Ward off the invaders!
       Speaker: {fileID: 0}
       Alternatives: []
+    Prerequisites: []
     DialogResult: {fileID: 0}
     AlternativeResults: []
     TriggerEvent: {fileID: 11400000, guid: d197174111060a049866df0d10ef5f7d, type: 2}

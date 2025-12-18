@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f0e6fff80922414d9e1c017e477478b, type: 3}
-  m_Name: Raiders1
+  m_Name: Mountainscape1
   m_EditorClassIdentifier: 
-  NameColor: {r: 0.62352943, g: 1, b: 0.62352943, a: 1}
-  Portrait: {fileID: 7815672338738233202, guid: cb5b6bc0db773334fbf19735c0255004, type: 3}
+  NameColor: {r: 1, g: 1, b: 1, a: 1}
+  Portrait: {fileID: -2909161187589847112, guid: 1529d9aa45703de4fb899830c94bfdf6, type: 3}
   Voice:
-  - {fileID: 8300000, guid: e613f51cb1f02ac4b802abbd21ce9462, type: 3}
+  - {fileID: 8300000, guid: a2f587f085eb3634eab0238d8fbb47ce, type: 3}
