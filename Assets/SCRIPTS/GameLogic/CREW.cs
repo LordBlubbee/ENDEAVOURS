@@ -110,6 +110,7 @@ public class CREW : NetworkBehaviour, iDamageable
     [Header("STATS")]
     public float MaxHealth = 100f;
     public float NaturalStaminaRegen = 25f;
+    private NetworkVariable<float> CurMove = new();
     public float MovementSpeed = 7;
     public float RotationDistanceFactor = 4;
     public float RotationBaseSpeed = 90;
@@ -1705,6 +1706,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     private void MoveAndLook()
     {
+        if (IsServer) CurMove.Value = 0;
         if (!CanFunction())
         {
             if (isDead() && !isDeadForever() && IsServer)
@@ -1760,6 +1762,7 @@ public class CREW : NetworkBehaviour, iDamageable
             float towardsang = Mathf.Abs(AngleTowards(MoveInput));
             float towardsfactor = 1.1f - Mathf.Clamp((towardsang - 70f) * 0.005f, 0, 0.5f); //The more you look in the correct direction, the faster you move!
             MoveCrew(MoveInput * GetSpeed() * towardsfactor * delta);
+            if (IsServer) CurMove.Value = (MoveInput * GetSpeed() * towardsfactor).magnitude;
             //Rigid.MovePosition(transform.position + MoveInput * GetSpeed() * towardsfactor * delta);
 
         }
@@ -2287,8 +2290,10 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetCurrentSpeed()
     {
-        if (!isMoving.Value || !CanFunction()) return 0;
-        return GetSpeed();
+        //Used for animations
+        return CurMove.Value;
+       // if (!isMoving.Value || !CanFunction()) return 0;
+      //  return GetSpeed();
     }
     public float AngleToTurnTarget()
     {
