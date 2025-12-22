@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8290810d474b4fa43ac85b0fd530822f, type: 3}
   m_Name: BakutoWarblimp
   m_EditorClassIdentifier: 
-  SpawnDrifter: {fileID: 1453653842865150193, guid: 30a4a4e595c62934d94d2380debfd8e1, type: 3}
+  SpawnDrifter: {fileID: 1453653842865150193, guid: 3cb2bde11b3336e4cbcc66630c89a3f2, type: 3}
   Weight: 20
   BaseWeaponBudgetMod: 1.2
   BaseModuleBudgetMod: 0.9
@@ -20,7 +20,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e699b0e268a36f041a171787e41bb9c7, type: 2}
   - {fileID: 11400000, guid: acdc84f7aedc49344a581b4ed33a3453, type: 2}
   - {fileID: 11400000, guid: 767ff06a4e8942d46a6a26b1f5bde4c2, type: 2}
-  - {fileID: 11400000, guid: 5e327c34dc8e8044db4ecf9d321d5743, type: 2}
   - {fileID: 11400000, guid: bd723a4461c96794a967ec21362a2f7b, type: 2}
   EquippableModules:
   - {fileID: 11400000, guid: f4a79d7d8115dae47bc2186299f35909, type: 2}

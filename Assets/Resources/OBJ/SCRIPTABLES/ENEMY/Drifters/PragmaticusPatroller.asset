@@ -15,7 +15,7 @@ MonoBehaviour:
   SpawnDrifter: {fileID: 1453653842865150193, guid: 81d901228f920904a8aebdca445ef8a0, type: 3}
   Weight: 20
   BaseWeaponBudgetMod: 1
-  BaseModuleBudgetMod: 0.9
+  BaseModuleBudgetMod: 1
   EquippableWeapons:
   - {fileID: 11400000, guid: 5e327c34dc8e8044db4ecf9d321d5743, type: 2}
   - {fileID: 11400000, guid: acdc84f7aedc49344a581b4ed33a3453, type: 2}
