@@ -5,6 +5,13 @@ using UnityEngine.UIElements;
 public class BlockAttacks : MonoBehaviour
 {
     public TOOL tool;
+    public CREW Crew;
+
+    public CREW GetCrew()
+    {
+        if (tool) return tool.GetCrew();
+        else return Crew;
+    }
     public Collider2D col;
     public float ReduceDamageModMelee = 1f;
     public float ReduceDamageModRanged = 1f;

@@ -10,11 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef6d31fc802706642abd802c670bd89e, type: 3}
-  m_Name: Looncrab_Claw
+  m_Name: N_Looncrab
   m_EditorClassIdentifier: 
-  ItemName: Claw
+  ItemName: Nebuloid Weapon
   ItemDesc: 
   ItemIcon: {fileID: 21300000, guid: 1d29de57caae98443bb8f05faa8b4be4, type: 3}
-  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Looncrab_Claw
-  ItemResourceIDShort: Looncrab_Claw
+  ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/N_Looncrab
+  ItemResourceIDShort: N_Looncrab
+  SellMaterials: 0
+  SellSupplies: 0
+  SellTech: 0
+  ItemRarity: 0
+  MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: e4f7ef7e0bec9f84589d9c9fec3b8ce5, type: 3}

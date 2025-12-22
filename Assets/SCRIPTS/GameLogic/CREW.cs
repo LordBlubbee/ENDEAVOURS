@@ -1354,8 +1354,8 @@ public class CREW : NetworkBehaviour, iDamageable
                 if (Blocker != null)
                 {
                     if (MeleeHits.Contains(Blocker.gameObject)) continue;
-                    if (!IsTargetEnemy(Blocker.tool.GetCrew().GetFaction())) continue;
-                    if (!Blocker.tool.GetCrew().CanBeTargeted(Space)) continue;
+                    if (!IsTargetEnemy(Blocker.GetCrew().GetFaction())) continue;
+                    if (!Blocker.GetCrew().CanBeTargeted(Space)) continue;
                     MeleeHits.Add(Blocker.gameObject);
                     float Penetration = 0;
                     if (DashingDamageBuff > 0 || isParrying) Penetration += 0.3f;
@@ -1364,11 +1364,11 @@ public class CREW : NetworkBehaviour, iDamageable
                     {
                         if (Blocker.BlockSound != AUDCO.BlockSoundEffects.NONE) AUDCO.aud.PlayBlockSFXRpc(Blocker.BlockSound, transform.position);
                         else WeaponHitSFXRpc();
-                        if (Blocker.ParryDuration > 0f) Blocker.tool.GetCrew().SetParry(Blocker.ParryDuration);
+                        if (Blocker.ParryDuration > 0f) Blocker.GetCrew().SetParry(Blocker.ParryDuration);
                         if (Blocker.ReduceDamageModMelee < 1f)
                         {
                             float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
-                            Melee(Blocker.tool.GetCrew(), checkHit, dmg * (1f - Blocker.ReduceDamageModMelee));
+                            Melee(Blocker.GetCrew(), checkHit, dmg * (1f - Blocker.ReduceDamageModMelee));
                         }
                         else
                         {

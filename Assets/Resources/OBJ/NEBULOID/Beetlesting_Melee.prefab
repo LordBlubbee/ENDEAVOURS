@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2920855210019276517}
   - component: {fileID: 54701884617678520}
   m_Layer: 7
-  m_Name: Beetlesting_Ranged
+  m_Name: Beetlesting_Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2220927406
+  GlobalObjectIdHash: 3071731028
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -211,8 +211,8 @@ MonoBehaviour:
   CharacterBackground: {fileID: 0}
   DefaultToolset: 0
   EquippedWeapons:
+  - {fileID: 11400000, guid: a32e1e58e49892045b66ebf79b587e27, type: 2}
   - {fileID: 11400000, guid: 8e7f3e3fb984dee489374a004d139385, type: 2}
-  - {fileID: 0}
   - {fileID: 0}
   EquippedArmor: {fileID: 0}
   EquippedArtifacts:

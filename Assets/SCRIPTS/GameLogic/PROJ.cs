@@ -247,7 +247,7 @@ public class PROJ : NetworkBehaviour
             if (Blocker != null && BlockPenetration < 1)
             {
                 if (Damageables.Contains(Blocker.gameObject)) return;
-                if (Blocker.tool.GetCrew().GetFaction() == Faction) return;
+                if (Blocker.GetCrew().GetFaction() == Faction) return;
                 Damageables.Add(Blocker.gameObject);
                 bool isBlocked = UnityEngine.Random.Range(0f, 1f) + BlockPenetration < Blocker.BlockChanceRanged;
                 if (isBlocked)
@@ -257,7 +257,7 @@ public class PROJ : NetworkBehaviour
                     if (Blocker.ReduceDamageModRanged < 1f)
                     {
                         AttackDamage *= (1f - Blocker.ReduceDamageModRanged);
-                        PotentialHitTarget(Blocker.tool.GetCrew().gameObject);
+                        PotentialHitTarget(Blocker.GetCrew().gameObject);
                     }
                     else
                     {
