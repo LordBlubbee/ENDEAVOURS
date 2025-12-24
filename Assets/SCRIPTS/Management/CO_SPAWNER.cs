@@ -369,7 +369,6 @@ public class CO_SPAWNER : NetworkBehaviour
                     members.Add(enem.GetComponent<AI_UNIT>());
                 }
             }
-
             group.SetAI(gr.AI_Type, gr.AI_Group, 2, members);
             group.SetAIHome(Spawn);
             return null;

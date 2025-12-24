@@ -562,7 +562,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     {
         Debug.Log("Despawn and unregister");
         CO.co.UnregisterDrifter(this);
-        foreach (Module mod in Interior.GetModules())
+        foreach (Module mod in new List<Module>(Interior.GetModules()))
         {
             mod.NetworkObject.Despawn();
         }
