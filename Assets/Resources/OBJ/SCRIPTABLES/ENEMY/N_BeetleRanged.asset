@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: N_BeetleRanged
   m_EditorClassIdentifier: 
   SpawnCrew: {fileID: 5867427934140877094, guid: 1a6d31ecf9180a648b55f7d26b8d852d, type: 3}
-  Worth: 80
+  Worth: 70

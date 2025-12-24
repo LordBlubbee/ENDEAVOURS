@@ -186,11 +186,11 @@ MonoBehaviour:
   Stripes: {fileID: 0}
   ControlledByPlayer: 0
   IsNeutral: 0
-  MaxHealth: 110
+  MaxHealth: 130
   NaturalStaminaRegen: 50
   MovementSpeed: 10
   RotationDistanceFactor: 6
-  RotationBaseSpeed: 90
+  RotationBaseSpeed: 180
   BleedOut: 0
   ATT_PHYSIQUE:
     m_InternalValue: 2
@@ -361,7 +361,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -493,7 +493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Crew: {fileID: 5867427934140877094}
   OpenWingMaximumAngle: 45
-  MaximumSpeed: 10
+  MaximumSpeed: 8
   OpenWingDirection: -1
   MaximumOscillate: 3
   LegRotCurrent: 0
@@ -600,12 +600,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crew: {fileID: 5867427934140877094}
-  OpenWingMaximumAngle: 30
-  MaximumSpeed: 7
+  OpenWingMaximumAngle: 25
+  MaximumSpeed: 10
   OpenWingDirection: -1
-  MaximumOscillate: 15
+  MaximumOscillate: 12
   LegRotCurrent: 0
-  LegRotSpeed: 720
+  LegRotSpeed: 300
   LegDirection: 1
 --- !u!1 &4860497760997928518
 GameObject:
@@ -616,8 +616,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7231632207248838197}
-  - component: {fileID: 2837217107903362462}
   - component: {fileID: 5765796471213650820}
+  - component: {fileID: 9044480971981600222}
   m_Layer: 7
   m_Name: Legs1 (2)
   m_TagString: Untagged
@@ -640,23 +640,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7284356740485404737}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
---- !u!114 &2837217107903362462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4860497760997928518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74949d8886271a143947a469ed9c51e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Crew: {fileID: 5867427934140877094}
-  MaximumLegRot: 15
-  LegRotSpeed: 30
-  LegRotCurrent: -30
-  LegDirection: 1
 --- !u!212 &5765796471213650820
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -712,6 +695,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &9044480971981600222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4860497760997928518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d08487c83044baa428bdc3437e327648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Crew: {fileID: 5867427934140877094}
+  OpenWingMaximumAngle: 0
+  MaximumSpeed: 4
+  OpenWingDirection: 1
+  MaximumOscillate: 5
+  LegRotCurrent: -30
+  LegRotSpeed: 15
+  LegDirection: 1
 --- !u!1 &5601655871505120929
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,7 +817,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Crew: {fileID: 5867427934140877094}
   OpenWingMaximumAngle: 45
-  MaximumSpeed: 10
+  MaximumSpeed: 8
   OpenWingDirection: 1
   MaximumOscillate: 3
   LegRotCurrent: 0
@@ -1016,12 +1019,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crew: {fileID: 5867427934140877094}
-  OpenWingMaximumAngle: 30
-  MaximumSpeed: 7
+  OpenWingMaximumAngle: 25
+  MaximumSpeed: 10
   OpenWingDirection: 1
-  MaximumOscillate: 15
+  MaximumOscillate: 12
   LegRotCurrent: 0
-  LegRotSpeed: 720
+  LegRotSpeed: 300
   LegDirection: 1
 --- !u!1 &7534759293836438548
 GameObject:
@@ -1032,8 +1035,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 557812071861041680}
-  - component: {fileID: 6084388909071286511}
   - component: {fileID: 1921450066542728920}
+  - component: {fileID: 1961277234817362287}
   m_Layer: 7
   m_Name: Legs1 (1)
   m_TagString: Untagged
@@ -1056,23 +1059,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7284356740485404737}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6084388909071286511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7534759293836438548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74949d8886271a143947a469ed9c51e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Crew: {fileID: 5867427934140877094}
-  MaximumLegRot: 15
-  LegRotSpeed: 30
-  LegRotCurrent: 0
-  LegDirection: 1
 --- !u!212 &1921450066542728920
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1128,6 +1114,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1961277234817362287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534759293836438548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d08487c83044baa428bdc3437e327648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Crew: {fileID: 5867427934140877094}
+  OpenWingMaximumAngle: 0
+  MaximumSpeed: 4
+  OpenWingDirection: 1
+  MaximumOscillate: 5
+  LegRotCurrent: 0
+  LegRotSpeed: 15
+  LegDirection: 1
 --- !u!1 &8386164980077990326
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,8 +1143,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 513970154922010616}
-  - component: {fileID: 8359391329369971411}
   - component: {fileID: 2640513213925169465}
+  - component: {fileID: 7245688516637214430}
   m_Layer: 7
   m_Name: Legs1
   m_TagString: Untagged
@@ -1161,23 +1167,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7284356740485404737}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30}
---- !u!114 &8359391329369971411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8386164980077990326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74949d8886271a143947a469ed9c51e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Crew: {fileID: 5867427934140877094}
-  MaximumLegRot: 15
-  LegRotSpeed: 30
-  LegRotCurrent: 0
-  LegDirection: 1
 --- !u!212 &2640513213925169465
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1233,6 +1222,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7245688516637214430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8386164980077990326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d08487c83044baa428bdc3437e327648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Crew: {fileID: 5867427934140877094}
+  OpenWingMaximumAngle: 0
+  MaximumSpeed: 4
+  OpenWingDirection: 1
+  MaximumOscillate: 5
+  LegRotCurrent: 30
+  LegRotSpeed: 15
+  LegDirection: 1
 --- !u!1001 &2445180893468555452
 PrefabInstance:
   m_ObjectHideFlags: 0

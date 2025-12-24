@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: N_BeetleMelee
   m_EditorClassIdentifier: 
   SpawnCrew: {fileID: 5867427934140877094, guid: 15ac525881c06a34e83ae6897346755c, type: 3}
-  Worth: 80
+  Worth: 70

@@ -36,6 +36,7 @@ public class Balloon : MonoBehaviour
             {
                 CurrentActivation -= CO.co.GetWorldSpeedDelta() * ActivationSpeed * 2f;
             }
+            CurrentActivation = Mathf.Clamp01(CurrentActivation);
             Loon.transform.localScale = Vector3.one * Mathf.Lerp(MinSize, MaxSize, CurrentActivation);
             Loon.color = new Color(1, 1, 1, Mathf.Clamp01(CurrentActivation * 0.8f - 0.1f));
             yield return null;

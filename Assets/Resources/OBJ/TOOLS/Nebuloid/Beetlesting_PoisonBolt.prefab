@@ -163,15 +163,15 @@ MonoBehaviour:
   Spr: {fileID: 5573374972207478105}
   Tip: {fileID: 1926082290725974325}
   ProjectileSpeed: 15
-  AccelProjectile: 5
-  AccelMaximum: 30
-  InaccuracyDegrees: 9
+  AccelProjectile: 10
+  AccelMaximum: 40
+  InaccuracyDegrees: 7
   MaximumRange: -1
   StickToWalls: 0
   UseAltitude: 1
   AltitudeExplodeEarly: 1
   CanHitWalls: 0
-  AltitudeInacurracyFactor: 0.1
+  AltitudeInacurracyFactor: 0.07
   AltitudeDirectHitCeiling: 0
   DamageType: 3
   ImpactVFX: {fileID: 7178822272740056672, guid: e7703d35e7045b24cb5bd091f9422000, type: 3}
@@ -179,15 +179,15 @@ MonoBehaviour:
   ImpactSFX:
   - {fileID: 8300000, guid: e65858ce6f0843548b28176ca445c4c4, type: 3}
   BlockPenetration: 9
-  DodgeModifier: 1
+  DodgeModifier: 0.8
   HullDamageModifier: 0
-  ModuleDamageModifier: 1
-  ArmorDamageModifier: 0.25
-  ArmorAbsorptionModifier: 1
+  ModuleDamageModifier: 2
+  ArmorDamageModifier: 1
+  ArmorAbsorptionModifier: 0
   ArmorCriticalChance: 0.05
   CrewDamageModifier: 1
   CrewDamageModifierDirect: 1
-  CrewDamageSplash: 4
+  CrewDamageSplash: 2.5
   DealSplash: 1
   ApplyBuff: {fileID: 0}
   ZoneImpact: {fileID: 0}

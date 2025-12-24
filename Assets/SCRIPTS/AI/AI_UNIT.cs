@@ -136,7 +136,7 @@ public class AI_UNIT : NetworkBehaviour
     }
     private void SetLookTowards(Vector3 trt, SPACE space)
     {
-        if (space == null) AI_LookTarget = trt;
+        if (space == null) AI_LookTarget = trt + new Vector3(0.1f, 0, 0);
         else AI_LookTarget = space.transform.InverseTransformPoint(trt);
         AI_LookTargetSpace = space;
         AI_IsLooking = true;
@@ -795,6 +795,7 @@ public class AI_UNIT : NetworkBehaviour
             return;
         }
         DRIFTER dr = GetClosestEnemyDrifter();
+        CREW NearestEnemy = GetClosestEnemyAnywhere();
         if (AI_TacticTimer < 0)
         {
             AI_TacticTimer = UnityEngine.Random.Range(4, 9);
@@ -805,7 +806,8 @@ public class AI_UNIT : NetworkBehaviour
             }
         }
         //AttemptBoard(dr.Space);
-        SetLookTowards(dr.transform.position, dr.Space);
+        if (NearestEnemy) SetLookTowards(NearestEnemy.transform.position, NearestEnemy.Space);
+        else SetLookTowards(dr.transform.position, null);
         if (Unit.IsEnemyInFront(GetAttackDistance()))
         {
             Unit.UseItem1Rpc();

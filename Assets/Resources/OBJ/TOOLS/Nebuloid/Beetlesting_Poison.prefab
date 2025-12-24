@@ -119,13 +119,13 @@ MonoBehaviour:
   RotateCrosshair: 0
   ActionUse1: 2
   attackAnimations1: 20000000
-  UsageStamina1: 10
+  UsageStamina1: 20
   Action1_SFX: []
   Action1_SFX_Hit: []
-  attackDamage1: 42
+  attackDamage1: 40
   RangedPrefab1: {fileID: 8910635656682413825, guid: da1418d799d358d4db7b6a770c395605, type: 3}
   UniqueSpell1: {fileID: 0}
-  Reload1: 4
+  Reload1: 3
   ExtendedCooldown1: 0
   ApplyBuff: {fileID: 0}
   ActionUse2: 0
