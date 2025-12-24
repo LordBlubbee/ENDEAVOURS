@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Pragmaticus2_0: -6717272355609918675
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

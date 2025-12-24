@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Flag_Democrats_0: 7128933953722676876
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

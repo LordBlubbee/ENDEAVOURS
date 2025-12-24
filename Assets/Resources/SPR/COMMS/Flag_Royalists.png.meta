@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Flag_Royalists_0: 976711227228238342
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
