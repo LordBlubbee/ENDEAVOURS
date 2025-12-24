@@ -40,17 +40,4 @@ public class Balloon : MonoBehaviour
             Loon.color = new Color(1, 1, 1, Mathf.Clamp01(CurrentActivation * 0.8f - 0.1f));
         }
     }
-
-    void Update()
-    {
-        float sped = Crew.GetCurrentSpeed();
-        if (sped > 0.1f)
-        {
-            CurrentActivation += Time.deltaTime * ActivationSpeed;
-        }
-        else
-        {
-            CurrentActivation -= Time.deltaTime * ActivationSpeed;
-        }
-    }
 }

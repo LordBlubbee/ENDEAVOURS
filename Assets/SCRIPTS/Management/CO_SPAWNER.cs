@@ -356,9 +356,9 @@ public class CO_SPAWNER : NetworkBehaviour
                 CrewWorthPoints = CO.co.GetEncounterSizeModifier() * gr.CrewAmountLevel / SpawnAmount;
                 while (CrewWorthPoints > 0)
                 {
-                    Debug.Log("Spawning creature...");
                     Vector3 tryPos = Spawn + new Vector3(UnityEngine.Random.Range(-Radius, Radius), UnityEngine.Random.Range(-Radius, Radius));
                     ScriptableEnemyCrew enemyType = PossibleSpawns[GetWeight()];
+                    Debug.Log($"Spawning creature {enemyType} with point worth {enemyType.Worth}");
                     CREW enem = Instantiate(enemyType.SpawnCrew, tryPos, Quaternion.identity);
                     CrewWorthPoints -= enemyType.Worth;
                     enem.NetworkObject.Spawn();

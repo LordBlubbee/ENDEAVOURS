@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3455771150058328581}
   - component: {fileID: 5867427934140877094}
   - component: {fileID: 2920855210019276517}
-  - component: {fileID: 54701884617678520}
+  - component: {fileID: 2777461695614414478}
   m_Layer: 7
   m_Name: Beetlesting_Ranged
   m_TagString: Untagged
@@ -234,8 +234,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   Unit: {fileID: 5867427934140877094}
   AI_Unit_Type: 1
---- !u!61 &54701884617678520
-BoxCollider2D:
+--- !u!58 &2777461695614414478
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -268,18 +268,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.1, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 2, y: 1.4}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.2, y: 0}
+  m_Radius: 0.9
 --- !u!1 &2220342982538331145
 GameObject:
   m_ObjectHideFlags: 0

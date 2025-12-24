@@ -1562,6 +1562,7 @@ public class CO : NetworkBehaviour
             i++;
         }
         ScriptableEnemyGroup EnemyGroup = Groups[GetWeight()].EnemyGroup;
+        Debug.Log("Spawning enemy group!");
         DRIFTER enemyDrifter = CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
         if (enemyDrifter == null)
         {
