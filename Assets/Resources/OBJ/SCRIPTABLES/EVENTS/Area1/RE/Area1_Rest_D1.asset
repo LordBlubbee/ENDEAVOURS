@@ -29,8 +29,11 @@ MonoBehaviour:
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
   - BaseText: War has come to the Republic and there is no more support for the already-unstable
-      Starlight Endeavour. If you are to save humanity... You will have to be quick.
-      You will be alone... But you will be there.
+      Starlight Endeavour. Chasing the Nexus Point... Might be our only hope.
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  - BaseText: We must select our next destination carefully. Plot a course through
+      the skies, turbulent with recent conflicts and strife.
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
   ChoicePathDialogs:

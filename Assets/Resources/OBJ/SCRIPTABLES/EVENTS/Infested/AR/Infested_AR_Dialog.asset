@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Infested_AR_Dialog
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: The storms surrounding this region are heavy and almost unnatural.
+      The crew is weary. One of our buoyancy compartments was damaged on the way.
+    Speaker: {fileID: 11400000, guid: 9d5807a3bec7ac546807c3709018eaf7, type: 2}
+    Alternatives: []
+  - BaseText: Finally, we are able to ascend far enough to regain our bearings. Our
+      compasses have pointed in the right direction and minor damage is patched.
+    Speaker: {fileID: 11400000, guid: 9d5807a3bec7ac546807c3709018eaf7, type: 2}
+    Alternatives: []
+  - BaseText: Suddenly, a wide-band message is received. A small outpost up ahead
+      has spotted us.
+    Speaker: {fileID: 11400000, guid: 9d5807a3bec7ac546807c3709018eaf7, type: 2}
+    Alternatives: []
+  - BaseText: Unknown vessel! This is a Logipedes observation post, ID 05-38. Do
+      not approach- repeat, you are advised to change course immediately!
+    Speaker: {fileID: 11400000, guid: 1c299f2d4cf2fad4580e98383e4b09f5, type: 2}
+    Alternatives: []
+  - BaseText: The Executiis and outposts up ahead are low-terrain areas and have
+      suffered level 5 damage after the Fluctus Nebulae hit them.
+    Speaker: {fileID: 11400000, guid: 1c299f2d4cf2fad4580e98383e4b09f5, type: 2}
+    Alternatives: []
+  - BaseText: Level 8 Nebuloid activity is reported. Some creatures have not yet
+      been catalogued. It is extremely dangerous. Vessel, please come in!
+    Speaker: {fileID: 11400000, guid: 1c299f2d4cf2fad4580e98383e4b09f5, type: 2}
+    Alternatives: []
+  - BaseText: We have established contact with the Stellae. The crew is running low
+      on supplies, as they are facing constant aggression by Beetlesting attacks.
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
+    Alternatives: []
+  - BaseText: It seems the regions up ahead are dangerous. However, this could prove
+      fortuituous if we are able to loot any stricken vessels, and eat the abundant
+      flora and fauna on our way.
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
+    Alternatives: []
+  - BaseText: The Stellae do not understand our urgency, but let us pass nonetheless.
+      Apparently, a few others have entered the area as well, lately- Ephemeral researchers.
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
+    Alternatives: []
+  - BaseText: We are armed with knowledge and the confidence that we will make it
+      through.
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: We must begin our journey.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: cbd8b5cc701a7a24ca0d291ae1ccae28, type: 2}
+  - ChoiceText:
+      BaseText: We should gift some supplies to the Stellae to help them survive.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: cbd8b5cc701a7a24ca0d291ae1ccae28, type: 2}
+  - ChoiceText:
+      BaseText: We should raid the outpost and claim whatever they have before we
+        leave.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: cbd8b5cc701a7a24ca0d291ae1ccae28, type: 2}

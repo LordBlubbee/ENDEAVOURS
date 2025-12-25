@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Wastes_AR_Dialog
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: We are entering a new area. A combination of storms, a lack of resources,
+      and its very far position have made it almost completely uncharted.
+    Speaker: {fileID: 11400000, guid: 9d5807a3bec7ac546807c3709018eaf7, type: 2}
+    Alternatives: []
+  - BaseText: Apparently, it lies right above a place that was once the Sea. Some
+      Logipedan excavators extract drinking water here.
+    Speaker: {fileID: 11400000, guid: 9d5807a3bec7ac546807c3709018eaf7, type: 2}
+    Alternatives: []
+  - BaseText: Due to the low density of important strategic resources, it is likely
+      to be mostly abandoned.
+    Speaker: {fileID: 11400000, guid: 9d5807a3bec7ac546807c3709018eaf7, type: 2}
+    Alternatives: []
+  - BaseText: Flux channels are static. Some Nebuloid are detected to live in the
+      area. We do not expect much activity here.
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  - BaseText: Or at least, that is our conjecture. Local Nomaden tribes might have
+      moved here after conflicts drove them out of the richer regions.
+    Speaker: {fileID: 11400000, guid: 23331acde968eeb40b0ac7c3d314c2f2, type: 2}
+    Alternatives: []
+  - BaseText: Though materials or technology are hard to come by here, we should
+      use these regions to gather all supplies we can.
+    Speaker: {fileID: 11400000, guid: 23331acde968eeb40b0ac7c3d314c2f2, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: We must begin our journey.
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: cbd8b5cc701a7a24ca0d291ae1ccae28, type: 2}

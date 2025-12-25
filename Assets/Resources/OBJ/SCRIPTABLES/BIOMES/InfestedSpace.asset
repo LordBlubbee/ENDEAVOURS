@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4fc65e7be402ef41b3a849a94b12e47, type: 3}
+  m_Name: InfestedSpace
+  m_EditorClassIdentifier: 
+  BiomeName: Infested Space
+  BiomeDescription: 
+  BiomeBaseDifficulty: 1.1
+  BiomeCalmRatio: 0.35
+  BiomeHostileRatio: 0.4
+  BiomeSize: 8
+  PossiblePointsCalm:
+  - {fileID: 11400000, guid: 0e3ec5f71bdffec408503e0ab7c62634, type: 2}
+  - {fileID: 11400000, guid: affd20759cceaa044a39629fff2b413c, type: 2}
+  - {fileID: 11400000, guid: 5bd324419cf9ca440a6c8daf13748784, type: 2}
+  PossiblePointsNeutral:
+  - {fileID: 11400000, guid: f85614dc02f2ee24084a89dac701ca18, type: 2}
+  - {fileID: 11400000, guid: 196422ba0471be54483aaf0f58ed8cfd, type: 2}
+  - {fileID: 11400000, guid: 1d80f28ba4f2cf044948c3a4dbecda84, type: 2}
+  PossiblePointsHostile:
+  - {fileID: 11400000, guid: 8c19b85e954f1444eaf22bc3ef113e4e, type: 2}
+  - {fileID: 11400000, guid: f3abea5c1db978c4486df9572f33c218, type: 2}
+  - {fileID: 11400000, guid: 8a96be3c36e56904b9478b66bf960f1e, type: 2}
+  PossiblePointsRest:
+  - {fileID: 11400000, guid: 673c942ec81d9974bb7787062baa9987, type: 2}
+  PossiblePointsArrival:
+  - {fileID: 11400000, guid: fdc8b48be1ca7da4dabe66c8d07afb85, type: 2}
