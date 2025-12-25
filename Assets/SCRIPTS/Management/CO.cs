@@ -11,6 +11,10 @@ public class CO : NetworkBehaviour
 {
     public static CO co;
 
+
+
+    [NonSerialized] public string PlayerMainDrifterTypeID;
+
     [NonSerialized] public NetworkVariable<bool> HasShipBeenLaunched = new();
     [NonSerialized] public NetworkVariable<bool> AreWeInDanger = new();
     [NonSerialized] public NetworkVariable<bool> AreWeResting = new();

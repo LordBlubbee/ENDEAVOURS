@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChatModule : MonoBehaviour
 {
     public UI_ChatMessage ChatMessagePrefab;
     public GameObject ChatScreen;
     public TMP_InputField ChatInputField;
-    public Transform ChatGrid;
+    public RectTransform ChatGrid;
     private List<UI_ChatMessage> ChatMessages = new();
 
     private void Start()
@@ -38,7 +39,9 @@ public class ChatModule : MonoBehaviour
 
     IEnumerator UpdateCanvas()
     {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(ChatGrid);
         yield return null;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(ChatGrid);
     }
     private void Update()
     {

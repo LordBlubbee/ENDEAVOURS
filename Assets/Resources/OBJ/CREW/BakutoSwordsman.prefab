@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   UnitName: Bakuto Senshi
+  UnitLink: BakutoSwordsman
   UnitDescription: An aggressive and tacit Bakuto warrior trained in the art of their
     steel-forged swords known as katanas. They will stop at nothing to lay their
     foes to rest.

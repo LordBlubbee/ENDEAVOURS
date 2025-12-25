@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   UnitName: Bakuto Glaive
+  UnitLink: BakutoGlaive
   UnitDescription: An aggressive and tacit Bakuto warrior trained in the art of their
     steel-forged glaives. They will stop at nothing to lay their foes to rest.
   UnitRarity: 0

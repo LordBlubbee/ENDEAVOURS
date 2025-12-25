@@ -11,6 +11,7 @@ public class CREW : NetworkBehaviour, iDamageable
 {
     [Header("LOGISTICS")]
     public string UnitName;
+    public string UnitLink;
     [TextArea(3,8)]
     public string UnitDescription;
     public ScriptableEquippable.Rarities UnitRarity;
@@ -280,6 +281,20 @@ public class CREW : NetworkBehaviour, iDamageable
 
     private List<ArtifactAbility> ArtifactAbilities = new(); //Server only
 
+    public int[] GetAttributes()
+    {
+        return new int[]
+        {
+            ATT_PHYSIQUE.Value,
+            ATT_ARMS.Value,
+            ATT_DEXTERITY.Value,
+              ATT_COMMUNOPATHY.Value,
+                ATT_COMMAND.Value,
+                  ATT_ENGINEERING.Value,
+                    ATT_ALCHEMY.Value,
+                      ATT_MEDICAL.Value
+        };
+    }
     private ArtifactAbility GetArtifactAbility(ScriptableEquippableArtifact art)
     {
         switch (art.Ability)

@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   UnitName: Coalition Archer
+  UnitLink: NomadenArcher
   UnitDescription: Though the Coalition have no unified combat doctrine, each of
     their members brings with themselves their own rigid expertise. When they stand
     unified, they are a force to be reckoned with.

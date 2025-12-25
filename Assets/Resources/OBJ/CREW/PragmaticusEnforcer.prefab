@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   UnitName: Pragmaticus Enforcer
+  UnitLink: PragmaticusEnforcer
   UnitDescription: The infamous core of the Pragmaticus' peacekeeping operations,
     Enforcers are heavily-armored soldiers specialized in the arrestation and containment
     of threats to the Republic. True followers of the Stipulations, any abnormalities

@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   UnitName: Invictus Marine
+  UnitLink: InvictusMarine
   UnitDescription: These Invictus Marines are the forefront of the Logipedes' forces,
     training in Drifter-to-Drifter combat. Logipedan soldiers are known for their
     rigid battle routines and their professional attitudes, though the long-lasting

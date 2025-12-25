@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   UnitName: Pragmaticus Arbalest
+  UnitLink: PragmaticusArbalest
   UnitDescription: These Arbalests specialize in using heavy suppression weapons
     against enemies of the Pragmaticus. Rigid battle routines and unwavering loyalty
     to the Stipulation's words- be they close-minded bigots or protectors of civilization,

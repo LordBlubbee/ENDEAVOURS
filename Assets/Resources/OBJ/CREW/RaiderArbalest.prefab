@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   UnitName: Raider Arbalest
+  UnitLink: RaiderArbalest
   UnitDescription: A trained Nomaden warrior from a Fog Raider clan. While many Raiders
     have allied themselves with the Bakuto Insurrection, others have used the failing
     patrols in many regions as an opportunity to advance piracy. Raiders often fight

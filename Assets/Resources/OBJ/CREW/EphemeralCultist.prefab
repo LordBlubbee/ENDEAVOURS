@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   UnitName: Ephemeral Disciple
+  UnitLink: EphemeralCultist
   UnitDescription: A devoted Ephemeral with limited but very real power in their
     hands. Their faith in the Nebula allows them to wield it as a weapon, making
     them dangerous spellcasters. They live free from chains and with the promise

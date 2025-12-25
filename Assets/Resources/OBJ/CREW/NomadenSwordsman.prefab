@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   UnitName: Coalition Swordsman
+  UnitLink: NomadenSwordsman
   UnitDescription: A warrior affiliated with the Nomaden Clans united under the Coalition.
     While the Nomaden come from all sorts of cultures and backgrounds, many have
     in common the language of violence.

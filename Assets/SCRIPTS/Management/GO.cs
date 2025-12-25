@@ -1,8 +1,10 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class GO : MonoBehaviour
@@ -28,42 +30,11 @@ public class GO : MonoBehaviour
 
     //SAVING SYSTEM
     public string CurrentSave;
-    public int ZoneProgress;
-    public List<savedObject> SavedObjects;
-    /*
-     Everything that must be saved:
-     -PLAYER NAME
-           -PLAYER FULL INVENTORY
-           -PLAYER BACKGROUND
-           -PLAYER APPEARANCE
-           -PLAYER ATTRIBUTES
-     -MAIN DRIFTER
-           -All resources
-           -All modules
-           -
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     */
     private void Awake()
     {
         if (GO.g == null) { GO.g = this; } else { Destroy(this); return; }
         DontDestroyOnLoad(this);
         loadSettings();
-    }
-    public void firstSave()
-    {
-        //Initialize important variables
-        SavedObjects = new List<savedObject>();
-        ZoneProgress = 1;
     }
     public void firstSettings()
     {
@@ -113,50 +84,15 @@ public class GO : MonoBehaviour
             FileStream stream = new FileStream(path, FileMode.Open);
 
             dataStructure data = formatter.Deserialize(stream) as dataStructure; //Load dataStructure that had old GO variables
-            data.loadData();
+            data.loadGame();
 
             stream.Close();
         }
         else
         {
             Debug.Log("Creating new save at " + path);
-            firstSave();
             saveGame();
         }
-    }
-    public DateTime getSlotTime(string slot)
-    {
-        string path = Application.persistentDataPath + slot;
-        DateTime tim = DateTime.MinValue;
-
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-
-            dataStructure data = formatter.Deserialize(stream) as dataStructure; //Load dataStructure that had old GO variables
-            tim = data.getSaveTime();
-
-            stream.Close();
-        }
-        return tim;
-    }
-    public int getSlotDay(string slot)
-    {
-        string path = Application.persistentDataPath + slot;
-        int tim = 1;
-
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-
-            dataStructure data = formatter.Deserialize(stream) as dataStructure; //Load dataStructure that had old GO variables
-            tim = data.getDay();
-
-            stream.Close();
-        }
-        return tim;
     }
     public void saveGame()
     {
@@ -245,64 +181,138 @@ public class dataStructure
     //Add save variables here
     public DateTime saveTime;
 
-    public int AdventureDay;
-    public List<savedObject> SavedObjects;
-    public void loadData()
-    {
-        dataStructure n = this;
-        //Set GO variables to n. variables
-        GO.g.ZoneProgress = AdventureDay;
-        GO.g.SavedObjects = n.SavedObjects;
+    int Resources_Materials;
+    int Resources_Supplies;
+    int Resources_Ammo;
+    int Resources_Tech;
 
-        //Compensate for new content
-    }
+    List<int> FactionKeys = new();
+    List<int> FactionValues = new();
 
-    public DateTime getSaveTime()
+    string DrifterType;
+    string BiomeType;
+    List<string> DrifterInventoryItems = new();
+    List<dataPlayer> DrifterPlayers = new();
+    List<dataNonPlayerCrew> DrifterAICrew = new();
+    List<dataModule> DrifterModules = new();
+    List<dataMapPoint> MapPointList = new();
+    int OurMapPointPositionID;
+    public void loadGame()
     {
         dataStructure n = this;
-        return n.saveTime;
-    }
-    public int getDay()
-    {
-        dataStructure n = this;
-        return n.AdventureDay;
-    }
-    public string getSlot(int i)
-    {
-        return "/Conquest" + i;
     }
     public dataStructure()
     {
-        AdventureDay = GO.g.ZoneProgress;
-        SavedObjects = GO.g.SavedObjects;
-        //Set local variables to GO variables
+        //Save game
+        saveTime = DateTime.Now;
+
+        foreach (var kvp in CO.co.Resource_Reputation)
+        {
+            // Enum -> int
+            FactionKeys.Add((int)kvp.Key);
+            FactionValues.Add(kvp.Value);
+        }
+
+        Resources_Materials = CO.co.Resource_Materials.Value;
+        Resources_Supplies = CO.co.Resource_Supplies.Value;
+        Resources_Ammo = CO.co.Resource_Ammo.Value;
+        Resources_Tech = CO.co.Resource_Tech.Value;
+
+        BiomeType = CO.co.CurrentBiome.name;
+        DrifterType = CO.co.PlayerMainDrifterTypeID;
+        foreach (ScriptableEquippable equip in CO.co.Drifter_Inventory)
+        {
+            DrifterInventoryItems.Add(equip.GetItemResourceIDFull());
+        }
+        foreach (Module mod in CO.co.PlayerMainDrifter.Interior.GetModules())
+        {
+            dataModule data = new dataModule();
+            data.ModuleLink = mod.ShowAsModule.GetItemResourceIDFull();
+            DrifterModules.Add(data);
+        }
+        foreach (CREW crew in CO.co.GetAlliedCrew())
+        {
+            if (crew.IsPlayer())
+            {
+                dataPlayer play = new dataPlayer();
+                play.PlayerName = crew.CharacterName.Value.ToString();
+                play.PlayerNameColor = crew.GetCharacterColor();
+
+                play.PlayerBackground = crew.CharacterBackground.ResourcePath;
+                play.PlayerXP = crew.XPPoints.Value;
+                play.PlayerSkillPoints = crew.SkillPoints.Value;
+                play.PlayerAttributes = crew.GetAttributes();
+                play.PlayerWeapons = new string[]
+                {
+                    crew.EquippedWeapons[0].GetItemResourceIDFull(),
+                     crew.EquippedWeapons[1].GetItemResourceIDFull(),
+                      crew.EquippedWeapons[2].GetItemResourceIDFull()
+                };
+                play.PlayerArmor = crew.EquippedArmor.GetItemResourceIDFull();
+                play.PlayerArtifacts = new string[]
+              {
+                    crew.EquippedArtifacts[0].GetItemResourceIDFull(),
+                     crew.EquippedArtifacts[1].GetItemResourceIDFull(),
+                      crew.EquippedArtifacts[2].GetItemResourceIDFull()
+              };
+                DrifterPlayers.Add(play);
+            } else
+            {
+                dataNonPlayerCrew play = new dataNonPlayerCrew();
+                play.PlayerName = crew.CharacterName.Value.ToString();
+                play.CrewLink = crew.UnitLink;
+                play.CrewLevel = crew.GetUnitUpgradeLevel();
+                DrifterAICrew.Add(play);
+            }
+        }
+        int i = 0;
+        foreach (MapPoint equip in CO.co.GetMapPoints())
+        {
+            dataMapPoint point = new dataMapPoint();
+            point.PointLink = equip.AssociatedPoint.GetResourceLink();
+            point.Position = equip.transform.position;
+
+            if (equip == CO.co.GetPlayerMapPoint()) OurMapPointPositionID = i;
+
+            MapPointList.Add(point);
+            i++;
+        }
     }
 }
+
 [Serializable]
-
-public class savedObject
+public class dataMapPoint
 {
-    public string ob;
-    public float posx;
-    public float posy;
-    public float rotz;
-    public Dictionary<string, string> SavedStrings = new Dictionary<string, string>();
-    public Dictionary<string, int> SavedIntegers = new Dictionary<string, int>();
-    public Dictionary<string, float> SavedFloats = new Dictionary<string, float>();
-    public savedObject(GameObject tar, string obref)
-    {
-        ob = obref;
-        posx = tar.transform.position.x;
-        posy = tar.transform.position.y;
-        rotz = tar.transform.eulerAngles.z;
-    }
+    public string PointLink;
+    public Vector3 Position;
 }
-public interface iSaveable
-{
-    Transform transform { get; }
-    GameObject gameObject { get; }
 
-    public string getPrefabLink();
-    public void OnLoad(savedObject data);
-    public savedObject OnSave(savedObject data);
+[Serializable]
+public class dataModule
+{
+    public string ModuleLink;
+    public int ModuleLevel;
+}
+
+[Serializable]
+public class dataNonPlayerCrew
+{
+    public string PlayerName;
+    public string CrewLink;
+    public int CrewLevel;
+}
+
+[Serializable]
+public class dataPlayer
+{
+    public string PlayerName;
+    public Color PlayerNameColor;
+    public string PlayerBackground;
+    public int PlayerXP;
+    public int PlayerSkillPoints;
+    public int[] PlayerAttributes;
+
+    public string[] PlayerWeapons;
+    public string PlayerArmor;
+    public string[] PlayerArtifacts;
 }

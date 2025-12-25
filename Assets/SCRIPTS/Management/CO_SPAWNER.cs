@@ -221,6 +221,7 @@ public class CO_SPAWNER : NetworkBehaviour
         CO.co.HasShipBeenLaunched.Value = true;
 
         DRIFTER driftPrefab = UI.ui.ShipSelectionUI.SpawnableShips[ID].Prefab;
+        CO.co.PlayerMainDrifterTypeID = driftPrefab.name;
         DRIFTER drifter = Instantiate(driftPrefab,Vector3.zero,Quaternion.identity);
         drifter.IsMainDrifter.Value = true;
         drifter.NetworkObject.Spawn();

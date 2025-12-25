@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Unity.Netcode;
 using UnityEngine;
 using static AI_GROUP;
@@ -273,8 +274,108 @@ public class AI_UNIT : NetworkBehaviour
                 AITick_Looncrab();
                 break;
         }
-
-        
+    }
+    private bool EquipAndUseCombatItem(Vector3 target)
+    {
+        float Distance = (target - transform.position).magnitude;
+        int EquipItem = 0;
+        int i = 0;
+        CREW Ally = null;
+        foreach (ScriptableEquippableWeapon Weapon in Unit.EquippedWeapons)
+        {
+            i++;
+            if (!Weapon) continue;
+            switch (i)
+            {
+                case 1:
+                    if (Unit.Slot1Cooldown.Value > 0f) continue;
+                    break;
+                case 2:
+                    if (Unit.Slot2Cooldown.Value > 0f) continue;
+                    break;
+                case 3:
+                    if (Unit.Slot3Cooldown.Value > 0f) continue;
+                    break;
+            }
+            switch (Weapon.ToolPrefab.GetUsageAI())
+            {
+                case TOOL.ToolAI.MELEE:
+                    if (Distance < 8) EquipItem = i;
+                    break;
+                case TOOL.ToolAI.RANGED:
+                    EquipItem = i;
+                    break;
+                case TOOL.ToolAI.MELEE_AND_SHIELD:
+                    EquipItem = i;
+                    break;
+                case TOOL.ToolAI.TARGET_ALLIES:
+                    Ally = GetClosestAlly();
+                    if (Ally != null)
+                    {
+                        if ((Ally.transform.position-transform.position).magnitude < 20) EquipItem = i;
+                    }
+                    break;
+                case TOOL.ToolAI.HEAL_ALLIES:
+                    Ally = GetClosestWoundedAlly();
+                    if (Ally != null)
+                    {
+                        if ((Ally.transform.position - transform.position).magnitude < 20) EquipItem = i;
+                    }
+                    break;
+            }
+        }
+        switch (EquipItem)
+        {
+            case 0:
+                SetLookTowards(target, getSpace());
+                return false;
+            case 1:
+                Unit.EquipWeapon1Rpc();
+                break;
+            case 2:
+                Unit.EquipWeapon2Rpc();
+                break;
+            case 3:
+                Unit.EquipWeapon3Rpc();
+                break;
+        }
+        switch (Unit.EquippedToolObject.GetUsageAI())
+        {
+            case TOOL.ToolAI.MELEE:
+                SetLookTowards(target, getSpace());
+                Unit.UseItem1Rpc();
+                break;
+            case TOOL.ToolAI.RANGED:
+                SetLookTowards(target, getSpace());
+                Unit.UseItem1Rpc();
+                break;
+            case TOOL.ToolAI.MELEE_AND_SHIELD:
+                SetLookTowards(target, getSpace());
+                if (Distance < 8) Unit.UseItem1Rpc();
+                else Unit.UseItem2Rpc();
+                break;
+            case TOOL.ToolAI.TARGET_ALLIES:
+                if (Ally != null)
+                {
+                    SetLookTowards(target, getSpace());
+                    return false;
+                }
+                target = Ally.transform.position;
+                SetLookTowards(target, getSpace());
+                Unit.UseItem1Rpc();
+                break;
+            case TOOL.ToolAI.HEAL_ALLIES:
+                if (Ally != null)
+                {
+                    SetLookTowards(target, getSpace());
+                    return false;
+                }
+                target = Ally.transform.position;
+                SetLookTowards(target, getSpace());
+                Unit.UseItem1Rpc();
+                break;
+        }
+        return true;
     }
     private void AITick_Crew()
     {
@@ -293,15 +394,16 @@ public class AI_UNIT : NetworkBehaviour
             switch (AI_Tactic)
             {
                 case AI_TACTICS.SKIRMISH:
-                    Unit.EquipWeapon1Rpc();
                     if (!HasLineOfSight(EnemyTarget.transform.position)) SetAIMoveTowards(EnemyTarget.transform.position, EnemyTarget.Space);
                     SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()), EnemyTarget.Space);
-                    SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
-                    if (UnityEngine.Random.Range(0f, 1f) < 0.05f) Unit.UseItem2Rpc();
-                    else if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
+
+                    EquipAndUseCombatItem(EnemyTarget.transform.position);
+
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
                     break;
                 case AI_TACTICS.CIRCLE:
-                    Unit.EquipWeapon1Rpc();
+
+
                     if (Unit.GetHealthRelative() < 0.3f)
                     {
                         SetAIMoveTowards(GetPointTowardsPoint(EnemyTarget.transform.position, -12f), EnemyTarget.Space);
@@ -310,9 +412,9 @@ public class AI_UNIT : NetworkBehaviour
                     {
                         SetAIMoveTowardsIfExpired(GetRandomPointAround(EnemyTarget.transform.position, 12f, 18f), EnemyTarget.Space, 3f);
                     }
-                    if (Unit.IsEnemyInFront(GetAttackDistance())) Unit.UseItem1Rpc();
-                    else Unit.UseItem2Rpc();
-                    SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+
+                    EquipAndUseCombatItem(EnemyTarget.transform.position);
+
                     if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
                     break;
                 case AI_TACTICS.RETREAT:
@@ -325,22 +427,21 @@ public class AI_UNIT : NetworkBehaviour
                         else SetAIMoveTowards(point, Group.HomeSpace);
                         SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
 
-                        Unit.EquipWeapon1Rpc();
                     } else
                     {
                         if (Dist(EnemyTarget.transform.position) > 24f)
                         {
                             Unit.EquipMedkitRpc();
+                            SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
                         } else
                         {
-                            Unit.EquipWeapon1Rpc();
+
+                            EquipAndUseCombatItem(EnemyTarget.transform.position);
                         }
                         SetAIMoveTowards(point, EnemyTarget.Space);
-                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
                     }
                   
                     if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();
-                    Unit.UseItem2Rpc();
                     break;
                 case AI_TACTICS.HEAL_ALLIES:
                     CREW WoundedAlly = GetClosestWoundedAlly();
@@ -368,9 +469,7 @@ public class AI_UNIT : NetworkBehaviour
                     } else
                     {
                         SetAIMoveTowards(WoundedAlly.transform.position, WoundedAlly.Space);
-                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
-                        Unit.EquipWeapon1Rpc();
-                        Unit.UseItem2Rpc();
+                        EquipAndUseCombatItem(EnemyTarget.transform.position);
                         if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
                     }
                     break;
@@ -818,6 +917,7 @@ public class AI_UNIT : NetworkBehaviour
             SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
         }
     }
+
     private void SwitchTacticsLooncrab()
     {
         ResetWeights();
@@ -936,6 +1036,17 @@ public class AI_UNIT : NetworkBehaviour
             if (crew.isDeadForever()) continue;
             if (crew == Unit) continue;
             if (crew.GetFaction() == Unit.GetFaction() && crew.GetHealthRelative() < 1f) allies.Add(crew);
+        }
+        return allies;
+    }
+    public List<CREW> AlliesInSpace()
+    {
+        List<CREW> allies = new();
+        foreach (var crew in CrewInSpace())
+        {
+            if (crew.isDeadForever()) continue;
+            if (crew == Unit) continue;
+            if (crew.GetFaction() == Unit.GetFaction()) allies.Add(crew);
         }
         return allies;
     }
@@ -1125,6 +1236,24 @@ public class AI_UNIT : NetworkBehaviour
         Vector3 myPos = transform.position;
         foreach (var enemy in enemies)
         {
+            float dist = (enemy.getPos() - myPos).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = enemy;
+            }
+        }
+        return closest;
+    }
+    public CREW GetClosestAlly()
+    {
+        List<CREW> enemies = WoundedAlliesInSpace();
+        CREW closest = null;
+        float minDist = float.MaxValue;
+        Vector3 myPos = transform.position;
+        foreach (var enemy in enemies)
+        {
+            if (enemy == Unit) continue; // skip self
             float dist = (enemy.getPos() - myPos).sqrMagnitude;
             if (dist < minDist)
             {

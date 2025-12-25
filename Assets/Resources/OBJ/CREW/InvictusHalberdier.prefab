@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   UnitName: Invictus Halberdier
+  UnitLink: InvictusHalberdier
   UnitDescription: A Legislatus Invictus soldier that wields a powerful halberd.
     Logipedes training routine involves the memorization of hundreds of synchronized
     battle maneuvers over dedicated physical training. Halberdiers serve as a vanguard,
