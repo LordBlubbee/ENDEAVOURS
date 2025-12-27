@@ -11,8 +11,6 @@ public class CO : NetworkBehaviour
 {
     public static CO co;
 
-
-
     [NonSerialized] public string PlayerMainDrifterTypeID;
 
     [NonSerialized] public NetworkVariable<bool> HasShipBeenLaunched = new();
@@ -33,6 +31,10 @@ public class CO : NetworkBehaviour
     public bool IsSafe()
     {
         return !AreWeInDanger.Value;
+    }
+    public bool PermissionToModifyDrifter()
+    {
+        return IsHost || HostControlMode.Value == 0;
     }
     public MapPoint GetMapPoint(int ID)
     {
@@ -179,6 +181,7 @@ public class CO : NetworkBehaviour
         return NextBiomePoints;
     }
 
+    private NetworkVariable<int> HostControlMode = new();
     private GameDifficulties Difficulty;
     public enum GameDifficulties
     {
@@ -665,6 +668,7 @@ public class CO : NetworkBehaviour
     public void StartGame()
     {
         Difficulty = (GameDifficulties)GO.g.preferredGameDifficulty;
+        HostControlMode.Value = GO.g.preferredHostControl;
         GenerateMap();
         CO_SPAWNER.co.CreateLandscape(CO_SPAWNER.BackgroundType.BARREN);
 
@@ -682,7 +686,7 @@ public class CO : NetworkBehaviour
             }
         }
 
-        CO_STORY.co.SetStory(GetPlayerMapPoint().AssociatedPoint.InitialDialog);
+        CO_STORY.co.SetStory(GetPlayerMapPoint().AssociatedPoint.GetInitialDialog());
         SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
     }
     [Rpc(SendTo.Server)]
@@ -980,7 +984,7 @@ public class CO : NetworkBehaviour
             destination = RegisteredMapPoints[0];
         }
         CO_SPAWNER.co.CreateLandscape(destination.AssociatedPoint.BackgroundType);
-        if (destination.AssociatedPoint.InitialDialog) CO_STORY.co.SetStory(destination.AssociatedPoint.InitialDialog);
+        if (destination.AssociatedPoint.InitialDialog) CO_STORY.co.SetStory(destination.AssociatedPoint.GetInitialDialog());
         SetCurrentSoundtrack(destination.AssociatedPoint.InitialSoundtrack);
 
         //UpdatePlayerMapPointRpc(destination.transform.position);

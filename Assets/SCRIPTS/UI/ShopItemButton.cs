@@ -83,6 +83,11 @@ public class ShopItemButton : MonoBehaviour
             AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
             return;
         }
+        if (!CO.co.PermissionToModifyDrifter())
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
         AUDCO.aud.PlaySFX(AUDCO.aud.Purchase);
         ItemLink.BuyShopItemRpc();
     }

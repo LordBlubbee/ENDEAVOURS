@@ -24,20 +24,10 @@ MonoBehaviour:
   - BaseText: Whatever spirituals truths one might or might not hold, this place
       is a place of brief respite for the crew.
     Speaker: {fileID: 11400000, guid: e063144cf422eff408c7e1329f403e15, type: 2}
-    Alternatives:
-    - AlternativeText: The camp is abandoned. A wrecked Loon once operated by a civilian
-        from a frontier Executis is located, and its hull is stripped for materials
-        and supplies.
-      Prerequisites:
-      - {fileID: 11400000, guid: b32172dce6df9864b9d23047a4235f27, type: 2}
-    - AlternativeText: A Flux radio is found, and frequencies listed on a paper note
-        are tried. There are no responses. The supply camp must have been of Logipedan
-        origin as a relief point for travellers.
-      Prerequisites:
-      - {fileID: 11400000, guid: b32172dce6df9864b9d23047a4235f27, type: 2}
+    Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
-      BaseText: We should move along soon.
+      BaseText: Gather any supplies nearby and leave.
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
@@ -46,13 +36,13 @@ MonoBehaviour:
     TriggerEvent: {fileID: 11400000, guid: 1797d89edb065a645b6ea0386c6898ce, type: 2}
   - ChoiceText:
       BaseText: <yellow>[Logipedes] Read the Stipulations, and remind yourself of
-        the One Truth.
+        the One Truth. Only through logic can humanity find an objective reality.
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
     DialogResult: {fileID: 0}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: 1797d89edb065a645b6ea0386c6898ce, type: 2}
+    TriggerEvent: {fileID: 11400000, guid: adc756f1967da2e4f84d0d7e643365c2, type: 2}
   - ChoiceText:
       BaseText: <yellow>[Survivors] The traditions of your Clan go back way before
         the Fog. You find peace in the sanctity of your religions.
@@ -61,7 +51,7 @@ MonoBehaviour:
     Prerequisites: []
     DialogResult: {fileID: 0}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: 1797d89edb065a645b6ea0386c6898ce, type: 2}
+    TriggerEvent: {fileID: 11400000, guid: 41bbdc95edda55140b7b07b4963ef3b0, type: 2}
   - ChoiceText:
       BaseText: <yellow>[Ephemeral] To live, we must adapt. Our forms, our ways,
         they are all ephemeral. We must become one with the Nebula.
@@ -70,7 +60,7 @@ MonoBehaviour:
     Prerequisites: []
     DialogResult: {fileID: 0}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: 1797d89edb065a645b6ea0386c6898ce, type: 2}
+    TriggerEvent: {fileID: 11400000, guid: 1af4109cc7fff57439e3dcf9920642d5, type: 2}
   - ChoiceText:
       BaseText: <yellow>[Catali] The Order of the Storm will and shall redeem itself.
         The Mist must be destroyed.
@@ -79,4 +69,4 @@ MonoBehaviour:
     Prerequisites: []
     DialogResult: {fileID: 0}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: 1797d89edb065a645b6ea0386c6898ce, type: 2}
+    TriggerEvent: {fileID: 11400000, guid: c9b8f3ce40de0414eb4cbae874f010c4, type: 2}

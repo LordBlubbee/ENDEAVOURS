@@ -22,6 +22,7 @@ public class GO : MonoBehaviour
     public int screenShakeLevel;
     public int resolutionConfig;
 
+    public int preferredHostControl;
     public int preferredGameDifficulty;
     public string preferredLobbyName;
 
@@ -30,6 +31,7 @@ public class GO : MonoBehaviour
 
     //SAVING SYSTEM
     public string CurrentSave;
+
     private void Awake()
     {
         if (GO.g == null) { GO.g = this; } else { Destroy(this); return; }
@@ -47,6 +49,7 @@ public class GO : MonoBehaviour
         OST_Vol = 0.8f;
         VCX_Vol = 0.8f;
         SFX_Vol = 0.8f;
+        preferredHostControl = 0;
         preferredGameDifficulty = 0;
         preferredLobbyName = "";
     }
@@ -139,6 +142,7 @@ public class dataSettings
     public float arrowScrollSpeed;
     public int screenShakeLevel;
     public int resolutionConfig;
+    public int preferredHostControl;
     public int preferredGameDifficulty;
     public string preferredLobbyName;
     public void loadSettings()
@@ -152,6 +156,7 @@ public class dataSettings
         GO.g.arrowScrollSpeed = arrowScrollSpeed;
         GO.g.screenShakeLevel = screenShakeLevel;
         GO.g.resolutionConfig = resolutionConfig;
+        GO.g.preferredHostControl = preferredHostControl;
         GO.g.preferredGameDifficulty = preferredGameDifficulty;
         GO.g.preferredLobbyName = preferredLobbyName;
         //Set GO variables to n. variables
@@ -170,6 +175,7 @@ public class dataSettings
         arrowScrollSpeed = GO.g.arrowScrollSpeed;
         screenShakeLevel = GO.g.screenShakeLevel;
         resolutionConfig = GO.g.resolutionConfig;
+        preferredHostControl = GO.g.preferredHostControl;
         preferredGameDifficulty = GO.g.preferredGameDifficulty;
         preferredLobbyName = GO.g.preferredLobbyName;
     }
@@ -203,6 +209,7 @@ public class dataStructure
     }
     public dataStructure()
     {
+        if (CO.co == null) return;
         //Save game
         saveTime = DateTime.Now;
 

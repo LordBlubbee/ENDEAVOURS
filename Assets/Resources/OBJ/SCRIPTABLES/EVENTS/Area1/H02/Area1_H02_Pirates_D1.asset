@@ -52,7 +52,7 @@ MonoBehaviour:
       BaseText: 'We will transfer a portion of our cargo to you, and we will <i>choose</i>
         to let you go.
 
-        <color=red>[Lose around 20-40 Supplies]</color>'
+        <color=red>[Lose Supplies]</color>'
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
@@ -60,6 +60,6 @@ MonoBehaviour:
     AlternativeResults:
     - ReplaceDialog: {fileID: 11400000, guid: 0db1501d3c8b9ce48aec02d6cfde2b31, type: 2}
       Prerequisites:
-      - {fileID: 11400000, guid: 629d7a1c60c61034d8b613996a06381f, type: 2}
-      - {fileID: 11400000, guid: b32172dce6df9864b9d23047a4235f27, type: 2}
+      - {fileID: 11400000, guid: 1488df1b9a461df40b248f0de229c62c, type: 2}
+      - {fileID: 11400000, guid: 51be009e44a001748a883f99359c81a4, type: 2}
     TriggerEvent: {fileID: 0}

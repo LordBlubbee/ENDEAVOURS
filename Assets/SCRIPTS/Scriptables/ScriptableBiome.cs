@@ -31,6 +31,7 @@ public class ScriptableBiome : ScriptableObject
     public List<ScriptablePoint> PossiblePointsCalm;
     public List<ScriptablePoint> PossiblePointsNeutral;
     public List<ScriptablePoint> PossiblePointsHostile;
+    public List<ScriptablePoint> PointsSpecial;
 
     public List<ScriptablePoint> PossiblePointsRest;
     public List<ScriptablePoint> PossiblePointsArrival;

@@ -471,16 +471,34 @@ public class Screen_Inventory : MonoBehaviour
     {
         if (!SelectedDrifterSlot.ModuleLink) return;
         if (SelectedDrifterSlot.ModuleLink.ModuleLevel.Value == SelectedDrifterSlot.ModuleLink.MaxModuleLevel - 1) return;
+        if (!CO.co.PermissionToModifyDrifter())
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
         int MoneyNeeded = SelectedDrifterSlot.ModuleLink.ModuleUpgradeMaterials[SelectedDrifterSlot.ModuleLink.ModuleLevel.Value];
-        if (MoneyNeeded > CO.co.Resource_Materials.Value) return;
+        if (MoneyNeeded > CO.co.Resource_Materials.Value)
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
         int TechNeeded = SelectedDrifterSlot.ModuleLink.ModuleUpgradeTechs[SelectedDrifterSlot.ModuleLink.ModuleLevel.Value];
-        if (TechNeeded > CO.co.Resource_Tech.Value) return;
+        if (TechNeeded > CO.co.Resource_Tech.Value)
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
         SelectedDrifterSlot.ModuleLink.SendUpgradeRpc();
         AUDCO.aud.PlaySFX(AUDCO.aud.Upgrade);
     }
     public void PressDismantleDrifterSlot()
     {
         if (!SelectedDrifterSlot.ModuleLink) return;
+        if (!CO.co.PermissionToModifyDrifter())
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
         if (SelectedDrifterSlot.ModuleLink.ModuleType == Module.ModuleTypes.NAVIGATION
             || SelectedDrifterSlot.ModuleLink.ModuleType == Module.ModuleTypes.ENGINES
             || SelectedDrifterSlot.ModuleLink.ModuleType == Module.ModuleTypes.MEDICAL)
@@ -749,6 +767,11 @@ public class Screen_Inventory : MonoBehaviour
     }
     public void PressRepairButton()
     {
+        if (!CO.co.PermissionToModifyDrifter())
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
         if (CO.co.PlayerMainDrifter.GetHealthRelative() < 1)
         {
             if (CO.co.Resource_Materials.Value >= CO.co.GetDrifterRepairCost())
@@ -851,6 +874,11 @@ public class Screen_Inventory : MonoBehaviour
     public void PressCrewPromote()
     {
         if (SelectedCrew == null) return;
+        if (!CO.co.PermissionToModifyDrifter())
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
         if (CO.co.Resource_Supplies.Value < SelectedCrew.GetLevelupCost())
         {
             AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
@@ -862,6 +890,11 @@ public class Screen_Inventory : MonoBehaviour
     public void PressCrewDismiss()
     {
         if (SelectedCrew == null) return;
+        if (!CO.co.PermissionToModifyDrifter())
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
         CrewScreen.gameObject.SetActive(false);
         AUDCO.aud.PlaySFX(AUDCO.aud.Salvage);
         SelectedCrew.DismissCrewmemberRpc();

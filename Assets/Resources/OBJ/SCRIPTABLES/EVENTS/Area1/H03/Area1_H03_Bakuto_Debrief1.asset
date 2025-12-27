@@ -23,7 +23,7 @@ MonoBehaviour:
     Alternatives: []
   - BaseText: When your crew finds the enemy's leader, they are already a corpse,
       having ritually ended themselves to avoid capture. Their vessel is looted before
-      it sinks away, and the journey continues.
+      it sinks away.
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
   ChoicePathDialogs:

@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,19 @@ public struct DialogPart //This is a single line in the dialog. It can be replac
 {
     [TextArea(3, 10)]
     public string BaseText;
+    [TextArea(3, 10)]
+    public List<string> VariantTexts;
+    public string GetBaseText()
+    {
+        if (VariantTexts != null && VariantTexts.Count > 0)
+        {
+            int index = UnityEngine.Random.Range(-1, VariantTexts.Count);
+            if (index == -1) return BaseText;
+            return VariantTexts[index];
+        }
+        return BaseText;
+    }
+
     public ScriptableDialogSpeaker Speaker;
     public AlternativeDialogPart[] Alternatives;
 }

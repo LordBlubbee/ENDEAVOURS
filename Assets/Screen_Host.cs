@@ -5,6 +5,8 @@ public class Screen_Host : MonoBehaviour
 {
     public TextMeshProUGUI DifficultyTex;
     public TooltipObject DifficultyTooltip;
+    public TextMeshProUGUI HostControlTex;
+    public TooltipObject HostControlTooltip;
     private void OnEnable()
     {
         RefreshPlayerGameDifficulty();
@@ -46,6 +48,30 @@ public class Screen_Host : MonoBehaviour
                 DifficultyTex.text = "IMPOSSIBLE";
                 DifficultyTex.color = new Color(0.5f,0,0);
                 DifficultyTooltip.Tooltip = "Everything seems lost. It is unknown whether the Endeavour can be completed this way. \n\nEnemy Drifter strength +40% \nEnemy crew- and creature strength +80% \nEnemy crew- and creature count +25% \nLoot -20%";
+                break;
+        }
+    }
+    public void PressHostControl()
+    {
+        GO.g.preferredHostControl++;
+        if (GO.g.preferredHostControl > 1) GO.g.preferredHostControl = 0;
+        GO.g.saveSettings();
+        RefreshHostControl();
+
+    }
+    public void RefreshHostControl()
+    {
+        switch (GO.g.preferredHostControl)
+        {
+            case 0:
+                DifficultyTex.text = "NONE";
+                DifficultyTex.color = Color.green;
+                DifficultyTooltip.Tooltip = "All players can purchase items or modify the Drifter. Destinations and dialogue options are voted for until all are in agreement.";
+                break;
+            case 1:
+                DifficultyTex.text = "BUYING";
+                DifficultyTex.color = Color.yellow;
+                DifficultyTooltip.Tooltip = "Only the host may purchase or craft items, upgrade modules, and promote crew.";
                 break;
         }
     }

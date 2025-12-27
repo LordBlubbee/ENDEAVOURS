@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_N01_CoalitionDistress_Initial
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: 'The weather is thick when a flux transmission becomes audible and
+      is relayed to us. The message follows:'
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
+    Alternatives: []
+  - BaseText: If there be any peoples hearin' this message! The Pragmaticus... They've
+      separated our women and children to enact their shitty rules! We ain't done
+      nothin' wrong!
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 23331acde968eeb40b0ac7c3d314c2f2, type: 2}
+    Alternatives: []
+  - BaseText: We are a Coalition vessel and are in need of food and fuel to bring
+      our people to safety. We possess Ephemeral-made technology with which we might
+      part as a payment for your assistance. Please assist!...
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 23331acde968eeb40b0ac7c3d314c2f2, type: 2}
+    Alternatives: []
+  - BaseText: The Coalition has indeed sent relief vessels to assist the stricken
+      Nomaden here, but it remains an awkward arrangement. The Republic and Coalition
+      are supposed to be staunch allies, and yet, their individual vessels often
+      stand opposed to the Pragmaticus.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 7dc646993301e0e4c9c314ed58e365c0, type: 2}
+    Alternatives: []
+  - BaseText: Ephemeral-made gear is nothing to scoff at, though. Their humanitarian
+      efforts might have gone through Coalition channels into this area. We have
+      a lot to gain there- more so than the obvious benefit of doing a great deed.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 7dc646993301e0e4c9c314ed58e365c0, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: It is our moral imperative to assist them. Move us closer.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: a18c16eb56881a1479be57bfe22badac, type: 2}
+  - ChoiceText:
+      BaseText: We are not in any capacity to help, and this could be a setup. We
+        should move on.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: a18c16eb56881a1479be57bfe22badac, type: 2}
+  - ChoiceText:
+      BaseText: <color=yellow>[Ephemeral] Their stubborn ways will get them killed.
+        We must let them hear the word of the Eye and take our technology back as
+        a reward for our assistance.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: a18c16eb56881a1479be57bfe22badac, type: 2}

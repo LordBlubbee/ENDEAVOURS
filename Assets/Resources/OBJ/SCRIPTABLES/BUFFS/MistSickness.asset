@@ -15,7 +15,7 @@ MonoBehaviour:
   MaxStacks: 1
   Duration: 10
   BuffParticles: 3
-  HealthChangePerSecond: -4
+  HealthChangePerSecond: -3
   ModifyHealthMax: 0
   ModifyHealthRegen: 0
   ModifyStaminaMax: 0

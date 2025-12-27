@@ -42,10 +42,10 @@ public class Screen_Talk : MonoBehaviour
             UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
             return;
         }
-        string StoryID = CO_STORY.co.GetMainStoryText(0);
-        if (PreviousTex != StoryID)
+        int ID = CO_STORY.co.GetCommsID();
+        if (CurrentID != ID)
         {
-            PreviousTex = StoryID;
+            CurrentID = ID;
             CurrentPage = 0;
             UpdateData();
         }
@@ -70,7 +70,7 @@ public class Screen_Talk : MonoBehaviour
         CO_STORY.co.OverrideTalkResult = true;
     }
 
-    string PreviousTex = "";
+    int CurrentID = -999;
     private void UpdateData()
     {
         string curText = CO_STORY.co.GetMainStoryText(CurrentPage);

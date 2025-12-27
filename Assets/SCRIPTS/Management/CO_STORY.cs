@@ -7,6 +7,8 @@ using UnityEngine;
 public class CO_STORY : NetworkBehaviour
 {
     [NonSerialized] public NetworkVariable<bool> CommsActive = new();
+    [NonSerialized] public NetworkVariable<int> CommsID = new();
+
     [NonSerialized] public NetworkVariable<FixedString512Bytes> CurrentChoices0 = new();
     [NonSerialized] public NetworkVariable<FixedString512Bytes> CurrentChoices1 = new();
     [NonSerialized] public NetworkVariable<FixedString512Bytes> CurrentChoices2 = new();
@@ -77,6 +79,11 @@ public class CO_STORY : NetworkBehaviour
             case 6: return CurrentChoices6.Value.ToString();
             default: return string.Empty;
         }
+    }
+
+    public int GetCommsID()
+    {
+        return CommsID.Value;
     }
     public string GetMainStoryText(int index)
     {
@@ -166,6 +173,8 @@ public class CO_STORY : NetworkBehaviour
     }
     public void SetMainStoryText(List<string> StoryList, List<string> SpeakerLinks)
     {
+        CommsID.Value++;
+
         MainStoryText0.Value = StoryList.Count > 0 ? StoryList[0] : "";
         SpeakerLink0.Value = SpeakerLinks.Count > 0 ? SpeakerLinks[0] : "";
 
@@ -247,7 +256,7 @@ public class CO_STORY : NetworkBehaviour
                 return alternatives.AlternativeText;
             }
         }
-        return showChoice.BaseText;
+        return showChoice.GetBaseText();
     }
 
     [Rpc(SendTo.Server)]

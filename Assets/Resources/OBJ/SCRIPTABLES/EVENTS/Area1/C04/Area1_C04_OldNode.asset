@@ -19,5 +19,6 @@ MonoBehaviour:
   InitialMapData: TERRAIN
   InitialDialog: {fileID: 11400000, guid: 7258aebf9a450ee4689afa6d2107446c, type: 2}
   BackgroundType: 3
-  WeatherSelectors: 1
+  WeatherSelectors: 6
   GateToBiome: {fileID: 0}
+  AlternativeDialogs: []

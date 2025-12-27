@@ -13,42 +13,44 @@ MonoBehaviour:
   m_Name: Area1_N02_Stellae_Initial
   m_EditorClassIdentifier: 
   StoryTexts:
-  - BaseText: Morning dawns as your vessel moves towards this area. A weak signal
+  - BaseText: Morning dawns as our vessel moves towards this area. A weak signal
       on an emergency Logipedan frequency is picked up from a mountaintop.
+    VariantTexts:
+    - Breakfast is interrupted. A part of our crew has spotted an incoming vessel
+      in the distance, the source of an obvious Flux signature on a mountaintop.
     Speaker: {fileID: 11400000, guid: 6eae2d8b178491744873b10786c471bd, type: 2}
     Alternatives: []
   - BaseText: A small docking point is inhabited by a small exploration Blimp with
       the icon of the <color=orange>Legislatus Stellae</color> perched on the side
       of its hull. They are equipped with a Sub-Nebulan drill capable of obtaining
       materials and artifacts from the ruined cities under the Mist- they are a Delver.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: 6eae2d8b178491744873b10786c471bd, type: 2}
     Alternatives: []
   - BaseText: They must be far from home, down here in the south. They look weary,
       but Logipedes are, by their Stipulations, always eager to share information.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: 6eae2d8b178491744873b10786c471bd, type: 2}
     Alternatives: []
   - BaseText: Level three careful greetings, Gubernator. This is Stellae Exploration
       Blimp ID code 0558. We perceive friendliness but still request your identifications.
+    VariantTexts:
+    - Level three careful greetings, Gubernator. This is Stellae Exploration Blimp
+      ID code 0193. We perceive friendliness but still request your identifications.
+    - Level three careful greetings, Gubernator. This is Stellae Exploration Blimp
+      ID code 0263. We perceive friendliness but still request your identifications.
     Speaker: {fileID: 11400000, guid: 1c299f2d4cf2fad4580e98383e4b09f5, type: 2}
-    Alternatives:
-    - AlternativeText: Level three careful greetings, Gubernator. This is Stellae
-        Exploration Blimp ID code 0193. We perceive friendliness but still request
-        your identifications.
-      Prerequisites:
-      - {fileID: 11400000, guid: f4a726ea53451f14cb5bdc1771f8e6a7, type: 2}
-    - AlternativeText: Level three careful greetings, Gubernator. This is Stellae
-        Exploration Blimp ID code 0263. We perceive friendliness but still request
-        your identifications.
-      Prerequisites:
-      - {fileID: 11400000, guid: b32172dce6df9864b9d23047a4235f27, type: 2}
+    Alternatives: []
   - BaseText: We are transporting a valuable cargo. We are willing to pay you if
       you can escort us to a nearby secure node.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: 1c299f2d4cf2fad4580e98383e4b09f5, type: 2}
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
       BaseText: Greetings, Stellae explorers. We will gladly take you up on that
         offer, in return of trade and news.
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
@@ -61,6 +63,7 @@ MonoBehaviour:
   - ChoiceText:
       BaseText: We will sadly not be able to assist you, Stellae. Perhaps we can
         exchange some goods and stories instead? We are in need of general information.
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
@@ -73,6 +76,7 @@ MonoBehaviour:
   - ChoiceText:
       BaseText: I am afraid you make yourselves quite the easy target. Surrender
         your cargo or be destroyed.
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []

@@ -15,16 +15,21 @@ MonoBehaviour:
   StoryTexts:
   - BaseText: Splendid. Lower your weapons, and we will move into comfortable docking
       range.
+    VariantTexts:
+    - Fantastic! There's a small spire eight hundred meters to your twelve. Why don't
+      we moor our Drifters there?
     Speaker: {fileID: 11400000, guid: c12e8202c96f7ab4a945141bce148e0f, type: 2}
     Alternatives: []
   - BaseText: Their vessel moves into range and they proudly display what they have
       available. Complimentary tea is served after you shake hands with their Gubernator,
       who kindly receives you.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
       BaseText: Let us trade.
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
