@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Flag_Democracy
   m_EditorClassIdentifier: 
   NameColor: {r: 1, g: 1, b: 1, a: 1}
-  Portrait: {fileID: 7128933953722676876, guid: 981745732142d8246b7c6421c6988846, type: 3}
+  Portrait: {fileID: 21300000, guid: 981745732142d8246b7c6421c6988846, type: 3}
   Voice:
   - {fileID: 8300000, guid: a2f587f085eb3634eab0238d8fbb47ce, type: 3}

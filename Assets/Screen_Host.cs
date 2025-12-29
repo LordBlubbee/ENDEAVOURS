@@ -9,7 +9,7 @@ public class Screen_Host : MonoBehaviour
     public TooltipObject HostControlTooltip;
     private void OnEnable()
     {
-        RefreshPlayerGameDifficulty();
+        RefreshPlayerGameDifficulty(); RefreshHostControl();
         LOBBY.lobby.HostNameInput.text = GO.g.preferredLobbyName;
     }
     public void PressPlayerGameDifficulty()
@@ -64,14 +64,14 @@ public class Screen_Host : MonoBehaviour
         switch (GO.g.preferredHostControl)
         {
             case 0:
-                DifficultyTex.text = "NONE";
-                DifficultyTex.color = Color.green;
-                DifficultyTooltip.Tooltip = "All players can purchase items or modify the Drifter. Destinations and dialogue options are voted for until all are in agreement.";
+                HostControlTex.text = "NONE";
+                HostControlTex.color = Color.green;
+                HostControlTooltip.Tooltip = "All players can purchase items or modify the Drifter. Destinations and dialogue options are voted for until all are in agreement.";
                 break;
             case 1:
-                DifficultyTex.text = "BUYING";
-                DifficultyTex.color = Color.yellow;
-                DifficultyTooltip.Tooltip = "Only the host may purchase or craft items, upgrade modules, and promote crew.";
+                HostControlTex.text = "BUYING";
+                HostControlTex.color = Color.yellow;
+                HostControlTooltip.Tooltip = "Only the host may purchase or craft items, upgrade modules, and promote crew.";
                 break;
         }
     }

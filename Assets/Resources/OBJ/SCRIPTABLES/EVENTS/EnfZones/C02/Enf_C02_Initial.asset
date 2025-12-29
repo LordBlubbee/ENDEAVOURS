@@ -63,9 +63,9 @@ MonoBehaviour:
     AlternativeResults: []
     TriggerEvent: {fileID: 0}
   - ChoiceText:
-      BaseText: <yellow>[Reputation]</color>You must have heard of us- we are allies
-        of the Clans! We need all the help we can get on our mission. Perhaps, a
-        warrior like you could even come help us!
+      BaseText: <color=yellow>[Reputation]</color>You must have heard of us- we are
+        allies of the Clans! We need all the help we can get on our mission. Perhaps,
+        a warrior like you could even come help us!
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []

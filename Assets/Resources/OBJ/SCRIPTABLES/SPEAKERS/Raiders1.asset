@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Raiders1
   m_EditorClassIdentifier: 
   NameColor: {r: 0.62352943, g: 1, b: 0.62352943, a: 1}
-  Portrait: {fileID: 7815672338738233202, guid: cb5b6bc0db773334fbf19735c0255004, type: 3}
+  Portrait: {fileID: 21300000, guid: cb5b6bc0db773334fbf19735c0255004, type: 3}
   Voice:
   - {fileID: 8300000, guid: e613f51cb1f02ac4b802abbd21ce9462, type: 3}

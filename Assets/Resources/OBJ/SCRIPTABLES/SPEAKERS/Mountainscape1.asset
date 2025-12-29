@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Mountainscape1
   m_EditorClassIdentifier: 
   NameColor: {r: 1, g: 1, b: 1, a: 1}
-  Portrait: {fileID: -2909161187589847112, guid: 1529d9aa45703de4fb899830c94bfdf6, type: 3}
+  Portrait: {fileID: 21300000, guid: 1529d9aa45703de4fb899830c94bfdf6, type: 3}
   Voice:
   - {fileID: 8300000, guid: a2f587f085eb3634eab0238d8fbb47ce, type: 3}

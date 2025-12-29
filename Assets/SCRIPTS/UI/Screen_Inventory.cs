@@ -292,9 +292,9 @@ public class Screen_Inventory : MonoBehaviour
 
         SellButton.gameObject.SetActive(true);
         SellTex.text = $"SCRAP\n";
-        if (HoldingItem.SellMaterials > 0) SellTex.text += "<color=yellow>[+10M]</color> ";
-        if (HoldingItem.SellSupplies > 0) SellTex.text += "<color=green>[+10S]</color> ";
-        if (HoldingItem.SellTech > 0) SellTex.text += "<color=#00AAFF>[+10T]</color> ";
+        if (HoldingItem.SellMaterials > 0) SellTex.text += $"<color=yellow>[+{HoldingItem.SellMaterials}M]</color> ";
+        if (HoldingItem.SellSupplies > 0) SellTex.text += $"<color=green>[+{HoldingItem.SellSupplies}S]</color> ";
+        if (HoldingItem.SellTech > 0) SellTex.text += $"<color=#00AAFF>[+{HoldingItem.SellTech}T]</color> ";
     }
     public void DepositItem(InventorySlot slot)
     {

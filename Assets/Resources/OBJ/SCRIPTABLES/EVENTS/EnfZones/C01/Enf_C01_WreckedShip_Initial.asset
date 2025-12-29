@@ -71,9 +71,9 @@ MonoBehaviour:
       - {fileID: 11400000, guid: 2aad1f046d385494fb151ecc0a76a04b, type: 2}
     TriggerEvent: {fileID: 0}
   - ChoiceText:
-      BaseText: <yellow>[Logipedes] These logs detail an identification code we can
-        cross-reference using Stipulation 22-14-89, which would allow us to locate
-        the unlawful perpetrators. We will bring justice upon them!
+      BaseText: <color=yellow>[Logipedes] These logs detail an identification code
+        we can cross-reference using Stipulation 22-14-89, which would allow us to
+        locate the unlawful perpetrators. We will bring justice upon them!
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []

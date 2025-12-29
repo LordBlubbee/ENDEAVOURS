@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Ephemeral1
   m_EditorClassIdentifier: 
   NameColor: {r: 0.5882109, g: 0.13705944, b: 0.8301887, a: 1}
-  Portrait: {fileID: 539290097007262091, guid: 410dcaa22239acb47b7373b6c4358ba0, type: 3}
+  Portrait: {fileID: 21300000, guid: 8145f151774c0024b94bbdc324c3352e, type: 3}
   Voice:
   - {fileID: 8300000, guid: 11142fe96529ecd478e1d70e474cf1bf, type: 3}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SpawnerPragmaticusTransport
   m_EditorClassIdentifier: 
   SpawnEnemyGroupList:
-  - EnemyGroup: {fileID: 11400000, guid: 93b20b831715e4e4398dd683e63d529a, type: 2}
+  - EnemyGroup: {fileID: 11400000, guid: 4839cbc73e05e71488236af8a14766aa, type: 2}
     Weight: 10
   EnemyAmountModifier: 1
   EnemyQualityModifier: 1

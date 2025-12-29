@@ -25,16 +25,15 @@ MonoBehaviour:
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
     Alternatives: []
-  - BaseText: This outpost is a border checkpoint of the Legislatus Pragmaticus.
-      You must have come for inspections. Please moor your vessel and submit files
-      imminently.
+  - BaseText: Unknown vessel. This outpost is a border checkpoint of the Legislatus
+      Pragmaticus. Please moor your vessel and submit files imminently.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
     Alternatives: []
-  - BaseText: Do you have your copy of the Stipulations on you, as instructed? During
-      audit, food and supplies will be provided to your crew. However, you are to
-      pay a toll of ammunition to pass this checkpoint, especially with the armament
-      you display, which I hypothesize as level-3.
+  - BaseText: Do you have your copy of the Stipulations on you? During audit, food
+      and supplies will be provided to your crew. However, you are to pay a toll
+      of ammunition to pass this checkpoint, especially with the armament you display,
+      which I hypothesize as level-3.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
     Alternatives: []

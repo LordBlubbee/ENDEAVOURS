@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Flag_Coalition
   m_EditorClassIdentifier: 
   NameColor: {r: 1, g: 1, b: 1, a: 1}
-  Portrait: {fileID: 228714490309465222, guid: 521294bb99af19e4db63a5908a687096, type: 3}
+  Portrait: {fileID: 21300000, guid: 521294bb99af19e4db63a5908a687096, type: 3}
   Voice:
   - {fileID: 8300000, guid: a2f587f085eb3634eab0238d8fbb47ce, type: 3}

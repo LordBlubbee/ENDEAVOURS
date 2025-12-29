@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Flag_Royals
   m_EditorClassIdentifier: 
   NameColor: {r: 1, g: 1, b: 1, a: 1}
-  Portrait: {fileID: 976711227228238342, guid: bf74c067396022546beed0000acdd82c, type: 3}
+  Portrait: {fileID: 21300000, guid: bf74c067396022546beed0000acdd82c, type: 3}
   Voice:
   - {fileID: 8300000, guid: a2f587f085eb3634eab0238d8fbb47ce, type: 3}

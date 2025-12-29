@@ -9,8 +9,8 @@ public class SpellWaywardConsumption : UniqueSpell
         {
             if (Caster == enemy) continue;
             if ((Caster.transform.position - enemy.transform.position).magnitude > 12f) continue;
-            enemy.TakeDamage(15f + Caster.GetATT_COMMUNOPATHY() * 3f,enemy.transform.position,iDamageable.DamageType.SPELL);
-            enemy.Push(8f + Caster.GetATT_COMMUNOPATHY() * 0.5f, 0.5f, (enemy.transform.position - Caster.transform.position).normalized);
+            enemy.TakeDamage(20f + Caster.GetATT_COMMUNOPATHY() * 4f,enemy.transform.position,iDamageable.DamageType.SPELL);
+            enemy.Push(9f + Caster.GetATT_COMMUNOPATHY() * 0.5f, 0.5f, (enemy.transform.position - Caster.transform.position).normalized);
         }
     }
 }
