@@ -1188,6 +1188,18 @@ public class CO : NetworkBehaviour
         RegisterMapPoint(mapPoint);
         mapPoint.Init(Destinations[UnityEngine.Random.Range(0, Destinations.Count)]);
 
+        for (int i = 0; i < CurrentBiome.PointsSpecial.Count; i++)
+        {
+            MapPoint map = MustBeInitialized[UnityEngine.Random.Range(0, MustBeInitialized.Count)];
+            if (map.transform.position.x < mapSize * 0.5f)
+            {
+                i--;
+                continue;
+            }
+            map.Init(CurrentBiome.PossiblePointsHostile[UnityEngine.Random.Range(0, CurrentBiome.PossiblePointsHostile.Count)]);
+            MustBeInitialized.Remove(map);
+        }
+
         float TotalPointsLeft = MustBeInitialized.Count;
         float Points = TotalPointsLeft * CurrentBiome.BiomeHostileRatio;
         while (Points > 0)

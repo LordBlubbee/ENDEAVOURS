@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_C02_TakeReward
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: The order to seize the supplies is given. Our strike team enters the
+      caves, and soon returns to report.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: e063144cf422eff408c7e1329f403e15, type: 2}
+    Alternatives: []
+  - BaseText: The warrior refused to surrender and was slain in the confrontation.
+      They managed to wound one of our soldiers with a rope-bow.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: e063144cf422eff408c7e1329f403e15, type: 2}
+    Alternatives: []
+  - BaseText: The supplies have been seized and are abundant, and our course into
+      contested lands continues. It is unknown if the Clans will know of our deed.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 2efa443e450817946b5abb735e0241e2, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Our journey continues.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: 61ae84a3364856b4186cb4d562631adb, type: 2}

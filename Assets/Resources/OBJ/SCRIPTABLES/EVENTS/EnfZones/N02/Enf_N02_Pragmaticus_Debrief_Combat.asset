@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_N02_Pragmaticus_Debrief_Combat
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: The enemy drifter breaks apart. A hidden mortar appears on top of one
+      of the burning buoyancy compartments, firing a colour-coded distress flare
+      into the sky.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 96f3fa33f08a69c4e9da2f4d333f781c, type: 2}
+    Alternatives: []
+  - BaseText: The Pragmaticus are silenced. Our teams are preparing to loot what
+      we can in anticipation of a quick getaway.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 96f3fa33f08a69c4e9da2f4d333f781c, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Our journey continues.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: 92287236a3a65b9469b2bfb3e7914e79, type: 2}

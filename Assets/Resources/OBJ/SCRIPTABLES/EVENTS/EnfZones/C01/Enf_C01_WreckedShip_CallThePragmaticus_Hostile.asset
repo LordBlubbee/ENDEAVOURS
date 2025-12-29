@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_C01_WreckedShip_CallThePragmaticus_Hostile
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: Many Pragmaticus patrollers roam these lands, responding to distress
+      codes. Some of these were given to us by the Starlight Endeavour, and we send
+      out a message.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
+    Alternatives: []
+  - BaseText: It does not take long for an armed boarding blimp to respond to our
+      call. However, their movement is suspicious, and they move to gain an altitude
+      advantage over us.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
+    Alternatives: []
+  - BaseText: This is Pragmaticus search vessel ID 15-28. For involvement in the
+      destruction of this vessel, you are under arrest until we can prove your innocence.
+      Prepare to follow us to a nearby detention center.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
+    Alternatives:
+    - AlternativeText: Hostile drifter. Stand down immediately! We have identified
+        your vessel as that of a perpetrator that has attacked and destroyed Republic
+        vessels in the past. You are under arrest, scum!
+      Prerequisites:
+      - {fileID: 11400000, guid: 2aad1f046d385494fb151ecc0a76a04b, type: 2}
+  - BaseText: We don't have time for this, and their commander is not receptive.
+      We must fight our way out.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 96f3fa33f08a69c4e9da2f4d333f781c, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Our journey continues.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: 041ad68cb8c89bb4180f8f2c6b2eef55, type: 2}

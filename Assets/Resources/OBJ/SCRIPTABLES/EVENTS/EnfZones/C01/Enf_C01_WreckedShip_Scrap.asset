@@ -9,11 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69a8717e7279b88409550c597721d3ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
   m_Name: Enf_C01_WreckedShip_Scrap
   m_EditorClassIdentifier: 
-  EventController: GenericLoot
-  EnemyWave: {fileID: 0}
-  AdditionalDialogs: []
-  LootTable: {fileID: 11400000, guid: 0f9583fc841506e438a5eaa930fda321, type: 2}
-  DebriefDialog: {fileID: 0}
+  StoryTexts:
+  - BaseText: The broken vessel comes apart, and its material contents are ours.
+      We should move on.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Our journey continues.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: f8bd304abf049a54eaaa407242ee4fbb, type: 2}

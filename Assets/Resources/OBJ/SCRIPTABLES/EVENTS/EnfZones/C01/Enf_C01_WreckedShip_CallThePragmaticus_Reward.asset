@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_C01_WreckedShip_CallThePragmaticus_Reward
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: Many Pragmaticus patrollers roam these lands, responding to distress
+      codes. Some of these were given to us by the Starlight Endeavour, and we send
+      out a message.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
+    Alternatives: []
+  - BaseText: This is Pragmaticus patrol blimp ID 15-26. We have received your transmission
+      and your report. Thank you for leaving the contents of the vessel intact- level
+      3.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
+    Alternatives: []
+  - BaseText: We will be sure to inform the expeditionary forces that you are to
+      be trusted, and we will award your crew with a class-4 "assistance of policing
+      forces" reward, as is within our limited authority. May All Be United!
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Our journey continues.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: bb3fdd8081956de4dbf6447cbb3a0040, type: 2}

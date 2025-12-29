@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6713958396d342478460fae2111cc58, type: 3}
+  m_Name: Enf_N02_Inspection
+  m_EditorClassIdentifier: 
+  UniqueName: 
+  ResourceLink: EnfZones/N02
+  InitialSoundtrack: 7
+  CombatSoundtrack: 7
+  InitialMapData: NO DATA
+  InitialDialog: {fileID: 11400000, guid: 3b9c02e235b2fc44f8a2253214fc84a6, type: 2}
+  BackgroundType: 2
+  WeatherSelectors: 0
+  GateToBiome: {fileID: 0}
+  AlternativeDialogs: []

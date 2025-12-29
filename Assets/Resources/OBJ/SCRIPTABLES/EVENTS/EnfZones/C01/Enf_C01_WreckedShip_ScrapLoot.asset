@@ -28,10 +28,10 @@ MonoBehaviour:
   TotalLootDrops: 2
   RandomLoot:
   - Randomness: 0.2
-    Resource_Materials: 9
+    Resource_Materials: 10
     Resource_Supplies: 0
     Resource_Ammunition: 0
-    Resource_Technology: 4
+    Resource_Technology: 5
     Resource_Repairs: 0
     Resource_XP: 0
     ItemDrop: {fileID: 0}

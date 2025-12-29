@@ -44,18 +44,32 @@ MonoBehaviour:
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
-    DialogResult: {fileID: 0}
-    AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: f8bd304abf049a54eaaa407242ee4fbb, type: 2}
+    DialogResult: {fileID: 11400000, guid: e791a9c494916e44eb8d222d4bc7ffc2, type: 2}
+    AlternativeResults:
+    - ReplaceDialog: {fileID: 11400000, guid: 89c6e61b3cb53ad4282c14a779ccb2ff, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: 82e95b99088449b488dc0499ee67d3f3, type: 2}
+    - ReplaceDialog: {fileID: 11400000, guid: 89c6e61b3cb53ad4282c14a779ccb2ff, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: b32172dce6df9864b9d23047a4235f27, type: 2}
+      - {fileID: 11400000, guid: 2aad1f046d385494fb151ecc0a76a04b, type: 2}
+    TriggerEvent: {fileID: 0}
   - ChoiceText:
       BaseText: Send a signal to the Pragmaticus to inform them of the wreck.
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
-    DialogResult: {fileID: 0}
-    AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: f8bd304abf049a54eaaa407242ee4fbb, type: 2}
+    DialogResult: {fileID: 11400000, guid: 262edf929374230409ed8a1d61c76047, type: 2}
+    AlternativeResults:
+    - ReplaceDialog: {fileID: 11400000, guid: 4e7146254d520224e9bd08bea79c265b, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: 82e95b99088449b488dc0499ee67d3f3, type: 2}
+    - ReplaceDialog: {fileID: 11400000, guid: 4e7146254d520224e9bd08bea79c265b, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: b32172dce6df9864b9d23047a4235f27, type: 2}
+      - {fileID: 11400000, guid: 2aad1f046d385494fb151ecc0a76a04b, type: 2}
+    TriggerEvent: {fileID: 0}
   - ChoiceText:
       BaseText: <yellow>[Logipedes] These logs detail an identification code we can
         cross-reference using Stipulation 22-14-89, which would allow us to locate
@@ -63,7 +77,11 @@ MonoBehaviour:
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
-    Prerequisites: []
-    DialogResult: {fileID: 0}
-    AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: f8bd304abf049a54eaaa407242ee4fbb, type: 2}
+    Prerequisites:
+    - {fileID: 11400000, guid: 707b13843f561664a9de7d3ef761fd67, type: 2}
+    DialogResult: {fileID: 11400000, guid: 9874ce3bb016cf147843ec536d6bbd68, type: 2}
+    AlternativeResults:
+    - ReplaceDialog: {fileID: 11400000, guid: 4a2731be6711fba47b80447976fe83c4, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: f4a726ea53451f14cb5bdc1771f8e6a7, type: 2}
+    TriggerEvent: {fileID: 0}

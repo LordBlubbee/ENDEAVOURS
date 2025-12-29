@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_C01_WreckedShip_TrackThemDown_SuccessTrade
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: Ah, great to hear it! Ye be one of ours, hahaha!
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 23331acde968eeb40b0ac7c3d314c2f2, type: 2}
+    Alternatives: []
+  - BaseText: We got roughed up pretty bad in the winds, lately, but our hunt for
+      justice continues. Our traditions must survive the Logipedes' idiocy! Why don'
+      ye and yer crew land on this here rock, for some good drink?
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 23331acde968eeb40b0ac7c3d314c2f2, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Of course, Captain. Let us drink and trade!
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: 0fd297d160be27a42b54ec79b4face01, type: 2}

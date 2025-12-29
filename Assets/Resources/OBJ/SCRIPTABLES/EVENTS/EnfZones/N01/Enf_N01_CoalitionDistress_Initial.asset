@@ -45,24 +45,25 @@ MonoBehaviour:
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
-      BaseText: It is our moral imperative to assist them. Move us closer.
+      BaseText: It is our moral imperative to assist them. Hear them out and prepare
+        to track down the Pragmaticus perpetrators.
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
     DialogResult: {fileID: 0}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: a18c16eb56881a1479be57bfe22badac, type: 2}
+    TriggerEvent: {fileID: 11400000, guid: 3a58653d5c7a05148acc21f58b635a88, type: 2}
   - ChoiceText:
-      BaseText: We are not in any capacity to help, and this could be a setup. We
-        should move on.
+      BaseText: We are not in any capacity to help, and this could be a setup. Ignore
+        the transmission.
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
     DialogResult: {fileID: 0}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: a18c16eb56881a1479be57bfe22badac, type: 2}
+    TriggerEvent: {fileID: 11400000, guid: cbd8b5cc701a7a24ca0d291ae1ccae28, type: 2}
   - ChoiceText:
       BaseText: <color=yellow>[Ephemeral] Their stubborn ways will get them killed.
         We must let them hear the word of the Eye and take our technology back as
@@ -70,7 +71,20 @@ MonoBehaviour:
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
-    Prerequisites: []
+    Prerequisites:
+    - {fileID: 11400000, guid: cee0af71f284fba4ba0579e0b3d73207, type: 2}
     DialogResult: {fileID: 0}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: a18c16eb56881a1479be57bfe22badac, type: 2}
+    TriggerEvent: {fileID: 11400000, guid: 6021de252e5c62742bf8567029488848, type: 2}
+  - ChoiceText:
+      BaseText: <color=yellow>[Pragmatice] These war-mongers make bold, unverified
+        claims unsupported by evidence links or Stipulations. I calculate a 38% chance
+        that they are sponsored by the Insurrection! We must arrest them!
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites:
+    - {fileID: 11400000, guid: 71e95b8ab59cccf499ccb90cd02a459e, type: 2}
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: 3d0cc1f511e10744ca37f3c97a27308e, type: 2}

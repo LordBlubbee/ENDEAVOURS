@@ -18,7 +18,7 @@ MonoBehaviour:
   CombatSoundtrack: 7
   InitialMapData: SIGNAL
   InitialDialog: {fileID: 11400000, guid: f5f8e2e67de2e3e43b1748c8fb0ce43d, type: 2}
-  BackgroundType: 2
+  BackgroundType: 1
   WeatherSelectors: 2
   GateToBiome: {fileID: 0}
   AlternativeDialogs: []

@@ -52,9 +52,9 @@ MonoBehaviour:
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
-    DialogResult: {fileID: 0}
+    DialogResult: {fileID: 11400000, guid: 9ecd73c396282ae43bf58fd5b146844a, type: 2}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: a18c16eb56881a1479be57bfe22badac, type: 2}
+    TriggerEvent: {fileID: 0}
   - ChoiceText:
       BaseText: 'We will submit to inspections and pay the toll, officer. We are
         in a hurry, so please tell inform us of the papers we must sign.
@@ -65,19 +65,20 @@ MonoBehaviour:
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
-    DialogResult: {fileID: 0}
+    DialogResult: {fileID: 11400000, guid: 6a7a254d37165a14f802b222b222e2aa, type: 2}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: a18c16eb56881a1479be57bfe22badac, type: 2}
+    TriggerEvent: {fileID: 0}
   - ChoiceText:
-      BaseText: <color=yellow>[Nomaden] Pragmaticus scum! You have oppressed the
+      BaseText: <color=yellow>[Peregrini] Pragmaticus scum! You have oppressed the
         Nomaden Clans here for far too long. In their name, we shall destroy you!
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
-    Prerequisites: []
-    DialogResult: {fileID: 0}
+    Prerequisites:
+    - {fileID: 11400000, guid: 8aacf088a5b85dd45aad083dabd7d82a, type: 2}
+    DialogResult: {fileID: 11400000, guid: 9ecd73c396282ae43bf58fd5b146844a, type: 2}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: a18c16eb56881a1479be57bfe22badac, type: 2}
+    TriggerEvent: {fileID: 0}
   - ChoiceText:
       BaseText: <color=yellow>[Reputation] We are allies of the enforcement operations
         in this area! If you cross-reference our ID, you are sure to find us. Please
@@ -85,7 +86,8 @@ MonoBehaviour:
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
-    Prerequisites: []
-    DialogResult: {fileID: 0}
+    Prerequisites:
+    - {fileID: 11400000, guid: 6101fcb2fe71f354e99af1a16cc00aa6, type: 2}
+    DialogResult: {fileID: 11400000, guid: 51f39d1120db16c4b9f49051047e71e1, type: 2}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: a18c16eb56881a1479be57bfe22badac, type: 2}
+    TriggerEvent: {fileID: 0}
