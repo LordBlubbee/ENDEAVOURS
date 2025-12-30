@@ -13,70 +13,107 @@ MonoBehaviour:
   m_Name: Enf_N03_Initial
   m_EditorClassIdentifier: 
   StoryTexts:
-  - BaseText: A loud and very clear Flux signal is repeatedly sent throughout these
-      empty lands. It is executed on a public frequency.
+  - BaseText: Our Drifter descends over valleys and large specks of terrain. Different
+      signs and small Loons populate the area, and our team is wary to see their
+      allegiance or possible courses of action.
     VariantTexts: []
-    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []
-  - BaseText: A slow-moving research drifter belonging to the <color=#FF00FF>Ephemeral
-      Eye</color> is located. They greet us when we approach.
+  - BaseText: It seems that the Drifters in this area belong to a multitude of different
+      peoples- most of them refugees who fear the Pragmaticus. They are wary of our
+      presence, and more than one weapon is raised towards us as we approach the
+      camps in the center.
     VariantTexts: []
-    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []
-  - BaseText: Our dearest, dearest greetings to you, unaffiliated vessel... This
-      here is a research vessel, by the will of the Nebula, we have been sent to
-      assist the impoverished Nomaden here, even before the Pragmaticus came through
-      the lands.
+  - BaseText: Here, we find many gathered peoples, eating dinners while sat in circles.
+      A speaker is sent down to join them and explain our peaceful intentions. However,
+      they are caught in the midst of fervent discussion, and many potentially dangerous
+      faces.
     VariantTexts: []
-    Speaker: {fileID: 11400000, guid: 899128443037b3f4bbe0f6d1ae303917, type: 2}
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []
-  - BaseText: You are clearly not in need of our aid. However, we are willing to
-      trade with you, yes?
+  - BaseText: A representative of the <color=green>Coalition</color> has arrived.
+      They argue that people must not be scared. They explain that they believe that
+      the Pragmaticus mean no harm, but that their methods are ancient. They explain
+      that the people here can use their vessel to evacuate some people who don't
+      wish to be sent to the Logipedan Executiis.
     VariantTexts: []
-    Speaker: {fileID: 11400000, guid: 899128443037b3f4bbe0f6d1ae303917, type: 2}
+    Speaker: {fileID: 11400000, guid: 2efa443e450817946b5abb735e0241e2, type: 2}
     Alternatives: []
-  - BaseText: A large number of Nomaden visitors are on-board their Drifter. They
-      were in the middle of a religious ceremony when we arrived. No doubt the Ephemerals
-      are helping people- as much as they are attempting to convert people to their
-      extremist religion.
+  - BaseText: However, their opponent in the discussion immediately puts our soldiers
+      on guard.
     VariantTexts: []
-    Speaker: {fileID: 11400000, guid: aedd2691828f8c4418791a2ed6690785, type: 2}
+    Speaker: {fileID: 11400000, guid: 2efa443e450817946b5abb735e0241e2, type: 2}
     Alternatives: []
-  - BaseText: They are sitting on an abundance of resources, and their vessel must
-      have a lot of advanced technology on-board. If we would choose to attack, however,
-      we would bring civilians into the midst of it...
+  - BaseText: A trio of suit-wearing <color=red>Bakuto Clan</color> members argue
+      against the Coalitionists, explaining that the Clans need to work together
+      to resist the Pragmaticus through violence if they are to keep their freedoms.
     VariantTexts: []
-    Speaker: {fileID: 11400000, guid: aedd2691828f8c4418791a2ed6690785, type: 2}
+    Speaker: {fileID: 11400000, guid: 2efa443e450817946b5abb735e0241e2, type: 2}
+    Alternatives: []
+  - BaseText: Our ground crew has not been spotted yet, and they await orders. It
+      seems that both the Coalition and the Bakuto have combat-ready blimps docked
+      nearby. We must make a decision soon.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 2efa443e450817946b5abb735e0241e2, type: 2}
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
-      BaseText: We will gladly trade, Ephemerals.
+      BaseText: We must oppose the Bakuto. Denounce them and explain that violence
+        is not the answer. Prepare our crew to possibly engage them!
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
-    DialogResult: {fileID: 0}
+    DialogResult: {fileID: 11400000, guid: f9f8a0ea68d400340ad2e3d271d10676, type: 2}
     AlternativeResults: []
     TriggerEvent: {fileID: 0}
   - ChoiceText:
-      BaseText: You take advantage of the weak in the midst of a crisis? You religious
-        fanatics should not be allowed around here. Let the Nomaden go, and surrender
-        your technology!
+      BaseText: It would be good to rally these people against the Pragmaticus. Support
+        the Bakuto and have the people here prepare to rise up!
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
-    DialogResult: {fileID: 0}
-    AlternativeResults: []
+    DialogResult: {fileID: 11400000, guid: a93275126cac3e74a8ef7dfc4c4345ed, type: 2}
+    AlternativeResults:
+    - ReplaceDialog: {fileID: 11400000, guid: 6e23962ae2e179b468c3cdf19223ba44, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: b32172dce6df9864b9d23047a4235f27, type: 2}
     TriggerEvent: {fileID: 0}
   - ChoiceText:
-      BaseText: <color=yellow>[Ephemeral] Brothers! Sisters! It is a joy to see you
-        in this joyless space. Are any of you willing to follow us on a grand mission?
+      BaseText: We should leave quietly before it gets out of hand here.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 11400000, guid: 891695c02dc15484bad5a1b6f9aa0f65, type: 2}
+    AlternativeResults:
+    - ReplaceDialog: {fileID: 11400000, guid: a075a1cc1b464744bbab75137cc043b1, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: dfe7cc990e92bba42b2498d0810397d5, type: 2}
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: <color=yellow>[Peregrini] People of the Clans! Those of you who want
+        to stand and fight- join us! The Pragmaticus must be stopped, but these Bakuto
+        will only exploit you!
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites:
-    - {fileID: 11400000, guid: cee0af71f284fba4ba0579e0b3d73207, type: 2}
-    DialogResult: {fileID: 0}
+    - {fileID: 11400000, guid: 8aacf088a5b85dd45aad083dabd7d82a, type: 2}
+    DialogResult: {fileID: 11400000, guid: 8907825120f7b6f4b9b9891423a7287a, type: 2}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: <color=yellow>[Insurrection] The Bakuto are right- stand up against
+        our enemy and fight the Pragmaticus! Join us- fight the good fight!
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites:
+    - {fileID: 11400000, guid: f584cf9500236f94288aac0aca003398, type: 2}
+    DialogResult: {fileID: 11400000, guid: e8ad9ed86c40c9249a8f04274f455e99, type: 2}
     AlternativeResults: []
     TriggerEvent: {fileID: 0}

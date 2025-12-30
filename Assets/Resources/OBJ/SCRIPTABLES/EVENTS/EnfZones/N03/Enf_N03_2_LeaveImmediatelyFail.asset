@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_N03_2_LeaveImmediatelyFail
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: Our agents are ordered to extract as soon as possible. However, one
+      of the members of the crowd recognizes you vessel! They inform the Bakuto...
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 2efa443e450817946b5abb735e0241e2, type: 2}
+    Alternatives: []
+  - BaseText: They have spotted us. The crowd begins to disperse, and cheer for the
+      Bakuto. A voice looms over the Flux.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 2efa443e450817946b5abb735e0241e2, type: 2}
+    Alternatives: []
+  - BaseText: Meddling fools. You are of the Starlight Endeavour. Your mission will
+      only end in fire and ash.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 5a28b60138a32ef4ca104943cc75855b, type: 2}
+    Alternatives: []
+  - BaseText: Let us hasten this end for you. Kiyaaaaaaaaaaaaaa!
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 5a28b60138a32ef4ca104943cc75855b, type: 2}
+    Alternatives: []
+  - BaseText: The Bakuto are coming, explosives and incendiaries at the ready. To
+      arms!
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 2b41c72ed0b156a4e8df29cc297a36f7, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Prepare for battle!
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: 129670868374a5349ac47905e4d7a5ae, type: 2}

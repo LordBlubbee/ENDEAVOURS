@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6713958396d342478460fae2111cc58, type: 3}
-  m_Name: Enf_N03_EphemeralRelief
+  m_Name: Enf_N03_BakutoRecruitment
   m_EditorClassIdentifier: 
   UniqueName: 
   ResourceLink: EnfZones/N03
-  InitialSoundtrack: 10
-  CombatSoundtrack: 10
-  InitialMapData: SIGNAL
+  InitialSoundtrack: 9
+  CombatSoundtrack: 9
+  InitialMapData: LAND
   InitialDialog: {fileID: 11400000, guid: 3d18e41216a1a8846869e5ebaeae08cc, type: 2}
-  BackgroundType: 0
-  WeatherSelectors: 1
+  BackgroundType: 3
+  WeatherSelectors: 5
   GateToBiome: {fileID: 0}
   AlternativeDialogs: []

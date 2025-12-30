@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Enf_C01_WreckedShip_Initial
   m_EditorClassIdentifier: 
   StoryTexts:
-  - BaseText: The signal is static, but its message is garbled and unreadable to
-      our Gubernator. Suddenly, they exit their ritual chambers and concentration.
+  - BaseText: A signal echoes throughout this area. It seems distant and afar, and
+      our Gubernator has trouble making out its contents. Our Drifter continues on
+      course for an hour before our Gubernator announces new information.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []

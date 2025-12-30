@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_N03_0_AntagonizeBakuto
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: 'Our team has entered discussions. Polarization is rising. People are
+      shouting and screaming in the chaos. It seems most people here agree with the
+      Bakuto. '
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 2efa443e450817946b5abb735e0241e2, type: 2}
+    Alternatives: []
+  - BaseText: The confrontation eventually erupts, and the Bakuto's blimp starts
+      to rise. They must have located our vessel! All crew to battle stations!
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 2efa443e450817946b5abb735e0241e2, type: 2}
+    Alternatives: []
+  - BaseText: Incessant fools. You are the independent drifter. The followers of
+      the Starlight Endeavour. Your mission shall end in flame.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 5a28b60138a32ef4ca104943cc75855b, type: 2}
+    Alternatives: []
+  - BaseText: Pray to the Blood Fathers that what remains of you shall sate your
+      future ancestors, for we shall not. Kiyaaaaaaaaaaaaaa!
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 5a28b60138a32ef4ca104943cc75855b, type: 2}
+    Alternatives: []
+  - BaseText: The loud warcry that follows deafens your Gubernator, and your comms
+      are put offline. The warmongers are coming.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 2b41c72ed0b156a4e8df29cc297a36f7, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Prepare for battle!
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: e1566470a6a9bb9439939b606a674a43, type: 2}

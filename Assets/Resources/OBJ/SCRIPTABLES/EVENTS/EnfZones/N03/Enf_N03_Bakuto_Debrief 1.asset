@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
-  m_Name: Area1_H03_Bakuto_D2
+  m_Name: Enf_N03_Bakuto_Debrief 1
   m_EditorClassIdentifier: 
   StoryTexts:
-  - BaseText: You will get no answers, fool. By the Rite of Blood, we proclaim a
-      duel. May the strongest warrior rule the ashes. Kiyaaaaaaaaaaaaaa!
+  - BaseText: The Bakuto warship suddenly erupts into a massive fireball- a self-destruct
+      sequence that renders it all to ash.
     VariantTexts: []
-    Speaker: {fileID: 11400000, guid: 5a28b60138a32ef4ca104943cc75855b, type: 2}
+    Speaker: {fileID: 11400000, guid: 2b41c72ed0b156a4e8df29cc297a36f7, type: 2}
     Alternatives: []
-  - BaseText: Their warriors are vicious and highly trained, and their vessels are
-      known for their aggressive firepower. Prepare yourself.
+  - BaseText: The people below have scattered and fled the battle while they could.
+      It has become quite a mess... But the ship's loot is ours.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: 2b41c72ed0b156a4e8df29cc297a36f7, type: 2}
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
-      BaseText: Prepare for battle.
+      BaseText: Our journey continues.
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
     DialogResult: {fileID: 0}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: e6ae47bb1e2df4443a4e7b6bdbb5bd5e, type: 2}
+    TriggerEvent: {fileID: 11400000, guid: 92287236a3a65b9469b2bfb3e7914e79, type: 2}
