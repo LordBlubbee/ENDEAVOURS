@@ -312,6 +312,13 @@ public class CO_SPAWNER : NetworkBehaviour
             dun.Init();
             CO.co.SetCurrentDungeon(dun);
 
+            foreach (ScriptableEnemyCrew enemyType in gr.GuaranteedCrewList)
+            {
+                CREW crew = SpawnUnitInDungeon(enemyType.SpawnCrew, dun);
+                SetQualityLevelOfCrew(crew, CrewQualityPoints);
+                CrewWorthPoints -= enemyType.Worth;
+            }
+
             ResetWeights();
             i = 0;
             foreach (EnemyCrewWithWeight weight in gr.SpawnCrewList)

@@ -14,7 +14,7 @@ public class ScriptableEnemyGroup : ScriptableObject
     [Header("SPAWN TARGETS")]
     public int CrewAmountLevel = 100;
     public int CrewQualityLevel = 100;
-    public List<EnemyCrewWithWeight> GuaranteedCrewList;
+    public List<ScriptableEnemyCrew> GuaranteedCrewList;
     public List<EnemyCrewWithWeight> SpawnCrewList;
 
     [Header("DRIFTER")]

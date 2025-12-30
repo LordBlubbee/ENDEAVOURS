@@ -305,7 +305,7 @@ MonoBehaviour:
   ResourceType: 2
   Damage: 200
   RotationBaseSpeed: 45
-  MaxAmmo: 10
+  MaxAmmo: 8
   FireCooldown: 16
   ReloadCooldown: 16
   ProjectileCount: 1

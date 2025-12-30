@@ -305,6 +305,7 @@ public class AI_GROUP : MonoBehaviour
         foreach (Module mod in HomeDrifter.Interior.SystemModules)
         {
             if (!(mod is ModuleEffector)) continue;
+            if (mod.IsDisabled()) continue;
             ModuleEffector effector = mod as ModuleEffector;
             if (effector.IsEffectAutomatic())
             {

@@ -563,7 +563,7 @@ MonoBehaviour:
   ModuleUpgradeTechs: 00000000000000001e00000028000000
   CenterPos: {fileID: 8038492078634388055}
   EffectDuration: 8
-  EffectMaxCooldown: 55
+  EffectMaxCooldown: 50
   EffectDurationPerLevel: 1
   EffectCooldownReductionPerLevel: -4
   ActivateVFXPrefab: {fileID: 7178822272740056672, guid: f81050a86bfdac9409620b90721e6bdc, type: 3}
