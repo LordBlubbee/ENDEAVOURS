@@ -150,7 +150,7 @@ public class AUDCO : MonoBehaviour
         aud.transform.SetParent(CAM.cam.transform);
         float Dist = (CAM.cam.transform.position - trt).magnitude;
         //Debug.Log($"Sound effect {clip.name} was {Dist} away resulting in sound level {Mathf.Clamp01((70f - Dist) * 0.04f)}");
-        aud.PlayAUD(clip, pitchshift, Mathf.Clamp01(0.4f+(70f - Dist) * 0.04f));
+        aud.PlayAUD(clip, pitchshift, 1);
     }
     public void PlaySFX(AudioClip[] clips, Vector3 trt, float pitchshift = 0f)
     {
