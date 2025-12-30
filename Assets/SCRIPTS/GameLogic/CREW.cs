@@ -1014,6 +1014,20 @@ public class CREW : NetworkBehaviour, iDamageable
         AnimationComboWeapon1 = 0;
         AnimationComboWeapon2 = 0;
         CurrentReload = 0;
+
+        if (EquippedWeapons[0])
+        {
+            if (EquippedWeapons[0].ToolPrefab.DashResetsCooldown) Slot1Cooldown.Value = 0;
+        }
+        if (EquippedWeapons[1])
+        {
+            if (EquippedWeapons[1].ToolPrefab.DashResetsCooldown) Slot1Cooldown.Value = 0;
+        }
+        if (EquippedWeapons[2])
+        {
+            if (EquippedWeapons[2].ToolPrefab.DashResetsCooldown) Slot1Cooldown.Value = 0;
+        }
+
         DashingDamageBuff = 0.6f;
         StartCoroutine(DashNumerator());
         if (EquippedToolObject)
@@ -1448,7 +1462,7 @@ public class CREW : NetworkBehaviour, iDamageable
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
         float reloadMod = 1f / (0.6f + 0.05f * GetATT_ARMS() + 0.05f * GetATT_ALCHEMY());
         reload *= reloadMod;
-        SetExtendedCooldown(reload);
+        SetExtendedCooldown(reloadMod);
         StartCoroutine(AttackCooldown(reload));
         if (!(proj is PROJ_Grapple)) ArtifactOnRanged();
     }
@@ -1468,7 +1482,7 @@ public class CREW : NetworkBehaviour, iDamageable
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
         float reloadMod = 1f / (0.4f + 0.08f * GetATT_COMMUNOPATHY() + 0.08f * GetATT_ALCHEMY());
         reload *= reloadMod;
-        SetExtendedCooldown(reload);
+        SetExtendedCooldown(reloadMod);
         StartCoroutine(AttackCooldown(reload));
         ArtifactOnSpell();
     }
@@ -1485,7 +1499,7 @@ public class CREW : NetworkBehaviour, iDamageable
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
         float reloadMod = 1f / (0.6f + 0.06f * GetATT_COMMUNOPATHY() + 0.06f * GetATT_ALCHEMY());
         reload *= reloadMod;
-        SetExtendedCooldown(reload);
+        SetExtendedCooldown(reloadMod);
         StartCoroutine(AttackCooldown(reload));
         ArtifactOnSpell();
     }

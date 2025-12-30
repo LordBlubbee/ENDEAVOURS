@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8290810d474b4fa43ac85b0fd530822f, type: 3}
+  m_Name: EphemeralResearcher
+  m_EditorClassIdentifier: 
+  SpawnDrifter: {fileID: 1453653842865150193, guid: 0bdca0deaf5cfdb49b11e13605ce01fb, type: 3}
+  Weight: 20
+  BaseWeaponBudgetMod: 1.1
+  BaseModuleBudgetMod: 1.1
+  EquippableWeapons:
+  - {fileID: 11400000, guid: e699b0e268a36f041a171787e41bb9c7, type: 2}
+  - {fileID: 11400000, guid: acdc84f7aedc49344a581b4ed33a3453, type: 2}
+  - {fileID: 11400000, guid: 767ff06a4e8942d46a6a26b1f5bde4c2, type: 2}
+  - {fileID: 11400000, guid: bd723a4461c96794a967ec21362a2f7b, type: 2}
+  EquippableModules:
+  - {fileID: 11400000, guid: f4a79d7d8115dae47bc2186299f35909, type: 2}
+  - {fileID: 11400000, guid: df311f49a5a0b3140a2953d61900940b, type: 2}
+  HullIncreasePerLevelup: 400

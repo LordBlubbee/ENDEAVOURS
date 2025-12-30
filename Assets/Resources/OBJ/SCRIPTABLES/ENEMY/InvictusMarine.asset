@@ -13,14 +13,4 @@ MonoBehaviour:
   m_Name: InvictusMarine
   m_EditorClassIdentifier: 
   SpawnCrew: {fileID: 5867427934140877094, guid: e3648a6c91d53c448b023e06c981efeb, type: 3}
-  Worth: 100
-  HealthIncreasePerLevelup: 15
-  PointIncreasePerLevelup:
-  - 0
-  - 1
-  - 0.5
-  - 0
-  - 0.5
-  - 0.5
-  - 0.5
-  - 0.5
+  Worth: 90

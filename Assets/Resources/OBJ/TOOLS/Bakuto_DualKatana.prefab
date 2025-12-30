@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tool: {fileID: 8311341897716400573}
+  Crew: {fileID: 0}
   col: {fileID: 230365718461389796}
   ReduceDamageModMelee: 1
   ReduceDamageModRanged: 0.6
@@ -370,6 +371,7 @@ MonoBehaviour:
   - {fileID: 7437231586876515039}
   AI: 0
   isConsumable: 0
+  DashResetsCooldown: 0
   CrosshairSprite: {fileID: 21300000, guid: b2087bbfc192e8041bd4924a70def55c, type: 3}
   CrosshairMaxRange: 4
   CrosshairMinRange: 3
@@ -493,6 +495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tool: {fileID: 8311341897716400573}
+  Crew: {fileID: 0}
   col: {fileID: 3740242466005506562}
   ReduceDamageModMelee: 1
   ReduceDamageModRanged: 1

@@ -28,11 +28,18 @@ MonoBehaviour:
     MinimumQuality: 0
     MaximumQuality: 0
     Crew: {fileID: 11400000, guid: 7ba5cb155e8ea6148b15e5788e29c48b, type: 2}
+  - Weight: 0
+    WeightIncreaseOverQualityGradient: 20
+    MinimumQuality: 100
+    MaximumQuality: 200
+    Crew: {fileID: 11400000, guid: 1719e4c7d01f1da439b540a93163988e, type: 2}
   DrifterQualityLevel: 100
   SpawnDrifter:
   - {fileID: 11400000, guid: 3c0fdf9475e854245a52026afe75d431, type: 2}
   DungeonQualityLevel: 100
   SpawnDungeon: {fileID: 0}
+  SpawnGroupAmountMin: 1
+  SpawnGroupAmountMax: 1
   SpawnGroupRange: 10
   SpawnDistanceMin: 100
   SpawnDistanceMax: 200

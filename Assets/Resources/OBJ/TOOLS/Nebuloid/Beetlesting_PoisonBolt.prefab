@@ -177,7 +177,7 @@ MonoBehaviour:
   ImpactVFX: {fileID: 7178822272740056672, guid: e7703d35e7045b24cb5bd091f9422000, type: 3}
   LaunchVFX: {fileID: 0}
   ImpactSFX:
-  - {fileID: 8300000, guid: e65858ce6f0843548b28176ca445c4c4, type: 3}
+  - {fileID: 8300000, guid: f4d1190882b086444a172004ca083b2a, type: 3}
   BlockPenetration: 9
   DodgeModifier: 0.8
   HullDamageModifier: 0

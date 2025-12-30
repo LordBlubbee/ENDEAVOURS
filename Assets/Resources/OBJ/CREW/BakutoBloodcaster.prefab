@@ -325,7 +325,7 @@ MonoBehaviour:
   - 0
   - 0.5
   - 0.5
-  - 0.5
+  - 1
   Spr: {fileID: 5632965166791697770}
   Stripes: {fileID: 2877882561032477406}
   ControlledByPlayer: 0

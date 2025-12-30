@@ -26,6 +26,9 @@ MonoBehaviour:
   ItemIcon: {fileID: -2473860874038997393, guid: 1fa3b4cbfc7793e4a8afc222b00dc3c9, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Nomaden_Floralburst
   ItemResourceIDShort: Nomaden_Floralburst
+  SellMaterials: 0
+  SellSupplies: 5
+  SellTech: 2
   ItemRarity: 0
   MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: 6891cdd36cd16794c82c5d74283d5371, type: 3}

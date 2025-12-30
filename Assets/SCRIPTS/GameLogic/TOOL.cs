@@ -13,6 +13,7 @@ public class TOOL : MonoBehaviour
     public List<BlockAttacks> Blockers;
     public ToolAI AI;
     public bool isConsumable = false;
+    public bool DashResetsCooldown = true;
     public ToolAI GetUsageAI()
     {
         return AI;

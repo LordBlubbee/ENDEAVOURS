@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AI_Type: 1
   AI_Group: 2
-  CrewAmountLevel: 600
+  CrewAmountLevel: 700
   CrewQualityLevel: 100
   GuaranteedCrewList: []
   SpawnCrewList:
@@ -22,12 +22,12 @@ MonoBehaviour:
     WeightIncreaseOverQualityGradient: 0
     MinimumQuality: 0
     MaximumQuality: 0
-    Crew: {fileID: 11400000, guid: c6f85b10eddc45a469ad04cbe60db169, type: 2}
+    Crew: {fileID: 11400000, guid: 2aa063b2090cfa34bbf8d4fafe530722, type: 2}
   - Weight: 20
     WeightIncreaseOverQualityGradient: 0
     MinimumQuality: 0
     MaximumQuality: 0
-    Crew: {fileID: 11400000, guid: 7ba5cb155e8ea6148b15e5788e29c48b, type: 2}
+    Crew: {fileID: 11400000, guid: 2fb908eb190e55d4ba22295e28599e8c, type: 2}
   - Weight: 15
     WeightIncreaseOverQualityGradient: 0
     MinimumQuality: 0
@@ -38,11 +38,18 @@ MonoBehaviour:
     MinimumQuality: 0
     MaximumQuality: 0
     Crew: {fileID: 11400000, guid: 06da3eac44f90c94c9ff09a62d6265d7, type: 2}
+  - Weight: 0
+    WeightIncreaseOverQualityGradient: 25
+    MinimumQuality: 100
+    MaximumQuality: 200
+    Crew: {fileID: 11400000, guid: bea8fc20f6e7cbe4f8347c5b4b4f8e2e, type: 2}
   DrifterQualityLevel: 90
   SpawnDrifter:
   - {fileID: 11400000, guid: 1b0e38ebf9d06ac42ba60e6fb629cd55, type: 2}
   DungeonQualityLevel: 100
   SpawnDungeon: {fileID: 0}
+  SpawnGroupAmountMin: 1
+  SpawnGroupAmountMax: 1
   SpawnGroupRange: 10
   SpawnDistanceMin: 100
   SpawnDistanceMax: 200

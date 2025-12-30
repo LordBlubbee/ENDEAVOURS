@@ -16,7 +16,7 @@ MonoBehaviour:
   ResourceLink: EnfZones/C02
   InitialSoundtrack: 8
   CombatSoundtrack: 8
-  InitialMapData: TERRAIN
+  InitialMapData: LAND
   InitialDialog: {fileID: 11400000, guid: 15f99eca938567c4a90dff6256f36692, type: 2}
   BackgroundType: 3
   WeatherSelectors: 5

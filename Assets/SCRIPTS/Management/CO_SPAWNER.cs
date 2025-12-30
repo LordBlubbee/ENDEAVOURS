@@ -492,6 +492,15 @@ public class CO_SPAWNER : NetworkBehaviour
             else
             {
                 Module upgrade = drifter.Interior.WeaponModules[UnityEngine.Random.Range(0, drifter.Interior.WeaponModules.Count)];
+                if (upgrade.ModuleLevel.Value >= upgrade.ModuleUpgradeMaterials.Length - 1)
+                {
+                    if (Tries > 0)
+                    {
+                        Tries--;
+                        if (Tries == 0) break;
+                    }
+                    continue;
+                }
                 Cost = 0.9f * (upgrade.ModuleUpgradeMaterials[upgrade.ModuleLevel.Value] + upgrade.ModuleUpgradeTechs[upgrade.ModuleLevel.Value] * 2);
                 if (Cost > Budget && Tries > 0)
                 {

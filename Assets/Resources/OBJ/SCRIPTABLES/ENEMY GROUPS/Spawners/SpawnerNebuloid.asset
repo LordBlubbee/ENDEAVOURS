@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnEnemyGroupList:
   - EnemyGroup: {fileID: 11400000, guid: fcd3db1e661fd7343a8370817d77fdc3, type: 2}
-    Weight: 20
+    Weight: 30
   - EnemyGroup: {fileID: 11400000, guid: 0b97ee8f43c0f6a499f79e7fcd3b12dc, type: 2}
     Weight: 10
   - EnemyGroup: {fileID: 11400000, guid: 124a357a48787c94f9d05658eea3fbbf, type: 2}

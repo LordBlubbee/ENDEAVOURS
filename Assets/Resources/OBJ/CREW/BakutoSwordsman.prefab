@@ -356,7 +356,7 @@ MonoBehaviour:
   DefaultToolset: 1
   EquippedWeapons:
   - {fileID: 11400000, guid: 94331255bdf77974a95e9aa0ff10aa02, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 1a5ba66db25aae94794c0a02ba54b3d2, type: 2}
   - {fileID: 0}
   EquippedArmor: {fileID: 0}
   EquippedArtifacts:

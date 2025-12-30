@@ -51,9 +51,9 @@ MonoBehaviour:
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
-    DialogResult: {fileID: 0}
+    DialogResult: {fileID: 11400000, guid: 780d7da650533cc4c8e36d631b633c4e, type: 2}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: 3a58653d5c7a05148acc21f58b635a88, type: 2}
+    TriggerEvent: {fileID: 0}
   - ChoiceText:
       BaseText: We are not in any capacity to help, and this could be a setup. Ignore
         the transmission.
@@ -73,9 +73,9 @@ MonoBehaviour:
       Alternatives: []
     Prerequisites:
     - {fileID: 11400000, guid: cee0af71f284fba4ba0579e0b3d73207, type: 2}
-    DialogResult: {fileID: 0}
+    DialogResult: {fileID: 11400000, guid: 52d1f0a9d8ebf154bb578ae4cb1abbfb, type: 2}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: 6021de252e5c62742bf8567029488848, type: 2}
+    TriggerEvent: {fileID: 0}
   - ChoiceText:
       BaseText: <color=yellow>[Pragmatice] These war-mongers make bold, unverified
         claims unsupported by evidence links or Stipulations. I calculate a 38% chance
@@ -85,6 +85,6 @@ MonoBehaviour:
       Alternatives: []
     Prerequisites:
     - {fileID: 11400000, guid: 71e95b8ab59cccf499ccb90cd02a459e, type: 2}
-    DialogResult: {fileID: 0}
+    DialogResult: {fileID: 11400000, guid: ce5f5e290d21dc545a6a1b49975a32be, type: 2}
     AlternativeResults: []
-    TriggerEvent: {fileID: 11400000, guid: 3d0cc1f511e10744ca37f3c97a27308e, type: 2}
+    TriggerEvent: {fileID: 0}

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BakutoWarrior
   m_EditorClassIdentifier: 
   SpawnCrew: {fileID: 5867427934140877094, guid: 65375c9c33102db41a786fb28b1cf066, type: 3}
-  Worth: 90
+  Worth: 100

@@ -15,7 +15,7 @@ MonoBehaviour:
   AI_Type: 2
   AI_Group: 2
   CrewAmountLevel: 800
-  CrewQualityLevel: 140
+  CrewQualityLevel: 120
   GuaranteedCrewList: []
   SpawnCrewList:
   - Weight: 20
@@ -33,6 +33,11 @@ MonoBehaviour:
     MinimumQuality: 0
     MaximumQuality: 0
     Crew: {fileID: 11400000, guid: 10078cda2c750cf4eb7b2d5629c4e0d5, type: 2}
+  - Weight: 0
+    WeightIncreaseOverQualityGradient: 25
+    MinimumQuality: 100
+    MaximumQuality: 200
+    Crew: {fileID: 11400000, guid: 4746f8097976f6545a6a64d759cd33e9, type: 2}
   DrifterQualityLevel: 100
   SpawnDrifter:
   - {fileID: 11400000, guid: 484d5ff31bc9988408bdaf9698dc79cf, type: 2}

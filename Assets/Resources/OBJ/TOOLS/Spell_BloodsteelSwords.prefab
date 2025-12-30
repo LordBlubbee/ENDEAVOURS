@@ -210,6 +210,7 @@ MonoBehaviour:
   Blockers: []
   AI: 1
   isConsumable: 0
+  DashResetsCooldown: 1
   CrosshairSprite: {fileID: 21300000, guid: 75cb877007f86484a8c71b17c5b6bc57, type: 3}
   CrosshairMaxRange: 999
   CrosshairMinRange: -1
@@ -223,7 +224,7 @@ MonoBehaviour:
   attackDamage1: 25
   RangedPrefab1: {fileID: 0}
   UniqueSpell1: {fileID: 5132797143761005078}
-  Reload1: 1.5
+  Reload1: 0.4
   ExtendedCooldown1: 1.5
   ApplyBuff: {fileID: 0}
   ActionUse2: 0
