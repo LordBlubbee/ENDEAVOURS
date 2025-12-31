@@ -67,6 +67,7 @@ public class Screen_GameUI : MonoBehaviour
 
     public void PressQuitGame()
     {
+        GO.g.saveGame();
         LOBBY.lobby.PressQuitServer();
     }
 

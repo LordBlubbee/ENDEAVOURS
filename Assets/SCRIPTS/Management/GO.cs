@@ -22,6 +22,7 @@ public class GO : MonoBehaviour
     public int screenShakeLevel;
     public int resolutionConfig;
 
+    public int currentSaveSlot;
     public int preferredHostControl;
     public int preferredGameDifficulty;
     public string preferredLobbyName;
@@ -46,6 +47,7 @@ public class GO : MonoBehaviour
         resolutionConfig = 0; //0 = full screen, 1 = 2560x1600, 2 = 2560x1440, 3 = 1920x1200, 4 = 1920x1080, 5 = 1280x720
         mouseScrollSpeed = 0.2f;
         arrowScrollSpeed = 0.2f;
+        currentSaveSlot = 0;
         OST_Vol = 0.8f;
         VCX_Vol = 0.8f;
         SFX_Vol = 0.8f;
@@ -75,36 +77,32 @@ public class GO : MonoBehaviour
             saveSettings();
         }
     }
-    public void loadSlot(int slot, bool overwrite)
+    public dataStructure loadSlot(int slot)
     {
         string path = Application.persistentDataPath + "/Mistworld" + slot;
         GO.g.CurrentSave = "/Mistworld" + slot;
 
-        if (File.Exists(path) && !overwrite)
+        if (File.Exists(path))
         {
             Debug.Log("Loading save at " + path);
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
             dataStructure data = formatter.Deserialize(stream) as dataStructure; //Load dataStructure that had old GO variables
-            data.loadGame();
 
             stream.Close();
+            return data;
         }
-        else
-        {
-            Debug.Log("Creating new save at " + path);
-            saveGame();
-        }
+        return null;
     }
     public void saveGame()
     {
-        saveGame(CurrentSave);
+        saveGame(currentSaveSlot);
     }
-    public void saveGame(string slot)
+    public void saveGame(int slot)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + slot;
+        string path = Application.persistentDataPath + "/Mistworld" + slot;
 
         FileStream stream = new FileStream(path, FileMode.Create);
 
@@ -138,6 +136,8 @@ public class dataSettings
     public float OST_Vol;
     public float VCX_Vol;
     public float SFX_Vol;
+
+    public int currentSaveSlot;
     public float mouseScrollSpeed;
     public float arrowScrollSpeed;
     public int screenShakeLevel;
@@ -149,6 +149,7 @@ public class dataSettings
     {
         GO.g.localUsername = localUsername;
         GO.g.localColor = new Color(localColorR, localColorG, localColorB);
+        GO.g.currentSaveSlot = currentSaveSlot;
         GO.g.OST_Vol = OST_Vol;
         GO.g.VCX_Vol = VCX_Vol;
         GO.g.SFX_Vol = SFX_Vol;
@@ -168,6 +169,7 @@ public class dataSettings
         localColorR = GO.g.localColor.r;
         localColorG = GO.g.localColor.g;
         localColorB = GO.g.localColor.b;
+        currentSaveSlot = GO.g.currentSaveSlot;
         OST_Vol = GO.g.OST_Vol;
         VCX_Vol = GO.g.VCX_Vol;
         SFX_Vol = GO.g.SFX_Vol;
@@ -186,6 +188,8 @@ public class dataStructure
 {
     //Add save variables here
     public DateTime saveTime;
+    public int BiomeProgress;
+    public string BiomeName;
 
     int Resources_Materials;
     int Resources_Supplies;
@@ -212,6 +216,7 @@ public class dataStructure
         if (CO.co == null) return;
         //Save game
         saveTime = DateTime.Now;
+        BiomeProgress = CO.co.BiomeProgress;
 
         foreach (var kvp in CO.co.Resource_Reputation)
         {
@@ -226,6 +231,7 @@ public class dataStructure
         Resources_Tech = CO.co.Resource_Tech.Value;
 
         BiomeType = CO.co.CurrentBiome.name;
+        BiomeName = CO.co.CurrentBiome.BiomeName;
         DrifterType = CO.co.PlayerMainDrifterTypeID;
         foreach (ScriptableEquippable equip in CO.co.Drifter_Inventory)
         {

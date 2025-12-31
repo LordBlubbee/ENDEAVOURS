@@ -1021,11 +1021,11 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         if (EquippedWeapons[1])
         {
-            if (EquippedWeapons[1].ToolPrefab.DashResetsCooldown) Slot1Cooldown.Value = 0;
+            if (EquippedWeapons[1].ToolPrefab.DashResetsCooldown) Slot2Cooldown.Value = 0;
         }
         if (EquippedWeapons[2])
         {
-            if (EquippedWeapons[2].ToolPrefab.DashResetsCooldown) Slot1Cooldown.Value = 0;
+            if (EquippedWeapons[2].ToolPrefab.DashResetsCooldown) Slot3Cooldown.Value = 0;
         }
 
         DashingDamageBuff = 0.6f;

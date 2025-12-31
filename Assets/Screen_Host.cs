@@ -7,13 +7,47 @@ public class Screen_Host : MonoBehaviour
     public TooltipObject DifficultyTooltip;
     public TextMeshProUGUI HostControlTex;
     public TooltipObject HostControlTooltip;
+
+    public UI_LoadGameButton[] LoadGameButtons;
     private void OnEnable()
     {
-        RefreshPlayerGameDifficulty(); RefreshHostControl();
+        SelectedLoadedGame = LoadGameButtons[GO.g.currentSaveSlot];
+        RefreshPlayerGameDifficulty(); RefreshHostControl(); RefreshLoadedGames();
         LOBBY.lobby.HostNameInput.text = GO.g.preferredLobbyName;
+    }
+    public void RefreshLoadedGames()
+    {
+        for (int i = 0; i < LoadGameButtons.Length; i++)
+        {
+            dataStructure sav = GO.g.loadSlot(i);
+            LoadGameButtons[i].gameObject.SetActive(true);
+            LoadGameButtons[i].Init(sav);
+            LoadGameButtons[i].SetSelected(LoadGameButtons[i] == SelectedLoadedGame);
+        }
+    }
+    private UI_LoadGameButton SelectedLoadedGame;
+    public UI_LoadGameButton GetSelectedLoadedGame()
+    {
+        return SelectedLoadedGame;
+    }
+    public void PressLoadGame(UI_LoadGameButton but)
+    {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
+        SelectedLoadedGame = but;
+        RefreshLoadedGames();
+        for (int i = 0; i < LoadGameButtons.Length; i++)
+        {
+            if (LoadGameButtons[i] == but)
+            {
+                GO.g.currentSaveSlot = i;
+                GO.g.saveSettings();
+                return;
+            }
+        }
     }
     public void PressPlayerGameDifficulty()
     {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         GO.g.preferredGameDifficulty++;
         if (GO.g.preferredGameDifficulty > 4) GO.g.preferredGameDifficulty = 0;
         GO.g.saveSettings();
@@ -53,6 +87,7 @@ public class Screen_Host : MonoBehaviour
     }
     public void PressHostControl()
     {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         GO.g.preferredHostControl++;
         if (GO.g.preferredHostControl > 1) GO.g.preferredHostControl = 0;
         GO.g.saveSettings();
