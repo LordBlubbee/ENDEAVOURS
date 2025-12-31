@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UniqueName: 
   ResourceLink: EnfZones/N02
-  InitialSoundtrack: 7
-  CombatSoundtrack: 7
+  InitialSoundtrack: 4
+  CombatSoundtrack: 4
   InitialMapData: NO DATA
   InitialDialog: {fileID: 11400000, guid: 3b9c02e235b2fc44f8a2253214fc84a6, type: 2}
   BackgroundType: 2

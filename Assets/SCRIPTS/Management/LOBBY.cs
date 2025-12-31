@@ -77,8 +77,12 @@ public class LOBBY : MonoBehaviour
     }
     public async void InitLobby()
     {
+        
         await UnityServices.InitializeAsync();
-        await SignUpAnonymouslyAsync();
+        if (!AuthenticationService.Instance.IsSignedIn)
+        {
+            await SignUpAnonymouslyAsync();
+        }
         RefreshLobbyList();
     }
     public async void RefreshLobbyList()

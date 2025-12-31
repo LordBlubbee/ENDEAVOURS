@@ -80,7 +80,7 @@ public class GO : MonoBehaviour
     public dataStructure loadSlot(int slot)
     {
         string path = Application.persistentDataPath + "/Mistworld" + slot;
-        GO.g.CurrentSave = "/Mistworld" + slot;
+        //GO.g.CurrentSave = "/Mistworld" + slot;
 
         if (File.Exists(path))
         {
@@ -239,6 +239,7 @@ public class dataStructure
         }
         foreach (Module mod in CO.co.PlayerMainDrifter.Interior.GetModules())
         {
+            if (mod.ShowAsModule == null) continue;
             dataModule data = new dataModule();
             data.ModuleLink = mod.ShowAsModule.GetItemResourceIDFull();
             DrifterModules.Add(data);
@@ -249,25 +250,23 @@ public class dataStructure
             {
                 dataPlayer play = new dataPlayer();
                 play.PlayerName = crew.CharacterName.Value.ToString();
-                play.PlayerNameColor = crew.GetCharacterColor();
+                play.localColorR = crew.GetCharacterColor().r;
+                play.localColorG = crew.GetCharacterColor().g;
+                play.localColorB = crew.GetCharacterColor().b;
 
                 play.PlayerBackground = crew.CharacterBackground.ResourcePath;
                 play.PlayerXP = crew.XPPoints.Value;
                 play.PlayerSkillPoints = crew.SkillPoints.Value;
                 play.PlayerAttributes = crew.GetAttributes();
-                play.PlayerWeapons = new string[]
-                {
-                    crew.EquippedWeapons[0].GetItemResourceIDFull(),
-                     crew.EquippedWeapons[1].GetItemResourceIDFull(),
-                      crew.EquippedWeapons[2].GetItemResourceIDFull()
-                };
-                play.PlayerArmor = crew.EquippedArmor.GetItemResourceIDFull();
-                play.PlayerArtifacts = new string[]
-              {
-                    crew.EquippedArtifacts[0].GetItemResourceIDFull(),
-                     crew.EquippedArtifacts[1].GetItemResourceIDFull(),
-                      crew.EquippedArtifacts[2].GetItemResourceIDFull()
-              };
+                play.PlayerWeapons = new string[2];
+                if (crew.EquippedWeapons[0] != null) play.PlayerWeapons[0] = crew.EquippedWeapons[0].GetItemResourceIDFull();
+                if (crew.EquippedWeapons[1] != null) play.PlayerWeapons[1] = crew.EquippedWeapons[1].GetItemResourceIDFull();
+                if (crew.EquippedWeapons[2] != null) play.PlayerWeapons[2] = crew.EquippedWeapons[2].GetItemResourceIDFull();
+                if (crew.EquippedArmor != null) play.PlayerArmor = crew.EquippedArmor.GetItemResourceIDFull();
+                play.PlayerArtifacts = new string[2];
+                if (crew.EquippedArtifacts[0] != null) play.PlayerArtifacts[0] = crew.EquippedWeapons[0].GetItemResourceIDFull();
+                if (crew.EquippedArtifacts[1] != null) play.PlayerArtifacts[1] = crew.EquippedWeapons[1].GetItemResourceIDFull();
+                if (crew.EquippedArtifacts[2] != null) play.PlayerArtifacts[2] = crew.EquippedWeapons[2].GetItemResourceIDFull();
                 DrifterPlayers.Add(play);
             } else
             {
@@ -283,7 +282,8 @@ public class dataStructure
         {
             dataMapPoint point = new dataMapPoint();
             point.PointLink = equip.AssociatedPoint.GetResourceLink();
-            point.Position = equip.transform.position;
+            point.PositionX = equip.transform.position.x;
+            point.PositionY = equip.transform.position.y;
 
             if (equip == CO.co.GetPlayerMapPoint()) OurMapPointPositionID = i;
 
@@ -297,7 +297,13 @@ public class dataStructure
 public class dataMapPoint
 {
     public string PointLink;
-    public Vector3 Position;
+    public float PositionX;
+    public float PositionY;
+
+    public Vector3 GetPosition()
+    {
+        return new Vector3(PositionX, PositionY, 0);
+    }
 }
 
 [Serializable]
@@ -319,7 +325,15 @@ public class dataNonPlayerCrew
 public class dataPlayer
 {
     public string PlayerName;
-    public Color PlayerNameColor;
+    public float localColorR;
+    public float localColorG;
+    public float localColorB;
+
+    public Color getColor()
+    {
+        return new Color(localColorR, localColorG, localColorB);
+    }
+
     public string PlayerBackground;
     public int PlayerXP;
     public int PlayerSkillPoints;

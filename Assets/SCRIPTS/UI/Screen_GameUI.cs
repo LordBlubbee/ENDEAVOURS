@@ -1,5 +1,6 @@
 using NUnit;
 using NUnit.Framework;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -46,6 +47,7 @@ public class Screen_GameUI : MonoBehaviour
     [Header("MISC")]
     public TextMeshProUGUI InteractTex;
     public GameObject PauseMenu;
+    public TextMeshProUGUI SaveButtonTex;
     public GameObject CommsMapButton;
     public TextMeshProUGUI CommsTex;
     public TextMeshProUGUI CommsReadyTex;
@@ -64,11 +66,17 @@ public class Screen_GameUI : MonoBehaviour
     {
         if (LOCALCO.local.GetPlayer().BleedingTime.Value > 0) LOCALCO.local.GetPlayer().RespawnASAPRpc();
     }
-
     public void PressQuitGame()
     {
-        GO.g.saveGame();
         LOBBY.lobby.PressQuitServer();
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
+    }
+    public void PressSaveGame()
+    {
+        GO.g.saveGame();
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
+        DateTime time = DateTime.Now;
+        SaveButtonTex.text = $"SAVE GAME \nLAST: {time.Hour.ToString("00")}:{time.Minute.ToString("00")}";
     }
 
     private float GetPlayerCooldown(CREW player, int ID)

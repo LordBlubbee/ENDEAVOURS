@@ -17,7 +17,7 @@ public class UI_LoadGameButton : MonoBehaviour
             LoadText.text = "EMPTY";
             return;
         }
-        LoadText.text = $"LOAD GAME {sav.saveTime.Date} \nAREA {sav.BiomeProgress} - {sav.BiomeName}";
+        LoadText.text = $"LOAD GAME {sav.saveTime.Day.ToString("00")}/{sav.saveTime.Month.ToString("00")}/{sav.saveTime.Year.ToString("00")} \nAREA {sav.BiomeProgress} - {sav.BiomeName}";
     }
     public void SetSelected(bool bol)
     {

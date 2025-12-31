@@ -65,7 +65,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "LOAD GAME 15/12/25 \nArea (3) - Enforcement Zones\n"
+  m_text: 'LOAD GAME 15/12/2025\nArea (3) - Enforcement Zones
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f8075f664abd4eb438ae0d737e6d7c82, type: 2}
   m_sharedMaterial: {fileID: -360070313367260889, guid: f8075f664abd4eb438ae0d737e6d7c82, type: 2}
@@ -108,9 +110,9 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 0
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 1
+  m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0
@@ -334,9 +336,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Screen_Host, Assembly-CSharp
-        m_MethodName: PressPlayerGameDifficulty
+      - m_Target: {fileID: 2055083360747469111}
+        m_TargetAssemblyTypeName: UI_LoadGameButton, Assembly-CSharp
+        m_MethodName: PressLoad
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

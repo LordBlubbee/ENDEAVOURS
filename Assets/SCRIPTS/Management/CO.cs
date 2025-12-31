@@ -876,6 +876,18 @@ public class CO : NetworkBehaviour
     {
         RefreshWeather(Daytime,Weather);
     }
+
+    private void ResetOrders()
+    {
+        foreach (ModuleWeapon wep in PlayerMainDrifter.Interior.WeaponModules)
+        {
+            wep.SetOrderPointRpc(Vector3.zero);
+        }
+        foreach (CREW crew in GetAllCrews())
+        {
+            crew.SetOrderPointRpc(Vector3.zero);
+        }
+    }
     IEnumerator Travel(MapPoint destination)
     {
         ShouldDriftersMove = true;
@@ -891,14 +903,7 @@ public class CO : NetworkBehaviour
             local.ShipTransportFadeAwayRpc(destination.GetNameOnly());
         }
         yield return new WaitForSeconds(2.5f);
-        foreach (ModuleWeapon wep in PlayerMainDrifter.Interior.WeaponModules)
-        {
-            wep.SetOrderPointRpc(Vector3.zero);
-        }
-        foreach (CREW crew in GetAllCrews())
-        {
-            crew.SetOrderPointRpc(Vector3.zero);
-        }
+        ResetOrders();
         GenerateLevel();
 
         ResetWeights();
