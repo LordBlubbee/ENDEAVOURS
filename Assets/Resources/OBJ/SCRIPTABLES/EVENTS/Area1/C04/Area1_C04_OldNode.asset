@@ -16,7 +16,7 @@ MonoBehaviour:
   ResourceLink: Area1/C04
   InitialSoundtrack: 0
   CombatSoundtrack: 0
-  InitialMapData: TERRAIN
+  InitialMapData: LAND
   InitialDialog: {fileID: 11400000, guid: 7258aebf9a450ee4689afa6d2107446c, type: 2}
   BackgroundType: 3
   WeatherSelectors: 6
