@@ -25,7 +25,7 @@ public class InventorySlot : MonoBehaviour
     {
         if (EquipItem == equippable) return;
         EquipItem = equippable;
-        if (equippable)
+        if (equippable != null)
         {
             InnerIconImage.sprite = equippable.ItemIcon;
 

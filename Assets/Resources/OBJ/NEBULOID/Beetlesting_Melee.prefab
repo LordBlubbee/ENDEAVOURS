@@ -170,9 +170,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   UnitName: 
+  UnitLink: 
   UnitDescription: 
   UnitRarity: 0
-  HealthIncreasePerLevelup: 25
+  HealthIncreasePerLevelup: 20
   PointIncreasePerLevelup:
   - 1
   - 1
@@ -186,7 +187,7 @@ MonoBehaviour:
   Stripes: {fileID: 0}
   ControlledByPlayer: 0
   IsNeutral: 0
-  MaxHealth: 130
+  MaxHealth: 120
   NaturalStaminaRegen: 50
   MovementSpeed: 10
   RotationDistanceFactor: 6

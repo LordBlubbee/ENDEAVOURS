@@ -66,7 +66,7 @@ public class CREW : NetworkBehaviour, iDamageable
             return;
         }
         UpgradeLevel.Value += Levels;
-        crew.ModifyHealthMax += crew.HealthIncreasePerLevelup * Levels;
+        crew.ModifyHealthMax.Value += crew.HealthIncreasePerLevelup * Levels;
         crew.AddAttributes(
                 Mathf.FloorToInt(crew.PointIncreasePerLevelup[0] * Levels),
                  Mathf.FloorToInt(crew.PointIncreasePerLevelup[1] * Levels),
@@ -176,7 +176,7 @@ public class CREW : NetworkBehaviour, iDamageable
     //Modified attributes from equipment and buffs
     [NonSerialized] public int[] ModifyAttributes = new int[8];
     [NonSerialized] public float HealthChangePerSecond = 0f;
-    [NonSerialized] public float ModifyHealthMax;
+    [NonSerialized] public NetworkVariable<float> ModifyHealthMax = new();
     [NonSerialized] public float ModifyHealthRegen;
     [NonSerialized] public float ModifyStaminaMax;
     [NonSerialized] public float ModifyStaminaRegen;
@@ -325,7 +325,7 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         if (ability == null) return;
         ArtifactAbilities.Add(ability);
-        Debug.Log($"Successfully added new ability. Abilities: {ArtifactAbilities.Count}");
+        Debug.Log($"Successfully added new ability of type {ability}. Abilities: {ArtifactAbilities.Count}");
     }
     private void RemoveArtifactAbility(ArtifactAbility ability)
     {
@@ -334,6 +334,7 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             if (abi.GetType() == ability.GetType())
             {
+                Debug.Log($"Removed artifact ability of type {ability}. Abilities: {ArtifactAbilities.Count}");
                 ArtifactAbilities.Remove(ability);
                 return;
             }
@@ -1622,6 +1623,11 @@ public class CREW : NetworkBehaviour, iDamageable
         if (!hasInitialized) return;
         AnimationController.setAnimation(stat, pr);
     }
+    public void setAnimation(ANIM.AnimationState stat, int pr = 99)
+    {
+        if (!hasInitialized) return;
+        AnimationController.setAnimation(stat, pr);
+    }
     [Rpc(SendTo.ClientsAndHost)]
     public void setAnimationIfNotAlreadyRpc(ANIM.AnimationState stat, int pr = 99)
     {
@@ -1784,10 +1790,11 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         if (isMoving.Value)
         {
-            if (IsServer)
-            {
-                if (GetCurrentAnimation() != animDefaultMove) setAnimationIfNotAlreadyRpc(animDefaultMove, 1);
-            }
+            /* if (IsServer)
+             {
+                 if (GetCurrentAnimation() != animDefaultMove) setAnimationIfNotAlreadyRpc(animDefaultMove, 1);
+             }*/
+            if (GetCurrentAnimation() != animDefaultMove) setAnimation(animDefaultMove, 1);
             float towardsang = Mathf.Abs(AngleTowards(MoveInput));
             float towardsfactor = 1.1f - Mathf.Clamp((towardsang - 70f) * 0.005f, 0, 0.5f); //The more you look in the correct direction, the faster you move!
             MoveCrew(MoveInput * GetSpeed() * towardsfactor * delta);
@@ -1797,7 +1804,8 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         else
         {
-            if (IsServer) setAnimationRpc(animDefaultIdle, 1);
+            // if (IsServer) setAnimationRpc(animDefaultIdle, 1);
+            setAnimation(animDefaultIdle);
         }
     }
 
@@ -1864,9 +1872,6 @@ public class CREW : NetworkBehaviour, iDamageable
            // Rigid.MovePosition(transform.position);
             return true;
         }
-
-        Debug.Log("We are colliding...");
-
         // --- BLOCKED → SLIDING LOGIC ---
 
         // 1. How far can we move BEFORE the block?
@@ -2020,7 +2025,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetMaxHealth()
     {
-        return MaxHealth * (0.8f + 0.1f * GetATT_PHYSIQUE()) + ModifyHealthMax;
+        return MaxHealth * (0.75f + 0.1f * GetATT_PHYSIQUE() + 0.05f * GetATT_MEDICAL()) + ModifyHealthMax.Value;
     }
     public float GetHealingSkill()
     {
@@ -2125,6 +2130,9 @@ public class CREW : NetworkBehaviour, iDamageable
             }
         }
         lastDamageTime = 7f;
+
+        if (fl < 0) fl = 0;
+
         CurHealth.Value -= fl;
         if (CurHealth.Value < 0.1f)
         {
@@ -2159,6 +2167,11 @@ public class CREW : NetworkBehaviour, iDamageable
             }
         } else
         {
+            if (EquippedWeapons[slot] == null)
+            {
+                LocallyEquip(null);
+                return;
+            }
             LocallyEquip(EquippedWeapons[slot].ToolPrefab);
         }
     }
@@ -2201,7 +2214,7 @@ public class CREW : NetworkBehaviour, iDamageable
     private void ApplyArtifact(ScriptableEquippableArtifact wep)
     {
         // Apply all flat modifiers
-        ModifyHealthMax += wep.ModifyHealthMax;
+        ModifyHealthMax.Value += wep.ModifyHealthMax;
         ModifyHealthRegen += wep.ModifyHealthRegen;
         ModifyStaminaMax += wep.ModifyStaminaMax;
         ModifyStaminaRegen += wep.ModifyStaminaRegen;
@@ -2223,7 +2236,7 @@ public class CREW : NetworkBehaviour, iDamageable
     private void UnapplyArtifact(ScriptableEquippableArtifact wep)
     {
         // Remove all flat modifiers
-        ModifyHealthMax -= wep.ModifyHealthMax;
+        ModifyHealthMax.Value -= wep.ModifyHealthMax;
         ModifyHealthRegen -= wep.ModifyHealthRegen;
         ModifyStaminaMax -= wep.ModifyStaminaMax;
         ModifyStaminaRegen -= wep.ModifyStaminaRegen;

@@ -34,7 +34,8 @@ MonoBehaviour:
     Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []
   - BaseText: One such "supply" was an explosive. The Logipedans do not lie in their
-      culture, and are often easily fooled by ruses. Most noteworthy loot was taken,
+      culture, and are often easily fooled by ruses. Most noteworthy loot was taken.
+      What shall we do?
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []

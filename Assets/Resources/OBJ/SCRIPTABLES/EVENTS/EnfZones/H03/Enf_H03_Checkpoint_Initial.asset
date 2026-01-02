@@ -55,8 +55,7 @@ MonoBehaviour:
     AlternativeResults: []
     TriggerEvent: {fileID: 0}
   - ChoiceText:
-      BaseText: 'We will submit to inspections and pay the toll, officer. We are
-        in a hurry, so please tell inform us of the papers we must sign.
+      BaseText: 'We will submit to inspections and pay the toll, officer.
 
         <color=red>[Lose
         Ammo]</color>'

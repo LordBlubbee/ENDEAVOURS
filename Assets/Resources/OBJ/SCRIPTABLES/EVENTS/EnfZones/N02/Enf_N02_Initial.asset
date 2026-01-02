@@ -60,7 +60,7 @@ MonoBehaviour:
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
-    DialogResult: {fileID: 11400000, guid: 496f0de6dc921194da5dcb399172656e, type: 2}
+    DialogResult: {fileID: 11400000, guid: ec6c422eb150c8c44a36ece2f675570c, type: 2}
     AlternativeResults: []
     TriggerEvent: {fileID: 0}
   - ChoiceText:

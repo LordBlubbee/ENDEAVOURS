@@ -32,7 +32,7 @@ public class BUFF
 
         crew.HealthChangePerSecond += buff.HealthChangePerSecond;
 
-        crew.ModifyHealthMax += buff.ModifyHealthMax;
+        crew.ModifyHealthMax.Value += buff.ModifyHealthMax;
         crew.ModifyHealthRegen += buff.ModifyHealthRegen;
         crew.ModifyStaminaMax += buff.ModifyStaminaMax;
         crew.ModifyStaminaRegen += buff.ModifyStaminaRegen;
@@ -54,7 +54,7 @@ public class BUFF
         {
             crew.HealthChangePerSecond -= buff.HealthChangePerSecond;
 
-            crew.ModifyHealthMax -= buff.ModifyHealthMax;
+            crew.ModifyHealthMax.Value -= buff.ModifyHealthMax;
             crew.ModifyHealthRegen -= buff.ModifyHealthRegen;
             crew.ModifyStaminaMax -= buff.ModifyStaminaMax;
             crew.ModifyStaminaRegen -= buff.ModifyStaminaRegen;

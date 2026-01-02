@@ -20,6 +20,7 @@ public class PROJ : NetworkBehaviour
     public bool UseAltitude = false;
     public bool AltitudeExplodeEarly = false;
     public bool CanHitWalls = false;
+    public bool CanHitDrifters = true;
     public float AltitudeInacurracyFactor;
     public float AltitudeDirectHitCeiling;
 
@@ -33,6 +34,7 @@ public class PROJ : NetworkBehaviour
     public float DodgeModifier = 1f;
     public float HullDamageModifier = 1f; //Which factor of damage is done to modules
     public float ModuleDamageModifier = 1f; //Which factor of damage is done to modules
+    public float ModuleSplash = 16f;
     public float ArmorDamageModifier = 1f; //Which factor of damage is done to armor
     public float ArmorAbsorptionModifier = 1f; //Which factor of damage is taken by armor
     public float ArmorCriticalChance = 0.05f; //Chance to ignore armor
@@ -147,6 +149,7 @@ public class PROJ : NetworkBehaviour
             DRIFTER drifter = collision.GetComponent<DRIFTER>();
             if (drifter != null)
             {
+                if (!CanHitDrifters) return;
                 if (UnityEngine.Random.Range(0f, 1f) > Mathf.Min(drifter.GetDodgeChance() * DodgeModifier,0.9f))
                 {
                     drifter.Impact(this, Tip.position);

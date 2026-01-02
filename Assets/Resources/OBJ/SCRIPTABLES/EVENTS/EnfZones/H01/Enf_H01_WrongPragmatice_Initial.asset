@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StoryTexts:
   - BaseText: Alert! Alert! Multiple blimps have been detected and appear to be in
-      battle with each other. They are in lower altitude, exchanging blows at each
+      battle with each other. They are at lower altitude, exchanging blows at each
       other. They seem to be of Nomaden and Pragmaticus origins.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
     Alternatives: []
   - BaseText: The Nomaden vessel activates a massive set of custom propellers and
-      makes its escape upwards during its ascent, moving towards our vessel. We are
+      makes its escape upwards during its ascent, sliding past our Drifter. We are
       receiving a hail.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
@@ -30,7 +30,7 @@ MonoBehaviour:
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
     Alternatives: []
-  - BaseText: Their Communopath is filtering out any transmissions thrown at us.
+  - BaseText: Their Communopath is filtering out any transmissions thrown from us.
       According to your Gubernator, this is likely related to the fact that the frequencies
       are being overloaded with brazen insultations from the other Nomaden vessel.
     VariantTexts: []

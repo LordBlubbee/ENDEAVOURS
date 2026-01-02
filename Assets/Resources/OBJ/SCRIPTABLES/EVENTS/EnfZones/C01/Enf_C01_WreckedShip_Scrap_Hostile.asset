@@ -18,8 +18,9 @@ MonoBehaviour:
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []
-  - BaseText: Proximity alert! Armed drifter detected. The crew are being recalled
-      and our standing teams are alert. We are hailing the vessel.
+  - BaseText: Proximity alert! Armed drifter detected. They must have followed the
+      distress signal. The crew are being recalled and our standing teams are alert.
+      We are hailing the vessel.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
     Alternatives: []

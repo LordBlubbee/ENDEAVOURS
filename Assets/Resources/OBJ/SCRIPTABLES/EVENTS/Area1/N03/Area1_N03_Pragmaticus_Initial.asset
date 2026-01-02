@@ -15,30 +15,36 @@ MonoBehaviour:
   StoryTexts:
   - BaseText: 'Weather: Heavy. Clouds have gathered near the lower altitudes. To
       compensate, we are ascending.'
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
   - BaseText: A Logipedan Nebula Excavator has been detected up ahead. A massive
       pole built into the Mist, this one is a water extractor that distills water
       from below.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: 6eae2d8b178491744873b10786c471bd, type: 2}
     Alternatives: []
   - BaseText: The device has been rendered inoperational, and its maintenance platform
       is partly submerged. Looting its steam core will allow us to obtain valuable
       technology.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: 6eae2d8b178491744873b10786c471bd, type: 2}
     Alternatives: []
-  - BaseText: 'Alert. Semirigid detected from behind! Brace for potential contact.
-      This Drifter  bears the markings of the <color=#CCCCCC>Legislatus Pragmaticus</color>!
+  - BaseText: 'Alert. Blimp detected from behind! Brace for potential contact. This
+      Drifter  bears the markings of the <color=#CCCCCC>Legislatus Pragmaticus</color>!
       We are being hailed. '
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
     Alternatives: []
   - BaseText: Stand by, unknown Drifter. You are violating protected Republic airspace
       as per Stipulation 05-18-25 "Defense of Property". Motives of looting are not
       permitted.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
     Alternatives: []
   - BaseText: Failure to comply will result in mandatory boarding action and potential
       offensive action. You have been warned.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
     Alternatives: []
   ChoicePathDialogs:
@@ -46,6 +52,7 @@ MonoBehaviour:
       BaseText: We apologize. We are on a high priority mission. We are willing to
         submit to inspection to prove this- please allow us to scavenge for materials
         here.
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
@@ -58,6 +65,7 @@ MonoBehaviour:
     TriggerEvent: {fileID: 0}
   - ChoiceText:
       BaseText: We hear you loud and clear. We will leave immediately.
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
@@ -67,6 +75,7 @@ MonoBehaviour:
   - ChoiceText:
       BaseText: Violated your airspace? How about I go violate <i>your</i> airspace
         instead, Pragmaticus pigs!
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
@@ -77,6 +86,7 @@ MonoBehaviour:
       BaseText: <color=yellow>[Pragmatice] According to civil Stipulation 52-81-84
         and level 4 mission clearance, we have calculated that it is the optimal
         action to salvage this Excavator.</color>
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites:

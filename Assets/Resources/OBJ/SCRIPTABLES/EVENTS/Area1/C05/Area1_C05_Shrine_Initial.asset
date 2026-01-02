@@ -13,21 +13,25 @@ MonoBehaviour:
   m_Name: Area1_C05_Shrine_Initial
   m_EditorClassIdentifier: 
   StoryTexts:
-  - BaseText: Our lookouts have spotted faint signs carved into the signs of the
+  - BaseText: Our lookouts have spotted faint signs carved into the rocks of the
       hills in this region.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []
   - BaseText: They are quickly identified to be religious markings. The trail is
       followed, and we are able to find a small shrine.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: e063144cf422eff408c7e1329f403e15, type: 2}
     Alternatives: []
   - BaseText: Whatever spirituals truths one might or might not hold, this place
       is a place of brief respite for the crew.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: e063144cf422eff408c7e1329f403e15, type: 2}
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
       BaseText: Gather any supplies nearby and leave.
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []
@@ -35,38 +39,46 @@ MonoBehaviour:
     AlternativeResults: []
     TriggerEvent: {fileID: 11400000, guid: 1797d89edb065a645b6ea0386c6898ce, type: 2}
   - ChoiceText:
-      BaseText: <yellow>[Logipedes] Read the Stipulations, and remind yourself of
-        the One Truth. Only through logic can humanity find an objective reality.
+      BaseText: <color=yellow>[Logipedes] Read the Stipulations, and remind yourself
+        of the One Truth. Only through logic can humanity find an objective reality.
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
-    Prerequisites: []
+    Prerequisites:
+    - {fileID: 11400000, guid: 707b13843f561664a9de7d3ef761fd67, type: 2}
     DialogResult: {fileID: 0}
     AlternativeResults: []
     TriggerEvent: {fileID: 11400000, guid: adc756f1967da2e4f84d0d7e643365c2, type: 2}
   - ChoiceText:
-      BaseText: <yellow>[Survivors] The traditions of your Clan go back way before
-        the Fog. You find peace in the sanctity of your religions.
+      BaseText: <color=yellow>[Survivors] The traditions of your Clan go back way
+        before the Fog. You find peace in the sanctity of your religions.
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
-    Prerequisites: []
+    Prerequisites:
+    - {fileID: 11400000, guid: 6eebfcd7ca21a7f49812bff4ac44fb6e, type: 2}
     DialogResult: {fileID: 0}
     AlternativeResults: []
     TriggerEvent: {fileID: 11400000, guid: 41bbdc95edda55140b7b07b4963ef3b0, type: 2}
   - ChoiceText:
-      BaseText: <yellow>[Ephemeral] To live, we must adapt. Our forms, our ways,
-        they are all ephemeral. We must become one with the Nebula.
+      BaseText: <color=yellow>[Ephemeral] To live, we must adapt. Our forms, our
+        ways, they are all ephemeral. We must become one with the Nebula.
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
-    Prerequisites: []
+    Prerequisites:
+    - {fileID: 11400000, guid: cee0af71f284fba4ba0579e0b3d73207, type: 2}
     DialogResult: {fileID: 0}
     AlternativeResults: []
     TriggerEvent: {fileID: 11400000, guid: 1af4109cc7fff57439e3dcf9920642d5, type: 2}
   - ChoiceText:
-      BaseText: <yellow>[Catali] The Order of the Storm will and shall redeem itself.
-        The Mist must be destroyed.
+      BaseText: <color=yellow>[Catali] The Order of the Storm will and shall redeem
+        itself. The Mist must be destroyed.
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
-    Prerequisites: []
+    Prerequisites:
+    - {fileID: 11400000, guid: 324514b59a7dab34bb761d37418e1f65, type: 2}
     DialogResult: {fileID: 0}
     AlternativeResults: []
     TriggerEvent: {fileID: 11400000, guid: c9b8f3ce40de0414eb4cbae874f010c4, type: 2}

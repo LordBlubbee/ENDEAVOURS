@@ -171,6 +171,7 @@ MonoBehaviour:
   UseAltitude: 0
   AltitudeExplodeEarly: 0
   CanHitWalls: 0
+  CanHitDrifters: 0
   AltitudeInacurracyFactor: 0
   AltitudeDirectHitCeiling: 0
   DamageType: 3
@@ -182,6 +183,7 @@ MonoBehaviour:
   DodgeModifier: 1
   HullDamageModifier: 0.2
   ModuleDamageModifier: 1
+  ModuleSplash: 16
   ArmorDamageModifier: 0.2
   ArmorAbsorptionModifier: 1
   ArmorCriticalChance: 0.05

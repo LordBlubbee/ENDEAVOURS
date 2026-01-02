@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
@@ -166,7 +167,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
 
     [Header("STATS")]
     public float MaxHealth = 100f;
-    public float HitboxRadius = 16f;
+   // public float HitboxRadius = 16f;
     [NonSerialized] public int Faction;
     [NonSerialized] public NetworkVariable<bool> isDisabled = new();
     [NonSerialized] public NetworkVariable<bool> PermanentlyDead = new();
@@ -209,51 +210,64 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         Init();
         if (!IsServer)
         {
-            Debug.Log($"Module spawned. Trying to add to {Space}");
-            if (!Space.GetModules().Contains(this))
-            {
-                Space.GetModules().Add(this);
-                switch (GetInteractableType())
-                {
-                    case ModuleTypes.NAVIGATION:
-                        Space.CoreModules.Add(this);
-                        break;
-                    case ModuleTypes.INVENTORY:
-                        Space.CoreModules.Add(this);
-                        break;
-                    case ModuleTypes.ENGINES:
-                        Space.CoreModules.Add(this);
-                        break;
-                    case ModuleTypes.MEDICAL:
-                        Space.CoreModules.Add(this);
-                        break;
-                    case ModuleTypes.MAPCOMMS:
-                        Space.CoreModules.Add(this);
-                        break;
-                    case ModuleTypes.DOOR:
-                        break;
-                    default:
-                        /*while (Space.SystemModules.Count <= ListPositionModuleSublist.Value)
-                        {
-                            Space.SystemModules.Add(null);
-                        }
-                        Space.SystemModules[ListPositionModuleSublist.Value] = this;*/
-                        Space.SystemModules.Add(this);
-                        break;
-                    case ModuleTypes.WEAPON:
-                       /* while (Space.WeaponModules.Count <= ListPositionModuleSublist.Value)
-                        {
-                            Space.WeaponModules.Add(null);
-                        }
-                        Space.WeaponModules[ListPositionModuleSublist.Value] = this;*/
-                        Space.WeaponModules.Add(this as ModuleWeapon);
-                        break;
-                }
-            }
-           
-            Debug.Log($"{Space} now has {Space.GetModules().Count} modules");
-            return;
+            StartCoroutine(ClientInitModule());
         }
+    }
+    IEnumerator ClientInitModule()
+    {
+        while (Space == null) yield return new WaitForSeconds(0.1f); 
+        Debug.Log($"Module spawned. Trying to add to {Space}");
+        if (!Space.GetModules().Contains(this))
+        {
+            Debug.Log($"It was not yet added. Continuing...");
+            Space.GetModules().Add(this);
+
+        }
+        switch (GetInteractableType())
+        {
+            case ModuleTypes.NAVIGATION:
+                if (Space.CoreModules.Contains(this)) break;
+                Space.CoreModules.Add(this);
+                break;
+            case ModuleTypes.INVENTORY:
+                if (Space.CoreModules.Contains(this)) break;
+                Space.CoreModules.Add(this);
+                break;
+            case ModuleTypes.ENGINES:
+                if (Space.CoreModules.Contains(this)) break;
+                Space.CoreModules.Add(this);
+                break;
+            case ModuleTypes.MEDICAL:
+                if (Space.CoreModules.Contains(this)) break;
+                Space.CoreModules.Add(this);
+                break;
+            case ModuleTypes.MAPCOMMS:
+                if (Space.CoreModules.Contains(this)) break;
+                Space.CoreModules.Add(this);
+                break;
+            case ModuleTypes.DOOR:
+                break;
+            default:
+                /*while (Space.SystemModules.Count <= ListPositionModuleSublist.Value)
+                {
+                    Space.SystemModules.Add(null);
+                }
+                Space.SystemModules[ListPositionModuleSublist.Value] = this;*/
+                if (Space.SystemModules.Contains(this)) break;
+                Space.SystemModules.Add(this);
+                break;
+            case ModuleTypes.WEAPON:
+                /* while (Space.WeaponModules.Count <= ListPositionModuleSublist.Value)
+                 {
+                     Space.WeaponModules.Add(null);
+                 }
+                 Space.WeaponModules[ListPositionModuleSublist.Value] = this;*/
+                if (Space.WeaponModules.Contains(this)) break;
+                Space.WeaponModules.Add(this as ModuleWeapon);
+                break;
+        }
+
+        Debug.Log($"{Space} now has {Space.GetModules().Count} modules");
     }
     protected virtual void ActivateModule()
     {
@@ -345,7 +359,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         if (MaxHealth < 1) return false;
         return !IsDisabled();
     }
-    public bool IsDisabled()
+    public virtual bool IsDisabled()
     {
         return isDisabled.Value;
     }

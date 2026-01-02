@@ -15,21 +15,23 @@ MonoBehaviour:
   StoryTexts:
   - BaseText: Alert. Alert! All crew to battle stations. Load all on-board weapons
       and prepare for Nebuloid contact.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
     Alternatives: []
   - BaseText: Roving Beetlewings have ascended to our altitude and have laid an intercept
       course towards us.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: 8fbb89434328f5349b5dc6c4056fd2aa, type: 2}
     Alternatives: []
   - BaseText: Seeking food, these ravenous hive-minded creatures spit acid and leech
       blood, but are lightly armoured. Don't get hit!
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: 8fbb89434328f5349b5dc6c4056fd2aa, type: 2}
-    Alternatives:
-    - AlternativeText: 
-      Prerequisites: []
+    Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
       BaseText: Prepare to ward off the Nebuloid!
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []

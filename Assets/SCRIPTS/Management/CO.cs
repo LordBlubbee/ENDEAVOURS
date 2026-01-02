@@ -1,4 +1,5 @@
 
+using Mono.Cecil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -636,6 +637,12 @@ public class CO : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void RequestPeriodicInventoryUpdateRpc()
     {
+        StartCoroutine(RequestPeriodicInventoryUpdateDelay());
+    }
+
+    IEnumerator RequestPeriodicInventoryUpdateDelay()
+    {
+        yield return null;
         SendPeriodicInventoryUpdate();
     }
 
@@ -652,7 +659,7 @@ public class CO : NetworkBehaviour
         List<FixedString64Bytes> strings = new();
         for (int i = 0; i < CO.co.Drifter_Inventory.Count; i++)
         {
-            if (CO.co.Drifter_Inventory[i]) strings.Add(CO.co.Drifter_Inventory[i].GetItemResourceIDFull());
+            if (CO.co.Drifter_Inventory[i] != null) strings.Add(CO.co.Drifter_Inventory[i].GetItemResourceIDFull());
             else strings.Add("");
         }
         CO.co.SetDrifterInventoryForClientsRpc(strings.ToArray());
@@ -693,11 +700,27 @@ public class CO : NetworkBehaviour
     public void AddInventoryItemRpc(FixedString64Bytes moduleLink)
     {
         //Server only
+        for (int i = 0; i < Drifter_Inventory.Count; i++)
+        {
+            if (Drifter_Inventory[i] == null)
+            {
+                Drifter_Inventory[i] = Resources.Load<ScriptableEquippable>(moduleLink.ToString());
+                return;
+            }
+        }
         Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>(moduleLink.ToString()));
     }
     public void AddInventoryItem(ScriptableEquippable equip)
     {
         //Server only
+        for (int i = 0; i < Drifter_Inventory.Count; i++)
+        {
+            if (Drifter_Inventory[i] == null)
+            {
+                Drifter_Inventory[i] = equip;
+                return;
+            }
+        }
         Drifter_Inventory.Add(equip);
     }
     public override void OnNetworkSpawn()

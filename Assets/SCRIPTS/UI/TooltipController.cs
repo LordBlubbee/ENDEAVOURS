@@ -64,14 +64,10 @@ public class TooltipController : MonoBehaviour
 
         TooltipBox.transform.position = worldPos;
     }
-
-
-
     public bool isTooltipActive()
     {
         return TooltipDuration > 0f;
     }
-
     public void setTooltip(string tex)
     {
         TooltipText.text = tex;

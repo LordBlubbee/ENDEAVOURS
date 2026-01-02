@@ -474,7 +474,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         foreach (Module mod in Interior.GetModules())
         {
             float Dist = (mod.transform.position - ImpactArea).magnitude;
-            if (Dist < mod.HitboxRadius)
+            if (Dist < fl.ModuleSplash)
             {
                 mod.TakeDamage(Damage * fl.ModuleDamageModifier, mod.transform.position, DamageType.BOMBARDMENT);
             }

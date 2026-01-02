@@ -301,6 +301,11 @@ public class Screen_Inventory : MonoBehaviour
         if (HoldingItemTile)
         {
             ScriptableEquippable slotSwap = slot.GetEquippedItem();
+            if (CurrentDraggingSlot.GetEquippedItem() != HoldingItem)
+            {
+                StopHoldingItem();
+                return;
+            }
             if (!doesItemFitInSlot(HoldingItem, slot)) return;
             for (int i = 0; i < HoldingItem.MinimumAttributes.Length; i++)
             {
@@ -348,6 +353,12 @@ public class Screen_Inventory : MonoBehaviour
     }
     public void DepositItemInSell()
     {
+        if (!CO.co.PermissionToModifyDrifter())
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            StopHoldingItem();
+            return;
+        }
         if (HoldingItemTile)
         {
             int MaterialSellReward = CurrentDraggingSlot.GetEquippedItem().SellMaterials;

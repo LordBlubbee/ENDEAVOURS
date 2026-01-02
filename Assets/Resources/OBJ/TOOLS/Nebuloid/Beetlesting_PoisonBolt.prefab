@@ -182,6 +182,7 @@ MonoBehaviour:
   DodgeModifier: 0.8
   HullDamageModifier: 0
   ModuleDamageModifier: 2
+  ModuleSplash: 4
   ArmorDamageModifier: 1
   ArmorAbsorptionModifier: 0
   ArmorCriticalChance: 0.05
