@@ -1790,11 +1790,11 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         if (isMoving.Value)
         {
-            /* if (IsServer)
+             if (IsServer)
              {
                  if (GetCurrentAnimation() != animDefaultMove) setAnimationIfNotAlreadyRpc(animDefaultMove, 1);
-             }*/
-            if (GetCurrentAnimation() != animDefaultMove) setAnimation(animDefaultMove, 1);
+             }
+            //if (GetCurrentAnimation() != animDefaultMove) setAnimation(animDefaultMove, 1);
             float towardsang = Mathf.Abs(AngleTowards(MoveInput));
             float towardsfactor = 1.1f - Mathf.Clamp((towardsang - 70f) * 0.005f, 0, 0.5f); //The more you look in the correct direction, the faster you move!
             MoveCrew(MoveInput * GetSpeed() * towardsfactor * delta);
@@ -1804,8 +1804,8 @@ public class CREW : NetworkBehaviour, iDamageable
         }
         else
         {
-            // if (IsServer) setAnimationRpc(animDefaultIdle, 1);
-            setAnimation(animDefaultIdle);
+            if (IsServer) setAnimationRpc(animDefaultIdle, 1);
+            //setAnimation(animDefaultIdle);
         }
     }
 
@@ -2375,11 +2375,15 @@ public class CREW : NetworkBehaviour, iDamageable
     public bool CanBeTargeted(SPACE space)
     {
         SPACE ourSpace = Space;
+        if (ourSpace != null && space == null) return false;
+        return !isDead();
+        //NEW
+        /*SPACE ourSpace = Space;
         if (ourSpace != null)
         {
             if (space != ourSpace) return false;
         }
-        return !isDead();
+        return !isDead();*/
     } 
     // Returns true if there is a clear line of sight to the target position (no obstacles in between)
     public bool HasLineOfSight(Vector3 target)

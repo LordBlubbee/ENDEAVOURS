@@ -185,8 +185,6 @@ public class ModuleWeapon : Module
     {
         AUDCO.aud.PlaySFX(AUDCO.aud.IncendiaryFireAttack, transform.position, 0.1f);
     }
-
-
     IEnumerator FireSequence(Vector3 mouse)
     {
         canFire = false;
@@ -205,7 +203,6 @@ public class ModuleWeapon : Module
                     IncendiarySFXRpc();
                 }
             }
-           
             proj.NetworkObject.Spawn();
 
             WeaponSFXRpc();
