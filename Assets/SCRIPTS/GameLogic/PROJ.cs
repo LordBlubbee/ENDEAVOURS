@@ -149,7 +149,7 @@ public class PROJ : NetworkBehaviour
             DRIFTER drifter = collision.GetComponent<DRIFTER>();
             if (drifter != null)
             {
-                if (!CanHitDrifters) return;
+                //if (!CanHitDrifters) return;
                 if (UnityEngine.Random.Range(0f, 1f) > Mathf.Min(drifter.GetDodgeChance() * DodgeModifier,0.9f))
                 {
                     drifter.Impact(this, Tip.position);
