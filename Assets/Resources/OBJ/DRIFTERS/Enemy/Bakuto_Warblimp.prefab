@@ -491,7 +491,7 @@ MonoBehaviour:
   CoreModuleRotations:
   - 90
   - 0
-  - 0
+  - 90
   - 90
   - 180
   WeaponModuleLocations:

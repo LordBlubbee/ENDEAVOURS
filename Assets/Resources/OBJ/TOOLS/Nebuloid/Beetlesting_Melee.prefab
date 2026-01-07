@@ -113,6 +113,7 @@ MonoBehaviour:
   - {fileID: 0}
   AI: 0
   isConsumable: 0
+  DashResetsCooldown: 1
   CrosshairSprite: {fileID: 0}
   CrosshairMaxRange: 999
   CrosshairMinRange: -1
@@ -134,11 +135,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c6a5ec4416bf6ce4fb7d5093feea6b94, type: 3}
   - {fileID: 8300000, guid: a50b10eb73e96634bbc7cc6e13105e8d, type: 3}
   Action1_SFX_Hit: []
-  attackDamage1: 40
+  attackDamage1: 50
   RangedPrefab1: {fileID: 0}
   UniqueSpell1: {fileID: 0}
-  Reload1: 2.2
-  ExtendedCooldown1: 1.5
+  Reload1: 0.3
+  ExtendedCooldown1: 1.6
   ApplyBuff: {fileID: 0}
   ActionUse2: 0
   attackAnimations2: 

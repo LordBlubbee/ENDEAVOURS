@@ -219,9 +219,9 @@ MonoBehaviour:
   IconSprite: {fileID: 21300000, guid: d45ee2221c20ebc408b728ddefaa103d, type: 3}
   ShowAsModule: {fileID: 11400000, guid: df311f49a5a0b3140a2953d61900940b, type: 2}
   MaxHealth: 200
-  HitboxRadius: 16
   ModuleWorth: 50
   ModuleUpgradeMaterials: 280000003c0000004600000050000000
   ModuleUpgradeTechs: 00000000000000001e00000028000000
   CenterPos: {fileID: 8038492078634388055}
   ShrapnelPrefab: {fileID: 8910635656682413825, guid: bfc43b7be9458984783738191b81d825, type: 3}
+  ShrapnelVFX: {fileID: 7178822272740056672, guid: b6fc2d5964d6c2b4191710d4b9f10ce8, type: 3}

@@ -477,6 +477,7 @@ public class Screen_Inventory : MonoBehaviour
     {
         if (SelectedDrifterSlot != null) SelectedDrifterSlot.SelectedBox.gameObject.SetActive(false);
         SelectedDrifterSlot = null;
+        SubscreenModuleEditor.gameObject.SetActive(false);
     }
     public void PressUpgradeDrifterSlot()
     {
@@ -524,6 +525,7 @@ public class Screen_Inventory : MonoBehaviour
        // UpdateEquipmentBasedOnItem(SelectedDrifterSlot);
         CO.co.RequestPeriodicInventoryUpdateRpc();
         DeselectDrifterSlot();
+
         RefreshSubscreenModuleEditor();
     }
 
@@ -609,7 +611,7 @@ public class Screen_Inventory : MonoBehaviour
     private void RefreshSubscreenModuleEditor()
     {
         if (!SelectedDrifterSlot) return;
-        if (!SelectedDrifterSlot.GetEquippedItem())
+        if (SelectedDrifterSlot.GetEquippedItem() == null)
         {
             ModuleTitle.text = "[DISMANTLED]";
             ModuleDesc.text = "";
@@ -617,6 +619,7 @@ public class Screen_Inventory : MonoBehaviour
             DrifterModuleSell.SetActive(false);
         } else
         {
+            DrifterModuleSell.SetActive(true);
             ModuleTitle.text = SelectedDrifterSlot.GetEquippedItem().ItemName;
 
             string Data = "\n";
@@ -637,10 +640,12 @@ public class Screen_Inventory : MonoBehaviour
                 case Module.ModuleTypes.ENGINES:
                     Data += $"\nDODGE: {(10+ SelectedDrifterSlot.ModuleLink.ModuleLevel.Value*5).ToString("0")}%";
                     Data += $"<color=green> (+5%)</color>";
+                    DrifterModuleSell.SetActive(false);
                     break;
                 case Module.ModuleTypes.NAVIGATION:
                     Data += $"\nDAMAGE REDUCTION: {(0+ SelectedDrifterSlot.ModuleLink.ModuleLevel.Value * 10).ToString("0")}%";
                     Data += $"<color=green> (+10%)</color>";
+                    DrifterModuleSell.SetActive(false);
                     break;
                 case Module.ModuleTypes.ARMOR:
                     ModuleArmor armor = (ModuleArmor)SelectedDrifterSlot.ModuleLink;
@@ -655,6 +660,7 @@ public class Screen_Inventory : MonoBehaviour
                     if (med.RegenAmountPerLevel != 0) Data += $"<color=green> (+{med.RegenAmountPerLevel}/s)</color>";
                     Data += $"\nAURA SIZE: {med.GetRegenAura().ToString("0.0")}";
                     if (med.RegenAuraPerLevel != 0) Data += $"<color=green> (+{med.RegenAuraPerLevel.ToString("0.0")})</color>";
+                    DrifterModuleSell.SetActive(false);
                     break;
                 case Module.ModuleTypes.STEAM_REACTOR:
                     ModuleSteamReactor steam = (ModuleSteamReactor)SelectedDrifterSlot.ModuleLink;

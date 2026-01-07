@@ -155,7 +155,7 @@ public class CAM : MonoBehaviour
             ShakePower -= Time.deltaTime * 4f * Mathf.Max((ShakePower - 1f),1f);
             float Shake = Mathf.Clamp(ShakePower,0,4);
             if (ShakePower > 4f) Shake += (ShakePower - 4f) * 0.2f;
-            CameraShake = new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-1f, 1f)) * Shake;
+            CameraShake = new Vector3(0f, Random.Range(-1f, 1f)) * Shake * 0.7f;
             yield return null;
         }
         CameraShake = Vector3.zero;

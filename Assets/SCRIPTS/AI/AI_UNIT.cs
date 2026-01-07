@@ -455,7 +455,7 @@ public class AI_UNIT : NetworkBehaviour
                         AI_TacticTimer = 0f;
                         break;
                     }
-                    if (Dist(EnemyTarget.transform.position) < 10f)
+                    if (Unit.HasLineOfSight(EnemyTarget.transform.position) && (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) < 12))
                     {
                         AI_TacticTimer = 0f;
                         break;
@@ -721,16 +721,22 @@ public class AI_UNIT : NetworkBehaviour
                 if (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) > 16f) AddWeights(1, 25);
                 else AddWeights(1, 12);
                 if (Unit.GetHealthRelative() < 0.4f) AddWeights(2, 40);
-                CREW Ally = GetClosestWoundedAlly();
-                if (Ally != null)
+
+                bool canTryToHeal = !(Unit.HasLineOfSight(EnemyTarget.transform.position) && (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) < 12));
+                if (canTryToHeal)
                 {
-                    if (Dist(Ally.transform.position) < 20f && Dist(EnemyTarget.transform.position) > 14f) AddWeights(3, 20);
+                    CREW Ally = GetClosestWoundedAlly();
+                    if (Ally != null)
+                    {
+                        if (Dist(Ally.transform.position) < 20f && Dist(EnemyTarget.transform.position) > 14f) AddWeights(3, 20);
+                    }
+                    Ally = GetClosestCriticallyWoundedAllyInSpace();
+                    if (Ally != null)
+                    {
+                        if (Dist(Ally.transform.position) < 20f && Dist(EnemyTarget.transform.position) > 14f) AddWeights(3, 40);
+                    }
                 }
-                Ally = GetClosestCriticallyWoundedAllyInSpace();
-                if (Ally != null)
-                {
-                    if (Dist(Ally.transform.position) < 20f && Dist(EnemyTarget.transform.position) > 14f) AddWeights(3, 40);
-                }
+                   
                 Module mod = GetClosestEnemyModule();
                 if (mod != null)
                 {

@@ -15,8 +15,8 @@ MonoBehaviour:
   BackgroundName: Nebuloid Hunter
   ResourcePath: Nomaden_Hunter
   MainIcon: {fileID: 21300000, guid: dc34b7f7fe82db8468037fd392493744, type: 3}
-  Sprite_Player: {fileID: 21300000, guid: 0c1886808aa933c40a603d5875372528, type: 3}
-  Sprite_Stripes: {fileID: 21300000, guid: 3747a236bcb720442860dfee28781287, type: 3}
+  Sprite_Player: {fileID: 21300000, guid: 05efb47474f53ae4a8de656f35ff49f2, type: 3}
+  Sprite_Stripes: {fileID: 21300000, guid: d5c2b786d31eebc43be3cac611291557, type: 3}
   ShortDesc: The proud Nebuloid Hunter Clans are various groups that pride themselves
     in hunting down the dangerous fauna of the Mist, as mercenary bodyguards or as
     exotic defenders of humanity.

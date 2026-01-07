@@ -2214,7 +2214,10 @@ public class CREW : NetworkBehaviour, iDamageable
     private void ApplyArtifact(ScriptableEquippableArtifact wep)
     {
         // Apply all flat modifiers
-        ModifyHealthMax.Value += wep.ModifyHealthMax;
+        if (IsServer)
+        {
+            ModifyHealthMax.Value += wep.ModifyHealthMax;
+        }
         ModifyHealthRegen += wep.ModifyHealthRegen;
         ModifyStaminaMax += wep.ModifyStaminaMax;
         ModifyStaminaRegen += wep.ModifyStaminaRegen;
@@ -2236,7 +2239,10 @@ public class CREW : NetworkBehaviour, iDamageable
     private void UnapplyArtifact(ScriptableEquippableArtifact wep)
     {
         // Remove all flat modifiers
-        ModifyHealthMax.Value -= wep.ModifyHealthMax;
+        if (IsServer)
+        {
+            ModifyHealthMax.Value -= wep.ModifyHealthMax;
+        }
         ModifyHealthRegen -= wep.ModifyHealthRegen;
         ModifyStaminaMax -= wep.ModifyStaminaMax;
         ModifyStaminaRegen -= wep.ModifyStaminaRegen;
