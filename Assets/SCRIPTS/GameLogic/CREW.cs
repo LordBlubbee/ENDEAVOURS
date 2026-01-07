@@ -1805,7 +1805,7 @@ public class CREW : NetworkBehaviour, iDamageable
         else
         {
             //if (IsServer) setAnimationRpc(animDefaultIdle, 1);
-            setAnimationIfNotAlready(animDefaultIdle);
+            setAnimationIfNotAlready(animDefaultIdle, 1);
         }
     }
 
