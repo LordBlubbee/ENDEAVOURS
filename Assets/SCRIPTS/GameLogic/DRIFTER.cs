@@ -521,11 +521,11 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         {
             if (ClosestArmor.CanAbsorbArmor())
             {
-                AbsorbableDamage *= 0.4f; //Say, we deal 80 damage with +50% modifier = 120
+                AbsorbableDamage *= 0.5f; //Say, we deal 80 damage with +50% modifier = 120
                 float DamageNeeded = Mathf.Min(ClosestArmor.CurArmor.Value, AbsorbableDamage); //Say, we need only 80 damage
                 ClosestArmor.TakeArmorDamage(AbsorbableDamage, ClosestArmor.transform.position);
                 AbsorbableDamage -= DamageNeeded; //We have 40 damage left
-                AbsorbableDamage /= 0.4f; //27 damage is returned to main damage mod
+                AbsorbableDamage /= 0.5f; //27 damage is returned to main damage mod
             }
             if (!ClosestArmor.IsDisabled())
             {
