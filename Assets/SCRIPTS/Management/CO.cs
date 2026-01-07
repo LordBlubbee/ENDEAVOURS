@@ -324,31 +324,31 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 0.9f;
                 break;
             case 2:
-                PlayerDiff = 1.1f;
+                PlayerDiff = 1.05f;
                 break;
             case 3:
-                PlayerDiff = 1.25f;
+                PlayerDiff = 1.2f;
                 break;
             case 4:
-                PlayerDiff = 1.35f;
+                PlayerDiff = 1.3f;
                 break;
             case 5:
-                PlayerDiff = 1.45f;
+                PlayerDiff = 1.4f;
                 break;
             case 6:
-                PlayerDiff = 1.55f;
+                PlayerDiff = 1.45f;
                 break;
             case 7:
-                PlayerDiff = 1.6f;
+                PlayerDiff = 1.5f;
                 break;
             case 8:
-                PlayerDiff = 1.65f;
+                PlayerDiff = 1.55f;
                 break;
             case 9:
-                PlayerDiff = 1.75f;
+                PlayerDiff = 1.58f;
                 break;
             case 10:
-                PlayerDiff = 1.8f;
+                PlayerDiff = 1.6f;
                 break;
         }
         switch (Difficulty)
@@ -479,13 +479,13 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 1.24f;
                 break;
             case 6:
-                PlayerDiff = 1.3f;
+                PlayerDiff = 1.28f;
                 break;
             case 7:
-                PlayerDiff = 1.34f;
+                PlayerDiff = 1.32f;
                 break;
             case 8:
-                PlayerDiff = 1.38f;
+                PlayerDiff = 1.35f;
                 break;
             case 9:
                 PlayerDiff = 1.42f;
@@ -562,16 +562,16 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 1.8f;
                 break;
             case 7:
-                PlayerDiff = 2.0f;
+                PlayerDiff = 1.9f;
                 break;
             case 8:
-                PlayerDiff = 2.1f;
+                PlayerDiff = 2.0f;
                 break;
             case 9:
-                PlayerDiff = 2.2f;
+                PlayerDiff = 2.1f;
                 break;
             case 10:
-                PlayerDiff = 2.3f;
+                PlayerDiff = 2.2f;
                 break;
         }
         switch (Difficulty)

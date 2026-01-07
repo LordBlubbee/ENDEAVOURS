@@ -355,8 +355,8 @@ MonoBehaviour:
   CharacterBackground: {fileID: 11400000, guid: 0050b1d483cd0724ca143e78a8ffebf3, type: 2}
   DefaultToolset: 1
   EquippedWeapons:
-  - {fileID: 11400000, guid: f792cf585d3bd084bb59af026c4a3448, type: 2}
   - {fileID: 11400000, guid: 5e6639483081e614397ab7b72cac4492, type: 2}
+  - {fileID: 11400000, guid: f792cf585d3bd084bb59af026c4a3448, type: 2}
   - {fileID: 11400000, guid: eebfb9e43ec084641bb23604ae23cb97, type: 2}
   EquippedArmor: {fileID: 0}
   EquippedArtifacts:
