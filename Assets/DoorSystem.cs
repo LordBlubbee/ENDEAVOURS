@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DoorSystem : Module
 {
-    public Collider2D Col;
+  //  public Collider2D Col;
     private NetworkVariable<bool> IsOpen = new();
     public Transform Door1;
     public Transform Door1Open;

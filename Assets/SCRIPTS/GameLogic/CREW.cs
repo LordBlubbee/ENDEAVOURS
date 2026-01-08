@@ -2342,7 +2342,9 @@ public class CREW : NetworkBehaviour, iDamageable
     public void Die()
     {
         Alive.Value = false;
-        BleedingTime.Value = 60;
+        if (IsPlayer() && CO.co.GetLOCALCO().Count == 1) BleedingTime.Value = 20;
+        else if (IsPlayer() && CO.co.GetLOCALCO().Count == 2) BleedingTime.Value = 40;
+        else BleedingTime.Value = 60;
         EquipWeapon1Rpc();
         setAnimationRpc(ANIM.AnimationState.MI_DEAD1);
         SetColorDeadRpc();

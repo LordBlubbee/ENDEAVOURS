@@ -471,6 +471,12 @@ public class Screen_Inventory : MonoBehaviour
     public GameObject DrifterModuleSell;
     public TextMeshProUGUI DrifterModuleBuyTex;
     public TextMeshProUGUI DrifterModuleSellTex;
+    public Image DrifterMapImage;
+    public RectTransform DrifterMapWidthAnchor;
+    public RectTransform DrifterMapHeightAnchor;
+    public RectTransform DrifterMapWidthAnchorLeft;
+    public RectTransform DrifterMapHeightAnchorBottom;
+    public Image DrifterMapIcon;
     private DrifterInventorySlot SelectedDrifterSlot = null;
 
     private void DeselectDrifterSlot()
@@ -611,6 +617,27 @@ public class Screen_Inventory : MonoBehaviour
     private void RefreshSubscreenModuleEditor()
     {
         if (!SelectedDrifterSlot) return;
+
+        DrifterMapImage.sprite = CO.co.PlayerMainDrifter.Spr.sprite;
+        DrifterMapIcon.sprite = SelectedDrifterSlot.GetEquippedItem().ItemIcon;
+
+        /*Vector3 ModulePosition = SelectedDrifterSlot.ModuleLink.transform.localPosition;
+        float MaxWidth = Mathf.Abs(DrifterMapWidthAnchor.transform.x - DrifterMapImage.transform.anchoredPosition.x);
+        float MaxHeight = Mathf.Abs(DrifterMapHeightAnchor.transform.y - DrifterMapImage.transform.anchoredPosition.y);
+
+        Debug.Log($"ModulePosition is {ModulePosition.x}, MaxWidth is {MaxWidth}, Drifter Radius X is {CO.co.PlayerMainDrifter.RadiusX}, LocalPositionX is {(ModulePosition.x / (CO.co.PlayerMainDrifter.RadiusX * 0.8f)) * MaxWidth}");
+
+        DrifterMapIcon.transform.localPosition = new Vector3((ModulePosition.x / (CO.co.PlayerMainDrifter.RadiusX*0.8f)) * MaxWidth, (ModulePosition.y / (CO.co.PlayerMainDrifter.RadiusY * 0.8f)) * MaxHeight, 0);
+        */
+
+        Vector3 ModulePosition = SelectedDrifterSlot.ModuleLink.transform.localPosition;
+        float RelativeX = (-ModulePosition.y / CO.co.PlayerMainDrifter.RadiusY);
+        float RelativeY = (ModulePosition.x / CO.co.PlayerMainDrifter.RadiusX);
+        float XPos = Mathf.Lerp(DrifterMapWidthAnchorLeft.position.x, DrifterMapWidthAnchor.position.x, (RelativeX + 1) * 0.5f);
+        float YPos = Mathf.Lerp(DrifterMapHeightAnchorBottom.position.y, DrifterMapHeightAnchor.position.y, (RelativeY + 1) * 0.5f);
+
+        DrifterMapIcon.transform.position = new Vector3(XPos, YPos, 0);
+
         if (SelectedDrifterSlot.GetEquippedItem() == null)
         {
             ModuleTitle.text = "[DISMANTLED]";

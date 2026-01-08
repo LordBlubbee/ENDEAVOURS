@@ -24,6 +24,7 @@ public class TooltipObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         if (isHovering)
         {
+            if (Tooltip == "") return;
             if (!IsPointerStillOverThis())
             {
                 isHovering = false;

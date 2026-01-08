@@ -87,7 +87,6 @@ MonoBehaviour:
   IconSprite: {fileID: 0}
   ShowAsModule: {fileID: 0}
   MaxHealth: 150
-  HitboxRadius: 8
   ModuleWorth: 0
   ModuleUpgradeMaterials: 
   ModuleUpgradeTechs: 
@@ -183,6 +182,7 @@ GameObject:
   - component: {fileID: 773029183256521562}
   - component: {fileID: 3483618067162760091}
   - component: {fileID: 2142339988460766890}
+  - component: {fileID: 7771052194750059620}
   m_Layer: 8
   m_Name: Door1
   m_TagString: LOSBlocker
@@ -306,6 +306,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 4, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &7771052194750059620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033738096136234500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da694f0a425131489522cf738b5e87d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Redirect: {fileID: 1017079601208933322}
 --- !u!1 &2430218241953743587
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,6 +423,7 @@ GameObject:
   - component: {fileID: 6743448392288811743}
   - component: {fileID: 8020960343255046298}
   - component: {fileID: 1030108386009422331}
+  - component: {fileID: 5899018275605406506}
   m_Layer: 8
   m_Name: Door2
   m_TagString: LOSBlocker
@@ -533,6 +547,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 4, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &5899018275605406506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310118557741052427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da694f0a425131489522cf738b5e87d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Redirect: {fileID: 1017079601208933322}
 --- !u!1 &7210217563372384976
 GameObject:
   m_ObjectHideFlags: 0

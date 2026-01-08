@@ -164,6 +164,7 @@ public class PROJ : NetworkBehaviour
                 }
             } else
             {
+                if (Space != crew.Space && crew.Space.Drifter != null) return; // Direct damage not possible if not in same space and the target is in a drifter
                 if (crew is Module) crew.TakeDamage(AttackDamage * ModuleDamageModifier, transform.position, DamageType);
                 else
                 {
@@ -230,6 +231,12 @@ public class PROJ : NetworkBehaviour
         {
             if (collision.tag.Equals("LOSBlocker"))
             {
+                CollisionRedirector redirector = collision.GetComponent<CollisionRedirector>();
+                if (redirector != null)
+                {
+                    PotentialHitTarget(redirector.Redirect);
+                    return;
+                }
                 if (ImpactSFX.Length > 0) ImpactSFXRpc();
                 if (DealSplash)
                 {

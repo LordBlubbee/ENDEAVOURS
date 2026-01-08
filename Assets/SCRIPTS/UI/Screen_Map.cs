@@ -55,7 +55,7 @@ public class Screen_Map : MonoBehaviour
         if (CO.co.BiomeName.Value == "") ZoneTex.text = "";
         else
         {
-            ZoneTex.text = $"ZONE {CO.co.GetBiomeProgress()}: {CO.co.BiomeName.Value.ToString()}";
+            ZoneTex.text = $"ZONE ({CO.co.GetBiomeProgress()}): {CO.co.BiomeName.Value.ToString()}";
         }
         OverrideVoteButton.gameObject.SetActive(LOCALCO.local.CurrentMapVote.Value > -1 && CO.co.IsHost);
     }

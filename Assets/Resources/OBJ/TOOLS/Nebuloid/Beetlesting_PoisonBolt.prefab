@@ -182,7 +182,7 @@ MonoBehaviour:
   BlockPenetration: 9
   DodgeModifier: 0.8
   HullDamageModifier: 0
-  ModuleDamageModifier: 2
+  ModuleDamageModifier: 0.5
   ModuleSplash: 4
   ArmorDamageModifier: 1
   ArmorAbsorptionModifier: 0
