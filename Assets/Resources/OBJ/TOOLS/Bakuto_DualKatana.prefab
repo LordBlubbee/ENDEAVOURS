@@ -497,7 +497,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f1d0d43891aa22e47a5d6b4fa239c5da, type: 3}
   - {fileID: 8300000, guid: c6a5ec4416bf6ce4fb7d5093feea6b94, type: 3}
   - {fileID: 8300000, guid: a50b10eb73e96634bbc7cc6e13105e8d, type: 3}
-  attackDamage2: 25
+  attackDamage2: 28
   RangedPrefab2: {fileID: 0}
   UniqueSpell2: {fileID: 0}
   Reload2: 0

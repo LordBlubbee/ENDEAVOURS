@@ -15,27 +15,27 @@ MonoBehaviour:
   StoryTexts:
   - BaseText: A signal echoes throughout this area. It seems distant and afar, and
       our Gubernator has trouble making out its contents. Our Drifter continues on
-      course for an hour before our Gubernator announces new information.
+      course for an hour before new data becomes available.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []
   - BaseText: They have found the source of the signal. A vessel lies crashed, two
-      hundred meters out. A crashed Pragmatice enforcement loon, a four-man vessel.
-      Explosive marks remain on the sides and forensics confirm that they were slain
-      by explosive.
+      hundred meters out. It is a Pragmaticus enforcement loon, a four-man vessel.
+      Engineering confirms that they and their crew were destroyed by an explosive
+      weapon.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []
-  - BaseText: Being a Logipedan vessel, a serial code and ship's log was saved according
+  - BaseText: Being a Logipedan vessel, a serial code and ship's log were saved according
       to protocol. It details that they encountered "class-4" Nomaden and were told
-      that they would cooperate. They asked the Logipedans to wait and help them
-      carry supplies.
+      that they would cooperate. The Nomaden had asked the Logipedes to carry supplies
+      for them.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []
   - BaseText: One such "supply" was an explosive. The Logipedans do not lie in their
-      culture, and are often easily fooled by ruses. Most noteworthy loot was taken.
-      What shall we do?
+      culture, and are often easily fooled by ruses. Most noteworthy material leftovers
+      have already been looted.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []

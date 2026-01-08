@@ -333,7 +333,7 @@ MonoBehaviour:
   IsNeutral: 0
   MaxHealth: 80
   NaturalStaminaRegen: 10
-  MovementSpeed: 7.5
+  MovementSpeed: 7
   RotationDistanceFactor: 4
   RotationBaseSpeed: 90
   BleedOut: 1

@@ -363,13 +363,13 @@ PrefabInstance:
       value: 'Each point in PHYSICAL increases:
 
         -Your melee weapon damage
-        by approximately 8%
+        by approximately 12%
 
-        -Your health by approximately 15%
+        -Your health by 10%
 
 
-        Some
-        powerful melee weapons require a certain amount of PHYSICAL to be used.'
+        Some powerful
+        melee weapons require a certain amount of PHYSICAL to be used.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -567,9 +567,9 @@ PrefabInstance:
       value: 'Each point in COMMUNOPATHY increases:
 
         -Your spell damage by
-        approximately 10%
+        approximately 12%
 
-        -Your spell reload by approximately 8%
+        -Your spell reload by approximately 7%
 
 
         Spells
@@ -770,18 +770,13 @@ PrefabInstance:
       propertyPath: Tooltip
       value: 'Each point in MEDICAL increases:
 
-        -Your healing speed of yourself
-        and others by approximately 20%.
+        -Your healing speed by approximately
+        20%
 
-        -Your maximum health by approximately
-        5%.
+        -Your maximum health by approximately 5%
 
-        -Your maximum stamina by 5.
-
-
-        Your MEDICAL attribute
-        might also be helpful in certain encounters related to creatures, knowledge,
-        and anatomy.'
+        -Your maximum
+        stamina by 5'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -977,13 +972,14 @@ PrefabInstance:
       value: 'Each point in ARMAMENTS increases:
 
         -Your ranged weapon damage
-        by approximately 8%
+        by approximately 12%
 
-        -Your weapon reload speed by approximately 4%
+        -Your weapon reload speed by approximately
+        4%
 
 
-        Some
-        powerful ranged weapons require a certain amount of ARMAMENTS to be used.'
+        Some powerful ranged weapons require a certain amount of ARMAMENTS
+        to be used.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1181,15 +1177,12 @@ PrefabInstance:
       value: 'Each point in DEXTERITY increases:
 
         -Your maximum stamina by
-        5%
+        5.
 
         -Your stamina regeneration by approximately 10%
 
         -Your
-        movement speed by approximately 8%
-
-        -Your ranged weapon reload speed
-        by approximately 3%'
+        movement speed by approximately 8%'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1391,10 +1384,10 @@ PrefabInstance:
         approximately 20%
 
         -Your resistance to environmental damage by approximately
-        5%.
+        5%
 
 
-        Some powerful Armor items require a certain amount of ARMAMENTS
+        Some powerful Armor items require a certain amount of ENGINEERING
         to be used.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1591,11 +1584,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: Tooltip
-      value: "Each point in ALCHEMY increases:\n-Your damage using consumables by
-        approximately 8%\n-The efficiency of the crafting cost for consumables by
-        3% \n\nSome powerful consumables like potions, explosives, and scrolls require
-        a certain amount of ALCHEMY to be used. Most crafting recipes for useful
-        consumables are locked behind ALCHEMY."
+      value: "Each point in ALCHEMY increases:\n-The team's efficiency in crafting
+        by 2%\n-The reloading of ranged arms and spells by approximately 4%\n-The
+        capabilities of most magic items \n\nSome powerful consumables like potions,
+        explosives, and scrolls require a certain amount of ALCHEMY to be used. Most
+        crafting recipes for useful consumables are locked behind ALCHEMY."
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1795,18 +1788,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: Tooltip
-      value: 'If you have at least (3) Command, you become able to increase the stats
-        of all nearby allies by approximately 3%. XP gained by your team also increases
-        by 5%.
+      value: 'If you have at least (3) Command, you gain an aura. Only the highest
+        Command aura can buff your team.
 
-        The highest number is taken into effect. Your team thus requires
-        only a single Commander.
+        -Your team gains 5% XP gain per
+        Command.
+
+        -Buffed team members gain a 3% increase to damage.
+
+        -Buffed
+        team members gain a 5% increase to repairs and healing.
 
 
-        Some powerful Artifacts require a certain
-        amount of COMMAND to be used. COMMAND also represents your charisma and can
-        be helpful  in certain encounters, allowing you to find diplomatic solutions
-        more easily.'
+        Some powerful
+        Artifacts require a certain amount of COMMAND to be used. COMMAND also represents
+        your charisma and can be helpful  in certain encounters, allowing you to
+        find diplomatic solutions more easily.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

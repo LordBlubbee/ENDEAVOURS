@@ -43,7 +43,7 @@ MonoBehaviour:
     Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
-      BaseText: Our journey continues.
+      BaseText: Prepare for battle!
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []

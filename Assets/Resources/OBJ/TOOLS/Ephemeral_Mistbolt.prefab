@@ -171,6 +171,7 @@ MonoBehaviour:
   UseAltitude: 1
   AltitudeExplodeEarly: 1
   CanHitWalls: 1
+  CanHitDrifters: 1
   AltitudeInacurracyFactor: 0.02
   AltitudeDirectHitCeiling: 0
   DamageType: 3
@@ -180,9 +181,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e65858ce6f0843548b28176ca445c4c4, type: 3}
   BlockPenetration: 9
   DodgeModifier: 1
-  HullDamageModifier: 0.25
+  HullDamageModifier: 0.2
   ModuleDamageModifier: 1
-  ArmorDamageModifier: 0.25
+  ModuleSplash: 16
+  ArmorDamageModifier: 0.2
   ArmorAbsorptionModifier: 1
   ArmorCriticalChance: 0.05
   CrewDamageModifier: 1

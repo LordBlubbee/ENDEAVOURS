@@ -527,13 +527,9 @@ public class DRIFTER : NetworkBehaviour, iDamageable
                 AbsorbableDamage -= DamageNeeded; //We have 40 damage left
                 AbsorbableDamage /= 0.4f; //27 damage is returned to main damage mod
             }
-            if (!ClosestArmor.IsDisabled())
-            {
-                AbsorbableDamage /= 2f;
-            }
         }
-        Damage += AbsorbableDamage * 0.5f * GetHullDamageRatio();
-        TakeDamage(Damage, ImpactArea, DamageType.TRUE);
+        //Damage += AbsorbableDamage * 0.5f * GetHullDamageRatio();
+        //TakeDamage(Damage, ImpactArea, DamageType.TRUE);
     }
     public int GetFaction()
     {

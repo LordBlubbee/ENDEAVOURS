@@ -20,7 +20,7 @@ MonoBehaviour:
 
     Skill: COMMUNOPATHY
 
-    Base damage: 30
+    Base damage: 24
 
     Base
     Cooldown: 3.0'

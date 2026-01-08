@@ -168,19 +168,19 @@ public class Screen_Inventory : MonoBehaviour
                 LevelNeed = 2;
                 break;
             case 4:
-                LevelNeed = 3;
+                LevelNeed = 2;
                 break;
             case 5:
-                LevelNeed = 4;
+                LevelNeed = 3;
                 break;
             case 6:
-                LevelNeed = 5;
+                LevelNeed = 3;
                 break;
             case 7:
-                LevelNeed = 6;
+                LevelNeed = 4;
                 break;
             default:
-                LevelNeed = 6;
+                LevelNeed = 5;
                 break;
         }
         if (LOCALCO.local.GetPlayer().SkillPoints.Value < LevelNeed) return;
@@ -227,31 +227,31 @@ public class Screen_Inventory : MonoBehaviour
                     SkillTex[i].color = new Color(0.8f, 0.9f, 0);
                     break;
                 case 4:
-                    LevelNeed = 3;
+                    LevelNeed = 2;
                     SkillTex[i].color = new Color(0.6f, 0.9f, 0);
                     break;
                 case 5:
-                    LevelNeed = 4;
+                    LevelNeed = 3;
                     SkillTex[i].color = new Color(0.4f, 0.9f, 0);
                     break;
                 case 6:
-                    LevelNeed = 5;
+                    LevelNeed = 3;
                     SkillTex[i].color = new Color(0.2f, 0.9f, 0);
                     break;
                 case 7:
-                    LevelNeed = 6;
+                    LevelNeed = 4;
                     SkillTex[i].color = new Color(0, 1, 0);
                     break;
                 case 8:
-                    LevelNeed = 6;
+                    LevelNeed = 5;
                     SkillTex[i].color = new Color(0, 1, 0.5f);
                     break;
                 case 9:
-                    LevelNeed = 6;
+                    LevelNeed = 5;
                     SkillTex[i].color = new Color(0, 1, 1);
                     break;
                 default:
-                    LevelNeed = 6;
+                    LevelNeed = 5;
                     SkillTex[i].color = new Color(0, 1, 1);
                     break;
             }
@@ -696,9 +696,9 @@ public class Screen_Inventory : MonoBehaviour
                     Data += $"<color=green> ({speakb.EffectCooldownReductionPerLevel})</color>";
 
                     //Unique
-                    Data += $"\nMELEE DAMAGE: +{speakb.GetBuffEffectPower().ToString("0")}%";
+                    Data += $"\nMELEE DAMAGE: +{speakb.GetBuffEffectPower().ToString("0")}";
                     Data += $"<color=green> (+4)</color>";
-                    Data += $"\nRANGED DAMAGE: +{speakb.GetBuffEffectPower().ToString("0")}%";
+                    Data += $"\nRANGED DAMAGE: +{speakb.GetBuffEffectPower().ToString("0")}";
                     Data += $"<color=green> (+4)</color>";
                     break;
                 case Module.ModuleTypes.SPEAKERS_DEBUFF:

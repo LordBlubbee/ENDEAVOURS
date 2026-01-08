@@ -158,6 +158,7 @@ public class PROJ : NetworkBehaviour
                     StickToWalls = false;
                 } else
                 {
+                    Damageables.Add(collision);
                     CO_SPAWNER.co.SpawnWordsRpc("MISS", transform.position);
                     return;
                 }
@@ -218,6 +219,7 @@ public class PROJ : NetworkBehaviour
             DUNGEON dung = collision.GetComponent<DUNGEON>();
             if (dung != null)
             {
+                if (Space != null) return;
                 dung.Impact(this, Tip.position);
                 if (ImpactSFX.Length > 0) ImpactSFXRpc();
                 BulletImpact();

@@ -216,7 +216,7 @@ public class dataStructure
         if (CO.co == null) return;
         //Save game
         saveTime = DateTime.Now;
-        BiomeProgress = CO.co.BiomeProgress;
+        BiomeProgress = CO.co.GetBiomeProgress();
 
         foreach (var kvp in CO.co.Resource_Reputation)
         {

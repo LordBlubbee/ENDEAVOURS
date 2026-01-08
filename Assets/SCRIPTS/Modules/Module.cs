@@ -293,6 +293,9 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
                     TakeDamageFromDisablement -= 5f;
                     HomeDrifter.TakeDamage(5f, transform.position, DamageType.TRUE);
                 }
+            } else
+            {
+                TakeDamageFromDisablement = 0f;
             }
         }
         Frame();
@@ -333,7 +336,12 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     {
         if (MaxHealth < 1) return;
         if (type == DamageType.BOMBARDMENT) fl *= OutsideDamageResistance;
-        CurHealth.Value -= fl;
+        else
+        {
+            fl /= 0.9f + (ModuleLevel.Value * 0.1f);
+        }
+        if (fl < 0) return;
+            CurHealth.Value -= fl;
         if (CurHealth.Value < 0.1f)
         {
             //Death

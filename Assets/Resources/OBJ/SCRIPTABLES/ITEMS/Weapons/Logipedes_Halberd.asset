@@ -19,7 +19,7 @@ MonoBehaviour:
     Skill: PHYSICAL
 
     Base
-    damage: 9
+    damage: 15
 
 
     SECONDARY: BLOCK'

@@ -9,7 +9,7 @@ public class ScriptableShopItemList : ScriptableObject
 {
     public List<ScriptableShopitem> GetPossibleDrops()
     {
-        switch (CO.co.BiomeProgress)
+        switch (CO.co.GetBiomeProgress())
         {
             case > 4:
                 return RareDrops;

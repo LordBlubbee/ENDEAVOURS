@@ -55,7 +55,7 @@ public class CO : NetworkBehaviour
 
     public int GetDrifterRepairCost()
     {
-        switch (BiomeProgress)
+        switch (GetBiomeProgress())
         {
             case > 4:
                 return 4;
@@ -172,7 +172,13 @@ public class CO : NetworkBehaviour
     }
 
     public ScriptableBiome CurrentBiome;
-    public int BiomeProgress;
+    public NetworkVariable<int> BiomeProgress = new();
+    public NetworkVariable<FixedString64Bytes> BiomeName = new();
+    public int GetBiomeProgress()
+    {
+        return BiomeProgress.Value;
+    }
+
     public int TotalZoneProgress;
     public List<ScriptablePoint> NextBiomePoints = new();
 
@@ -214,7 +220,7 @@ public class CO : NetworkBehaviour
     public float GetEncounterLootModifier()
     {
         float ProgressDiff = 1f;
-        switch (BiomeProgress)
+        switch (GetBiomeProgress())
         {
             case 0:
                 ProgressDiff = 1f;
@@ -293,7 +299,7 @@ public class CO : NetworkBehaviour
     public float GetEncounterDifficultyModifier()
     {
         float ProgressDiff = 1f;
-        switch (BiomeProgress)
+        switch (GetBiomeProgress())
         {
             case 0:
                 ProgressDiff = 1f;
@@ -373,7 +379,7 @@ public class CO : NetworkBehaviour
     public float GetNewFriendlyCrewModifier()
     {
         float ProgressDiff = 1f;
-        switch (BiomeProgress)
+        switch (GetBiomeProgress())
         {
             case 0:
                 ProgressDiff = 1f;
@@ -436,7 +442,7 @@ public class CO : NetworkBehaviour
     public float GetDrifterDifficultyModifier()
     {
         float ProgressDiff = 1f;
-        switch (BiomeProgress)
+        switch (GetBiomeProgress())
         {
             case 0:
                 ProgressDiff = 1f;
@@ -516,7 +522,7 @@ public class CO : NetworkBehaviour
     public float GetEncounterSizeModifier()
     {
         float ProgressDiff = 1f;
-        switch (BiomeProgress)
+        switch (GetBiomeProgress())
         {
             case 0:
                 ProgressDiff = 0.85f;
@@ -1006,7 +1012,8 @@ public class CO : NetworkBehaviour
         if (destination.AssociatedPoint.GateToBiome)
         {
             CurrentBiome = destination.AssociatedPoint.GateToBiome;
-            BiomeProgress++;
+            BiomeName.Value = destination.AssociatedPoint.UniqueName;
+            BiomeProgress.Value++;
             GenerateMap();
             destination = RegisteredMapPoints[0];
         }

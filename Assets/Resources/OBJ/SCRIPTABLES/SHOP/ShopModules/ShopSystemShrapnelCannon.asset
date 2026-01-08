@@ -17,10 +17,10 @@ MonoBehaviour:
   AlchemySkillRequirement: 0
   Weight: 8
   IsCrafted: 0
-  DealMaterialsCost: 70
-  DealSuppliesCost: 0
+  DealMaterialsCost: 0
+  DealSuppliesCost: 130
   DealAmmoCost: 0
-  DealTechCost: 30
+  DealTechCost: 0
   DealMaterialsGain: 0
   DealSuppliesGain: 0
   DealAmmoGain: 0

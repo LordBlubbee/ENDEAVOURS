@@ -9,7 +9,7 @@ public class ScriptableLootItemList : ScriptableObject
 {
     public List<WeightedLootItem> GetPossibleDrops()
     {
-        switch (CO.co.BiomeProgress)
+        switch (CO.co.GetBiomeProgress())
         {
             case > 4:
                 return RareDrops;

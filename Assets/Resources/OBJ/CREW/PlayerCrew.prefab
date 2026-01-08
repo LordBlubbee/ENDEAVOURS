@@ -310,6 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   UnitName: 
+  UnitLink: 
   UnitDescription: 
   UnitRarity: 0
   HealthIncreasePerLevelup: 0
@@ -320,7 +321,7 @@ MonoBehaviour:
   IsNeutral: 0
   MaxHealth: 100
   NaturalStaminaRegen: 25
-  MovementSpeed: 7
+  MovementSpeed: 6.5
   RotationDistanceFactor: 4
   RotationBaseSpeed: 90
   BleedOut: 1

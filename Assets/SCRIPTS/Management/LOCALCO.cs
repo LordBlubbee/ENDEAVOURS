@@ -381,6 +381,24 @@ public class LOCALCO : NetworkBehaviour
                                             else str += "\n<color=green> [F] RELOAD <color=red> [10 AMMO]";
                                             if (Input.GetKeyDown(KeyCode.F))
                                             {
+                                                if (weapon.ReloadingCurrently.Value)
+                                                {
+                                                    AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+                                                    break;
+                                                }
+                                                if (weapon.GetFaction() == 1)
+                                                {
+                                                    if (CO.co.Resource_Ammo.Value < 10)
+                                                    {
+                                                        AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+                                                        break;
+                                                    }
+                                                } else
+                                                {
+                                                    AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+                                                    break;
+                                                }
+                                                AUDCO.aud.PlaySFX(AUDCO.aud.Upgrade);
                                                 weapon.ReloadAmmoRpc();
                                             }
                                         }

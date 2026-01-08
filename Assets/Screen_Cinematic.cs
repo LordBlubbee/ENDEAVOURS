@@ -16,6 +16,7 @@ public class Screen_Cinematic : MonoBehaviour
     public Sprite[] Intro_Images;
 
     bool isRunningCinematic = false;
+    bool canSkip = false;
     public void PlayIntroCinematic()
     {
         UI.ui.SelectScreen(gameObject);
@@ -23,6 +24,7 @@ public class Screen_Cinematic : MonoBehaviour
     }
     IEnumerator PlayIntro()
     {
+        canSkip = false;
         isRunningCinematic = true;
         SetImage(null);
         SetImage(null);
@@ -30,6 +32,7 @@ public class Screen_Cinematic : MonoBehaviour
 
         StartCoroutine(SkipTextRoutine());
         yield return new WaitForSeconds(1f);
+        canSkip = true;
         if (Intro_OST) AUDCO.aud.setOST(Intro_OST);
         yield return new WaitForSeconds(2f);
         SetText("Long ago, the <color=#00AAFF>ORDER OF THE STORM</color> had united humanity.");
@@ -141,14 +144,19 @@ public class Screen_Cinematic : MonoBehaviour
         StartCoroutine(SwitchTextRoutine(tex));
     }
     bool isSwitchingText = false;
+    int TextID = 0;
     IEnumerator SwitchTextRoutine(string tex)
     {
-       // while (isSwitchingText) yield return null;
+        // while (isSwitchingText) yield return null;
+        TextID++;
+        int ID = TextID;
+        
         isSwitchingText = true;
         while (CinematicTex.color.a > 0)
         {
             CinematicTex.color = new Color(1, 1, 1, Mathf.Clamp01(CinematicTex.color.a - Time.deltaTime));
             yield return null;
+            if (ID != TextID) yield break;
         }
         CinematicTex.text = tex;
         if (tex.Length > 0)
@@ -157,6 +165,7 @@ public class Screen_Cinematic : MonoBehaviour
             {
                 CinematicTex.color = new Color(1, 1, 1, Mathf.Clamp01(CinematicTex.color.a + Time.deltaTime * 1.4f));
                 yield return null;
+                if (ID != TextID) yield break;
             }
         }
         isSwitchingText = false;
@@ -197,8 +206,8 @@ public class Screen_Cinematic : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space))
         {
+            if (canSkip) UI.ui.GoBackToPreviousScreen();
             //AUDCO.aud.setOST(null);
-            UI.ui.GoBackToPreviousScreen();
         }
     }
 }

@@ -171,6 +171,7 @@ MonoBehaviour:
   UseAltitude: 1
   AltitudeExplodeEarly: 1
   CanHitWalls: 0
+  CanHitDrifters: 1
   AltitudeInacurracyFactor: 0.07
   AltitudeDirectHitCeiling: 0
   DamageType: 3

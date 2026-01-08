@@ -24,5 +24,5 @@ MonoBehaviour:
   DealMaterialsGain: 0
   DealSuppliesGain: 0
   DealAmmoGain: 0
-  DealTechGain: 15
+  DealTechGain: 12
   BuyCrew: {fileID: 0}

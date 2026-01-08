@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4fc65e7be402ef41b3a849a94b12e47, type: 3}
   m_Name: EnforcementZones
   m_EditorClassIdentifier: 
-  BiomeName: Enforcement Zones
+  BiomeName: <color=#CCBB99>Enforcement Zones
   BiomeDescription: 
   BiomeBaseDifficulty: 1.1
   BiomeCalmRatio: 0.3

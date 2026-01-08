@@ -590,16 +590,19 @@ public class CREW : NetworkBehaviour, iDamageable
                 LevelNeed = 2;
                 break;
             case 4:
-                LevelNeed = 3;
+                LevelNeed = 2;
                 break;
             case 5:
-                LevelNeed = 4;
+                LevelNeed = 3;
                 break;
             case 6:
-                LevelNeed = 5;
+                LevelNeed = 3;
+                break;
+            case 7:
+                LevelNeed = 4;
                 break;
             default:
-                LevelNeed = 6;
+                LevelNeed = 5;
                 break;
         }
         if (SkillPoints.Value < LevelNeed) return;
@@ -1417,9 +1420,17 @@ public class CREW : NetworkBehaviour, iDamageable
         if (!crew.CanBeTargeted(Space)) return false;
         dmg += ModifyMeleeDamage;
         dmg *= AnimationController.CurrentStrikePower();
-        dmg *= 0.7f + 0.1f * GetATT_PHYSIQUE();
+
+        float LevelMod = 0.1f;
+        if (IsPlayer())
+        {
+            dmg /= 0.7f;
+            LevelMod = 0.12f;
+        }
+
+        dmg *= 0.7f + LevelMod * GetATT_PHYSIQUE();
         dmg *= 1f + 0.03f * GetCurrentCommanderLevel();
-        if (IsPlayer()) dmg /= 0.7f;
+    
         if (DashingDamageBuff > 0 || isParrying)
         {
             DashingDamageBuff = 0;
@@ -1454,9 +1465,16 @@ public class CREW : NetworkBehaviour, iDamageable
         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
         dmg += ModifyRangedDamage;
         dmg *= AnimationController.CurrentStrikePower();
-        dmg *= 0.7f + 0.1f * GetATT_ARMS();
+
+        float LevelMod = 0.1f;
+        if (IsPlayer())
+        {
+            dmg /= 0.7f;
+            LevelMod = 0.12f;
+        }
+
+        dmg *= 0.7f + LevelMod * GetATT_ARMS();
         dmg *= 1f + 0.03f * GetCurrentCommanderLevel();
-        if (IsPlayer()) dmg /= 0.7f;
         proj.NetworkObject.Spawn();
         proj.Init(dmg, GetFaction(), Space, trt);
         proj.CrewOwner = this;
@@ -1473,15 +1491,22 @@ public class CREW : NetworkBehaviour, iDamageable
         float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
         dmg += ModifySpellDamage;
         dmg *= AnimationController.CurrentStrikePower();
-        dmg *= 0.7f + 0.1f * GetATT_COMMUNOPATHY();
+
+        float LevelMod = 0.1f;
+        if (IsPlayer())
+        {
+            dmg /= 0.7f;
+            LevelMod = 0.12f;
+        }
+        dmg *= 0.7f + LevelMod * GetATT_COMMUNOPATHY();
+
         dmg *= 1f + 0.03f * GetCurrentCommanderLevel();
-        if (IsPlayer()) dmg /= 0.7f;
         if (GetATT_COMMUNOPATHY() < 4) dmg *= 0.25f * GetATT_COMMUNOPATHY();
         proj.NetworkObject.Spawn();
         proj.Init(dmg, GetFaction(), Space, trt);
         proj.CrewOwner = this;
         float reload = SelectedWeaponAbility == 0 ? EquippedToolObject.Reload1 : EquippedToolObject.Reload2;
-        float reloadMod = 1f / (0.4f + 0.08f * GetATT_COMMUNOPATHY() + 0.08f * GetATT_ALCHEMY());
+        float reloadMod = 1f / (0.5f + 0.07f * GetATT_COMMUNOPATHY() + 0.05f * GetATT_ALCHEMY());
         reload *= reloadMod;
         SetExtendedCooldown(reloadMod);
         StartCoroutine(AttackCooldown(reload));
@@ -1519,6 +1544,13 @@ public class CREW : NetworkBehaviour, iDamageable
                     if (!(crew is Module)) continue; 
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
+
+                    float RepairMod = 0.2f;
+                    if (GetATT_ENGINEERING() > 4)
+                    {
+                        RepairMod += GetATT_ENGINEERING() * 0.02f;
+                    }
+
                     dmg *= 0.4f + 0.2f * GetATT_ENGINEERING();
                     dmg *= 1f + 0.05f * GetCurrentCommanderLevel();
                     if (CO.co.IsSafe()) dmg *= 5;
@@ -2330,7 +2362,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetSpeed()
     {
-        return MovementSpeed * (0.8f+GetATT_DEXTERITY()*0.1f) * (1f+ ModifyMovementSpeed) / (1f + ModifyMovementSlow);
+        return MovementSpeed * (0.8f+GetATT_DEXTERITY()*0.08f) * (1f+ ModifyMovementSpeed) / (1f + ModifyMovementSlow);
     }
     public float GetDashSpeed()
     {
@@ -2381,7 +2413,8 @@ public class CREW : NetworkBehaviour, iDamageable
     public bool CanBeTargeted(SPACE space)
     {
         SPACE ourSpace = Space;
-        if (ourSpace != null && space == null) return false;
+        if (ourSpace != null && space == null) return false; //If this target is in a drifter and the projectile is a bombardment projectile from outside the drifter, return false
+
         return !isDead();
         //NEW
         /*SPACE ourSpace = Space;

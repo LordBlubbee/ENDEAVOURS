@@ -17,10 +17,10 @@ MonoBehaviour:
     slowly but fires bullets that deal great damage.
 
 
-    Skill: ARMS (+ALCHEMY)
+    Skill: ARMS
 
     Base
-    damage: 30
+    damage: 22
 
     Base Cooldown: 3.0'
   ItemIcon: {fileID: 21300000, guid: e6f35ef3de4884a4fac3c08b2111c998, type: 3}

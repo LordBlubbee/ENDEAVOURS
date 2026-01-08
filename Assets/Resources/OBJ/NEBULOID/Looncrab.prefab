@@ -312,9 +312,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   UnitName: 
+  UnitLink: 
   UnitDescription: 
   UnitRarity: 0
-  HealthIncreasePerLevelup: 30
+  HealthIncreasePerLevelup: 25
   PointIncreasePerLevelup:
   - 1
   - 1

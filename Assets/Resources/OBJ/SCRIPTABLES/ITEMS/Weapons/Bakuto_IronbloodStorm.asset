@@ -15,7 +15,7 @@ MonoBehaviour:
   ItemName: Ironblood Storm
   ItemDesc: "Fury and rage become blood and steel- sacrifices a small portion of
     your health to fling a flurry of blades forward that decimate your enemies. \n\nSkill:
-    COMMUNOPATHY, PHYSIQUE, ALCHEMY\nBase damage: 20"
+    COMMUNOPATHY, PHYSIQUE, ALCHEMY\nBase damage: 25"
   ItemIcon: {fileID: -2722047151274526662, guid: 12006913d963ee74182fb85de0d0ec00, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Bakuto_IronbloodStorm
   ItemResourceIDShort: Bakuto_IronbloodStorm

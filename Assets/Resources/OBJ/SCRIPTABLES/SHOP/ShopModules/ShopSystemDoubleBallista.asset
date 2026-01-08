@@ -15,10 +15,10 @@ MonoBehaviour:
   ResourcePath: ShopModules
   Equippable: {fileID: 11400000, guid: a070b50b714195f4bac819a3003f3a4a, type: 2}
   AlchemySkillRequirement: 0
-  Weight: 78
+  Weight: 8
   IsCrafted: 0
-  DealMaterialsCost: 125
-  DealSuppliesCost: 0
+  DealMaterialsCost: 0
+  DealSuppliesCost: 125
   DealAmmoCost: 0
   DealTechCost: 0
   DealMaterialsGain: 0

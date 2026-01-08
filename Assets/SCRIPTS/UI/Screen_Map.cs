@@ -15,7 +15,8 @@ public class Screen_Map : MonoBehaviour
     public GameObject[] ChoiceButton;
     public TextMeshProUGUI[] ChoiceButtonVotes;
     public TextMeshProUGUI[] ChoiceTex;
-    public TextMeshProUGUI WarningTex; 
+    public TextMeshProUGUI WarningTex;
+    public TextMeshProUGUI ZoneTex;
     public GameObject OverrideVoteButton;
 
     private void OnEnable()
@@ -50,6 +51,11 @@ public class Screen_Map : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.U))
         {
             UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
+        }
+        if (CO.co.BiomeName.Value == "") ZoneTex.text = "";
+        else
+        {
+            ZoneTex.text = $"ZONE {CO.co.GetBiomeProgress()}: {CO.co.BiomeName.Value.ToString()}";
         }
         OverrideVoteButton.gameObject.SetActive(LOCALCO.local.CurrentMapVote.Value > -1 && CO.co.IsHost);
     }

@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Area1_N03_Pragmaticus_Initial
   m_EditorClassIdentifier: 
   StoryTexts:
-  - BaseText: 'Weather: Heavy. Clouds have gathered near the lower altitudes. To
-      compensate, we are ascending.'
+  - BaseText: 'Weather: Heavy. Clouds have gathered near the higher altitudes. To
+      compensate, we are descending.'
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
   - BaseText: A Logipedan Nebula Excavator has been detected up ahead. A massive
       pole built into the Mist, this one is a water extractor that distills water
-      from below.
+      from the oceans far below.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: 6eae2d8b178491744873b10786c471bd, type: 2}
     Alternatives: []

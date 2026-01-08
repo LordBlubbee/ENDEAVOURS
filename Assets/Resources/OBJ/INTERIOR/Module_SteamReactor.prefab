@@ -429,9 +429,8 @@ MonoBehaviour:
   IconSprite: {fileID: 21300000, guid: 58ddf0c78f9e9e04bb4cfae560a0d75e, type: 3}
   ShowAsModule: {fileID: 11400000, guid: d59f55781dce66445b31a1bd9cc23a4e, type: 2}
   MaxHealth: 200
-  HitboxRadius: 16
   ModuleWorth: 70
-  ModuleUpgradeMaterials: 32000000460000005a00000078000000
+  ModuleUpgradeMaterials: 2800000032000000500000005a000000
   ModuleUpgradeTechs: 00000000000000002800000032000000
   CenterPos: {fileID: 0}
   EffectDuration: 12

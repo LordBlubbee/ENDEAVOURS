@@ -222,7 +222,7 @@ public class Screen_GameUI : MonoBehaviour
         if (player.isDead())
         {
             BleedingOutScreen.gameObject.SetActive(true); //!CO.co.PlayerMainDrifter.MedicalModule.IsDisabled()
-            BleedingButton.gameObject.SetActive(!player.isDeadForever() && player.Space == CO.co.PlayerMainDrifter.Interior && player.BleedingTime.Value < 40);
+            //BleedingButton.gameObject.SetActive(!player.isDeadForever() && CO.co.CanRespawn(player) && player.BleedingTime.Value < 40); //Respawn early button
             if (player.isDeadForever())
             {
                 /*if (CO.co.PlayerMainDrifter.MedicalModule.IsDisabled())

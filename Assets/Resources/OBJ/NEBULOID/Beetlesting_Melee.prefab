@@ -173,7 +173,7 @@ MonoBehaviour:
   UnitLink: 
   UnitDescription: 
   UnitRarity: 0
-  HealthIncreasePerLevelup: 20
+  HealthIncreasePerLevelup: 15
   PointIncreasePerLevelup:
   - 1
   - 1

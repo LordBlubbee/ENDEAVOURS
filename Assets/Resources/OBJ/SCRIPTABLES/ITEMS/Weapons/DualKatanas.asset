@@ -20,11 +20,11 @@ MonoBehaviour:
 
     Skill: PHYSICAL
 
-    Base damage: 9
+    Base damage: 14
 
 
-    SECONDARY: Power
-    strike'
+    SECONDARY:
+    Power strike'
   ItemIcon: {fileID: -523024417087210977, guid: 1755685362c60264d8aa41fc2349cabd, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/DualKatanas
   ItemResourceIDShort: DualKatanas

@@ -332,7 +332,7 @@ public class UI_Module : MonoBehaviour
         MainTex.color = new Color(crew.CharacterNameColor.Value.x, crew.CharacterNameColor.Value.y, crew.CharacterNameColor.Value.z);
         if (crew.isDeadForever()) StatusTex.text = $"<color=#880000>KIA";
         else if (crew.isDead()) StatusTex.text = $"<color=red>BLEEDING OUT: {crew.BleedingTime.Value.ToString("0")}";
-        else StatusTex.text = $"HEALTH {(crew.GetHealthRelative() * 100).ToString("0")}";
+        else StatusTex.text = $"HEALTH {crew.GetHealth().ToString("0")}";
         if (crew.IsPlayer()) StatusTex.text += " | <color=yellow>PLAYER</color>";
         else if (crew.GetOrderPoint() == Vector3.zero) StatusTex.text += " | <color=white>NO ORDERS</color>";
         else StatusTex.text += " | <color=yellow>ORDER SET</color>";
