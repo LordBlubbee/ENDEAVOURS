@@ -44,7 +44,7 @@ public class ModuleArmor : Module
         if (fl > 50) WaitWithRegen = 1f + 0.01f * fl;
         CO_SPAWNER.co.SpawnArmorDMGRpc(fl, impact);
 
-        TakeDamage(fl*0.25f, impact, iDamageable.DamageType.BOMBARDMENT);
+        TakeDamage(fl*0.15f, impact, iDamageable.DamageType.TRUE);
     }
     public void HealArmor(float fl)
     {

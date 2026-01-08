@@ -152,6 +152,7 @@ public class PROJ : NetworkBehaviour
                 //if (!CanHitDrifters) return;
                 if (UnityEngine.Random.Range(0f, 1f) > Mathf.Min(drifter.GetDodgeChance() * DodgeModifier,0.9f))
                 {
+                    if (Space != null) ModuleDamageModifier = 0; //You cannot deal module damage from space to drifters
                     drifter.Impact(this, Tip.position);
                     AttemptSpawnZone(Tip.position, drifter.Interior.transform);
                     isActive = false;

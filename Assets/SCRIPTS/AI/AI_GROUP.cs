@@ -103,6 +103,7 @@ public class AI_GROUP : MonoBehaviour
 
                 break;
         }
+        yield return new WaitForSeconds(0.2f);
         while (true)
         {
             if (Units.Count == 0 && HomeDrifter == null && HomeDungeon == null)

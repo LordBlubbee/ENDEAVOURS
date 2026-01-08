@@ -1546,9 +1546,9 @@ public class CREW : NetworkBehaviour, iDamageable
                     dmg *= AnimationController.CurrentStrikePower();
 
                     float RepairMod = 0.2f;
-                    if (GetATT_ENGINEERING() > 4)
+                    if (GetATT_ENGINEERING() > 3 && IsPlayer())
                     {
-                        RepairMod += GetATT_ENGINEERING() * 0.02f;
+                        RepairMod += (GetATT_ENGINEERING()-2) * 0.03f;
                     }
 
                     dmg *= 0.4f + 0.2f * GetATT_ENGINEERING();

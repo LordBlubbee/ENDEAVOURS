@@ -1573,12 +1573,13 @@ public class CO : NetworkBehaviour
                 StartCoroutine(Event_GenericSurvival());
                 break;
         }
-        foreach (DRIFTER drift in GetAllDrifters())
+        foreach (DRIFTER drift in GetAllDrifters()) //This function works? I think?
         {
             foreach (ModuleWeapon weapons in drift.Interior.WeaponModules)
             {
                 weapons.LoadWeaponsNow();
             }
+            Debug.Log("Setting system cooldowns...");
             foreach (Module mod in drift.Interior.SystemModules)
             {
                 if (!(mod is ModuleEffector)) continue;

@@ -79,8 +79,10 @@ public class ModuleEffector : Module
     }
     public void SetCooldown()
     {
+        Debug.Log("Trying to set cooldown...");
         if (IsEffectActive()) return;
         if (IsEffectOnCooldown()) return;
+        Debug.Log("Success!...");
         StartCoroutine(CooldownOnly());
     }
     protected IEnumerator CooldownOnly()
