@@ -516,7 +516,8 @@ public class LOCALCO : NetworkBehaviour
         CurrentControlMode = ControlModes.NONE;
         SetCameraToPlayer();
         yield return new WaitForSeconds(1.5f);
-        UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
+        UI.ui.MainGameplayUI.OpenMissionScreen();
+        //UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
         arrivalAnimation = false;
     }
 

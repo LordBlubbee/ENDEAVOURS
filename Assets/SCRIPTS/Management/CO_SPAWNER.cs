@@ -332,7 +332,7 @@ public class CO_SPAWNER : NetworkBehaviour
             }
             while (CrewWorthPoints > 0)
             {
-                Vector3 tryPos = dun.Space.GetRandomUnboardableGrid().transform.position;
+                Vector3 tryPos = dun.Space.GetRandomUnboardableGrid().transform.position + GetRandomOnTile();
                 ScriptableEnemyCrew enemyType = PossibleSpawns[GetWeight()];
                 CREW crew = SpawnUnitInDungeon(enemyType.SpawnCrew, dun);
                 SetQualityLevelOfCrew(crew, CrewQualityPoints);
@@ -427,6 +427,11 @@ public class CO_SPAWNER : NetworkBehaviour
         group.SetAI(gr.AI_Type, gr.AI_Group, 2, members);
         return drifter;
     }
+
+    private Vector3 GetRandomOnTile(float off = 2)
+    {
+        return new Vector3(UnityEngine.Random.Range(-off, off), UnityEngine.Random.Range(-off, off));
+    }
     public List<Vault> SpawnVaultObjectives(DUNGEON Dungeon)
     {
         List<Vault> List = new();
@@ -438,13 +443,14 @@ public class CO_SPAWNER : NetworkBehaviour
                 ObjectivePositions.Remove(tile);
             }
         }
-        WalkableTile SelectedTile = ObjectivePositions[UnityEngine.Random.Range(0, ObjectivePositions.Count)];
-        ObjectivePositions.Remove(SelectedTile);
-
-        for (int i = 0; i < 1; i++)
+       
+        int Vaults = UnityEngine.Random.Range(2, 5);
+        for (int i = 0; i < Vaults; i++)
         {
-            Vault vault = Instantiate(VaultObjectiveObject, SelectedTile.transform.position, SelectedTile.transform.rotation);
-            vault.ExtraMaxHealth.Value = CO.co.GetLOCALCO().Count * 100;
+            WalkableTile SelectedTile = ObjectivePositions[UnityEngine.Random.Range(0, ObjectivePositions.Count)];
+            ObjectivePositions.Remove(SelectedTile);
+            Vault vault = Instantiate(VaultObjectiveObject, SelectedTile.transform.position+ GetRandomOnTile(), SelectedTile.transform.rotation);
+            vault.ExtraMaxHealth.Value = ((100 + CO.co.GetLOCALCO().Count * 100) / Vaults) -100;
             vault.NetworkObject.Spawn();
             vault.transform.SetParent(Dungeon.Space.transform);
             vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;

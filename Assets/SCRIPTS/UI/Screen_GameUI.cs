@@ -332,15 +332,21 @@ public class Screen_GameUI : MonoBehaviour
     {
         if (gameObject.activeSelf)
         {
-            if (CO_STORY.co.IsCommsActive()) UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
-            else if (UI.ui.RewardUI.RewardActive) UI.ui.OpenTalkScreenFancy(UI.ui.RewardUI.gameObject);
+            if (UI.ui.RewardUI.RewardActive) UI.ui.OpenTalkScreenFancy(UI.ui.RewardUI.gameObject);
+            else if (CO_STORY.co.IsCommsActive()) UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
             else if (CO.co.IsSafe()) UI.ui.OpenTalkScreenFancy(UI.ui.MapUI.gameObject);
+            /*if (CO_STORY.co.IsCommsActive()) UI.ui.OpenTalkScreenFancy(UI.ui.TalkUI.gameObject);
+            else if (UI.ui.RewardUI.RewardActive) UI.ui.OpenTalkScreenFancy(UI.ui.RewardUI.gameObject);
+            else if (CO.co.IsSafe()) UI.ui.OpenTalkScreenFancy(UI.ui.MapUI.gameObject);*/
         }
         else
         {
-            if (CO_STORY.co.IsCommsActive()) UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
-            else if (UI.ui.RewardUI.RewardActive) UI.ui.SelectScreen(UI.ui.RewardUI.gameObject);
+            if (UI.ui.RewardUI.RewardActive) UI.ui.SelectScreen(UI.ui.RewardUI.gameObject);
+            else if (CO_STORY.co.IsCommsActive()) UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
             else if (CO.co.IsSafe()) UI.ui.SelectScreen(UI.ui.MapUI.gameObject);
+            /*if (CO_STORY.co.IsCommsActive()) UI.ui.SelectScreen(UI.ui.TalkUI.gameObject);
+            else if (UI.ui.RewardUI.RewardActive) UI.ui.SelectScreen(UI.ui.RewardUI.gameObject);
+            else if (CO.co.IsSafe()) UI.ui.SelectScreen(UI.ui.MapUI.gameObject);*/
         }
     }
     public void EquipWeaponUI(int ID)

@@ -1729,22 +1729,23 @@ public class CO : NetworkBehaviour
             int Threats = GetEnemyNonDormantCrew().Count;
 
             EnemyBarRelative.Value = 1f - Death;
+            if (Vaults.Count == 0) EnemyBarString.Value = $"<color=green>OBJECTIVES COMPLETE";
+            else EnemyBarString.Value = $"FIND {Vaults.Count} VAULTS";
             if (AreCrewAwayFromHome() && !ThreatsEliminated)
             {
-                AreWeInDanger.Value = true; 
-                if (Threats > 0) EnemyBarString.Value = $"THREATS: {Threats}";
-                else EnemyBarString.Value = $"FIND {Vaults.Count} VAULTS";
+                AreWeInDanger.Value = true;
+                /*if (Threats > 0) EnemyBarString.Value = $"THREATS: {Threats}";
+                else*/
             } else
             {
                 AreWeInDanger.Value = false; 
-                EnemyBarRelative.Value = 1f - Death;
-                EnemyBarString.Value = $"FIND {Vaults.Count} VAULTS";
             }
             foreach (Vault vault in new List<Vault>(Vaults))
             {
                 if (vault.GetHealthRelative() >= 1)
                 {
                     //ProcessLootTable(CurrentEvent.LootTable, 0.35f);
+                    CO_SPAWNER.co.SpawnWordsRpc("<color=green>VAULT UNLOCKED", vault.transform.position);
                     CompletedVaults++;
                     Vaults.Remove(vault);
                     /* if (!MissionCompleted)
@@ -1761,7 +1762,7 @@ public class CO : NetworkBehaviour
                 }
             }
             yield return new WaitForSeconds(0.5f);
-            if (ShouldDriftersMove)
+            if (ShouldDriftersMove) //When we escape
             {
                 break;
             }

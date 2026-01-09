@@ -33,7 +33,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f3abea5c1db978c4486df9572f33c218, type: 2}
   - {fileID: 11400000, guid: 8a96be3c36e56904b9478b66bf960f1e, type: 2}
   - {fileID: 11400000, guid: 795155942de51eb4a9a9525a34372729, type: 2}
+  PointsSpecial: []
   PossiblePointsRest:
   - {fileID: 11400000, guid: 673c942ec81d9974bb7787062baa9987, type: 2}
   PossiblePointsArrival:
-  - {fileID: 11400000, guid: 10e9d257f3ab6eb4aa09701a0bebdd11, type: 2}
+  - {fileID: 11400000, guid: f85614dc02f2ee24084a89dac701ca18, type: 2}

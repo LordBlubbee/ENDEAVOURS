@@ -18,7 +18,12 @@ MonoBehaviour:
   CrewQualityLevel: 100
   GuaranteedCrewList: []
   SpawnCrewList:
-  - Weight: 2
+  - Weight: 5
+    WeightIncreaseOverQualityGradient: 0
+    MinimumQuality: 0
+    MaximumQuality: 0
+    Crew: {fileID: 11400000, guid: 3e5dcf9afba26364a981a1cdbcabbbf2, type: 2}
+  - Weight: 20
     WeightIncreaseOverQualityGradient: 0
     MinimumQuality: 0
     MaximumQuality: 0
