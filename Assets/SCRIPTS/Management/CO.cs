@@ -1712,11 +1712,15 @@ public class CO : NetworkBehaviour
         ScriptableEnemyGroup EnemyGroup = Groups[GetWeight()].EnemyGroup;
         CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
 
-        List<Vault> Vaults = CO_SPAWNER.co.SpawnVaultObjectives(CurrentDungeon);
+        List<Vault> Vaults = CO_SPAWNER.co.SpawnVaultObjectives(CurrentDungeon); //These are now THREE
         AlternativeDebriefDialog Debrief = CurrentEvent.GetDebrief();
-        bool MissionCompleted = false;
+        bool ThreatsEliminated = false;
         float Death = 0f;
-        while (Death < 1)
+        int CompletedVaults = 0;
+
+        //Rewards are given immediately after each unlock
+
+        while (true)
         {
             int DeadAmount = GroupDeathAmount(GetEnemyCrew());
             int AliveAmount = GetEnemyCrew().Count - DeadAmount;
@@ -1725,28 +1729,35 @@ public class CO : NetworkBehaviour
             int Threats = GetEnemyNonDormantCrew().Count;
 
             EnemyBarRelative.Value = 1f - Death;
-            if (AreCrewAwayFromHome())
+            if (AreCrewAwayFromHome() && !ThreatsEliminated)
             {
                 AreWeInDanger.Value = true; 
                 if (Threats > 0) EnemyBarString.Value = $"THREATS: {Threats}";
+                else EnemyBarString.Value = $"FIND {Vaults.Count} VAULTS";
             } else
             {
                 AreWeInDanger.Value = false; 
                 EnemyBarRelative.Value = 1f - Death;
-                EnemyBarString.Value = $"REPAIR VAULT";
+                EnemyBarString.Value = $"FIND {Vaults.Count} VAULTS";
             }
-            if (Vaults[0].GetHealthRelative() >= 1)
+            foreach (Vault vault in new List<Vault>(Vaults))
             {
-                EnemyBarString.Value = $"VAULT SECURED";
-                if (!MissionCompleted)
+                if (vault.GetHealthRelative() >= 1)
                 {
-                    MissionCompleted = true;
-                    CommunicationGamePaused.Value = true;
-                    if (CurrentEvent.HasDebrief()) {
-                        CO_STORY.co.SetStory(Debrief.ReplaceDialog);
-                        StartCoroutine(RewardOnceSafe(CurrentEvent.LootTable));
-                        //if (CurrentEvent.HasDebrief()) CO_STORY.co.SetStory(Debrief.ReplaceDialog);
-                    }
+                    //ProcessLootTable(CurrentEvent.LootTable, 0.35f);
+                    CompletedVaults++;
+                    Vaults.Remove(vault);
+                    /* if (!MissionCompleted)
+                     {
+                         //MissionCompleted = true;
+                         //CommunicationGamePaused.Value = true;
+                         /*if (CurrentEvent.HasDebrief())
+                         {
+                             //CO_STORY.co.SetStory(Debrief.ReplaceDialog);
+                             //StartCoroutine(RewardOnceSafe(CurrentEvent.LootTable));
+                             //if (CurrentEvent.HasDebrief()) CO_STORY.co.SetStory(Debrief.ReplaceDialog);
+                         }
+                     }*/
                 }
             }
             yield return new WaitForSeconds(0.5f);
@@ -1754,28 +1765,30 @@ public class CO : NetworkBehaviour
             {
                 break;
             }
-        }
-        EnemyBarRelative.Value = -1;
-        if (!ShouldDriftersMove)
-        {
-            yield return new WaitForSeconds(4f);
-            if (Death >= 1)
+            if (!ThreatsEliminated && Death >= 1)
             {
-                LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
-            }
-            SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
+                EnemyBarRelative.Value = -1;
+                yield return new WaitForSeconds(1f);
+                if (Death >= 1)
+                {
+                    LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
+                }
+                SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
 
-            yield return new WaitForSeconds(3f);
-            AreWeInDanger.Value = false;
-          
+                yield return new WaitForSeconds(1f);
+                AreWeInDanger.Value = false;
+                ThreatsEliminated = true;
+            }
         }
+        if (CompletedVaults > 0) ProcessLootTable(CurrentEvent.LootTable, CompletedVaults*0.3f+0.1f);
+        EnemyBarRelative.Value = -1;
         SetCurrentDungeon(null);
     }
-    IEnumerator RewardOnceSafe(ScriptableLootTable loot)
+   /* IEnumerator RewardOnceSafe(ScriptableLootTable loot)
     {
         while (!CO.co.IsSafe()) yield return null;
         ProcessLootTable(loot, 1f);
-    }
+    }*/
     IEnumerator Event_GenericSurvival()
     {
         ShouldDriftersMove = true;

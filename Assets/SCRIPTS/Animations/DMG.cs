@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class DMG : MonoBehaviour
 {
     public TextMeshPro texto;
-    private float Duration = 1f;
+    private float Duration = 0.8f;
     private float Fade = 1f;
     private Vector3 MovementDir = new Vector3(0,1);
     private float MovementSpeed = 3f;
@@ -21,7 +21,7 @@ public class DMG : MonoBehaviour
         scale *= 0.6f + CAM.cam.camob.orthographicSize * 0.04f;
         transform.localScale = new Vector3(scale, scale, 1);
 
-        MovementDir = new Vector3(Random.Range(-0.3f,0.3f), Random.Range(0.2f, 0.3f));
+        MovementDir = new Vector3(Random.Range(-0.6f,0.6f), Random.Range(0.4f, 0.5f));
     }
     public void InitWords(string str, float dur, Color col)
     {
@@ -29,7 +29,7 @@ public class DMG : MonoBehaviour
         texto.color = col;
         Duration = dur;
 
-        Scale = 1f;
+        Scale = 0.9f;
         float scale = 0.6f + CAM.cam.camob.orthographicSize * 0.04f;
         transform.localScale = new Vector3(scale * 0.6f, scale * 0.6f, 1);
         MovementDir = new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(0.2f, 0.3f));
@@ -44,10 +44,10 @@ public class DMG : MonoBehaviour
         transform.localScale = new Vector3(scale, scale, 1);
         transform.position += MovementSpeed * MovementDir * scale * CO.co.GetWorldSpeedDelta();
 
-        MovementSpeed -= 0.5f * CO.co.GetWorldSpeedDelta();
+        MovementSpeed = Mathf.Max(0,MovementSpeed- 1f * CO.co.GetWorldSpeedDelta());
         if (Duration < 0f)
         {
-            Fade -= CO.co.GetWorldSpeedDelta();
+            Fade -= CO.co.GetWorldSpeedDelta() * 2f;
             texto.color = new Color(texto.color.r, texto.color.g, texto.color.b, Fade);
             if (Fade < 0f)
             {

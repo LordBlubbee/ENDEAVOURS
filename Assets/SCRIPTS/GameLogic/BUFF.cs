@@ -7,7 +7,7 @@ public class BUFF
     private int Stacks;
     private float Duration;
     public CO_SPAWNER.BuffParticles BuffParticles;
-
+    public string DebuffTex;
     public int GetStacks()
     {
         return Stacks;

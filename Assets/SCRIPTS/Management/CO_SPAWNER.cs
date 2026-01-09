@@ -12,7 +12,10 @@ public class CO_SPAWNER : NetworkBehaviour
     public TOOL PrefabGrappleLogipedes;
     public TOOL PrefabGrappleSilent;
     public Sprite GrappleCursor;
+    public ResourceCrate PrefabMatCrate;
+    public ResourceCrate PrefabSupCrate;
     public ResourceCrate PrefabAmmoCrate;
+    public ResourceCrate PrefabTechCrate;
     public ShopItem PrefabShopItem;
     public Sprite ShopItemMaterialDeal;
     public Sprite ShopItemSupplyDeal;
@@ -437,16 +440,20 @@ public class CO_SPAWNER : NetworkBehaviour
         }
         WalkableTile SelectedTile = ObjectivePositions[UnityEngine.Random.Range(0, ObjectivePositions.Count)];
         ObjectivePositions.Remove(SelectedTile);
-        Vault vault = Instantiate(VaultObjectiveObject, SelectedTile.transform.position, SelectedTile.transform.rotation);
-        vault.ExtraMaxHealth.Value = CO.co.GetLOCALCO().Count * 100;
-        vault.NetworkObject.Spawn();
-        vault.transform.SetParent(Dungeon.Space.transform);
-        vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;
-        vault.Faction = 0;
-        vault.Init();
-        vault.TakeDamage(9999, vault.transform.position, iDamageable.DamageType.TRUE);
-        Dungeon.DungeonNetworkObjects.Add(vault.NetworkObject);
-        List.Add(vault);
+
+        for (int i = 0; i < 1; i++)
+        {
+            Vault vault = Instantiate(VaultObjectiveObject, SelectedTile.transform.position, SelectedTile.transform.rotation);
+            vault.ExtraMaxHealth.Value = CO.co.GetLOCALCO().Count * 100;
+            vault.NetworkObject.Spawn();
+            vault.transform.SetParent(Dungeon.Space.transform);
+            vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;
+            vault.Faction = 0;
+            vault.Init();
+            vault.TakeDamage(9999, vault.transform.position, iDamageable.DamageType.TRUE);
+            Dungeon.DungeonNetworkObjects.Add(vault.NetworkObject);
+            List.Add(vault);
+        }
         return List;
     }
     private void SetQualityLevelOfDrifter(DRIFTER drifter, ScriptableEnemyDrifter drifterData, float Quality)
@@ -688,28 +695,29 @@ public class CO_SPAWNER : NetworkBehaviour
     {
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
         dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
-        dmg.InitWords(dm, 0.7f, Color.red);
+        dmg.InitWords(dm, 1.2f, Color.red);
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnDMGRpc(float dm, Vector3 pos)
     {
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
         dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
-        dmg.InitNumber(dm, 1f, Color.red);
+        dmg.InitNumber(dm, 0.5f, Color.red);
     }
+
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnArmorDMGRpc(float dm, Vector3 pos)
     {
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
         dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
-        dmg.InitNumber(dm, 1f, Color.yellow);
+        dmg.InitNumber(dm, 0.5f, Color.yellow);
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnHealRpc(float dm, Vector3 pos)
     {
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
         dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
-        dmg.InitNumber(dm, 1f, Color.green);
+        dmg.InitNumber(dm, 0.5f, Color.green);
     }
 
     public MapPoint CreateMapPoint(Vector3 pos)

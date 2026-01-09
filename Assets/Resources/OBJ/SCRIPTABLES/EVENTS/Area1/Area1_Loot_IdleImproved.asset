@@ -15,7 +15,7 @@ MonoBehaviour:
   GuaranteedLoot:
   - Randomness: 0.2
     Resource_Materials: 0
-    Resource_Supplies: 5
+    Resource_Supplies: 0
     Resource_Ammunition: 0
     Resource_Technology: 0
     Resource_Repairs: 0
@@ -36,6 +36,15 @@ MonoBehaviour:
     Resource_XP: 0
     ItemDrop: {fileID: 0}
     Weight: 15
+  - Randomness: 0.2
+    Resource_Materials: 0
+    Resource_Supplies: 20
+    Resource_Ammunition: 0
+    Resource_Technology: 0
+    Resource_Repairs: 0
+    Resource_XP: 0
+    ItemDrop: {fileID: 0}
+    Weight: 15
   - Randomness: 0
     Resource_Materials: 0
     Resource_Supplies: 0
@@ -44,7 +53,5 @@ MonoBehaviour:
     Resource_Repairs: 0
     Resource_XP: 0
     ItemDrop: {fileID: 11400000, guid: 0a70c805b4206b04dad2f4c4d74456c6, type: 2}
-    Weight: 5
-  MinimumShopDrops: 0
-  MaximumShopDrops: 0
-  PossibleShopDrops: {fileID: 0}
+    Weight: 10
+  ShopDrops: []

@@ -46,9 +46,9 @@ MonoBehaviour:
     ItemDrop: {fileID: 0}
     Weight: 10
   - Randomness: 0.2
-    Resource_Materials: 0
-    Resource_Supplies: 0
-    Resource_Ammunition: 20
+    Resource_Materials: 5
+    Resource_Supplies: 5
+    Resource_Ammunition: 10
     Resource_Technology: 0
     Resource_Repairs: 0
     Resource_XP: 0

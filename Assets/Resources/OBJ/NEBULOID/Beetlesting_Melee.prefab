@@ -606,7 +606,7 @@ MonoBehaviour:
   OpenWingDirection: -1
   MaximumOscillate: 12
   LegRotCurrent: 0
-  LegRotSpeed: 300
+  LegRotSpeed: 150
   LegDirection: 1
 --- !u!1 &4860497760997928518
 GameObject:
@@ -1025,7 +1025,7 @@ MonoBehaviour:
   OpenWingDirection: 1
   MaximumOscillate: 12
   LegRotCurrent: 0
-  LegRotSpeed: 300
+  LegRotSpeed: 150
   LegDirection: 1
 --- !u!1 &7534759293836438548
 GameObject:

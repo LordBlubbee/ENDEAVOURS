@@ -2125,17 +2125,17 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             case iDamageable.DamageType.MELEE:
                 fl = ArtifactOnPreventDamageMelee(fl);
-                fl *= 0.7f; //Standard crew-to-crew damage boost
+                fl *= 0.8f; //Standard crew-to-crew damage boost
                 if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.RANGED:
                 fl = ArtifactOnPreventDamageRanged(fl);
-                fl *= 0.7f; //Standard crew-to-crew damage boost
+                fl *= 0.8f; //Standard crew-to-crew damage boost
                 if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.SPELL:
                 fl = ArtifactOnPreventDamageSpell(fl);
-                fl *= 0.7f; //Standard crew-to-crew damage boost
+                fl *= 0.8f; //Standard crew-to-crew damage boost
                 if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.ENVIRONMENT_FIRE:

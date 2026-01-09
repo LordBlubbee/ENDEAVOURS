@@ -46,14 +46,12 @@ MonoBehaviour:
     ItemDrop: {fileID: 11400000, guid: 0a70c805b4206b04dad2f4c4d74456c6, type: 2}
     Weight: 5
   - Randomness: 0.2
-    Resource_Materials: 5
-    Resource_Supplies: 0
+    Resource_Materials: 10
+    Resource_Supplies: 5
     Resource_Ammunition: 5
-    Resource_Technology: 5
+    Resource_Technology: 0
     Resource_Repairs: 0
     Resource_XP: 0
     ItemDrop: {fileID: 0}
     Weight: 5
-  MinimumShopDrops: 0
-  MaximumShopDrops: 0
-  PossibleShopDrops: {fileID: 0}
+  ShopDrops: []
