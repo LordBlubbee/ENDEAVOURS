@@ -258,34 +258,6 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             }
         }
     }
-    public void CreateMatCrate(Vector3 vec, int health, int resources)
-    {
-        ResourceCrate ob = Instantiate(CO_SPAWNER.co.PrefabMatCrate, vec, Quaternion.identity);
-        ob.NetworkObject.Spawn();
-        ob.transform.SetParent(transform);
-        ob.InitCrate(health, resources, ResourceCrate.ResourceTypes.MATERIALS);
-    }
-    public void CreateSupCrate(Vector3 vec, int health, int resources)
-    {
-        ResourceCrate ob = Instantiate(CO_SPAWNER.co.PrefabSupCrate, vec, Quaternion.identity);
-        ob.NetworkObject.Spawn();
-        ob.transform.SetParent(transform);
-        ob.InitCrate(health, resources, ResourceCrate.ResourceTypes.SUPPLIES);
-    }
-    public void CreateAmmoCrate(Vector3 vec, int health, int resources)
-    {
-        ResourceCrate ob = Instantiate(CO_SPAWNER.co.PrefabAmmoCrate, vec, Quaternion.identity);
-        ob.NetworkObject.Spawn();
-        ob.transform.SetParent(transform);
-        ob.InitCrate(health, resources, ResourceCrate.ResourceTypes.AMMUNITION);
-    }
-    public void CreateTechCrate(Vector3 vec, int health, int resources)
-    {
-        ResourceCrate ob = Instantiate(CO_SPAWNER.co.PrefabTechCrate, vec, Quaternion.identity);
-        ob.NetworkObject.Spawn();
-        ob.transform.SetParent(transform);
-        ob.InitCrate(health, resources, ResourceCrate.ResourceTypes.TECHNOLOGY);
-    }
     public float AngleToTurnTarget()
     {
         return AngleTowards(LookTowards);

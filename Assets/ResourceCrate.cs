@@ -1,9 +1,10 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 using static CO;
 using static Module;
 
-public class ResourceCrate : NetworkBehaviour, iDamageable, iInteractable
+public class ResourceCrate : NetworkBehaviour, iDamageable
 {
     private NetworkVariable<float> MaxHealth = new(100);
     public ResourceTypes ResourceType;
@@ -12,7 +13,12 @@ public class ResourceCrate : NetworkBehaviour, iDamageable, iInteractable
     private NetworkVariable<bool> IsGrabbed = new();
     public GameObject DestructionParticles;
     public SPACE Space { get; set; }
-    public ModuleTypes GetInteractableType()
+    public void SetSpace(SPACE space)
+    {
+        Space = space;
+        transform.SetParent(space.transform);
+    }
+    public ModuleTypes GetInteractableType() //Add iInteractable to reactivate, currently unused
     {
         return ModuleTypes.DRAGGABLE;
     }
@@ -29,6 +35,7 @@ public class ResourceCrate : NetworkBehaviour, iDamageable, iInteractable
         if (CurHealth.Value <= 0)
         {
             DestructionRpc();
+            GainMaterials();
             RemoveCrate();
         }
         CO_SPAWNER.co.SpawnDMGRpc(fl, transform.position);
@@ -38,8 +45,9 @@ public class ResourceCrate : NetworkBehaviour, iDamageable, iInteractable
     {
         Instantiate(DestructionParticles, transform.position, Quaternion.identity);
     }
-    public void GainMaterials(float fl)
+    public void GainMaterials()
     {
+        float fl = ResourceAmount.Value;
         switch (ResourceType)
         {
             case ResourceTypes.MATERIALS:
@@ -65,7 +73,8 @@ public class ResourceCrate : NetworkBehaviour, iDamageable, iInteractable
         MATERIALS,
         SUPPLIES,
         AMMUNITION,
-        TECHNOLOGY
+        TECHNOLOGY,
+        NONE
     }
     public int GetFaction()
     {

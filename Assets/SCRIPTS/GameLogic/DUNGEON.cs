@@ -20,7 +20,7 @@ public class DUNGEON : NetworkBehaviour
     private NetworkVariable<FixedString32Bytes> DungeonVariantData = new();
     public List<DungeonAlteration> Alterations = new List<DungeonAlteration>();
     public List<WalkableTile> MainObjectivePossibilities;
-    public List<WalkableTile> TrapPossibilities;
+    public List<WalkableTile> MiscPossibilities;
 
     [Serializable]
     public struct DungeonAlteration
@@ -108,7 +108,7 @@ public class DUNGEON : NetworkBehaviour
                 if (tile == null) continue;
                 Space.RoomTiles.Remove(tile);
                 MainObjectivePossibilities.Remove(tile);
-                TrapPossibilities.Remove(tile);
+                MiscPossibilities.Remove(tile);
                 tile.gameObject.SetActive(false);
             }
             foreach (SpriteRenderer tile in ChosenVar.SpritesRemoved)
@@ -118,6 +118,90 @@ public class DUNGEON : NetworkBehaviour
             }
             i++;
         }
+    }
+
+    [Header("Spawned Object Prefabs")]
+    public RespawnArea PrefabSpawningArea;
+
+    private Vector3 GetRandomOnTile(float off = 2)
+    {
+        return new Vector3(UnityEngine.Random.Range(-off, off), UnityEngine.Random.Range(-off, off));
+    }
+
+    [NonSerialized] public List<RespawnArea> SpawnedRespawnAreas = new();
+    public void GenerateCrates(int MaterialWorth, int SuppliesWorth, int AmmoWorth, int TechWorth, float Density)
+    {
+        int Crates = Mathf.CeilToInt(Density * MiscPossibilities.Count);
+        for (int i = 0; i < Mathf.Min(Crates,4); i++)
+        {
+            Vector3 vec = GetRandomOnTile();
+            ResourceCrate.ResourceTypes Typ = ResourceCrate.ResourceTypes.NONE;
+            if (SuppliesWorth > 0) Typ = ResourceCrate.ResourceTypes.SUPPLIES;
+            else if (MaterialWorth > 0) Typ = ResourceCrate.ResourceTypes.MATERIALS;
+            else if (AmmoWorth > 0) Typ = ResourceCrate.ResourceTypes.AMMUNITION;
+            else if (TechWorth > 0) Typ = ResourceCrate.ResourceTypes.TECHNOLOGY;
+
+            for (int i2 = 0; i2 < UnityEngine.Random.Range(1, 4); i2++)
+            {
+                int Num = 0;
+                switch (Typ)
+                {
+                    case ResourceCrate.ResourceTypes.MATERIALS:
+                        Num = Mathf.Min(MaterialWorth, UnityEngine.Random.Range(3, 7));
+                        MaterialWorth -= Num;
+                        break;
+                    case ResourceCrate.ResourceTypes.SUPPLIES:
+                        Num = Mathf.Min(SuppliesWorth, UnityEngine.Random.Range(3, 7));
+                        SuppliesWorth -= Num;
+                        break;
+                    case ResourceCrate.ResourceTypes.AMMUNITION:
+                        Num = Mathf.Min(AmmoWorth, UnityEngine.Random.Range(3, 7));
+                        AmmoWorth -= Num;
+                        break;
+                    case ResourceCrate.ResourceTypes.TECHNOLOGY:
+                        Num = Mathf.Min(TechWorth, UnityEngine.Random.Range(2, 5));
+                        TechWorth -= Num;
+                        break;
+                }
+                ResourceCrate a;
+                if (UnityEngine.Random.value < 0.5f)
+                {
+                    switch (Typ)
+                    {
+                        case ResourceCrate.ResourceTypes.MATERIALS:
+                            a = CO_SPAWNER.co.SpawnMatCrate(Space, vec + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 70f) * CO.co.GetEncounterDifficultyModifier()), Num);
+                            break;
+                        case ResourceCrate.ResourceTypes.SUPPLIES:
+                            a = CO_SPAWNER.co.SpawnSupCrate(Space, vec + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 70f) * CO.co.GetEncounterDifficultyModifier()), Num);
+                            break;
+                        case ResourceCrate.ResourceTypes.AMMUNITION:
+                            a = CO_SPAWNER.co.SpawnAmmoCrate(Space, vec + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 70f) * CO.co.GetEncounterDifficultyModifier()), Num);
+                            break;
+                        case ResourceCrate.ResourceTypes.TECHNOLOGY:
+                            a = CO_SPAWNER.co.SpawnTechCrate(Space, vec + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 70f) * CO.co.GetEncounterDifficultyModifier()), Num);
+                            break;
+                    }
+                }
+                a = CO_SPAWNER.co.SpawnCrate(Space, vec + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 70f) * CO.co.GetEncounterDifficultyModifier()), Num, Typ);
+                a.NetworkObject.Spawn();
+                DungeonNetworkObjects.Add(a.NetworkObject);
+            }
+        }
+    }
+    public void GenerateSpawningMounds(int RespawnMounds)
+    {
+        RespawnArea a = Instantiate(PrefabSpawningArea, GetUtilitySpawn(), Quaternion.identity);
+        a.NetworkObject.Spawn();
+        a.SetSpace(Space);
+        DungeonNetworkObjects.Add(a.NetworkObject);
+        SpawnedRespawnAreas.Add(a);
+    }
+
+    public Vector3 GetUtilitySpawn()
+    {
+        WalkableTile tile = MiscPossibilities[UnityEngine.Random.Range(0, MiscPossibilities.Count)];
+        MiscPossibilities.Remove(tile);
+        return tile.transform.position;
     }
     public void Impact(PROJ fl, Vector3 ImpactArea)
     {

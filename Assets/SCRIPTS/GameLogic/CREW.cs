@@ -1741,9 +1741,27 @@ public class CREW : NetworkBehaviour, iDamageable
                     //Bleeding time is stuck on zero
                     BleedingTime.Value = 0;
                 }
+            } else if (isForceReviving)
+            {
+                if (!CO.co.IsSafe())
+                {
+                    BleedingTime.Value -= CO.co.GetWorldSpeedDelta();
+                    if (BleedingTime.Value < -20 || CO.co.IsSafe())
+                    {
+                        DeadForever.Value = false;
+                        SetAlive();
+                        Heal(GetMaxHealth());
+                    }
+                }
             }
         }
         DamageHealingUpdate();
+    }
+
+    bool isForceReviving = false;
+    public void ForceRevive() {
+        isForceReviving = true;
+        BleedingTime.Value = -10;
     }
 
     public ANIM.AnimationState GetCurrentAnimation()
@@ -1752,6 +1770,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public void SetAlive()
     {
+        isForceReviving = false;
         Alive.Value = true;
         setAnimationIfNotAlready(ANIM.AnimationState.MI_IDLE);
         SetColorAliveRpc();

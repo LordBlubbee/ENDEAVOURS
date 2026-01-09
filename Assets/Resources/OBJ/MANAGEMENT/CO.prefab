@@ -171,6 +171,7 @@ MonoBehaviour:
   PrefabGrappleLogipedes: {fileID: 8311341897716400573, guid: e11f4c2fe346a554589783eaa99827f3, type: 3}
   PrefabGrappleSilent: {fileID: 8311341897716400573, guid: f731be7339e17ee4399b86044f2ad2b7, type: 3}
   GrappleCursor: {fileID: 21300000, guid: 60f878be486a87a4ca9baaf1ee6e18e7, type: 3}
+  PrefabCrate: {fileID: 5275543212453673670, guid: a45df6783de8bc3469d2812feb4d44db, type: 3}
   PrefabMatCrate: {fileID: 5275543212453673670, guid: 8384cb1ea12c4dd46a5c2c2072f30029, type: 3}
   PrefabSupCrate: {fileID: 5275543212453673670, guid: 307210cef5b872d4aae40663bc1fd2c6, type: 3}
   PrefabAmmoCrate: {fileID: 5275543212453673670, guid: 177145219c0c30a45b6bf20c1cfe5d5a, type: 3}

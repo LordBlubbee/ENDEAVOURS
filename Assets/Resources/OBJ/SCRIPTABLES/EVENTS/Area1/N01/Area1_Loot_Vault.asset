@@ -25,7 +25,7 @@ MonoBehaviour:
   MultiplayerLootModifier: 1
   ReputationChanges: []
   RecruitCrewmembers: []
-  TotalLootDrops: 4
+  TotalLootDrops: 2
   RandomLoot:
   - Randomness: 0.2
     Resource_Materials: 0
@@ -71,5 +71,5 @@ MonoBehaviour:
     Resource_Repairs: 0
     Resource_XP: 0
     ItemDrop: {fileID: 11400000, guid: 0a70c805b4206b04dad2f4c4d74456c6, type: 2}
-    Weight: 6
+    Weight: 10
   ShopDrops: []

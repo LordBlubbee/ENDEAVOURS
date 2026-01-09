@@ -11,7 +11,8 @@ public class CO_SPAWNER : NetworkBehaviour
     public TOOL PrefabMedkitLogipedes;
     public TOOL PrefabGrappleLogipedes;
     public TOOL PrefabGrappleSilent;
-    public Sprite GrappleCursor;
+    public Sprite GrappleCursor; 
+    public ResourceCrate PrefabCrate;
     public ResourceCrate PrefabMatCrate;
     public ResourceCrate PrefabSupCrate;
     public ResourceCrate PrefabAmmoCrate;
@@ -450,7 +451,7 @@ public class CO_SPAWNER : NetworkBehaviour
             WalkableTile SelectedTile = ObjectivePositions[UnityEngine.Random.Range(0, ObjectivePositions.Count)];
             ObjectivePositions.Remove(SelectedTile);
             Vault vault = Instantiate(VaultObjectiveObject, SelectedTile.transform.position+ GetRandomOnTile(), SelectedTile.transform.rotation);
-            vault.ExtraMaxHealth.Value = ((100 + CO.co.GetLOCALCO().Count * 100) / Vaults) -100;
+            vault.ExtraMaxHealth.Value = ((50 + CO.co.GetLOCALCO().Count * 100) / Vaults) -50;
             vault.NetworkObject.Spawn();
             vault.transform.SetParent(Dungeon.Space.transform);
             vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;
@@ -602,6 +603,46 @@ public class CO_SPAWNER : NetworkBehaviour
             Levels++;
         }
         crew.AddUpgradeLevel(Levels);
+    }
+    public ResourceCrate SpawnCrate(SPACE space, Vector3 vec, int health, int resources, ResourceCrate.ResourceTypes type)
+    {
+        ResourceCrate ob = Instantiate(CO_SPAWNER.co.PrefabCrate, vec, Quaternion.identity);
+        ob.NetworkObject.Spawn();
+        ob.SetSpace(space);
+        ob.InitCrate(health, resources, type);
+        return ob;
+    }
+    public ResourceCrate SpawnMatCrate(SPACE space, Vector3 vec, int health, int resources)
+    {
+        ResourceCrate ob = Instantiate(CO_SPAWNER.co.PrefabMatCrate, vec, Quaternion.identity);
+        ob.NetworkObject.Spawn();
+        ob.SetSpace(space);
+        ob.InitCrate(health, resources, ResourceCrate.ResourceTypes.MATERIALS);
+        return ob;
+    }
+    public ResourceCrate SpawnSupCrate(SPACE space, Vector3 vec, int health, int resources)
+    {
+        ResourceCrate ob = Instantiate(CO_SPAWNER.co.PrefabSupCrate, vec, Quaternion.identity);
+        ob.NetworkObject.Spawn();
+        ob.SetSpace(space);
+        ob.InitCrate(health, resources, ResourceCrate.ResourceTypes.SUPPLIES);
+        return ob;
+    }
+    public ResourceCrate SpawnAmmoCrate(SPACE space, Vector3 vec, int health, int resources)
+    {
+        ResourceCrate ob = Instantiate(CO_SPAWNER.co.PrefabAmmoCrate, vec, Quaternion.identity);
+        ob.NetworkObject.Spawn();
+        ob.SetSpace(space);
+        ob.InitCrate(health, resources, ResourceCrate.ResourceTypes.AMMUNITION);
+        return ob;
+    }
+    public ResourceCrate SpawnTechCrate(SPACE space, Vector3 vec, int health, int resources)
+    {
+        ResourceCrate ob = Instantiate(CO_SPAWNER.co.PrefabTechCrate, vec, Quaternion.identity);
+        ob.NetworkObject.Spawn();
+        ob.SetSpace(space);
+        ob.InitCrate(health, resources, ResourceCrate.ResourceTypes.TECHNOLOGY);
+        return ob;
     }
 
     /*VFX*/

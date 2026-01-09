@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8252273903227475408}
   - component: {fileID: 369838450385855604}
   m_Layer: 6
-  m_Name: Crate_Ammo
+  m_Name: Crate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 176339662
+  GlobalObjectIdHash: 1383675952
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -107,7 +107,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 87df71c10a39ede419fda41f8d779b81, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 10593a8499e45864e82ac3b253e01983, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  ResourceType: 2
+  ResourceType: 0
   DestructionParticles: {fileID: 5970191255916826189, guid: 6f02cda9ec0e8b9479beccfec97ef425, type: 3}
 --- !u!114 &8252273903227475408
 MonoBehaviour:
