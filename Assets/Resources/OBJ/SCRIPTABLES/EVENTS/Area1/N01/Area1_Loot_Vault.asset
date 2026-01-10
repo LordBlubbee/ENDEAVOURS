@@ -71,5 +71,5 @@ MonoBehaviour:
     Resource_Repairs: 0
     Resource_XP: 0
     ItemDrop: {fileID: 11400000, guid: 0a70c805b4206b04dad2f4c4d74456c6, type: 2}
-    Weight: 10
+    Weight: 20
   ShopDrops: []
