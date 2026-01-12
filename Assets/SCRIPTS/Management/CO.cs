@@ -19,7 +19,7 @@ public class CO : NetworkBehaviour
     [NonSerialized] public NetworkVariable<bool> AreWeCrafting = new();
     [NonSerialized] public NetworkVariable<bool> CommunicationGamePaused = new();
     [NonSerialized] public NetworkVariable<float> EnemyBarRelative = new(-1);
-    [NonSerialized] public NetworkVariable<FixedString32Bytes> EnemyBarString = new("");
+    [NonSerialized] public NetworkVariable<FixedString64Bytes> EnemyBarString = new("");
     [NonSerialized] public DRIFTER PlayerMainDrifter;
     [NonSerialized] public NetworkVariable<int> PlayerMapPointID = new();
 
@@ -1739,7 +1739,7 @@ public class CO : NetworkBehaviour
             int Threats = GetEnemyNonDormantCrew().Count;
 
             EnemyBarRelative.Value = 1f - Death;
-            if (Vaults.Count == 0) EnemyBarString.Value = $"<color=green>OBJECTIVES COMPLETE";
+            if (Vaults.Count == 0) EnemyBarString.Value = $"<color=green>OBJECTIVE COMPLETE";
             else EnemyBarString.Value = $"FIND {Vaults.Count} VAULTS";
             if (AreCrewAwayFromHome() && !ThreatsEliminated)
             {

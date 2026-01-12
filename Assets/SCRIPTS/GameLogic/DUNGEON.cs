@@ -134,7 +134,6 @@ public class DUNGEON : NetworkBehaviour
         int Crates = Mathf.CeilToInt(Density * MiscPossibilities.Count);
         for (int i = 0; i < Mathf.Min(Crates,4); i++)
         {
-            Vector3 vec = GetRandomOnTile();
             ResourceCrate.ResourceTypes Typ = ResourceCrate.ResourceTypes.NONE;
             if (SuppliesWorth > 0) Typ = ResourceCrate.ResourceTypes.SUPPLIES;
             else if (MaterialWorth > 0) Typ = ResourceCrate.ResourceTypes.MATERIALS;
@@ -164,6 +163,7 @@ public class DUNGEON : NetworkBehaviour
                         break;
                 }
                 ResourceCrate a;
+                Vector3 vec = GetUtilitySpawn();
                 if (UnityEngine.Random.value < 0.5f)
                 {
                     switch (Typ)
