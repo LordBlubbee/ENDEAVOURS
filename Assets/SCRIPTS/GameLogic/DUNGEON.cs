@@ -183,7 +183,6 @@ public class DUNGEON : NetworkBehaviour
                     }
                 }
                 a = CO_SPAWNER.co.SpawnCrate(Space, vec + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 70f) * CO.co.GetEncounterDifficultyModifier()), Num, Typ);
-                a.NetworkObject.Spawn();
                 DungeonNetworkObjects.Add(a.NetworkObject);
             }
         }
