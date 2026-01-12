@@ -11,6 +11,7 @@ public class AI_UNIT : NetworkBehaviour
 {
     public CREW Unit;
     public AI_UNIT_TYPES AI_Unit_Type;
+    public AI_TACTIC_TYPES AI_Tactic_Type;
     private float AI_TacticTimer;
     private AI_TACTICS AI_Tactic;
     private AI_GROUP Group;
@@ -163,6 +164,11 @@ public class AI_UNIT : NetworkBehaviour
     {
         CREW,
         LOONCRAB
+    }
+    public enum AI_TACTIC_TYPES
+    {
+        NORMAL,
+        SNIPER,
     }
     private void Start()
     {
@@ -402,8 +408,6 @@ public class AI_UNIT : NetworkBehaviour
                     if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
                     break;
                 case AI_TACTICS.CIRCLE:
-
-
                     if (Unit.GetHealthRelative() < 0.3f)
                     {
                         SetAIMoveTowards(GetPointTowardsPoint(EnemyTarget.transform.position, -12f), EnemyTarget.Space);
@@ -718,8 +722,11 @@ public class AI_UNIT : NetworkBehaviour
         {
             case AI_UNIT_TYPES.CREW:
                 AddWeights(0, 20);
-                if (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) > 16f) AddWeights(1, 25);
-                else AddWeights(1, 12);
+                if (AI_Tactic_Type != AI_TACTIC_TYPES.SNIPER)
+                {
+                    if (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) > 16f) AddWeights(1, 25);
+                    else AddWeights(1, 12);
+                }
                 if (Unit.GetHealthRelative() < 0.4f) AddWeights(2, 40);
 
                 bool canTryToHeal = !(Unit.HasLineOfSight(EnemyTarget.transform.position) && (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) < 12));
@@ -1379,7 +1386,7 @@ public class AI_UNIT : NetworkBehaviour
             case TOOL.ToolAI.MELEE:
                 return 3f;
             case TOOL.ToolAI.RANGED:
-                return 22f;
+                return 25f;
         }
         return 3f;
     }

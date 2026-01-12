@@ -376,6 +376,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   Unit: {fileID: 5867427934140877094}
   AI_Unit_Type: 0
+  AI_Tactic_Type: 1
 --- !u!1 &3208371297625316648
 GameObject:
   m_ObjectHideFlags: 0

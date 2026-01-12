@@ -2,6 +2,7 @@ using System;
 using Unity.Netcode;
 using UnityEngine;
 using static CO;
+using static iDamageable;
 using static Module;
 
 public class ResourceCrate : NetworkBehaviour, iDamageable
@@ -12,6 +13,10 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
     private NetworkVariable<float> CurHealth = new();
     private NetworkVariable<bool> IsGrabbed = new();
     public GameObject DestructionParticles;
+
+    public AudioClip DestructionSFX;
+    public float DestructionDamage = 0;
+    public float DestructionRadius = 0;
     public SPACE Space { get; set; }
     public void SetSpace(SPACE space)
     {
@@ -34,6 +39,20 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
         CurHealth.Value = Mathf.Clamp(CurHealth.Value - fl, 0, GetMaxHealth());
         if (CurHealth.Value <= 0)
         {
+            if (DestructionRadius > 0)
+            {
+                foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position, DestructionRadius))
+                {
+                    CREW Crew = col.GetComponent<CREW>();
+                    if (Crew != null)
+                    {
+                        if (Crew.isDead()) continue;
+                        float DisFactor = 1f - (Vector3.Distance(transform.position, Crew.transform.position) / DestructionRadius);
+                        Crew.TakeDamage(DestructionDamage * DisFactor * (0.5f + GetMaxHealth() * 0.006f), Crew.transform.position, DamageType.ENVIRONMENT_FIRE);
+                    }
+                }
+            }
+            
             DestructionRpc();
             GainMaterials();
             RemoveCrate();
@@ -44,6 +63,7 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
     private void DestructionRpc()
     {
         Instantiate(DestructionParticles, transform.position, Quaternion.identity);
+        AUDCO.aud.PlaySFX(DestructionSFX, transform.position, 0.2f);
     }
     public void GainMaterials()
     {

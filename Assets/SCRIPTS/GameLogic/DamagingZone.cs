@@ -8,6 +8,7 @@ public class DamagingZone : NetworkBehaviour
     public float Duration = 10f;
     public float DamagePerSecond = 20f;
     public float DamageRadius = 0f;
+    public ScriptableBuff ApplyBuff;
     public iDamageable.DamageType DamageType;
     public float ModuleDamageMod = 0f;
     float DurationLeft = 0f;
@@ -43,6 +44,10 @@ public class DamagingZone : NetworkBehaviour
                     if (Crew != null)
                     {
                         if (Crew.isDead()) continue;
+                        if (ApplyBuff)
+                        {
+                            Crew.AddBuff(ApplyBuff);
+                        }
                         Crew.TakeDamage(Damage, Crew.transform.position, DamageType);
                     }
                     if (ModuleDamageMod > 0)

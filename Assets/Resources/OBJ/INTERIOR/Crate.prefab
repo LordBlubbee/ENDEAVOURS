@@ -206,6 +206,9 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   ResourceType: 0
   DestructionParticles: {fileID: 5970191255916826189, guid: 6f02cda9ec0e8b9479beccfec97ef425, type: 3}
+  DestructionSFX: {fileID: 8300000, guid: a5bcddae087aadf4291d2958fdc27c39, type: 3}
+  DestructionDamage: 0
+  DestructionRadius: 0
 --- !u!114 &8252273903227475408
 MonoBehaviour:
   m_ObjectHideFlags: 0
