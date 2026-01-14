@@ -1714,6 +1714,7 @@ public class CO : NetworkBehaviour
 
         List<Vault> Vaults = CO_SPAWNER.co.SpawnVaultObjectives(CurrentDungeon); //These are now THREE
 
+        CurrentDungeon.GenerateTraps(Mathf.RoundToInt(600 * CO.co.GetEncounterSizeModifier()));
         CurrentDungeon.GenerateSpawningMounds(UnityEngine.Random.Range(2,5));
         CurrentDungeon.GenerateCrates(
             Mathf.RoundToInt(UnityEngine.Random.Range(16,24) * GetEncounterLootModifier()), //20 MAT

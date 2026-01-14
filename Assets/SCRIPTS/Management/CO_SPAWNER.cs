@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 public class CO_SPAWNER : NetworkBehaviour
@@ -12,11 +13,7 @@ public class CO_SPAWNER : NetworkBehaviour
     public TOOL PrefabGrappleLogipedes;
     public TOOL PrefabGrappleSilent;
     public Sprite GrappleCursor; 
-    public ResourceCrate PrefabCrate;
-    public ResourceCrate PrefabMatCrate;
-    public ResourceCrate PrefabSupCrate;
-    public ResourceCrate PrefabAmmoCrate;
-    public ResourceCrate PrefabTechCrate;
+  
     public ShopItem PrefabShopItem;
     public Sprite ShopItemMaterialDeal;
     public Sprite ShopItemSupplyDeal;
@@ -57,6 +54,15 @@ public class CO_SPAWNER : NetworkBehaviour
     public GameObject[] NebulaSparks;
     public BackgroundRock[] BackgroundSmallRocks;
     public BackgroundRock[] BackgroundLargeRocks;
+
+    [Header("DUNGEON")]
+    public ResourceCrate PrefabCrate;
+    public ResourceCrate PrefabMatCrate;
+    public ResourceCrate PrefabSupCrate;
+    public ResourceCrate PrefabAmmoCrate;
+    public ResourceCrate PrefabTechCrate;
+    public DamagingZone[] DifficultTerrain;
+    public ResourceCrate PrefabExplosiveCrate;
     public enum BackgroundType
     {
         EMPTY,
@@ -149,7 +155,7 @@ public class CO_SPAWNER : NetworkBehaviour
         }
     }
 
-    public List<BackgroundRock> LandscapeObjects = new();
+    private List<BackgroundRock> LandscapeObjects = new();
     public void CreateLandscape(BackgroundType LandscapeType)
     {
         foreach (BackgroundRock ob in LandscapeObjects)
@@ -612,6 +618,7 @@ public class CO_SPAWNER : NetworkBehaviour
         ob.InitCrate(health, resources, type);
         return ob;
     }
+   
     public ResourceCrate SpawnMatCrate(SPACE space, Vector3 vec, int health, int resources)
     {
         ResourceCrate ob = Instantiate(CO_SPAWNER.co.PrefabMatCrate, vec, Quaternion.identity);
@@ -642,6 +649,23 @@ public class CO_SPAWNER : NetworkBehaviour
         ob.NetworkObject.Spawn();
         ob.SetSpace(space);
         ob.InitCrate(health, resources, ResourceCrate.ResourceTypes.TECHNOLOGY);
+        return ob;
+    }
+    public ResourceCrate SpawnExplosiveCrate(SPACE space, Vector3 vec, int health)
+    {
+        ResourceCrate ob = Instantiate(CO_SPAWNER.co.PrefabExplosiveCrate, vec, Quaternion.identity);
+        ob.NetworkObject.Spawn();
+        ob.SetSpace(space);
+        ob.InitCrate(health, 0, ResourceCrate.ResourceTypes.NONE);
+        return ob;
+    }
+    public DamagingZone SpawnDifficultTerrain(SPACE space, Vector3 vec)
+    {
+        DamagingZone ob = Instantiate(DifficultTerrain[UnityEngine.Random.Range(0, DifficultTerrain.Length)], vec, Quaternion.identity);
+        ob.transform.SetParent(space.transform);
+        ob.transform.Rotate(Vector3.forward, UnityEngine.Random.Range(0, 4)*90);
+        ob.NetworkObject.Spawn();
+        ob.Init();
         return ob;
     }
 

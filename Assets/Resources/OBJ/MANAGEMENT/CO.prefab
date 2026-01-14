@@ -171,11 +171,6 @@ MonoBehaviour:
   PrefabGrappleLogipedes: {fileID: 8311341897716400573, guid: e11f4c2fe346a554589783eaa99827f3, type: 3}
   PrefabGrappleSilent: {fileID: 8311341897716400573, guid: f731be7339e17ee4399b86044f2ad2b7, type: 3}
   GrappleCursor: {fileID: 21300000, guid: 60f878be486a87a4ca9baaf1ee6e18e7, type: 3}
-  PrefabCrate: {fileID: 5275543212453673670, guid: a45df6783de8bc3469d2812feb4d44db, type: 3}
-  PrefabMatCrate: {fileID: 5275543212453673670, guid: 8384cb1ea12c4dd46a5c2c2072f30029, type: 3}
-  PrefabSupCrate: {fileID: 5275543212453673670, guid: 307210cef5b872d4aae40663bc1fd2c6, type: 3}
-  PrefabAmmoCrate: {fileID: 5275543212453673670, guid: 177145219c0c30a45b6bf20c1cfe5d5a, type: 3}
-  PrefabTechCrate: {fileID: 5275543212453673670, guid: 2ca4d4c7bcf96b148904ad67ace431af, type: 3}
   PrefabShopItem: {fileID: 555142459187643347, guid: b1fb234dbf69e4744a05666ade6e8c9b, type: 3}
   ShopItemMaterialDeal: {fileID: 21300000, guid: ad35b3711c0acf94293132facffca22e, type: 3}
   ShopItemSupplyDeal: {fileID: 21300000, guid: f4f0572014414ec4bb873a84a94c2b57, type: 3}
@@ -220,6 +215,14 @@ MonoBehaviour:
   - {fileID: 5773891418078970687, guid: d2e75b0cbe831e14fb379831e6b4bf77, type: 3}
   - {fileID: -3678832351633460812, guid: 134cafe8401e4db4887920b394be0375, type: 3}
   - {fileID: -4234765308474215883, guid: 5f50c7d1008477b438225999f96d7f16, type: 3}
+  PrefabCrate: {fileID: 5275543212453673670, guid: a45df6783de8bc3469d2812feb4d44db, type: 3}
+  PrefabMatCrate: {fileID: 5275543212453673670, guid: 8384cb1ea12c4dd46a5c2c2072f30029, type: 3}
+  PrefabSupCrate: {fileID: 5275543212453673670, guid: 307210cef5b872d4aae40663bc1fd2c6, type: 3}
+  PrefabAmmoCrate: {fileID: 5275543212453673670, guid: 177145219c0c30a45b6bf20c1cfe5d5a, type: 3}
+  PrefabTechCrate: {fileID: 5275543212453673670, guid: 2ca4d4c7bcf96b148904ad67ace431af, type: 3}
+  DifficultTerrain:
+  - {fileID: 649788761470363830, guid: e1f122cb74fcbfe4a8307ae8344e2939, type: 3}
+  PrefabExplosiveCrate: {fileID: 5275543212453673670, guid: 79aeb42c18638f64cb58d51b53683287, type: 3}
   PrefabDMG: {fileID: 7984331047920370264, guid: d7c770080f1bbd74896728c8e86423ca, type: 3}
   PrefabMapPoint: {fileID: 3321087299976624134, guid: dc2158057d660e74e8c4d97661c8c919, type: 3}
   PrefabAIGROUP: {fileID: 3831634758814928319, guid: cb606a21fdafac54faa6d61495604d6e, type: 3}

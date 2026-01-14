@@ -1,11 +1,10 @@
-using NUnit.Framework;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
-using static iDamageable;
 
 public class DUNGEON : NetworkBehaviour
 {
@@ -21,6 +20,15 @@ public class DUNGEON : NetworkBehaviour
     public List<DungeonAlteration> Alterations = new List<DungeonAlteration>();
     public List<WalkableTile> MainObjectivePossibilities;
     public List<WalkableTile> MiscPossibilities;
+    public List<NetworkObject> BackgroundObjectPossibilities;
+    public List<ObstacleTypes> ObstaclePossibilityList;
+
+    public enum ObstacleTypes
+    {
+        NONE,
+        EXPLOSIVE_CRATE,
+        DIFFICULT_TERRAIN
+    }
 
     [Serializable]
     public struct DungeonAlteration
@@ -118,6 +126,17 @@ public class DUNGEON : NetworkBehaviour
             }
             i++;
         }
+        foreach (WalkableTile tile in Space.RoomTiles)
+        {
+            for (int i2 = 0; i2 < UnityEngine.Random.Range(0,3);i2++)
+            {
+                NetworkObject obj = Instantiate(BackgroundObjectPossibilities[UnityEngine.Random.Range(0, BackgroundObjectPossibilities.Count)], tile.transform.position + GetRandomOnTile(), Quaternion.identity);
+                obj.transform.Rotate(Vector3.forward, UnityEngine.Random.Range(0, 4)*90);
+                obj.transform.SetParent(Space.transform);
+                obj.Spawn();
+                DungeonNetworkObjects.Add(obj);
+            }
+        }
     }
 
     [Header("Spawned Object Prefabs")]
@@ -187,6 +206,41 @@ public class DUNGEON : NetworkBehaviour
             }
         }
     }
+
+    public void GenerateTraps(int TrapPoints)
+    {
+        while (TrapPoints > 0)
+        {
+            ObstacleTypes Typ = ObstaclePossibilityList[UnityEngine.Random.Range(0,ObstaclePossibilityList.Count)];
+            Vector3 Spawn = GetRandomSpawn();
+            switch (Typ)
+            {
+                case ObstacleTypes.EXPLOSIVE_CRATE:
+                    {
+                        TrapPoints -= 30;
+                        for (int i = 0; i < UnityEngine.Random.Range(1, 4); i++)
+                        {
+                            TrapPoints -= 20;
+                            ResourceCrate a = CO_SPAWNER.co.SpawnExplosiveCrate(Space, Spawn + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 60f) * CO.co.GetEncounterDifficultyModifier()));
+                            DungeonNetworkObjects.Add(a.NetworkObject);
+                        }
+                        for (int i = 0; i < UnityEngine.Random.Range(0,3); i++)
+                        {
+                            ResourceCrate a = CO_SPAWNER.co.SpawnCrate(Space, Spawn + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 60f) * CO.co.GetEncounterDifficultyModifier()), 0, ResourceCrate.ResourceTypes.NONE);
+                            DungeonNetworkObjects.Add(a.NetworkObject);
+                        }
+                        break;
+                    }
+                case ObstacleTypes.DIFFICULT_TERRAIN:
+                    {
+                        DamagingZone zon = CO_SPAWNER.co.SpawnDifficultTerrain(Space, Spawn + GetRandomOnTile());
+                        DungeonNetworkObjects.Add(zon.NetworkObject);
+                        TrapPoints -= 50;
+                        break;
+                    }
+            }
+        }
+    }
     public void GenerateSpawningMounds(int RespawnMounds)
     {
         RespawnArea a = Instantiate(PrefabSpawningArea, GetUtilitySpawn(), Quaternion.identity);
@@ -202,6 +256,11 @@ public class DUNGEON : NetworkBehaviour
         MiscPossibilities.Remove(tile);
         return tile.transform.position;
     }
+    public Vector3 GetRandomSpawn()
+    {
+        WalkableTile tile = Space.RoomTiles[UnityEngine.Random.Range(0, Space.RoomTiles.Count)];
+        return tile.transform.position;
+    }
     public void Impact(PROJ fl, Vector3 ImpactArea)
     {
         float Damage = fl.AttackDamage;
@@ -210,7 +269,7 @@ public class DUNGEON : NetworkBehaviour
             float Dist = (mod.transform.position - ImpactArea).magnitude;
             if (Dist < fl.CrewDamageSplash)
             {
-                mod.TakeDamage(Damage * fl.CrewDamageModifier, mod.transform.position, DamageType.TRUE);
+                mod.TakeDamage(Damage * fl.CrewDamageModifier, mod.transform.position, iDamageable.DamageType.TRUE);
             }
         }
     }

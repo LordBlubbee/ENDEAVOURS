@@ -1381,6 +1381,14 @@ MonoBehaviour:
   - {fileID: 2682816367951570057}
   - {fileID: 8656623115420567257}
   - {fileID: 2633141743570521196}
+  BackgroundObjectPossibilities:
+  - {fileID: 2203519663317647966, guid: b87ec17899f4c9f4ea6708c294976160, type: 3}
+  - {fileID: 2203519663317647966, guid: 78b4ce87c955fc84fb78e11925cb64a7, type: 3}
+  - {fileID: 2203519663317647966, guid: 3ae3dbc4a118efe4d92520e5855f5d42, type: 3}
+  - {fileID: 2203519663317647966, guid: 7f413c8a06a7d31498d0ff28d9a9fed8, type: 3}
+  - {fileID: 2203519663317647966, guid: f37368528653ed54fac39198177d26dc, type: 3}
+  - {fileID: 2203519663317647966, guid: ec3a3e0b7bf43a4459bdfd959fc1bcc0, type: 3}
+  ObstaclePossibilityList: 020000000200000001000000
   PrefabSpawningArea: {fileID: 4056564725635188173, guid: 749ea8741785b744ab9c61f1db59058c, type: 3}
 --- !u!114 &4870201802980658587
 MonoBehaviour:

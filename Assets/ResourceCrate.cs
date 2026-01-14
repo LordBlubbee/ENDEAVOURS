@@ -36,25 +36,26 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
     public void TakeDamage(float fl, Vector3 src, iDamageable.DamageType type)
     {
         if (fl < 0) return;
+        if (CurHealth.Value == 0) return;
         CurHealth.Value = Mathf.Clamp(CurHealth.Value - fl, 0, GetMaxHealth());
         if (CurHealth.Value <= 0)
         {
+            DestructionRpc();
+            GainMaterials();
+
             if (DestructionRadius > 0)
             {
                 foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position, DestructionRadius))
                 {
-                    CREW Crew = col.GetComponent<CREW>();
+                    iDamageable Crew = col.GetComponent<iDamageable>();
                     if (Crew != null)
                     {
-                        if (Crew.isDead()) continue;
+                        if (!Crew.CanBeTargeted(Space)) continue;
                         float DisFactor = 1f - (Vector3.Distance(transform.position, Crew.transform.position) / DestructionRadius);
                         Crew.TakeDamage(DestructionDamage * DisFactor * (0.5f + GetMaxHealth() * 0.006f), Crew.transform.position, DamageType.ENVIRONMENT_FIRE);
                     }
                 }
             }
-            
-            DestructionRpc();
-            GainMaterials();
             RemoveCrate();
         }
         CO_SPAWNER.co.SpawnDMGRpc(fl, transform.position);

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DamagingZone : NetworkBehaviour
 {
+    public int Faction = -1;
     public ParticleSystem[] ParticleSystem;
     public float Duration = 10f;
     public float DamagePerSecond = 20f;
@@ -30,7 +31,7 @@ public class DamagingZone : NetworkBehaviour
     {
         DurationLeft = Duration;
         float Timer = 0f;
-        while (DurationLeft > 0f)
+        while (DurationLeft > 0f || Duration == -1)
         {
             Timer -= CO.co.GetWorldSpeedDelta();
             if (Timer < 0f)
@@ -44,11 +45,12 @@ public class DamagingZone : NetworkBehaviour
                     if (Crew != null)
                     {
                         if (Crew.isDead()) continue;
+                        if (Crew.GetFaction() == Faction) continue;
                         if (ApplyBuff)
                         {
                             Crew.AddBuff(ApplyBuff);
                         }
-                        Crew.TakeDamage(Damage, Crew.transform.position, DamageType);
+                        if (Damage > 0) Crew.TakeDamage(Damage, Crew.transform.position, DamageType);
                     }
                     if (ModuleDamageMod > 0)
                     {

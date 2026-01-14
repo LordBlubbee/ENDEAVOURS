@@ -205,7 +205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   ResourceType: 4
-  DestructionParticles: {fileID: 5970191255916826189, guid: 6f02cda9ec0e8b9479beccfec97ef425, type: 3}
+  DestructionParticles: {fileID: 7178822272740056672, guid: 70d93878a36b8c54292e0c86ba038037, type: 3}
   DestructionSFX: {fileID: 8300000, guid: 6e999360bbf88ef478b7802c157a8524, type: 3}
   DestructionDamage: 180
   DestructionRadius: 12
