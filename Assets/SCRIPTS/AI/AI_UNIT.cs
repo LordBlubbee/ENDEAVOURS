@@ -783,6 +783,7 @@ public class AI_UNIT : NetworkBehaviour
             switch (AI_Tactic)
             {
                 case AI_TACTICS.DORMANT:
+                    CO_SPAWNER.co.SpawnSleepRpc(transform.position);
                     if (Unit.GetHealthRelative() < 1f)
                     {
                         Unit.IsNeutral = false;
@@ -854,13 +855,20 @@ public class AI_UNIT : NetworkBehaviour
                         {
                             SetAIMoveTowardsIfExpired(GetRandomPointAround(EnemyTarget.transform.position, 5f, 12f), EnemyTarget.Space, 3f);
                         }
-                        Unit.UseItem2Rpc();
+                        if (Unit.IsEnemyInFront(GetAttackDistance()) && UnityEngine.Random.Range(0f, 1f) < 0.5f)
+                        {
+                            Unit.UseItem1Rpc();
+                        } else
+                        {
+                            Unit.UseItem2Rpc();
+                        }
                         SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
                         break;
                     case AI_TACTICS.CHARGE:
                         SetAIMoveTowardsIfExpired(GetPointTowardsPoint(EnemyTarget.transform.position, 24f), EnemyTarget.Space, UnityEngine.Random.Range(2f, 4f));
                         SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
                         Unit.Dash();
+                        Unit.UseItem1Rpc();
                         break;
                     case AI_TACTICS.SABOTAGE:
                         mod = GetClosestEnemyModule();

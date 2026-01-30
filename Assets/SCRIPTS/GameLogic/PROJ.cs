@@ -165,7 +165,11 @@ public class PROJ : NetworkBehaviour
                 }
             } else
             {
-                if (Space != crew.Space && crew.Space.Drifter != null) return; // Direct damage not possible if not in same space and the target is in a drifter
+                SPACE OtherSpace = crew.Space;
+                if (OtherSpace != null)
+                {
+                    if (Space != crew.Space && OtherSpace.Drifter != null) return; // Direct damage not possible if not in same space and the target is in a drifter
+                }
                 if (crew is Module) crew.TakeDamage(AttackDamage * ModuleDamageModifier, transform.position, DamageType);
                 else
                 {
@@ -218,14 +222,16 @@ public class PROJ : NetworkBehaviour
             return;
         } else if (UseAltitude)
         {
-            DUNGEON dung = collision.GetComponent<DUNGEON>();
-            if (dung != null)
+            if (Space == null)
             {
-                if (Space != null) return;
-                dung.Impact(this, Tip.position);
-                if (ImpactSFX.Length > 0) ImpactSFXRpc();
-                BulletImpact();
-                return;
+                DUNGEON dung = collision.GetComponent<DUNGEON>();
+                if (dung != null)
+                {
+                    dung.Impact(this, Tip.position);
+                    if (ImpactSFX.Length > 0) ImpactSFXRpc();
+                    BulletImpact();
+                    return;
+                }
             }
         }
         if (Space != null)

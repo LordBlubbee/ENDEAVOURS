@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 using static UnityEngine.GraphicsBuffer;
 
 public class CREW : NetworkBehaviour, iDamageable
@@ -1056,7 +1058,25 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             float mov = 5f * GetDashSpeed() * Speed * CO.co.GetWorldSpeedDeltaFixed();
 
-            MoveCrew(dir * mov);
+            Vector3 move = dir * mov;
+            Vector2 start = transform.position;
+            Vector2 direction = move.normalized;
+            float distance = move.magnitude;
+            float radius = ((CircleCollider2D)Col).radius;
+
+            foreach (RaycastHit2D col in Physics2D.CircleCastAll(start, radius, direction, distance))
+            {
+                CREW Crew = col.transform.gameObject.GetComponent<CREW>();
+                if (Crew != null)
+                {
+                    if (Crew.isDead()) continue;
+                    if (!IsTargetEnemy(Crew)) continue;
+                    move *= 0.3f;
+                    break;
+                }
+            }
+
+            MoveCrew(move);
 
             /*
             // Predict the new position
@@ -1921,8 +1941,20 @@ public class CREW : NetworkBehaviour, iDamageable
             Vector2 target = start + move;
             transform.position = target;
            // Rigid.MovePosition(transform.position);
+
             return true;
         }
+        transform.position = SlideAlong(move, hit);
+        return false;
+    }
+
+    private Vector3 SlideAlong(Vector3 move, RaycastHit2D hit)
+    {
+        Vector2 start = transform.position;
+        Vector2 direction = move.normalized;
+        float distance = move.magnitude;
+        float radius = ((CircleCollider2D)Col).radius;
+        int layerMask = LayerMask.GetMask("DrifterInterior");
         // --- BLOCKED → SLIDING LOGIC ---
 
         // 1. How far can we move BEFORE the block?
@@ -1959,17 +1991,12 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             // even slide direction is blocked → stop
             Vector2 finalPos = start + safePart;
-            transform.position = finalPos;
-           // Rigid.MovePosition(transform.position);
-            return false;
+            return finalPos;
         }
 
         // 5. Combine safe direct movement + sliding
         Vector2 finalPosition = start + safePart + slideMove;
-        transform.position = finalPosition;
-       // Rigid.MovePosition(transform.position);
-
-        return true;
+        return finalPosition;
     }
 
     /*WEAPONS*/
@@ -2433,6 +2460,17 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public bool CanBeTargeted(SPACE space)
     {
+        /* HOW SHOULD THIS WORK?
+         -Bullet shot in SPACE should hit only targets in SPACE (Crew, Drifter, Dungeon)
+         -Bullet shot from DRIFTER should hit
+            >Crew in same Space
+            >Crew in null Space
+            >NOT Crew in Drifters
+            >YES Crew in a Dungeon
+         
+         
+         
+         */
         SPACE ourSpace = Space;
         if (ourSpace != null && space == null) return false; //If this target is in a drifter and the projectile is a bombardment projectile from outside the drifter, return false
 

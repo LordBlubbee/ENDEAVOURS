@@ -973,7 +973,7 @@ GameObject:
   - component: {fileID: 807498822971738821}
   - component: {fileID: 7395482235492128901}
   m_Layer: 6
-  m_Name: StorageAreaDungeon
+  m_Name: TestDungeon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1388,7 +1388,7 @@ MonoBehaviour:
   - {fileID: 2203519663317647966, guid: 7f413c8a06a7d31498d0ff28d9a9fed8, type: 3}
   - {fileID: 2203519663317647966, guid: f37368528653ed54fac39198177d26dc, type: 3}
   - {fileID: 2203519663317647966, guid: ec3a3e0b7bf43a4459bdfd959fc1bcc0, type: 3}
-  ObstaclePossibilityList: 020000000200000001000000
+  ObstaclePossibilityList: 020000000200000001000000030000000300000004000000
   PrefabSpawningArea: {fileID: 4056564725635188173, guid: 749ea8741785b744ab9c61f1db59058c, type: 3}
 --- !u!114 &4870201802980658587
 MonoBehaviour:
@@ -3505,7 +3505,7 @@ PrefabInstance:
     - target: {fileID: 4511574632909210950, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 01ac5d03f44e494408e56e19e0e0a532, type: 3}
+      objectReference: {fileID: 21300000, guid: c66ead402b4efef48baa06fed7e918b1, type: 3}
     - target: {fileID: 4511574632909210950, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -6246,7 +6246,7 @@ PrefabInstance:
     - target: {fileID: 4511574632909210950, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 01ac5d03f44e494408e56e19e0e0a532, type: 3}
+      objectReference: {fileID: 21300000, guid: c66ead402b4efef48baa06fed7e918b1, type: 3}
     - target: {fileID: 4511574632909210950, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -6849,7 +6849,7 @@ PrefabInstance:
     - target: {fileID: 4511574632909210950, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 01ac5d03f44e494408e56e19e0e0a532, type: 3}
+      objectReference: {fileID: 21300000, guid: c66ead402b4efef48baa06fed7e918b1, type: 3}
     - target: {fileID: 4511574632909210950, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -8812,7 +8812,7 @@ PrefabInstance:
     - target: {fileID: 4511574632909210950, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 01ac5d03f44e494408e56e19e0e0a532, type: 3}
+      objectReference: {fileID: 21300000, guid: c66ead402b4efef48baa06fed7e918b1, type: 3}
     - target: {fileID: 4511574632909210950, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -10095,7 +10095,7 @@ PrefabInstance:
     - target: {fileID: 4511574632909210950, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 01ac5d03f44e494408e56e19e0e0a532, type: 3}
+      objectReference: {fileID: 21300000, guid: c66ead402b4efef48baa06fed7e918b1, type: 3}
     - target: {fileID: 4511574632909210950, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -11257,7 +11257,7 @@ PrefabInstance:
     - target: {fileID: 4511574632909210950, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 01ac5d03f44e494408e56e19e0e0a532, type: 3}
+      objectReference: {fileID: 21300000, guid: c66ead402b4efef48baa06fed7e918b1, type: 3}
     - target: {fileID: 4511574632909210950, guid: 678c6dd4954e45641974b7fadc555ae5, type: 3}
       propertyPath: m_Color.b
       value: 1

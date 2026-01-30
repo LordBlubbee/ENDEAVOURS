@@ -21,24 +21,28 @@ public class DUNGEON : NetworkBehaviour
     public List<WalkableTile> MainObjectivePossibilities;
     public List<WalkableTile> MiscPossibilities;
     public List<NetworkObject> BackgroundObjectPossibilities;
+    public float TrapSpawnDefault = 600;
     public List<ObstacleTypes> ObstaclePossibilityList;
 
     public enum ObstacleTypes
     {
         NONE,
         EXPLOSIVE_CRATE,
-        DIFFICULT_TERRAIN
+        DIFFICULT_TERRAIN,
+        LOONCRAB_EGG,
+        LEAKING_MIST
     }
 
     [Serializable]
     public struct DungeonAlteration
     {
+        [TextArea(2,5)]
+        public string Title;
         public List<DungeonVariants> Variants;
     }
     [Serializable] public struct DungeonVariants
     {
         public List<WalkableTile> WalkablesRemoved;
-        public List<SpriteRenderer> SpritesRemoved;
     }
     public void Init()
     {
@@ -117,11 +121,6 @@ public class DUNGEON : NetworkBehaviour
                 Space.RoomTiles.Remove(tile);
                 MainObjectivePossibilities.Remove(tile);
                 MiscPossibilities.Remove(tile);
-                tile.gameObject.SetActive(false);
-            }
-            foreach (SpriteRenderer tile in ChosenVar.SpritesRemoved)
-            {
-                if (tile == null) continue;
                 tile.gameObject.SetActive(false);
             }
             i++;
@@ -217,11 +216,11 @@ public class DUNGEON : NetworkBehaviour
             {
                 case ObstacleTypes.EXPLOSIVE_CRATE:
                     {
-                        TrapPoints -= 30;
+                        TrapPoints -= 20;
                         for (int i = 0; i < UnityEngine.Random.Range(1, 4); i++)
                         {
-                            TrapPoints -= 20;
-                            ResourceCrate a = CO_SPAWNER.co.SpawnExplosiveCrate(Space, Spawn + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 60f) * CO.co.GetEncounterDifficultyModifier()));
+                            TrapPoints -= 15;
+                            ResourceCrate a = CO_SPAWNER.co.SpawnExplosiveCrate(Space, Spawn + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(10f, 30f) * CO.co.GetEncounterDifficultyModifier()));
                             DungeonNetworkObjects.Add(a.NetworkObject);
                         }
                         for (int i = 0; i < UnityEngine.Random.Range(0,3); i++)
@@ -231,11 +230,28 @@ public class DUNGEON : NetworkBehaviour
                         }
                         break;
                     }
+                case ObstacleTypes.LOONCRAB_EGG:
+                    {
+                        for (int i = 0; i < UnityEngine.Random.Range(2, 6); i++)
+                        {
+                            TrapPoints -= 10;
+                            LooncrabEgg a = CO_SPAWNER.co.SpawnLooncrabEgg(Space, this, Spawn + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(10f, 30f) * CO.co.GetEncounterDifficultyModifier()), Mathf.RoundToInt(100f * CO.co.GetEncounterDifficultyModifier()));
+                            DungeonNetworkObjects.Add(a.NetworkObject);
+                        }
+                        break;
+                    }
                 case ObstacleTypes.DIFFICULT_TERRAIN:
                     {
                         DamagingZone zon = CO_SPAWNER.co.SpawnDifficultTerrain(Space, Spawn + GetRandomOnTile());
                         DungeonNetworkObjects.Add(zon.NetworkObject);
-                        TrapPoints -= 50;
+                        TrapPoints -= 25;
+                        break;
+                    }
+                case ObstacleTypes.LEAKING_MIST:
+                    {
+                        DamagingZone zon = CO_SPAWNER.co.SpawnLeakingMist(Space, Spawn + GetRandomOnTile());
+                        DungeonNetworkObjects.Add(zon.NetworkObject);
+                        TrapPoints -= 35;
                         break;
                     }
             }

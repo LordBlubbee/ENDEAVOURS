@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DifficultTerrain
   m_EditorClassIdentifier: 
   MaxStacks: 1
-  Duration: 0.6
+  Duration: 0.2
   BuffParticles: 0
   HealthChangePerSecond: 0
   ModifyHealthMax: 0
@@ -21,9 +21,9 @@ MonoBehaviour:
   ModifyStaminaMax: 0
   ModifyStaminaRegen: -0.2
   ModifyMovementSpeed: 0
-  ModifyMovementSlow: 1
+  ModifyMovementSlow: 2
   ModifyAnimationSpeed: 0
-  ModifyAnimationSlow: 1
+  ModifyAnimationSlow: 0.5
   ModifyDamageTaken: 0
   ModifyMeleeDamage: 0
   ModifyRangedDamage: 0

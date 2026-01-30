@@ -5,9 +5,20 @@ public class DoorPlaceholder : MonoBehaviour
 {
     public DRIFTER Drifter;
     public DoorSystem Door;
+    public float SpawnChance = 1f;
     public void InitDoor(SPACE space)
     {
         if (!Drifter.IsServer)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        if (Random.Range(0f, 1f) > SpawnChance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        if (!space.GetCurrentGrid(transform.position))
         {
             Destroy(gameObject);
             return;

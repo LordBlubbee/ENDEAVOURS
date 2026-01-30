@@ -29,6 +29,10 @@ public class LOCALCO : NetworkBehaviour
     public CREW GetPlayer()
     {
         //Works only locally
+        if (local != this)
+        {
+            return CO.co.GetPlayerCharacter(GetPlayerID());
+        }
         return Player;
     }
 

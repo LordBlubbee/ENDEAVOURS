@@ -15,30 +15,29 @@ MonoBehaviour:
   StoryTexts:
   - BaseText: 'Three calm days pass. No threats are detected. Fuel check-up complete:
       Systems nominal.'
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
   - BaseText: You spend time with your crew, using the moment of respite to calm
       your nerves. On your way, your team finds a small supply camp.
+    VariantTexts: []
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
     Alternatives: []
   - BaseText: Your team loots a small surplus of resources from the camp. Loot includes
       playing cards- they are utilized to play a Nomaden card game, said to have
       originated from before the Nebula, known as "Poker".
+    VariantTexts:
+    - The camp is abandoned. A wrecked Loon once operated by a civilian from a frontier
+      Executis is located, and its hull is stripped for materials and supplies.
+    - A Flux radio is found, and frequencies listed on a paper note are tried. There
+      are no responses. The supply camp must have been of Logipedan origin as a relief
+      point for travellers.
     Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
-    Alternatives:
-    - AlternativeText: The camp is abandoned. A wrecked Loon once operated by a civilian
-        from a frontier Executis is located, and its hull is stripped for materials
-        and supplies.
-      Prerequisites:
-      - {fileID: 11400000, guid: b32172dce6df9864b9d23047a4235f27, type: 2}
-    - AlternativeText: A Flux radio is found, and frequencies listed on a paper note
-        are tried. There are no responses. The supply camp must have been of Logipedan
-        origin as a relief point for travellers.
-      Prerequisites:
-      - {fileID: 11400000, guid: b32172dce6df9864b9d23047a4235f27, type: 2}
+    Alternatives: []
   ChoicePathDialogs:
   - ChoiceText:
       BaseText: Our journey continues.
+      VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
     Prerequisites: []

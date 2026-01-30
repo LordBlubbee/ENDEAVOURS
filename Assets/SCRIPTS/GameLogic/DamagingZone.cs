@@ -31,14 +31,21 @@ public class DamagingZone : NetworkBehaviour
     {
         DurationLeft = Duration;
         float Timer = 0f;
+        int DamageTick = 0;
         while (DurationLeft > 0f || Duration == -1)
         {
             Timer -= CO.co.GetWorldSpeedDelta();
             if (Timer < 0f)
             {
-                Timer += 0.5f;
-                DurationLeft -= 0.5f;
-                float Damage = DamagePerSecond * 0.5f;
+                Timer += 0.1f;
+                DurationLeft -= 0.1f;
+                float Damage = 0;
+                DamageTick--;
+                if (DamageTick < 1)
+                {
+                    Damage = DamagePerSecond * 0.5f;
+                    DamageTick = 5;
+                }
                 foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position,DamageRadius))
                 {
                     CREW Crew = col.GetComponent<CREW>();
@@ -52,7 +59,7 @@ public class DamagingZone : NetworkBehaviour
                         }
                         if (Damage > 0) Crew.TakeDamage(Damage, Crew.transform.position, DamageType);
                     }
-                    if (ModuleDamageMod > 0)
+                    if (Damage > 0 && ModuleDamageMod > 0)
                     {
                         Module Mod = col.GetComponent<Module>();
                         if (Mod != null)

@@ -332,7 +332,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         }
         if (fl > 1) CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
     }
-    public void TakeDamage(float fl, Vector3 src, DamageType type)
+    public virtual void TakeDamage(float fl, Vector3 src, DamageType type)
     {
         if (MaxHealth < 1) return;
         if (type == DamageType.BOMBARDMENT) fl *= OutsideDamageResistance;

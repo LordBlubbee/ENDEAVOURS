@@ -10,6 +10,7 @@ public class WalkableTile : MonoBehaviour
     public bool canBeBoarded = false;
     private void Start()
     {
+        spr.color = Color.white;
         //if (canBeBoarded) spr.color = new Color(1,1,0.7f);
     }
 }

@@ -1714,14 +1714,14 @@ public class CO : NetworkBehaviour
 
         List<Vault> Vaults = CO_SPAWNER.co.SpawnVaultObjectives(CurrentDungeon); //These are now THREE
 
-        CurrentDungeon.GenerateTraps(Mathf.RoundToInt(600 * CO.co.GetEncounterSizeModifier()));
+        CurrentDungeon.GenerateTraps(Mathf.RoundToInt(CurrentDungeon.TrapSpawnDefault * CO.co.GetEncounterSizeModifier()));
         CurrentDungeon.GenerateSpawningMounds(UnityEngine.Random.Range(2,5));
         CurrentDungeon.GenerateCrates(
             Mathf.RoundToInt(UnityEngine.Random.Range(16,24) * GetEncounterLootModifier()), //20 MAT
             Mathf.RoundToInt(UnityEngine.Random.Range(32, 48) * GetEncounterLootModifier()), //40 SUP
             0, //AMMO
             0, //TECH
-            0.25f);
+            0.3f);
 
 
         AlternativeDebriefDialog Debrief = CurrentEvent.GetDebrief();

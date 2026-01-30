@@ -61,8 +61,10 @@ public class CO_SPAWNER : NetworkBehaviour
     public ResourceCrate PrefabSupCrate;
     public ResourceCrate PrefabAmmoCrate;
     public ResourceCrate PrefabTechCrate;
+    public DamagingZone LeakingMist;
     public DamagingZone[] DifficultTerrain;
     public ResourceCrate PrefabExplosiveCrate;
+    public LooncrabEgg PrefabLooncrabEgg;
     public enum BackgroundType
     {
         EMPTY,
@@ -279,7 +281,11 @@ public class CO_SPAWNER : NetworkBehaviour
     }
     public CREW SpawnUnitInDungeon(CREW Prefab, DUNGEON drift, int Faction = 2)
     {
-        CREW enem = Instantiate(Prefab, drift.Space.GetRandomUnboardableGrid().transform.position, Quaternion.identity);
+        return SpawnUnitInDungeon(Prefab, drift,drift.Space.GetRandomUnboardableGrid().transform.position + GetRandomOnTile(), Faction);
+    }
+    public CREW SpawnUnitInDungeon(CREW Prefab, DUNGEON drift, Vector3 pos, int Faction = 2)
+    {
+        CREW enem = Instantiate(Prefab, pos, Quaternion.identity);
         enem.NetworkObject.Spawn();
         enem.Faction.Value = Faction;
         if (Prefab.CharacterBackground)
@@ -434,7 +440,6 @@ public class CO_SPAWNER : NetworkBehaviour
         group.SetAI(gr.AI_Type, gr.AI_Group, 2, members);
         return drifter;
     }
-
     private Vector3 GetRandomOnTile(float off = 2)
     {
         return new Vector3(UnityEngine.Random.Range(-off, off), UnityEngine.Random.Range(-off, off));
@@ -659,11 +664,27 @@ public class CO_SPAWNER : NetworkBehaviour
         ob.InitCrate(health, 0, ResourceCrate.ResourceTypes.NONE);
         return ob;
     }
+    public LooncrabEgg SpawnLooncrabEgg(SPACE space, DUNGEON dun, Vector3 vec, int health, int quality)
+    {
+        LooncrabEgg ob = Instantiate(CO_SPAWNER.co.PrefabLooncrabEgg, vec, Quaternion.identity);
+        ob.NetworkObject.Spawn();
+        ob.InitializeEgg(space, dun, quality);
+        ob.InitEgg(health);
+        return ob;
+    }
     public DamagingZone SpawnDifficultTerrain(SPACE space, Vector3 vec)
     {
         DamagingZone ob = Instantiate(DifficultTerrain[UnityEngine.Random.Range(0, DifficultTerrain.Length)], vec, Quaternion.identity);
         ob.transform.SetParent(space.transform);
         ob.transform.Rotate(Vector3.forward, UnityEngine.Random.Range(0, 4)*90);
+        ob.NetworkObject.Spawn();
+        ob.Init();
+        return ob;
+    }
+    public DamagingZone SpawnLeakingMist(SPACE space, Vector3 vec)
+    {
+        DamagingZone ob = Instantiate(LeakingMist, vec, Quaternion.identity);
+        ob.transform.SetParent(space.transform);
         ob.NetworkObject.Spawn();
         ob.Init();
         return ob;
@@ -845,6 +866,13 @@ public class CO_SPAWNER : NetworkBehaviour
     }
 
     /**/
+    public GameObject SleepVFX;
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnSleepRpc(Vector3 pos)
+    {
+        GameObject ob = Instantiate(SleepVFX, pos, Quaternion.identity);
+    }
     [Header("SPELLS")]
     public GameObject CommandVFX;
     public GameObject FloralImpactVFX;
