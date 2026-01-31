@@ -8,7 +8,9 @@ public class PART : MonoBehaviour
     public float FullFadeDuration;
     public float FadeChange;
     public float ScaleChange;
-    float ShakeTotal;
+    public float RandomMovement = 0;
+    Vector3 Movement = Vector3.zero;
+    float MoveFactor = 1f;
     float Fade;
     float Scale;
     void Start()
@@ -16,11 +18,20 @@ public class PART : MonoBehaviour
         spr = GetComponent<SpriteRenderer>();
         Fade = spr.color.a;
         Scale = transform.localScale.x;
+        if (RandomMovement > 0)
+        {
+            Movement = new Vector3(Random.Range(-RandomMovement, RandomMovement), Random.Range(-RandomMovement, RandomMovement), 0);
+        }
         foreach (ParticleSystem particle in AttachedParticles) particle.transform.SetParent(transform.parent);
     }
     void Update()
     {
         //FADE
+        if (Movement != Vector3.zero)
+        {
+            MoveFactor = Mathf.Max(MoveFactor-FadeChange * 0.7f * CO.co.GetWorldSpeedDelta(), 0);
+            transform.position += Movement * MoveFactor * CO.co.GetWorldSpeedDelta();
+        }
         if (FullFadeDuration > 0f)
         {
             FullFadeDuration -= CO.co.GetWorldSpeedDelta();

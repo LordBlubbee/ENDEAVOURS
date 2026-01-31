@@ -169,7 +169,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.1
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -751,7 +751,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 8
+      value: 3
       mode: 0
       spread: 0
       speed:
@@ -870,7 +870,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 30
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4911,7 +4911,7 @@ MonoBehaviour:
   - {fileID: 273074317841944583}
   Duration: -1
   DamagePerSecond: 0
-  DamageRadius: 8
+  DamageRadius: 7
   ApplyBuff: {fileID: 11400000, guid: cb7b3b755fb212144b9744c7a4fa4104, type: 2}
   DamageType: 6
   ModuleDamageMod: 0

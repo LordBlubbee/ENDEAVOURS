@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AI_Type: 0
   AI_Group: 0
-  CrewAmountLevel: 2400
+  CrewAmountLevel: 2500
   CrewQualityLevel: 120
   GuaranteedCrewList: []
   SpawnCrewList:
-  - Weight: 25
+  - Weight: 15
     WeightIncreaseOverQualityGradient: 0
     MinimumQuality: 0
     MaximumQuality: 0
@@ -31,7 +31,7 @@ MonoBehaviour:
   DrifterQualityLevel: 100
   SpawnDrifter: []
   DungeonQualityLevel: 100
-  SpawnDungeon: {fileID: 2173810768608011869, guid: e2555949a3b435c48868bfc58b81261d, type: 3}
+  SpawnDungeon: {fileID: 2173810768608011869, guid: 0c393f9aa478725489174b5dccb08f0e, type: 3}
   SpawnGroupAmountMin: 1
   SpawnGroupAmountMax: 1
   SpawnGroupRange: 0

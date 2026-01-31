@@ -104,3 +104,4 @@ MonoBehaviour:
   FullFadeDuration: 0.2
   FadeChange: -1
   ScaleChange: 0.5
+  RandomMovement: 0.5

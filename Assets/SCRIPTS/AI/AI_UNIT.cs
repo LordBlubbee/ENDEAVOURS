@@ -783,7 +783,6 @@ public class AI_UNIT : NetworkBehaviour
             switch (AI_Tactic)
             {
                 case AI_TACTICS.DORMANT:
-                    CO_SPAWNER.co.SpawnSleepRpc(transform.position);
                     if (Unit.GetHealthRelative() < 1f)
                     {
                         Unit.IsNeutral = false;

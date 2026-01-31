@@ -131,8 +131,8 @@ public class DUNGEON : NetworkBehaviour
             {
                 NetworkObject obj = Instantiate(BackgroundObjectPossibilities[UnityEngine.Random.Range(0, BackgroundObjectPossibilities.Count)], tile.transform.position + GetRandomOnTile(), Quaternion.identity);
                 obj.transform.Rotate(Vector3.forward, UnityEngine.Random.Range(0, 4)*90);
-                obj.transform.SetParent(Space.transform);
                 obj.Spawn();
+                obj.transform.SetParent(Space.transform);
                 DungeonNetworkObjects.Add(obj);
             }
         }
@@ -306,7 +306,13 @@ public class DUNGEON : NetworkBehaviour
     {
         foreach (NetworkObject networkObject in DungeonNetworkObjects)
         {
-            networkObject.Despawn();
+            if (networkObject == null) continue;
+            if (networkObject.IsSpawned) networkObject.Despawn();
+            else
+            {
+                Debug.Log($"Error: Object {networkObject.gameObject.name} was not despawned");
+                Destroy(networkObject.gameObject);
+            }
         }
         Debug.Log("Despawn and unregister");
         CO.co.UnregisterSpace(Space);

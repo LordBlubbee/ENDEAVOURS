@@ -675,17 +675,17 @@ public class CO_SPAWNER : NetworkBehaviour
     public DamagingZone SpawnDifficultTerrain(SPACE space, Vector3 vec)
     {
         DamagingZone ob = Instantiate(DifficultTerrain[UnityEngine.Random.Range(0, DifficultTerrain.Length)], vec, Quaternion.identity);
-        ob.transform.SetParent(space.transform);
         ob.transform.Rotate(Vector3.forward, UnityEngine.Random.Range(0, 4)*90);
         ob.NetworkObject.Spawn();
+        ob.transform.SetParent(space.transform);
         ob.Init();
         return ob;
     }
     public DamagingZone SpawnLeakingMist(SPACE space, Vector3 vec)
     {
         DamagingZone ob = Instantiate(LeakingMist, vec, Quaternion.identity);
-        ob.transform.SetParent(space.transform);
         ob.NetworkObject.Spawn();
+        ob.transform.SetParent(space.transform);
         ob.Init();
         return ob;
     }
