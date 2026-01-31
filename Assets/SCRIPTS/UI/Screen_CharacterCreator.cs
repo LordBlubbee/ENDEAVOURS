@@ -234,8 +234,16 @@ public class Screen_CharacterCreator : MonoBehaviour
         AppearanceStripes.color = GO.g.localColor;
         GO.g.saveSettings();
     }
+
+    public bool Test_Skip;
     public void PressCreateCharacter()
     {
+        if (Test_Skip)
+        {
+            LOCALCO.local.CreatePlayerRpc("Test Man", new Color(1,1,1), new int[] {5,5,5,5,5,5,5,5}, "Invictus_Marine");
+            UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
+            return;
+        }
         if (!ReadyToMoveOn()) return;
         if (!SelectedBackground)
         {
