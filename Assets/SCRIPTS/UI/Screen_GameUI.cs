@@ -241,7 +241,14 @@ public class Screen_GameUI : MonoBehaviour
                 }*/
                 BleedingTex.text = $"-RESPAWNING- \n{(20 + player.BleedingTime.Value).ToString("0")}";
             }
-            else BleedingTex.text = $"-BLEEDING OUT- \n{player.BleedingTime.Value.ToString("0")}";
+            else
+            {
+                if (player.BleedingTime.Value == 0)
+                {
+                   BleedingTex.text = "-CANNOT RESPAWN- \nNO SUPPLIES";
+                }
+                else BleedingTex.text = $"-BLEEDING OUT- \n{player.BleedingTime.Value.ToString("0")}";
+            }
             if (UI_CommandInterface.co.IsCommandingTabOpen())
             {
                 BleedingOutScreen.color = Color.clear;

@@ -8,6 +8,13 @@ public class ModuleLight : MonoBehaviour
     public Light2D MainLight;
     void Update()
     {
-        MainLight.enabled = !module.IsDisabled();
+        float WantLight = module.GetHealthRelative() > 0.5f ? 8f : 0f;
+        if (WantLight > MainLight.intensity)
+        {
+            MainLight.intensity = Mathf.Min(MainLight.intensity + Time.deltaTime * 4f, WantLight);
+        } else if (WantLight < MainLight.intensity)
+        {
+            MainLight.intensity = Mathf.Max(MainLight.intensity - Time.deltaTime * 4f, WantLight);
+        }
     }
 }

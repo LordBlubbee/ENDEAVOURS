@@ -101,6 +101,22 @@ public class CREW : NetworkBehaviour, iDamageable
     [NonSerialized] public NetworkVariable<int> Faction = new();
     [NonSerialized] public NetworkVariable<int> UpgradeLevel = new();
     [NonSerialized] public NetworkVariable<float> BleedingTime = new();
+    [NonSerialized] public NetworkVariable<int> CurrentTagState = new();
+
+    public enum TagStates
+    {
+        NONE,
+        DORMANT,
+        OPENED
+    }
+    public void SetTagState(TagStates state)
+    {
+        CurrentTagState.Value = (int)state;
+    }
+    public TagStates GetTagState()
+    {
+        return (TagStates)CurrentTagState.Value;
+    }
     public bool IsPlayer()
     {
         return ControlledByPlayer;
@@ -1358,7 +1374,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public bool IsEnemyInFront(float dis)
     {
-        foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position + getLookVector() * dis * 0.5f, dis * 0.6f))
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position + getLookVector() * dis * 0.5f, dis * 0.5f+0.5f))
         {
             iDamageable crew = col.GetComponent<iDamageable>();
             if (crew != null)
@@ -1734,6 +1750,15 @@ public class CREW : NetworkBehaviour, iDamageable
                     if (!CO.co.GetDungeon())
                     {
                         DeadForever.Value = true;
+                    } else
+                    {
+                        if (CO.co.CanRespawn(this))
+                        {
+                            DeadForever.Value = true;
+                            CO.co.Resource_Supplies.Value -= 20;
+                            CO_SPAWNER.co.SpawnWordsRpc("<color=red>-20 SUPPLIES</color>", HomeDrifter.MedicalModule.transform.position);
+                            TeleportCrewMember(HomeDrifter.MedicalModule.transform.position + new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-3f, 3f)), HomeDrifter.Space);
+                        }
                     }
                     BleedingTime.Value = 0;
                 }
@@ -1743,6 +1768,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 //If HomeDrifter exists
                 if (CO.co.CanRespawn(this))
                 {
+                    //REVIVE
                     //If Medical Module is functional and we are in the same space
                     if ((transform.position - HomeDrifter.MedicalModule.transform.position).magnitude > 8)
                     {
@@ -2414,7 +2440,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetDashSpeed()
     {
-        return MovementSpeed * (1f + GetATT_DEXTERITY() * 0.02f) * (1f + ModifyMovementSpeed) / (1f + ModifyMovementSlow);
+        return MovementSpeed * (0.9f + GetATT_DEXTERITY() * 0.02f) * (1f + ModifyMovementSpeed) / (1f + ModifyMovementSlow);
     }
     public float GetCurrentSpeed()
     {

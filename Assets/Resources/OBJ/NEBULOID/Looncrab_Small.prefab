@@ -331,7 +331,7 @@ MonoBehaviour:
   IsNeutral: 0
   MaxHealth: 80
   NaturalStaminaRegen: 50
-  MovementSpeed: 7
+  MovementSpeed: 6
   RotationDistanceFactor: 4
   RotationBaseSpeed: 60
   BleedOut: 0
@@ -377,6 +377,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   Unit: {fileID: 5867427934140877094}
   AI_Unit_Type: 1
+  AI_Tactic_Type: 0
 --- !u!1 &4860497760997928518
 GameObject:
   m_ObjectHideFlags: 0

@@ -51,7 +51,7 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
                     if (Crew != null)
                     {
                         if (!Crew.CanBeTargeted(Space)) continue;
-                        float DisFactor = 0.5f + (1f - (Vector3.Distance(transform.position, Crew.transform.position) / DestructionRadius))*0.5f;
+                        float DisFactor = 0.5f + (1f - Mathf.Clamp01(Vector3.Distance(transform.position, Crew.transform.position) / DestructionRadius))*0.5f;
                         Crew.TakeDamage(DestructionDamage * DisFactor * (0.8f + GetMaxHealth() * 0.01f), Crew.transform.position, DamageType.ENVIRONMENT_FIRE);
                     }
                 }

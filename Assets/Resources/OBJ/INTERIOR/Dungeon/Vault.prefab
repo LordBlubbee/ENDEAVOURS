@@ -262,6 +262,7 @@ MonoBehaviour:
   ModuleUpgradeMaterials: 
   ModuleUpgradeTechs: 
   CenterPos: {fileID: 1574681345292828512}
+  CanBeDamagedWhenFull: 0
 --- !u!1 &7153505357198130503
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,3 +365,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   module: {fileID: 3455235200430234361}
   RotationSpeed: 60
+  RotateBasedOnFullHealth: 1

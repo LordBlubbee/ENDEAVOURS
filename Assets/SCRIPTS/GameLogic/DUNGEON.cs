@@ -147,10 +147,21 @@ public class DUNGEON : NetworkBehaviour
     }
 
     [NonSerialized] public List<RespawnArea> SpawnedRespawnAreas = new();
-    public void GenerateCrates(int MaterialWorth, int SuppliesWorth, int AmmoWorth, int TechWorth, float Density)
+
+    public int AverageMaterialCrateWorth = 20;
+    public int AverageSuppliesCrateWorth = 40;
+    public int AverageAmmoCrateWorth;
+    public int AverageTechCrateWorth;
+    public float CrateDensity = 0.1f;
+    public void GenerateCrates(float LootLevel = 1f, float DensityLevel = 1f)
     {
+        int MaterialWorth = Mathf.RoundToInt(AverageMaterialCrateWorth * LootLevel * CO.co.GetEncounterLootModifier() * UnityEngine.Random.Range(0.8f,1.2f));
+        int SuppliesWorth = Mathf.RoundToInt(AverageSuppliesCrateWorth * LootLevel * CO.co.GetEncounterLootModifier() * UnityEngine.Random.Range(0.8f, 1.2f));
+        int AmmoWorth = Mathf.RoundToInt(AverageAmmoCrateWorth * LootLevel * CO.co.GetEncounterLootModifier() * UnityEngine.Random.Range(0.8f, 1.2f));
+        int TechWorth = Mathf.RoundToInt(AverageTechCrateWorth * LootLevel * CO.co.GetEncounterLootModifier() * UnityEngine.Random.Range(0.8f, 1.2f));
+        float Density = CrateDensity * UnityEngine.Random.Range(0.8f, 1.2f) * DensityLevel;
         int Crates = Mathf.CeilToInt(Density * MiscPossibilities.Count);
-        for (int i = 0; i < Mathf.Min(Crates,4); i++)
+        for (int i = 0; i < Mathf.Max(Crates,4); i++)
         {
             ResourceCrate.ResourceTypes Typ = ResourceCrate.ResourceTypes.NONE;
             if (SuppliesWorth > 0) Typ = ResourceCrate.ResourceTypes.SUPPLIES;
@@ -158,7 +169,8 @@ public class DUNGEON : NetworkBehaviour
             else if (AmmoWorth > 0) Typ = ResourceCrate.ResourceTypes.AMMUNITION;
             else if (TechWorth > 0) Typ = ResourceCrate.ResourceTypes.TECHNOLOGY;
 
-            for (int i2 = 0; i2 < UnityEngine.Random.Range(1, 4); i2++)
+            Vector3 vec = GetUtilitySpawn();
+            for (int i2 = 0; i2 < UnityEngine.Random.Range(1, 6); i2++)
             {
                 int Num = 0;
                 switch (Typ)
@@ -181,23 +193,26 @@ public class DUNGEON : NetworkBehaviour
                         break;
                 }
                 ResourceCrate a;
-                Vector3 vec = GetUtilitySpawn();
                 if (UnityEngine.Random.value < 0.5f)
                 {
                     switch (Typ)
                     {
                         case ResourceCrate.ResourceTypes.MATERIALS:
                             a = CO_SPAWNER.co.SpawnMatCrate(Space, vec + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 70f) * CO.co.GetEncounterDifficultyModifier()), Num);
-                            break;
+                            DungeonNetworkObjects.Add(a.NetworkObject);
+                            continue;
                         case ResourceCrate.ResourceTypes.SUPPLIES:
                             a = CO_SPAWNER.co.SpawnSupCrate(Space, vec + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 70f) * CO.co.GetEncounterDifficultyModifier()), Num);
-                            break;
+                            DungeonNetworkObjects.Add(a.NetworkObject);
+                            continue;
                         case ResourceCrate.ResourceTypes.AMMUNITION:
                             a = CO_SPAWNER.co.SpawnAmmoCrate(Space, vec + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 70f) * CO.co.GetEncounterDifficultyModifier()), Num);
-                            break;
+                            DungeonNetworkObjects.Add(a.NetworkObject);
+                            continue;
                         case ResourceCrate.ResourceTypes.TECHNOLOGY:
                             a = CO_SPAWNER.co.SpawnTechCrate(Space, vec + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 70f) * CO.co.GetEncounterDifficultyModifier()), Num);
-                            break;
+                            DungeonNetworkObjects.Add(a.NetworkObject);
+                            continue;
                     }
                 }
                 a = CO_SPAWNER.co.SpawnCrate(Space, vec + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(30f, 70f) * CO.co.GetEncounterDifficultyModifier()), Num, Typ);
@@ -235,7 +250,7 @@ public class DUNGEON : NetworkBehaviour
                         for (int i = 0; i < UnityEngine.Random.Range(2, 6); i++)
                         {
                             TrapPoints -= 10;
-                            LooncrabEgg a = CO_SPAWNER.co.SpawnLooncrabEgg(Space, this, Spawn + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(10f, 30f) * CO.co.GetEncounterDifficultyModifier()), Mathf.RoundToInt(100f * CO.co.GetEncounterDifficultyModifier()));
+                            LooncrabEgg a = CO_SPAWNER.co.SpawnLooncrabEgg(Space, this, Spawn + GetRandomOnTile(), Mathf.RoundToInt(UnityEngine.Random.Range(40f, 70f) * CO.co.GetEncounterDifficultyModifier()), Mathf.RoundToInt(100f * CO.co.GetEncounterDifficultyModifier()));
                             DungeonNetworkObjects.Add(a.NetworkObject);
                         }
                         break;

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 486074c487becad41a25117778c346f8, type: 3}
-  m_Name: OldStorageFacility
+  m_Name: AggressiveCaves
   m_EditorClassIdentifier: 
   AI_Type: 0
-  AI_Group: 0
-  CrewAmountLevel: 2500
+  AI_Group: 1
+  CrewAmountLevel: 1000
   CrewQualityLevel: 120
   GuaranteedCrewList: []
   SpawnCrewList:
@@ -22,12 +22,12 @@ MonoBehaviour:
     WeightIncreaseOverQualityGradient: 0
     MinimumQuality: 0
     MaximumQuality: 0
-    Crew: {fileID: 11400000, guid: 3e5dcf9afba26364a981a1cdbcabbbf2, type: 2}
+    Crew: {fileID: 11400000, guid: 0a05cd1c80df1934fa5e1158a9ca5108, type: 2}
   - Weight: 20
     WeightIncreaseOverQualityGradient: 0
     MinimumQuality: 0
     MaximumQuality: 0
-    Crew: {fileID: 11400000, guid: c6e0fec683152e2489a871ccaefacc48, type: 2}
+    Crew: {fileID: 11400000, guid: 1389c07ed57a48f488adc3a0af25dbdf, type: 2}
   DrifterQualityLevel: 100
   SpawnDrifter: []
   DungeonQualityLevel: 100

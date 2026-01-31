@@ -47,6 +47,15 @@ public class AI_UNIT : NetworkBehaviour
     }
     public void SetTactic(AI_TACTICS tac, float timer)
     {
+        switch (tac)
+        {
+            case AI_TACTICS.DORMANT:
+                Unit.SetTagState(CREW.TagStates.DORMANT);
+                break;
+            default:
+                Unit.SetTagState(CREW.TagStates.NONE);
+                break;
+        }
         AI_Tactic = tac;
         AI_TacticTimer = timer;
         AI_MoveTimer = 0;
@@ -271,6 +280,7 @@ public class AI_UNIT : NetworkBehaviour
         Unit.StopItem2Rpc();
 
         if (!Unit.CanFunction()) return;
+        if (PatrolDungeon()) return;
         switch (AI_Unit_Type)
         {
             case AI_UNIT_TYPES.CREW:
@@ -280,6 +290,47 @@ public class AI_UNIT : NetworkBehaviour
                 AITick_Looncrab();
                 break;
         }
+    }
+
+    private bool PatrolDungeon()
+    {
+        PotentiallyAlertAllies();
+        switch (AI_Tactic)
+        {
+            case AI_TACTICS.DORMANT:
+                if (Unit.GetHealthRelative() < 1f)
+                {
+                    Unit.IsNeutral = false;
+                    break;
+                }
+                return true;
+            case AI_TACTICS.PATROL:
+                SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
+                StopLooking();
+                /*if (DistToObjective(transform.position) > 1)
+                {
+
+                }*/
+                CREW crew;
+                if (EnemyTargetTimer > 0.5f) crew = GetClosestVisibleEnemyInCone(25f, 120f);
+                else crew = GetClosestVisibleEnemyInCone(25f, 70f);
+                if (crew)
+                {
+                    StopMoving();
+                    SetLookTowards(crew.transform.position, ObjectiveSpace);
+                    EnemyTargetTimer += 0.5f;
+                    if (EnemyTargetTimer > 2.5f || Unit.GetHealthRelative() < 1f)
+                    {
+                        SetEnemyTarget(crew);
+                        SetTactic(AI_TACTICS.SKIRMISH, 1);
+                        Unit.IsNeutral = false;
+                        break;
+                    }
+                }
+                else EnemyTargetTimer = 0;
+                return true;
+        }
+        return false;
     }
     private bool EquipAndUseCombatItem(Vector3 target)
     {
@@ -479,16 +530,19 @@ public class AI_UNIT : NetworkBehaviour
                     break;
                 case AI_TACTICS.SABOTAGE:
                     mod = GetClosestEnemyModule();
-                    SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
-                    if (Dist(mod.transform.position) < 8f)
+                    if (mod)
                     {
-                        SetLookTowards(mod.GetTargetPos(), mod.Space);
-                    }
-                    else
-                    {
-                        Unit.UseItem2Rpc();
-                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
-                        Unit.Dash();
+                        SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+                        if (Dist(mod.transform.position) < 8f)
+                        {
+                            SetLookTowards(mod.GetTargetPos(), mod.Space);
+                        }
+                        else
+                        {
+                            Unit.UseItem2Rpc();
+                            SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                            Unit.Dash();
+                        }
                     }
                     break;
             }
@@ -531,37 +585,41 @@ public class AI_UNIT : NetworkBehaviour
             }
             //Repair behavior
             mod = GetClosestFriendlyModule();
-            if (mod.GetHealthRelative() < 1)
+            if (mod)
             {
-                if (DistToObjective(mod.transform.position) < 16)
+                if (mod.GetHealthRelative() < 1)
                 {
-                    SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
-                    SetLookTowards(mod.GetTargetPos(), ObjectiveSpace);
-                    if (Dist(mod.transform.position) < 4f)
-                    {
-                        Unit.EquipWrenchRpc();
-                        Unit.UseItem1Rpc();
-                    }
-                    return;
-                }
-                return;
-            }
-            if (mod is ModuleWeapon)
-            {
-                if (((ModuleWeapon)mod).EligibleForReload())
-                {
-                    if (DistToObjective(mod.transform.position) < 8)
+                    if (DistToObjective(mod.transform.position) < 16)
                     {
                         SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
                         SetLookTowards(mod.GetTargetPos(), ObjectiveSpace);
                         if (Dist(mod.transform.position) < 4f)
                         {
-                            ((ModuleWeapon)mod).ReloadAmmoRpc();
+                            Unit.EquipWrenchRpc();
+                            Unit.UseItem1Rpc();
                         }
                         return;
                     }
+                    return;
+                }
+                if (mod is ModuleWeapon)
+                {
+                    if (((ModuleWeapon)mod).EligibleForReload())
+                    {
+                        if (DistToObjective(mod.transform.position) < 8)
+                        {
+                            SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+                            SetLookTowards(mod.GetTargetPos(), ObjectiveSpace);
+                            if (Dist(mod.transform.position) < 4f)
+                            {
+                                ((ModuleWeapon)mod).ReloadAmmoRpc();
+                            }
+                            return;
+                        }
+                    }
                 }
             }
+            
             return;
         }
         //We are boarding an enemy vessel!!
@@ -775,46 +833,27 @@ public class AI_UNIT : NetworkBehaviour
      * LOONCRAB
      * --------------------------------------------------------------------------------------------
      */
+
+    private void PotentiallyAlertAllies()
+    {
+        if (!EnemyTarget) return;
+        if (Group.AI_Objective == AI_OBJECTIVES.DORMANT)
+        {
+            foreach (AI_UNIT crew in Group.GetUnits())
+            {
+                if (Dist(crew.transform.position) < 12f && Dist(EnemyTarget.transform.position) < 40f && (crew.AI_Tactic == AI_TACTICS.DORMANT || crew.AI_Tactic == AI_TACTICS.PATROL))
+                {
+                    crew.Unit.IsNeutral = false;
+                    crew.SetTactic(AI_TACTICS.NONE, 0f);
+                }
+            }
+        }
+    }
     private void AITick_Looncrab()
     {
         Module mod;
         if (getSpace())
         {
-            switch (AI_Tactic)
-            {
-                case AI_TACTICS.DORMANT:
-                    if (Unit.GetHealthRelative() < 1f)
-                    {
-                        Unit.IsNeutral = false;
-                        break;
-                    }
-                    return;
-                case AI_TACTICS.PATROL:
-                    SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
-                    StopLooking();
-                    /*if (DistToObjective(transform.position) > 1)
-                    {
-                       
-                    }*/
-                    CREW crew;
-                    if (EnemyTargetTimer > 0.5f) crew = GetClosestVisibleEnemyInCone(25f, 120f);
-                    else crew = GetClosestVisibleEnemyInCone(25f, 70f);
-                    if (crew)
-                    {
-                        StopMoving();
-                        SetLookTowards(crew.transform.position, ObjectiveSpace);
-                        EnemyTargetTimer += 0.5f;
-                        if (EnemyTargetTimer > 2.5f || Unit.GetHealthRelative() < 1f)
-                        {
-                            SetEnemyTarget(crew);
-                            SwitchTacticsLooncrab();
-                            Unit.IsNeutral = false;
-                            break;
-                        }
-                    }
-                    else EnemyTargetTimer = 0;
-                    return;
-            }
             if (!EnemyTarget || EnemyTargetTimer < 0 || EnemyTarget.isDead())
             {
                 EnemyTarget = GetClosestVisibleEnemy();
@@ -822,17 +861,6 @@ public class AI_UNIT : NetworkBehaviour
             }
             if (EnemyTarget)
             {
-                if (Group.AI_Objective == AI_OBJECTIVES.DORMANT)
-                {
-                    foreach (AI_UNIT crew in Group.GetUnits())
-                    {
-                        if (Dist(crew.transform.position) < 16f && (crew.AI_Tactic == AI_TACTICS.DORMANT || crew.AI_Tactic == AI_TACTICS.PATROL))
-                        {
-                            crew.Unit.IsNeutral = false;
-                            crew.SetTactic(AI_TACTICS.NONE, 0f);
-                        }
-                    }
-                }
                 AttemptBoard(EnemyTarget.Space);
 
                 if (AI_TacticTimer < 0) SwitchTacticsLooncrab();
@@ -876,7 +904,7 @@ public class AI_UNIT : NetworkBehaviour
                             AI_TacticTimer = 0;
                             break;
                         }
-                        SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+                        SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2.5f), mod.Space);
                         if (Dist(mod.transform.position) < 8f)
                         {
                             SetLookTowards(mod.GetTargetPos(), mod.Space);
@@ -895,21 +923,24 @@ public class AI_UNIT : NetworkBehaviour
                 }
                 return;
             }
-            mod = GetClosestEnemyModule();
             if (Unit.IsEnemyInFront(GetAttackDistance()))
             {
                 Unit.UseItem1Rpc();
             }
+            mod = GetClosestEnemyModule();
             if (mod && (Dist(mod.transform.position) < 8 || DistToObjective(mod.transform.position) < 20))
             {
-                SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+                SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2.5f), mod.Space);
                 SetLookTowards(mod.GetTargetPos(), mod.Space);
                 return;
             }
-            SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
-            if (DistToObjective(transform.position) > 1)
+            if (!Unit.IsEnemyInFront(GetAttackDistance()))
             {
-                SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
+                SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
+                if (DistToObjective(transform.position) > 1)
+                {
+                    SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
+                }
             }
             return;
         }
@@ -1383,7 +1414,7 @@ public class AI_UNIT : NetworkBehaviour
             case TOOL.ToolAI.RANGED:
                 return 30f;
         }
-        return 2f;
+        return 3f;
     }
     public float GetAttackStayDistance()
     {
@@ -1412,6 +1443,7 @@ public class AI_UNIT : NetworkBehaviour
         foreach (var enemy in EnemiesInSpace())
         {
             if (enemy == Unit) continue; // skip self
+            if (enemy.GetTagState() == CREW.TagStates.DORMANT) continue;
             Vector3 enemyPos = enemy.getPos();
             float dist = (enemyPos - myPos).magnitude;
             if (HasLineOfSight(enemyPos) || !getSpace())

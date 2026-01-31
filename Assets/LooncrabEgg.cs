@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -23,6 +24,62 @@ public class LooncrabEgg : NetworkBehaviour, iDamageable
         Dungeon = dung;
         QualityLevel = Quality;
         transform.SetParent(space.transform);
+        StartCoroutine(EggHatch());
+    }
+    int Sensitivity = 30;
+    IEnumerator EggHatch()
+    {
+        Sensitivity = Random.Range(8, 42);
+        while (Col.enabled)
+        {
+            int Closest = 999;
+            foreach (CREW Crew in CO.co.GetAlliedCrew())
+            {
+                Closest = Mathf.Min(Closest, (int)(Crew.transform.position - transform.position).magnitude);
+            }
+            if (Closest < 5)
+            {
+                Sensitivity--;
+            }
+            if (Closest < 10)
+            {
+                Sensitivity--;
+            }
+            if (Closest < 15)
+            {
+                Sensitivity--;
+            }
+            if (Closest < 20)
+            {
+                Sensitivity--;
+                if (Sensitivity < 10)
+                {
+                    StartPulseRpc();
+                }
+            }
+            if (Sensitivity < 1)
+            {
+                Hatch();
+                yield break;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void StartPulseRpc()
+    {
+        StartCoroutine(PulseLight());
+    }
+    IEnumerator PulseLight()
+    {
+        float Light = 4f;
+        while (Light > 1f && Lig.enabled)
+        {
+            Lig.intensity = Light;
+            Light -= 9f * Time.deltaTime;
+            yield return null;
+        }
     }
     public ModuleTypes GetInteractableType() //Add iInteractable to reactivate, currently unused
     {
@@ -39,16 +96,34 @@ public class LooncrabEgg : NetworkBehaviour, iDamageable
         if (fl < 0) return;
         if (CurHealth.Value == 0) return;
         CurHealth.Value = Mathf.Clamp(CurHealth.Value - fl, 0, GetMaxHealth());
+        Sensitivity -= UnityEngine.Random.Range(1, 8);
         if (CurHealth.Value <= 0)
         {
             DestructionRpc();
 
             Lig.enabled = false;
             Col.enabled = false;
-            CREW crew = CO_SPAWNER.co.SpawnUnitInDungeon(SpawnPrefab, Dungeon, transform.position);
-            CO_SPAWNER.co.SetQualityLevelOfCrew(crew, QualityLevel);
+            if (Random.Range(0f,1f) < 0.15f && Sensitivity < 5)
+            {
+                SpawnCrab();
+            }
         }
         CO_SPAWNER.co.SpawnDMGRpc(fl, transform.position);
+    }
+
+    private void Hatch()
+    {
+        DestructionRpc();
+
+        Lig.enabled = false;
+        Col.enabled = false;
+
+        SpawnCrab();
+    }
+    private void SpawnCrab()
+    {
+        CREW crew = CO_SPAWNER.co.SpawnUnitInDungeon(SpawnPrefab, Dungeon, transform.position);
+        CO_SPAWNER.co.SetQualityLevelOfCrew(crew, QualityLevel);
     }
     [Rpc(SendTo.ClientsAndHost)]
     private void DestructionRpc()

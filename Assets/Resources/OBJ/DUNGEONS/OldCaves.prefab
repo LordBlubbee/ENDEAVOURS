@@ -1756,7 +1756,7 @@ GameObject:
   - component: {fileID: 807498822971738821}
   - component: {fileID: 7395482235492128901}
   m_Layer: 6
-  m_Name: OldStorageFacility
+  m_Name: OldCaves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1567,7 +1567,11 @@ public class CO : NetworkBehaviour
             case "DungeonStorage":
                 StartCoroutine(Event_DungeonStorage());
                 break;
+            case "DungeonDefense":
+                StartCoroutine(Event_DungeonDefense());
+                break;
             case "DungeonExtermination":
+                StartCoroutine(Event_DungeonExterminate());
                 break;
             case "GenericSurvival":
                 StartCoroutine(Event_GenericSurvival());
@@ -1685,6 +1689,11 @@ public class CO : NetworkBehaviour
         return CurrentDungeon;
     }
 
+    public bool IsInDungeonToRevive(CREW un)
+    {
+        if (un.GetHomeDrifter() == null) return false;
+        return GetDungeon() && un.Space != un.GetHomeDrifter().Space;
+    }
     public bool CanRespawn(CREW un)
     {
         if (CO.co.IsSafe())
@@ -1692,7 +1701,10 @@ public class CO : NetworkBehaviour
             return un.GetFaction() == 1;
         }
         if (un.GetHomeDrifter()) if (un.GetHomeDrifter().MedicalModule.IsDisabled()) return false;
-        if (GetDungeon() && un.Space != un.GetHomeDrifter().Space) return false;
+        if (IsInDungeonToRevive(un))
+        {
+            return Resource_Supplies.Value >= 20;
+        }
         return true;
     }
     IEnumerator Event_DungeonStorage()
@@ -1716,19 +1728,13 @@ public class CO : NetworkBehaviour
 
         CurrentDungeon.GenerateTraps(Mathf.RoundToInt(CurrentDungeon.TrapSpawnDefault * CO.co.GetEncounterSizeModifier()));
         CurrentDungeon.GenerateSpawningMounds(UnityEngine.Random.Range(2,5));
-        CurrentDungeon.GenerateCrates(
-            Mathf.RoundToInt(UnityEngine.Random.Range(16,24) * GetEncounterLootModifier()), //20 MAT
-            Mathf.RoundToInt(UnityEngine.Random.Range(32, 48) * GetEncounterLootModifier()), //40 SUP
-            0, //AMMO
-            0, //TECH
-            0.3f);
-
+        CurrentDungeon.GenerateCrates();
 
         AlternativeDebriefDialog Debrief = CurrentEvent.GetDebrief();
-        bool ThreatsEliminated = false;
         float Death = 0f;
         int CompletedVaults = 0;
-
+        int TotalVaults = Vaults.Count;
+        bool HasGivenLoot = false;
         //Rewards are given immediately after each unlock
 
         while (true)
@@ -1742,23 +1748,36 @@ public class CO : NetworkBehaviour
             EnemyBarRelative.Value = 1f - Death;
             if (Vaults.Count == 0) EnemyBarString.Value = $"<color=green>OBJECTIVE COMPLETE";
             else EnemyBarString.Value = $"FIND {Vaults.Count} VAULTS";
-            if (AreCrewAwayFromHome() && !ThreatsEliminated)
+            if (AreCrewAwayFromHome())
             {
                 AreWeInDanger.Value = true;
                 /*if (Threats > 0) EnemyBarString.Value = $"THREATS: {Threats}";
                 else*/
             } else
             {
-                AreWeInDanger.Value = false; 
+                AreWeInDanger.Value = false;
+                if (CompletedVaults == TotalVaults && !HasGivenLoot)
+                {
+                    HasGivenLoot = true;
+                    ProcessLootTable(CurrentEvent.LootTable,1f);
+                }
             }
             foreach (Vault vault in new List<Vault>(Vaults))
             {
                 if (vault.GetHealthRelative() >= 1)
                 {
                     //ProcessLootTable(CurrentEvent.LootTable, 0.35f);
-                    CO_SPAWNER.co.SpawnWordsRpc("<color=green>VAULT UNLOCKED", vault.transform.position);
                     CompletedVaults++;
                     Vaults.Remove(vault);
+                    if (Vaults.Count == 0)
+                    {
+                        CO_SPAWNER.co.SpawnWordsRpc("<color=green>ALL VAULTS UNLOCKED", vault.transform.position);
+                        yield return new WaitForSeconds(2f);
+                        LOCALCO.local.CinematicTexRpc("MISSION COMPLETE");
+                    } else
+                    {
+                        CO_SPAWNER.co.SpawnWordsRpc("<color=green>VAULT UNLOCKED", vault.transform.position);
+                    }
                     /* if (!MissionCompleted)
                      {
                          //MissionCompleted = true;
@@ -1777,30 +1796,171 @@ public class CO : NetworkBehaviour
             {
                 break;
             }
-            if (!ThreatsEliminated && Death >= 1)
-            {
-                EnemyBarRelative.Value = -1;
-                yield return new WaitForSeconds(1f);
-                if (Death >= 1)
-                {
-                    LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
-                }
-                SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
-
-                yield return new WaitForSeconds(1f);
-                AreWeInDanger.Value = false;
-                ThreatsEliminated = true;
-            }
         }
-        if (CompletedVaults > 0) ProcessLootTable(CurrentEvent.LootTable, CompletedVaults*0.3f+0.1f);
+        if (CompletedVaults > 0 && !HasGivenLoot)
+        {
+            HasGivenLoot = true;
+            ProcessLootTable(CurrentEvent.LootTable, ((float)CompletedVaults / (float)TotalVaults) * 0.9f + 0.1f);
+        }
         EnemyBarRelative.Value = -1;
         SetCurrentDungeon(null);
     }
-   /* IEnumerator RewardOnceSafe(ScriptableLootTable loot)
+    IEnumerator Event_DungeonDefense()
     {
-        while (!CO.co.IsSafe()) yield return null;
-        ProcessLootTable(loot, 1f);
-    }*/
+        ShouldDriftersMove = false;
+        AreWeInDanger.Value = false;
+        SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
+        ResetWeights();
+        int i = 0;
+        List<EnemyGroupWithWeight> Groups = new();
+        foreach (EnemyGroupWithWeight weighted in CurrentEvent.EnemyWave.SpawnEnemyGroupList)
+        {
+            Groups.Add(weighted);
+            AddWeights(i, weighted.Weight);
+            i++;
+        }
+        ScriptableEnemyGroup EnemyGroup = Groups[GetWeight()].EnemyGroup;
+        CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
+
+        List<Vault> Vaults = CO_SPAWNER.co.SpawnRepulsorObjective(CurrentDungeon); //These are now THREE
+
+        CurrentDungeon.GenerateTraps(Mathf.RoundToInt(CurrentDungeon.TrapSpawnDefault * CO.co.GetEncounterSizeModifier()));
+        CurrentDungeon.GenerateSpawningMounds(UnityEngine.Random.Range(3, 6));
+        CurrentDungeon.GenerateCrates();
+
+        AlternativeDebriefDialog Debrief = CurrentEvent.GetDebrief();
+        float DefenseProgress = 1f;
+        bool HasStartedDefense = false;
+        float WaveTimer = 0f;
+        float ActivationPercentage;
+
+        //Rewards are given immediately after each unlock
+
+        while (true)
+        {
+            EnemyBarRelative.Value = DefenseProgress;
+            if (DefenseProgress == 0) EnemyBarString.Value = $"<color=green>OBJECTIVE COMPLETE";
+            else
+            {
+                if (HasStartedDefense) EnemyBarString.Value = $"REPULSOR PROGRESS: {((1f-DefenseProgress)*100f).ToString("0")}%";
+                else EnemyBarString.Value = $"FIND REPULSORS";
+            }
+            if (AreCrewAwayFromHome())
+            {
+                AreWeInDanger.Value = true;
+                /*if (Threats > 0) EnemyBarString.Value = $"THREATS: {Threats}";
+                else*/
+            }
+            else
+            {
+                AreWeInDanger.Value = false;
+            }
+            ActivationPercentage = 0f;
+            foreach (Vault vault in new List<Vault>(Vaults))
+            {
+                if (vault.GetHealthRelative() >= 0.5f)
+                {
+                    vault.Faction = 1; //Allied
+                    ActivationPercentage += 1f / (float)Vaults.Count;
+                    if (!HasStartedDefense && vault.GetHealthRelative() >= 1f)
+                    {
+                        WaveTimer = 15f;
+                        HasStartedDefense = true;
+                        CO_SPAWNER.co.SpawnWordsRpc("<color=green>REPULSOR ENGAGED", vault.transform.position);
+                        yield return new WaitForSeconds(2.5f);
+                        CO_SPAWNER.co.SpawnWordsRpc("<color=red>HOSTILES INCOMING", vault.transform.position);
+                    }
+                }
+            }
+            if (HasStartedDefense && DefenseProgress > 0f)
+            {
+                DefenseProgress -= ActivationPercentage / (90 * 2);
+                WaveTimer -= 0.5f;
+                if (WaveTimer <= 0f)
+                {
+                    WaveTimer = UnityEngine.Random.Range(30f,40f);
+                    //Order wave
+                    List<AI_UNIT> PossibleUnits = new();
+                    foreach (AI_UNIT unit in new List<AI_UNIT>(CurrentDungeon.AI.GetUnits()))
+                    {
+                        if (!unit.Unit.isDead() && (unit.GetTactic() == AI_UNIT.AI_TACTICS.DORMANT || unit.GetTactic() == AI_UNIT.AI_TACTICS.PATROL))
+                        {
+                            PossibleUnits.Add(unit);
+                        }
+                    }
+                    int Amount = Mathf.RoundToInt(CurrentDungeon.AI.GetUnits().Count * UnityEngine.Random.Range(0.15f,0.25f));
+                    for (i = 0; i < Amount; i++)
+                    {
+                        if (PossibleUnits.Count == 0) break;
+                        AI_UNIT Unit = PossibleUnits[UnityEngine.Random.Range(0,PossibleUnits.Count)];
+                        PossibleUnits.Remove(Unit);
+                        Unit.SetTactic(AI_UNIT.AI_TACTICS.SKIRMISH,0f);
+                        Unit.SetObjectiveTarget(Vaults[UnityEngine.Random.Range(0,Vaults.Count)].transform.position, CurrentDungeon.Space);
+                    }
+                }
+                if (DefenseProgress <= 0f)
+                {
+                    DefenseProgress = 0f;
+                    LOCALCO.local.CinematicTexRpc("MISSION COMPLETE");
+                }
+            }
+            yield return new WaitForSeconds(0.5f);
+            if (ShouldDriftersMove) //When we escape
+            {
+                break;
+            }
+        }
+        if (DefenseProgress == 0f) ProcessLootTable(CurrentEvent.LootTable, 1f);
+        EnemyBarRelative.Value = -1;
+        SetCurrentDungeon(null);
+    }
+
+    IEnumerator Event_DungeonExterminate()
+    {
+        ShouldDriftersMove = false;
+        AreWeInDanger.Value = true;
+        SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
+        ResetWeights();
+        int i = 0;
+        List<EnemyGroupWithWeight> Groups = new();
+        foreach (EnemyGroupWithWeight weighted in CurrentEvent.EnemyWave.SpawnEnemyGroupList)
+        {
+            Groups.Add(weighted);
+            AddWeights(i, weighted.Weight);
+            i++;
+        }
+        ScriptableEnemyGroup EnemyGroup = Groups[GetWeight()].EnemyGroup;
+        CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
+
+        CurrentDungeon.GenerateTraps(Mathf.RoundToInt(CurrentDungeon.TrapSpawnDefault * CO.co.GetEncounterSizeModifier()));
+        CurrentDungeon.GenerateCrates();
+
+        float Death = 0f;
+
+        while (Death < 1f)
+        {
+            int DeadAmount = GroupDeathAmount(GetEnemyCrew());
+            int AliveAmount = GetEnemyCrew().Count - DeadAmount;
+            Death = (float)DeadAmount / (float)GetEnemyCrew().Count;
+            EnemyBarString.Value = $"THREATS: {AliveAmount}";
+
+            EnemyBarRelative.Value = 1f - Death;
+            yield return new WaitForSeconds(0.5f);
+        }
+        EnemyBarRelative.Value = -1;
+        yield return new WaitForSeconds(4f);
+        LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
+        SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
+
+        yield return new WaitForSeconds(3f);
+        SetCurrentDungeon(null);
+        EndEvent();
+    }
+    /* IEnumerator RewardOnceSafe(ScriptableLootTable loot)
+     {
+         while (!CO.co.IsSafe()) yield return null;
+         ProcessLootTable(loot, 1f);
+     }*/
     IEnumerator Event_GenericSurvival()
     {
         ShouldDriftersMove = true;
@@ -1840,7 +2000,7 @@ public class CO : NetworkBehaviour
 
         yield return new WaitForSeconds(4f);
         LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
-       SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
+        SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
 
         yield return new WaitForSeconds(3f);
         EndEvent();

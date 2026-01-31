@@ -20,6 +20,7 @@ public class CO_SPAWNER : NetworkBehaviour
     public Sprite ShopItemAmmoDeal;
     public Sprite ShopItemTechnologyDeal;
     public Vault VaultObjectiveObject;
+    public Vault RepulsorObjectiveObject;
 
     [Header("VFX")]
     public PART ArmorImpact;
@@ -472,6 +473,50 @@ public class CO_SPAWNER : NetworkBehaviour
             Dungeon.DungeonNetworkObjects.Add(vault.NetworkObject);
             List.Add(vault);
         }
+        return List;
+    }
+    public List<Vault> SpawnRepulsorObjective(DUNGEON Dungeon)
+    {
+        List<Vault> List = new();
+        List<WalkableTile> ObjectivePositions = new(Dungeon.MainObjectivePossibilities);
+        foreach (WalkableTile tile in new List<WalkableTile>(ObjectivePositions))
+        {
+            if (!tile.gameObject.activeSelf)
+            {
+                ObjectivePositions.Remove(tile);
+            }
+        }
+        WalkableTile SelectedTile = ObjectivePositions[UnityEngine.Random.Range(0, ObjectivePositions.Count)];
+        ObjectivePositions.Remove(SelectedTile);
+
+        List<WalkableTile> NearbyTiles = new(Dungeon.Space.RoomTiles);
+        foreach (WalkableTile tile in new List<WalkableTile>(NearbyTiles))
+        {
+            if (Vector3.Distance(tile.transform.position, SelectedTile.transform.position) > 30f)
+            {
+                NearbyTiles.Remove(tile);
+            }
+        }
+
+        int Vaults = UnityEngine.Random.Range(3, 6);
+        for (int i = 0; i < Vaults; i++)
+        {
+            if (NearbyTiles.Count == 0) break;
+            WalkableTile SelectedNearbyTile = NearbyTiles[UnityEngine.Random.Range(0, NearbyTiles.Count)];
+            NearbyTiles.Remove(SelectedNearbyTile);
+            Vault vault = Instantiate(RepulsorObjectiveObject, SelectedNearbyTile.transform.position + GetRandomOnTile(), Quaternion.identity);
+            vault.transform.Rotate(Vector3.forward, UnityEngine.Random.Range(0f, 360f));
+            vault.ExtraMaxHealth.Value = 50 * CO.co.GetEncounterDifficultyModifier() - 50;
+            vault.NetworkObject.Spawn();
+            vault.transform.SetParent(Dungeon.Space.transform);
+            vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;
+            vault.Faction = 0;
+            vault.Init();
+            vault.TakeDamage(vault.GetMaxHealth() * UnityEngine.Random.Range(0.5f, 0.6f), vault.transform.position, iDamageable.DamageType.TRUE);
+            Dungeon.DungeonNetworkObjects.Add(vault.NetworkObject);
+            List.Add(vault);
+        } 
+
         return List;
     }
     private void SetQualityLevelOfDrifter(DRIFTER drifter, ScriptableEnemyDrifter drifterData, float Quality)
