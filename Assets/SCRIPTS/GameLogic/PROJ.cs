@@ -212,13 +212,11 @@ public class PROJ : NetworkBehaviour
                 transform.SetParent(collision.transform);
                 if (ImpactVFX) ImpactVFXRpc();
                 ExpireSlowlyRpc();
+                return;
             }
-            else
-            {
-                if (ImpactSFX.Length > 0) ImpactSFXRpc();
-                isActive = false;
-                BulletImpact();
-            }
+            if (ImpactSFX.Length > 0) ImpactSFXRpc();
+            isActive = false;
+            BulletImpact();
             return;
         } else if (UseAltitude)
         {

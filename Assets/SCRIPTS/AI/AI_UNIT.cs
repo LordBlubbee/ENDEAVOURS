@@ -365,6 +365,9 @@ public class AI_UNIT : NetworkBehaviour
                 case TOOL.ToolAI.MELEE_AND_SHIELD:
                     EquipItem = i;
                     break;
+                case TOOL.ToolAI.MELEE_LONG_SHIELD:
+                    EquipItem = i;
+                    break;
                 case TOOL.ToolAI.TARGET_ALLIES:
                     Ally = GetClosestAlly();
                     if (Ally != null)
@@ -411,6 +414,11 @@ public class AI_UNIT : NetworkBehaviour
                 if (Distance < 8) Unit.UseItem1Rpc();
                 else Unit.UseItem2Rpc();
                 break;
+            case TOOL.ToolAI.MELEE_LONG_SHIELD:
+                SetLookTowards(target, getSpace());
+                if (Distance < 9) Unit.UseItem1Rpc();
+                else Unit.UseItem2Rpc();
+                break;
             case TOOL.ToolAI.TARGET_ALLIES:
                 if (Ally != null)
                 {
@@ -433,6 +441,16 @@ public class AI_UNIT : NetworkBehaviour
                 break;
         }
         return true;
+    }
+
+    private bool HaveMedicalRetreat()
+    {
+        if (Group.HomeDrifter)
+        {
+
+            if (Group.HomeDrifter.MedicalModule) return true;
+        }
+        return false;
     }
     private void AITick_Crew()
     {
@@ -474,7 +492,7 @@ public class AI_UNIT : NetworkBehaviour
                     break;
                 case AI_TACTICS.RETREAT:
                     point = GetDiagonalPointTowards(EnemyTarget.transform.position, -12f, LeaningRight);
-                    if (Group.HomeDrifter.MedicalModule)
+                    if (HaveMedicalRetreat())
                     {
                         float dist = (Group.HomeDrifter.MedicalModule.transform.position - transform.position).magnitude;
                         if (dist > 16f) point = Group.HomeDrifter.MedicalModule.transform.position;
@@ -1411,6 +1429,8 @@ public class AI_UNIT : NetworkBehaviour
         {
             case TOOL.ToolAI.MELEE:
                 return 4.5f;
+            case TOOL.ToolAI.MELEE_LONG_SHIELD:
+                return 7f;
             case TOOL.ToolAI.RANGED:
                 return 30f;
         }
@@ -1423,6 +1443,8 @@ public class AI_UNIT : NetworkBehaviour
         {
             case TOOL.ToolAI.MELEE:
                 return 3f;
+            case TOOL.ToolAI.MELEE_LONG_SHIELD:
+                return 6f;
             case TOOL.ToolAI.RANGED:
                 return 25f;
         }

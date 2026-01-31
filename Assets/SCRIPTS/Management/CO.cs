@@ -1625,6 +1625,7 @@ public class CO : NetworkBehaviour
         DRIFTER enemyDrifter = CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
         if (enemyDrifter == null)
         {
+            CO_SPAWNER.co.SpawnWarningPointerRpc(GetEnemyCrew()[0].transform.position);
             float Death = 0f;
             while (Death < 1)
             {
@@ -1637,6 +1638,7 @@ public class CO : NetworkBehaviour
             }
         } else
         {
+            CO_SPAWNER.co.SpawnWarningPointerRpc(enemyDrifter.transform.position);
             float Death = 0f;
             while (Death < 1)
             {
@@ -1726,6 +1728,7 @@ public class CO : NetworkBehaviour
 
         List<Vault> Vaults = CO_SPAWNER.co.SpawnVaultObjectives(CurrentDungeon); //These are now THREE
 
+        CO_SPAWNER.co.SpawnWarningPointerRpc(CurrentDungeon.transform.position);
         CurrentDungeon.GenerateTraps(Mathf.RoundToInt(CurrentDungeon.TrapSpawnDefault * CO.co.GetEncounterSizeModifier()));
         CurrentDungeon.GenerateSpawningMounds(UnityEngine.Random.Range(2,5));
         CurrentDungeon.GenerateCrates();
@@ -1824,6 +1827,7 @@ public class CO : NetworkBehaviour
 
         List<Vault> Vaults = CO_SPAWNER.co.SpawnRepulsorObjective(CurrentDungeon); //These are now THREE
 
+        CO_SPAWNER.co.SpawnWarningPointerRpc(CurrentDungeon.transform.position);
         CurrentDungeon.GenerateTraps(Mathf.RoundToInt(CurrentDungeon.TrapSpawnDefault * CO.co.GetEncounterSizeModifier()));
         CurrentDungeon.GenerateSpawningMounds(UnityEngine.Random.Range(3, 6));
         CurrentDungeon.GenerateCrates();
@@ -1932,6 +1936,7 @@ public class CO : NetworkBehaviour
         ScriptableEnemyGroup EnemyGroup = Groups[GetWeight()].EnemyGroup;
         CO_SPAWNER.co.SpawnEnemyGroup(EnemyGroup);
 
+        CO_SPAWNER.co.SpawnWarningPointerRpc(CurrentDungeon.transform.position);
         CurrentDungeon.GenerateTraps(Mathf.RoundToInt(CurrentDungeon.TrapSpawnDefault * CO.co.GetEncounterSizeModifier()));
         CurrentDungeon.GenerateCrates();
 
@@ -2156,6 +2161,7 @@ public class CO : NetworkBehaviour
                 int ExtraItemDrops = Mathf.FloorToInt(PlayerModifier * table.MultiplayerLootModifier + UnityEngine.Random.Range(-1f,1f));
                 for (int i2 = 0; i2 < ExtraItemDrops; i2++)
                 {
+                    Debug.Log($"Multiplayer item drop: {MultiPlayers}");
                     ResetWeights();
                     i = 0;
                     foreach (WeightedLootItem weighted in table.MultiplayerLootList.GetPossibleDrops())

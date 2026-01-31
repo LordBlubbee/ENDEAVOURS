@@ -125,17 +125,21 @@ public class DUNGEON : NetworkBehaviour
             }
             i++;
         }
-        foreach (WalkableTile tile in Space.RoomTiles)
+        if (BackgroundObjectPossibilities.Count > 0)
         {
-            for (int i2 = 0; i2 < UnityEngine.Random.Range(0,3);i2++)
+            foreach (WalkableTile tile in Space.RoomTiles)
             {
-                NetworkObject obj = Instantiate(BackgroundObjectPossibilities[UnityEngine.Random.Range(0, BackgroundObjectPossibilities.Count)], tile.transform.position + GetRandomOnTile(), Quaternion.identity);
-                obj.transform.Rotate(Vector3.forward, UnityEngine.Random.Range(0, 4)*90);
-                obj.Spawn();
-                obj.transform.SetParent(Space.transform);
-                DungeonNetworkObjects.Add(obj);
+                for (int i2 = 0; i2 < UnityEngine.Random.Range(0, 3); i2++)
+                {
+                    NetworkObject obj = Instantiate(BackgroundObjectPossibilities[UnityEngine.Random.Range(0, BackgroundObjectPossibilities.Count)], tile.transform.position + GetRandomOnTile(), Quaternion.identity);
+                    obj.transform.Rotate(Vector3.forward, UnityEngine.Random.Range(0, 4) * 90);
+                    obj.Spawn();
+                    obj.transform.SetParent(Space.transform);
+                    DungeonNetworkObjects.Add(obj);
+                }
             }
         }
+       
     }
 
     [Header("Spawned Object Prefabs")]

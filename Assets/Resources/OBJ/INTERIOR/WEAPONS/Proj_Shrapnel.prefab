@@ -171,10 +171,11 @@ MonoBehaviour:
   UseAltitude: 1
   AltitudeExplodeEarly: 0
   CanHitWalls: 0
+  CanHitDrifters: 1
   AltitudeInacurracyFactor: 0.15
   AltitudeDirectHitCeiling: 1
   DamageType: 2
-  ImpactVFX: {fileID: 7178822272740056672, guid: 70d93878a36b8c54292e0c86ba038037, type: 3}
+  ImpactVFX: {fileID: 7178822272740056672, guid: 7f7f15c6c27261d438e11d44c34555b3, type: 3}
   LaunchVFX: {fileID: 7178822272740056672, guid: 7f7f15c6c27261d438e11d44c34555b3, type: 3}
   ImpactSFX:
   - {fileID: 8300000, guid: 6e999360bbf88ef478b7802c157a8524, type: 3}
@@ -184,6 +185,7 @@ MonoBehaviour:
   DodgeModifier: 1.3
   HullDamageModifier: 0.25
   ModuleDamageModifier: 0.25
+  ModuleSplash: 16
   ArmorDamageModifier: 4
   ArmorAbsorptionModifier: 0.5
   ArmorCriticalChance: 0.05

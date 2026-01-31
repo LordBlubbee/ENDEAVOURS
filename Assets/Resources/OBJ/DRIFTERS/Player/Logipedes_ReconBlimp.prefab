@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Drifter: {fileID: 1453653842865150193}
   Door: {fileID: 4255643745049972001, guid: da076f1ebcd9a6f43b7a29e7271d490a, type: 3}
+  SpawnChance: 1
 --- !u!1 &1564568884469061669
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Drifter: {fileID: 1453653842865150193}
   Door: {fileID: 4255643745049972001, guid: da076f1ebcd9a6f43b7a29e7271d490a, type: 3}
+  SpawnChance: 1
 --- !u!1 &2215013079113221082
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Drifter: {fileID: 1453653842865150193}
   Door: {fileID: 4255643745049972001, guid: da076f1ebcd9a6f43b7a29e7271d490a, type: 3}
+  SpawnChance: 1
 --- !u!1 &3388606262696114643
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,6 +1002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Drifter: {fileID: 1453653842865150193}
   Door: {fileID: 4255643745049972001, guid: da076f1ebcd9a6f43b7a29e7271d490a, type: 3}
+  SpawnChance: 1
 --- !u!1 &7335464086384110514
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,6 +1049,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Drifter: {fileID: 1453653842865150193}
   Door: {fileID: 4255643745049972001, guid: da076f1ebcd9a6f43b7a29e7271d490a, type: 3}
+  SpawnChance: 1
 --- !u!1 &7509174443097077569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1297,6 +1302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Drifter: {fileID: 1453653842865150193}
   Door: {fileID: 4255643745049972001, guid: da076f1ebcd9a6f43b7a29e7271d490a, type: 3}
+  SpawnChance: 1
 --- !u!1001 &106637527082582228
 PrefabInstance:
   m_ObjectHideFlags: 0

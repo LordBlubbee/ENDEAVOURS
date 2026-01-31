@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 public class CO_SPAWNER : NetworkBehaviour
 {
     public GamerTag PrefabGamerTag;
@@ -912,12 +913,26 @@ public class CO_SPAWNER : NetworkBehaviour
 
     /**/
     public GameObject SleepVFX;
+    public GameObject WarningPointerVFX;
+    public GameObject WarningIconVFX;
 
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnSleepRpc(Vector3 pos)
     {
         GameObject ob = Instantiate(SleepVFX, pos, Quaternion.identity);
     }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnWarningPointerRpc(Vector3 towards)
+    {
+        Transform tr = CAM.cam.transform;
+        GameObject ob = Instantiate(WarningIconVFX, new Vector3(tr.position.x, tr.position.y,0), Quaternion.identity);
+        ob.transform.SetParent(tr);
+        ob = Instantiate(WarningPointerVFX, new Vector3(tr.position.x, tr.position.y, 0), Quaternion.identity);
+        ob.transform.Rotate(Vector3.forward, Vector2.SignedAngle(new Vector3(1,0), towards - tr.position));
+        ob.transform.SetParent(tr);
+    }
+
     [Header("SPELLS")]
     public GameObject CommandVFX;
     public GameObject FloralImpactVFX;
@@ -947,7 +962,6 @@ public class CO_SPAWNER : NetworkBehaviour
         Transform trans = CO.co.GetTransformAtPoint(pos);
         if (trans) ob.transform.SetParent(trans);
     }
-
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnWaywardConsumptionRpc(Vector3 pos)
     {
@@ -962,7 +976,6 @@ public class CO_SPAWNER : NetworkBehaviour
         Transform trans = CO.co.GetTransformAtPoint(pos);
         if (trans) ob.transform.SetParent(trans);
     }
-
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnPragmaticusShieldImpactRpc(Vector3 pos)
     {
@@ -970,6 +983,5 @@ public class CO_SPAWNER : NetworkBehaviour
         Transform trans = CO.co.GetTransformAtPoint(pos);
         if (trans) ob.transform.SetParent(trans);
     }
-
 
 }

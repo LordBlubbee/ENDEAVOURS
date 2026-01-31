@@ -24,7 +24,8 @@ public class TOOL : MonoBehaviour
         RANGED,
         MELEE_AND_SHIELD,
         TARGET_ALLIES,
-        HEAL_ALLIES
+        HEAL_ALLIES,
+        MELEE_LONG_SHIELD
     }
 
     [Header("CROSSHAIR")]

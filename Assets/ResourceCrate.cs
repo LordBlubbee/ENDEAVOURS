@@ -135,4 +135,13 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
     {
         NetworkObject.Despawn();
     }
+
+    public override void OnNetworkDespawn()
+    {
+        foreach (Transform child in transform)
+        {
+            child.SetParent(null);
+        }
+        base.OnNetworkDespawn();
+    }
 }
