@@ -1752,7 +1752,7 @@ public class CREW : NetworkBehaviour, iDamageable
                         DeadForever.Value = true;
                     } else
                     {
-                        if (CO.co.CanRespawn(this))
+                        if (CO.co.CanRespawn(this) && GetFaction() == 1)
                         {
                             DeadForever.Value = true;
                             CO.co.Resource_Supplies.Value -= 20;

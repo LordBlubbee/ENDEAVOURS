@@ -43,6 +43,7 @@ public class DoorPlaceholder : MonoBehaviour
         {
             mod.Faction = 2;
             Dungeon.DungeonNetworkObjects.Add(mod.NetworkObject);
+            mod.ExtraMaxHealth.Value = CO.co.GetEncounterDifficultyModifier() * 80f - 50f;
         } else
         {
             mod.Faction = Drifter.GetFaction();
