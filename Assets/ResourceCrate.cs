@@ -133,15 +133,19 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
 
     public void RemoveCrate()
     {
+        Debug.Log($"Crate Children: {transform.childCount}");
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            Debug.Log($"Despawning child object of ResourceCrate {child.name}");
+            NetworkObject ob = child.GetComponent<NetworkObject>();
+            if (ob) ob.Despawn();
+        }
         NetworkObject.Despawn();
     }
 
     public override void OnNetworkDespawn()
     {
-        foreach (Transform child in transform)
-        {
-            child.SetParent(null);
-        }
         base.OnNetworkDespawn();
     }
 }

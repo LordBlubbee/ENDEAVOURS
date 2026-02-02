@@ -2211,10 +2211,10 @@ public class CREW : NetworkBehaviour, iDamageable
                 if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.ENVIRONMENT_FIRE:
-                fl = GetEnvironmentalDamageMod();
+                fl *= GetEnvironmentalDamageMod();
                 break;
             case iDamageable.DamageType.ENVIRONMENT_MIST:
-                fl = GetEnvironmentalDamageMod();
+                fl *= GetEnvironmentalDamageMod();
                 break;
         }
         fl *= 1f + ModifyDamageTaken;
@@ -2249,7 +2249,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetEnvironmentalDamageMod()
     {
-        return 1f / (GetATT_ENGINEERING()*0.2f);
+        return 1f / (1f + GetATT_ENGINEERING()*0.2f);
     }
 
     public void EquipWeapon(int slot, ScriptableEquippableWeapon wep)
