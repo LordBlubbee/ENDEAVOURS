@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2203519663317647966}
   - component: {fileID: 4056564725635188173}
   m_Layer: 0
-  m_Name: LooncrabMound
+  m_Name: RespawnHallway
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 318e0697384cc0d4c897d78a08a0afe1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e9e344bd1229e0b4c9a7852b385c1e6d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3182708085
+  GlobalObjectIdHash: 1407052999
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -128,5 +128,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   Faction: 2
-  BaseRespawnDelay: 25
+  BaseRespawnDelay: 20
   ActivelySpawning: 1

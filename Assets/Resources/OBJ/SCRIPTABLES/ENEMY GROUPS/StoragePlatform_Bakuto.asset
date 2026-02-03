@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486074c487becad41a25117778c346f8, type: 3}
   m_Name: StoragePlatform_Bakuto
   m_EditorClassIdentifier: 
-  AI_Type: 0
+  AI_Type: 4
   AI_Group: 1
-  CrewAmountLevel: 1000
+  CrewAmountLevel: 1600
   CrewQualityLevel: 120
   GuaranteedCrewList: []
   SpawnCrewList:
@@ -33,8 +33,8 @@ MonoBehaviour:
     MinimumQuality: 0
     MaximumQuality: 0
     Crew: {fileID: 11400000, guid: 10078cda2c750cf4eb7b2d5629c4e0d5, type: 2}
-  - Weight: 20
-    WeightIncreaseOverQualityGradient: 0
+  - Weight: 0
+    WeightIncreaseOverQualityGradient: 20
     MinimumQuality: 300
     MaximumQuality: 500
     Crew: {fileID: 11400000, guid: 4746f8097976f6545a6a64d759cd33e9, type: 2}

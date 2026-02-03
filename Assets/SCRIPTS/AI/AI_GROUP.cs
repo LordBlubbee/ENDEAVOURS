@@ -60,7 +60,8 @@ public class AI_GROUP : MonoBehaviour
         SWARM,
         SHIP_DEFENSIVE,
         SHIP_BOARDING,
-        SHIP_PRAGMATICUS_BOARDING
+        SHIP_PRAGMATICUS_BOARDING,
+        DUNGEON_FIGHTERS
     }
     public enum AI_OBJECTIVES
     {
@@ -118,6 +119,9 @@ public class AI_GROUP : MonoBehaviour
                     break;
                 case AI_TYPES.SWARM:
                     SwarmAI();
+                    break;
+                case AI_TYPES.DUNGEON_FIGHTERS:
+                    DungeonAI();
                     break;
             }
             MainObjectiveTimer -= 0.5f;
@@ -178,6 +182,11 @@ public class AI_GROUP : MonoBehaviour
         UsableUnits = new(Units);
         foreach (AI_UNIT un in Units)
         {
+            if (un.Unit.isDead())
+            {
+                UsableUnits.Remove(un);
+                continue;
+            }
             if (un.Unit.GetOrderPoint() != Vector3.zero)
             {
                 un.SetObjectiveTarget(un.Unit.GetOrderPoint(),un.Unit.GetOrderTransform());
@@ -343,6 +352,76 @@ public class AI_GROUP : MonoBehaviour
                     }
                 }
                 break;
+        }
+    }
+
+    List<AI_UNIT> SelectedAttackers = new();
+    private void DungeonAI()
+    {
+        List<AI_UNIT> UsableUnits = new(Units);
+        //Pick the closest unit
+        //Send periodic attack waves when the army is full
+        foreach (AI_UNIT un in UsableUnits)
+        {
+            if (!un)
+            {
+                Units.Remove(un);
+            }
+        }
+        UsableUnits = new(Units);
+
+        List<CREW> Intruders = new List<CREW>(EnemiesInSpace(HomeDungeon.Space));
+        int WantDefenders = 0;
+
+        Vector3 PointOfInterest;
+
+        float Readiness = 1f;
+        foreach (AI_UNIT un in UsableUnits)
+        {
+            if (un.Unit.isDead() || SelectedAttackers.Contains(un))
+            {
+                Readiness -= 1f/UsableUnits.Count;
+            }
+        }
+        if (Readiness > 0.9f)
+        {
+            //Prepare to send an attack wave!
+            for (int i = 0; i < Mathf.Min(2 + Mathf.FloorToInt(UsableUnits.Count * UnityEngine.Random.Range(0.2f,0.5f)), UsableUnits.Count); i++)
+            {
+                AI_UNIT Closest = GetClosestUnitInGroup(HomeDungeon.transform.position, UsableUnits);
+                SelectedAttackers.Add(Closest);
+                UsableUnits.Remove(Closest);
+            }
+        }
+
+        foreach (AI_UNIT un in new List<AI_UNIT>(SelectedAttackers))
+        {
+            DRIFTER EnemyDrifter = GetClosestEnemyDrifter(HomeDungeon.transform.position);
+            if (un.GetObjectiveSpace() != EnemyDrifter.Interior)
+            {
+                PointOfInterest = EnemyDrifter.Interior.GetRandomGrid().transform.position;
+                un.SetObjectiveTarget(un.getSpace().GetNearestGridToPoint(PointOfInterest).transform, EnemyDrifter.Interior);
+            }
+            UsableUnits.Remove(un);
+        }
+
+        while (UsableUnits.Count > 0)
+        {
+            AI_UNIT Closest;
+           
+            if (WantDefenders > 0)
+            {
+                PointOfInterest = Intruders[0].transform.position;
+                Closest = GetClosestUnitInGroup(PointOfInterest, UsableUnits);
+                Closest.SetObjectiveTarget(Closest.getSpace().GetNearestGridToPoint(PointOfInterest).transform, HomeSpace);
+                UsableUnits.Remove(Closest);
+                WantDefenders--;
+                continue;
+            }
+           
+            Closest = UsableUnits[0];
+            if (Closest.DistToObjective(Closest.transform.position) < 8) Closest.SetObjectiveTarget(HomeDungeon.Space.GetRandomGrid().transform, HomeSpace);
+            UsableUnits.Remove(Closest);
         }
     }
     private Vector3 GetGroupCenter()
