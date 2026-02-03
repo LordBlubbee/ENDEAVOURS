@@ -209,7 +209,7 @@ public class PROJ : NetworkBehaviour
             {
                 if (ImpactSFX.Length > 0) ImpactSFXRpc();
                 isActive = false;
-                transform.SetParent(collision.transform);
+                if (collision.GetComponent<NetworkObject>() != null) transform.SetParent(collision.transform);
                 if (ImpactVFX) ImpactVFXRpc();
                 ExpireSlowlyRpc();
                 return;

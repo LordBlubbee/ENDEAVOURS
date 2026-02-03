@@ -3,10 +3,11 @@ using static iDamageable;
 
 public class Vault : Module
 {
+    public bool CanBeDisabled = false;
     public bool CanBeDamagedWhenFull = false;
     public override bool IsDisabled()
     {
-        return false;
+        return base.IsDisabled() && CanBeDisabled;
     }
     public override void TakeDamage(float fl, Vector3 src, DamageType type)
     {

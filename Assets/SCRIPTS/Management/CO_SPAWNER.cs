@@ -22,6 +22,7 @@ public class CO_SPAWNER : NetworkBehaviour
     public Sprite ShopItemTechnologyDeal;
     public Vault VaultObjectiveObject;
     public Vault RepulsorObjectiveObject;
+    public Vault RespawnObjectiveObject;
 
     [Header("VFX")]
     public PART ArmorImpact;
@@ -507,7 +508,7 @@ public class CO_SPAWNER : NetworkBehaviour
             NearbyTiles.Remove(SelectedNearbyTile);
             Vault vault = Instantiate(RepulsorObjectiveObject, SelectedNearbyTile.transform.position + GetRandomOnTile(), Quaternion.identity);
             vault.transform.Rotate(Vector3.forward, UnityEngine.Random.Range(0f, 360f));
-            vault.ExtraMaxHealth.Value = 50 * CO.co.GetEncounterDifficultyModifier() - 50;
+            vault.ExtraMaxHealth.Value = 50f * CO.co.GetEncounterDifficultyModifier() - 50;
             vault.NetworkObject.Spawn();
             vault.transform.SetParent(Dungeon.Space.transform);
             vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;
@@ -518,6 +519,37 @@ public class CO_SPAWNER : NetworkBehaviour
             List.Add(vault);
         } 
 
+        return List;
+    }
+    public List<Vault> SpawnRallyObjective(DUNGEON Dungeon)
+    {
+        List<Vault> List = new();
+        List<WalkableTile> ObjectivePositions = new(Dungeon.MainObjectivePossibilities);
+        foreach (WalkableTile tile in new List<WalkableTile>(ObjectivePositions))
+        {
+            if (!tile.gameObject.activeSelf)
+            {
+                ObjectivePositions.Remove(tile);
+            }
+        }
+
+        int Vaults = 3;
+        for (int i = 0; i < Vaults; i++)
+        {
+            WalkableTile SelectedTile = ObjectivePositions[UnityEngine.Random.Range(0, ObjectivePositions.Count)];
+            ObjectivePositions.Remove(SelectedTile);
+            Vault vault = Instantiate(RespawnObjectiveObject, SelectedTile.transform.position + GetRandomOnTile(), SelectedTile.transform.rotation);
+            vault.ExtraMaxHealth.Value = 100f * CO.co.GetEncounterDifficultyModifier();
+            vault.NetworkObject.Spawn();
+            vault.transform.SetParent(Dungeon.Space.transform);
+            vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;
+            vault.Faction = 2;
+            vault.GetComponent<RespawnArea>().SetSpace(Dungeon.Space);
+            vault.Init();
+            vault.Heal(vault.GetMaxHealth());
+            Dungeon.DungeonNetworkObjects.Add(vault.NetworkObject);
+            List.Add(vault);
+        }
         return List;
     }
     private void SetQualityLevelOfDrifter(DRIFTER drifter, ScriptableEnemyDrifter drifterData, float Quality)
@@ -932,6 +964,16 @@ public class CO_SPAWNER : NetworkBehaviour
         ob.transform.Rotate(Vector3.forward, Vector2.SignedAngle(new Vector3(1,0), towards - tr.position));
         ob.transform.SetParent(tr);
     }
+    public GameObject TeleportRespawnVFX; //
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnTeleportRespawnVFXRpc(Vector3 pos)
+    {
+        GameObject ob = Instantiate(TeleportRespawnVFX, pos, Quaternion.identity);
+        Transform trans = CO.co.GetTransformAtPoint(pos);
+        if (trans) ob.transform.SetParent(trans); ;
+    }
+
 
     [Header("SPELLS")]
     public GameObject CommandVFX;
@@ -940,7 +982,6 @@ public class CO_SPAWNER : NetworkBehaviour
     public GameObject WaywardConsumptionVFX;
     public GameObject PragmaticusRestrainImpactVFX;
     public GameObject PragmaticusShieldImpactVFX;
-
     public void SpawnCommandVFX(CREW crew)
     {
         GameObject ob = Instantiate(CommandVFX, crew.transform.position, Quaternion.identity);

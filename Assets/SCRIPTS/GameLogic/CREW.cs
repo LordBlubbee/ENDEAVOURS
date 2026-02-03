@@ -1709,6 +1709,7 @@ public class CREW : NetworkBehaviour, iDamageable
 
     public void TeleportCrewMember(Vector3 pos, SPACE spac)
     {
+        CO_SPAWNER.co.SpawnTeleportRespawnVFXRpc(transform.position);
         transform.position = pos;
         if (Space != spac)
         {
@@ -1747,7 +1748,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 if (BleedingTime.Value < 0)
                 {
                     //We have bled out!
-                    if (!CO.co.GetDungeon())
+                    if (!CO.co.GetDungeon() || GetFaction() == 2)
                     {
                         DeadForever.Value = true;
                     } else
@@ -1808,6 +1809,13 @@ public class CREW : NetworkBehaviour, iDamageable
     public void ForceRevive() {
         isForceReviving = true;
         BleedingTime.Value = -10;
+    }
+    public void CancelRevive()
+    {
+        isForceReviving = false;
+        BleedingTime.Value = 0;
+        Alive.Value = false;
+        DeadForever.Value = true;
     }
 
     public ANIM.AnimationState GetCurrentAnimation()

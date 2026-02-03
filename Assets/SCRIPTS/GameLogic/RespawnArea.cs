@@ -8,6 +8,7 @@ public class RespawnArea : NetworkBehaviour
     public int Faction;
     public float BaseRespawnDelay = 20f;
     public bool ActivelySpawning = false;
+    public Module AttachedModule;
     private float CurrentRespawnDelay = 0f;
     SPACE Space { get; set; }
 
@@ -23,14 +24,18 @@ public class RespawnArea : NetworkBehaviour
         CurrentRespawnDelay -= CO.co.GetWorldSpeedDelta();
         if (CurrentRespawnDelay < 0)
         {
-            CurrentRespawnDelay = 2;
+            CurrentRespawnDelay += 2f;
+            if (AttachedModule)
+            {
+                if (AttachedModule.IsDisabled()) return;
+            }
             foreach (CREW un in CO.co.GetAlliedCrew(Faction))
             {
                 if (!un.isDead()) continue;
                 if (un.isDeadButReviving()) continue;
                 un.ForceRevive();
                 un.TeleportCrewMember(transform.position, Space);
-                CurrentRespawnDelay = BaseRespawnDelay;
+                CurrentRespawnDelay = BaseRespawnDelay * 0.25f + (BaseRespawnDelay / CO.co.GetEncounterSizeModifier()) * 0.75f;
                 break;
             }
         }

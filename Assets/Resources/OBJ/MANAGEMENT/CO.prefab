@@ -178,6 +178,7 @@ MonoBehaviour:
   ShopItemTechnologyDeal: {fileID: 21300000, guid: a7dff9a1e3302ca43a64ebfdd1e4a784, type: 3}
   VaultObjectiveObject: {fileID: 3455235200430234361, guid: 1718159036bdc3a4e92f1d7fb67695ed, type: 3}
   RepulsorObjectiveObject: {fileID: 3455235200430234361, guid: 49f85bbb0dd10a742840cfc5ed3de1c8, type: 3}
+  RespawnObjectiveObject: {fileID: 3455235200430234361, guid: f84eb6231a5a2694580ecd1eea06f4c2, type: 3}
   ArmorImpact: {fileID: 1759800388499967267, guid: 52ce5ea45dc461346bed82ea78a64521, type: 3}
   ExplosionSmall: {fileID: 1759800388499967267, guid: 7f7f15c6c27261d438e11d44c34555b3, type: 3}
   ExplosionMedium: {fileID: 1759800388499967267, guid: 70d93878a36b8c54292e0c86ba038037, type: 3}
@@ -234,6 +235,7 @@ MonoBehaviour:
   SleepVFX: {fileID: 7178822272740056672, guid: e6c418c850e51b24bab6d375e0d26b77, type: 3}
   WarningPointerVFX: {fileID: 7178822272740056672, guid: d1fbd13956b0157498f270239e36a117, type: 3}
   WarningIconVFX: {fileID: 7178822272740056672, guid: 7f3f7f678460adf42895472ee5767d69, type: 3}
+  TeleportRespawnVFX: {fileID: 7178822272740056672, guid: 686bf80fe947a0a468eed519fff1591a, type: 3}
   CommandVFX: {fileID: 7178822272740056672, guid: 8ef22170cdf6cf947980f7efd685a66d, type: 3}
   FloralImpactVFX: {fileID: 7178822272740056672, guid: 08141c87165688a44aac95e0b1d1d896, type: 3}
   FloralHealSpellImpactVFX: {fileID: 7178822272740056672, guid: 93f7d0f99be04294d9fbe7a0051ec69d, type: 3}

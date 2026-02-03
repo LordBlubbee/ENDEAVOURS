@@ -386,7 +386,7 @@ public class AI_GROUP : MonoBehaviour
         if (Readiness > 0.9f)
         {
             //Prepare to send an attack wave!
-            for (int i = 0; i < Mathf.Min(2 + Mathf.FloorToInt(UsableUnits.Count * UnityEngine.Random.Range(0.2f,0.5f)), UsableUnits.Count); i++)
+            for (int i = 0; i < Mathf.Min(2 + Mathf.FloorToInt(UsableUnits.Count * UnityEngine.Random.Range(0.3f,0.6f)), UsableUnits.Count); i++)
             {
                 AI_UNIT Closest = GetClosestUnitInGroup(HomeDungeon.transform.position, UsableUnits);
                 SelectedAttackers.Add(Closest);

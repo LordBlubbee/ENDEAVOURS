@@ -1938,19 +1938,35 @@ public class CO : NetworkBehaviour
 
         CO_SPAWNER.co.SpawnWarningPointerRpc(CurrentDungeon.transform.position);
         CurrentDungeon.GenerateTraps(Mathf.RoundToInt(CurrentDungeon.TrapSpawnDefault * CO.co.GetEncounterSizeModifier()));
+        List<Vault> Objectives = CO_SPAWNER.co.SpawnRallyObjective(CurrentDungeon);
         CurrentDungeon.GenerateCrates();
 
         float Death = 0f;
+        int RallyPoints = Objectives.Count;
 
-        while (Death < 1f)
+        while (Death < 1f && RallyPoints > 0)
         {
+            RallyPoints = 0;
+            foreach (Vault ob in Objectives)
+            {
+                if (!ob.IsDisabled()) RallyPoints++;
+            }
             int DeadAmount = GroupDeathAmount(GetEnemyCrew());
             int AliveAmount = GetEnemyCrew().Count - DeadAmount;
             Death = (float)DeadAmount / (float)GetEnemyCrew().Count;
-            EnemyBarString.Value = $"THREATS: {AliveAmount}";
+            if (RallyPoints == 0) EnemyBarString.Value = $"THREATS LEFT: {AliveAmount}";
+            else EnemyBarString.Value = $"RALLY POINTS: {RallyPoints}";
 
             EnemyBarRelative.Value = 1f - Death;
             yield return new WaitForSeconds(0.5f);
+        }
+        foreach (CREW un in GetEnemyCrew())
+        {
+            un.CancelRevive();
+        }
+        foreach (Vault ob in Objectives)
+        {
+            ob.TakeDamage(9999, ob.transform.position, iDamageable.DamageType.TRUE);
         }
         EnemyBarRelative.Value = -1;
         yield return new WaitForSeconds(4f);
