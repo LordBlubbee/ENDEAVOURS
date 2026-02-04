@@ -160,7 +160,7 @@ MonoBehaviour:
   attackDamage1: 16
   RangedPrefab1: {fileID: 0}
   UniqueSpell1: {fileID: 0}
-  Reload1: 0
+  Reload1: 0.4
   ExtendedCooldown1: 0
   ApplyBuff: {fileID: 0}
   ActionUse2: 6
@@ -171,7 +171,7 @@ MonoBehaviour:
   attackDamage2: 7
   RangedPrefab2: {fileID: 0}
   UniqueSpell2: {fileID: 0}
-  Reload2: 0
+  Reload2: 0.4
   ExtendedCooldown2: 0
 --- !u!1 &6403120744721419714
 GameObject:

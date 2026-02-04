@@ -165,6 +165,11 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         return OrderPoint.Value;
     }
+
+    public bool HasOrderPoint()
+    {
+        return OrderPoint.Value == Vector3.zero;
+    }
     public SPACE GetOrderTransform()
     {
         return OrderTransform;
@@ -667,7 +672,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public bool isDeadButReviving()
     {
-        return DeadForever.Value && BleedingTime.Value < 0;
+        return DeadForever.Value && (isForceReviving || BleedingTime.Value < 0);
     }
     public bool CanFunction()
     {
@@ -1652,6 +1657,11 @@ public class CREW : NetworkBehaviour, iDamageable
     bool canStrikeMelee = true;
     bool canStrike = true;
     float CurrentReload = 0f;
+
+    public bool CanStrike()
+    {
+        return canStrike;
+    }
     IEnumerator AttackCooldown(float col)
     {
         canStrike = false;
@@ -1756,8 +1766,9 @@ public class CREW : NetworkBehaviour, iDamageable
                         if (CO.co.CanRespawn(this) && GetFaction() == 1)
                         {
                             DeadForever.Value = true;
-                            CO.co.Resource_Supplies.Value -= 20;
-                            CO_SPAWNER.co.SpawnWordsRpc("<color=red>-20 SUPPLIES</color>", HomeDrifter.MedicalModule.transform.position);
+                            int LoseAmount = IsPlayer() ? 20 : 10;
+                            CO.co.Resource_Supplies.Value -= LoseAmount;
+                            CO_SPAWNER.co.SpawnWordsRpc($"<color=red>-{LoseAmount} SUPPLIES</color>", HomeDrifter.MedicalModule.transform.position);
                             TeleportCrewMember(HomeDrifter.MedicalModule.transform.position + new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-3f, 3f)), HomeDrifter.Space);
                         }
                     }

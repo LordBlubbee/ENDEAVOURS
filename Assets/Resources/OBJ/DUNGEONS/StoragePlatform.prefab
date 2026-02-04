@@ -1232,6 +1232,8 @@ MonoBehaviour:
   - {fileID: 3888116079889444596}
   - {fileID: 2460205659769789414}
   - {fileID: 3593433127119628910}
+  - {fileID: 4759307725666168391}
+  - {fileID: 2405227712308254802}
   MiscPossibilities:
   - {fileID: 3401310960853551573}
   - {fileID: 3222092665202241489}
@@ -1270,7 +1272,7 @@ MonoBehaviour:
   BackgroundObjectPossibilities: []
   TrapSpawnDefault: 250
   ObstaclePossibilityList: 01000000
-  PrefabSpawningArea: {fileID: 4056564725635188173, guid: 18ac500e101115d42a741fe89ce5c5d6, type: 3}
+  PrefabSpawningArea: {fileID: 0}
   AverageMaterialCrateWorth: 0
   AverageSuppliesCrateWorth: 10
   AverageAmmoCrateWorth: 30

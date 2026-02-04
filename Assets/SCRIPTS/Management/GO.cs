@@ -22,6 +22,8 @@ public class GO : MonoBehaviour
     public int screenShakeLevel;
     public int resolutionConfig;
 
+    public bool enableTutorial;
+
     public int currentSaveSlot;
     public int preferredHostControl;
     public int preferredGameDifficulty;
@@ -48,6 +50,7 @@ public class GO : MonoBehaviour
         mouseScrollSpeed = 0.2f;
         arrowScrollSpeed = 0.2f;
         currentSaveSlot = 0;
+        enableTutorial = true;
         OST_Vol = 0.8f;
         VCX_Vol = 0.8f;
         SFX_Vol = 0.8f;
@@ -137,6 +140,8 @@ public class dataSettings
     public float VCX_Vol;
     public float SFX_Vol;
 
+    public bool enableTutorial;
+
     public int currentSaveSlot;
     public float mouseScrollSpeed;
     public float arrowScrollSpeed;
@@ -153,6 +158,7 @@ public class dataSettings
         GO.g.OST_Vol = OST_Vol;
         GO.g.VCX_Vol = VCX_Vol;
         GO.g.SFX_Vol = SFX_Vol;
+        GO.g.enableTutorial = enableTutorial;
         GO.g.mouseScrollSpeed = mouseScrollSpeed;
         GO.g.arrowScrollSpeed = arrowScrollSpeed;
         GO.g.screenShakeLevel = screenShakeLevel;
@@ -173,6 +179,7 @@ public class dataSettings
         OST_Vol = GO.g.OST_Vol;
         VCX_Vol = GO.g.VCX_Vol;
         SFX_Vol = GO.g.SFX_Vol;
+        enableTutorial = GO.g.enableTutorial;
         mouseScrollSpeed = GO.g.mouseScrollSpeed;
         arrowScrollSpeed = GO.g.arrowScrollSpeed;
         screenShakeLevel = GO.g.screenShakeLevel;

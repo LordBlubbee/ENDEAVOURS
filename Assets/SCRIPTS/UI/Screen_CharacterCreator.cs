@@ -240,6 +240,7 @@ public class Screen_CharacterCreator : MonoBehaviour
     {
         if (Test_Skip)
         {
+            UI.ui.TutorialManager.OpenTutorial();
             LOCALCO.local.CreatePlayerRpc("Test Man", new Color(1,1,1), new int[] {5,5,5,5,5,5,5,5}, "Invictus_Marine");
             UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
             return;
@@ -249,6 +250,7 @@ public class Screen_CharacterCreator : MonoBehaviour
         {
             return;
         }
+        UI.ui.TutorialManager.OpenTutorial();
         LOCALCO.local.CreatePlayerRpc(GO.g.localUsername, GO.g.localColor, SkillPower, SelectedBackground.ResourcePath);
         UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
     }

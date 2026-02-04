@@ -18,6 +18,7 @@ public class UI : MonoBehaviour
     public Screen_Settings SettingsUI;
     public Screen_Cinematic CinematicUI;
     public Screen_Host HostUI;
+    public TutorialManager TutorialManager;
     public Image Crosshair;
     public ChatModule ChatUI;
     private GameObject PreviousScreen;

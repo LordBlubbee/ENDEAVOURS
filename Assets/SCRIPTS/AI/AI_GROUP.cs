@@ -396,6 +396,12 @@ public class AI_GROUP : MonoBehaviour
 
         foreach (AI_UNIT un in new List<AI_UNIT>(SelectedAttackers))
         {
+            if (un.Unit.isDead())
+            {
+                SelectedAttackers.Remove(un);
+                UsableUnits.Remove(un);
+                continue;
+            }
             DRIFTER EnemyDrifter = GetClosestEnemyDrifter(HomeDungeon.transform.position);
             if (un.GetObjectiveSpace() != EnemyDrifter.Interior)
             {

@@ -145,6 +145,8 @@ MonoBehaviour:
   - {fileID: 8362816068341079287}
   Blockers: []
   AI: 0
+  isConsumable: 0
+  DashResetsCooldown: 1
   CrosshairSprite: {fileID: 21300000, guid: 48374f1853df9d24c876ed36dc366473, type: 3}
   CrosshairMaxRange: 9999
   CrosshairMinRange: -1
@@ -159,14 +161,19 @@ MonoBehaviour:
   Action1_SFX_Hit: []
   attackDamage1: 10
   RangedPrefab1: {fileID: 0}
-  Reload1: 0
+  UniqueSpell1: {fileID: 0}
+  Reload1: 0.15
+  ExtendedCooldown1: 0
+  ApplyBuff: {fileID: 0}
   ActionUse2: 0
   attackAnimations2: 
   UsageStamina2: 2
   Action2_SFX: []
   attackDamage2: 10
   RangedPrefab2: {fileID: 0}
-  Reload2: 0
+  UniqueSpell2: {fileID: 0}
+  Reload2: 0.15
+  ExtendedCooldown2: 0
 --- !u!1 &6403120744721419714
 GameObject:
   m_ObjectHideFlags: 0

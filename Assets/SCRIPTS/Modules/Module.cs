@@ -26,6 +26,11 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         return OrderTransform;
     }
 
+    public bool HasOrderPoint()
+    {
+        return OrderPoint.Value != Vector3.zero;
+    }
+
     [Rpc(SendTo.Server)]
     public void SetOrderPointRpc(Vector3 vec)
     {

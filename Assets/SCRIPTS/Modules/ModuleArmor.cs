@@ -50,7 +50,7 @@ public class ModuleArmor : Module
     {
         float max = GetMaxArmor();
         CurArmor.Value = Mathf.Clamp(CurArmor.Value + fl, 0, max);
-        CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
+        //CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
     }
     public override void Heal(float fl)
     {

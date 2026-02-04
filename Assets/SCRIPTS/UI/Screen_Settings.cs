@@ -15,6 +15,7 @@ public class Screen_Settings : MonoBehaviour
     public TextMeshProUGUI VCX_Tex;
     public TextMeshProUGUI SFX_Tex;
     public TextMeshProUGUI OST_Tex;
+    public TextMeshProUGUI Tutorial_Tex;
     public AudioMixer AudioMixer;
 
     public void Init()
@@ -22,6 +23,7 @@ public class Screen_Settings : MonoBehaviour
         VCX_Vol.value = GO.g.VCX_Vol;
         SFX_Vol.value = GO.g.SFX_Vol;
         OST_Vol.value = GO.g.OST_Vol;
+        Tutorial_Tex.color = GO.g.enableTutorial ? Color.yellow : Color.gray;
         Refresh();
     }
     private void Refresh()
@@ -29,6 +31,13 @@ public class Screen_Settings : MonoBehaviour
         VCX_Tex.text = $"Volume Voices\n{(VCX_Vol.value * 20f - 10f).ToString("0.0")}dB";
         SFX_Tex.text = $"Volume Sound Effects\n{(SFX_Vol.value * 20f - 10f).ToString("0.0")}dB";
         OST_Tex.text = $"Volume Soundtrack\n{(OST_Vol.value * 20f - 10f).ToString("0.0")}dB";
+    }
+
+    public void PressTutorial()
+    {
+        GO.g.enableTutorial = !GO.g.enableTutorial;
+        GO.g.saveSettings();
+        Tutorial_Tex.color = GO.g.enableTutorial ? Color.yellow : Color.gray;
     }
     public void ResetGame()
     {

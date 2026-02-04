@@ -22,6 +22,10 @@ public class UI_CommandInterface : MonoBehaviour
     [NonSerialized] public bool IsCommanding = false;
     int SelectedTab = -1;
 
+    public int GetSelectedTab()
+    {
+        return SelectedTab;
+    }
     public bool IsCommandingTabOpen()
     {
         return SelectedTab > -1;

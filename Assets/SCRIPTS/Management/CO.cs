@@ -1944,7 +1944,7 @@ public class CO : NetworkBehaviour
         float Death = 0f;
         int RallyPoints = Objectives.Count;
 
-        while (Death < 1f && RallyPoints > 0)
+        while (Death < 1f || RallyPoints > 0)
         {
             RallyPoints = 0;
             foreach (Vault ob in Objectives)
@@ -1962,6 +1962,7 @@ public class CO : NetworkBehaviour
         }
         foreach (CREW un in GetEnemyCrew())
         {
+            un.DieForever();
             un.CancelRevive();
         }
         foreach (Vault ob in Objectives)

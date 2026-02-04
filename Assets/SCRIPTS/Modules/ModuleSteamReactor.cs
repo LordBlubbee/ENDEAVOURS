@@ -39,15 +39,22 @@ public class ModuleSteamReactor : ModuleEffector
     }
     protected IEnumerator ArmorRepair()
     {
+        int HealArmor = 4;
         while (EffectActive.Value > 0f)
         {
             yield return new WaitForSeconds(0.25f);
+            HealArmor--;
             foreach (Module mod in Space.SystemModules)
             {
                 if (mod is ModuleArmor)
                 {
                     ((ModuleArmor)mod).HealArmor(GetArmorBoost()*0.25f);
+                    if (HealArmor < 1) ((ModuleArmor)mod).Heal(GetArmorBoost()*0.5f);
                 }
+            }
+            if (HealArmor < 1)
+            {
+                HealArmor += 4;
             }
         }
     }
