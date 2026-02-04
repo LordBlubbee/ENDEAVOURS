@@ -358,6 +358,11 @@ public class UI_Module : MonoBehaviour
         }
     }
 
+    public bool TutorialIsOrderMarkerSet()
+    {
+        return UI_CommandInterface.co.CurrentOrderMarker != OrderMarker && OrderMarker.gameObject.activeSelf;
+    }
+
     public void CommandFollowCursor()
     {
         OrderMarker.gameObject.SetActive(true);

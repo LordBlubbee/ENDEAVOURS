@@ -9,6 +9,7 @@ public class TutorialManager : MonoBehaviour
     public TextMeshProUGUI TutorialDescription;
     public GameObject ContinueButton;
     public GameObject SkipButton;
+    public GameObject FocusBlocker;
     private TutorialProgressLevels Progress;
     private enum TutorialProgressLevels
     {
@@ -47,6 +48,7 @@ public class TutorialManager : MonoBehaviour
     {
         if (!GO.g.enableTutorial) return;
         gameObject.SetActive(true);
+        FocusBlocker.SetActive(true);
         Progress = TutorialProgressLevels.INTRO1;
         SetTutorial();
     }
@@ -77,6 +79,7 @@ public class TutorialManager : MonoBehaviour
                 break;
             case TutorialProgressLevels.WASD:
                 SkipButton.SetActive(false);
+                FocusBlocker.SetActive(false);
                 break;
             case TutorialProgressLevels.DASH:
                 break;
@@ -132,14 +135,17 @@ public class TutorialManager : MonoBehaviour
             case TutorialProgressLevels.U_OPENCOMMS:
                 break;
             case TutorialProgressLevels.DIPLOMACY:
+                FocusBlocker.SetActive(true);
                 StartCoroutine(ContinueAfterDelay());
                 break;
             case TutorialProgressLevels.OUTRO1:
+                FocusBlocker.SetActive(true);
                 StartCoroutine(ContinueAfterDelay());
                 break;
             case TutorialProgressLevels.ENDING:
                 GO.g.enableTutorial = false;
                 GO.g.saveSettings();
+                FocusBlocker.SetActive(false);
                 gameObject.SetActive(false);
                 break;
         }
@@ -163,15 +169,15 @@ public class TutorialManager : MonoBehaviour
                 break;
             case TutorialProgressLevels.DASH:
                 TutorialTitle.text = "DASHING";
-                TutorialDescription.text = $"Press SHIFT to dash, granting you a quick burst of movement. Dashing uses your STAMINA, which is the blue bar. Dashing allows you to quickly reload and deal additional melee damage.\n\n<color=yellow>Dash: ({TutorialEngagementProgress}/4)</color>";
+                TutorialDescription.text = $"Press SHIFT to dash, granting you a quick burst of movement. Dashing uses your STAMINA, which is the blue bar. \n\n<color=yellow>Dash: ({TutorialEngagementProgress}/4)</color>";
                 break;
             case TutorialProgressLevels.LMB1_ATTACK:
                 TutorialTitle.text = "ATTACK";
-                TutorialDescription.text = $"Use your LEFT MOUSE BUTTON to use your current items. For most weapons, this means that you will perform an ATTACK SEQUENCE.\n\n<color=yellow>Attack: ({TutorialEngagementProgress}/4)</color>";
+                TutorialDescription.text = $"Use your LEFT MOUSE BUTTON to use your current items. For most weapons, this means that you will perform an ATTACK SEQUENCE. Dashing allows you to quickly reload ranged weapons and deal double melee damage. Time your dashes well in battle.\n\n<color=yellow>Attack: ({TutorialEngagementProgress}/4)</color>";
                 break;
             case TutorialProgressLevels.LMB2_ATTACK:
                 TutorialTitle.text = "SECONDARY ACTION";
-                TutorialDescription.text = "Use your RIGHT MOUSE BUTTON to use your item's secondary effects. Melee weapons can often use this to BLOCK attacks. BLOCKING attacks this way can grant you a PARRY damage bonus.";
+                TutorialDescription.text = "Use your RIGHT MOUSE BUTTON to use your item's secondary effects. Melee weapons can often use this to BLOCK attacks. Some non-shield melee weapons gain a PARRY damage bonus whenever you block attacks with them. Use them well!";
                 break;
             case TutorialProgressLevels.SELECT_WEAPONS:
                 TutorialTitle.text = "WEAPON SELECTION";
@@ -239,7 +245,7 @@ public class TutorialManager : MonoBehaviour
                 break;
             case TutorialProgressLevels.ADDITIONAL_RESOURCES:
                 TutorialTitle.text = "RESOURCES";
-                TutorialDescription.text = "All of this is done with the four main Resources, seen in the top-left. <color=yellow>Materials</color> are needed to craft and upgrade systems. <color=green>Supplies</color> are needed to upgrade crew and to respawn when you are slain in dangerous dungeons. <color=red>Ammo</color> is needed for your weapons, and <color=0088FF>Tech</color> is a rare resource for Drifter upgrades.";
+                TutorialDescription.text = "All of this is done with the four main Resources, seen in the top-left. <color=yellow>Materials</color> are needed to craft and upgrade systems. <color=green>Supplies</color> are needed to upgrade crew and to respawn when you are slain in dangerous dungeons. <color=red>Ammo</color> is needed for your weapons, and <color=#0088FF>Tech</color> is a rare resource for Drifter upgrades.";
                 break;
             case TutorialProgressLevels.ADDITIONAL_INVENTORY_TECH:
                 TutorialTitle.text = "ARMORY STRATEGY";
@@ -275,6 +281,7 @@ public class TutorialManager : MonoBehaviour
 
     public void PressSkip()
     {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Salvage);
         gameObject.SetActive(false);
     }
 
@@ -298,7 +305,7 @@ public class TutorialManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.Y))
         {
             if (SkipButton.activeSelf) PressSkip();
         }
@@ -351,7 +358,6 @@ public class TutorialManager : MonoBehaviour
                     tol = Player.EquippedToolObject;
                     if (tol)
                     {
-                        Debug.Log("ACTION USE: "+tol.ActionUse1);
                         if (tol.ActionUse1 == TOOL.ToolActionType.HEAL_OTHERS)
                         {
                             if (Input.GetMouseButtonDown(0))
@@ -392,7 +398,7 @@ public class TutorialManager : MonoBehaviour
                         UI_Module wep = UI_CommandInterface.co.Weapons[0];
                         if (wep)
                         {
-                            if (wep.OrderMarker.gameObject.activeSelf) ContinueEngagement(1);
+                            if (wep.TutorialIsOrderMarkerSet()) ContinueEngagement(1);
                         }
                     } else
                     {
@@ -405,7 +411,7 @@ public class TutorialManager : MonoBehaviour
                         UI_Module wep = UI_CommandInterface.co.Weapons[0];
                         if (wep)
                         {
-                            if (!wep.OrderMarker.gameObject.activeSelf) ContinueEngagement(1);
+                            if (!wep.TutorialIsOrderMarkerSet() && UI_CommandInterface.co.GetSelectedTab() == 1) ContinueEngagement(1);
                         }
                     }
                     else
@@ -425,7 +431,7 @@ public class TutorialManager : MonoBehaviour
                         UI_Module wep = UI_CommandInterface.co.Crews[0];
                         if (wep)
                         {
-                            if (!wep.OrderMarker.gameObject.activeSelf) ContinueEngagement(1);
+                            if (wep.TutorialIsOrderMarkerSet()) ContinueEngagement(1);
                         }
                     }
                     else
@@ -439,7 +445,7 @@ public class TutorialManager : MonoBehaviour
                         UI_Module wep = UI_CommandInterface.co.Crews[0];
                         if (wep)
                         {
-                            if (!wep.OrderMarker.gameObject.activeSelf) ContinueEngagement(1);
+                            if (!wep.TutorialIsOrderMarkerSet() && UI_CommandInterface.co.GetSelectedTab() == 2) ContinueEngagement(1);
                         }
                     }
                     else

@@ -23,7 +23,7 @@ public class Screen_Settings : MonoBehaviour
         VCX_Vol.value = GO.g.VCX_Vol;
         SFX_Vol.value = GO.g.SFX_Vol;
         OST_Vol.value = GO.g.OST_Vol;
-        Tutorial_Tex.color = GO.g.enableTutorial ? Color.yellow : Color.gray;
+        RefreshTutorial();
         Refresh();
     }
     private void Refresh()
@@ -37,7 +37,13 @@ public class Screen_Settings : MonoBehaviour
     {
         GO.g.enableTutorial = !GO.g.enableTutorial;
         GO.g.saveSettings();
+        RefreshTutorial();
+    }
+
+    private void RefreshTutorial()
+    {
         Tutorial_Tex.color = GO.g.enableTutorial ? Color.yellow : Color.gray;
+        Tutorial_Tex.text = GO.g.enableTutorial ? "Tutorial Enabled" : "Tutorial Disabled";
     }
     public void ResetGame()
     {
