@@ -213,7 +213,7 @@ public class TutorialManager : MonoBehaviour
                 break;
             case TutorialProgressLevels.X_ACCESSWEAPONS_CANCEL:
                 TutorialTitle.text = "TARGETING ENEMIES";
-                TutorialDescription.text = $"Press LEFT MOUSE BUTTON and then RIGHT MOUSE BUTTON to cancel manual targeting. When set on AUTO, your crew will automatically reload the weapon and it will automatically shoot nearby enemies.\n\n<color=yellow>Cancel Aim Weapon 1: ({TutorialEngagementProgress}/1)";
+                TutorialDescription.text = $"Press LEFT MOUSE BUTTON and then RIGHT MOUSE BUTTON to cancel manual targeting. When set on <color=yellow>AUTO</color>, your crew will automatically reload the weapon and it will automatically shoot nearby enemies.\n\n<color=yellow>Cancel Aim Weapon 1: ({TutorialEngagementProgress}/1)";
                 break;
             case TutorialProgressLevels.C_ACCESSCREW_OPEN:
                 TutorialTitle.text = "CREW CONTROLS";

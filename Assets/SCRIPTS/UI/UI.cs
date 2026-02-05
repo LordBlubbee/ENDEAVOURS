@@ -27,7 +27,41 @@ public class UI : MonoBehaviour
     public Image BlackScreen;
     public Image WhiteScreen;
 
+    public Image LossScreenImage;
+    public GameObject LossScreenContents;
+    public TextMeshProUGUI LossScreenTex;
+    public CanvasGroup LossScreen;
+
     public TextMeshProUGUI SaveTex;
+
+    public void OpenLossScreen()
+    {
+        if (LossScreen.gameObject.activeSelf) return;
+        StartCoroutine(OpenLossScreenNum());
+    }
+
+    IEnumerator OpenLossScreenNum()
+    {
+        LossScreen.gameObject.SetActive(true);
+        LossScreenImage.color = Color.white;
+        LossScreen.alpha = 0;
+        while (LossScreen.alpha < 1)
+        {
+            LossScreen.alpha += Time.deltaTime * 0.35f;
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.2f);
+        LossScreenImage.color = Color.black;
+        LossScreenContents.gameObject.SetActive(true);
+        LossScreenTex.alpha = 0;
+        while (LossScreenTex.alpha < 1)
+        {
+            LossScreenTex.alpha += Time.deltaTime * 0.5f;
+            yield return null;
+        }
+
+    }
+
     bool SaveTexShowing = false;
     public void DisplaySaveTex()
     {
@@ -38,6 +72,7 @@ public class UI : MonoBehaviour
     IEnumerator SaveTexNum()
     {
         SaveTexShowing = true;
+        SaveTex.alpha = 0;
         while (SaveTex.alpha < 1)
         {
             SaveTex.alpha += Time.deltaTime * 1.4f;

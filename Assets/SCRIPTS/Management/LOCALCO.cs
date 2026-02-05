@@ -103,6 +103,13 @@ public class LOCALCO : NetworkBehaviour
                 CO.co.SavePlayer(GetPlayer());
                 GetPlayer().DespawnAndUnregister(); //We should test if this works properly
             }
+        } else
+        {
+            if (GetPlayer() != null)
+            {
+                string hex = ColorUtility.ToHtmlStringRGB(GetPlayer().GetCharacterColor());
+                UI.ui.ChatUI.CreateChatMessage($"<color=#{hex}>{GetPlayer().name}</color> has left the game!");
+            }
         }
         base.OnNetworkDespawn();
     }

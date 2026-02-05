@@ -15,6 +15,7 @@ public class CO : NetworkBehaviour
     [NonSerialized] public string PlayerMainDrifterTypeID;
 
     [NonSerialized] public NetworkVariable<bool> HasShipBeenLaunched = new();
+    [NonSerialized] public NetworkVariable<bool> HaveWeLost = new();
     [NonSerialized] public NetworkVariable<bool> AreWeInDanger = new();
     [NonSerialized] public NetworkVariable<bool> AreWeResting = new();
     [NonSerialized] public NetworkVariable<bool> AreWeCrafting = new();
@@ -32,6 +33,11 @@ public class CO : NetworkBehaviour
         {
             GO.g.saveGame();
         }
+    }
+
+    public bool GameHasBeenLost()
+    {
+        return HaveWeLost.Value;
     }
     public bool AreDriftersMoving()
     {
@@ -634,6 +640,7 @@ public class CO : NetworkBehaviour
         while (true)
         {
             UpdateMapConnections();
+            if (GameHasBeenLost()) UI.ui.OpenLossScreen();
             yield return new WaitForSeconds(2f);
         }
     }
@@ -655,8 +662,29 @@ public class CO : NetworkBehaviour
                 }
                 SendPeriodicInventoryUpdate();
             }
-            yield return new WaitForSeconds(5f);
+            CheckLossCondition();
+            yield return new WaitForSeconds(2f);
         }
+    }
+    public void CheckLossCondition()
+    {
+        if (CO.co.PlayerMainDrifter.GetHealth() <= 0)
+        {
+            SetGameLost();
+        }
+        foreach (CREW Crew in CO.co.GetAlliedCrew())
+        {
+            if (!Crew.isDeadForever()) return;
+            if (CO.co.CanRespawn(Crew)) return;
+            if (Crew.isDeadButReviving()) return;
+        }
+        SetGameLost();
+    }
+    public void SetGameLost()
+    {
+        if (GameHasBeenLost()) return;
+        Debug.Log("The game has been lost...");
+        HaveWeLost.Value = true;
     }
 
     [Rpc(SendTo.Server)]
