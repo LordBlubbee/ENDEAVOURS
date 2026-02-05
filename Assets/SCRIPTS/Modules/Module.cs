@@ -83,6 +83,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public string ModuleTag;
     public ModuleTypes ModuleType;
     public Sprite IconSprite;
+    public bool ShowModule = true;
     public ScriptableEquippableModule ShowAsModule;
     //
     public enum ModuleTypes

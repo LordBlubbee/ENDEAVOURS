@@ -27,6 +27,30 @@ public class UI : MonoBehaviour
     public Image BlackScreen;
     public Image WhiteScreen;
 
+    public TextMeshProUGUI SaveTex;
+    bool SaveTexShowing = false;
+    public void DisplaySaveTex()
+    {
+        if (SaveTexShowing) return;
+        StartCoroutine(SaveTexNum());
+    }
+
+    IEnumerator SaveTexNum()
+    {
+        SaveTexShowing = true;
+        while (SaveTex.alpha < 1)
+        {
+            SaveTex.alpha += Time.deltaTime * 1.4f;
+            yield return null;
+        }
+        yield return new WaitForSeconds(2f);
+        while (SaveTex.alpha > 0)
+        {
+            SaveTex.alpha -= Time.deltaTime * 1.4f;
+            yield return null;
+        }
+        SaveTexShowing = false;
+    }
     private void Start()
     {
         SettingsUI.Init();

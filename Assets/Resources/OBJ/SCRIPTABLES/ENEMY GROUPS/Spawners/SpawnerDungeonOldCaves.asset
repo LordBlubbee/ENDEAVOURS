@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SpawnerDungeonOldCaves
   m_EditorClassIdentifier: 
   SpawnEnemyGroupList:
-  - EnemyGroup: {fileID: 11400000, guid: 3a5969854c5c67b44b893a76fe7adc82, type: 2}
+  - EnemyGroup: {fileID: 11400000, guid: 09b1d58dc9822404e843fa0ef1bb1a80, type: 2}
     Weight: 10
   EnemyAmountModifier: 1
   EnemyQualityModifier: 1

@@ -17,7 +17,6 @@ public class Screen_ShipSelector : MonoBehaviour
     public TextMeshProUGUI Data;
     public TextMeshProUGUI Desc;
     SpawnableShip SelectedShip;
-
     private void Start()
     {
         PressShipButton(SpawnableShips[0]);

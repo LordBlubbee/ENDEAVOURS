@@ -76,7 +76,7 @@ public class Screen_GameUI : MonoBehaviour
         GO.g.saveGame();
         AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         DateTime time = DateTime.Now;
-        SaveButtonTex.text = $"SAVE GAME \nLAST: {time.Hour.ToString("00")}:{time.Minute.ToString("00")}";
+        SaveButtonTex.text = $"LAST SAVE: {time.Hour.ToString("00")}:{time.Minute.ToString("00")}";
     }
 
     private float GetPlayerCooldown(CREW player, int ID)

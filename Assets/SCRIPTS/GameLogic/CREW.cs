@@ -155,7 +155,7 @@ public class CREW : NetworkBehaviour, iDamageable
         while (XPPoints.Value > 100)
         {
             XPPoints.Value = 0;
-            SkillPoints.Value+= 3;
+            SkillPoints.Value += 3;
         }
     }
 

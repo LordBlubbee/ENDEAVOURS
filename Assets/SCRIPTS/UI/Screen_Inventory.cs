@@ -547,7 +547,7 @@ public class Screen_Inventory : MonoBehaviour
             {
                 Module mod = CO.co.PlayerMainDrifter.Interior.GetModules()[ID];
                 if (mod is ModuleWeapon) continue;
-                if (!mod.ShowAsModule) continue;
+                if (!mod.ShowModule) continue;
                 slot.gameObject.SetActive(true);
                 slot.SetInventoryItem(mod.ShowAsModule); 
                 slot.UpdateInventorySlot(mod);
@@ -579,7 +579,7 @@ public class Screen_Inventory : MonoBehaviour
             if (CO.co.PlayerMainDrifter.Interior.WeaponModules.Count > ID)
             {
                 Module mod = CO.co.PlayerMainDrifter.Interior.WeaponModules[ID];
-                if (!mod.ShowAsModule) continue; 
+                if (!mod.ShowModule) continue; 
                 slot.gameObject.SetActive(true);
                 slot.SetInventoryItem(mod.ShowAsModule);
                 slot.UpdateInventorySlot(mod);

@@ -30,8 +30,40 @@ public class Screen_CharacterCreator : MonoBehaviour
     public TextMeshProUGUI[] SkillTex;
     public Image[] SkillLevelButton;
     public TextMeshProUGUI[] SkillLevelTex;
+
+    [Header("Load Character")]
+    public GameObject LoadCharacterScreen;
+    public TextMeshProUGUI LoadCharacterTitle;
+    public Image LoadCharacterIcon;
+    public Image LoadCharacterStripes;
+
+    public void AddLoadedCharacter(string Name, Color Col, ScriptableBackground Back)
+    {
+        //Load from LOCALCO
+        LoadCharacterScreen.SetActive(true);
+        LoadCharacterTitle.text = Name;
+        LoadCharacterTitle.color = Col;
+        LoadCharacterIcon.sprite = Back.Sprite_Player;
+        LoadCharacterStripes.sprite = Back.Sprite_Stripes;
+        LoadCharacterStripes.color = Col;
+    }
+    public void PressLoadCharacter()
+    {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
+        LoadCharacterScreen.SetActive(false);
+        UI.ui.TutorialManager.OpenTutorial();
+        LOCALCO.local.LoadPlayerRpc();
+        UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
+    }
+
+    public void CancelLoadCharacter()
+    {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
+        LoadCharacterScreen.SetActive(false);
+    }
     public void LevelSkill(int ID)
     {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         int LevelNeed;
         switch (SkillPower[ID])
         {
@@ -245,11 +277,17 @@ public class Screen_CharacterCreator : MonoBehaviour
             UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
             return;
         }
-        if (!ReadyToMoveOn()) return;
-        if (!SelectedBackground)
+        if (!ReadyToMoveOn())
         {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
             return;
         }
+        if (!SelectedBackground)
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         UI.ui.TutorialManager.OpenTutorial();
         LOCALCO.local.CreatePlayerRpc(GO.g.localUsername, GO.g.localColor, SkillPower, SelectedBackground.ResourcePath);
         UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);

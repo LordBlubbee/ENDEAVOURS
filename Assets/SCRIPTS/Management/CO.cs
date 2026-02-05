@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using static AUDCO;
 
@@ -24,6 +25,14 @@ public class CO : NetworkBehaviour
     [NonSerialized] public NetworkVariable<int> PlayerMapPointID = new();
 
     private bool ShouldDriftersMove = false;
+    private bool isServerSided = false;
+    private void OnApplicationQuit()
+    {
+        if (isServerSided)
+        {
+            GO.g.saveGame();
+        }
+    }
     public bool AreDriftersMoving()
     {
         return ShouldDriftersMove;
@@ -137,6 +146,7 @@ public class CO : NetworkBehaviour
     [NonSerialized] public NetworkVariable<int> Resource_Supplies = new();
     [NonSerialized] public NetworkVariable<int> Resource_Ammo = new();
     [NonSerialized] public NetworkVariable<int> Resource_Tech = new();
+    [NonSerialized] public NetworkVariable<int> Resource_TotalXP = new();
     [NonSerialized] public Dictionary<Faction, int> Resource_Reputation = new();
     public enum Faction
     {
@@ -189,6 +199,15 @@ public class CO : NetworkBehaviour
 
     private NetworkVariable<int> HostControlMode = new();
     private GameDifficulties Difficulty;
+
+    public void LoadDifficulty(int ID)
+    {
+        Difficulty = (GameDifficulties)ID;
+    }
+    public int GetDifficulty()
+    {
+        return (int)Difficulty;
+    }
     public enum GameDifficulties
     {
         ADVANTAGED,
@@ -605,6 +624,7 @@ public class CO : NetworkBehaviour
         StartCoroutine(PeriodicClientUpdates());
         if (IsServer)
         {
+            isServerSided = true;
             StartCoroutine(PeriodicUpdates());
         }
     }
@@ -682,7 +702,7 @@ public class CO : NetworkBehaviour
         Difficulty = (GameDifficulties)GO.g.preferredGameDifficulty;
         HostControlMode.Value = GO.g.preferredHostControl;
         GenerateMap();
-        CO_SPAWNER.co.CreateLandscape(CO_SPAWNER.BackgroundType.BARREN);
+        //CO_SPAWNER.co.CreateLandscape(CO_SPAWNER.BackgroundType.BARREN);
 
         //NEW GAME
         Resource_Materials.Value = 50;
@@ -697,10 +717,18 @@ public class CO : NetworkBehaviour
                 AddInventoryItem(lootItem.Item);
             }
         }
-
+        CO_SPAWNER.co.CreateLandscape(GetPlayerMapPoint().AssociatedPoint.BackgroundType);
         CO_STORY.co.SetStory(GetPlayerMapPoint().AssociatedPoint.GetInitialDialog());
         SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
     }
+    public void StartLoadedGame()
+    {
+        HostControlMode.Value = GO.g.preferredHostControl;
+        CO_SPAWNER.co.CreateLandscape(GetPlayerMapPoint().AssociatedPoint.BackgroundType);
+        CO_STORY.co.SetStory(GetPlayerMapPoint().AssociatedPoint.GetInitialDialog());
+        SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
+    }
+
     [Rpc(SendTo.Server)]
     public void AddInventoryItemRpc(FixedString64Bytes moduleLink)
     {
@@ -1027,7 +1055,9 @@ public class CO : NetworkBehaviour
             local.ShipTransportFadeInRpc();
         }
         //Generate Area here
-       
+
+        GO.g.saveGame();
+        UI.ui.DisplaySaveTex();
 
         yield return new WaitForSeconds(1f);
         PlayerMainDrifter.SetCanReceiveInput(true);
@@ -1169,12 +1199,28 @@ public class CO : NetworkBehaviour
 
     private int GetMapWidth() { return 20; }
     private int GetPointStep() { return 5; }
-    public void GenerateMap()
+
+    public void WipeMap()
     {
         foreach (MapPoint map in GetMapPoints())
         {
             map.NetworkObject.Despawn();
         }
+    }
+    public void LoadMap(List<dataMapPoint> map)
+    {
+        WipeMap();
+        foreach (dataMapPoint point in map)
+        {
+            MapPoint mapPoint = CO_SPAWNER.co.CreateMapPoint(point.GetPosition());
+            mapPoint.Init(Resources.Load<ScriptablePoint>($"OBJ/SCRIPTABLES/EVENTS/{point.PointLink}"));
+            RegisterMapPoint(mapPoint);
+        }
+        UpdateMapConnections();
+    }
+    public void GenerateMap()
+    {
+        WipeMap();
         float mapSize = CurrentBiome.GetBiomeSize();
         RegisteredMapPoints = new();
         List<MapPoint> MustBeInitialized = new();
@@ -2200,10 +2246,8 @@ public class CO : NetworkBehaviour
             Resource_Supplies.Value += ChangeSupplies;
             Resource_Tech.Value += ChangeTech;
             if (ChangeHP > 0) PlayerMainDrifter.Heal(ChangeHP);
-            foreach (CREW crew in GetAlliedCrew())
-            {
-                crew.AddXP(ChangeXP);
-            }
+            AddXP(ChangeXP);
+
             //Send report to clients with all faction rep changes
             FixedString64Bytes NewCrewLink = NewCrew == null ? "" : NewCrewPrefab.name;
             Debug.Log($"NewCrewLink is {NewCrewLink}");
@@ -2240,6 +2284,67 @@ public class CO : NetworkBehaviour
         }
     }
 
+    private void AddXP(int amn)
+    {
+        Resource_TotalXP.Value += amn;
+        foreach (CREW crew in GetAlliedCrew())
+        {
+            crew.AddXP(amn);
+        }
+    }
+
+    /*SAVE AND LOAD*/
+    private List<dataPlayer> LoadedPlayers = new();
+    public List<dataPlayer> GetLoadedPlayers()
+    {
+        return LoadedPlayers;
+    }
+    public void SetLoadedPlayers(List<dataPlayer> loadedPlayers)
+    {
+        LoadedPlayers = loadedPlayers;
+    }
+    public void SavePlayer(CREW crew)
+    {
+        dataPlayer play = new dataPlayer();
+
+        play.PlayerName = crew.CharacterName.Value.ToString();
+        play.PlayerOwnerID = LOCALCO.local.PlayerSaveID.Value.ToString();
+        if (play.PlayerOwnerID == "")
+        {
+            Debug.Log("Error: Could not save a player because they had an invalid saveID.");
+            return;
+        }
+        play.localColorR = crew.GetCharacterColor().r;
+        play.localColorG = crew.GetCharacterColor().g;
+        play.localColorB = crew.GetCharacterColor().b;
+
+        play.PlayerBackground = crew.CharacterBackground.ResourcePath;
+        play.PlayerXP = crew.XPPoints.Value;
+        play.PlayerXPTotal = CO.co.Resource_TotalXP.Value;
+        play.PlayerSkillPoints = crew.SkillPoints.Value;
+        play.PlayerAttributes = crew.GetAttributes();
+        play.PlayerWeapons = new string[3];
+        if (crew.EquippedWeapons[0] != null) play.PlayerWeapons[0] = crew.EquippedWeapons[0].GetItemResourceIDFull();
+        if (crew.EquippedWeapons[1] != null) play.PlayerWeapons[1] = crew.EquippedWeapons[1].GetItemResourceIDFull();
+        if (crew.EquippedWeapons[2] != null) play.PlayerWeapons[2] = crew.EquippedWeapons[2].GetItemResourceIDFull();
+        if (crew.EquippedArmor != null) play.PlayerArmor = crew.EquippedArmor.GetItemResourceIDFull();
+        play.PlayerArtifacts = new string[3];
+        if (crew.EquippedArtifacts[0] != null) play.PlayerArtifacts[0] = crew.EquippedWeapons[0].GetItemResourceIDFull();
+        if (crew.EquippedArtifacts[1] != null) play.PlayerArtifacts[1] = crew.EquippedWeapons[1].GetItemResourceIDFull();
+        if (crew.EquippedArtifacts[2] != null) play.PlayerArtifacts[2] = crew.EquippedWeapons[2].GetItemResourceIDFull();
+
+        for (int i = 0; i < GetLoadedPlayers().Count; i++)
+        {
+            dataPlayer pl = GetLoadedPlayers()[i];
+            if (pl.PlayerOwnerID.Equals(play.PlayerOwnerID))
+            {
+                LoadedPlayers[i] = play;
+                return;
+            }
+        }
+        LoadedPlayers.Add(play);
+    }
+         
     [Rpc(SendTo.ClientsAndHost)]
     private void OpenRewardScreenRpc(int Materials, int Supplies, int Ammo, int Tech, int HP, int XP, Faction[] Facs, int[] FacChanges, FixedString64Bytes[] RewardItemsGained, FixedString64Bytes NewCrew)
     {

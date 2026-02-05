@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a8717e7279b88409550c597721d3ae, type: 3}
   m_Name: Area1_Event_StorageDungeon
   m_EditorClassIdentifier: 
-  EventController: DungeonExtermination
+  EventController: DungeonStorage
   EnemyWave: {fileID: 11400000, guid: 81804936722872d4a98f4b42355fce75, type: 2}
   AdditionalEventDialogs: []
   LootTable: {fileID: 11400000, guid: a376cdac4cef34a46802b8b1d634294d, type: 2}

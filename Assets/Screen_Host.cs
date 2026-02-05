@@ -23,8 +23,23 @@ public class Screen_Host : MonoBehaviour
             LoadGameButtons[i].gameObject.SetActive(true);
             LoadGameButtons[i].Init(sav);
             LoadGameButtons[i].SetSelected(LoadGameButtons[i] == SelectedLoadedGame);
+            if (sav == null)
+            {
+                for (int i2 = i+1; i2 < LoadGameButtons.Length; i2++)
+                {
+                    LoadGameButtons[i2].gameObject.SetActive(false);
+                }
+                break;
+            }
         }
     }
+    public void PressDeleteGame()
+    {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Salvage);
+        GO.g.deleteGame(GO.g.currentSaveSlot);
+        RefreshLoadedGames();
+    }
+
     private UI_LoadGameButton SelectedLoadedGame;
     public UI_LoadGameButton GetSelectedLoadedGame()
     {

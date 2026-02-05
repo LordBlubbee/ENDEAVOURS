@@ -219,6 +219,11 @@ public class CO_STORY : NetworkBehaviour
     }
 
     private ScriptableDialog CurrentDialog;
+
+    public ScriptableDialog GetCurrentDialog()
+    {
+        return CurrentDialog;
+    }
     public void SetStory(ScriptableDialog Dialog)
     {
         CommsActive.Value = true;

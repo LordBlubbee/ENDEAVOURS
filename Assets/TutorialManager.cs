@@ -23,6 +23,7 @@ public class TutorialManager : MonoBehaviour
         Q_MEDKIT,
         E_WRENCH,
         G_GRAPPLE,
+        DEATH,
         X_ACCESSWEAPONS_OPEN,
         X_ACCESSWEAPONS_TARGET,
         X_ACCESSWEAPONS_CANCEL,
@@ -95,6 +96,9 @@ public class TutorialManager : MonoBehaviour
             case TutorialProgressLevels.E_WRENCH:
                 break;
             case TutorialProgressLevels.G_GRAPPLE:
+                break;
+            case TutorialProgressLevels.DEATH:
+                StartCoroutine(ContinueAfterDelay());
                 break;
             case TutorialProgressLevels.X_ACCESSWEAPONS_OPEN:
                  break;
@@ -195,6 +199,10 @@ public class TutorialManager : MonoBehaviour
                 TutorialTitle.text = "GRAPPLE USAGE";
                 TutorialDescription.text = $"Press G to equip your Grappling Hook. LEFT MOUSE BUTTON allows you to fire a projectile that can attach to different Drifters or platforms, allowing you to move to another area. GRAPPLING has a cooldown.\n\n<color=yellow>Use Grapple: ({TutorialEngagementProgress}/1)";
                 break;
+            case TutorialProgressLevels.DEATH:
+                TutorialTitle.text = "BEING WOUNDED";
+                TutorialDescription.text = $"When you lose all health, you start bleeding out. If no allies can heal you before then, you will return to the Medical Bay, provided that it is online. \n<color=red>Respawning costs 20 Supplies when you fall in a Dungeon. If you run out of Supplies, the Expedition might be done for...";
+                break;
             case TutorialProgressLevels.X_ACCESSWEAPONS_OPEN:
                 TutorialTitle.text = "DRIFTER CONTROLS";
                 TutorialDescription.text = "Press X to open the Command Interface. In particular, the DRIFTER WEAPONS MANAGER. Your Drifter's weapons are essential in destroying critical modules on other Drifters and providing firing support to your team.";
@@ -245,7 +253,7 @@ public class TutorialManager : MonoBehaviour
                 break;
             case TutorialProgressLevels.ADDITIONAL_RESOURCES:
                 TutorialTitle.text = "RESOURCES";
-                TutorialDescription.text = "All of this is done with the four main Resources, seen in the top-left. <color=yellow>Materials</color> are needed to craft and upgrade systems. <color=green>Supplies</color> are needed to upgrade crew and to respawn when you are slain in dangerous dungeons. <color=red>Ammo</color> is needed for your weapons, and <color=#0088FF>Tech</color> is a rare resource for Drifter upgrades.";
+                TutorialDescription.text = "All of this is done with the four main Resources, seen in the top-left. <color=yellow>Materials</color> are needed to craft and upgrade systems. <color=green>Supplies</color> are needed to upgrade crew. <color=red>Ammo</color> is needed for your weapons, and <color=#0088FF>Tech</color> is a rare resource for Drifter upgrades.";
                 break;
             case TutorialProgressLevels.ADDITIONAL_INVENTORY_TECH:
                 TutorialTitle.text = "ARMORY STRATEGY";
@@ -265,7 +273,7 @@ public class TutorialManager : MonoBehaviour
                 break;
             case TutorialProgressLevels.OUTRO1:
                 TutorialTitle.text = "STRATEGY";
-                TutorialDescription.text = "The Expedition has failed. The world has changed, and many dangers lurk ahead. Experience will be your strongest weapon. \n\n<color=green>Go out there and begin your mission. Good luck.</color>";
+                TutorialDescription.text = "The game saves whenever you reach a new destination. So go out there. Set course. You will fail, again and again, but eventually... You will succeed. \n\n<color=green>Good luck.</color>";
                 break;
             default:
                 TutorialTitle.text = "";
@@ -283,6 +291,9 @@ public class TutorialManager : MonoBehaviour
     {
         AUDCO.aud.PlaySFX(AUDCO.aud.Salvage);
         gameObject.SetActive(false);
+        FocusBlocker.SetActive(false);
+        GO.g.enableTutorial = false;
+        GO.g.saveSettings();
     }
 
     private void Start()
@@ -411,7 +422,7 @@ public class TutorialManager : MonoBehaviour
                         UI_Module wep = UI_CommandInterface.co.Weapons[0];
                         if (wep)
                         {
-                            if (!wep.TutorialIsOrderMarkerSet() && UI_CommandInterface.co.GetSelectedTab() == 1) ContinueEngagement(1);
+                            if (wep.TutorialIsOrderMarkerUnset() && UI_CommandInterface.co.GetSelectedTab() == 1) ContinueEngagement(1);
                         }
                     }
                     else
@@ -445,7 +456,7 @@ public class TutorialManager : MonoBehaviour
                         UI_Module wep = UI_CommandInterface.co.Crews[0];
                         if (wep)
                         {
-                            if (!wep.TutorialIsOrderMarkerSet() && UI_CommandInterface.co.GetSelectedTab() == 2) ContinueEngagement(1);
+                            if (wep.TutorialIsOrderMarkerUnset() && UI_CommandInterface.co.GetSelectedTab() == 2) ContinueEngagement(1);
                         }
                     }
                     else
@@ -481,6 +492,7 @@ public class TutorialManager : MonoBehaviour
                 case TutorialProgressLevels.U_OPENCOMMS:
                     if (UI.ui.TalkUI.gameObject.activeSelf || UI.ui.RewardUI.gameObject.activeSelf || UI.ui.MapUI.gameObject.activeSelf)
                     {
+                        FocusBlocker.SetActive(true);
                         ContinueEngagement(1);
                     }
                     break;

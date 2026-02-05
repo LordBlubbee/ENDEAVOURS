@@ -137,7 +137,7 @@ public class SPACE : NetworkBehaviour
     {
         AddModule(Resources.Load<ScriptableEquippableModule>(resourceLink), false);
     }
-    public bool AddModule(ScriptableEquippableModule module, bool Initial)
+    public Module AddModule(ScriptableEquippableModule module, bool Initial)
     {
         Module mod = null;
         Vector3 vec = Vector3.zero;
@@ -237,7 +237,7 @@ public class SPACE : NetworkBehaviour
                 }*/
                 break;
         }
-        if (mod == null) return false;
+        if (mod == null) return null;
         mod.NetworkObject.Spawn();
         mod.transform.SetParent(transform);
         mod.transform.localRotation = Quaternion.identity;
@@ -254,7 +254,7 @@ public class SPACE : NetworkBehaviour
         {
             ((ModuleWeapon)mod).ReloadInstantly();
         }
-        return true;
+        return mod;
     }
     public Vector2 ConvertWorldToGrid(Vector3 pos)
     {

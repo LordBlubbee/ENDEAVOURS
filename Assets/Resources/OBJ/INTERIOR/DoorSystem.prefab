@@ -85,13 +85,13 @@ MonoBehaviour:
   ModuleTag: 
   ModuleType: 11
   IconSprite: {fileID: 0}
+  ShowModule: 0
   ShowAsModule: {fileID: 0}
   MaxHealth: 150
   ModuleWorth: 0
   ModuleUpgradeMaterials: 
   ModuleUpgradeTechs: 
   CenterPos: {fileID: 8528484589644675618}
-  Col: {fileID: 0}
   Door1: {fileID: 773029183256521562}
   Door1Open: {fileID: 9192378586723188085}
   Door1Close: {fileID: 62129879571249150}

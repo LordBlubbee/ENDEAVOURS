@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GO : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class GO : MonoBehaviour
 
     //SETTINGS
     [Header("Public Saves")]
+    public string SaveID;
+
     public float OST_Vol;
     public float VCX_Vol;
     public float SFX_Vol;
@@ -44,6 +48,15 @@ public class GO : MonoBehaviour
     public void firstSettings()
     {
         //Initialize important global preferences variables
+        if (SaveID == "")
+        {
+            SaveID = "";
+            for (int i = 0; i < 28; i++)
+            {
+                SaveID += UnityEngine.Random.Range(0, 10).ToString();
+            }
+            Debug.Log($"Created new settings and set SaveID to {SaveID}");
+        }
         localColor = Color.white;
         screenShakeLevel = 2; //0 = none, 1 = cinematic, 2 = all
         resolutionConfig = 0; //0 = full screen, 1 = 2560x1600, 2 = 2560x1440, 3 = 1920x1200, 4 = 1920x1080, 5 = 1280x720
@@ -51,12 +64,12 @@ public class GO : MonoBehaviour
         arrowScrollSpeed = 0.2f;
         currentSaveSlot = 0;
         enableTutorial = true;
-        OST_Vol = 0.8f;
+        OST_Vol = 0.5f;
         VCX_Vol = 0.8f;
         SFX_Vol = 0.8f;
         preferredHostControl = 0;
-        preferredGameDifficulty = 0;
-        preferredLobbyName = "";
+        preferredGameDifficulty = 1;
+        preferredLobbyName = "Lobby";
     }
     public void loadSettings()
     {
@@ -114,6 +127,15 @@ public class GO : MonoBehaviour
         formatter.Serialize(stream, saveData);
         stream.Close();
     }
+    public void deleteGame(int slot)
+    {
+        string path = Application.persistentDataPath + "/Mistworld" + slot;
+
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+    }
     public void saveSettings()
     {
         BinaryFormatter formatter = new BinaryFormatter();
@@ -132,6 +154,8 @@ public class GO : MonoBehaviour
 public class dataSettings
 {
     //SETTINGS
+    public string SaveID;
+
     public string localUsername;
     public float localColorR;
     public float localColorG;
@@ -152,6 +176,7 @@ public class dataSettings
     public string preferredLobbyName;
     public void loadSettings()
     {
+        GO.g.SaveID = SaveID;
         GO.g.localUsername = localUsername;
         GO.g.localColor = new Color(localColorR, localColorG, localColorB);
         GO.g.currentSaveSlot = currentSaveSlot;
@@ -171,6 +196,7 @@ public class dataSettings
     public dataSettings()
     {
         //Set local variables to GO variables
+        SaveID = GO.g.SaveID;
         localUsername = GO.g.localUsername;
         localColorR = GO.g.localColor.r;
         localColorG = GO.g.localColor.g;
@@ -197,11 +223,14 @@ public class dataStructure
     public DateTime saveTime;
     public int BiomeProgress;
     public string BiomeName;
+    public int SavedDifficulty;
 
     int Resources_Materials;
     int Resources_Supplies;
     int Resources_Ammo;
     int Resources_Tech;
+    int Resources_TotalXP;
+    float DrifterHull;
 
     List<int> FactionKeys = new();
     List<int> FactionValues = new();
@@ -217,6 +246,87 @@ public class dataStructure
     public void loadGame()
     {
         dataStructure n = this;
+
+        CO.co.BiomeProgress.Value = n.BiomeProgress;
+        CO.co.LoadDifficulty(n.SavedDifficulty);
+
+        CO.co.Resource_Materials.Value = n.Resources_Materials;
+        CO.co.Resource_Supplies.Value = n.Resources_Supplies;
+        CO.co.Resource_Ammo.Value = n.Resources_Ammo;
+        CO.co.Resource_Tech.Value = n.Resources_Tech;
+        CO.co.Resource_TotalXP.Value = n.Resources_TotalXP;
+
+        CO.co.Resource_Reputation = new();
+        for (int i = 0; i < n.FactionKeys.Count; i++)
+        {
+            CO.co.Resource_Reputation.Add((CO.Faction)n.FactionKeys[i], n.FactionValues[i]);
+        }
+        CO.co.SetLoadedPlayers(n.DrifterPlayers);
+
+        foreach (LOCALCO local in CO.co.GetLOCALCO())
+        {
+            string ID = local.PlayerSaveID.Value.ToString();
+            foreach (dataPlayer pl in CO.co.GetLoadedPlayers())
+            {
+                if (pl.PlayerOwnerID.Equals(ID))
+                {
+                    local.AddLoadedCharacter(pl);
+                    break;
+                }
+            }
+        }
+
+        CO.co.CurrentBiome = Resources.Load<ScriptableBiome>($"OBJ/SCRIPTABLES/BIOMES/{BiomeType}");
+
+        CO.co.LoadMap(MapPointList);
+        CO.co.PlayerMapPointID.Value = OurMapPointPositionID;
+        Debug.Log($"We are point {OurMapPointPositionID} in a total of {CO.co.GetMapPoints().Count} points");
+
+        CO_SPAWNER.co.SpawnLoadedPlayerShip(n.DrifterType, DrifterHull, DrifterModules);
+
+        foreach (dataNonPlayerCrew Crew in DrifterAICrew)
+        {
+            CREW TypeOfCrew = Resources.Load<CREW>($"OBJ/CREW/{Crew.CrewLink}");
+            CREW Spawned = CO_SPAWNER.co.SpawnUnitOnShip(TypeOfCrew, CO.co.PlayerMainDrifter);
+            Spawned.CharacterName.Value = Crew.PlayerName;
+            Spawned.CharacterNameColor.Value = new Vector3(Crew.localColorR, Crew.localColorG, Crew.localColorB);
+            Spawned.AddUpgradeLevel(Crew.CrewLevel);
+        }
+
+        foreach (dataPlayer play in CO.co.GetLoadedPlayers())
+        {
+            Debug.Log($"Loading player entity {play.PlayerName}");
+            ScriptableEquippable scr; 
+           
+            for (int i = 0; i < 3; i++)
+            {
+                if (play.PlayerWeapons[i] != "")
+                {
+                    scr = Resources.Load<ScriptableEquippable>(play.PlayerWeapons[i]);
+                    CO.co.AddInventoryItem(scr);
+                }
+            }
+            if (play.PlayerArmor != "")
+            {
+                scr = Resources.Load<ScriptableEquippable>(play.PlayerArmor);
+                CO.co.AddInventoryItem(scr);
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                if (play.PlayerArtifacts[i] != "")
+                {
+                    scr = Resources.Load<ScriptableEquippable>(play.PlayerArtifacts[i]);
+                    CO.co.AddInventoryItem(scr);
+                }
+            }
+        }
+        foreach (string str in DrifterInventoryItems)
+        {
+            ScriptableEquippable scr = Resources.Load<ScriptableEquippable>(str);
+            CO.co.AddInventoryItem(scr);
+        }
+
+        CO.co.StartLoadedGame();
     }
     public dataStructure()
     {
@@ -224,6 +334,7 @@ public class dataStructure
         //Save game
         saveTime = DateTime.Now;
         BiomeProgress = CO.co.GetBiomeProgress();
+        SavedDifficulty = CO.co.GetDifficulty();
 
         foreach (var kvp in CO.co.Resource_Reputation)
         {
@@ -236,55 +347,47 @@ public class dataStructure
         Resources_Supplies = CO.co.Resource_Supplies.Value;
         Resources_Ammo = CO.co.Resource_Ammo.Value;
         Resources_Tech = CO.co.Resource_Tech.Value;
+        Resources_TotalXP = CO.co.Resource_TotalXP.Value;
+        DrifterHull = CO.co.PlayerMainDrifter.GetHealth();
 
         BiomeType = CO.co.CurrentBiome.name;
         BiomeName = CO.co.CurrentBiome.BiomeName;
         DrifterType = CO.co.PlayerMainDrifterTypeID;
         foreach (ScriptableEquippable equip in CO.co.Drifter_Inventory)
         {
+            if (equip == null) continue;
             DrifterInventoryItems.Add(equip.GetItemResourceIDFull());
         }
         foreach (Module mod in CO.co.PlayerMainDrifter.Interior.GetModules())
         {
-            if (mod.ShowAsModule == null) continue;
+            if (mod == null) continue;
+            if (!mod.ShowAsModule) continue;
             dataModule data = new dataModule();
             data.ModuleLink = mod.ShowAsModule.GetItemResourceIDFull();
+            data.ModuleLevel = mod.ModuleLevel.Value;
             DrifterModules.Add(data);
         }
         foreach (CREW crew in CO.co.GetAlliedCrew())
         {
             if (crew.IsPlayer())
             {
-                dataPlayer play = new dataPlayer();
-                play.PlayerName = crew.CharacterName.Value.ToString();
-                play.localColorR = crew.GetCharacterColor().r;
-                play.localColorG = crew.GetCharacterColor().g;
-                play.localColorB = crew.GetCharacterColor().b;
-
-                play.PlayerBackground = crew.CharacterBackground.ResourcePath;
-                play.PlayerXP = crew.XPPoints.Value;
-                play.PlayerSkillPoints = crew.SkillPoints.Value;
-                play.PlayerAttributes = crew.GetAttributes();
-                play.PlayerWeapons = new string[2];
-                if (crew.EquippedWeapons[0] != null) play.PlayerWeapons[0] = crew.EquippedWeapons[0].GetItemResourceIDFull();
-                if (crew.EquippedWeapons[1] != null) play.PlayerWeapons[1] = crew.EquippedWeapons[1].GetItemResourceIDFull();
-                if (crew.EquippedWeapons[2] != null) play.PlayerWeapons[2] = crew.EquippedWeapons[2].GetItemResourceIDFull();
-                if (crew.EquippedArmor != null) play.PlayerArmor = crew.EquippedArmor.GetItemResourceIDFull();
-                play.PlayerArtifacts = new string[2];
-                if (crew.EquippedArtifacts[0] != null) play.PlayerArtifacts[0] = crew.EquippedWeapons[0].GetItemResourceIDFull();
-                if (crew.EquippedArtifacts[1] != null) play.PlayerArtifacts[1] = crew.EquippedWeapons[1].GetItemResourceIDFull();
-                if (crew.EquippedArtifacts[2] != null) play.PlayerArtifacts[2] = crew.EquippedWeapons[2].GetItemResourceIDFull();
-                DrifterPlayers.Add(play);
+                CO.co.SavePlayer(crew);
+                //DrifterPlayers.Add(play);
             } else
             {
                 dataNonPlayerCrew play = new dataNonPlayerCrew();
                 play.PlayerName = crew.CharacterName.Value.ToString();
+                play.localColorR = crew.CharacterNameColor.Value.x;
+                play.localColorG = crew.CharacterNameColor.Value.y;
+                play.localColorB = crew.CharacterNameColor.Value.z;
                 play.CrewLink = crew.UnitLink;
                 play.CrewLevel = crew.GetUnitUpgradeLevel();
                 DrifterAICrew.Add(play);
             }
         }
+        DrifterPlayers = CO.co.GetLoadedPlayers();
         int i = 0;
+        MapPoint WeAreHere = CO.co.GetPlayerMapPoint();
         foreach (MapPoint equip in CO.co.GetMapPoints())
         {
             dataMapPoint point = new dataMapPoint();
@@ -292,7 +395,7 @@ public class dataStructure
             point.PositionX = equip.transform.position.x;
             point.PositionY = equip.transform.position.y;
 
-            if (equip == CO.co.GetPlayerMapPoint()) OurMapPointPositionID = i;
+            if (equip == WeAreHere) OurMapPointPositionID = i;
 
             MapPointList.Add(point);
             i++;
@@ -324,6 +427,15 @@ public class dataModule
 public class dataNonPlayerCrew
 {
     public string PlayerName;
+    public float localColorR;
+    public float localColorG;
+    public float localColorB;
+
+    public Color getColor()
+    {
+        return new Color(localColorR, localColorG, localColorB);
+    }
+
     public string CrewLink;
     public int CrewLevel;
 }
@@ -331,6 +443,8 @@ public class dataNonPlayerCrew
 [Serializable]
 public class dataPlayer
 {
+    public string PlayerOwnerID;
+
     public string PlayerName;
     public float localColorR;
     public float localColorG;
@@ -344,6 +458,7 @@ public class dataPlayer
     public string PlayerBackground;
     public int PlayerXP;
     public int PlayerSkillPoints;
+    public int PlayerXPTotal;
     public int[] PlayerAttributes;
 
     public string[] PlayerWeapons;

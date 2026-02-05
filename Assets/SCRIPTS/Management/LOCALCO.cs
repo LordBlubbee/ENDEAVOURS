@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
@@ -8,7 +9,9 @@ using static UnityEngine.Rendering.DebugUI;
 public class LOCALCO : NetworkBehaviour
 {
     public static LOCALCO local;
-    public NetworkVariable<int> PlayerID = new NetworkVariable<int>();
+    [NonSerialized] public NetworkVariable<int> PlayerID = new NetworkVariable<int>();
+    [NonSerialized] public NetworkVariable<FixedString32Bytes> PlayerSaveID = new NetworkVariable<FixedString32Bytes>(writePerm:NetworkVariableWritePermission.Owner);
+    [NonSerialized] public NetworkVariable<bool> ClearedToSpawnPlayer = new NetworkVariable<bool>(false);
 
     [NonSerialized] public NetworkVariable<int> CurrentDialogVote = new NetworkVariable<int>(-1);
     [NonSerialized] public NetworkVariable<int> CurrentMapVote = new NetworkVariable<int>(-1);
@@ -36,6 +39,26 @@ public class LOCALCO : NetworkBehaviour
         return Player;
     }
 
+    dataPlayer LoadedCharacter = null;
+    public void AddLoadedCharacter(dataPlayer Character)
+    {
+        //Server sided
+        LoadedCharacter = Character;
+        AddLoadedCharacterRpc(Character.PlayerName, Character.getColor(), Character.PlayerBackground); //Send this character data to the target player's menu, allowing them to load the character if they want to
+    }
+
+    [Rpc(SendTo.Owner)]
+    private void AddLoadedCharacterRpc(string Name, Color Col, string Back)
+    {
+        //Load from LOCALCO
+        ScriptableBackground Background = Resources.Load<ScriptableBackground>($"OBJ/SCRIPTABLES/BACKGROUNDS/{Back}");
+        if (Background == null)
+        {
+            Debug.Log("Error. Back is null.");
+            return;
+        }
+        UI.ui.CharacterCreationUI.AddLoadedCharacter(Name, Col, Background);
+    }
 
     public ModuleWeapon GetWeapon()
     {
@@ -47,6 +70,21 @@ public class LOCALCO : NetworkBehaviour
         if (IsOwner)
         {
             local = this;
+            PlayerSaveID.Value = GO.g.SaveID;
+            Debug.Log($"Set LOCALCO PlayerSaveID to {GO.g.SaveID}");
+        }
+        if (IsServer)
+        {
+            ClearedToSpawnPlayer.Value = true;
+            //Check if there is a character in the list to load
+            foreach (dataPlayer pl in CO.co.GetLoadedPlayers())
+            {
+                if (pl.PlayerOwnerID.Equals(PlayerSaveID.Value.ToString()))
+                {
+                    AddLoadedCharacter(pl);
+                    break;
+                }
+            }
         }
     }
 
@@ -57,6 +95,15 @@ public class LOCALCO : NetworkBehaviour
 
     public override void OnNetworkDespawn()
     {
+        if (IsServer)
+        {
+            //Save and unload player!
+            if (GetPlayer() != null)
+            {
+                CO.co.SavePlayer(GetPlayer());
+                GetPlayer().DespawnAndUnregister(); //We should test if this works properly
+            }
+        }
         base.OnNetworkDespawn();
     }
 
@@ -234,14 +281,31 @@ public class LOCALCO : NetworkBehaviour
             StartCoroutine(CheckInteraction());
         }
     }
+
     [Rpc(SendTo.Server)]
-    public void CreatePlayerRpc(string name, Color col, int[] attributes, string backTex)
+    public void LoadPlayerRpc()
+    {
+        if (!ClearedToSpawnPlayer.Value) return;
+        if (LoadedCharacter == null) return;
+        ScriptableBackground back = Resources.Load<ScriptableBackground>($"OBJ/SCRIPTABLES/BACKGROUNDS/{LoadedCharacter.PlayerBackground}");
+        CREW crew = CreatePlayer(LoadedCharacter.PlayerName, LoadedCharacter.getColor(), LoadedCharacter.PlayerAttributes, back);
+        crew.AddXP(CO.co.Resource_TotalXP.Value - LoadedCharacter.PlayerXPTotal);
+        crew.AddXP(LoadedCharacter.PlayerXP);
+        crew.SkillPoints.Value += LoadedCharacter.PlayerSkillPoints;
+        /*if (LoadedCharacter.PlayerWeapons[0] != "") crew.EquipWeapon(0, Resources.Load<ScriptableEquippableWeapon>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{LoadedCharacter.PlayerWeapons[0]}"));
+        if (LoadedCharacter.PlayerWeapons[1] != "") crew.EquipWeapon(1, Resources.Load<ScriptableEquippableWeapon>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{LoadedCharacter.PlayerWeapons[1]}"));
+        if (LoadedCharacter.PlayerWeapons[2] != "") crew.EquipWeapon(2, Resources.Load<ScriptableEquippableWeapon>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{LoadedCharacter.PlayerWeapons[2]}"));
+        if (LoadedCharacter.PlayerArtifacts[0] != "") crew.EquipArtifact(0, Resources.Load<ScriptableEquippableArtifact>($"OBJ/SCRIPTABLES/ITEMS/Artifacts/{LoadedCharacter.PlayerArtifacts[0]}"));
+        if (LoadedCharacter.PlayerArtifacts[1] != "") crew.EquipArtifact(1, Resources.Load<ScriptableEquippableArtifact>($"OBJ/SCRIPTABLES/ITEMS/Artifacts/{LoadedCharacter.PlayerArtifacts[1]}"));
+        if (LoadedCharacter.PlayerArtifacts[2] != "") crew.EquipArtifact(2, Resources.Load<ScriptableEquippableArtifact>($"OBJ/SCRIPTABLES/ITEMS/Artifacts/{LoadedCharacter.PlayerArtifacts[2]}"));
+        if (LoadedCharacter.PlayerArmor != "") crew.EquipArmor(Resources.Load<ScriptableEquippableArtifact>($"OBJ/SCRIPTABLES/ITEMS/Armor/{LoadedCharacter.PlayerArmor}"));*/
+    }
+    public CREW CreatePlayer(string name, Color col, int[] attributes, ScriptableBackground back)
     {
         //SpawnPlayer Spawn Player
         CREW crew = Instantiate(CO_SPAWNER.co.PlayerPrefab, CO.co.PlayerMainDrifter.transform.TransformPoint(CO.co.PlayerMainDrifter.Interior.Bridge), Quaternion.identity);
-     
+
         crew.Faction.Value = 1;
-        Debug.Log($"We are player: {GetPlayerID()}");
         crew.PlayerController.Value = GetPlayerID();
         crew.CharacterName.Value = name;
         crew.CharacterNameColor.Value = new Vector3(col.r, col.g, col.b);
@@ -255,23 +319,32 @@ public class LOCALCO : NetworkBehaviour
             attributes[6],
             attributes[7]
             );
-        ScriptableBackground back = Resources.Load<ScriptableBackground>($"OBJ/SCRIPTABLES/BACKGROUNDS/{backTex}");
-        Debug.Log($"Set initial background: {back} searched at OBJ/SCRIPTABLES/BACKGROUNDS/{backTex}");
+       
         crew.SetCharacterBackground(back); //Must be called BEFORE INIT
         crew.NetworkObject.Spawn();
         crew.Init();
         crew.SetHomeDrifter(CO.co.PlayerMainDrifter);
         crew.RegisterPlayerOnLOCALCORpc();
-        Player.EquipWeapon(0, back.Background_StartingWeapon);
-        if (back.Background_StartingWeapon2) Player.EquipWeapon(1, back.Background_StartingWeapon2);
-        //Player.EquipWeaponPrefab(0);
+       
+        CO.co.PlayerMainDrifter.Interior.AddCrew(crew);
+        return crew;
+    }
+
+    [Rpc(SendTo.Server)]
+    public void CreatePlayerRpc(string name, Color col, int[] attributes, string backTex)
+    {
+        if (!ClearedToSpawnPlayer.Value) return;
+        ScriptableBackground back = Resources.Load<ScriptableBackground>($"OBJ/SCRIPTABLES/BACKGROUNDS/{backTex}");
+        CREW crew = CreatePlayer(name, col, attributes, back);
+        crew.AddXP(CO.co.Resource_TotalXP.Value);
+        crew.EquipWeapon(0, back.Background_StartingWeapon);
+        if (back.Background_StartingWeapon2) crew.EquipWeapon(1, back.Background_StartingWeapon2);
 
         foreach (FactionReputation rep in back.Background_ReputationEffect)
         {
             CO.co.Resource_Reputation[rep.Fac] = (CO.co.Resource_Reputation.ContainsKey(rep.Fac) ? CO.co.Resource_Reputation[rep.Fac] : 0) + rep.Amount;
         }
 
-        CO.co.PlayerMainDrifter.Interior.AddCrew(crew);
     }
     public void SetCameraToPlayer()
     {

@@ -167,9 +167,9 @@ MonoBehaviour:
   ModuleTag: 
   ModuleType: 0
   IconSprite: {fileID: 21300000, guid: 40e74035ea3ce8643843327a94785e44, type: 3}
+  ShowModule: 1
   ShowAsModule: {fileID: 11400000, guid: 8a6bf186b9e338048943d374d686d7d0, type: 2}
   MaxHealth: 200
-  HitboxRadius: 16
   ModuleWorth: 50
   ModuleUpgradeMaterials: 0a000000140000001e00000028000000320000003c000000
   ModuleUpgradeTechs: 0a000000140000001e00000028000000320000003c000000

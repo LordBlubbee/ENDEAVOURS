@@ -252,6 +252,41 @@ public class CO_SPAWNER : NetworkBehaviour
 
         CO.co.StartGame();
     }
+
+    public void SpawnLoadedPlayerShip(string link, float Health, List<dataModule> Modules)
+    {
+        if (CO.co.HasShipBeenLaunched.Value) return;
+        CO.co.HasShipBeenLaunched.Value = true;
+
+        DRIFTER driftPrefab = Resources.Load<DRIFTER>($"OBJ/DRIFTERS/Player/{link}");
+
+        CO.co.PlayerMainDrifterTypeID = driftPrefab.name;
+        DRIFTER drifter = Instantiate(driftPrefab, Vector3.zero, Quaternion.identity);
+        drifter.StartingModules = new();
+        drifter.IsMainDrifter.Value = true;
+        drifter.NetworkObject.Spawn();
+        drifter.Faction.Value = 1;
+        drifter.Init();
+        drifter.SetHealth(Health);
+        CO.co.PlayerMainDrifter = drifter;
+        foreach (dataModule mod in Modules)
+        {
+            ScriptableEquippableModule scr = Resources.Load<ScriptableEquippableModule>($"{mod.ModuleLink}");
+            if (scr == null)
+            {
+                Debug.LogError($"Error: Failed to load module {mod.ModuleLink}");
+                return;
+            }
+            Module module = drifter.Space.AddModule(scr, true);
+
+            Debug.Log($"Loaded module {mod.ModuleLink} of level {mod.ModuleLevel}");
+            for (int i = 0; i < mod.ModuleLevel; i++)
+            {
+                module.UpgradeLevel();
+            }
+        }
+
+    }
     public DRIFTER SpawnOtherShip(DRIFTER driftPrefab, Vector3 pos, int Faction = 2)
     {
         DRIFTER drifter = Instantiate(driftPrefab, pos, Quaternion.identity);
