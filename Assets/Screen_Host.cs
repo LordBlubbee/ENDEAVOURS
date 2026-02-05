@@ -17,20 +17,23 @@ public class Screen_Host : MonoBehaviour
     }
     public void RefreshLoadedGames()
     {
+        bool HasShownEmptyGame = false;
         for (int i = 0; i < LoadGameButtons.Length; i++)
         {
-            dataStructure sav = GO.g.loadSlot(i);
+            dataStructure sav = GO.g.loadSlot(i); 
+            if (sav == null)
+            {
+                if (HasShownEmptyGame)
+                {
+                    LoadGameButtons[i].gameObject.SetActive(false);
+                    return;
+                }
+                HasShownEmptyGame = true;
+            }
             LoadGameButtons[i].gameObject.SetActive(true);
             LoadGameButtons[i].Init(sav);
             LoadGameButtons[i].SetSelected(LoadGameButtons[i] == SelectedLoadedGame);
-            if (sav == null)
-            {
-                for (int i2 = i+1; i2 < LoadGameButtons.Length; i2++)
-                {
-                    LoadGameButtons[i2].gameObject.SetActive(false);
-                }
-                break;
-            }
+          
         }
     }
     public void PressDeleteGame()
@@ -56,6 +59,21 @@ public class Screen_Host : MonoBehaviour
             {
                 GO.g.currentSaveSlot = i;
                 GO.g.saveSettings();
+                return;
+            }
+        }
+    }
+    public void PressDeleteGame(UI_LoadGameButton but)
+    {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Salvage);
+     
+        for (int i = 0; i < LoadGameButtons.Length; i++)
+        {
+            if (LoadGameButtons[i] == but)
+            {
+                GO.g.deleteGame(i);
+                GO.g.saveSettings();
+                RefreshLoadedGames();
                 return;
             }
         }
