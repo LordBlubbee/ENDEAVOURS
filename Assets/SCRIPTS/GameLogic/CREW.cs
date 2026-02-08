@@ -714,6 +714,13 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         Init();
     }
+
+    VoiceHandler voiceHandler;
+
+    public VoiceHandler GetVoiceHandler()
+    {
+        return voiceHandler;
+    }
     public void Init()
     {
         if (hasInitialized) return;
@@ -722,6 +729,7 @@ public class CREW : NetworkBehaviour, iDamageable
 
         Rigid = GetComponent<Rigidbody2D>();
         Col = GetComponent<Collider2D>();
+        voiceHandler = GetComponent<VoiceHandler>();
 
         AnimTransforms.Add(new AnimTransform(Spr.transform));
         AnimTransforms.Add(new AnimTransform());

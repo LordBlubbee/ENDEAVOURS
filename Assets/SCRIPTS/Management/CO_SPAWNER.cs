@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEditor.PlayerSettings;
 public class CO_SPAWNER : NetworkBehaviour
 {
@@ -110,6 +111,7 @@ public class CO_SPAWNER : NetworkBehaviour
 
     [Header("MISC")]
     public DMG PrefabDMG;
+    public VCX PrefabVCX;
     public MapPoint PrefabMapPoint;
     public AI_GROUP PrefabAIGROUP;
     public CREW PlayerPrefab;
@@ -901,6 +903,16 @@ public class CO_SPAWNER : NetworkBehaviour
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
         dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
         dmg.InitWords(dm, 1.2f, Color.red);
+    }
+    public void SpawnVoice(string dm, CREW tr, VCX.VoiceStyles style)
+    {
+        VCX dmg = Instantiate(PrefabVCX, tr.transform.position + new Vector3(0, 3.5f), Quaternion.identity);
+        dmg.InitVoice(dm, tr.transform, style, tr.GetVoiceHandler().SpeechVoice, tr.GetVoiceHandler().SpeechColor);
+    }
+    public void SpawnVoice(string dm, Transform tr, VCX.VoiceStyles style, AudioClip voice, Color col)
+    {
+        VCX dmg = Instantiate(PrefabVCX, tr.transform.position + new Vector3(0,3.5f), Quaternion.identity);
+        dmg.InitVoice(dm, tr, style, voice, col);
     }
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnDMGRpc(float dm, Vector3 pos)

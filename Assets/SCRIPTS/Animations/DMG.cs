@@ -30,7 +30,18 @@ public class DMG : MonoBehaviour
         Duration = dur;
 
         Scale = 0.9f;
-        float scale = 0.6f + CAM.cam.camob.orthographicSize * 0.04f;
+        float scale = Scale * 0.6f + CAM.cam.camob.orthographicSize * 0.04f;
+        transform.localScale = new Vector3(scale * 0.6f, scale * 0.6f, 1);
+        MovementDir = new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(0.2f, 0.3f));
+    }
+    public void InitVoice(string str, float dur, Color col)
+    {
+        texto.text = str;
+        texto.color = col;
+        Duration = dur;
+
+        Scale = 0.6f;
+        float scale = Scale * 0.6f + CAM.cam.camob.orthographicSize * 0.04f;
         transform.localScale = new Vector3(scale * 0.6f, scale * 0.6f, 1);
         MovementDir = new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(0.2f, 0.3f));
     }
@@ -38,7 +49,6 @@ public class DMG : MonoBehaviour
     private void Update()
     {
         Duration -= CO.co.GetWorldSpeedDelta();
-
 
         float scale = Scale * 0.6f + CAM.cam.camob.orthographicSize * 0.04f;
         transform.localScale = new Vector3(scale, scale, 1);

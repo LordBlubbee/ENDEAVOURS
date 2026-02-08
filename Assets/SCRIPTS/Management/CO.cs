@@ -33,6 +33,7 @@ public class CO : NetworkBehaviour
         {
             GO.g.saveGame();
         }
+        NetworkManager.Singleton.Shutdown();
     }
 
     public bool GameHasBeenLost()
@@ -668,6 +669,7 @@ public class CO : NetworkBehaviour
     }
     public void CheckLossCondition()
     {
+        if (!CO.co.HasShipBeenLaunched.Value) return;
         if (CO.co.PlayerMainDrifter.GetHealth() <= 0)
         {
             SetGameLost();
@@ -817,6 +819,22 @@ public class CO : NetworkBehaviour
             PlayerMapPointID.Value = destination.PointID.Value;
             ResetMapVotes();
         }
+        //Tests!
+        /*if (Input.GetKeyUp(KeyCode.O)) {
+            CO_SPAWNER.co.SpawnVoice("By Stipulation 15-25-93, you are going down, you cur!", LOCALCO.local.GetPlayer(), VCX.VoiceStyles.NONE);
+        }
+        if (Input.GetKeyUp(KeyCode.P))
+        {
+            CO_SPAWNER.co.SpawnVoice("We are authorized to use lethal force!", LOCALCO.local.GetPlayer(), VCX.VoiceStyles.SHOUT_SHAKE);
+        }
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            UI.ui.ChatUI.CreateChatMessage("By Stipulation 15-25-93, you are going down, you cur!");
+        }
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            UI.ui.ChatUI.CreateChatMessage("We are authorized to use lethal force!");
+        }*/
     }
 
     [Rpc(SendTo.Server)]
@@ -2330,6 +2348,30 @@ public class CO : NetworkBehaviour
     public void SetLoadedPlayers(List<dataPlayer> loadedPlayers)
     {
         LoadedPlayers = loadedPlayers;
+    }
+    public void UnequipPlayer(CREW crew)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (crew.EquippedWeapons[i] != null)
+            {
+                AddInventoryItem(crew.EquippedWeapons[i]);
+                crew.EquipWeapon(i, null);
+            }
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            if (crew.EquippedArtifacts[i] != null)
+            {
+                AddInventoryItem(crew.EquippedArtifacts[i]);
+                crew.EquipArtifact(i, null);
+            }
+        }
+        if (crew.EquippedArmor != null)
+        {
+            AddInventoryItem(crew.EquippedArmor);
+            crew.EquipArmor(null);
+        }
     }
     public void SavePlayer(CREW crew)
     {

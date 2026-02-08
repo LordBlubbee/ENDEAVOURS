@@ -111,8 +111,11 @@ public class GO : MonoBehaviour
         }
         return null;
     }
+
+    public DateTime LastSaveTime = DateTime.MinValue;
     public void saveGame()
     {
+        LastSaveTime = DateTime.Now;
         saveGame(currentSaveSlot);
     }
     public void saveGame(int slot)

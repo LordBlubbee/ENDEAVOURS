@@ -26,7 +26,7 @@ public class Screen_Host : MonoBehaviour
                 if (HasShownEmptyGame)
                 {
                     LoadGameButtons[i].gameObject.SetActive(false);
-                    return;
+                    continue;
                 }
                 HasShownEmptyGame = true;
             }
