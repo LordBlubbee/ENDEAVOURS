@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 3455771150058328581}
   - component: {fileID: 5867427934140877094}
   - component: {fileID: 5706374163872125340}
+  - component: {fileID: -6063175051159037473}
   m_Layer: 7
   m_Name: EphemeralDisciple
   m_TagString: Untagged
@@ -379,6 +380,23 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   Unit: {fileID: 5867427934140877094}
   AI_Unit_Type: 0
+  AI_Tactic_Type: 0
+--- !u!114 &-6063175051159037473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147099674879425539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 797bd89a65d63334697380cbd8c8c7b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpeechColor: {r: 0.45, g: 0.2, b: 0.7, a: 1}
+  SpeechVoice: {fileID: 8300000, guid: 8e4c54c25deb53f4c9d698bb6e6190bc, type: 3}
+  VoiceListEnemy: {fileID: 11400000, guid: 856d2477bc9d8fc41b8f89e353ea2c66, type: 2}
+  VoiceListAlly: {fileID: 11400000, guid: 856d2477bc9d8fc41b8f89e353ea2c66, type: 2}
 --- !u!1 &3208371297625316648
 GameObject:
   m_ObjectHideFlags: 0

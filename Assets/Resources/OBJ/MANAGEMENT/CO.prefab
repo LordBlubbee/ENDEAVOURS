@@ -230,6 +230,7 @@ MonoBehaviour:
   PrefabLooncrabEgg: {fileID: 1400026843930528663, guid: 314565cef3e0be34cac3db74b346a5cf, type: 3}
   PrefabDMG: {fileID: 7984331047920370264, guid: d7c770080f1bbd74896728c8e86423ca, type: 3}
   PrefabVCX: {fileID: 7776314060846906377, guid: f013058605d362d41ba842183196cddb, type: 3}
+  PrefabConvo: {fileID: 8522961349288969093, guid: 04e515b323ba1d341a7a8e9e5482a9a5, type: 3}
   PrefabMapPoint: {fileID: 3321087299976624134, guid: dc2158057d660e74e8c4d97661c8c919, type: 3}
   PrefabAIGROUP: {fileID: 3831634758814928319, guid: cb606a21fdafac54faa6d61495604d6e, type: 3}
   PlayerPrefab: {fileID: 5867427934140877094, guid: e0e5452e1cb9d2a419680a1f263400a1, type: 3}

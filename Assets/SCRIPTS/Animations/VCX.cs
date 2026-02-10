@@ -31,7 +31,7 @@ public class VCX : MonoBehaviour
     {
         texto.text = str;
         texto.color = col;
-        Duration = 2.8f;
+        Duration = 2.5f + str.Length*0.02f;
         Follow = tr;
         Voice = voice;
 
@@ -109,7 +109,7 @@ public class VCX : MonoBehaviour
                 {
                     speakLetter = Random.Range(2, 4);
                     AudioClip clip = Voice;
-                    AUDCO.aud.PlaySFX(clip, transform.position);
+                    AUDCO.aud.PlayVCX(clip, transform.position);
                 }
             }
         }

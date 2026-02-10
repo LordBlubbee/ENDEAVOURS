@@ -112,6 +112,7 @@ public class CO_SPAWNER : NetworkBehaviour
     [Header("MISC")]
     public DMG PrefabDMG;
     public VCX PrefabVCX;
+    public ConvoHandler PrefabConvo;
     public MapPoint PrefabMapPoint;
     public AI_GROUP PrefabAIGROUP;
     public CREW PlayerPrefab;
@@ -935,6 +936,11 @@ public class CO_SPAWNER : NetworkBehaviour
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
         dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
         dmg.InitNumber(dm, 0.5f, Color.green);
+    }
+    public void SpawnConvo(CREW us, CREW them, Conversation convo)
+    {
+        ConvoHandler han = Instantiate(PrefabConvo);
+        han.InitConvo(us, them, convo);
     }
 
     public MapPoint CreateMapPoint(Vector3 pos)

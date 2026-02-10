@@ -123,7 +123,7 @@ public class CO_STORY : NetworkBehaviour
     //The visual is provided by a scripted element, as is character voice and background music
     public static CO_STORY co;
 
-    [NonSerialized] public bool ShouldUpdate = true;
+    //[NonSerialized] public bool ShouldUpdate = true;
 
     private void Start()
     {
@@ -215,7 +215,7 @@ public class CO_STORY : NetworkBehaviour
         {
             local.CurrentDialogVote.Value = -1;
         }
-        ForceUpdateStoryRpc();
+        //ForceUpdateStoryRpc();
     }
 
     private ScriptableDialog CurrentDialog;
@@ -250,7 +250,7 @@ public class CO_STORY : NetworkBehaviour
         {
             local.CurrentDialogVote.Value = -1;
         }
-        ForceUpdateStoryRpc();
+        //ForceUpdateStoryRpc();
     }
     string ReturnDialogPart(DialogPart showChoice)
     {
@@ -272,11 +272,11 @@ public class CO_STORY : NetworkBehaviour
         if (local.CurrentDialogVote.Value == choiceIndex) local.CurrentDialogVote.Value = -1;
         else local.CurrentDialogVote.Value = choiceIndex;
     }
-    [Rpc(SendTo.ClientsAndHost)]
+    /*[Rpc(SendTo.ClientsAndHost)]
     private void ForceUpdateStoryRpc()
     {
         ShouldUpdate = true;
-    }
+    }*/
 
     [NonSerialized] public bool OverrideTalkResult = false;
     

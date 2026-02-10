@@ -10,6 +10,7 @@ public class AUDCO : MonoBehaviour
     protected AudioSource mainOST;
     protected AudioSource otherOST;
     public AUD spawnSFX;
+    public AUD spawnVCX;
     public static AUDCO aud;
     public enum BlockSoundEffects
     {
@@ -133,6 +134,15 @@ public class AUDCO : MonoBehaviour
     public void PlaySFX(AudioClip[] clips, float pitchshift = 0f)
     {
         PlaySFX(clips[Random.Range(0, clips.Length)], pitchshift);
+    }
+    public void PlayVCX(AudioClip clip, Vector3 trt, float pitchshift = 0f)
+    {
+        trt = new Vector3(trt.x, trt.y, CAM.cam.transform.position.z);
+        AUD aud = Instantiate(spawnVCX, trt, Quaternion.identity);
+        aud.transform.SetParent(CAM.cam.transform);
+        float Dist = (CAM.cam.transform.position - trt).magnitude;
+        //Debug.Log($"Sound effect {clip.name} was {Dist} away resulting in sound level {Mathf.Clamp01((70f - Dist) * 0.04f)}");
+        aud.PlayAUD(clip, pitchshift, (Mathf.Clamp01((60f - Dist) * 0.03f))*0.5f);
     }
     public void PlaySFX(AudioClip clip, Vector3 trt, float pitchshift = 0f)
     {

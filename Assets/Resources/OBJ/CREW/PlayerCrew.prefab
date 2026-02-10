@@ -120,7 +120,6 @@ GameObject:
   - component: {fileID: 35990855443869147}
   - component: {fileID: 3455771150058328581}
   - component: {fileID: 5867427934140877094}
-  - component: {fileID: 8256560001967931297}
   m_Layer: 7
   m_Name: PlayerCrew
   m_TagString: Untagged
@@ -353,20 +352,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &8256560001967931297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2147099674879425539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 797bd89a65d63334697380cbd8c8c7b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SpeechColor: {r: 1, g: 0.9548047, b: 0.33490568, a: 1}
-  SpeechVoice: {fileID: 8300000, guid: 66c274a115c8ee94c98da142f97f479f, type: 3}
 --- !u!1 &3208371297625316648
 GameObject:
   m_ObjectHideFlags: 0

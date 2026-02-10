@@ -178,6 +178,7 @@ MonoBehaviour:
   OST1: {fileID: 4778354215524234105}
   OST2: {fileID: 7587355540660797396}
   spawnSFX: {fileID: 6261859860495128718, guid: 0b4a93330e28c1d438836d4cb2beac53, type: 3}
+  spawnVCX: {fileID: 6261859860495128718, guid: 468e1dd670b5ae8499721a8b801d6b6c, type: 3}
   SoundtrackCalm:
   - {fileID: 8300000, guid: 2f5b5b0f696a09a43a0175c81c972ca8, type: 3}
   - {fileID: 8300000, guid: f6c2c1893dea4484ab105003e62befb1, type: 3}

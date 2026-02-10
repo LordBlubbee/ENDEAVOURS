@@ -18,6 +18,13 @@ public class CREW : NetworkBehaviour, iDamageable
     public string UnitDescription;
     public ScriptableEquippable.Rarities UnitRarity;
 
+    AI_UNIT AI;
+
+    public AI_UNIT GetAI()
+    {
+        return AI;
+    }
+
     public float HealthIncreasePerLevelup;
     public float[] PointIncreasePerLevelup;
 
@@ -28,6 +35,10 @@ public class CREW : NetworkBehaviour, iDamageable
         if (CO.co.Resource_Supplies.Value < Cost) return;
         CO.co.Resource_Supplies.Value -= Cost;
         AddUpgradeLevel(1);
+        if (AI)
+        {
+            AI.SetThankForPromotion();
+        }
     }
 
     public int GetUnitUpgradeLevel()
@@ -720,12 +731,15 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         return voiceHandler;
     }
-    public void PlayVCX(List<Voiceline> Voices, float Cooldown, float SilenceRequired = 0f)
+    public void PlayVCX(ScriptableVoicelist.VoicelineTypes typ, VoiceHandler.PriorityTypes pri, float Chance = 1f, float Cooldown = 2.5f)
     {
+        if (!GetVoiceHandler()) return;
         if (IsPlayer()) return;
-        if (GetVoiceHandler().TimeOfSilence() > SilenceRequired) return;
+        if (UnityEngine.Random.Range(0f, 1f) > Chance) return;
+        if (!GetVoiceHandler().HasPriority(pri)) return;
+        List<Voiceline> Voices = GetVoiceHandler().GetVoicelist().GetVoicelines(typ);
         if (Voices.Count == 0) return;
-        GetVoiceHandler().PlayVCX(Voices, Cooldown * UnityEngine.Random.Range(0.8f,1.2f));
+        GetVoiceHandler().PlayVCX(Voices, Cooldown * UnityEngine.Random.Range(0.75f,1.25f));
     }
     public void Init()
     {
@@ -736,6 +750,7 @@ public class CREW : NetworkBehaviour, iDamageable
         Rigid = GetComponent<Rigidbody2D>();
         Col = GetComponent<Collider2D>();
         voiceHandler = GetComponent<VoiceHandler>();
+        AI = GetComponent<AI_UNIT>();
 
         AnimTransforms.Add(new AnimTransform(Spr.transform));
         AnimTransforms.Add(new AnimTransform());
@@ -2446,6 +2461,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public void Die()
     {
+        if (isDead()) return;
         Alive.Value = false;
         if (IsPlayer() && CO.co.GetLOCALCO().Count == 1) BleedingTime.Value = 20;
         else if (IsPlayer() && CO.co.GetLOCALCO().Count == 2) BleedingTime.Value = 40;

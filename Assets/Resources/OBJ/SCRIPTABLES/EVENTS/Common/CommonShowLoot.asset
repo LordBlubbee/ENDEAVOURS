@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a8717e7279b88409550c597721d3ae, type: 3}
   m_Name: CommonShowLoot
   m_EditorClassIdentifier: 
-  EventController: ShowLoot
+  EventController: ShowMap
   EnemyWave: {fileID: 0}
   AdditionalEventDialogs: []
   LootTable: {fileID: 0}

@@ -14,6 +14,10 @@ public class AI_UNIT : NetworkBehaviour
     public AI_TACTIC_TYPES AI_Tactic_Type;
     private float AI_TacticTimer;
     private AI_TACTICS AI_Tactic;
+    private Vector3 AI_TacticTarget;
+    private SPACE AI_TacticSpace;
+    bool HasTacticTarget = false;
+    private CREW AI_TacticFollow;
     private AI_GROUP Group;
     private bool HasObjective = false;
     private Vector3 ObjectiveTarget = Vector3.zero;
@@ -59,11 +63,28 @@ public class AI_UNIT : NetworkBehaviour
         AI_Tactic = tac;
         AI_TacticTimer = timer;
         AI_MoveTimer = 0;
+        ResetTacticTarget();
     }
 
     public AI_TACTICS GetTactic()
     {
         return AI_Tactic;
+    }
+    public void SetTacticTarget(Vector3 target, SPACE space)
+    {
+        if (space == null) AI_TacticTarget = target;
+        else AI_TacticTarget = space.transform.InverseTransformPoint(target);
+        HasTacticTarget = true;
+        AI_TacticFollow = null;
+        AI_TacticSpace = space;
+    }
+    public void SetTacticTarget(CREW target, SPACE space)
+    {
+        AI_TacticFollow = target;
+        if (space == null) AI_TacticTarget = target.transform.position;
+        else ObjectiveTarget = space.transform.InverseTransformPoint(target.transform.position);
+        HasTacticTarget = true;
+        AI_TacticSpace = space;
     }
     public void SetObjectiveTarget(Vector3 target, SPACE space)
     {
@@ -86,7 +107,11 @@ public class AI_UNIT : NetworkBehaviour
     {
         return ObjectiveSpace;
     }
-
+    public float GetTacticDistance()
+    {
+        if (!HasTacticTarget) return 0f;
+        return (GetTacticTarget() - transform.position).magnitude;
+    }
     public float GetObjectiveDistance()
     {
         if (!HasObjective) return 0f;
@@ -125,6 +150,20 @@ public class AI_UNIT : NetworkBehaviour
         AI_MoveTargetSpace = space;
         AI_MoveTimer = movtimer;
         return true;
+    }
+
+    public void ResetTacticTarget()
+    {
+        HasTacticTarget = false;
+        AI_TacticFollow = null;
+        AI_TacticSpace = null;
+        AI_TacticTarget = Vector3.zero;
+    }
+    public Vector3 GetTacticTarget()
+    {
+        if (AI_TacticFollow != null) return AI_TacticFollow.transform.position;
+        if (AI_TacticSpace == null) return AI_TacticTarget;
+        return AI_TacticSpace.transform.TransformPoint(AI_TacticTarget);
     }
     public Vector3 GetObjectiveTarget()
     {
@@ -167,7 +206,12 @@ public class AI_UNIT : NetworkBehaviour
         RETREAT,
         HEAL_ALLIES,
         DORMANT,
-        PATROL
+        PATROL,
+        PREPARE_CHARGE,
+        PREPARE_FORMATION,
+        FORMATION,
+        GREET,
+        CONVERSE
     }
     public enum AI_UNIT_TYPES
     {
@@ -176,8 +220,25 @@ public class AI_UNIT : NetworkBehaviour
     }
     public enum AI_TACTIC_TYPES
     {
-        NORMAL,
-        SNIPER,
+        NOMADEN_NORMAL,
+        NOMADEN_SNIPER,
+        LOGIPEDES_NORMAL,
+        LOGIPEDES_SNIPER,
+        LOGIPEDES_OFFICER,
+        BAKUTO_NORMAL,
+        BAKUTO_SNIPER,
+        BAKUTO_CHOSEN
+    }
+    public bool IsTacticSniper()
+    {
+        return AI_Tactic_Type == AI_TACTIC_TYPES.NOMADEN_SNIPER
+            || AI_Tactic_Type == AI_TACTIC_TYPES.LOGIPEDES_SNIPER
+            || AI_Tactic_Type == AI_TACTIC_TYPES.BAKUTO_SNIPER;
+    }
+    public bool IsTacticOfficer()
+    {
+        return AI_Tactic_Type == AI_TACTIC_TYPES.LOGIPEDES_OFFICER
+           || AI_Tactic_Type == AI_TACTIC_TYPES.BAKUTO_CHOSEN;
     }
     private void Start()
     {
@@ -452,6 +513,8 @@ public class AI_UNIT : NetworkBehaviour
         }
         return false;
     }
+
+    bool FirstEngagement = true;
     private void AITick_Crew()
     {
         Module mod;
@@ -461,116 +524,196 @@ public class AI_UNIT : NetworkBehaviour
         {
             EnemyTarget = GetClosestVisibleEnemy();
             EnemyTargetTimer = 5;
+
         }
         if (EnemyTarget)
         {
             if (AI_TacticTimer < 0) SwitchTacticsCrew();
-
-            switch (AI_Tactic)
+            else
             {
-                case AI_TACTICS.SKIRMISH:
-                    if (!HasLineOfSight(EnemyTarget.transform.position)) SetAIMoveTowards(EnemyTarget.transform.position, EnemyTarget.Space);
-                    SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()), EnemyTarget.Space);
-
-                    EquipAndUseCombatItem(EnemyTarget.transform.position);
-
-                    if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
-                    break;
-                case AI_TACTICS.CIRCLE:
-                    if (Unit.GetHealthRelative() < 0.3f)
+                if (FirstEngagement)
+                {
+                    FirstEngagement = false;
+                    PlayVCX(ScriptableVoicelist.VoicelineTypes.FIRST_ENGAGE, VoiceHandler.PriorityTypes.PRIORITY, 1f);
+                }
+            }
+            //COMBAT STRATEGEMS
+                switch (AI_Tactic)
+                {
+                    case AI_TACTICS.SKIRMISH:
+                    if (AI_TacticTimer > 2f) PlayVCX(ScriptableVoicelist.VoicelineTypes.IN_COMBAT, VoiceHandler.PriorityTypes.IDLE, 0.05f, 1f);
+                    if (!HasLineOfSight(EnemyTarget.transform.position))
                     {
-                        SetAIMoveTowards(GetPointTowardsPoint(EnemyTarget.transform.position, -12f), EnemyTarget.Space);
-                    }
-                    else
-                    {
-                        SetAIMoveTowardsIfExpired(GetRandomPointAround(EnemyTarget.transform.position, 12f, 18f), EnemyTarget.Space, 3f);
-                    }
-
-                    EquipAndUseCombatItem(EnemyTarget.transform.position);
-
-                    if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
-                    break;
-                case AI_TACTICS.RETREAT:
-                    point = GetDiagonalPointTowards(EnemyTarget.transform.position, -12f, LeaningRight);
-                    if (HaveMedicalRetreat())
-                    {
-                        float dist = (Group.HomeDrifter.MedicalModule.transform.position - transform.position).magnitude;
-                        if (dist > 16f) point = Group.HomeDrifter.MedicalModule.transform.position;
-                        if (getSpace() != Group.HomeSpace) SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
-                        else SetAIMoveTowards(point, Group.HomeSpace);
-                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
-
+                        SetAIMoveTowards(EnemyTarget.transform.position, EnemyTarget.Space);
                     } else
                     {
-                        if (Dist(EnemyTarget.transform.position) > 24f)
-                        {
-                            Unit.EquipMedkitRpc();
-                            SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
-                        } else
-                        {
+                        SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()), EnemyTarget.Space);
+                    }
 
-                            EquipAndUseCombatItem(EnemyTarget.transform.position);
-                        }
-                        SetAIMoveTowards(point, EnemyTarget.Space);
-                    }
-                  
-                    if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();
-                    break;
-                case AI_TACTICS.HEAL_ALLIES:
-                    CREW WoundedAlly = GetClosestWoundedAlly();
-                    if (!WoundedAlly)
-                    {
-                        AI_TacticTimer = 0f;
-                        break;
-                    }
-                    if (Dist(WoundedAlly.transform.position) > 24f)
-                    {
-                        AI_TacticTimer = 0f;
-                        break;
-                    }
-                    if (Unit.HasLineOfSight(EnemyTarget.transform.position) && (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) < 12))
-                    {
-                        AI_TacticTimer = 0f;
-                        break;
-                    }
-                    Unit.EquipMedkitRpc();
-                    if (Dist(WoundedAlly.transform.position) < 8f)
-                    {
-                        SetAIMoveTowards(GetPointAwayFromPoint(WoundedAlly.transform.position, 2f), WoundedAlly.Space);
-                        SetLookTowards(WoundedAlly.transform.position, WoundedAlly.Space);
-                        Unit.UseItem1Rpc();
-                    } else
-                    {
-                        SetAIMoveTowards(WoundedAlly.transform.position, WoundedAlly.Space);
                         EquipAndUseCombatItem(EnemyTarget.transform.position);
+
                         if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
-                    }
-                    break;
-                case AI_TACTICS.SABOTAGE:
-                    mod = GetClosestEnemyModule();
-                    if (mod)
-                    {
-                        SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
-                        if (Dist(mod.transform.position) < 8f)
+                        break;
+                    case AI_TACTICS.CIRCLE:
+                    if (AI_TacticTimer > 2f) PlayVCX(ScriptableVoicelist.VoicelineTypes.IN_COMBAT, VoiceHandler.PriorityTypes.IDLE, 0.05f, 1f);
+                    if (Unit.GetHealthRelative() < 0.3f)
                         {
-                            SetLookTowards(mod.GetTargetPos(), mod.Space);
+                            SetAIMoveTowards(GetPointTowardsPoint(EnemyTarget.transform.position, -12f), EnemyTarget.Space);
                         }
                         else
                         {
-                            Unit.UseItem2Rpc();
-                            SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
-                            Unit.Dash();
+                            SetAIMoveTowardsIfExpired(GetRandomPointAround(EnemyTarget.transform.position, 12f, 18f), EnemyTarget.Space, 3f);
                         }
+
+                        EquipAndUseCombatItem(EnemyTarget.transform.position);
+
+                        if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
+                        break;
+                    case AI_TACTICS.RETREAT:
+                        point = GetDiagonalPointTowards(EnemyTarget.transform.position, -12f, LeaningRight);
+                        if (HaveMedicalRetreat())
+                        {
+                            float dist = (Group.HomeDrifter.MedicalModule.transform.position - transform.position).magnitude;
+                            if (dist > 16f) point = Group.HomeDrifter.MedicalModule.transform.position;
+                            if (getSpace() != Group.HomeSpace) SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
+                            else SetAIMoveTowards(point, Group.HomeSpace);
+                            SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+
+                        }
+                        else
+                        {
+                            if (Dist(EnemyTarget.transform.position) > 24f)
+                            {
+                                Unit.EquipMedkitRpc();
+                                SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                            }
+                            else
+                            {
+
+                                EquipAndUseCombatItem(EnemyTarget.transform.position);
+                            }
+                            SetAIMoveTowards(point, EnemyTarget.Space);
+                        }
+
+                        if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();
+                        break;
+                    case AI_TACTICS.HEAL_ALLIES:
+
+                    if (AI_TacticTimer > 2f) PlayVCX(ScriptableVoicelist.VoicelineTypes.HEALING, VoiceHandler.PriorityTypes.IDLE, 0.05f, 1f);
+                    CREW WoundedAlly = GetClosestWoundedAlly();
+                        if (!WoundedAlly)
+                        {
+                            AI_TacticTimer = 0f;
+                            break;
+                        }
+                        if (Dist(WoundedAlly.transform.position) > 24f)
+                        {
+                            AI_TacticTimer = 0f;
+                            break;
+                        }
+                        if (Unit.HasLineOfSight(EnemyTarget.transform.position) && (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) < 12))
+                        {
+                            AI_TacticTimer = 0f;
+                            break;
+                        }
+                        Unit.EquipMedkitRpc();
+                        if (Dist(WoundedAlly.transform.position) < 8f)
+                        {
+                            SetAIMoveTowards(GetPointAwayFromPoint(WoundedAlly.transform.position, 2f), WoundedAlly.Space);
+                            SetLookTowards(WoundedAlly.transform.position, WoundedAlly.Space);
+                            Unit.UseItem1Rpc();
+                        }
+                        else
+                        {
+                            SetAIMoveTowards(WoundedAlly.transform.position, WoundedAlly.Space);
+                            EquipAndUseCombatItem(EnemyTarget.transform.position);
+                            if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
+                        }
+                        break;
+                    case AI_TACTICS.SABOTAGE:
+                    if (AI_TacticTimer > 2f) PlayVCX(ScriptableVoicelist.VoicelineTypes.IN_COMBAT, VoiceHandler.PriorityTypes.IDLE, 0.05f, 1f);
+                    mod = GetClosestEnemyModule();
+                        if (mod)
+                        {
+                            SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+                            if (Dist(mod.transform.position) < 8f)
+                            {
+                                SetLookTowards(mod.GetTargetPos(), mod.Space);
+                            }
+                            else
+                            {
+                                Unit.UseItem2Rpc();
+                                SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                                Unit.Dash();
+                            }
+                        }
+                        break;
+                case AI_TACTICS.FORMATION:
+                    if (AI_TacticTimer > 2f) PlayVCX(ScriptableVoicelist.VoicelineTypes.IN_COMBAT, VoiceHandler.PriorityTypes.IDLE, 0.05f, 1f);
+
+                    if (Unit.GetHealthRelative() < 0.3f)
+                    {
+                        PlayVCX(ScriptableVoicelist.VoicelineTypes.RETREATING, VoiceHandler.PriorityTypes.NORMAL, 0.7f);
+                        SetTactic(AI_TACTICS.RETREAT, UnityEngine.Random.Range(8f, 12f));
                     }
+
+                    if (Dist(GetTacticTarget()) > 6f)
+                    {
+                        SetAIMoveTowards(GetTacticTarget(), AI_TacticSpace);
+                    }
+                    else if (!HasLineOfSight(EnemyTarget.transform.position))
+                    {
+                        SetAIMoveTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                    }
+                    else
+                    {
+                        SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()), EnemyTarget.Space);
+                    }
+                    SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                    EquipAndUseCombatItem(EnemyTarget.transform.position);
                     break;
-            }
+                case AI_TACTICS.PREPARE_FORMATION:
+                    if (AI_TacticTimer < 1f || GetTacticDistance() < 1f)
+                    {
+                        CREW FormationFollow = AI_TacticFollow;
+                        SetTactic(AI_TACTICS.FORMATION, UnityEngine.Random.Range(10f, 13f));
+                        SetTacticTarget(FormationFollow, FormationFollow.Space);
+                        break;
+                    }
+                    SetAIMoveTowards(GetTacticTarget(), AI_TacticSpace);
+                    SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                    break;
+                case AI_TACTICS.CHARGE:
+                    if (AI_TacticTimer > 2f) PlayVCX(ScriptableVoicelist.VoicelineTypes.IN_COMBAT, VoiceHandler.PriorityTypes.IDLE, 0.05f, 1f);
+
+                    if (!HasLineOfSight(EnemyTarget.transform.position)) SetAIMoveTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                    SetAIMoveTowards(GetPointAwayFromPoint(EnemyTarget.transform.position, GetAttackStayDistance()), EnemyTarget.Space);
+
+                    SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                    EquipAndUseCombatItem(EnemyTarget.transform.position);
+
+                    Unit.Dash();
+                    break;
+                case AI_TACTICS.PREPARE_CHARGE:
+                    if (AI_TacticTimer < 1f || GetTacticDistance() < 1f)
+                    {
+                        if (AI_TacticTimer > 2f) PlayVCX(ScriptableVoicelist.VoicelineTypes.CHARGE, VoiceHandler.PriorityTypes.GUARANTEE, 0.6f);
+                        SetTactic(AI_TACTICS.CHARGE, UnityEngine.Random.Range(6f,8f));
+                        break;
+                    }
+                    SetAIMoveTowards(GetTacticTarget(), AI_TacticSpace);
+                    SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                    break;
+                }
             if (Unit.IsEnemyInFront(GetAttackDistance()))
             {
                 Unit.UseItem1Rpc();
             }
             return;
         }
-       
+
+        if (CO.co.IsSafe()) FirstEngagement = true;
+
         if (OutOfCombatCrewBehavior()) return;
         if (Unit.IsEnemyInFront(GetAttackDistance()))
         {
@@ -655,7 +798,6 @@ public class AI_UNIT : NetworkBehaviour
     private bool OutOfCombatCrewBehavior()
     {
         if (AI_TacticTimer < 0) SwitchTacticsCrewOutOfCombat();
-
        
         Vector3 point;
         Module mod;
@@ -744,11 +886,27 @@ public class AI_UNIT : NetworkBehaviour
                     Unit.Dash();
                 }
                 return true;
+            case AI_TACTICS.GREET:
+                if ((GetTacticTarget() - transform.position).magnitude > 16)
+                {
+                    AI_TacticTimer = 0f;
+                    break;
+                }
+                if ((GetTacticTarget() - transform.position).magnitude < 3)
+                {
+                    SetAIMoveTowards(GetPointAwayFromPoint(GetTacticTarget(), 3f), AI_TacticFollow.Space);
+                }
+                SetLookTowards(GetTacticTarget(), AI_TacticFollow.Space);
+                return true;
+            case AI_TACTICS.CONVERSE:
+                SetAIMoveTowards(GetPointAwayFromPoint(GetTacticTarget(), 3f), AI_TacticFollow.Space);
+                SetLookTowards(GetTacticTarget(), AI_TacticFollow.Space);
+                return true;
         }
         return false;
     }
 
-    private void SwitchTacticsCrewOutOfCombat()
+    public void SwitchTacticsCrewOutOfCombat()
     {
         ResetWeights();
         switch (AI_Unit_Type)
@@ -773,32 +931,164 @@ public class AI_UNIT : NetworkBehaviour
                     if (Dist(mod.transform.position) < 16f) AddWeights(2, 50);
                     else if (Dist(mod.transform.position) < 40f) AddWeights(2, 25);
                 }
+                CREW ClosestAlly = null;
+                if (CO.co.IsSafe())
+                {
+                    ClosestAlly = GetClosestAlly();
+                    if (ClosestAlly.IsPlayer())
+                    {
+                        if (HasToReportVictory || HasToReportHardVictory)
+                        {
+                            if (GetVoiceSilenceLevel() > 0f && Dist(ClosestAlly.transform.position) < 7f) AddWeights(4, 60);
+                        } else
+                        {
+                            if (Dist(ClosestAlly.transform.position) < 7f)
+                            {
+                                if (GetVoiceSilenceLevel() > 0f)
+                                    AddWeights(4, 15);
+                                else if (GetVoiceSilenceLevel() > 5f)
+                                    AddWeights(4, 40);
+                            }
+                        }
+                    } else if (ClosestAlly.GetVoiceHandler() != null)
+                    {
+                        if (GetVoiceSilenceLevel() > 5f && Dist(ClosestAlly.transform.position) < 7f)
+                        {
+                            AddWeights(5, 15);
+                        }
+                    }
+                }
                 switch (GetWeight())
                 {
                     case 0:
-                        SetTactic(AI_TACTICS.SKIRMISH, UnityEngine.Random.Range(4, 8));
+                        SetTactic(AI_TACTICS.SKIRMISH, UnityEngine.Random.Range(4f, 8f));
                         break;
                     case 1:
-                        SetTactic(AI_TACTICS.HEAL_ALLIES, UnityEngine.Random.Range(17, 19));
+                        PlayVCX(ScriptableVoicelist.VoicelineTypes.HEALING, VoiceHandler.PriorityTypes.NORMAL, 0.7f);
+                        SetTactic(AI_TACTICS.HEAL_ALLIES, UnityEngine.Random.Range(17f, 19f));
                         break;
                     case 2:
-                        SetTactic(AI_TACTICS.SABOTAGE, UnityEngine.Random.Range(17, 19));
+                        SetTactic(AI_TACTICS.SABOTAGE, UnityEngine.Random.Range(17f, 19f));
                         break;
                     case 3:
-                        SetTactic(AI_TACTICS.RETREAT, UnityEngine.Random.Range(17, 19));
+                        PlayVCX(ScriptableVoicelist.VoicelineTypes.RETREATING, VoiceHandler.PriorityTypes.NORMAL, 0.7f);
+                        SetTactic(AI_TACTICS.RETREAT, UnityEngine.Random.Range(17f, 19f));
+                        break;
+                    case 4:
+                        SetTactic(AI_TACTICS.GREET, UnityEngine.Random.Range(4f, 7f));
+                        SetTacticTarget(ClosestAlly, ClosestAlly.Space);
+                        SetAIMoveTowards(GetPointAwayFromPoint(ClosestAlly.transform.position, 4f), ClosestAlly.Space);
+                        if (HasToThankForPromotion)
+                        {
+                            HasToThankForPromotion = false;
+                            PlayVCX(ScriptableVoicelist.VoicelineTypes.SALUTE_PROMOTION, VoiceHandler.PriorityTypes.GUARANTEE, 1f);
+                            break;
+                        }
+                        if (HasToReportVictory)
+                        {
+                            HasToReportVictory = false;
+                            PlayVCX(ScriptableVoicelist.VoicelineTypes.SALUTE_EASYVICTORY, VoiceHandler.PriorityTypes.GUARANTEE, 1f);
+                            break;
+                        }
+                        if (HasToReportHardVictory)
+                        {
+                            HasToReportHardVictory = false;
+                            PlayVCX(ScriptableVoicelist.VoicelineTypes.SALUTE_HARDVICTORY, VoiceHandler.PriorityTypes.GUARANTEE, 1f);
+                            break;
+                        }
+                        if (CO.co.Resource_Ammo.Value < 30)
+                        {
+                            if (UnityEngine.Random.Range(0f, 1f) < 0.5f)
+                            {
+                                PlayVCX(ScriptableVoicelist.VoicelineTypes.SALUTE_LOWAMMO, VoiceHandler.PriorityTypes.NORMAL, 1f);
+                                break;
+                            }
+                        }
+                        if (CO.co.Resource_Supplies.Value < 30)
+                        {
+                            if (UnityEngine.Random.Range(0f, 1f) < 0.5f)
+                            {
+
+                                PlayVCX(ScriptableVoicelist.VoicelineTypes.SALUTE_LOWSUPPLIES, VoiceHandler.PriorityTypes.NORMAL, 1f);
+                                break;
+                            }
+                        }
+                        
+                        if (CO.co.PlayerMainDrifter.GetHullDamageRatio() < 0.5f && UnityEngine.Random.Range(0f, 1f) < 0.4f)
+                        {
+                            PlayVCX(ScriptableVoicelist.VoicelineTypes.SALUTE_WORRIED, VoiceHandler.PriorityTypes.NORMAL, 1f);
+                            break;
+                        }
+                        if (CO.co.PlayerMainDrifter.GetHullDamageRatio() < 0.3f)
+                        {
+                            PlayVCX(ScriptableVoicelist.VoicelineTypes.SALUTE_WORRIED, VoiceHandler.PriorityTypes.NORMAL, 1f);
+                            break;
+                        }
+                        PlayVCX(ScriptableVoicelist.VoicelineTypes.SALUTE, VoiceHandler.PriorityTypes.NORMAL, 1f);
+                        break;
+                    case 5:
+                        List<Conversation> list = GetVoiceHandler().GetVoicelist().GenericConversations;
+                        if (list.Count == 0) break;
+                        Conversation convo = list[UnityEngine.Random.Range(0, list.Count)];
+                        if (UnityEngine.Random.Range(0f,1f) < 0.7f)
+                        {
+                            List<Conversation> list2 = new();
+                            foreach (Conversation con in GetVoiceHandler().GetVoicelist().TargetedConversations)
+                            {
+                                if (con.Target.Contains(ClosestAlly.GetVoiceHandler().GetVoicelist()))
+                                {
+                                    list2.Add(con);
+                                }
+                            }
+                            if (list2.Count > 0)
+                            {
+                                convo = list2[UnityEngine.Random.Range(0, list2.Count)];
+                            }
+                        }
+                        if (convo == null) break;
+                        SetTactic(AI_TACTICS.CONVERSE, 60f);
+                        SetTacticTarget(ClosestAlly, ClosestAlly.Space);
+                        ClosestAlly.GetAI().SetTactic(AI_TACTICS.CONVERSE, 60f);
+                        ClosestAlly.GetAI().SetTacticTarget(Unit, getSpace());
+                      
+                        CO_SPAWNER.co.SpawnConvo(Unit, ClosestAlly, convo);
                         break;
                 }
                 break;
         }
     }
+
+    bool HasToThankForPromotion = false;
+    bool HasToReportVictory = false;
+    bool HasToReportHardVictory = false;
+
+    public void SetThankForPromotion()
+    {
+        HasToThankForPromotion = true;
+    }
+    public void SetReportVictory()
+    {
+        HasToReportVictory = true;
+    }
+    public void SetReportHardVictory()
+    {
+        HasToReportHardVictory = true;
+    }
+
+    public void ClearOutOfCombatReports()
+    {
+        HasToReportVictory = false;
+        HasToReportHardVictory = false;
+    }
     private void SwitchTacticsCrew()
     {
+        ClearOutOfCombatReports();
         ResetWeights();
         switch (AI_Unit_Type)
         {
             case AI_UNIT_TYPES.CREW:
                 AddWeights(0, 20);
-                if (AI_Tactic_Type != AI_TACTIC_TYPES.SNIPER)
+                if (!IsTacticSniper())
                 {
                     if (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) > 16f) AddWeights(1, 25);
                     else AddWeights(1, 12);
@@ -819,32 +1109,79 @@ public class AI_UNIT : NetworkBehaviour
                         if (Dist(Ally.transform.position) < 20f && Dist(EnemyTarget.transform.position) > 14f) AddWeights(3, 40);
                     }
                 }
-                   
                 Module mod = GetClosestEnemyModule();
                 if (mod != null)
                 {
                     if (Dist(mod.transform.position) < 24f && Dist(EnemyTarget.transform.position) > 14f) AddWeights(4, 40);
                 }
+
+                if (AI_Tactic_Type == AI_TACTIC_TYPES.BAKUTO_NORMAL || AI_Tactic_Type == AI_TACTIC_TYPES.BAKUTO_CHOSEN)
+                {
+                    AddWeights(5, 30);
+                }
+                if (AI_Tactic_Type == AI_TACTIC_TYPES.LOGIPEDES_NORMAL || AI_Tactic_Type == AI_TACTIC_TYPES.LOGIPEDES_OFFICER)
+                {
+                    AddWeights(6, 30);
+                }
                 switch (GetWeight())
                 {
                     case 0:
-                        SetTactic(AI_TACTICS.SKIRMISH, UnityEngine.Random.Range(4, 8));
+                        PlayVCX(ScriptableVoicelist.VoicelineTypes.SKIRMISHING, VoiceHandler.PriorityTypes.NORMAL, 0.5f);
+                        SetTactic(AI_TACTICS.SKIRMISH, UnityEngine.Random.Range(4f, 8f));
                         break;
                     case 1:
-                        SetTactic(AI_TACTICS.CIRCLE, UnityEngine.Random.Range(3, 5));
+                        PlayVCX(ScriptableVoicelist.VoicelineTypes.SKIRMISHING, VoiceHandler.PriorityTypes.NORMAL, 0.5f);
+                        SetTactic(AI_TACTICS.CIRCLE, UnityEngine.Random.Range(3f, 5f));
                         break;
                     case 2:
-                        SetTactic(AI_TACTICS.RETREAT, UnityEngine.Random.Range(8, 12));
+                        PlayVCX(ScriptableVoicelist.VoicelineTypes.RETREATING, VoiceHandler.PriorityTypes.NORMAL, 0.7f);
+                        SetTactic(AI_TACTICS.RETREAT, UnityEngine.Random.Range(8f, 12f));
                         break;
                     case 3:
-                        SetTactic(AI_TACTICS.HEAL_ALLIES, UnityEngine.Random.Range(17, 19));
+                        PlayVCX(ScriptableVoicelist.VoicelineTypes.HEALING, VoiceHandler.PriorityTypes.NORMAL, 0.7f);
+                        SetTactic(AI_TACTICS.HEAL_ALLIES, UnityEngine.Random.Range(17f, 19f));
                         break;
                     case 4:
-                        SetTactic(AI_TACTICS.SABOTAGE, UnityEngine.Random.Range(6, 8));
+                        SetTactic(AI_TACTICS.SABOTAGE, UnityEngine.Random.Range(6f, 8f));
+                        break;
+                    case 5:
+                        PlayVCX(ScriptableVoicelist.VoicelineTypes.PREPARE_CHARGE, VoiceHandler.PriorityTypes.PRIORITY, 0.8f, 1.5f);
+                        SetTactic(AI_TACTICS.PREPARE_CHARGE, 2.5f);
+                        SetTacticTarget(transform.position, getSpace());
+                        foreach (CREW crew in GetTeam())
+                        {
+                            crew.GetAI().SetTactic(AI_TACTICS.PREPARE_CHARGE, 2.5f);
+                            crew.GetAI().SetTacticTarget(Unit, getSpace());
+                        }
+                        break;
+                    case 6:
+                        PlayVCX(ScriptableVoicelist.VoicelineTypes.FORMATION, VoiceHandler.PriorityTypes.PRIORITY, 0.8f, 1.5f);
+                        SetTactic(AI_TACTICS.PREPARE_FORMATION, 2.5f);
+                        SetTacticTarget(transform.position, getSpace());
+                        foreach (CREW crew in GetTeam())
+                        {
+                            crew.GetAI().SetTactic(AI_TACTICS.PREPARE_FORMATION, 2.5f);
+                            crew.GetAI().SetTacticTarget(Unit, getSpace());
+                        }
                         break;
                 }
                 break;
         }
+    }
+    public void PlayVCX(ScriptableVoicelist.VoicelineTypes typ, VoiceHandler.PriorityTypes pri, float Chance = 1f, float Cooldown = 2.5f)
+    {
+        Unit.PlayVCX(typ, pri, Chance, Cooldown);
+    }
+    private List<CREW> GetTeam(float range = 20f)
+    {
+        List<CREW> List = new();
+        foreach (CREW crew in CO.co.GetAlliedAICrew(Unit.GetFaction()))
+        {
+            if ((crew.transform.position - transform.position).magnitude > range) continue;
+            if (crew.Space != getSpace()) continue;
+            List.Add(crew);
+        }
+        return List;
     }
 
     /*--------------------------------------------------------------------------------------------
@@ -1316,13 +1653,32 @@ public class AI_UNIT : NetworkBehaviour
     }
     public CREW GetClosestAlly()
     {
-        List<CREW> enemies = WoundedAlliesInSpace();
+        List<CREW> enemies = AlliesInSpace();
         CREW closest = null;
         float minDist = float.MaxValue;
         Vector3 myPos = transform.position;
         foreach (var enemy in enemies)
         {
             if (enemy == Unit) continue; // skip self
+            float dist = (enemy.getPos() - myPos).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = enemy;
+            }
+        }
+        return closest;
+    }
+    public CREW GetClosestAllyPlayer()
+    {
+        List<CREW> enemies = AlliesInSpace();
+        CREW closest = null;
+        float minDist = float.MaxValue;
+        Vector3 myPos = transform.position;
+        foreach (var enemy in enemies)
+        {
+            if (enemy == Unit) continue; // skip self
+            if (!enemy.IsPlayer()) continue;
             float dist = (enemy.getPos() - myPos).sqrMagnitude;
             if (dist < minDist)
             {
@@ -1482,6 +1838,12 @@ public class AI_UNIT : NetworkBehaviour
     public VoiceHandler GetVoiceHandler()
     {
         return Unit.GetVoiceHandler();
+    }
+
+    public float GetVoiceSilenceLevel()
+    {
+        if (Unit.GetVoiceHandler() == null) return -10f;
+        return Unit.GetVoiceHandler().TimeOfSilence();
     }
     public float DistToObjective(Vector3 vec)
     {

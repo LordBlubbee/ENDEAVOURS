@@ -1485,18 +1485,25 @@ public class CO : NetworkBehaviour
         }
         return list;
     }
-    public List<CREW> GetAlliedAICrew()
+    public List<CREW> GetAlliedAICrew(int fac = 1)
     {
         List<CREW> list = new();
         foreach (CREW loc in GetAllCrews())
         {
             if (loc.IsPlayer()) continue;
-            if (loc.GetFaction() == 1)
+            if (loc.GetFaction() == fac)
             {
                 list.Add(loc);
             }
         }
         return list;
+    }
+
+    public CREW GetRandomAlliedAICrew()
+    {
+        List<CREW> list = GetAlliedAICrew();
+        if (list.Count == 0) return null;
+        return list[UnityEngine.Random.Range(0, list.Count)];
     }
 
     List<CREW> RegisteredCREW = new();
@@ -1702,6 +1709,7 @@ public class CO : NetworkBehaviour
     {
         ShouldDriftersMove = true;
         AreWeInDanger.Value = true;
+        float BeforeCombatHealth = PlayerMainDrifter.GetHealthRelative();
         SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.CombatSoundtrack);
         ResetWeights();
         int i = 0;
@@ -1753,6 +1761,20 @@ public class CO : NetworkBehaviour
         yield return new WaitForSeconds(4f);
         LOCALCO.local.CinematicTexRpc("THREATS ELIMINATED");
         SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
+
+        CREW Reporter = GetRandomAlliedAICrew();
+        if (Reporter != null)
+        {
+            if (PlayerMainDrifter.GetHealthRelative() < BeforeCombatHealth - 0.3f)
+            {
+                Reporter.GetComponent<AI_UNIT>().SetReportVictory();
+            }
+            else
+            {
+                Reporter.GetComponent<AI_UNIT>().SetReportHardVictory();
+            }
+        }
+       
 
         yield return new WaitForSeconds(3f);
         EndEvent();
