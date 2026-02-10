@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StoryTexts:
   - BaseText: You will get no answers, fool. By the Rite of Blood, we proclaim a
-      duel. May the strongest warrior rule the ashes. Kiyaaaaaaaaaaaaaa!
+      duel. May the strongest warrior rule the ashes. Kiyeeeeeeeeeeee!
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: 5a28b60138a32ef4ca104943cc75855b, type: 2}
     Alternatives: []

@@ -808,6 +808,10 @@ public class AI_UNIT : NetworkBehaviour
         switch (AI_Tactic)
         {
             default:
+                if (!CO.co.IsSafe() && !CO.co.GetDungeon() && FirstEngagement)
+                {
+                    PlayVCX(ScriptableVoicelist.VoicelineTypes.READYING, VoiceHandler.PriorityTypes.SILENCE, 0.2f, 5f);
+                }
                 break;
             case AI_TACTICS.RETREAT:
                 Unit.EquipMedkitRpc();
@@ -1032,23 +1036,15 @@ public class AI_UNIT : NetworkBehaviour
                         break;
                     case 5:
                         List<Conversation> list = GetVoiceHandler().GetVoicelist().GenericConversations;
-                        if (list.Count == 0) break;
-                        Conversation convo = list[UnityEngine.Random.Range(0, list.Count)];
-                        if (UnityEngine.Random.Range(0f,1f) < 0.7f)
+                        foreach (Conversation con in GetVoiceHandler().GetVoicelist().TargetedConversations)
                         {
-                            List<Conversation> list2 = new();
-                            foreach (Conversation con in GetVoiceHandler().GetVoicelist().TargetedConversations)
+                            if (con.Target.Contains(ClosestAlly.GetVoiceHandler().GetVoicelist()))
                             {
-                                if (con.Target.Contains(ClosestAlly.GetVoiceHandler().GetVoicelist()))
-                                {
-                                    list2.Add(con);
-                                }
-                            }
-                            if (list2.Count > 0)
-                            {
-                                convo = list2[UnityEngine.Random.Range(0, list2.Count)];
+                                list.Add(con);
                             }
                         }
+                        if (list.Count == 0) break;
+                        Conversation convo = list[UnityEngine.Random.Range(0, list.Count)];
                         if (convo == null) break;
                         SetTactic(AI_TACTICS.CONVERSE, 60f);
                         SetTacticTarget(ClosestAlly, ClosestAlly.Space);
@@ -1379,7 +1375,11 @@ public class AI_UNIT : NetworkBehaviour
                 {
                     Unit.EquipGrappleRpc();
 
-                    if (Mathf.Abs(Unit.AngleBetweenPoints(boarding.transform.position)) < 8) Unit.UseItem1Rpc();
+                    if (Mathf.Abs(Unit.AngleBetweenPoints(boarding.transform.position)) < 8 && Unit.SlotGrappleCooldown.Value <= 0f)
+                    {
+                        PlayVCX(ScriptableVoicelist.VoicelineTypes.BOARDING, VoiceHandler.PriorityTypes.PRIORITY, 0.6f);
+                        Unit.UseItem1Rpc();
+                    }
                 }
               
                 return true;
