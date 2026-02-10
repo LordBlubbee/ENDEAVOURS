@@ -716,10 +716,16 @@ public class CREW : NetworkBehaviour, iDamageable
     }
 
     VoiceHandler voiceHandler;
-
     public VoiceHandler GetVoiceHandler()
     {
         return voiceHandler;
+    }
+    public void PlayVCX(List<Voiceline> Voices, float Cooldown, float SilenceRequired = 0f)
+    {
+        if (IsPlayer()) return;
+        if (GetVoiceHandler().TimeOfSilence() > SilenceRequired) return;
+        if (Voices.Count == 0) return;
+        GetVoiceHandler().PlayVCX(Voices, Cooldown * UnityEngine.Random.Range(0.8f,1.2f));
     }
     public void Init()
     {

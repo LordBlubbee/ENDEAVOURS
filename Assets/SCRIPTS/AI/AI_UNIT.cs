@@ -1479,6 +1479,10 @@ public class AI_UNIT : NetworkBehaviour
     {
         return (transform.position-vec).magnitude;
     }
+    public VoiceHandler GetVoiceHandler()
+    {
+        return Unit.GetVoiceHandler();
+    }
     public float DistToObjective(Vector3 vec)
     {
         if (GetObjectiveTarget() == Vector3.zero) return 0f;

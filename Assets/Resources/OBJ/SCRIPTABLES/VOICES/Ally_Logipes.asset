@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10f9c823a3e012d4c8618b82635a95df, type: 3}
+  m_Name: Ally_Logipes
+  m_EditorClassIdentifier: 
+  VCX_FirstEngage:
+  - VoiceTex: Unit engaging enemy!
+    Style: 3
+  VCX_InCombat: []
+  VCX_Skirmishing: []
+  VCX_Retreating: []
+  VCX_Repairing: []
+  VCX_Formation: []
+  VCX_Charge: []
+  VCX_Healing: []
+  VCX_Boarding: []
+  VCX_ReadyingForBattle: []
+  VCX_Surrendering: []
+  VCX_SalutePlayer:
+  - VoiceTex: Level three greetings, commander!
+    Style: 0
+  VCX_SalutePlayer_EasyVictory: []
+  VCX_SalutePlayer_HardVictory: []
+  VCX_SalutePlayer_Worried: []
+  VCX_SalutePlayer_LowAmmo: []
+  VCX_SalutePlayer_LowSupplies: []
+  TargetedConversations: []
+  GenericConversations:
+  - Target: {fileID: 0}
+    Parts:
+    - Voice:
+        VoiceTex: 
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: 
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: 
+        Style: 0
+      IsPersonA: 0
