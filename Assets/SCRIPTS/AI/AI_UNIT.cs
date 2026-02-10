@@ -758,6 +758,10 @@ public class AI_UNIT : NetworkBehaviour
                         {
                             Unit.EquipWrenchRpc();
                             Unit.UseItem1Rpc();
+                            PlayVCX(ScriptableVoicelist.VoicelineTypes.REPAIRING, VoiceHandler.PriorityTypes.IDLE, 0.1f);
+                        } else
+                        {
+                            PlayVCX(ScriptableVoicelist.VoicelineTypes.REPAIRING, VoiceHandler.PriorityTypes.NORMAL, 0.7f);
                         }
                         return;
                     }

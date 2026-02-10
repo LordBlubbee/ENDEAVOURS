@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class VoiceHandler : MonoBehaviour
+public class VoiceHandler : NetworkBehaviour
 {
     private CREW Crew;
     public Color SpeechColor
@@ -65,9 +66,8 @@ public class VoiceHandler : MonoBehaviour
     {
         Cooldown = Mathf.Max(fl, Cooldown);
     }
-    public void PlayVCX(List<Voiceline> Voices, float Cooldown)
+    public void PlayVCX(Voiceline Voice, float Cooldown)
     {
-        Voiceline Voice = Voices[UnityEngine.Random.Range(0, Voices.Count)];
         CO_SPAWNER.co.SpawnVoice(Voice.VoiceTex, Crew, Voice.Style);
         SetCooldown(Cooldown * 1.2f + 1f);
         foreach (CREW crew in CO.co.GetAlliedCrew(Crew.GetFaction()))
@@ -76,6 +76,14 @@ public class VoiceHandler : MonoBehaviour
             if ((crew.transform.position - transform.position).magnitude > 40) continue;
             crew.GetVoiceHandler().SetCooldown(Cooldown);
         }
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void PlayVCXRpc(int VoiceEnum, int VoiceID, float Cooldown)
+    {
+        List<Voiceline> Voices = GetVoicelist().GetVoicelines((ScriptableVoicelist.VoicelineTypes)VoiceEnum);
+        Voiceline Voice = Voices[VoiceID];
+        PlayVCX(Voice, Cooldown);
     }
     private void Start()
     {

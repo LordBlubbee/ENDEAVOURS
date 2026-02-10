@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10f9c823a3e012d4c8618b82635a95df, type: 3}
+  m_Name: Enemy_Clan
+  m_EditorClassIdentifier: 
+  VCX_FirstEngage:
+  - VoiceTex: Unit engaging enemy!
+    Style: 3
+  VCX_InCombat:
+  - VoiceTex: In combat!
+    Style: 0
+  VCX_Skirmishing:
+  - VoiceTex: Skirmishing!
+    Style: 0
+  VCX_Retreating:
+  - VoiceTex: Retreating!
+    Style: 2
+  VCX_Repairing:
+  - VoiceTex: Repairing!
+    Style: 3
+  VCX_Healing:
+  - VoiceTex: Administering Aid!
+    Style: 0
+  VCX_Boarding:
+  - VoiceTex: Boarding!
+    Style: 0
+  VCX_ReadyingForBattle:
+  - VoiceTex: Prepare for battle!
+    Style: 3
+  VCX_Downed:
+  - VoiceTex: Requesting... Backup...
+    Style: 1
+  VCX_Surrendering: []
+  VCX_Formation:
+  - VoiceTex: Logipedes! Formation!
+    Style: 0
+  VCX_PrepareCharge:
+  - VoiceTex: Ready to charge!
+    Style: 0
+  VCX_Charge:
+  - VoiceTex: BANZAI!!!
+    Style: 0
+  VCX_SalutePlayer:
+  - VoiceTex: Greetings, sir!
+    Style: 0
+  VCX_SalutePlayer_EasyVictory:
+  - VoiceTex: Easy victory, sir!
+    Style: 0
+  VCX_SalutePlayer_HardVictory:
+  - VoiceTex: That was a close one, Sir!
+    Style: 0
+  VCX_SalutePlayer_Worried:
+  - VoiceTex: Hull stability is low... It's quite worrying.
+    Style: 0
+  VCX_SalutePlayer_LowAmmo:
+  - VoiceTex: Ammo stocks are low... We must watch out.
+    Style: 0
+  VCX_SalutePlayer_LowSupplies:
+  - VoiceTex: Supplies are low... We must be wary.
+    Style: 0
+  VCX_SalutePlayer_Promotion:
+  - VoiceTex: Thank you for the promotion, Sir! I will not let you down!
+    Style: 0
+  TargetedConversations:
+  - Target:
+    - {fileID: 11400000}
+    Parts:
+    - Voice:
+        VoiceTex: Hello, fellow test subject!
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: Greetings. Weather sure is nice today.
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: Damn right.
+        Style: 0
+      IsPersonA: 1
+  GenericConversations:
+  - Target: []
+    Parts:
+    - Voice:
+        VoiceTex: How is your day, companion?
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: It's quite good. Ghahaha!
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: Great to hear. Have some soup!
+        Style: 0
+      IsPersonA: 1

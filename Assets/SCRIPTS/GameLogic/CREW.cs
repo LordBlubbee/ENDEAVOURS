@@ -739,7 +739,7 @@ public class CREW : NetworkBehaviour, iDamageable
         if (!GetVoiceHandler().HasPriority(pri)) return;
         List<Voiceline> Voices = GetVoiceHandler().GetVoicelist().GetVoicelines(typ);
         if (Voices.Count == 0) return;
-        GetVoiceHandler().PlayVCX(Voices, Cooldown * UnityEngine.Random.Range(0.75f,1.25f));
+        GetVoiceHandler().PlayVCXRpc((int)typ, UnityEngine.Random.Range(0,Voices.Count), Cooldown * UnityEngine.Random.Range(0.75f,1.25f));
     }
     public void Init()
     {
