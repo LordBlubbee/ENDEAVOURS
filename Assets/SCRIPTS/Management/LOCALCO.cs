@@ -104,7 +104,7 @@ public class LOCALCO : NetworkBehaviour
                 CO.co.SavePlayer(GetPlayer());
                 GetPlayer().DespawnAndUnregister(); //We should test if this works properly
             }
-            if (!IsOwner) NetworkManager.Singleton.DisconnectClient(OwnerClientId);
+            //if (!IsOwner) NetworkManager.Singleton.DisconnectClient(OwnerClientId);
         } else
         {
             if (GetPlayer() != null)

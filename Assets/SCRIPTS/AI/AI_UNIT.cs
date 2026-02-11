@@ -161,7 +161,11 @@ public class AI_UNIT : NetworkBehaviour
     }
     public Vector3 GetTacticTarget()
     {
-        if (AI_TacticFollow != null) AI_TacticTarget = AI_TacticFollow.transform.position;
+        if (AI_TacticFollow != null)
+        {
+            AI_TacticTarget = AI_TacticFollow.transform.localPosition;
+            AI_TacticSpace = AI_TacticFollow.Space;
+        }
         if (AI_TacticSpace == null) return AI_TacticTarget;
         return AI_TacticSpace.transform.TransformPoint(AI_TacticTarget);
     }
@@ -575,7 +579,7 @@ public class AI_UNIT : NetworkBehaviour
                     {
                         SetLookTowards(Group.HomeSpace.transform.position, Group.HomeSpace);
                         point = getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position;
-                        AttemptBoard(Group.HomeSpace);
+                        if (AttemptBoard(Group.HomeSpace)) return;
                     } else
                     {
                         if (HaveMedicalRetreat())
@@ -826,10 +830,11 @@ public class AI_UNIT : NetworkBehaviour
                 }
                 if (Group.HomeSpace != getSpace())
                 {
-                    AttemptBoard(Group.HomeSpace);
                     point = getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position;
                     SetLookTowards(Group.HomeSpace.transform.position, Group.HomeSpace);
                     SetAIMoveTowards(point, getSpace());
+
+                    if (AttemptBoard(Group.HomeSpace)) return true;
                 } else
                 {
                     if (Group.HomeDrifter.MedicalModule)
@@ -1364,8 +1369,6 @@ public class AI_UNIT : NetworkBehaviour
                 break;
         }
     }
-   
-
     private void SetLookTowardsMoveDirection()
     {
         SetLookTowards(transform.position + Unit.GetMoveInput() * 100f, getSpace());

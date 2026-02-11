@@ -739,6 +739,7 @@ public class CO : NetworkBehaviour
         Resource_Supplies.Value = 50;
         Resource_Ammo.Value = 50;
         Resource_Tech.Value = 0;
+        BiomeName.Value = "Far South";
 
         if (Test_StartingLoot != null)
         {

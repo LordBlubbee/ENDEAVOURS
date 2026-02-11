@@ -80,18 +80,18 @@ public class VCX : MonoBehaviour
         {
             case VoiceStyles.SCARED_SHAKE:
                 WriteoutSpeed = 0.035f;
-                ShakeFrame(0.2f * DurationFactor(), 2.5f * DurationFactor());
-                ShakeRotFrame(2f * DurationFactor(), 6f * DurationFactor());
+                ShakeFrame(0.1f * DurationFactor(), 12f * DurationFactor());
+                ShakeRotFrame(2.5f * DurationFactor(), 6f * DurationFactor());
                 break;
             case VoiceStyles.SHOUT_SHAKE:
                 WriteoutSpeed = 0.017f;
-                ShakeFrame(0.2f * DurationFactor(), 24f * DurationFactor());
-                ShakeRotFrame(4f * DurationFactor(), 16f * DurationFactor());
+                ShakeFrame(0.15f * DurationFactor(), 4f * DurationFactor());
+                ShakeRotFrame(5f * DurationFactor(), 16f * DurationFactor());
                 break;
             case VoiceStyles.SHAKE:
                 WriteoutSpeed = 0.02f;
-                ShakeFrame(0.15f * DurationFactor(), 12f * DurationFactor());
-                ShakeRotFrame(1.5f * DurationFactor(), 8f * DurationFactor());
+                ShakeFrame(0.15f * DurationFactor(), 2f * DurationFactor());
+                ShakeRotFrame(2f * DurationFactor(), 8f * DurationFactor());
                 break;
         }
         Duration -= CO.co.GetWorldSpeedDelta() * 0.9f;
@@ -108,8 +108,11 @@ public class VCX : MonoBehaviour
                 if (speakLetter < 0)
                 {
                     speakLetter = Random.Range(2, 4);
-                    AudioClip clip = Voice;
-                    AUDCO.aud.PlayVCX(clip, transform.position);
+                    if (UI.ui.CurrentlySelectedScreen == UI.ui.MainGameplayUI.gameObject)
+                    {
+                        AudioClip clip = Voice;
+                        AUDCO.aud.PlayVCX(clip, transform.position);
+                    }
                 }
             }
         }

@@ -355,6 +355,7 @@ public class dataStructure
 
         BiomeType = CO.co.CurrentBiome.name;
         BiomeName = CO.co.CurrentBiome.BiomeName;
+        CO.co.BiomeName.Value = CO.co.CurrentBiome.BiomeName;
         DrifterType = CO.co.PlayerMainDrifterTypeID;
         foreach (ScriptableEquippable equip in CO.co.Drifter_Inventory)
         {

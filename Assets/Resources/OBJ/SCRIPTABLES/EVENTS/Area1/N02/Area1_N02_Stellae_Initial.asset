@@ -49,7 +49,7 @@ MonoBehaviour:
   ChoicePathDialogs:
   - ChoiceText:
       BaseText: Greetings, Stellae explorers. We will gladly take you up on that
-        offer, in return of trade and news.
+        offer, in return of a reward and some news.
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
