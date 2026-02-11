@@ -21,7 +21,7 @@ MonoBehaviour:
     Style: 2
   - VoiceTex: YOU DIE NOW!
     Style: 2
-  - VoiceTex: KIYEEEEEEEEE
+  - VoiceTex: KIYEEEEEEEEE!!!
     Style: 2
   VCX_InCombat:
   - VoiceTex: Stand still, fool!
@@ -32,7 +32,7 @@ MonoBehaviour:
     Style: 3
   - VoiceTex: I fight for the Endeavour!
     Style: 3
-  - VoiceTex: KIYEEEEEEEEE
+  - VoiceTex: KIYEEEEEEEEE!!!
     Style: 2
   VCX_Skirmishing:
   - VoiceTex: Repositioning!

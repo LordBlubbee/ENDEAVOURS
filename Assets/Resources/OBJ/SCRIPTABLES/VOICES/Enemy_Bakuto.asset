@@ -13,91 +13,166 @@ MonoBehaviour:
   m_Name: Enemy_Bakuto
   m_EditorClassIdentifier: 
   VCX_FirstEngage:
-  - VoiceTex: Unit engaging enemy!
-    Style: 3
-  VCX_InCombat:
-  - VoiceTex: In combat!
-    Style: 0
-  VCX_Skirmishing:
-  - VoiceTex: Skirmishing!
-    Style: 0
-  VCX_Retreating:
-  - VoiceTex: Retreating!
+  - VoiceTex: ENGAGING NOW!
     Style: 2
+  - VoiceTex: BATTLE! FOR HUMANITY!
+    Style: 2
+  - VoiceTex: I UNSHEATHE MY STEEL!
+    Style: 2
+  - VoiceTex: YOU DIE NOW!
+    Style: 2
+  - VoiceTex: KIYEEEEEEEEE!!!
+    Style: 2
+  VCX_InCombat:
+  - VoiceTex: Stand still, fool!
+    Style: 3
+  - VoiceTex: You die now!
+    Style: 3
+  - VoiceTex: You shall fall today!
+    Style: 3
+  - VoiceTex: I fight for the Endeavour!
+    Style: 3
+  - VoiceTex: KIYEEEEEEEEE!!!
+    Style: 2
+  VCX_Skirmishing:
+  - VoiceTex: Repositioning!
+    Style: 3
+  - VoiceTex: Commander, I am finding new position!
+    Style: 3
+  - VoiceTex: Strike from shadows!
+    Style: 3
+  - VoiceTex: They shall burn.
+    Style: 3
+  VCX_Retreating:
+  - VoiceTex: Falling back!
+    Style: 3
+  - VoiceTex: My blood is spilled... I must retreat!
+    Style: 3
+  - VoiceTex: Tactical... Retreat...
+    Style: 3
+  - VoiceTex: Repositioning!
+    Style: 3
   VCX_Repairing:
-  - VoiceTex: Repairing!
+  - VoiceTex: Systems damaged! Need engineer here...
+    Style: 3
+  - VoiceTex: Repairing systems!
+    Style: 3
+  - VoiceTex: Mechanic needed!
     Style: 3
   VCX_Healing:
-  - VoiceTex: Administering Aid!
-    Style: 0
+  - VoiceTex: I shall bandage your wounds!
+    Style: 3
+  - VoiceTex: Stand still and be healed, fool...
+    Style: 3
+  - VoiceTex: Bite through the pain! You must fight on!
+    Style: 3
   VCX_Boarding:
-  - VoiceTex: Boarding!
-    Style: 0
+  - VoiceTex: Grapples away!
+    Style: 3
+  - VoiceTex: Mvoe out!
+    Style: 3
+  - VoiceTex: Blades ready! Boarding now!
+    Style: 3
   VCX_ReadyingForBattle:
-  - VoiceTex: Prepare for battle!
+  - VoiceTex: My blade thirsts for blood!
+    Style: 3
+  - VoiceTex: They shall know wrath!
+    Style: 3
+  - VoiceTex: Battle is upon us!
+    Style: 3
+  - VoiceTex: I chant a prayer of steel, of vengeance...
+    Style: 3
+  - VoiceTex: They will know the pain of ten thousand!
+    Style: 3
+  - VoiceTex: They are foolish to oppose us.
     Style: 3
   VCX_Downed:
-  - VoiceTex: Requesting... Backup...
+  - VoiceTex: I am... Finished...
+    Style: 1
+  - VoiceTex: I will be... Avenged...
+    Style: 1
+  - VoiceTex: I fall... Today...
+    Style: 1
+  - VoiceTex: My time has... Come...
+    Style: 1
+  - VoiceTex: My duty... Is not done...
     Style: 1
   VCX_Surrendering: []
-  VCX_Formation:
-  - VoiceTex: Logipedes! Formation!
-    Style: 0
+  VCX_Formation: []
   VCX_PrepareCharge:
-  - VoiceTex: Ready to charge!
-    Style: 0
+  - VoiceTex: CHARGE WITH ME, COMRADES!
+    Style: 2
+  - VoiceTex: WITH ME, COMRADES!
+    Style: 2
+  - VoiceTex: RALLY ON ME!
+    Style: 2
   VCX_Charge:
   - VoiceTex: BANZAI!!!
     Style: 0
+  - VoiceTex: KIYEEEEEEEEEE!!!
+    Style: 0
+  - VoiceTex: KIYAAAAAAAAA!!!
+    Style: 0
+  - VoiceTex: WRATH WITH ME!!!
+    Style: 0
   VCX_SalutePlayer:
-  - VoiceTex: Greetings, sir!
+  - VoiceTex: Greeting, comrade! I am ready for battle!
+    Style: 0
+  - VoiceTex: My iron thirsts for blood! Send me to war!
+    Style: 3
+  - VoiceTex: My body is ready!
+    Style: 3
+  - VoiceTex: This Endeavour will succeed! It has my blade!
+    Style: 3
+  - VoiceTex: I shall stand beside you in war, comrade!
+    Style: 3
+  - VoiceTex: Show no fear. It does not suit you.
     Style: 0
   VCX_SalutePlayer_EasyVictory:
-  - VoiceTex: Easy victory, sir!
+  - VoiceTex: TODAY, WE BATHE IN THE BLOOD OF OUR FOES! GHAHAHA!
+    Style: 2
+  - VoiceTex: My prayers are answered! We have won today, comrade!
+    Style: 3
+  - VoiceTex: Our enemies are ash. I am ready for our next trial!
+    Style: 0
+  - VoiceTex: We are victorious! They are dust! Kiyaaa!
     Style: 0
   VCX_SalutePlayer_HardVictory:
-  - VoiceTex: That was a close one, Sir!
+  - VoiceTex: They are ash. That is all that matters!
+    Style: 0
+  - VoiceTex: All of us paid the price of blood. But we emerge. Victorious!
+    Style: 1
+  - VoiceTex: We have won, comrade. Rest your blade.
+    Style: 0
+  - VoiceTex: The Endeavour shall continue another day.
     Style: 0
   VCX_SalutePlayer_Worried:
-  - VoiceTex: Hull stability is low... It's quite worrying.
+  - VoiceTex: It is a good day to die.
+    Style: 1
+  - VoiceTex: My blade stands ready until the end, comrade.
+    Style: 1
+  - VoiceTex: Our Drifter is shaken. But we shall never fall.
+    Style: 0
+  - VoiceTex: My faith is strong. By iron and steel, we shall reach the next harbour.
     Style: 0
   VCX_SalutePlayer_LowAmmo:
-  - VoiceTex: Ammo stocks are low... We must watch out.
+  - VoiceTex: Comrade. Our ammo stocks are low. Be warned!
+    Style: 0
+  - VoiceTex: We are low on steel. We must be careful.
     Style: 0
   VCX_SalutePlayer_LowSupplies:
-  - VoiceTex: Supplies are low... We must be wary.
+  - VoiceTex: Comrade. Our food supplies are low. We must ration.
+    Style: 0
+  - VoiceTex: Know that we are through our supplies. Take care.
     Style: 0
   VCX_SalutePlayer_Promotion:
-  - VoiceTex: Thank you for the promotion, Sir! I will not let you down!
+  - VoiceTex: You have promoted me. I shall not fail you!
     Style: 0
-  TargetedConversations:
-  - Target:
-    - {fileID: 11400000}
-    Parts:
-    - Voice:
-        VoiceTex: Hello, fellow test subject!
-        Style: 0
-      IsPersonA: 1
-    - Voice:
-        VoiceTex: Greetings. Weather sure is nice today.
-        Style: 0
-      IsPersonA: 0
-    - Voice:
-        VoiceTex: Damn right.
-        Style: 0
-      IsPersonA: 1
-  GenericConversations:
-  - Target: []
-    Parts:
-    - Voice:
-        VoiceTex: How is your day, companion?
-        Style: 0
-      IsPersonA: 1
-    - Voice:
-        VoiceTex: It's quite good. Ghahaha!
-        Style: 0
-      IsPersonA: 0
-    - Voice:
-        VoiceTex: Great to hear. Have some soup!
-        Style: 0
-      IsPersonA: 1
+  - VoiceTex: You have improved my gear. I am eternally thankful.
+    Style: 0
+  - VoiceTex: You have put your trust in me. My blade is yours, comrade.
+    Style: 0
+  - VoiceTex: Your promotion stirs my heart. Our foes will feel my power!
+    Style: 0
+  TargetedConversations: []
+  GenericConversations: []

@@ -13,91 +13,193 @@ MonoBehaviour:
   m_Name: Enemy_Clan
   m_EditorClassIdentifier: 
   VCX_FirstEngage:
-  - VoiceTex: Unit engaging enemy!
+  - VoiceTex: I see 'em!! We go to battle, eh!!
     Style: 3
-  VCX_InCombat:
-  - VoiceTex: In combat!
-    Style: 0
-  VCX_Skirmishing:
-  - VoiceTex: Skirmishing!
-    Style: 0
-  VCX_Retreating:
-  - VoiceTex: Retreating!
+  - VoiceTex: War has come. Today, we fight!
+    Style: 3
+  - VoiceTex: Strike 'em down. No mercy.
+    Style: 3
+  - VoiceTex: For the Clans! For the Endeavour!
     Style: 2
+  - VoiceTex: THE ANCESTORS ARE WITH ME!
+    Style: 2
+  VCX_InCombat:
+  - VoiceTex: Ye gutless, arse-faced underbrain!
+    Style: 3
+  - VoiceTex: Ye fog-soaked, motherless freak! Have at me!
+    Style: 3
+  - VoiceTex: Ye irksome scheitlicker! I'll end yer miserable life here!
+    Style: 3
+  - VoiceTex: Ancestors watch over me!
+    Style: 3
+  - VoiceTex: FOR THE ENDEAVOUR!
+    Style: 2
+  - VoiceTex: FOR THE CLANS!
+    Style: 2
+  - VoiceTex: FOR FREEDOM!
+    Style: 2
+  VCX_Skirmishing:
+  - VoiceTex: Stand still where I can see ya, fool!
+    Style: 3
+  - VoiceTex: I'll strike 'em!
+    Style: 3
+  - VoiceTex: Move without fear!
+    Style: 3
+  - VoiceTex: I'll sack these bastards!
+    Style: 3
+  VCX_Retreating:
+  - VoiceTex: Healer!! Healer, heed me!
+    Style: 3
+  - VoiceTex: I'm done for. Goin' back!
+    Style: 3
+  - VoiceTex: Getting back, back!
+    Style: 3
+  - VoiceTex: Protect me, damnit! Now!
+    Style: 3
   VCX_Repairing:
-  - VoiceTex: Repairing!
+  - VoiceTex: Module seems damaged, I'm on it...
+    Style: 0
+  - VoiceTex: I shall repair this damage...
+    Style: 0
+  - VoiceTex: Guard me while I fix this!
+    Style: 3
+  - VoiceTex: Repairing, repairing!
     Style: 3
   VCX_Healing:
-  - VoiceTex: Administering Aid!
+  - VoiceTex: These herbs shall heal ya!
+    Style: 3
+  - VoiceTex: Lay still, and let me Clan's wisdom restore yer wounds!
     Style: 0
+  - VoiceTex: I shall mend yer pain!
+    Style: 0
+  - VoiceTex: Be still, and be healed!
+    Style: 3
   VCX_Boarding:
-  - VoiceTex: Boarding!
+  - VoiceTex: Jumpin' drifters!
     Style: 0
+  - VoiceTex: Jumpin'!
+    Style: 0
+  - VoiceTex: Cover me, I'm goin' in!
+    Style: 3
+  - VoiceTex: Watch me, me clan! I go now!
+    Style: 3
   VCX_ReadyingForBattle:
-  - VoiceTex: Prepare for battle!
+  - VoiceTex: Me Clan's spirit is with me. This endeavour'll succeed!
+    Style: 3
+  - VoiceTex: Watch me fight, sir. I'll show 'em hell!
+    Style: 3
+  - VoiceTex: They'll never know what hit 'em. We fight, now!
+    Style: 3
+  - VoiceTex: I've been waitin' fer some action. Let's do this!!
+    Style: 3
+  - VoiceTex: I'll end their miserable lives. Watch me!
+    Style: 3
+  - VoiceTex: If I die today, I'll take a hunnerd of 'em down with me!
     Style: 3
   VCX_Downed:
-  - VoiceTex: Requesting... Backup...
+  - VoiceTex: Ancestors... Forgive... Me...
+    Style: 1
+  - VoiceTex: Get me... Help...
+    Style: 1
+  - VoiceTex: Me people... Will live on...
+    Style: 1
+  - VoiceTex: The Endeavour will... Succeed...
+    Style: 1
+  - VoiceTex: I shall... Survive...
+    Style: 1
+  - VoiceTex: I can see... The ocean...
     Style: 1
   VCX_Surrendering: []
   VCX_Formation:
-  - VoiceTex: Logipedes! Formation!
-    Style: 0
+  - VoiceTex: Get into formation, ye fools!
+    Style: 3
+  - VoiceTex: With me! Guard each other!
+    Style: 3
+  - VoiceTex: Work together, fellow warriors! With me!
+    Style: 3
   VCX_PrepareCharge:
-  - VoiceTex: Ready to charge!
-    Style: 0
+  - VoiceTex: Get ready to charge at 'em!!
+    Style: 3
+  - VoiceTex: To me, to me! Ready up!
+    Style: 3
+  - VoiceTex: Work together, fellow warriors! With me!
+    Style: 3
   VCX_Charge:
-  - VoiceTex: BANZAI!!!
-    Style: 0
+  - VoiceTex: CHARGE!!!
+    Style: 1
+  - VoiceTex: FOR THE CLANS!!!
+    Style: 1
+  - VoiceTex: FOR THE ENDEAVOUR!!!
+    Style: 1
+  - VoiceTex: TO SEE THE OCEAN ONCE MORE!!!
+    Style: 1
   VCX_SalutePlayer:
-  - VoiceTex: Greetings, sir!
+  - VoiceTex: Ready for battle, sir!
+    Style: 0
+  - VoiceTex: I'm itchin' fer a fight!
+    Style: 0
+  - VoiceTex: Me Ancestors bless ye!
+    Style: 0
+  - VoiceTex: Got anythin fer us, sir?
+    Style: 0
+  - VoiceTex: Set course already, captain!
+    Style: 0
+  - VoiceTex: When are we leavin'? All this sittin' around is makin' me bum itch.
+    Style: 0
+  - VoiceTex: So, are we goin'? Let's get to it already, eh?
     Style: 0
   VCX_SalutePlayer_EasyVictory:
-  - VoiceTex: Easy victory, sir!
+  - VoiceTex: They didn't even scratch us, captain! Easy pickin', eh?
+    Style: 0
+  - VoiceTex: We won, easy peasy!
+    Style: 0
+  - VoiceTex: They didn't stand a chance, captain! Heh!
+    Style: 0
+  - VoiceTex: That was quite easy, eh?
     Style: 0
   VCX_SalutePlayer_HardVictory:
-  - VoiceTex: That was a close one, Sir!
-    Style: 0
+  - VoiceTex: We took a beatin', captain! Shit...
+    Style: 1
+  - VoiceTex: THOSE VIRGIN PEBBLE-STACKERS CAN ROT IN HELL! Bastards...
+    Style: 2
+  - VoiceTex: They got us real good, captain! Damnit...
+    Style: 2
+  - VoiceTex: The bastards got us pretty good, but they're gone now.
+    Style: 1
   VCX_SalutePlayer_Worried:
-  - VoiceTex: Hull stability is low... It's quite worrying.
+  - VoiceTex: We're alive, fer now!
+    Style: 0
+  - VoiceTex: So... What's happenin' to us now, sir? We're pretty... Roughed up...
+    Style: 0
+  - VoiceTex: Drifter's holdin' 'er butt clenched, sir. We gotta watch it.
+    Style: 0
+  - VoiceTex: We've gotten quite some damage, lift ain't lookin' good.
     Style: 0
   VCX_SalutePlayer_LowAmmo:
-  - VoiceTex: Ammo stocks are low... We must watch out.
+  - VoiceTex: Eh, captain, our guns are almost empty. Gotta watch it, eh?
+    Style: 0
+  - VoiceTex: Not a lot o' ammo left. Just so ye know.
+    Style: 0
+  - VoiceTex: We're runnin' low on ammunitions. Might be important, sir.
     Style: 0
   VCX_SalutePlayer_LowSupplies:
-  - VoiceTex: Supplies are low... We must be wary.
+  - VoiceTex: Eh, when can we stop rationin' our supplies? We gotta find more!
+    Style: 0
+  - VoiceTex: We need more supplies, sir!
+    Style: 0
+  - VoiceTex: Supplies are gone, and it ain' just me!
     Style: 0
   VCX_SalutePlayer_Promotion:
-  - VoiceTex: Thank you for the promotion, Sir! I will not let you down!
+  - VoiceTex: This new equipment's real shiny, captain! I'll make good use of it,
+      eh?
     Style: 0
-  TargetedConversations:
-  - Target:
-    - {fileID: 11400000}
-    Parts:
-    - Voice:
-        VoiceTex: Hello, fellow test subject!
-        Style: 0
-      IsPersonA: 1
-    - Voice:
-        VoiceTex: Greetings. Weather sure is nice today.
-        Style: 0
-      IsPersonA: 0
-    - Voice:
-        VoiceTex: Damn right.
-        Style: 0
-      IsPersonA: 1
-  GenericConversations:
-  - Target: []
-    Parts:
-    - Voice:
-        VoiceTex: How is your day, companion?
-        Style: 0
-      IsPersonA: 1
-    - Voice:
-        VoiceTex: It's quite good. Ghahaha!
-        Style: 0
-      IsPersonA: 0
-    - Voice:
-        VoiceTex: Great to hear. Have some soup!
-        Style: 0
-      IsPersonA: 1
+  - VoiceTex: I'll toast to ye tonight, captain! I won't let ye down fer that promotion!
+    Style: 0
+  - VoiceTex: Real sweet gettin' me promoted! I'll get this Endeavour succeedin'
+      real good, eh?
+    Style: 0
+  - VoiceTex: Me people would be proud if they could be watchin' me right now. Thanks
+      fer the promotion, sir!
+    Style: 0
+  TargetedConversations: []
+  GenericConversations: []
