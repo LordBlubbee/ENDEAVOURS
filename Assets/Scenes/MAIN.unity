@@ -26081,7 +26081,7 @@ MonoBehaviour:
   LoadCharacterTitle: {fileID: 1997435903}
   LoadCharacterIcon: {fileID: 1199066614}
   LoadCharacterStripes: {fileID: 2022017800}
-  Test_Skip: 1
+  Test_Skip: 0
   SelectedBackgroundScreen: {fileID: 52128217}
   SelectedBackgroundScreenImage: {fileID: 8092177035780664476}
   SelectedBackgroundScreenImageOuter: {fileID: 9121645505216886060}
