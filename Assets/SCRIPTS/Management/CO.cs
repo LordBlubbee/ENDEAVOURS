@@ -1663,13 +1663,13 @@ public class CO : NetworkBehaviour
             case "GenericBattle":
                 StartCoroutine(Event_GenericBattle());
                 break;
-            case "DungeonStorage":
+            case "DungeonVaults":
                 StartCoroutine(Event_DungeonStorage());
                 break;
-            case "DungeonDefense":
+            case "DungeonRepulsors":
                 StartCoroutine(Event_DungeonDefense());
                 break;
-            case "DungeonExtermination":
+            case "DungeonRally":
                 StartCoroutine(Event_DungeonExterminate());
                 break;
             case "GenericSurvival":
@@ -1767,11 +1767,11 @@ public class CO : NetworkBehaviour
         {
             if (PlayerMainDrifter.GetHealthRelative() < BeforeCombatHealth - 0.3f)
             {
-                Reporter.GetComponent<AI_UNIT>().SetReportVictory();
+                Reporter.GetAI().SetReportHardVictory();
             }
             else
             {
-                Reporter.GetComponent<AI_UNIT>().SetReportHardVictory();
+                Reporter.GetAI().SetReportVictory();
             }
         }
        
@@ -2203,7 +2203,7 @@ public class CO : NetworkBehaviour
         if (NewCrewPrefab)
         {
             NewCrew = CO_SPAWNER.co.SpawnUnitOnShip(NewCrewPrefab, CO.co.PlayerMainDrifter);
-            CO_SPAWNER.co.SetQualityLevelOfCrew(NewCrew, 120*GetNewFriendlyCrewModifier());
+            CO_SPAWNER.co.SetQualityLevelOfCrew(NewCrew, 120f*GetNewFriendlyCrewModifier());
         }
 
         foreach (FactionReputation rep in table.ReputationChanges)
@@ -2234,18 +2234,18 @@ public class CO : NetworkBehaviour
         int ChangeXP = 0;
         int ChangeHP = 0;
 
-        LootLevelMod *= GetEncounterLootModifier();
+        float TotalLootMod = LootLevelMod * GetEncounterLootModifier();
 
         List<FixedString64Bytes> ItemTranslate = new();
         foreach (LootItem item in list)
         {
-            ChangeAmmo+= Mathf.RoundToInt(item.Resource_Ammunition * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
-            ChangeMaterials += Mathf.RoundToInt(item.Resource_Materials * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
-            ChangeSupplies += Mathf.RoundToInt(item.Resource_Supplies * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
-            ChangeTech += Mathf.RoundToInt(item.Resource_Technology * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
-            ChangeHP += Mathf.RoundToInt(item.Resource_Repairs * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod);
-            ChangeXP += Mathf.RoundToInt(item.Resource_XP * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * LootLevelMod * GetCommanderExperienceFactor());
-            if (item.ItemDrop)
+            ChangeAmmo += Mathf.RoundToInt(item.Resource_Ammunition * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * TotalLootMod);
+            ChangeMaterials += Mathf.RoundToInt(item.Resource_Materials * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * TotalLootMod);
+            ChangeSupplies += Mathf.RoundToInt(item.Resource_Supplies * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * TotalLootMod);
+            ChangeTech += Mathf.RoundToInt(item.Resource_Technology * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * TotalLootMod);
+            ChangeHP += Mathf.RoundToInt(item.Resource_Repairs * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * TotalLootMod);
+            ChangeXP += Mathf.RoundToInt(item.Resource_XP * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * TotalLootMod * GetCommanderExperienceFactor());
+            if (item.ItemDrop && UnityEngine.Random.Range(0f,1f) < LootLevelMod)
             {
                 ResetWeights();
                 i = 0;
@@ -2274,22 +2274,22 @@ public class CO : NetworkBehaviour
                         PlayerModifier = 1.1f;
                         break;
                     case 4:
-                        PlayerModifier = 1.4f;
+                        PlayerModifier = 1.3f;
                         break;
                     case 5:
-                        PlayerModifier = 1.7f;
+                        PlayerModifier = 1.6f;
                         break;
                     case 6:
-                        PlayerModifier = 2f;
+                        PlayerModifier = 1.8f;
                         break;
                     case 7:
-                        PlayerModifier = 2.3f;
+                        PlayerModifier = 2.0f;
                         break;
                     case >7:
-                        PlayerModifier = 2.6f;
+                        PlayerModifier = 2.2f;
                         break;
                 }
-                int ExtraItemDrops = Mathf.FloorToInt(PlayerModifier * table.MultiplayerLootModifier + UnityEngine.Random.Range(-1f,1f));
+                int ExtraItemDrops = Mathf.FloorToInt(PlayerModifier * LootLevelMod * table.MultiplayerLootModifier + UnityEngine.Random.Range(-1f,1f));
                 for (int i2 = 0; i2 < ExtraItemDrops; i2++)
                 {
                     Debug.Log($"Multiplayer item drop: {MultiPlayers}");

@@ -735,6 +735,7 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         if (!GetVoiceHandler()) return;
         if (IsPlayer()) return;
+        if (isDead()) return;
         if (UnityEngine.Random.Range(0f, 1f) > Chance) return;
         if (!GetVoiceHandler().HasPriority(pri)) return;
         List<Voiceline> Voices = GetVoiceHandler().GetVoicelist().GetVoicelines(typ);

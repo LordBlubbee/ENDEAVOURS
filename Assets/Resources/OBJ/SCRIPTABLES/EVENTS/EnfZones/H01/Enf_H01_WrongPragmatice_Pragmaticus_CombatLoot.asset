@@ -22,7 +22,7 @@ MonoBehaviour:
     Resource_XP: 20
     ItemDrop: {fileID: 11400000, guid: 0a70c805b4206b04dad2f4c4d74456c6, type: 2}
   MultiplayerLootList: {fileID: 11400000, guid: 0a70c805b4206b04dad2f4c4d74456c6, type: 2}
-  MultiplayerLootModifier: 1
+  MultiplayerLootModifier: 0.8
   ReputationChanges: []
   RecruitCrewmembers: []
   TotalLootDrops: 4

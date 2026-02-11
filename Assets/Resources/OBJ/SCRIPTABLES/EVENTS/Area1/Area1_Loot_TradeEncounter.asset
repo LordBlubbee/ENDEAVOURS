@@ -28,7 +28,7 @@ MonoBehaviour:
   TotalLootDrops: 0
   RandomLoot: []
   ShopDrops:
-  - DropList: {fileID: 11400000, guid: e6ed3e146d833c0498e18f44c7c10bb6, type: 2}
+  - DropList: {fileID: 11400000, guid: 000983790ec19f9469993b1480147d54, type: 2}
     MinimumShopDrops: 6
     MaximumShopDrops: 9
   - DropList: {fileID: 11400000, guid: eecfa057e4df4e14c8df740dc30e518c, type: 2}

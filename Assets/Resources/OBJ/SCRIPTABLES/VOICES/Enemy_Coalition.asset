@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10f9c823a3e012d4c8618b82635a95df, type: 3}
+  m_Name: Enemy_Coalition
+  m_EditorClassIdentifier: 
+  VCX_FirstEngage:
+  - VoiceTex: For the Coalition!
+    Style: 3
+  - VoiceTex: For the Nomaden!
+    Style: 3
+  - VoiceTex: I've got sight on the enemy. Attack!
+    Style: 3
+  - VoiceTex: We fight for freedom and peace!
+    Style: 3
+  - VoiceTex: They're here! Show them the might of our arts!
+    Style: 3
+  VCX_InCombat:
+  - VoiceTex: You're going down!
+    Style: 3
+  - VoiceTex: For the Nomaden!
+    Style: 3
+  - VoiceTex: My aim is true!
+    Style: 3
+  - VoiceTex: Guided by the Ancestors, I strike!
+    Style: 3
+  - VoiceTex: MY FAITH IS UNWAVERING!
+    Style: 2
+  - VoiceTex: DIE!
+    Style: 2
+  - VoiceTex: YOU SHALL FALL!
+    Style: 2
+  VCX_Skirmishing:
+  - VoiceTex: Maneuvering out, cover me!
+    Style: 3
+  - VoiceTex: I'm going in, cover me!
+    Style: 3
+  - VoiceTex: March to glory!
+    Style: 3
+  - VoiceTex: For glory! Ancestors heed me!
+    Style: 3
+  VCX_Retreating:
+  - VoiceTex: I'm falling back! I need a healer!
+    Style: 3
+  - VoiceTex: Requesting aid! Wounded...
+    Style: 3
+  - VoiceTex: Falling back! Falling back!
+    Style: 3
+  - VoiceTex: Retreating now! Help!
+    Style: 3
+  VCX_Repairing:
+  - VoiceTex: I'm starting repairs here!
+    Style: 0
+  - VoiceTex: Engaging repairs...
+    Style: 0
+  - VoiceTex: Systems damaged! Administering repairs...
+    Style: 0
+  - VoiceTex: Critical damage! I'm fixing this...
+    Style: 0
+  VCX_Healing:
+  - VoiceTex: Here, take this medkit!
+    Style: 0
+  - VoiceTex: Let me help you. Here...
+    Style: 0
+  - VoiceTex: The Ancestors will not let you die today!
+    Style: 0
+  - VoiceTex: You are still needed. Get up, warrior!
+    Style: 3
+  VCX_Boarding:
+  - VoiceTex: Boarding action!
+    Style: 0
+  - VoiceTex: I'm going in!
+    Style: 0
+  - VoiceTex: Cover me, I'm moving in!
+    Style: 3
+  - VoiceTex: For the Coalition!
+    Style: 3
+  VCX_ReadyingForBattle:
+  - VoiceTex: The enemy is near. We shall succeed!
+    Style: 0
+  - VoiceTex: I pray for our glory. Ready for battle!
+    Style: 0
+  - VoiceTex: We will fight for our freedom!
+    Style: 0
+  - VoiceTex: We must fight! We will fight!
+    Style: 3
+  - VoiceTex: Gather your courage, warriors. Today, we strike!
+    Style: 3
+  - VoiceTex: Let the Ancestors know our path to glory today!
+    Style: 3
+  VCX_Downed:
+  - VoiceTex: I'm... Done for...
+    Style: 1
+  - VoiceTex: For the... Ancestors...
+    Style: 1
+  - VoiceTex: My people... Will live on...
+    Style: 1
+  - VoiceTex: Freedom...
+    Style: 1
+  - VoiceTex: My spirit... Goes on...
+    Style: 1
+  - VoiceTex: I can see... The ocean...
+    Style: 1
+  VCX_Surrendering: []
+  VCX_Formation:
+  - VoiceTex: Battle formation!
+    Style: 3
+  - VoiceTex: Stick together!
+    Style: 3
+  - VoiceTex: Rally to me!
+    Style: 3
+  VCX_PrepareCharge:
+  - VoiceTex: Ready to charge!
+    Style: 3
+  - VoiceTex: Stick together!
+    Style: 3
+  - VoiceTex: Rally to me!
+    Style: 3
+  VCX_Charge:
+  - VoiceTex: CHARGE!!!
+    Style: 1
+  - VoiceTex: FOR THE CLANS!!!
+    Style: 1
+  - VoiceTex: FOR THE NOMADEN!!!
+    Style: 1
+  - VoiceTex: TO SEE THE OCEAN ONCE MORE!!!
+    Style: 1
+  VCX_SalutePlayer: []
+  VCX_SalutePlayer_EasyVictory: []
+  VCX_SalutePlayer_HardVictory: []
+  VCX_SalutePlayer_Worried: []
+  VCX_SalutePlayer_LowAmmo: []
+  VCX_SalutePlayer_LowSupplies: []
+  VCX_SalutePlayer_Promotion: []
+  TargetedConversations: []
+  GenericConversations: []

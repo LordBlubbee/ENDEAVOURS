@@ -188,5 +188,130 @@ MonoBehaviour:
     Style: 0
   - VoiceTex: All is green. New equipment is looking good. Thank you, sir!
     Style: 0
-  TargetedConversations: []
+  TargetedConversations:
+  - Target:
+    - {fileID: 11400000}
+    Parts:
+    - Voice:
+        VoiceTex: Stipulation 33-45-01 "Fashion Index" dictates that you are dressed
+          well today.
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: I trust all is well?
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: Mentals are green, yes. Thank you for the checkup.
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: It is important to maintain civilized standards through our mission.
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: Indeed. May all go well.
+        Style: 0
+      IsPersonA: 1
+  - Target:
+    - {fileID: 11400000}
+    Parts:
+    - Voice:
+        VoiceTex: The Bakuto have apparently laid siege on the outer Executiis!
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: Many Peregrini have joined their cause as well. Don't they see
+          they disrupt unity?
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: Let us hope the Classi of the Invictus hold them off.
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: With some luck, should our mission succeed, the Bakuto will stop.
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: Indeed. Let us hope.
+        Style: 0
+      IsPersonA: 1
+  - Target:
+    - {fileID: 11400000}
+    Parts:
+    - Voice:
+        VoiceTex: Have you had a proper breakfast? There's some soup left.
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: Catali-made All-crop broth. Index +22 nutritional.
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: An index 22? Really? I had no idea.
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: I'll have a taste myself, soon. Thank you.
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: No problem.
+        Style: 0
+      IsPersonA: 1
+  - Target:
+    - {fileID: 11400000}
+    Parts:
+    - Voice:
+        VoiceTex: Colleague. I am bored. Do you play chess?
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: Coalition standard? Yes, I do.
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: I'll go as white. Pawn to d4.
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: Pawn to d5.
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: Rider to f3.
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: Shaman to f5.
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: ...Fascinating. I should calculate the next move.
+        Style: 0
+      IsPersonA: 0
+  - Target:
+    - {fileID: 11400000}
+    Parts:
+    - Voice:
+        VoiceTex: Colleague. Have your weapons been tested?
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: Four days ago. I might be tardy...
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: I'll help you with the check-up. Here...
+        Style: 0
+      IsPersonA: 1
+    - Voice:
+        VoiceTex: Thank you. It's good to have a fellow Republican on board.
+        Style: 0
+      IsPersonA: 0
+    - Voice:
+        VoiceTex: It helps stick to routine.
+        Style: 0
+      IsPersonA: 0
   GenericConversations: []

@@ -32,11 +32,11 @@ MonoBehaviour:
     Style: 3
   - VoiceTex: Ancestors watch over me!
     Style: 3
-  - VoiceTex: FOR THE ENDEAVOUR!
+  - VoiceTex: FER THE ENDEAVOUR!
     Style: 2
-  - VoiceTex: FOR THE CLANS!
+  - VoiceTex: FER THE CLANS!
     Style: 2
-  - VoiceTex: FOR FREEDOM!
+  - VoiceTex: FER FREEDOM!
     Style: 2
   VCX_Skirmishing:
   - VoiceTex: Stand still where I can see ya, fool!
@@ -134,7 +134,7 @@ MonoBehaviour:
   - VoiceTex: TO SEE THE OCEAN ONCE MORE!!!
     Style: 1
   VCX_SalutePlayer:
-  - VoiceTex: Ready for battle, sir!
+  - VoiceTex: Ready fer battle, sir!
     Style: 0
   - VoiceTex: I'm itchin' fer a fight!
     Style: 0

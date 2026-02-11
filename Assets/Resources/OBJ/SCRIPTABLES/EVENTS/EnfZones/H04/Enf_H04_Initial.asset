@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_H04_Initial
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: The purple skies give way to nothing but emptiness. We travel the distance,
+      making significant progress on our travels towards Nexus Point.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  - BaseText: However, suddenly, a signal is detected. Despite our stealth, we have
+      been detected by a nearby outpost. Unregistered and in the middle of nowhere.
+      Identification in progress...
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  - BaseText: The area appears to be a military resupply point. The vessel docked,
+      however, are Nomaden transport vessels of many affiliations.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  - BaseText: Warning! The platform has sent out a distress signal and is hailing
+      us!
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  - BaseText: Stop yourselves, fool. You are the Starlight Endeavour vessel. We know
+      you. You will die here.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 5a28b60138a32ef4ca104943cc75855b, type: 2}
+    Alternatives: []
+  - BaseText: Our steel will hunt you down to the ends of our planet. Stop now, and
+      your death might be painless.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 5a28b60138a32ef4ca104943cc75855b, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: The Insurrection is stirring the flames of war between the Pragmaticus
+        and Nomaden here. We will destroy your outpost before you can try!
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 11400000, guid: fac9558fb61f2c94fbc7e26338c6b210, type: 2}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: Let's see how far your reach truly is, Bakuto. We seek no conflict.
+        Leave us be!
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 11400000, guid: e7802718ae119b04cbc44c5b13f2db82, type: 2}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: <color=yellow>[Bakuto] Comrades! Do you not see we both fight to
+        be free of the Republic's assimilation? We know not what you have been told,
+        but surely, we can trade, and all benefit.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites:
+    - {fileID: 11400000, guid: 8b1a682f2e3c2ee41bcca0ce84739a8a, type: 2}
+    DialogResult: {fileID: 11400000, guid: fac9558fb61f2c94fbc7e26338c6b210, type: 2}
+    AlternativeResults:
+    - ReplaceDialog: {fileID: 11400000, guid: c9ccda6706b0b064fafd21c5a0b99203, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: 2aad1f046d385494fb151ecc0a76a04b, type: 2}
+    - ReplaceDialog: {fileID: 11400000, guid: c9ccda6706b0b064fafd21c5a0b99203, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: 09169b93647b3ea42b6e49c798e3764c, type: 2}
+    - ReplaceDialog: {fileID: 11400000, guid: c9ccda6706b0b064fafd21c5a0b99203, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: f4a726ea53451f14cb5bdc1771f8e6a7, type: 2}
+    TriggerEvent: {fileID: 0}

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6713958396d342478460fae2111cc58, type: 3}
+  m_Name: Enf_C04_PragmaticusPlatform
+  m_EditorClassIdentifier: 
+  UniqueName: 
+  ResourceLink: EnfZones/C04
+  InitialSoundtrack: 4
+  CombatSoundtrack: 4
+  InitialMapData: SIGNAL
+  InitialDialog: {fileID: 11400000, guid: 7fc6c9422d096a446aca9576eed928fe, type: 2}
+  BackgroundType: 3
+  WeatherSelectors: 1
+  GateToBiome: {fileID: 0}
+  AlternativeDialogs: []

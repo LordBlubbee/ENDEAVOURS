@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6713958396d342478460fae2111cc58, type: 3}
+  m_Name: Area1_N01_AbandonedCaves
+  m_EditorClassIdentifier: 
+  UniqueName: 
+  ResourceLink: Area1/N01
+  InitialSoundtrack: 1
+  CombatSoundtrack: 1
+  InitialMapData: LAND
+  InitialDialog: {fileID: 11400000, guid: 8a97177aa70713b4fb4ce96e969d9eb3, type: 2}
+  BackgroundType: 3
+  WeatherSelectors: 0
+  GateToBiome: {fileID: 0}
+  AlternativeDialogs: []

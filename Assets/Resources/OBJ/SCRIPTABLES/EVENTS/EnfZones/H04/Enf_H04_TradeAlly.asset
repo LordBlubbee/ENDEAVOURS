@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_H04_TradeAlly
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: Hmmm...
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 5a28b60138a32ef4ca104943cc75855b, type: 2}
+    Alternatives: []
+  - BaseText: ...You speak a rare truth, comrade. You must have found your honour,
+      to join the Endeavour. It seems the goals of the Endeavour might not be entirely
+      what we have been informed of.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 5a28b60138a32ef4ca104943cc75855b, type: 2}
+    Alternatives: []
+  - BaseText: Very well. For your bold words, this platform alone will allow you
+      to dock.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 5a28b60138a32ef4ca104943cc75855b, type: 2}
+    Alternatives: []
+  - BaseText: We have managed to secure a peaceful resolution with the Bakuto Clan,
+      leaders of the mysteriously powerful Insurrection, and head of all anti-Republic
+      sentiment. What can this mean?
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Let us trade.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: 0fc6a40a0c913894ca65e81fd4632a4b, type: 2}

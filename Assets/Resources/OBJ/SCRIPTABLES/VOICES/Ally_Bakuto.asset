@@ -69,7 +69,7 @@ MonoBehaviour:
   VCX_Boarding:
   - VoiceTex: Grapples away!
     Style: 3
-  - VoiceTex: Mvoe out!
+  - VoiceTex: Move out!
     Style: 3
   - VoiceTex: Blades ready! Boarding now!
     Style: 3

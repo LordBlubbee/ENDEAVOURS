@@ -13,62 +13,66 @@ MonoBehaviour:
   m_Name: Enemy_Pragmaticus
   m_EditorClassIdentifier: 
   VCX_FirstEngage:
-  - VoiceTex: Reporting class 3 contact!
+  - VoiceTex: Assailant, you are under arrest. Do not resist!
     Style: 0
-  - VoiceTex: Reporting code 6-8 engagement.
+  - VoiceTex: 5-16. Freeze, freeze!
     Style: 0
-  - VoiceTex: Engaging enemy - requesting cover.
+  - VoiceTex: Suspected Peregrinus, drop your weapons!
     Style: 0
-  - VoiceTex: Threat acknowledged. Violence imminent.
+  - VoiceTex: Assailant. Stand down, or we will be forced to administer force!
     Style: 0
   VCX_InCombat:
   - VoiceTex: In combat!
     Style: 0
   - VoiceTex: Directing attack!
     Style: 0
-  - VoiceTex: Assailant, stand down!
+  - VoiceTex: Pragmatice engaged.
     Style: 0
-  - VoiceTex: Violent action continuing...
+  - VoiceTex: Combat progress undecided.
     Style: 0
   - VoiceTex: Combat code 6-18!
     Style: 0
   - VoiceTex: Combat code 6-11!
     Style: 0
-  - VoiceTex: For the Endeavour! Do not falter!
+  - VoiceTex: Stand down! Repeat, stand down!
     Style: 3
+  - VoiceTex: STOP RESISTING!
+    Style: 2
   VCX_Skirmishing:
-  - VoiceTex: Maneuvering offensively.
+  - VoiceTex: Officer is repositioning.
     Style: 0
-  - VoiceTex: Forward engage.
+  - VoiceTex: Acknowledge 6-12.
     Style: 0
-  - VoiceTex: Attacking- requesting assistance!
+  - VoiceTex: Officer reports 6-22, imminent.
     Style: 3
-  - VoiceTex: Pushing advantage.
+  - VoiceTex: Pushing suspects.
+    Style: 0
+  - VoiceTex: Apprehending suspects.
     Style: 0
   VCX_Retreating:
-  - VoiceTex: I'm- I'm wounded, retreating!
+  - VoiceTex: Vitals low, falling back.
     Style: 1
-  - VoiceTex: Vitals low, falling back...
+  - VoiceTex: Requesting immediate medical aid!
     Style: 1
-  - VoiceTex: Falling back!
+  - VoiceTex: 6-1, 6-1, need backup!
     Style: 3
-  - VoiceTex: Acknowledge backwards reposition!
+  - VoiceTex: Pragmatice requesting support!
     Style: 3
   VCX_Repairing:
-  - VoiceTex: Class six damage, repairs commencing!
+  - VoiceTex: Repairing module damage.
     Style: 0
-  - VoiceTex: Requesting engineering support, level four.
+  - VoiceTex: Damage assessment, critical!
     Style: 0
   - VoiceTex: 'Stipulation 77-26-33: Prioritize repairs.'
     Style: 0
-  - VoiceTex: Engaging repairs!
+  - VoiceTex: Engaging combat repair routines!
     Style: 0
   - VoiceTex: Code 6-2, team, acknowledge!
     Style: 0
   VCX_Healing:
   - VoiceTex: Administering aid!
     Style: 0
-  - VoiceTex: Be still, I am supporting you!
+  - VoiceTex: Officer, get behind me!
     Style: 0
   - VoiceTex: Medical action! Requesting cover!
     Style: 0
@@ -82,39 +86,39 @@ MonoBehaviour:
   - VoiceTex: 'Acknowledge: Boarding ensues!'
     Style: 0
   VCX_ReadyingForBattle:
-  - VoiceTex: Preparing for battle...
-    Style: 1
-  - VoiceTex: Readiness level five. Let's go.
+  - VoiceTex: Prepare arrestation teams!
     Style: 0
-  - VoiceTex: Switching to battle-efficient language...
+  - VoiceTex: Pragmatice! Stand ready!
     Style: 0
-  - VoiceTex: Guaranteeing combat focus.
+  - VoiceTex: Gear check complete. Battle formations!
     Style: 0
-  - VoiceTex: Allies, we fight for the Endeavour!
+  - VoiceTex: Pragmatice! On me!
+    Style: 0
+  - VoiceTex: For the Legislates! The Republic is strong!
     Style: 3
   VCX_Downed:
   - VoiceTex: Requesting... Backup...
     Style: 1
   - VoiceTex: Vitals... Red...
     Style: 1
-  - VoiceTex: Need... Assistance...
+  - VoiceTex: Pragmatice... Downed...
     Style: 1
-  - VoiceTex: Verdict red, verdict... Red...
+  - VoiceTex: Unit down, repeat, unit... Down...
     Style: 1
-  - VoiceTex: Unit down! Unit... Down...
+  - VoiceTex: For the... Stipulations...
     Style: 1
   VCX_Surrendering: []
   VCX_Formation:
-  - VoiceTex: Logipedes! Formation!
+  - VoiceTex: Pragmatice! Formation!
     Style: 3
   - VoiceTex: Allies, combat formation code 6-86!
     Style: 3
   - VoiceTex: Performing imminent 6-86!
     Style: 3
-  - VoiceTex: Team, acknowledge 6-86!
-    Style: 3
-  - VoiceTex: Defensive group formation!
-    Style: 3
+  - VoiceTex: PRAGMATICUS IMPERAT!
+    Style: 2
+  - VoiceTex: DEFENSIVE FORMATION!
+    Style: 2
   VCX_PrepareCharge:
   - VoiceTex: Acknowledge charge!
     Style: 3
@@ -125,68 +129,12 @@ MonoBehaviour:
     Style: 2
   - VoiceTex: Pushing aggressively!
     Style: 2
-  VCX_SalutePlayer:
-  - VoiceTex: Level three greetings, sir!
-    Style: 0
-  - VoiceTex: I am ready for what is to come, sir. Rest easy.
-    Style: 0
-  - VoiceTex: Drifter systems check-up complete, nominal, sir!
-    Style: 0
-  - VoiceTex: Sir! The Endeavour's crew stands ready!
-    Style: 0
-  - VoiceTex: May All Be United, sir!
-    Style: 0
-  VCX_SalutePlayer_EasyVictory:
-  - VoiceTex: Damage is of class zero, sir! Ready for action!
-    Style: 0
-  - VoiceTex: Acknowledging complete victory!
-    Style: 0
-  - VoiceTex: Assessment complete. We have won, sir!
-    Style: 0
-  - VoiceTex: Combat operations are over. We are victorious!
-    Style: 0
-  VCX_SalutePlayer_HardVictory:
-  - VoiceTex: Sir. Damage is of class four. Caution red.
-    Style: 0
-  - VoiceTex: Assessment complete... We're... Damaged, sir.
-    Style: 0
-  - VoiceTex: Stipulation 26-25-19 "Drifter Assessment" safety index negative, sir.
-    Style: 0
-  - VoiceTex: We've taken... Quite a beating. Report is red.
-    Style: 1
-  VCX_SalutePlayer_Worried:
-  - VoiceTex: Sir! Hull stability under fifty percent.
-    Style: 0
-  - VoiceTex: I calculated strategic Stipulations, sir. Optimal strategy is caution.
-    Style: 0
-  - VoiceTex: Drifter integrity is comprimised, sir... I find it very worrying.
-    Style: 0
-  - VoiceTex: I hope we'll be alright. Damage is... Level four.
-    Style: 0
-  VCX_SalutePlayer_LowAmmo:
-  - VoiceTex: Acknowledge, ammo stocks under optimum!
-    Style: 0
-  - VoiceTex: We do not make military vessel minimum ammo requirements, sir. Be advised.
-    Style: 0
-  - VoiceTex: Be advised, ammo reserves are limited. Sir.
-    Style: 0
-  VCX_SalutePlayer_LowSupplies:
-  - VoiceTex: We are running low on supplies, Sir. Let us be wary.
-    Style: 0
-  - VoiceTex: Supplies at critical index. We must watch out.
-    Style: 0
-  - VoiceTex: The Endeavour will need at least 100% more supplies, sir.
-    Style: 0
-  VCX_SalutePlayer_Promotion:
-  - VoiceTex: Promotion acknowledged, sir. I will not let you down!
-    Style: 0
-  - VoiceTex: I am proud to be promoted, level three. I shall continue my service!
-    Style: 0
-  - VoiceTex: My promotion is appreciated. Motivation index increased by +18!
-    Style: 0
-  - VoiceTex: Thank you for the promotion, sir. I will work hard!
-    Style: 0
-  - VoiceTex: All is green. New equipment is looking good. Thank you, sir!
-    Style: 0
+  VCX_SalutePlayer: []
+  VCX_SalutePlayer_EasyVictory: []
+  VCX_SalutePlayer_HardVictory: []
+  VCX_SalutePlayer_Worried: []
+  VCX_SalutePlayer_LowAmmo: []
+  VCX_SalutePlayer_LowSupplies: []
+  VCX_SalutePlayer_Promotion: []
   TargetedConversations: []
   GenericConversations: []

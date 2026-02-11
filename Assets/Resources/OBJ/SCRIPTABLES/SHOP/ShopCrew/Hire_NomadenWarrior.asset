@@ -15,7 +15,7 @@ MonoBehaviour:
   ResourcePath: ShopCrew
   Equippable: {fileID: 0}
   AlchemySkillRequirement: 0
-  Weight: 20
+  Weight: 40
   IsCrafted: 0
   DealMaterialsCost: 0
   DealSuppliesCost: 40

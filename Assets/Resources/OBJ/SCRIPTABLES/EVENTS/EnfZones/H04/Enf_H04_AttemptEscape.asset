@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_H04_AttemptEscape
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: You will find yourself to be followed by our mightiest warriors. Run.
+      You cannot hide from our steel.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 5a28b60138a32ef4ca104943cc75855b, type: 2}
+    Alternatives: []
+  - BaseText: Comms are silent. Engines are set to full. We are preparing to use
+      our submerging technology in order to escape the Bakuto.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  - BaseText: However, it is of no use. Before we are able to dive, a Bakuto war-blimp
+      of great speed intercepts us from our starboard position.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
+    Alternatives: []
+  - BaseText: This war-blimp is heavily armed, and its warriors are preparing to
+      board us. We must stand ready to fight them!
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 2b41c72ed0b156a4e8df29cc297a36f7, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Prepare for battle.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: e6ae47bb1e2df4443a4e7b6bdbb5bd5e, type: 2}

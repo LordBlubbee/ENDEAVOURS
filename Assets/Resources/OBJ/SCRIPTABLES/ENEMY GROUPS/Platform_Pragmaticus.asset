@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 486074c487becad41a25117778c346f8, type: 3}
+  m_Name: Platform_Pragmaticus
+  m_EditorClassIdentifier: 
+  AI_Type: 4
+  AI_Group: 1
+  CrewAmountLevel: 1600
+  CrewQualityLevel: 120
+  GuaranteedCrewList:
+  - {fileID: 11400000, guid: 250b701226ffdfb4fbf37d37e106c32c, type: 2}
+  SpawnCrewList:
+  - Weight: 30
+    WeightIncreaseOverQualityGradient: 0
+    MinimumQuality: 0
+    MaximumQuality: 0
+    Crew: {fileID: 11400000, guid: 953bc2b110d847c44abe507671bfec7f, type: 2}
+  - Weight: 20
+    WeightIncreaseOverQualityGradient: 0
+    MinimumQuality: 0
+    MaximumQuality: 0
+    Crew: {fileID: 11400000, guid: fa449f2ac0c144b46ad939122de14978, type: 2}
+  - Weight: 0
+    WeightIncreaseOverQualityGradient: 5
+    MinimumQuality: 300
+    MaximumQuality: 500
+    Crew: {fileID: 11400000, guid: 250b701226ffdfb4fbf37d37e106c32c, type: 2}
+  - Weight: 0
+    WeightIncreaseOverQualityGradient: 20
+    MinimumQuality: 300
+    MaximumQuality: 500
+    Crew: {fileID: 11400000, guid: 3dce5365aaf75124ebf1cb8a45f21d83, type: 2}
+  DrifterQualityLevel: 100
+  SpawnDrifter: []
+  DungeonQualityLevel: 100
+  SpawnDungeon: {fileID: 2173810768608011869, guid: c901d641ccf053e4e8e71d538e2d6b3a, type: 3}
+  SpawnGroupAmountMin: 1
+  SpawnGroupAmountMax: 1
+  SpawnGroupRange: 0
+  SpawnDistanceMin: 0
+  SpawnDistanceMax: 0

@@ -392,9 +392,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797bd89a65d63334697380cbd8c8c7b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   SpeechVoice: {fileID: 8300000, guid: 71ee3d7e939c9af4f9258fdcfe390a9b, type: 3}
-  VoiceListEnemy: {fileID: 11400000, guid: 856d2477bc9d8fc41b8f89e353ea2c66, type: 2}
-  VoiceListAlly: {fileID: 11400000, guid: 856d2477bc9d8fc41b8f89e353ea2c66, type: 2}
+  VoiceListEnemy: {fileID: 11400000, guid: aaafbfa8cce17ca4bb59a7d39d6dee50, type: 2}
+  VoiceListAlly: {fileID: 11400000, guid: 7f02c4ad85b2d1f47ac2cac79a784e9b, type: 2}
 --- !u!1 &3208371297625316648
 GameObject:
   m_ObjectHideFlags: 0

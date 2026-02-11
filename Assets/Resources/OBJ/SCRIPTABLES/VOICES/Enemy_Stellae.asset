@@ -34,7 +34,7 @@ MonoBehaviour:
     Style: 0
   - VoiceTex: Combat code 6-11!
     Style: 0
-  - VoiceTex: For the Endeavour! Do not falter!
+  - VoiceTex: For the Republic! Do not falter!
     Style: 3
   VCX_Skirmishing:
   - VoiceTex: Maneuvering offensively.
@@ -55,9 +55,9 @@ MonoBehaviour:
   - VoiceTex: Acknowledge backwards reposition!
     Style: 3
   VCX_Repairing:
-  - VoiceTex: Class six damage, repairs commencing!
+  - VoiceTex: Undiagnosed damage, repairs commencing!
     Style: 0
-  - VoiceTex: Requesting engineering support, level four.
+  - VoiceTex: Requesting engineering support, level three!
     Style: 0
   - VoiceTex: 'Stipulation 77-26-33: Prioritize repairs.'
     Style: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
   VCX_Healing:
   - VoiceTex: Administering aid!
     Style: 0
-  - VoiceTex: Be still, I am supporting you!
+  - VoiceTex: Be still, you have class 41.b wounds!
     Style: 0
   - VoiceTex: Medical action! Requesting cover!
     Style: 0
@@ -90,7 +90,7 @@ MonoBehaviour:
     Style: 0
   - VoiceTex: Guaranteeing combat focus.
     Style: 0
-  - VoiceTex: Allies, we fight for the Endeavour!
+  - VoiceTex: We shall defend the Stipulation's will!
     Style: 3
   VCX_Downed:
   - VoiceTex: Requesting... Backup...
@@ -125,68 +125,12 @@ MonoBehaviour:
     Style: 2
   - VoiceTex: Pushing aggressively!
     Style: 2
-  VCX_SalutePlayer:
-  - VoiceTex: Level three greetings, sir!
-    Style: 0
-  - VoiceTex: I am ready for what is to come, sir. Rest easy.
-    Style: 0
-  - VoiceTex: Drifter systems check-up complete, nominal, sir!
-    Style: 0
-  - VoiceTex: Sir! The Endeavour's crew stands ready!
-    Style: 0
-  - VoiceTex: May All Be United, sir!
-    Style: 0
-  VCX_SalutePlayer_EasyVictory:
-  - VoiceTex: Damage is of class zero, sir! Ready for action!
-    Style: 0
-  - VoiceTex: Acknowledging complete victory!
-    Style: 0
-  - VoiceTex: Assessment complete. We have won, sir!
-    Style: 0
-  - VoiceTex: Combat operations are over. We are victorious!
-    Style: 0
-  VCX_SalutePlayer_HardVictory:
-  - VoiceTex: Sir. Damage is of class four. Caution red.
-    Style: 0
-  - VoiceTex: Assessment complete... We're... Damaged, sir.
-    Style: 0
-  - VoiceTex: Stipulation 26-25-19 "Drifter Assessment" safety index negative, sir.
-    Style: 0
-  - VoiceTex: We've taken... Quite a beating. Report is red.
-    Style: 1
-  VCX_SalutePlayer_Worried:
-  - VoiceTex: Sir! Hull stability under fifty percent.
-    Style: 0
-  - VoiceTex: I calculated strategic Stipulations, sir. Optimal strategy is caution.
-    Style: 0
-  - VoiceTex: Drifter integrity is comprimised, sir... I find it very worrying.
-    Style: 0
-  - VoiceTex: I hope we'll be alright. Damage is... Level four.
-    Style: 0
-  VCX_SalutePlayer_LowAmmo:
-  - VoiceTex: Acknowledge, ammo stocks under optimum!
-    Style: 0
-  - VoiceTex: We do not make military vessel minimum ammo requirements, sir. Be advised.
-    Style: 0
-  - VoiceTex: Be advised, ammo reserves are limited. Sir.
-    Style: 0
-  VCX_SalutePlayer_LowSupplies:
-  - VoiceTex: We are running low on supplies, Sir. Let us be wary.
-    Style: 0
-  - VoiceTex: Supplies at critical index. We must watch out.
-    Style: 0
-  - VoiceTex: The Endeavour will need at least 100% more supplies, sir.
-    Style: 0
-  VCX_SalutePlayer_Promotion:
-  - VoiceTex: Promotion acknowledged, sir. I will not let you down!
-    Style: 0
-  - VoiceTex: I am proud to be promoted, level three. I shall continue my service!
-    Style: 0
-  - VoiceTex: My promotion is appreciated. Motivation index increased by +18!
-    Style: 0
-  - VoiceTex: Thank you for the promotion, sir. I will work hard!
-    Style: 0
-  - VoiceTex: All is green. New equipment is looking good. Thank you, sir!
-    Style: 0
+  VCX_SalutePlayer: []
+  VCX_SalutePlayer_EasyVictory: []
+  VCX_SalutePlayer_HardVictory: []
+  VCX_SalutePlayer_Worried: []
+  VCX_SalutePlayer_LowAmmo: []
+  VCX_SalutePlayer_LowSupplies: []
+  VCX_SalutePlayer_Promotion: []
   TargetedConversations: []
   GenericConversations: []

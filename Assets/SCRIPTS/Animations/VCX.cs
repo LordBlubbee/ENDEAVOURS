@@ -85,8 +85,8 @@ public class VCX : MonoBehaviour
                 break;
             case VoiceStyles.SHOUT_SHAKE:
                 WriteoutSpeed = 0.017f;
-                ShakeFrame(0.3f * DurationFactor(), 24f * DurationFactor());
-                ShakeRotFrame(3f * DurationFactor(), 16f * DurationFactor());
+                ShakeFrame(0.2f * DurationFactor(), 24f * DurationFactor());
+                ShakeRotFrame(4f * DurationFactor(), 16f * DurationFactor());
                 break;
             case VoiceStyles.SHAKE:
                 WriteoutSpeed = 0.02f;

@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_C03_Initial
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: The terrain opens up into a large valley of crooked peaks and mountaintops,
+      making navigation difficult. We are increasing altitude to compensate.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
+    Alternatives: []
+  - BaseText: A lookout reports visible campfires nearby. It seems that a large Nomaden
+      Clan has stationed themselves in a large cave system nearby! The area around
+      is abundant with natural resources.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
+    Alternatives: []
+  - BaseText: They seem to have no active Drifters nearby. Their people at the entrance
+      stare up at us wearily. We might not be able to get our resources here easily.
+      We are receiving a hail.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
+    Alternatives: []
+  - BaseText: I represent the warriors o' this here Clan. What is yer business here?
+      I swear, if ye be with the Logipedes...
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: f2895f0ec963c244e9bb999bac9369a3, type: 2}
+    Alternatives: []
+  - BaseText: This cave home was ours long before the law-worshippin' bastards ever
+      came outta their mother's wombs. Stay away from us, and we'll stay away from
+      ye!
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: f2895f0ec963c244e9bb999bac9369a3, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Perhaps you would be open for trading? We can dock within your cave
+        system.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 11400000, guid: dc903ff7117b3784790104b9f4cfa8a1, type: 2}
+    AlternativeResults:
+    - ReplaceDialog: {fileID: 11400000, guid: f4c494205ab55f14d898b460a999c794, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: dfe7cc990e92bba42b2498d0810397d5, type: 2}
+    - ReplaceDialog: {fileID: 11400000, guid: f4c494205ab55f14d898b460a999c794, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: b32172dce6df9864b9d23047a4235f27, type: 2}
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: Give us all your supplies and weapons! We need them for our classified
+        mission. We are prepared to meet resistance with violence.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 11400000, guid: 3eb6c8dd3fb42e343932cea27de668f9, type: 2}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: We merely seek to gather some supplies in the fields nearby. Then,
+        we will take our leave.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 11400000, guid: c58ce41e795b9974ca4e7f680dd4a878, type: 2}
+    AlternativeResults:
+    - ReplaceDialog: {fileID: 11400000, guid: f4c494205ab55f14d898b460a999c794, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: dfe7cc990e92bba42b2498d0810397d5, type: 2}
+    - ReplaceDialog: {fileID: 11400000, guid: f4c494205ab55f14d898b460a999c794, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: f4a726ea53451f14cb5bdc1771f8e6a7, type: 2}
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: We will leave immediately and close off communications, captain.
+        We seek no trouble.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: cbd8b5cc701a7a24ca0d291ae1ccae28, type: 2}
+  - ChoiceText:
+      BaseText: '[Reputation] Allies! We are on an important mission. Assistance
+        would be appreciated. In turn, we can help keep the Pragmaticus off your
+        track.'
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites:
+    - {fileID: 11400000, guid: 09169b93647b3ea42b6e49c798e3764c, type: 2}
+    DialogResult: {fileID: 11400000, guid: 6e5ea23c22d0fc14ba35244597b0feb8, type: 2}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}

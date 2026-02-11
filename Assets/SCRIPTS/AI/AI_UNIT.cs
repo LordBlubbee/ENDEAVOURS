@@ -161,7 +161,7 @@ public class AI_UNIT : NetworkBehaviour
     }
     public Vector3 GetTacticTarget()
     {
-        if (AI_TacticFollow != null) return AI_TacticFollow.transform.position;
+        if (AI_TacticFollow != null) AI_TacticTarget = AI_TacticFollow.transform.position;
         if (AI_TacticSpace == null) return AI_TacticTarget;
         return AI_TacticSpace.transform.TransformPoint(AI_TacticTarget);
     }
@@ -570,32 +570,36 @@ public class AI_UNIT : NetworkBehaviour
                         if (UnityEngine.Random.Range(0f, 1f) < 0.1f) Unit.Dash();
                         break;
                     case AI_TACTICS.RETREAT:
-                        point = GetDiagonalPointTowards(EnemyTarget.transform.position, -12f, LeaningRight);
+                    point = GetDiagonalPointTowards(EnemyTarget.transform.position, -12f, LeaningRight);
+                    if (getSpace() != Group.HomeSpace)
+                    {
+                        SetLookTowards(Group.HomeSpace.transform.position, Group.HomeSpace);
+                        point = getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position;
+                        AttemptBoard(Group.HomeSpace);
+                    } else
+                    {
                         if (HaveMedicalRetreat())
                         {
                             float dist = (Group.HomeDrifter.MedicalModule.transform.position - transform.position).magnitude;
                             if (dist > 16f) point = Group.HomeDrifter.MedicalModule.transform.position;
-                            if (getSpace() != Group.HomeSpace) SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
-                            else SetAIMoveTowards(point, Group.HomeSpace);
+                            SetAIMoveTowards(point, Group.HomeSpace);
                             SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
-
+                         
                         }
-                        else
-                        {
-                            if (Dist(EnemyTarget.transform.position) > 24f)
-                            {
-                                Unit.EquipMedkitRpc();
-                                SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
-                            }
-                            else
-                            {
+                    }
+                    if (Dist(EnemyTarget.transform.position) > 24f)
+                    {
+                        Unit.EquipMedkitRpc();
+                        SetLookTowards(EnemyTarget.transform.position, EnemyTarget.Space);
+                    }
+                    else
+                    {
 
-                                EquipAndUseCombatItem(EnemyTarget.transform.position);
-                            }
-                            SetAIMoveTowards(point, EnemyTarget.Space);
-                        }
+                        EquipAndUseCombatItem(EnemyTarget.transform.position);
+                    }
+                    SetAIMoveTowards(point, EnemyTarget.Space);
 
-                        if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();
                         break;
                     case AI_TACTICS.HEAL_ALLIES:
 
@@ -820,13 +824,22 @@ public class AI_UNIT : NetworkBehaviour
                     AI_TacticTimer = 0f;
                     break;
                 }
-                if (Group.HomeDrifter.MedicalModule)
+                if (Group.HomeSpace != getSpace())
                 {
-                    point = Group.HomeDrifter.MedicalModule.transform.position;
-                    if (getSpace() != Group.HomeSpace) SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
-                    else SetAIMoveTowards(point, Group.HomeSpace);
-                    SetLookTowards(point, Group.HomeSpace);
+                    AttemptBoard(Group.HomeSpace);
+                    point = getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position;
+                    SetLookTowards(Group.HomeSpace.transform.position, Group.HomeSpace);
+                    SetAIMoveTowards(point, getSpace());
+                } else
+                {
+                    if (Group.HomeDrifter.MedicalModule)
+                    {
+                        point = Group.HomeDrifter.MedicalModule.transform.position;
+                        SetAIMoveTowards(point, Group.HomeSpace);
+                        SetLookTowards(point, Group.HomeSpace);
+                    }
                 }
+                
              
                 if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();
                 if (Unit.IsEnemyInFront(GetAttackDistance()))
@@ -954,22 +967,22 @@ public class AI_UNIT : NetworkBehaviour
                             {
                                 if (GetVoiceSilenceLevel() > 0f)
                                     AddWeights(4, 15);
-                                else if (GetVoiceSilenceLevel() > 5f)
+                                else if (GetVoiceSilenceLevel() > 8f)
                                     AddWeights(4, 40);
                             }
                         }
                     } else if (ClosestAlly.GetVoiceHandler() != null)
                     {
-                        if (GetVoiceSilenceLevel() > 5f && Dist(ClosestAlly.transform.position) < 7f)
+                        if (GetVoiceSilenceLevel() > 8f && Dist(ClosestAlly.transform.position) < 7f)
                         {
-                            AddWeights(5, 15);
+                            AddWeights(5, 20);
                         }
                     }
                 }
                 switch (GetWeight())
                 {
                     case 0:
-                        SetTactic(AI_TACTICS.SKIRMISH, UnityEngine.Random.Range(4f, 8f));
+                        SetTactic(AI_TACTICS.SKIRMISH, UnityEngine.Random.Range(3f, 6f));
                         break;
                     case 1:
                         PlayVCX(ScriptableVoicelist.VoicelineTypes.HEALING, VoiceHandler.PriorityTypes.NORMAL, 0.7f);
@@ -1022,12 +1035,12 @@ public class AI_UNIT : NetworkBehaviour
                             }
                         }
                         
-                        if (CO.co.PlayerMainDrifter.GetHullDamageRatio() < 0.5f && UnityEngine.Random.Range(0f, 1f) < 0.4f)
+                        if (CO.co.PlayerMainDrifter.GetHealthRelative() < 0.5f && UnityEngine.Random.Range(0f, 1f) < 0.4f)
                         {
                             PlayVCX(ScriptableVoicelist.VoicelineTypes.SALUTE_WORRIED, VoiceHandler.PriorityTypes.NORMAL, 1f);
                             break;
                         }
-                        if (CO.co.PlayerMainDrifter.GetHullDamageRatio() < 0.3f)
+                        if (CO.co.PlayerMainDrifter.GetHealthRelative() < 0.3f)
                         {
                             PlayVCX(ScriptableVoicelist.VoicelineTypes.SALUTE_WORRIED, VoiceHandler.PriorityTypes.NORMAL, 1f);
                             break;

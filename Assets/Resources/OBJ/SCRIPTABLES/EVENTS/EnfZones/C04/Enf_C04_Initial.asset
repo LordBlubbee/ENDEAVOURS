@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_C04_Initial
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: We approach a high-traffic area to find a small Republican ammunitions
+      post standing in the midst of the Nebula.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  - BaseText: Built to sustain the Enforcement Fleet's operations here, this hub
+      allows their Drifters to continue their "reeducation" of the Clan's people
+      in the region.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  - BaseText: Bringing it down would be a major boon for the Clans, and its supplies
+      are plentiful. We are being hailed.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives:
+    - AlternativeText: The platform recognizes us and hails us in a friendly manner.
+      Prerequisites:
+      - {fileID: 11400000, guid: 6101fcb2fe71f354e99af1a16cc00aa6, type: 2}
+  - BaseText: Greetings, unregistered vessel. This platform is off-limits to unregistered
+      personnel. Please identify or change navigation course immediately.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 465731e8ba26e8d43b73a4c9751a4097, type: 2}
+    Alternatives:
+    - AlternativeText: Greetings, registered vessel, and ally of the Republic. This
+        platform is at your service, should you require our support.
+      Prerequisites:
+      - {fileID: 11400000, guid: 6101fcb2fe71f354e99af1a16cc00aa6, type: 2}
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Greetings, Officer. We hope all goes well. We are simply passing
+        through.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 11400000, guid: 1ae551fea6626054dae1796842184a62, type: 2}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: We are commandeering this platform's resources, in name of the Clans.
+        Stand your men down or be slain in battle!
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 11400000, guid: 9a2fbe40aaf2a0f46b5aae229ef31590, type: 2}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: <color=yellow>[Pragmatice] Invoking Stipulation 63-26-68, we have
+        the right to ask for potential trading possibilities.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites:
+    - {fileID: 11400000, guid: 71e95b8ab59cccf499ccb90cd02a459e, type: 2}
+    DialogResult: {fileID: 11400000, guid: 022ee4ad611a8c1449d54d94a5701ba5, type: 2}
+    AlternativeResults:
+    - ReplaceDialog: {fileID: 11400000, guid: ccf4f7f2c520ce44a862f481f8bc71ea, type: 2}
+      Prerequisites:
+      - {fileID: 11400000, guid: 6101fcb2fe71f354e99af1a16cc00aa6, type: 2}
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: <color=yellow>[Reputation] Greetings, allies. Do you have anything
+        that can help us on our mission? Is it possible to trade?
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites:
+    - {fileID: 11400000, guid: 6101fcb2fe71f354e99af1a16cc00aa6, type: 2}
+    DialogResult: {fileID: 11400000, guid: ccf4f7f2c520ce44a862f481f8bc71ea, type: 2}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}

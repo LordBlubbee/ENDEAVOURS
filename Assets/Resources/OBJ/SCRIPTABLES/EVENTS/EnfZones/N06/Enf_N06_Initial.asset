@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Enf_N06_Initial
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: A loud and very clear Flux signal is repeatedly sent throughout these
+      empty lands. It is executed on a public frequency.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  - BaseText: A slow-moving research drifter belonging to the <color=#FF00FF>Ephemeral
+      Eye</color> is located. They greet us when we approach.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ed232e139a291974e8f49af1830ad540, type: 2}
+    Alternatives: []
+  - BaseText: Our dearest, dearest greetings to you, unaffiliated vessel... This
+      here is a research vessel, by the will of the Nebula, we have been sent to
+      assist the impoverished Nomaden here, even before the Pragmaticus came through
+      the lands.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 899128443037b3f4bbe0f6d1ae303917, type: 2}
+    Alternatives: []
+  - BaseText: You are clearly not in need of our aid. However, we are willing to
+      trade with you, yes?
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 899128443037b3f4bbe0f6d1ae303917, type: 2}
+    Alternatives: []
+  - BaseText: A large number of Nomaden visitors are on-board their Drifter. They
+      were in the middle of a religious ceremony when we arrived. No doubt the Ephemerals
+      are helping people- as much as they are attempting to convert people to their
+      extremist religion.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: aedd2691828f8c4418791a2ed6690785, type: 2}
+    Alternatives: []
+  - BaseText: They are sitting on an abundance of resources, and their vessel must
+      have a lot of advanced technology on-board. If we would choose to attack, however,
+      we would bring civilians into the midst of it...
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: aedd2691828f8c4418791a2ed6690785, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: We will gladly trade, Ephemerals.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: You take advantage of the weak in the midst of a crisis? You religious
+        fanatics should not be allowed around here. Let the Nomaden go, and surrender
+        your technology!
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}
+  - ChoiceText:
+      BaseText: <color=yellow>[Ephemeral] Brothers! Sisters! It is a joy to see you
+        in this joyless space. Are any of you willing to follow us on a grand mission?
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites:
+    - {fileID: 11400000, guid: cee0af71f284fba4ba0579e0b3d73207, type: 2}
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 0}
