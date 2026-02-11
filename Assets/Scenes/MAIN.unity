@@ -14754,7 +14754,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ALPHA v1.7 - 09/01/26 - DO NOT DISTRIBUTE - NOT INDICATIVE OF FINAL PRODUCT
+  m_text: ALPHA v1.8 - 11/02/26 - DO NOT DISTRIBUTE - NOT INDICATIVE OF FINAL PRODUCT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3c72511864ca839479db2e59161ca659, type: 2}
   m_sharedMaterial: {fileID: 7073387845928896342, guid: 3c72511864ca839479db2e59161ca659, type: 2}
