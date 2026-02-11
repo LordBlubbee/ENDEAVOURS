@@ -39,8 +39,7 @@ MonoBehaviour:
       VariantTexts: []
       Speaker: {fileID: 0}
       Alternatives: []
-    Prerequisites:
-    - {fileID: 11400000, guid: a34642f5f7c75a14a8dc1e7a4348fa22, type: 2}
+    Prerequisites: []
     DialogResult: {fileID: 0}
     AlternativeResults: []
     TriggerEvent: {fileID: 11400000, guid: c6f4930b69c13db4493155523e8d8e04, type: 2}
