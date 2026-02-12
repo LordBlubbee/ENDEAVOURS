@@ -40,9 +40,7 @@ MonoBehaviour:
   Background_StartingArtifact: {fileID: 0}
   Background_StartingArmor: {fileID: 0}
   Background_ReputationEffect:
-  - Fac: 0
-    Amount: 1
-  - Fac: 2
+  - Fac: 6
     Amount: 1
   - Fac: 7
     Amount: 1

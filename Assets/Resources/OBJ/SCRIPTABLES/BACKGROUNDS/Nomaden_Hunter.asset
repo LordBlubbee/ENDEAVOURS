@@ -33,7 +33,7 @@ MonoBehaviour:
     +1
 
     ALC +1'
-  BackgroundColor: {r: 0.059271906, g: 0.3679245, b: 0, a: 1}
+  BackgroundColor: {r: 0.53795713, g: 0.7264151, b: 0.099368125, a: 1}
   Background_ATT_BONUS: 0000000001000000020000000000000000000000000000000100000000000000
   Background_StartingWeapon: {fileID: 11400000, guid: e59a1c2997ccefe469aab1d66e0ff5a3, type: 2}
   Background_StartingWeapon2: {fileID: 0}

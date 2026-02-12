@@ -18,10 +18,10 @@ public class GamerTag : MonoBehaviour
         //
         Name.text = str;
         Name.color = col;
+        if (trans.GetFaction() != 1) Name.text = "";
 
         if (Crew) return;
 
-        if (trans.GetFaction() != 1) Name.text = "";
         Crew = trans;
         FollowObject = trans;
         FollowObjectRef = trans.transform.gameObject;

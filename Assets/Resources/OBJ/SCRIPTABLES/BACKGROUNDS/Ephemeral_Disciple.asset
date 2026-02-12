@@ -42,7 +42,7 @@ MonoBehaviour:
   Background_ReputationEffect:
   - Fac: 3
     Amount: 1
-  - Fac: 7
+  - Fac: 6
     Amount: -1
   - Fac: 5
     Amount: -1
