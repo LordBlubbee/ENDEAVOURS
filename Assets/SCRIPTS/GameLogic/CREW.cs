@@ -1783,7 +1783,7 @@ public class CREW : NetworkBehaviour, iDamageable
             //We are dead
             if (!isDeadForever())
             {
-                //We are bleeding out...
+                //We are bleeding out and can still be healed...
                 BleedingTime.Value -= CO.co.GetWorldSpeedDelta();
                 if (CO.co.IsSafe() && GetFaction() == 1) BleedingTime.Value = -1;
                 if (BleedingTime.Value < 0)
@@ -1797,13 +1797,29 @@ public class CREW : NetworkBehaviour, iDamageable
                         if (CO.co.CanRespawn(this) && GetFaction() == 1)
                         {
                             DeadForever.Value = true;
-                            int LoseAmount = IsPlayer() ? 20 : 10;
-                            CO.co.Resource_Supplies.Value -= LoseAmount;
-                            CO_SPAWNER.co.SpawnWordsRpc($"<color=red>-{LoseAmount} SUPPLIES</color>", HomeDrifter.MedicalModule.transform.position);
+                            if (CO.co.IsInDungeonToRevive(this))
+                            {
+                                int LoseAmount = IsPlayer() ? 20 : 10;
+                                CO.co.Resource_Supplies.Value -= LoseAmount;
+                                CO_SPAWNER.co.SpawnWordsRpc($"<color=red>-{LoseAmount} SUPPLIES</color>", HomeDrifter.MedicalModule.transform.position);
+                            }
                             TeleportCrewMember(HomeDrifter.MedicalModule.transform.position + new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-3f, 3f)), HomeDrifter.Space);
                         }
                     }
                     BleedingTime.Value = 0;
+                }
+            }
+            else if (isForceReviving)
+            {
+                if (!CO.co.IsSafe())
+                {
+                    BleedingTime.Value -= CO.co.GetWorldSpeedDelta();
+                    if (BleedingTime.Value < -20 || CO.co.IsSafe())
+                    {
+                        DeadForever.Value = false;
+                        SetAlive();
+                        Heal(GetMaxHealth());
+                    }
                 }
             }
             else if (HomeDrifter)
@@ -1830,19 +1846,7 @@ public class CREW : NetworkBehaviour, iDamageable
                     //Bleeding time is stuck on zero
                     BleedingTime.Value = 0;
                 }
-            } else if (isForceReviving)
-            {
-                if (!CO.co.IsSafe())
-                {
-                    BleedingTime.Value -= CO.co.GetWorldSpeedDelta();
-                    if (BleedingTime.Value < -20 || CO.co.IsSafe())
-                    {
-                        DeadForever.Value = false;
-                        SetAlive();
-                        Heal(GetMaxHealth());
-                    }
-                }
-            }
+            } 
         }
         DamageHealingUpdate();
     }

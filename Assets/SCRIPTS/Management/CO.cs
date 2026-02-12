@@ -1834,11 +1834,10 @@ public class CO : NetworkBehaviour
     {
         return CurrentDungeon;
     }
-
     public bool IsInDungeonToRevive(CREW un)
     {
         if (un.GetHomeDrifter() == null) return false;
-        return GetDungeon() && un.Space != un.GetHomeDrifter().Space;
+        return GetDungeon() && un.Space != un.GetHomeDrifter().Space && !CO.co.IsSafe();
     }
     public bool CanRespawn(CREW un)
     {
@@ -1846,10 +1845,13 @@ public class CO : NetworkBehaviour
         {
             return un.GetFaction() == 1;
         }
-        if (un.GetHomeDrifter()) if (un.GetHomeDrifter().MedicalModule.IsDisabled()) return false;
+        if (un.GetHomeDrifter())
+        {
+            if (un.GetHomeDrifter().MedicalModule.IsDisabled()) return false;
+        }
         if (IsInDungeonToRevive(un))
         {
-            return Resource_Supplies.Value >= 20;
+            return Resource_Supplies.Value >= (un.IsPlayer() ? 20 : 10);
         }
         return true;
     }
