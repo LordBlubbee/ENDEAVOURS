@@ -10,7 +10,6 @@ public class CrewAura : MonoBehaviour
         Crew = cr;
         float Scale = Crew.Radius + 0.2f;
         transform.localScale = new Vector3(Scale, Scale, 1);
-        transform.localPosition = new Vector3(0, 0, 0.005f);
         spr = GetComponent<SpriteRenderer>();
         col = Crew.GetFaction() == 1 ? new Color(0,1,0,0.5f) : new Color(1, 0, 0, 0.5f);
         spr.color = col;
@@ -43,6 +42,6 @@ public class CrewAura : MonoBehaviour
             float newAlpha = Mathf.Min(spr.color.a + CO.co.GetWorldSpeedDelta(), TargetAlpha);
             spr.color = new Color(col.r, col.g, col.b, newAlpha);
         }
-        //transform.position = Crew.transform.position + new Vector3(0, 0, 0.005f);
+        transform.position = Crew.transform.position + new Vector3(0, 0, 0.005f);
     }
 }

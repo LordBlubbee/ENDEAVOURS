@@ -595,7 +595,8 @@ public class CO_SPAWNER : NetworkBehaviour
         while (Levelup > 100)
         {
             Levelup -= 100;
-            drifter.MaxHealth += drifterData.HullIncreasePerLevelup;
+            drifter.ExtraMaxHealth.Value += drifterData.HullIncreasePerLevelup;
+            drifter.Heal(drifterData.HullIncreasePerLevelup);
         }
         float Budget = drifterData.BaseWeaponBudgetMod * Quality + 40;
         int Tries = 10;

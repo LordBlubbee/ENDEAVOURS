@@ -19,6 +19,11 @@ public class AI_UNIT : NetworkBehaviour
     bool HasTacticTarget = false;
     private CREW AI_TacticFollow;
     private AI_GROUP Group;
+
+    public AI_GROUP GetGroup()
+    {
+        return Group;
+    }
     private bool HasObjective = false;
     private Vector3 ObjectiveTarget = Vector3.zero;
     private SPACE ObjectiveSpace;
@@ -408,6 +413,7 @@ public class AI_UNIT : NetworkBehaviour
         int EquipItem = 0;
         int i = 0;
         CREW Ally = null;
+        bool EnemyInMeleeRange = Distance < 8 || Unit.IsEnemyInFront(3f);
         foreach (ScriptableEquippableWeapon Weapon in Unit.EquippedWeapons)
         {
             i++;
@@ -427,7 +433,7 @@ public class AI_UNIT : NetworkBehaviour
             switch (Weapon.ToolPrefab.GetUsageAI())
             {
                 case TOOL.ToolAI.MELEE:
-                    if (Distance < 8) EquipItem = i;
+                    if (EnemyInMeleeRange) EquipItem = i;
                     break;
                 case TOOL.ToolAI.RANGED:
                     EquipItem = i;
@@ -481,12 +487,12 @@ public class AI_UNIT : NetworkBehaviour
                 break;
             case TOOL.ToolAI.MELEE_AND_SHIELD:
                 SetLookTowards(target, getSpace());
-                if (Distance < 8) Unit.UseItem1Rpc();
+                if (EnemyInMeleeRange) Unit.UseItem1Rpc();
                 else Unit.UseItem2Rpc();
                 break;
             case TOOL.ToolAI.MELEE_LONG_SHIELD:
                 SetLookTowards(target, getSpace());
-                if (Distance < 9) Unit.UseItem1Rpc();
+                if (EnemyInMeleeRange) Unit.UseItem1Rpc();
                 else Unit.UseItem2Rpc();
                 break;
             case TOOL.ToolAI.TARGET_ALLIES:
@@ -517,7 +523,6 @@ public class AI_UNIT : NetworkBehaviour
     {
         if (Group.HomeDrifter)
         {
-
             if (Group.HomeDrifter.MedicalModule) return true;
         }
         return false;
@@ -738,7 +743,7 @@ public class AI_UNIT : NetworkBehaviour
             if (!AttemptBoard(ObjectiveSpace))
             {
                 //Find the nearest boarding point in THIS space to the nearest boarding tile in the OTHER space
-                SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(ObjectiveSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position, getSpace());
+                SetAIMoveTowards(getSpace().GetNearestBoardingGridTransformToPoint(ObjectiveSpace.GetNearestBoardingGridTransformToPoint(ObjectiveTarget).transform.position).transform.position, getSpace());
                 SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
             }
             return;
@@ -835,21 +840,29 @@ public class AI_UNIT : NetworkBehaviour
                 }
                 if (Group.HomeSpace != getSpace())
                 {
+                    if (AttemptBoard(Group.HomeSpace))
+                    {
+                        return true;
+                    }
                     point = getSpace().GetNearestBoardingGridTransformToPoint(Group.HomeSpace.GetNearestBoardingGridTransformToPoint(transform.position).transform.position).transform.position;
                     SetLookTowards(Group.HomeSpace.transform.position, Group.HomeSpace);
                     SetAIMoveTowards(point, getSpace());
-
-                    if (AttemptBoard(Group.HomeSpace)) return true;
-                } else
+                }
+                else
                 {
-                    if (Group.HomeDrifter.MedicalModule)
+                    if (Group.HomeDrifter)
                     {
-                        point = Group.HomeDrifter.MedicalModule.transform.position;
-                        SetAIMoveTowards(point, Group.HomeSpace);
-                        SetLookTowards(point, Group.HomeSpace);
+                        if (Group.HomeDrifter.MedicalModule)
+                        {
+                            point = Group.HomeDrifter.MedicalModule.transform.position;
+                            SetAIMoveTowards(point, Group.HomeSpace);
+                            SetLookTowards(point, Group.HomeSpace);
+                        }
+                    } else
+                    {
+
                     }
                 }
-                
              
                 if (UnityEngine.Random.Range(0f, 1f) < 0.5f) Unit.Dash();
                 if (Unit.IsEnemyInFront(GetAttackDistance()))

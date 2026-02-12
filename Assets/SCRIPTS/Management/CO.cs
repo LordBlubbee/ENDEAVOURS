@@ -675,10 +675,31 @@ public class CO : NetworkBehaviour
         }
     }
 
+    void FilterInvisibleInventory()
+    {
+        if (Drifter_Inventory.Count > 36)
+        {
+            if (Drifter_Inventory[36] != null)
+            {
+                for (int i = 0; i < 36; i++)
+                {
+                    ScriptableEquippable equip = Drifter_Inventory[i];
+                    if (equip == null)
+                    {
+                        Drifter_Inventory[i] = Drifter_Inventory[36];
+                        Drifter_Inventory.RemoveAt(36);
+                        FilterInvisibleInventory();
+                        break;
+                    }
+                }
+            }
+        }
+    }
     IEnumerator PeriodicUpdates()
     {
         while (true)
         {
+            FilterInvisibleInventory();
             foreach (LOCALCO local in GetLOCALCO())
             {
                 if (local.GetPlayer() != null)
@@ -793,15 +814,7 @@ public class CO : NetworkBehaviour
     public void AddInventoryItemRpc(FixedString64Bytes moduleLink)
     {
         //Server only
-        for (int i = 0; i < Drifter_Inventory.Count; i++)
-        {
-            if (Drifter_Inventory[i] == null)
-            {
-                Drifter_Inventory[i] = Resources.Load<ScriptableEquippable>(moduleLink.ToString());
-                return;
-            }
-        }
-        Drifter_Inventory.Add(Resources.Load<ScriptableEquippable>(moduleLink.ToString()));
+        AddInventoryItem(Resources.Load<ScriptableEquippable>(moduleLink.ToString()));
     }
     public void AddInventoryItem(ScriptableEquippable equip)
     {

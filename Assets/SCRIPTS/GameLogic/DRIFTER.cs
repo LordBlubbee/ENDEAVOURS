@@ -57,6 +57,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     [Header("STATS")]
     public bool IsLoon;
     public float MaxHealth = 2500f;
+    [NonSerialized] public NetworkVariable<float> ExtraMaxHealth = new();
     public float RadiusX = 60f;
     public float RadiusY = 45f;
     public float MovementSpeed = 5;
@@ -316,7 +317,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
     }
     public void Heal(float fl)
     {
-        CurHealth.Value = Mathf.Min(MaxHealth, CurHealth.Value + fl);
+        CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
     }
 
     public void SetHealth(float health)
@@ -537,7 +538,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
 
     public float GetMaxHealth()
     {
-        return MaxHealth;
+        return MaxHealth + ExtraMaxHealth.Value;
     }
 
     public float GetHealthRelative()

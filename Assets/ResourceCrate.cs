@@ -40,7 +40,6 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
         CurHealth.Value = Mathf.Clamp(CurHealth.Value - fl, 0, GetMaxHealth());
         if (CurHealth.Value <= 0)
         {
-            DestructionRpc();
             GainMaterials();
 
             if (DestructionRadius > 0)
@@ -56,6 +55,7 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
                     }
                 }
             }
+            DestructionRpc();
             RemoveCrate();
         }
         CO_SPAWNER.co.SpawnDMGRpc(fl, transform.position);
@@ -133,11 +133,9 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
 
     public void RemoveCrate()
     {
-        Debug.Log($"Crate Children: {transform.childCount}");
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
-            Debug.Log($"Despawning child object of ResourceCrate {child.name}");
             NetworkObject ob = child.GetComponent<NetworkObject>();
             if (ob) ob.Despawn();
         }

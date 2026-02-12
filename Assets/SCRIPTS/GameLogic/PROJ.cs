@@ -124,6 +124,7 @@ public class PROJ : NetworkBehaviour
                 AltitudeRemaining = 999;
                 if (AltitudeExplodeEarly || hasHitTarget)
                 {
+                    isActive = false;
                     if (ImpactSFX.Length > 0) ImpactSFXRpc();
                     BulletImpact(); 
                 }
@@ -204,13 +205,13 @@ public class PROJ : NetworkBehaviour
             {
                 hasHitTarget = true;
                 AttackDamage *= 0.7f;
+                return;
             }
             else if (StickToWalls)
             {
                 if (ImpactSFX.Length > 0) ImpactSFXRpc();
                 isActive = false;
-                NetworkObject NetCheck = collision.GetComponent<NetworkObject>();
-                if (NetCheck != null) transform.SetParent(collision.transform);
+                transform.SetParent(collision.transform);
                 if (ImpactVFX) ImpactVFXRpc();
                 ExpireSlowlyRpc();
                 return;

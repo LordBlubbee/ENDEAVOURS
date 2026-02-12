@@ -174,7 +174,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     [Header("STATS")]
     public float MaxHealth = 100f;
    // public float HitboxRadius = 16f;
-    [NonSerialized] public NetworkVariable<int> Faction;
+    [NonSerialized] public NetworkVariable<int> Faction = new();
     [NonSerialized] public NetworkVariable<bool> isDisabled = new();
     [NonSerialized] public NetworkVariable<bool> PermanentlyDead = new();
     [NonSerialized] public NetworkVariable<float> ExtraMaxHealth = new();

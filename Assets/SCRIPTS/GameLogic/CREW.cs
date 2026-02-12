@@ -1855,6 +1855,14 @@ public class CREW : NetworkBehaviour, iDamageable
     public void ForceRevive() {
         isForceReviving = true;
         BleedingTime.Value = -10;
+
+        if (GetAI())
+        {
+            if (GetAI().GetGroup().AI_Objective == AI_GROUP.AI_OBJECTIVES.DORMANT)
+            {
+                GetAI().GetGroup().ReturnUnitToDuty(GetAI());
+            }
+        }
     }
     public void CancelRevive()
     {

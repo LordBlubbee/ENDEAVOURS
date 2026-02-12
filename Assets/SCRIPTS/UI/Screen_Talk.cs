@@ -242,6 +242,11 @@ public class Screen_Talk : MonoBehaviour
         CurrentPage++;
         UpdateData();
     }
+
+    public void LastPage()
+    {
+        while (!CO_STORY.co.IsLastMainStoryText(CurrentPage)) CurrentPage++;
+    }
     public void PreviousPage() {
         if (CurrentPage < 1) return;
         CurrentPage--; UpdateData(); 

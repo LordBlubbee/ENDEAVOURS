@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4af8441bd33cbf54196ce825168d3493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsObjectUnder: 0
   localX: 1.1
   localY: 0
   localRot: 0
@@ -113,6 +114,7 @@ MonoBehaviour:
   - {fileID: 0}
   AI: 1
   isConsumable: 0
+  DashResetsCooldown: 1
   CrosshairSprite: {fileID: 0}
   CrosshairMaxRange: 999
   CrosshairMinRange: -1

@@ -125,7 +125,7 @@ public class DUNGEON : NetworkBehaviour
             }
             i++;
         }
-        if (BackgroundObjectPossibilities.Count > 0)
+        if (BackgroundObjectPossibilities.Count > 0 && IsServer)
         {
             foreach (WalkableTile tile in Space.RoomTiles)
             {

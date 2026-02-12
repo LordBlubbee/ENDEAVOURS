@@ -71,6 +71,16 @@ public class AI_GROUP : MonoBehaviour
     }
 
     private List<AI_UNIT> UnitListPatrollers = new();
+
+    public void ReturnUnitToDuty(AI_UNIT un)
+    {
+        if (UnitListPatrollers.Contains(un)) un.SetTactic(AI_UNIT.AI_TACTICS.PATROL, 0);
+        else un.SetTactic(AI_UNIT.AI_TACTICS.DORMANT, 0);
+    }
+    public List<AI_UNIT> GetPatrollers()
+    {
+        return UnitListPatrollers;
+    }
     IEnumerator RunAI()
     {
         /*
@@ -189,6 +199,7 @@ public class AI_GROUP : MonoBehaviour
             }
             if (un.Unit.GetOrderPoint() != Vector3.zero)
             {
+                //Ordered by player
                 un.SetObjectiveTarget(un.Unit.GetOrderPoint(),un.Unit.GetOrderTransform());
                 UsableUnits.Remove(un);
             }
@@ -211,20 +222,20 @@ public class AI_GROUP : MonoBehaviour
         }
         
         List<CREW> Intruders = new List<CREW>(EnemiesInSpace(HomeDrifter.Space));
-        int WantDefenders = Intruders.Count;
-        if (WantDefenders > 0)
+        int WantDefenders = 0;
+        if (Intruders.Count > 0)
         {
             IntruderThreatTimer += 0.5f;
-            WantDefenders += Mathf.FloorToInt(UsableUnits.Count/(IntruderThreatTimer /120f));
+            WantDefenders = Mathf.FloorToInt(UsableUnits.Count*(IntruderThreatTimer /120f));
         } else
         {
             IntruderThreatTimer = 0f;
         }
 
-            int WantMarines = 0;
+        int WantMarines = 0;
         if (AI_Type == AI_TYPES.SHIP_BOARDING)
         {
-            WantMarines = Mathf.FloorToInt(UsableUnits.Count*0.6f);
+            WantMarines = Mathf.FloorToInt(UsableUnits.Count*0.4f);
         }
 
         Vector3 PointOfInterest;
@@ -254,6 +265,9 @@ public class AI_GROUP : MonoBehaviour
             {
                 WantMarines--;
                 Closest = GetClosestUnitInGroup(EnemyDrifter.transform.position, UsableUnits);
+                PointOfInterest = EnemyDrifter.Interior.GetRandomGrid().transform.position;
+                Closest.SetObjectiveTarget(PointOfInterest, EnemyDrifter.Interior);
+                /*Closest.SetObjectiveTarget(Closest.getSpace().GetNearestGridToPoint(PointOfInterest).transform, HomeSpace);
                 if (Closest.Unit.GetHealthRelative() < 0.5f)
                 {
                     PointOfInterest = EnemyDrifter.Interior.GetRandomGrid().transform.position;
@@ -262,10 +276,9 @@ public class AI_GROUP : MonoBehaviour
                 {
                     if (Closest.GetObjectiveSpace() != EnemyDrifter.Interior)
                     {
-                        PointOfInterest = EnemyDrifter.Interior.GetRandomGrid().transform.position;
                         Closest.SetObjectiveTarget(Closest.getSpace().GetNearestGridToPoint(PointOfInterest).transform, EnemyDrifter.Interior);
                     }
-                }
+                }*/
                 UsableUnits.Remove(Closest);
                 continue;
             }
@@ -370,14 +383,17 @@ public class AI_GROUP : MonoBehaviour
         }
         UsableUnits = new(Units);
 
-        List<CREW> Intruders = new List<CREW>(EnemiesInSpace(HomeDungeon.Space));
-        int WantDefenders = 0;
+        //List<CREW> Intruders = new List<CREW>(EnemiesInSpace(HomeDungeon.Space));
 
         Vector3 PointOfInterest;
 
         float Readiness = 1f;
-        foreach (AI_UNIT un in UsableUnits)
+        foreach (AI_UNIT un in Units)
         {
+            if (un.Unit.isDead())
+            {
+                UsableUnits.Remove(un);
+            }
             if (un.Unit.isDead() || SelectedAttackers.Contains(un))
             {
                 Readiness -= 1f/UsableUnits.Count;
@@ -386,7 +402,7 @@ public class AI_GROUP : MonoBehaviour
         if (Readiness > 0.9f)
         {
             //Prepare to send an attack wave!
-            for (int i = 0; i < Mathf.Min(2 + Mathf.FloorToInt(UsableUnits.Count * UnityEngine.Random.Range(0.3f,0.6f)), UsableUnits.Count); i++)
+            for (int i = 0; i < Mathf.Min(2 + Mathf.FloorToInt(UsableUnits.Count * UnityEngine.Random.Range(0.3f,0.5f)), UsableUnits.Count); i++)
             {
                 AI_UNIT Closest = GetClosestUnitInGroup(HomeDungeon.transform.position, UsableUnits);
                 SelectedAttackers.Add(Closest);
@@ -414,17 +430,7 @@ public class AI_GROUP : MonoBehaviour
         while (UsableUnits.Count > 0)
         {
             AI_UNIT Closest;
-           
-            if (WantDefenders > 0)
-            {
-                PointOfInterest = Intruders[0].transform.position;
-                Closest = GetClosestUnitInGroup(PointOfInterest, UsableUnits);
-                Closest.SetObjectiveTarget(Closest.getSpace().GetNearestGridToPoint(PointOfInterest).transform, HomeSpace);
-                UsableUnits.Remove(Closest);
-                WantDefenders--;
-                continue;
-            }
-           
+
             Closest = UsableUnits[0];
             if (Closest.DistToObjective(Closest.transform.position) < 8) Closest.SetObjectiveTarget(HomeDungeon.Space.GetRandomGrid().transform, HomeSpace);
             UsableUnits.Remove(Closest);
