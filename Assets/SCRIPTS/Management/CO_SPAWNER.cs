@@ -6,6 +6,7 @@ using UnityEngine;
 public class CO_SPAWNER : NetworkBehaviour
 {
     public GamerTag PrefabGamerTag;
+    public CrewAura PrefabCrewAura;
     public Sprite DefaultInventorySprite;
     public TOOL PrefabWrenchLogipedes;
     public TOOL PrefabMedkitLogipedes;
@@ -504,7 +505,7 @@ public class CO_SPAWNER : NetworkBehaviour
             vault.NetworkObject.Spawn();
             vault.transform.SetParent(Dungeon.Space.transform);
             vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;
-            vault.Faction = 0;
+            vault.Faction.Value = 0;
             vault.Init();
             vault.TakeDamage(9999, vault.transform.position, iDamageable.DamageType.TRUE);
             Dungeon.DungeonNetworkObjects.Add(vault.NetworkObject);
@@ -547,7 +548,7 @@ public class CO_SPAWNER : NetworkBehaviour
             vault.NetworkObject.Spawn();
             vault.transform.SetParent(Dungeon.Space.transform);
             vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;
-            vault.Faction = 0;
+            vault.Faction.Value = 0;
             vault.Init();
             vault.TakeDamage(vault.GetMaxHealth() * UnityEngine.Random.Range(0.5f, 0.6f), vault.transform.position, iDamageable.DamageType.TRUE);
             Dungeon.DungeonNetworkObjects.Add(vault.NetworkObject);
@@ -578,7 +579,7 @@ public class CO_SPAWNER : NetworkBehaviour
             vault.NetworkObject.Spawn();
             vault.transform.SetParent(Dungeon.Space.transform);
             vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;
-            vault.Faction = 2;
+            vault.Faction.Value = 2;
             vault.GetComponent<RespawnArea>().SetSpace(Dungeon.Space);
             vault.Init();
             vault.Heal(vault.GetMaxHealth());
@@ -658,8 +659,9 @@ public class CO_SPAWNER : NetworkBehaviour
                 Tries = 10;
             }
         }
-        Budget = drifterData.BaseModuleBudgetMod * 1.2f * Quality + 40;
+        Budget = drifterData.BaseModuleBudgetMod * 1.4f * Quality + 40;
         float TotalBudget = Budget;
+        float MinimumArmorMoney = Budget * 0.25f;
         Tries = 10;
         while (Budget > 0)
         {
@@ -672,19 +674,20 @@ public class CO_SPAWNER : NetworkBehaviour
             switch (AmountOfNonArmorModules)
             {
                 case 0:
-                    ChanceForNewModule = 0.4f;
+                    ChanceForNewModule = 0.3f;
                     break;
                 case 1:
-                    ChanceForNewModule = 0.3f;
+                    ChanceForNewModule = 0.2f;
                     break;
                 case 2:
-                    ChanceForNewModule = 0.3f;
+                    ChanceForNewModule = 0.1f;
                     break;
                 default:
                     ChanceForNewModule = 0f;
                     break;
             }
             float Cost;
+           
             if (UnityEngine.Random.Range(0f, 1f) < ChanceForNewModule)
             {
                 ScriptableEquippableModule equip = drifterData.EquippableModules[UnityEngine.Random.Range(0, drifterData.EquippableModules.Count)];
@@ -701,7 +704,17 @@ public class CO_SPAWNER : NetworkBehaviour
             }
             else
             {
-                Module upgrade = drifter.Interior.GetNonWeaponModules()[UnityEngine.Random.Range(0, drifter.Interior.GetNonWeaponModules().Count)];
+                List<Module> list;
+             
+                if (MinimumArmorMoney > 30f)
+                {
+                    list = drifter.Interior.GetArmorModules();
+                    if (list.Count == 0) list = drifter.Interior.GetNonWeaponModules();
+                } else
+                {
+                    list = drifter.Interior.GetNonWeaponModules();
+                }
+                Module upgrade = list[UnityEngine.Random.Range(0, list.Count)];
                 Cost = 0.9f * (upgrade.ModuleUpgradeMaterials[upgrade.ModuleLevel.Value] + upgrade.ModuleUpgradeTechs[upgrade.ModuleLevel.Value] * 2);
                 if (Cost > Budget && Tries > 0)
                 {
@@ -710,6 +723,7 @@ public class CO_SPAWNER : NetworkBehaviour
                     continue;
                 }
                 Budget -= Cost;
+                MinimumArmorMoney -= Cost;
                 upgrade.UpgradeLevel();
                 Tries = 10;
             }

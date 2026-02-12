@@ -41,13 +41,13 @@ public class DoorPlaceholder : MonoBehaviour
         mod.SpaceID.Value = space.SpaceID.Value;
         if (Dungeon)
         {
-            mod.Faction = 2;
+            mod.Faction.Value = 2;
             Dungeon.DungeonNetworkObjects.Add(mod.NetworkObject);
-            mod.ExtraMaxHealth.Value = CO.co.GetEncounterDifficultyModifier() * 80f - 50f;
+            mod.ExtraMaxHealth.Value = CO.co.GetEncounterDifficultyModifier() * 60f - 40f;
             mod.Heal(mod.GetMaxHealth());
         } else
         {
-            mod.Faction = Drifter.GetFaction();
+            mod.Faction.Value = Drifter.GetFaction();
             mod.SetHomeDrifter(Drifter);
         }
         mod.Init();

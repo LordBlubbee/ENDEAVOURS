@@ -49,7 +49,7 @@ public class ModuleVengeancePlating : Module
         foreach (var enemy in drifters)
         {
             if ((enemy.transform.position - vec).magnitude > 200) continue;
-            if (enemy.GetFaction() == 0 || enemy.GetFaction() == Faction) continue;
+            if (enemy.GetFaction() == 0 || enemy.GetFaction() == GetFaction()) continue;
             if (enemy.isDead()) continue;
             float dist = (enemy.getPos() - myPos).sqrMagnitude;
             if (dist < minDist)

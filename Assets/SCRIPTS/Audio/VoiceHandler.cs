@@ -91,7 +91,7 @@ public class VoiceHandler : NetworkBehaviour
     }
     private void Update()
     {
-        if (Cooldown > -10f)
+        if (Cooldown > -20f)
         {
             Cooldown -= CO.co.GetWorldSpeedDelta();
         }

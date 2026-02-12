@@ -24,12 +24,12 @@ MonoBehaviour:
   MultiplayerLootList: {fileID: 11400000, guid: 0a70c805b4206b04dad2f4c4d74456c6, type: 2}
   MultiplayerLootModifier: 0.6
   ReputationChanges:
+  - Fac: 1
+    Amount: 2
   - Fac: 7
     Amount: -2
   - Fac: 6
-    Amount: 1
-  - Fac: 1
-    Amount: 2
+    Amount: -1
   RecruitCrewmembers: []
   TotalLootDrops: 2
   RandomLoot:

@@ -103,6 +103,11 @@ public class AI_UNIT : NetworkBehaviour
         ObjectiveSpace = space;
     }
 
+    public void ClearObjective()
+    {
+        HasObjective = false;
+    }
+
     public SPACE GetObjectiveSpace()
     {
         return ObjectiveSpace;
@@ -965,22 +970,22 @@ public class AI_UNIT : NetworkBehaviour
                     {
                         if (HasToReportVictory || HasToReportHardVictory)
                         {
-                            if (GetVoiceSilenceLevel() > 0f && Dist(ClosestAlly.transform.position) < 7f) AddWeights(4, 60);
+                            if (GetVoiceSilenceLevel() > 2f && Dist(ClosestAlly.transform.position) < 7f) AddWeights(4, 60);
                         } else
                         {
                             if (Dist(ClosestAlly.transform.position) < 7f)
                             {
-                                if (GetVoiceSilenceLevel() > 0f)
+                                if (GetVoiceSilenceLevel() > 5f)
                                     AddWeights(4, 15);
-                                else if (GetVoiceSilenceLevel() > 8f)
+                                else if (GetVoiceSilenceLevel() > 15f)
                                     AddWeights(4, 40);
                             }
                         }
                     } else if (ClosestAlly.GetVoiceHandler() != null)
                     {
-                        if (GetVoiceSilenceLevel() > 8f && Dist(ClosestAlly.transform.position) < 7f)
+                        if (GetVoiceSilenceLevel() > 15f && Dist(ClosestAlly.transform.position) < 7f)
                         {
-                            AddWeights(5, 20);
+                            AddWeights(5, 15);
                         }
                     }
                 }
@@ -1022,7 +1027,7 @@ public class AI_UNIT : NetworkBehaviour
                             PlayVCX(ScriptableVoicelist.VoicelineTypes.SALUTE_HARDVICTORY, VoiceHandler.PriorityTypes.GUARANTEE, 1f);
                             break;
                         }
-                        if (CO.co.Resource_Ammo.Value < 30)
+                        if (CO.co.Resource_Ammo.Value < UnityEngine.Random.Range(25, 35))
                         {
                             if (UnityEngine.Random.Range(0f, 1f) < 0.5f)
                             {
@@ -1030,11 +1035,10 @@ public class AI_UNIT : NetworkBehaviour
                                 break;
                             }
                         }
-                        if (CO.co.Resource_Supplies.Value < 30)
+                        if (CO.co.Resource_Supplies.Value < UnityEngine.Random.Range(25,35))
                         {
                             if (UnityEngine.Random.Range(0f, 1f) < 0.5f)
                             {
-
                                 PlayVCX(ScriptableVoicelist.VoicelineTypes.SALUTE_LOWSUPPLIES, VoiceHandler.PriorityTypes.NORMAL, 1f);
                                 break;
                             }
@@ -1380,7 +1384,7 @@ public class AI_UNIT : NetworkBehaviour
         {
             WalkableTile boarding = trt.GetNearestBoardingGridTransformToPoint(transform.position);
           
-            if (Dist(boarding.transform.position) < 40f)
+            if (Dist(boarding.transform.position) < 42f)
             {
                 SetLookTowards(boarding.transform.position, trt); 
                 if (Unit.DefaultToolset == CO_SPAWNER.DefaultEquipmentSet.NONE)
@@ -1590,7 +1594,7 @@ public class AI_UNIT : NetworkBehaviour
         foreach (var enemy in enemies)
         {
             if (!enemy.CanBeTargeted(getSpace())) continue;
-            if (enemy.Faction == Unit.GetFaction()) continue;
+            if (enemy.GetFaction() == Unit.GetFaction()) continue;
             if (enemy is DoorSystem) continue;
             float dist = (enemy.transform.position - myPos).sqrMagnitude;
             if (dist < minDist)
@@ -1610,7 +1614,7 @@ public class AI_UNIT : NetworkBehaviour
         Vector3 myPos = transform.position;
         foreach (var enemy in enemies)
         {
-            if (enemy.Faction != Unit.GetFaction()) continue;
+            if (enemy.GetFaction() != Unit.GetFaction()) continue;
             float dist = (enemy.transform.position - myPos).sqrMagnitude;
             if (dist < minDist)
             {
@@ -1862,7 +1866,7 @@ public class AI_UNIT : NetworkBehaviour
 
     public float GetVoiceSilenceLevel()
     {
-        if (Unit.GetVoiceHandler() == null) return -10f;
+        if (Unit.GetVoiceHandler() == null) return -20f;
         return Unit.GetVoiceHandler().TimeOfSilence();
     }
     public float DistToObjective(Vector3 vec)

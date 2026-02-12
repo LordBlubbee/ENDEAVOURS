@@ -335,6 +335,7 @@ MonoBehaviour:
   RotationDistanceFactor: 4
   RotationBaseSpeed: 45
   BleedOut: 0
+  Radius: 1.3
   ATT_PHYSIQUE:
     m_InternalValue: 2
   ATT_ARMS:
@@ -377,6 +378,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   Unit: {fileID: 5867427934140877094}
   AI_Unit_Type: 1
+  AI_Tactic_Type: 0
 --- !u!1 &4860497760997928518
 GameObject:
   m_ObjectHideFlags: 0

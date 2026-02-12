@@ -33,6 +33,15 @@ public class SPACE : NetworkBehaviour
         modules.AddRange(SystemModules);
         return modules;
     }
+    public List<Module> GetArmorModules()
+    {
+        List<Module> modules = new();
+        foreach (Module mod in SystemModules)
+        {
+            if (mod is ModuleArmor) modules.Add(mod);
+        }
+        return modules;
+    }
 
     public GameObject PrefabWall;
     public GameObject PrefabCorner;
@@ -244,7 +253,7 @@ public class SPACE : NetworkBehaviour
         mod.transform.localPosition = vec;
         mod.transform.Rotate(Vector3.forward, rot);
         mod.SpaceID.Value = SpaceID.Value;
-        mod.Faction = Drifter.GetFaction();
+        mod.Faction.Value = Drifter.GetFaction();
         mod.SetHomeDrifter(Drifter);
 
         Modules.Add(mod);
@@ -326,7 +335,6 @@ public class SPACE : NetworkBehaviour
         }
         return nearestTile;
     }
-
     public List<Vector2> GetGrid()
     {
         return RoomLocations;

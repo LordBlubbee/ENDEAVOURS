@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -301,6 +302,30 @@ public class LOCALCO : NetworkBehaviour
         crew.AddXP(CO.co.Resource_TotalXP.Value - LoadedCharacter.PlayerXPTotal);
         crew.AddXP(LoadedCharacter.PlayerXP);
         crew.SkillPoints.Value += LoadedCharacter.PlayerSkillPoints;
+
+        //Automatically obtain items from the inventory of the Drifter
+        for (int i = 0; i < 3; i++)
+        {
+            if (LoadedCharacter.PlayerWeapons[i] != "")
+            {
+                ScriptableEquippable item = Resources.Load<ScriptableEquippable>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{LoadedCharacter.PlayerWeapons[i]}");
+                if (FindAndRemoveItemInInventory(item)) crew.EquipWeapon(i, (ScriptableEquippableWeapon)item);
+            }
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            if (LoadedCharacter.PlayerArtifacts[i] != "")
+            {
+                ScriptableEquippable item = Resources.Load<ScriptableEquippable>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{LoadedCharacter.PlayerArtifacts[i]}");
+                if (FindAndRemoveItemInInventory(item)) crew.EquipArtifact(i, (ScriptableEquippableArtifact)item);
+            }
+        }
+        if (LoadedCharacter.PlayerArmor!= "")
+        {
+            ScriptableEquippable item = Resources.Load<ScriptableEquippable>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{LoadedCharacter.PlayerArmor}");
+            if (FindAndRemoveItemInInventory(item)) crew.EquipArmor((ScriptableEquippableArtifact)item);
+        }
+
         /*if (LoadedCharacter.PlayerWeapons[0] != "") crew.EquipWeapon(0, Resources.Load<ScriptableEquippableWeapon>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{LoadedCharacter.PlayerWeapons[0]}"));
         if (LoadedCharacter.PlayerWeapons[1] != "") crew.EquipWeapon(1, Resources.Load<ScriptableEquippableWeapon>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{LoadedCharacter.PlayerWeapons[1]}"));
         if (LoadedCharacter.PlayerWeapons[2] != "") crew.EquipWeapon(2, Resources.Load<ScriptableEquippableWeapon>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{LoadedCharacter.PlayerWeapons[2]}"));
@@ -308,6 +333,25 @@ public class LOCALCO : NetworkBehaviour
         if (LoadedCharacter.PlayerArtifacts[1] != "") crew.EquipArtifact(1, Resources.Load<ScriptableEquippableArtifact>($"OBJ/SCRIPTABLES/ITEMS/Artifacts/{LoadedCharacter.PlayerArtifacts[1]}"));
         if (LoadedCharacter.PlayerArtifacts[2] != "") crew.EquipArtifact(2, Resources.Load<ScriptableEquippableArtifact>($"OBJ/SCRIPTABLES/ITEMS/Artifacts/{LoadedCharacter.PlayerArtifacts[2]}"));
         if (LoadedCharacter.PlayerArmor != "") crew.EquipArmor(Resources.Load<ScriptableEquippableArtifact>($"OBJ/SCRIPTABLES/ITEMS/Armor/{LoadedCharacter.PlayerArmor}"));*/
+    }
+
+    bool FindAndRemoveItemInInventory(ScriptableEquippable type)
+    {
+        if (type == null)
+        {
+            Debug.LogError("Error: Item is null");
+            return false;
+        }
+        List<ScriptableEquippable> Inventory = new(CO.co.Drifter_Inventory);
+        foreach (ScriptableEquippable equip in Inventory)
+        {
+            if (type.Equals(equip))
+            {
+                CO.co.Drifter_Inventory.Remove(equip);
+                return true;
+            }
+        }
+        return false;
     }
     public CREW CreatePlayer(string name, Color col, int[] attributes, ScriptableBackground back)
     {
@@ -467,11 +511,11 @@ public class LOCALCO : NetworkBehaviour
                                             else str += "\n<color=green> [F] RELOAD <color=red> [10 AMMO]";
                                             if (Input.GetKeyDown(KeyCode.F))
                                             {
-                                                if (weapon.ReloadingCurrently.Value)
+                                                /*if (weapon.ReloadingCurrently.Value)
                                                 {
                                                     AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
                                                     break;
-                                                }
+                                                }*/
                                                 if (weapon.GetFaction() == 1)
                                                 {
                                                     if (CO.co.Resource_Ammo.Value < 10)

@@ -141,6 +141,7 @@ public class CREW : NetworkBehaviour, iDamageable
     public float RotationDistanceFactor = 4;
     public float RotationBaseSpeed = 90;
     public bool BleedOut = true;
+    public float Radius = 0.8f;
 
     [Header("ATTRIBUTES")]
     [NonSerialized] public NetworkVariable<int> SkillPoints = new NetworkVariable<int>(0); //Not used in initial character creation
@@ -757,7 +758,8 @@ public class CREW : NetworkBehaviour, iDamageable
 
         CharacterNameTag = Instantiate(CO_SPAWNER.co.PrefabGamerTag);
         CharacterNameTag.SetPlayerAndName(this, CharacterName.Value.ToString(), new Color(CharacterNameColor.Value.x, CharacterNameColor.Value.y, CharacterNameColor.Value.z));
-        
+        Instantiate(CO_SPAWNER.co.PrefabCrewAura).SetCrew(this);
+
         if (!IsServer)
         {
             if (CharacterBackgroundLink.Value != "")
@@ -1742,7 +1744,6 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         AnimationController.setAnimation(stat, pr);
     }
-
     public void TeleportCrewMember(Vector3 pos, SPACE spac)
     {
         CO_SPAWNER.co.SpawnTeleportRespawnVFXRpc(transform.position);
@@ -1751,6 +1752,10 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             Space.RemoveCrew(this);
             spac.AddCrew(this);
+        }
+        if (GetAI())
+        {
+            GetAI().ClearObjective();
         }
     }
     private void Update()
@@ -2391,6 +2396,7 @@ public class CREW : NetworkBehaviour, iDamageable
         if (IsServer)
         {
             ModifyHealthMax.Value -= wep.ModifyHealthMax;
+            CurHealth.Value = Mathf.Min(CurHealth.Value, GetMaxHealth());
         }
         ModifyHealthRegen -= wep.ModifyHealthRegen;
         ModifyStaminaMax -= wep.ModifyStaminaMax;
@@ -2578,5 +2584,11 @@ public class CREW : NetworkBehaviour, iDamageable
             }
         }
         return true;
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnVoiceRpc(string dm, VCX.VoiceStyles style)
+    {
+        CO_SPAWNER.co.SpawnVoice(dm, this, style);
     }
 }

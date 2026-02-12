@@ -20,6 +20,8 @@ public class GamerTag : MonoBehaviour
         Name.color = col;
 
         if (Crew) return;
+
+        if (trans.GetFaction() != 1) Name.text = "";
         Crew = trans;
         FollowObject = trans;
         FollowObjectRef = trans.transform.gameObject;
@@ -78,7 +80,7 @@ public class GamerTag : MonoBehaviour
             }
             if (Crew.isDead())
             {
-                if (Crew.BleedingTime.Value == 0) Health.text = $"CANNOT REVIVE";
+                if (Crew.BleedingTime.Value == 0) Health.text = $"BLEEDING";
                 else Health.text = $"BLEEDING: {Crew.BleedingTime.Value.ToString("0")}";
                 Health.color = new Color(1, 0, 0);
                 return;
@@ -86,8 +88,8 @@ public class GamerTag : MonoBehaviour
             switch (Crew.GetTagState())
             {
                 case CREW.TagStates.DORMANT:
-                    Health.text = $"ZZZ";
-                    Health.color = new Color(0.5f, 0, 0.5f);
+                    Health.text = $"ZZZZZ";
+                    Health.color = new Color(0.7f, 0, 0.8f);
                     return;
             }
             Health.text = $"{FollowObject.GetHealth().ToString("0")}/{FollowObject.GetMaxHealth().ToString("0")}";

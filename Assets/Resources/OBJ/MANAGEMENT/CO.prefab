@@ -165,6 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   PrefabGamerTag: {fileID: 7664399197578832526, guid: 13763fc837ffb9840b9462900a539937, type: 3}
+  PrefabCrewAura: {fileID: 7963668381503795396, guid: 567ffc40dd56da843b21af89f175dc5e, type: 3}
   DefaultInventorySprite: {fileID: 2347656569888133005, guid: f23f2b3fa89b0774e9b2ad1ceda60890, type: 3}
   PrefabWrenchLogipedes: {fileID: 8311341897716400573, guid: 2c40e2d5cca7e6244b812f2d75dce46b, type: 3}
   PrefabMedkitLogipedes: {fileID: 8311341897716400573, guid: e24d4a4413d2ea945a81e534377d03a5, type: 3}

@@ -174,7 +174,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     [Header("STATS")]
     public float MaxHealth = 100f;
    // public float HitboxRadius = 16f;
-    [NonSerialized] public int Faction;
+    [NonSerialized] public NetworkVariable<int> Faction;
     [NonSerialized] public NetworkVariable<bool> isDisabled = new();
     [NonSerialized] public NetworkVariable<bool> PermanentlyDead = new();
     [NonSerialized] public NetworkVariable<float> ExtraMaxHealth = new();
@@ -344,7 +344,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         if (type == DamageType.BOMBARDMENT) fl *= OutsideDamageResistance;
         else
         {
-            fl /= 0.9f + (ModuleLevel.Value * 0.1f);
+            fl /= 1f + (ModuleLevel.Value * 0.2f);
         }
         if (fl < 0) return;
             CurHealth.Value -= fl;
@@ -365,7 +365,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     }
     public int GetFaction()
     {
-        return Faction;
+        return Faction.Value;
     }
     public bool CanBeTargeted(SPACE space)
     {

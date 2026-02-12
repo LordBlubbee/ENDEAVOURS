@@ -39,8 +39,8 @@ public class ConvoHandler : MonoBehaviour
             }
             ConversationPart part = Conversation.Parts[Progress];
             Progress++;
-            CO_SPAWNER.co.SpawnVoice(part.Voice.VoiceTex, GetUnit(part), part.Voice.Style);
-            Timer = 2.5f + part.Voice.VoiceTex.Length*0.03f;
+            GetUnit(part).SpawnVoiceRpc(part.Voice.VoiceTex, part.Voice.Style);
+            Timer = 2.7f + part.Voice.VoiceTex.Length*0.03f;
             GetUnit(part).GetVoiceHandler().SetCooldown(Timer + 5f);
         }
     }

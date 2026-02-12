@@ -30,7 +30,7 @@ MonoBehaviour:
     damage +2
 
     <color=red>Movement -10%'
-  ItemIcon: {fileID: 21300000, guid: 93756e9c2a7dfa2408f8c5421fcf24bc, type: 3}
+  ItemIcon: {fileID: 21300000, guid: 3fb09924091b79a4bbc2b825f00bc07d, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Armor/Common_HeavyChain
   ItemResourceIDShort: Common_HeavyChain
   SellMaterials: 8

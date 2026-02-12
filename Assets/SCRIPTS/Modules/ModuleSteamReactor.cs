@@ -10,7 +10,7 @@ public class ModuleSteamReactor : ModuleEffector
     }
     public float GetArmorBoost()
     {
-        return 5f + ModuleLevel.Value* 5f;
+        return 4f + ModuleLevel.Value* 4f;
     }
 
     public GameObject SteamVFXPrefab;
@@ -49,7 +49,7 @@ public class ModuleSteamReactor : ModuleEffector
                 if (mod is ModuleArmor)
                 {
                     ((ModuleArmor)mod).HealArmor(GetArmorBoost()*0.25f);
-                    if (HealArmor < 1) ((ModuleArmor)mod).Heal(GetArmorBoost()*0.5f);
+                    if (HealArmor < 1) ((ModuleArmor)mod).Heal(GetArmorBoost()*1f);
                 }
             }
             if (HealArmor < 1)

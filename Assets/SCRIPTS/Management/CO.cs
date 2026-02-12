@@ -356,31 +356,31 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 0.9f;
                 break;
             case 2:
-                PlayerDiff = 1.05f;
+                PlayerDiff = 1.1f;
                 break;
             case 3:
-                PlayerDiff = 1.2f;
+                PlayerDiff = 1.25f;
                 break;
             case 4:
-                PlayerDiff = 1.3f;
+                PlayerDiff = 1.35f;
                 break;
             case 5:
-                PlayerDiff = 1.4f;
-                break;
-            case 6:
                 PlayerDiff = 1.45f;
                 break;
+            case 6:
+                PlayerDiff = 1.52f;
+                break;
             case 7:
-                PlayerDiff = 1.5f;
+                PlayerDiff = 1.6f;
                 break;
             case 8:
-                PlayerDiff = 1.55f;
+                PlayerDiff = 1.65f;
                 break;
             case 9:
-                PlayerDiff = 1.58f;
+                PlayerDiff = 1.7f;
                 break;
             case 10:
-                PlayerDiff = 1.6f;
+                PlayerDiff = 1.75f;
                 break;
         }
         switch (Difficulty)
@@ -401,6 +401,35 @@ public class CO : NetworkBehaviour
                 break;
         }
         return 1f * ProgressDiff * PlayerDiff * CurrentBiome.BiomeBaseDifficulty;
+    }
+    public float GetInsideScalingDifficulty()
+    {
+        float ProgressDiff = 1f;
+        switch (GetBiomeProgress())
+        {
+            case 0:
+                ProgressDiff = 1f;
+                break;
+            case 1:
+                ProgressDiff = 1.5f;
+                break;
+            case 2:
+                ProgressDiff = 2f;
+                break;
+            case 3:
+                ProgressDiff = 2.5f;
+                break;
+            case 4:
+                ProgressDiff = 3f;
+                break;
+            case 5:
+                ProgressDiff = 3.5f;
+                break;
+            case > 5:
+                ProgressDiff = 4f;
+                break;
+        }
+        return 1f * ProgressDiff * CurrentBiome.BiomeBaseDifficulty;
     }
     public float GetNewFriendlyCrewModifier()
     {
@@ -433,34 +462,34 @@ public class CO : NetworkBehaviour
         switch (GetLOCALCO().Count)
         {
             case 1:
-                PlayerDiff = 1f;
+                PlayerDiff = 0.9f;
                 break;
             case 2:
-                PlayerDiff = 1f;
-                break;
-            case 3:
                 PlayerDiff = 1.1f;
                 break;
-            case 4:
-                PlayerDiff = 1.2f;
-                break;
-            case 5:
+            case 3:
                 PlayerDiff = 1.25f;
                 break;
-            case 6:
-                PlayerDiff = 1.3f;
-                break;
-            case 7:
+            case 4:
                 PlayerDiff = 1.35f;
                 break;
-            case 8:
-                PlayerDiff = 1.4f;
-                break;
-            case 9:
+            case 5:
                 PlayerDiff = 1.45f;
                 break;
+            case 6:
+                PlayerDiff = 1.52f;
+                break;
+            case 7:
+                PlayerDiff = 1.6f;
+                break;
+            case 8:
+                PlayerDiff = 1.65f;
+                break;
+            case 9:
+                PlayerDiff = 1.7f;
+                break;
             case 10:
-                PlayerDiff = 1.5f;
+                PlayerDiff = 1.75f;
                 break;
         }
         return 1f * ProgressDiff * PlayerDiff * CurrentBiome.BiomeBaseDifficulty;
@@ -579,31 +608,31 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 0.75f;
                 break;
             case 2:
-                PlayerDiff = 1f;
+                PlayerDiff = 0.95f;
                 break;
             case 3:
-                PlayerDiff = 1.2f;
+                PlayerDiff = 1.15f;
                 break;
             case 4:
-                PlayerDiff = 1.4f;
+                PlayerDiff = 1.3f;
                 break;
             case 5:
-                PlayerDiff = 1.6f;
+                PlayerDiff = 1.4f;
                 break;
             case 6:
-                PlayerDiff = 1.8f;
+                PlayerDiff = 1.5f;
                 break;
             case 7:
-                PlayerDiff = 1.9f;
+                PlayerDiff = 1.6f;
                 break;
             case 8:
-                PlayerDiff = 2.0f;
+                PlayerDiff = 1.7f;
                 break;
             case 9:
-                PlayerDiff = 2.1f;
+                PlayerDiff = 1.8f;
                 break;
             case 10:
-                PlayerDiff = 2.2f;
+                PlayerDiff = 1.9f;
                 break;
         }
         switch (Difficulty)
@@ -1979,7 +2008,7 @@ public class CO : NetworkBehaviour
             {
                 if (vault.GetHealthRelative() >= 0.5f)
                 {
-                    vault.Faction = 1; //Allied
+                    vault.Faction.Value = 1; //Allied
                     ActivationPercentage += 1f / (float)Vaults.Count;
                     if (!HasStartedDefense && vault.GetHealthRelative() >= 1f)
                     {
@@ -2399,12 +2428,18 @@ public class CO : NetworkBehaviour
     public void SavePlayer(CREW crew)
     {
         dataPlayer play = new dataPlayer();
+        LOCALCO LocalOwner = GetLOCALCO(crew.GetPlayerController());
+        if (LocalOwner == null)
+        {
+            Debug.LogError($"Error: Could not save a player because the owner {crew.GetPlayerController()} does not exist");
+            return;
+        }
 
         play.PlayerName = crew.CharacterName.Value.ToString();
-        play.PlayerOwnerID = LOCALCO.local.PlayerSaveID.Value.ToString();
+        play.PlayerOwnerID = LocalOwner.PlayerSaveID.Value.ToString();
         if (play.PlayerOwnerID == "")
         {
-            Debug.Log("Error: Could not save a player because they had an invalid saveID.");
+            Debug.LogError("Error: Could not save a player because they had an invalid saveID.");
             return;
         }
         play.localColorR = crew.GetCharacterColor().r;

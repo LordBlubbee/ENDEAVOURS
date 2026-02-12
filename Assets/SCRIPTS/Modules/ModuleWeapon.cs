@@ -192,7 +192,7 @@ public class ModuleWeapon : Module
         {
             LoadedAmmo.Value--;
             PROJ proj = Instantiate(FireProjectile, FirePoint.position, WeaponTransform.rotation);
-            proj.Init(GetDamage(), Faction, null, mouse);
+            proj.Init(GetDamage(), GetFaction(), null, mouse);
             if (proj.ZoneImpact)
             {
                 foreach (Module mod in Space.Drifter.ModulesWithAbilityActive(Module.ModuleTypes.INCENDIARY_STORAGE))
