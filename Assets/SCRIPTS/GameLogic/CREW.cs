@@ -225,10 +225,13 @@ public class CREW : NetworkBehaviour, iDamageable
     private List<BUFF> Buffs = new();
     public void AddBuff(ScriptableBuff buf)
     {
+        Debug.Log($"Name of our buff to add: {buf.name}");
         foreach (BUFF buff in Buffs)
         {
-            if (buff.GetScriptable() == buf)
+            Debug.Log($"Name of buff to compare with: {buff.GetScriptable().name}");
+            if (buff.GetScriptable().name.Equals(buf.name))
             {
+                Debug.Log($"Yes, that's the same!");
                 buff.AddBuff(buf, this);
                 if (buf.BuffParticles != CO_SPAWNER.BuffParticles.NONE) AddBuffParticlesRpc(buf.BuffParticles, buff.GetStacks());
                 return;

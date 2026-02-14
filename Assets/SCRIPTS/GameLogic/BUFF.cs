@@ -1,9 +1,11 @@
+using System.Xml.Linq;
 using UnityEngine;
 using static CO_SPAWNER;
 
 public class BUFF
 {
     private ScriptableBuff buff;
+    private string Name;
     private int Stacks;
     private float Duration;
     public CO_SPAWNER.BuffParticles BuffParticles;
@@ -20,12 +22,14 @@ public class BUFF
     }
     public BUFF(ScriptableBuff buf, CREW crew)
     {
+        Name = buf.name;
         buff = buf;
         BuffParticles = buf.BuffParticles;
         AddBuff(buf, crew);
     }
     public void AddBuff(ScriptableBuff buf, CREW crew)
     {
+        Name = buf.name;
         Duration = buf.Duration;
         if (Stacks >= buf.MaxStacks) return;
         Stacks = Mathf.Clamp(Stacks + 1, 1, buf.MaxStacks);

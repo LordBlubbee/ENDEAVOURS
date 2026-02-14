@@ -18,6 +18,7 @@ public class Screen_CharacterCreator : MonoBehaviour
     public TextMeshProUGUI CompleteName;
     public Image[] BackgroundCategories;
     public Image[] AllBackgrounds;
+    public GameObject PlayerListButton;
 
     public Image AppearanceSprite;
     public Image AppearanceStripes;
@@ -206,6 +207,7 @@ public class Screen_CharacterCreator : MonoBehaviour
     private void Update()
     {
         UpdateCompletionStatus();
+        PlayerListButton.gameObject.SetActive(CO.co.GetLOCALCO().Count > 1);
     }
 
     private void UpdateCompletionStatus()

@@ -23,12 +23,15 @@ public class Screen_Inventory : MonoBehaviour
     public Slider DrifterHealthSlider;
     public TextMeshProUGUI DrifterHealthTex;
     public TextMeshProUGUI DrifterRepairTex;
+    public GameObject PlayerCrewButton;
     private void OnEnable()
     {
         SkillRefresh(); 
         RefreshPlayerEquipment(); 
         RefreshShipEquipment();
         RefreshDrifterStats();
+
+        PlayerCrewButton.gameObject.SetActive(CO.co.GetLOCALCO().Count > 1);
     }
     void Update()
     {
