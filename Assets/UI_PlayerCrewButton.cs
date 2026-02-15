@@ -36,7 +36,15 @@ public class UI_PlayerCrewButton : MonoBehaviour
         str += $"<color=#{hex}>{Crew.CharacterName.Value}</color>";
         hex = ColorUtility.ToHtmlStringRGB(Crew.CharacterBackground.BackgroundColor);
         str += $"\n<color=#{hex}>{Crew.CharacterBackground.BackgroundName}</color>";
-        int[] stats = Crew.GetAttributes();
+        int[] stats = new int[7];
+        stats[0] = cre.GetATT_PHYSIQUE();
+        stats[1] = cre.GetATT_ARMS();
+        stats[2] = cre.GetATT_DEXTERITY();
+        stats[3] = cre.GetATT_COMMUNOPATHY();
+        stats[4] = cre.GetATT_COMMAND();
+        stats[5] = cre.GetATT_ENGINEERING();
+        stats[6] = cre.GetATT_ALCHEMY();
+        stats[7] = cre.GetATT_MEDICAL();
         int HighestStatID = -1;
         int SecondHighestStatID = -1;
         int ThirdHighestStatID = -1;
@@ -90,7 +98,7 @@ public class UI_PlayerCrewButton : MonoBehaviour
                 case 7: str += "MED"; break;
             }
 
-            str += $": {HighestStatNumber}";
+            str += $" {HighestStatNumber}";
         }
         if (SecondHighestStatNumber > 3)
         {
@@ -107,7 +115,7 @@ public class UI_PlayerCrewButton : MonoBehaviour
                 case 7: str += "MED"; break;
             }
 
-            str += $": {SecondHighestStatNumber}";
+            str += $" {SecondHighestStatNumber}";
         }
         if (ThirdHighestStatNumber > 3)
         {
@@ -124,18 +132,18 @@ public class UI_PlayerCrewButton : MonoBehaviour
                 case 7: str += "MED"; break;
             }
 
-            str += $": {ThirdHighestStatNumber}";
+            str += $" {ThirdHighestStatNumber}";
         }
         CrewText.text = str;
 
         LOCALCO local = CO.co.GetLOCALCO(Crew.GetPlayerController());
         if (local)
         {
-            StatText[0].text = $"Crew damage: {local.Stats_CrewDamage.Value}";
-            StatText[1].text = $"Module damage: {local.Stats_ModuleDamage.Value}";
-            StatText[2].text = $"Healing: {local.Stats_Healed.Value}";
-            StatText[3].text = $"Repairs: {local.Stats_Repaired.Value}";
-            StatText[4].text = $"Damage taken/prevented: {local.Stats_DamageTaken.Value}";
+            StatText[0].text = $"Crew damage: {local.Stats_CrewDamage.Value.ToString("0")}";
+            StatText[1].text = $"Module damage: {local.Stats_ModuleDamage.Value.ToString("0")}";
+            StatText[2].text = $"Healing: {local.Stats_Healed.Value.ToString("0")}";
+            StatText[3].text = $"Repairs: {local.Stats_Repaired.Value.ToString("0")}";
+            StatText[4].text = $"Damage taken/prevented: {local.Stats_DamageTaken.Value.ToString("0")}";
         }
     }
 }

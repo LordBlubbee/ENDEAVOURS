@@ -8,4 +8,10 @@ public class Screen_MainMenu : MonoBehaviour
     {
         BlackBlocker.color = new Color(0, 0, 0, Mathf.Clamp01(BlackBlocker.color.a - Time.deltaTime));
     }
+
+    public void PressPlayAlone()
+    {
+        UI.ui.HostUI.AloneGame = true;
+        UI.ui.PressSelectScreen(UI.ui.HostUI.gameObject);
+    }
 }

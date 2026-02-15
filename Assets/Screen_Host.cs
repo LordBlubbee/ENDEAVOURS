@@ -7,6 +7,9 @@ public class Screen_Host : MonoBehaviour
     public TooltipObject DifficultyTooltip;
     public TextMeshProUGUI HostControlTex;
     public TooltipObject HostControlTooltip;
+    public GameObject LobbyNameTagObject;
+    public GameObject HostControlObject;
+    public bool AloneGame = false;
 
     public UI_LoadGameButton[] LoadGameButtons;
     private void OnEnable()
@@ -14,6 +17,20 @@ public class Screen_Host : MonoBehaviour
         SelectedLoadedGame = LoadGameButtons[GO.g.currentSaveSlot];
         RefreshPlayerGameDifficulty(); RefreshHostControl(); RefreshLoadedGames();
         LOBBY.lobby.HostNameInput.text = GO.g.preferredLobbyName;
+
+        LobbyNameTagObject.SetActive(!AloneGame);
+        HostControlObject.SetActive(!AloneGame);
+    }
+
+    public void PressPlay()
+    {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
+        if (AloneGame)
+        {
+            LOBBY.lobby.PressPlayAlone();
+            return;
+        }
+        LOBBY.lobby.StartHost();
     }
     public void RefreshLoadedGames()
     {

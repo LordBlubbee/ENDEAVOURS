@@ -2293,15 +2293,15 @@ public class CREW : NetworkBehaviour, iDamageable
     public float Heal(float fl)
     {
         if (isDeadForever()) return 0f;
-        float Diff = CurHealth.Value;
+        float Diff = CurHealth.Value; //80
         CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
-        Diff = CurHealth.Value - Diff;
+        Diff = CurHealth.Value - Diff; //100-80 = 20
         if (CurHealth.Value > 49 && isDead())
         {
             SetAlive();
         }
-        if (Diff < 0) return 0f;
-        CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
+        if (Diff < 0) return 0;
+        CO_SPAWNER.co.SpawnHealRpc(Mathf.Max(fl,1f), transform.position);
         return Diff;
     }
     public float TakeDamage(float fl, Vector3 src, iDamageable.DamageType type)
@@ -2396,6 +2396,7 @@ public class CREW : NetworkBehaviour, iDamageable
         else if (isCrit) CO_SPAWNER.co.SpawnDMGCriticalRpc(fl, src);
         else CO_SPAWNER.co.SpawnDMGRpc(fl, src);
         ArtifactOnDamaged();
+        GainCredit_DamageTaken(fl);
         return fl;
     }
     public float GetEnvironmentalDamageMod()

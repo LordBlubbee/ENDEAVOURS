@@ -111,6 +111,11 @@ public class UI : MonoBehaviour
         }
         ob.transform.localScale = new Vector3(1, 1, 1);
     }
+    public void PressSelectScreen(GameObject ob)
+    {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
+        SelectScreen(ob);
+    }
     public void SelectScreen(GameObject ob)
     {
         PreviousScreen = CurrentlySelectedScreen;

@@ -106,6 +106,8 @@ public class Screen_GameUI : MonoBehaviour
         if (max == 0) return 0;
         return cool / max;
     }
+
+    public GameObject PlayerScreen;
     void Update()
     {
         if (!LOCALCO.local)
@@ -113,6 +115,7 @@ public class Screen_GameUI : MonoBehaviour
             return;
         }
         PauseScreen.SetActive(CO.co.CommunicationGamePaused.Value);
+        PlayerScreen.SetActive(Input.GetKey(KeyCode.Tab));
         CREW player = LOCALCO.local.GetPlayer();
         if (!player)
         {
