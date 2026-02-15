@@ -64,7 +64,6 @@ public class Screen_CharacterCreator : MonoBehaviour
     }
     public void LevelSkill(int ID)
     {
-        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         int LevelNeed;
         switch (SkillPower[ID])
         {
@@ -96,7 +95,12 @@ public class Screen_CharacterCreator : MonoBehaviour
                 LevelNeed = 5;
                 break;
         }
-        if (SkillPoints < LevelNeed) return;
+        if (SkillPoints < LevelNeed)
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
+        AUDCO.aud.PlaySFX(AUDCO.aud.Upgrade);
         SkillPoints -= LevelNeed;
         SkillPower[ID]++;
         SkillRefresh();
@@ -179,7 +183,12 @@ public class Screen_CharacterCreator : MonoBehaviour
                     SkillTex[i].color = new Color(0, 1, 1);
                     break;
             }
-            if (LevelNeed > SkillPoints) SkillLevelButton[i].gameObject.SetActive(false);
+            if (LevelNeed > SkillPoints)
+            {
+                SkillLevelButton[i].gameObject.SetActive(true);
+                SkillLevelTex[i].text = $"LEVEL ({LevelNeed})";
+                SkillLevelTex[i].color = Color.gray;
+            }
             else
             {
                 SkillLevelButton[i].gameObject.SetActive(true);

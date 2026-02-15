@@ -186,7 +186,12 @@ public class Screen_Inventory : MonoBehaviour
                 LevelNeed = 5;
                 break;
         }
-        if (LOCALCO.local.GetPlayer().SkillPoints.Value < LevelNeed) return;
+        if (LOCALCO.local.GetPlayer().SkillPoints.Value < LevelNeed)
+        {
+            AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
+            return;
+        }
+        AUDCO.aud.PlaySFX(AUDCO.aud.Upgrade);
         LOCALCO.local.GetPlayer().IncreaseATTRpc(ID);
     }
     public void SkillRefresh()
@@ -258,7 +263,12 @@ public class Screen_Inventory : MonoBehaviour
                     SkillTex[i].color = new Color(0, 1, 1);
                     break;
             }
-            if (LevelNeed > LOCALCO.local.GetPlayer().SkillPoints.Value) SkillLevelButton[i].gameObject.SetActive(false);
+            if (LevelNeed > LOCALCO.local.GetPlayer().SkillPoints.Value)
+            {
+                SkillLevelButton[i].gameObject.SetActive(true);
+                SkillLevelTex[i].text = $"LEVEL ({LevelNeed})";
+                SkillLevelTex[i].color = Color.gray;
+            }
             else
             {
                 SkillLevelButton[i].gameObject.SetActive(true);

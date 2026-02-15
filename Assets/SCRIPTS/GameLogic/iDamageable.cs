@@ -20,7 +20,10 @@ public interface iDamageable
         SPELL,
         BOMBARDMENT,
         ENVIRONMENT_FIRE,
-        ENVIRONMENT_MIST
+        ENVIRONMENT_MIST,
+        MELEE_CRIT,
+        RANGED_CRIT,
+        SPELL_CRIT
     }
     public Transform transform { get; }
 

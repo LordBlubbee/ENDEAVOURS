@@ -17,6 +17,11 @@ public class LOCALCO : NetworkBehaviour
     [NonSerialized] public NetworkVariable<int> CurrentDialogVote = new NetworkVariable<int>(-1);
     [NonSerialized] public NetworkVariable<int> CurrentMapVote = new NetworkVariable<int>(-1);
 
+    //[NonSerialized] public NetworkVariable<float> Stats_CrewDamage = new();
+    //[NonSerialized] public NetworkVariable<float> Stats_ModuleDamage = new();
+    //[NonSerialized] public NetworkVariable<float> Stats_DamageTaken = new();
+    //[NonSerialized] public NetworkVariable<float> Stats_Healed = new();
+
     private CREW Player;
     private DRIFTER Drifter;
     private enum ControlModes
@@ -308,7 +313,7 @@ public class LOCALCO : NetworkBehaviour
         {
             if (LoadedCharacter.PlayerWeapons[i] != "")
             {
-                ScriptableEquippable item = Resources.Load<ScriptableEquippable>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{LoadedCharacter.PlayerWeapons[i]}");
+                ScriptableEquippable item = Resources.Load<ScriptableEquippable>($"{LoadedCharacter.PlayerWeapons[i]}");
                 if (FindAndRemoveItemInInventory(item)) crew.EquipWeapon(i, (ScriptableEquippableWeapon)item);
             }
         }
@@ -316,13 +321,13 @@ public class LOCALCO : NetworkBehaviour
         {
             if (LoadedCharacter.PlayerArtifacts[i] != "")
             {
-                ScriptableEquippable item = Resources.Load<ScriptableEquippable>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{LoadedCharacter.PlayerArtifacts[i]}");
+                ScriptableEquippable item = Resources.Load<ScriptableEquippable>($"{LoadedCharacter.PlayerArtifacts[i]}");
                 if (FindAndRemoveItemInInventory(item)) crew.EquipArtifact(i, (ScriptableEquippableArtifact)item);
             }
         }
         if (LoadedCharacter.PlayerArmor!= "")
         {
-            ScriptableEquippable item = Resources.Load<ScriptableEquippable>($"OBJ/SCRIPTABLES/ITEMS/Weapons/{LoadedCharacter.PlayerArmor}");
+            ScriptableEquippable item = Resources.Load<ScriptableEquippable>($"{LoadedCharacter.PlayerArmor}");
             if (FindAndRemoveItemInInventory(item)) crew.EquipArmor((ScriptableEquippableArtifact)item);
         }
 

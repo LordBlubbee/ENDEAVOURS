@@ -92769,7 +92769,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1757381812
 RectTransform:
   m_ObjectHideFlags: 0
@@ -92812,7 +92812,7 @@ MonoBehaviour:
   m_text: Game saved...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ae1c7c9a342696144a6ec39964526f66, type: 2}
-  m_sharedMaterial: {fileID: -360070313367260889, guid: f8075f664abd4eb438ae0d737e6d7c82, type: 2}
+  m_sharedMaterial: {fileID: -8257588341390531809, guid: ae1c7c9a342696144a6ec39964526f66, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -95804,6 +95804,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 587433071}
     m_Modifications:
+    - target: {fileID: 2435789638548321350, guid: 5693da503199f714590378d1d0ca7bad, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2872249948039147693, guid: 5693da503199f714590378d1d0ca7bad, type: 3}
       propertyPath: m_Name
       value: TalkChooser

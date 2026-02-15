@@ -217,7 +217,7 @@ MonoBehaviour:
   m_text: Lorem Ipsum Dolor Sit Amet. Destroy all enemies. Show no mercy. Also, the
     Ephemeral Eye has betrayed us earlier. We must show them no remorse.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0e9d0616e484a47409d0b732828ca151, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ae1c7c9a342696144a6ec39964526f66, type: 2}
   m_sharedMaterial: {fileID: -2665110194855471181, guid: 0e9d0616e484a47409d0b732828ca151, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

@@ -662,7 +662,8 @@ public class CO_SPAWNER : NetworkBehaviour
         }
         Budget = drifterData.BaseModuleBudgetMod * 1.4f * Quality + 40;
         float TotalBudget = Budget;
-        float MinimumArmorMoney = Budget * 0.25f;
+        float MinimumArmorMoney = Budget * 0.3f - 50;
+        int ArmorIterator = 0;
         Tries = 10;
         while (Budget > 0)
         {
@@ -706,16 +707,26 @@ public class CO_SPAWNER : NetworkBehaviour
             else
             {
                 List<Module> list;
-             
-                if (MinimumArmorMoney > 30f)
+                Module upgrade = null;
+                if (MinimumArmorMoney > 0f)
                 {
                     list = drifter.Interior.GetArmorModules();
-                    if (list.Count == 0) list = drifter.Interior.GetNonWeaponModules();
+                    if (list.Count == 0)
+                    {
+                        list = drifter.Interior.GetNonWeaponModules();
+                        upgrade = list[UnityEngine.Random.Range(0, list.Count)];
+                    } else
+                    {
+                        upgrade = list[ArmorIterator];
+                        ArmorIterator++;
+                        if (list.Count >= ArmorIterator) ArmorIterator = 0;
+                        if (list[ArmorIterator].ModuleUpgradeMaterials[upgrade.ModuleLevel.Value] + upgrade.ModuleUpgradeTechs[upgrade.ModuleLevel.Value] * 2 > MinimumArmorMoney) MinimumArmorMoney = 0;
+                    }
                 } else
                 {
                     list = drifter.Interior.GetNonWeaponModules();
+                    upgrade = list[UnityEngine.Random.Range(0, list.Count)];
                 }
-                Module upgrade = list[UnityEngine.Random.Range(0, list.Count)];
                 Cost = 0.9f * (upgrade.ModuleUpgradeMaterials[upgrade.ModuleLevel.Value] + upgrade.ModuleUpgradeTechs[upgrade.ModuleLevel.Value] * 2);
                 if (Cost > Budget && Tries > 0)
                 {
@@ -932,7 +943,15 @@ public class CO_SPAWNER : NetworkBehaviour
     {
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
         dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
-        dmg.InitNumber(dm, 0.5f, Color.red);
+        dmg.InitNumber(dm, 0.5f, new Color(0.9f,0,0));
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnDMGCriticalRpc(float dm, Vector3 pos)
+    {
+        DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
+        dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
+        dmg.InitNumber(dm, 0.7f, new Color(1,0,0.8f));
     }
 
     [Rpc(SendTo.ClientsAndHost)]

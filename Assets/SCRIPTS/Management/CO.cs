@@ -2472,9 +2472,9 @@ public class CO : NetworkBehaviour
         if (crew.EquippedWeapons[2] != null) play.PlayerWeapons[2] = crew.EquippedWeapons[2].GetItemResourceIDFull();
         if (crew.EquippedArmor != null) play.PlayerArmor = crew.EquippedArmor.GetItemResourceIDFull();
         play.PlayerArtifacts = new string[3];
-        if (crew.EquippedArtifacts[0] != null) play.PlayerArtifacts[0] = crew.EquippedWeapons[0].GetItemResourceIDFull();
-        if (crew.EquippedArtifacts[1] != null) play.PlayerArtifacts[1] = crew.EquippedWeapons[1].GetItemResourceIDFull();
-        if (crew.EquippedArtifacts[2] != null) play.PlayerArtifacts[2] = crew.EquippedWeapons[2].GetItemResourceIDFull();
+        if (crew.EquippedArtifacts[0] != null) play.PlayerArtifacts[0] = crew.EquippedArtifacts[0].GetItemResourceIDFull();
+        if (crew.EquippedArtifacts[1] != null) play.PlayerArtifacts[1] = crew.EquippedArtifacts[1].GetItemResourceIDFull();
+        if (crew.EquippedArtifacts[2] != null) play.PlayerArtifacts[2] = crew.EquippedArtifacts[2].GetItemResourceIDFull();
 
         for (int i = 0; i < GetLoadedPlayers().Count; i++)
         {

@@ -1496,15 +1496,16 @@ public class CREW : NetworkBehaviour, iDamageable
         float LevelMod = 0.1f;
         if (IsPlayer())
         {
-            dmg /= 0.7f;
-            LevelMod = 0.12f;
+            LevelMod = 0.13f;
         }
 
         dmg *= 0.7f + LevelMod * GetATT_PHYSIQUE();
         dmg *= 1f + 0.03f * GetCurrentCommanderLevel();
-    
+
+        bool isCrit = false;
         if (DashingDamageBuff > 0 || isParrying)
         {
+            isCrit = true;
             DashingDamageBuff = 0;
             ParryTime = 0;
             dmg *= 2;
@@ -1512,7 +1513,7 @@ public class CREW : NetworkBehaviour, iDamageable
         if (crew is DRIFTER) ((DRIFTER)crew).Impact(dmg * 0.5f, checkHit);
         else
         {
-            crew.TakeDamage(dmg, checkHit, iDamageable.DamageType.MELEE);
+            crew.TakeDamage(dmg, checkHit, isCrit? iDamageable.DamageType.MELEE_CRIT : iDamageable.DamageType.MELEE);
             if (crew is CREW)
             {
                 if (EquippedToolObject.ApplyBuff)
@@ -1541,8 +1542,7 @@ public class CREW : NetworkBehaviour, iDamageable
         float LevelMod = 0.1f;
         if (IsPlayer())
         {
-            dmg /= 0.7f;
-            LevelMod = 0.12f;
+            LevelMod = 0.13f;
         }
 
         dmg *= 0.7f + LevelMod * GetATT_ARMS();
@@ -1567,13 +1567,12 @@ public class CREW : NetworkBehaviour, iDamageable
         float LevelMod = 0.1f;
         if (IsPlayer())
         {
-            dmg /= 0.7f;
-            LevelMod = 0.12f;
+            LevelMod = 0.13f;
         }
         dmg *= 0.7f + LevelMod * GetATT_COMMUNOPATHY();
 
         dmg *= 1f + 0.03f * GetCurrentCommanderLevel();
-        if (GetATT_COMMUNOPATHY() < 4) dmg *= 0.25f * GetATT_COMMUNOPATHY();
+
         proj.NetworkObject.Spawn();
         proj.Init(dmg, GetFaction(), Space, trt);
         proj.CrewOwner = this;
@@ -2258,6 +2257,7 @@ public class CREW : NetworkBehaviour, iDamageable
         if (isDashing) return;
        
         if (DashingDamageBuff > 0f) fl *= 0.5f;
+        bool isCrit = false;
         switch (type)
         {
             case iDamageable.DamageType.MELEE:
@@ -2271,6 +2271,24 @@ public class CREW : NetworkBehaviour, iDamageable
                 if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.SPELL:
+                fl = ArtifactOnPreventDamageSpell(fl);
+                fl *= 0.8f; //Standard crew-to-crew damage boost
+                if (IsPlayer()) fl *= 0.8f;
+                break;
+            case iDamageable.DamageType.MELEE_CRIT:
+                isCrit = true;
+                fl = ArtifactOnPreventDamageMelee(fl);
+                fl *= 0.8f; //Standard crew-to-crew damage boost
+                if (IsPlayer()) fl *= 0.8f;
+                break;
+            case iDamageable.DamageType.RANGED_CRIT:
+                isCrit = true;
+                fl = ArtifactOnPreventDamageRanged(fl);
+                fl *= 0.8f; //Standard crew-to-crew damage boost
+                if (IsPlayer()) fl *= 0.8f;
+                break;
+            case iDamageable.DamageType.SPELL_CRIT:
+                isCrit = true;
                 fl = ArtifactOnPreventDamageSpell(fl);
                 fl *= 0.8f; //Standard crew-to-crew damage boost
                 if (IsPlayer()) fl *= 0.8f;
@@ -2309,7 +2327,8 @@ public class CREW : NetworkBehaviour, iDamageable
             if (!BleedOut) DieForever();
             else Die();
         }
-        CO_SPAWNER.co.SpawnDMGRpc(fl, src);
+        if (isCrit) CO_SPAWNER.co.SpawnDMGCriticalRpc(fl, src);
+        else CO_SPAWNER.co.SpawnDMGRpc(fl, src);
         ArtifactOnDamaged();
     }
     public float GetEnvironmentalDamageMod()
