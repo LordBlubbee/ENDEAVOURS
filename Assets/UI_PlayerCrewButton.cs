@@ -8,6 +8,7 @@ public class UI_PlayerCrewButton : MonoBehaviour
 {
     public UI_SubscreenPlayers Subscreen;
     public TextMeshProUGUI CrewText;
+    public TextMeshProUGUI[] StatText;
     public Image CrewOuter;
     public Image CrewIcon;
     public Image CrewStripes;
@@ -74,7 +75,7 @@ public class UI_PlayerCrewButton : MonoBehaviour
                 ThirdHighestStatID = i;
             }
         }
-        str += "\n";
+        str += " - ";
         if (HighestStatNumber > 3)
         {
             switch (HighestStatID)
@@ -126,5 +127,15 @@ public class UI_PlayerCrewButton : MonoBehaviour
             str += $": {ThirdHighestStatNumber}";
         }
         CrewText.text = str;
+
+        LOCALCO local = CO.co.GetLOCALCO(Crew.GetPlayerController());
+        if (local)
+        {
+            StatText[0].text = $"Crew damage: {local.Stats_CrewDamage.Value}";
+            StatText[1].text = $"Module damage: {local.Stats_ModuleDamage.Value}";
+            StatText[2].text = $"Healing: {local.Stats_Healed.Value}";
+            StatText[3].text = $"Repairs: {local.Stats_Repaired.Value}";
+            StatText[4].text = $"Damage taken/prevented: {local.Stats_DamageTaken.Value}";
+        }
     }
 }

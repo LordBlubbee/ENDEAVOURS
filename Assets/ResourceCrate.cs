@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography;
 using Unity.Netcode;
 using UnityEngine;
 using static CO;
@@ -27,16 +28,18 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
     {
         return ModuleTypes.DRAGGABLE;
     }
-    public void Heal(float fl)
+    public float Heal(float fl)
     {
-        if (fl < 0) return;
+        if (fl < 0) return 0f;
+        float Old = CurHealth.Value;
         CurHealth.Value = Mathf.Clamp(CurHealth.Value + fl, 0, GetMaxHealth());
         CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
+        return CurHealth.Value - Old;
     }
-    public void TakeDamage(float fl, Vector3 src, iDamageable.DamageType type)
+    public float TakeDamage(float fl, Vector3 src, iDamageable.DamageType type)
     {
-        if (fl < 0) return;
-        if (CurHealth.Value == 0) return;
+        if (fl < 0) return 0;
+        if (CurHealth.Value == 0) return 0;
         CurHealth.Value = Mathf.Clamp(CurHealth.Value - fl, 0, GetMaxHealth());
         if (CurHealth.Value <= 0)
         {
@@ -59,6 +62,7 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
             RemoveCrate();
         }
         CO_SPAWNER.co.SpawnDMGRpc(fl, transform.position);
+        return fl;
     }
     [Rpc(SendTo.ClientsAndHost)]
     private void DestructionRpc()

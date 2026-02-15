@@ -57,7 +57,7 @@ public class ModuleSpeaker : ModuleEffector
                     buff.BuffParticles = CO_SPAWNER.BuffParticles.SPEAKER_INVICTUS;
                     buff.ModifyMeleeDamage = GetBuffEffectPower();
                     buff.ModifyRangedDamage = GetBuffEffectPower();
-                    crew.AddBuff(buff);
+                    crew.AddBuff(buff, null);
                 }
                 break;
             case SpeakerTypes.PRAGMATICUS:
@@ -71,7 +71,7 @@ public class ModuleSpeaker : ModuleEffector
                     buff.BuffParticles = CO_SPAWNER.BuffParticles.SPEAKER_PRAGMATICUS;
                     buff.ModifyAnimationSlow = GetBuffEffectPower() * 0.3f;
                     buff.ModifyMovementSlow = GetBuffEffectPower();
-                    crew.AddBuff(buff);
+                    crew.AddBuff(buff, null);
                 }
                 break;
             case SpeakerTypes.STELLAE:
@@ -84,7 +84,7 @@ public class ModuleSpeaker : ModuleEffector
                     buff.Duration = GetEffectDuration();
                     buff.BuffParticles = CO_SPAWNER.BuffParticles.SPEAKER_STELLAE;
                     buff.HealthChangePerSecond = GetBuffEffectPower();
-                    crew.AddBuff(buff);
+                    crew.AddBuff(buff, null);
                 }
                 break;
         }

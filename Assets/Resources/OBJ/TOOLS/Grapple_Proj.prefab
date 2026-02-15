@@ -177,14 +177,18 @@ MonoBehaviour:
   Spr: {fileID: 5573374972207478105}
   Tip: {fileID: 5280911498916563812}
   ProjectileSpeed: 70
+  AccelProjectile: 0
+  AccelMaximum: 0
   InaccuracyDegrees: 3
   MaximumRange: 45
-  StickToWalls: 0
+  StickToWalls: 1
   UseAltitude: 0
   AltitudeExplodeEarly: 0
   CanHitWalls: 0
+  CanHitDrifters: 1
   AltitudeInacurracyFactor: 0.05
   AltitudeDirectHitCeiling: 0
+  DamageType: 2
   ImpactVFX: {fileID: 0}
   LaunchVFX: {fileID: 0}
   ImpactSFX:
@@ -192,11 +196,19 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 999117fc720192542a48562bc242b423, type: 3}
   - {fileID: 8300000, guid: d765450ea07bfe742a34f2a80267190f, type: 3}
   - {fileID: 8300000, guid: ca22bc6628f6ddf4b81a1e4d7fc2a027, type: 3}
+  BlockPenetration: 0
+  DodgeModifier: 1
   HullDamageModifier: 1
   ModuleDamageModifier: 1
+  ModuleSplash: 16
   ArmorDamageModifier: 1
   ArmorAbsorptionModifier: 1
+  ArmorCriticalChance: 0.05
   CrewDamageModifier: 0.5
+  CrewDamageModifierDirect: 1
   CrewDamageSplash: 1
   DealSplash: 0
-  CanBeBlocked: 0
+  ApplyBuff: {fileID: 0}
+  ZoneImpact: {fileID: 0}
+  ZoneChance: 0
+  CreateLinePrefab: {fileID: 1300799118010467197, guid: 57d3563438c720741afc3f232e364989, type: 3}

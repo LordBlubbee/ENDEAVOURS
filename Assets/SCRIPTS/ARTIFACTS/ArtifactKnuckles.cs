@@ -16,6 +16,6 @@ public class ArtifactKnuckles : ArtifactAbility
         buff.ModifyAnimationSpeed = 0.3f;
         buff.ModifyMovementSpeed = 0.3f;
         buff.ModifyMeleeDamage = 3;
-        User.AddBuff(buff);
+        User.AddBuff(buff, User);
     }
 }

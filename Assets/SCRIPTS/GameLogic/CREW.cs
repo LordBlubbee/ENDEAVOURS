@@ -205,8 +205,39 @@ public class CREW : NetworkBehaviour, iDamageable
         }
     }
     //Modified attributes from equipment and buffs
+    [Header("Resistances")]
+    public float MeleeRes = 1;
+    public float RangedRes = 1;
+    public float SpellRes = 1;
+    public float FireRes = 1;
+    public float MistRes = 1;
+    public float GetMeleeResFactor()
+    {
+        if (MeleeRes >= 1) return 1f / MeleeRes; //If meleeres is 2, you will take half damage
+        return 1f - (MeleeRes - 1); //If meleeres is 0.7, you will take 1.3x damage
+    }
+    public float GetRangedResFactor()
+    {
+        if (RangedRes >= 1) return 1f / RangedRes; //If meleeres is 2, you will take half damage
+        return 1f - (RangedRes - 1); //If meleeres is 0.7, you will take 1.3x damage
+    }
+    public float GetSpellResFactor()
+    {
+        if (SpellRes >= 1) return 1f / SpellRes; //If meleeres is 2, you will take half damage
+        return 1f - (SpellRes - 1); //If meleeres is 0.7, you will take 1.3x damage
+    }
+    public float GetFireResFactor()
+    {
+        if (FireRes >= 1) return 1f / FireRes; //If meleeres is 2, you will take half damage
+        return 1f - (FireRes - 1); //If meleeres is 0.7, you will take 1.3x damage
+    }
+    public float GetMistResFactor()
+    {
+        if (MistRes >= 1) return 1f / MistRes; //If meleeres is 2, you will take half damage
+        return 1f - (MistRes - 1); //If meleeres is 0.7, you will take 1.3x damage
+    }
+
     [NonSerialized] public int[] ModifyAttributes = new int[8];
-    [NonSerialized] public float HealthChangePerSecond = 0f;
     [NonSerialized] public NetworkVariable<float> ModifyHealthMax = new();
     [NonSerialized] public float ModifyHealthRegen;
     [NonSerialized] public float ModifyStaminaMax;
@@ -220,10 +251,11 @@ public class CREW : NetworkBehaviour, iDamageable
     [NonSerialized] public float ModifyRangedDamage;
     [NonSerialized] public float ModifySpellDamage;
 
+
     [NonSerialized] public float ModifyDamageTaken;
 
     private List<BUFF> Buffs = new();
-    public void AddBuff(ScriptableBuff buf)
+    public void AddBuff(ScriptableBuff buf, CREW BuffOwner)
     {
         Debug.Log($"Name of our buff to add: {buf.name}");
         foreach (BUFF buff in Buffs)
@@ -232,33 +264,46 @@ public class CREW : NetworkBehaviour, iDamageable
             if (buff.GetScriptable().name.Equals(buf.name))
             {
                 Debug.Log($"Yes, that's the same!");
-                buff.AddBuff(buf, this);
+                buff.AddBuff(buf, this, BuffOwner);
                 if (buf.BuffParticles != CO_SPAWNER.BuffParticles.NONE) AddBuffParticlesRpc(buf.BuffParticles, buff.GetStacks());
                 return;
             }
         }
         if (buf.BuffParticles != CO_SPAWNER.BuffParticles.NONE) AddBuffParticlesRpc(buf.BuffParticles, 1);
-        Buffs.Add(new BUFF(buf, this));
+        Buffs.Add(new BUFF(buf, this, BuffOwner));
     }
     public void BuffTick(float time)
     {
-        if (HealthChangePerSecond > 0)
-        {
-            Heal(HealthChangePerSecond * time);
-        } else if (HealthChangePerSecond < 0)
-        {
-            TakeDamage(-HealthChangePerSecond * time, transform.position, iDamageable.DamageType.TRUE);
-        }
+        float HealthChangePerSecond = 0f;
+        
         foreach (BUFF buf in new List<BUFF>(Buffs))
             {
                 buf.TickBuff(time);
-                if (buf.IsExpired())
+            if (buf.HealthChangePerSecond > 0)
+            {
+                HealthChangePerSecond += buf.HealthChangePerSecond;
+                if (buf.BuffOwner) buf.BuffOwner.GainCredit_Healing(HealthChangePerSecond * time);
+            }
+            if (buf.HealthChangePerSecond < 0)
+            {
+                HealthChangePerSecond += buf.HealthChangePerSecond;
+                if (buf.BuffOwner) buf.BuffOwner.GainCredit_CrewDamage(-HealthChangePerSecond * time);
+            }
+            if (buf.IsExpired())
                 {
                     buf.RemoveBuff(this);
                     if (buf.BuffParticles != CO_SPAWNER.BuffParticles.NONE) RemoveBuffParticlesRpc(buf.BuffParticles);
                     Buffs.Remove(buf);
                 }
             }
+        if (HealthChangePerSecond > 0)
+        {
+            Heal(HealthChangePerSecond * time);
+        }
+        else if (HealthChangePerSecond < 0)
+        {
+            TakeDamage(-HealthChangePerSecond * time, transform.position, iDamageable.DamageType.TRUE);
+        }
     }
 
     private List<ParticleBuff> BuffParticles = new();
@@ -1513,18 +1558,23 @@ public class CREW : NetworkBehaviour, iDamageable
         if (crew is DRIFTER) ((DRIFTER)crew).Impact(dmg * 0.5f, checkHit);
         else
         {
-            crew.TakeDamage(dmg, checkHit, isCrit? iDamageable.DamageType.MELEE_CRIT : iDamageable.DamageType.MELEE);
+            float damageDealt = crew.TakeDamage(dmg, checkHit, isCrit? iDamageable.DamageType.MELEE_CRIT : iDamageable.DamageType.MELEE);
+           
             if (crew is CREW)
             {
+                if (damageDealt > 0) GainCredit_CrewDamage(damageDealt);
                 if (EquippedToolObject.ApplyBuff)
                 {
-                    ((CREW)crew).AddBuff(EquippedToolObject.ApplyBuff);
+                    ((CREW)crew).AddBuff(EquippedToolObject.ApplyBuff, this);
                 }
                 ArtifactOnMeleeTarget((CREW)crew);
                 if (((CREW)crew).isDead())
                 {
                     ArtifactOnKill((CREW)crew);
                 }
+            } else if (crew is Module)
+            {
+                if (damageDealt > 0) GainCredit_ModuleDamage(damageDealt);
             }
         }
         CO_SPAWNER.co.SpawnImpactRpc(checkHit);
@@ -1625,7 +1675,8 @@ public class CREW : NetworkBehaviour, iDamageable
                     dmg *= 0.4f + 0.2f * GetATT_ENGINEERING();
                     dmg *= 1f + 0.05f * GetCurrentCommanderLevel();
                     if (CO.co.IsSafe()) dmg *= 5;
-                    crew.Heal(dmg);
+                    float Healed = crew.Heal(dmg);
+                    GainCredit_Repairs(Healed);
                     canStrikeMelee = false; //Turn off until animation ends
                     return;
                 }
@@ -1666,7 +1717,8 @@ public class CREW : NetworkBehaviour, iDamageable
             dmg *= AnimationController.CurrentStrikePower();
             dmg *= GetHealingSkill();
             if (CO.co.IsSafe()) dmg *= 5;
-            crew.Heal(dmg);
+            float Healed = crew.Heal(dmg);
+            GainCredit_Healing(Healed);
             canStrikeMelee = false; //Turn off until animation ends
             return;
         } else
@@ -2238,23 +2290,24 @@ public class CREW : NetworkBehaviour, iDamageable
             return;
         }
     }
-    public void Heal(float fl)
+    public float Heal(float fl)
     {
-        if (isDeadForever()) return;
+        if (isDeadForever()) return 0f;
         float Diff = CurHealth.Value;
         CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
-        Diff -= CurHealth.Value;
+        Diff = CurHealth.Value - Diff;
         if (CurHealth.Value > 49 && isDead())
         {
             SetAlive();
         }
-        if (Diff > -1) return;
+        if (Diff < 0) return 0f;
         CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
+        return Diff;
     }
-    public void TakeDamage(float fl, Vector3 src, iDamageable.DamageType type)
+    public float TakeDamage(float fl, Vector3 src, iDamageable.DamageType type)
     {
-        if (isDead()) return;
-        if (isDashing) return;
+        if (isDead()) return 0;
+        if (isDashing) return 0;
        
         if (DashingDamageBuff > 0f) fl *= 0.5f;
         bool isCrit = false;
@@ -2263,41 +2316,49 @@ public class CREW : NetworkBehaviour, iDamageable
             case iDamageable.DamageType.MELEE:
                 fl = ArtifactOnPreventDamageMelee(fl);
                 fl *= 0.8f; //Standard crew-to-crew damage boost
+                fl *= GetMeleeResFactor();
                 if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.RANGED:
                 fl = ArtifactOnPreventDamageRanged(fl);
                 fl *= 0.8f; //Standard crew-to-crew damage boost
+                fl *= GetRangedResFactor();
                 if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.SPELL:
                 fl = ArtifactOnPreventDamageSpell(fl);
                 fl *= 0.8f; //Standard crew-to-crew damage boost
+                fl *= GetSpellResFactor();
                 if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.MELEE_CRIT:
                 isCrit = true;
                 fl = ArtifactOnPreventDamageMelee(fl);
                 fl *= 0.8f; //Standard crew-to-crew damage boost
+                fl *= GetMeleeResFactor();
                 if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.RANGED_CRIT:
                 isCrit = true;
                 fl = ArtifactOnPreventDamageRanged(fl);
                 fl *= 0.8f; //Standard crew-to-crew damage boost
+                fl *= GetRangedResFactor();
                 if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.SPELL_CRIT:
                 isCrit = true;
                 fl = ArtifactOnPreventDamageSpell(fl);
                 fl *= 0.8f; //Standard crew-to-crew damage boost
+                fl *= GetSpellResFactor();
                 if (IsPlayer()) fl *= 0.8f;
                 break;
             case iDamageable.DamageType.ENVIRONMENT_FIRE:
                 fl *= GetEnvironmentalDamageMod();
+                fl *= GetFireResFactor();
                 break;
             case iDamageable.DamageType.ENVIRONMENT_MIST:
                 fl *= GetEnvironmentalDamageMod();
+                fl *= GetMistResFactor();
                 break;
         }
         fl *= 1f + ModifyDamageTaken;
@@ -2309,11 +2370,15 @@ public class CREW : NetworkBehaviour, iDamageable
                 float reduce = Mathf.Min(buff.TemporaryHitpoints, fl);
                 buff.TemporaryHitpoints -= reduce;
                 fl -= reduce;
+                if (buff.BuffOwner)
+                {
+                    buff.BuffOwner.GainCredit_DamageTaken(reduce);
+                }
                 if (buff.TemporaryHitpoints <= 0)
                 {
                     buff.RemoveBuff(this);
                 }
-                if (fl <= 0) return;
+                if (fl <= 0) return 0;
             }
         }
         lastDamageTime = 7f;
@@ -2327,9 +2392,11 @@ public class CREW : NetworkBehaviour, iDamageable
             if (!BleedOut) DieForever();
             else Die();
         }
-        if (isCrit) CO_SPAWNER.co.SpawnDMGCriticalRpc(fl, src);
+        if (fl < 1) CO_SPAWNER.co.SpawnDMGBlockedRpc(fl, src);
+        else if (isCrit) CO_SPAWNER.co.SpawnDMGCriticalRpc(fl, src);
         else CO_SPAWNER.co.SpawnDMGRpc(fl, src);
         ArtifactOnDamaged();
+        return fl;
     }
     public float GetEnvironmentalDamageMod()
     {
@@ -2415,6 +2482,12 @@ public class CREW : NetworkBehaviour, iDamageable
         ModifyRangedDamage += wep.ModifyRangedDamage;
         ModifySpellDamage += wep.ModifySpellDamage;
 
+        MeleeRes += wep.ModifyMeleeRes;
+        RangedRes += wep.ModifyRangedRes;
+        SpellRes += wep.ModifySpellRes;
+        FireRes += wep.ModifyFireRes;
+        MistRes += wep.ModifyMistRes;
+
         // Apply array modifiers if applicable
         if (wep.ModifyAttributes != null && ModifyAttributes != null)
         {
@@ -2440,6 +2513,12 @@ public class CREW : NetworkBehaviour, iDamageable
         ModifyMeleeDamage -= wep.ModifyMeleeDamage;
         ModifyRangedDamage -= wep.ModifyRangedDamage;
         ModifySpellDamage -= wep.ModifySpellDamage;
+
+        MeleeRes -= wep.ModifyMeleeRes;
+        RangedRes -= wep.ModifyRangedRes;
+        SpellRes -= wep.ModifySpellRes;
+        FireRes -= wep.ModifyFireRes;
+        MistRes -= wep.ModifyMistRes;
 
         // Remove array modifiers if applicable
         if (wep.ModifyAttributes != null && ModifyAttributes != null)
@@ -2520,13 +2599,18 @@ public class CREW : NetworkBehaviour, iDamageable
     {
         return PlayerController.Value > 0;
     }
+
+    public float GetMasterMovement()
+    {
+        return MovementSpeed * AnimationController.getAnimationMoveFactor();
+    }
     public float GetSpeed()
     {
-        return MovementSpeed * (0.8f+GetATT_DEXTERITY()*0.08f) * (1f+ ModifyMovementSpeed) / (1f + ModifyMovementSlow);
+        return GetMasterMovement() * (0.8f+GetATT_DEXTERITY()*0.08f) * (1f+ ModifyMovementSpeed) / (1f + ModifyMovementSlow);
     }
     public float GetDashSpeed()
     {
-        return MovementSpeed * (0.9f + GetATT_DEXTERITY() * 0.02f) * (1f + ModifyMovementSpeed) / (1f + ModifyMovementSlow);
+        return GetMasterMovement() * (0.9f + GetATT_DEXTERITY() * 0.02f) * (1f + ModifyMovementSpeed) / (1f + ModifyMovementSlow);
     }
     public float GetCurrentSpeed()
     {
@@ -2624,5 +2708,45 @@ public class CREW : NetworkBehaviour, iDamageable
     public void SpawnVoiceRpc(string dm, VCX.VoiceStyles style)
     {
         CO_SPAWNER.co.SpawnVoice(dm, this, style);
+    }
+    public void GainCredit_CrewDamage(float fl)
+    {
+        if (IsPlayer())
+        {
+            LOCALCO local = CO.co.GetLOCALCO(PlayerController.Value);
+            if (local != null) local.Stats_CrewDamage.Value += fl;
+        }
+    }
+    public void GainCredit_ModuleDamage(float fl)
+    {
+        if (IsPlayer())
+        {
+            LOCALCO local = CO.co.GetLOCALCO(PlayerController.Value);
+            if (local != null) local.Stats_ModuleDamage.Value += fl;
+        }
+    }
+    public void GainCredit_Healing(float fl)
+    {
+        if (IsPlayer())
+        {
+            LOCALCO local = CO.co.GetLOCALCO(PlayerController.Value);
+            if (local != null) local.Stats_Healed.Value += fl;
+        }
+    }
+    public void GainCredit_DamageTaken(float fl)
+    {
+        if (IsPlayer())
+        {
+            LOCALCO local = CO.co.GetLOCALCO(PlayerController.Value);
+            if (local != null) local.Stats_DamageTaken.Value += fl;
+        }
+    }
+    public void GainCredit_Repairs(float fl)
+    {
+        if (IsPlayer())
+        {
+            LOCALCO local = CO.co.GetLOCALCO(PlayerController.Value);
+            if (local != null) local.Stats_Repaired.Value += fl;
+        }
     }
 }

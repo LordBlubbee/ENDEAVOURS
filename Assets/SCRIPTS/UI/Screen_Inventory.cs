@@ -31,7 +31,7 @@ public class Screen_Inventory : MonoBehaviour
         RefreshShipEquipment();
         RefreshDrifterStats();
 
-        PlayerCrewButton.gameObject.SetActive(CO.co.GetLOCALCO().Count > 1);
+        //PlayerCrewButton.gameObject.SetActive(CO.co.GetLOCALCO().Count > 1);
     }
     void Update()
     {

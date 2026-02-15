@@ -654,6 +654,86 @@ public class CO : NetworkBehaviour
         }
         return 1f * ProgressDiff * PlayerDiff * CurrentBiome.BiomeBaseDifficulty;
     }
+    public float GetNebulaEncounterSizeModifier()
+    {
+        float ProgressDiff = 1f;
+        switch (GetBiomeProgress())
+        {
+            case 0:
+                ProgressDiff = 0.9f;
+                break;
+            case 1:
+                ProgressDiff = 1.05f;
+                break;
+            case 2:
+                ProgressDiff = 1.2f;
+                break;
+            case 3:
+                ProgressDiff = 1.4f;
+                break;
+            case 4:
+                ProgressDiff = 1.65f;
+                break;
+            case 5:
+                ProgressDiff = 1.85f;
+                break;
+            case 6:
+                ProgressDiff = 2f;
+                break;
+        }
+        float PlayerDiff = 1f;
+        switch (GetLOCALCO().Count)
+        {
+            case 1:
+                PlayerDiff = 0.85f;
+                break;
+            case 2:
+                PlayerDiff = 0.95f;
+                break;
+            case 3:
+                PlayerDiff = 1.05f;
+                break;
+            case 4:
+                PlayerDiff = 1.12f;
+                break;
+            case 5:
+                PlayerDiff = 1.2f;
+                break;
+            case 6:
+                PlayerDiff = 1.3f;
+                break;
+            case 7:
+                PlayerDiff = 1.4f;
+                break;
+            case 8:
+                PlayerDiff = 1.5f;
+                break;
+            case 9:
+                PlayerDiff = 1.6f;
+                break;
+            case 10:
+                PlayerDiff = 1.7f;
+                break;
+        }
+        switch (Difficulty)
+        {
+            case GameDifficulties.ADVANTAGED:
+                ProgressDiff *= 0.9f;
+                break;
+            case GameDifficulties.MEDIUM:
+                break;
+            case GameDifficulties.HARD:
+                ProgressDiff *= 1.1f;
+                break;
+            case GameDifficulties.INSANE:
+                ProgressDiff *= 1.15f;
+                break;
+            case GameDifficulties.IMPOSSIBLE:
+                ProgressDiff *= 1.25f;
+                break;
+        }
+        return 1f * ProgressDiff * PlayerDiff * CurrentBiome.BiomeBaseDifficulty;
+    }
     private void Start()
     {
         co = this; 

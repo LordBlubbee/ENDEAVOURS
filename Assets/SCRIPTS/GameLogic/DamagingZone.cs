@@ -55,7 +55,7 @@ public class DamagingZone : NetworkBehaviour
                         if (Crew.GetFaction() == Faction) continue;
                         if (ApplyBuff)
                         {
-                            Crew.AddBuff(ApplyBuff);
+                            Crew.AddBuff(ApplyBuff, null);
                         }
                         if (Damage > 0) Crew.TakeDamage(Damage, Crew.transform.position, DamageType);
                     }

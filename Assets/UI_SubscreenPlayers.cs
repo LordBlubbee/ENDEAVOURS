@@ -25,9 +25,9 @@ public class UI_SubscreenPlayers : MonoBehaviour
     private void Refresh()
     {
         List<LOCALCO> OtherPlayers = new(CO.co.GetLOCALCO());
-        OtherPlayers.Remove(LOCALCO.local);
+        //OtherPlayers.Remove(LOCALCO.local);
 
-        MaxTex.text = $"ELITE CREW ({OtherPlayers.Count + 1}/8)";
+        MaxTex.text = $"ELITE CREW ({OtherPlayers.Count}/8)";
 
         int i = 0;
         foreach (UI_PlayerCrewButton button in PlayerButtons)

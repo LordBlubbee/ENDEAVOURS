@@ -24,7 +24,7 @@ public class SpellPragmaticusShield : UniqueSpell
             buff.BuffParticles = CO_SPAWNER.BuffParticles.PRAGMATICUS_SHIELD;
             buff.Duration = 10f;
             buff.TemporaryHitpoints = 20f + Caster.GetATT_COMMUNOPATHY() * 5f;
-            Target.AddBuff(buff);
+            Target.AddBuff(buff, Caster);
         }
     }
 }

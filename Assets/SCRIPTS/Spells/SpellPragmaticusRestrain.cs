@@ -24,7 +24,7 @@ public class SpellPragmaticusRestrain : UniqueSpell
             buff.Duration = 3f + Caster.GetATT_COMMUNOPATHY() * 0.4f;
             buff.ModifyMeleeDamage -= 10;
             buff.ModifyMovementSlow = 99;
-            Target.AddBuff(buff);
+            Target.AddBuff(buff, Caster);
         }
     }
 }

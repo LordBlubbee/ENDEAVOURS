@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AI_Type: 2
   AI_Group: 2
-  CrewAmountLevel: 1000
-  CrewQualityLevel: 140
+  CrewAmountLevel: 1200
+  CrewQualityLevel: 130
   GuaranteedCrewList:
   - {fileID: 11400000, guid: 250b701226ffdfb4fbf37d37e106c32c, type: 2}
   - {fileID: 11400000, guid: 3dce5365aaf75124ebf1cb8a45f21d83, type: 2}

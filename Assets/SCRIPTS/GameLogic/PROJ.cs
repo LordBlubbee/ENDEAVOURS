@@ -78,11 +78,11 @@ public class PROJ : NetworkBehaviour
         Zone.transform.SetParent(trans);
         Zone.Init(1f);
     }
-    private void Start()
+    protected virtual void Start()
     {
         if (LaunchVFX) LaunchVFXAnimation();
     }
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (!IsServer) return;
         if (!isActive) return;
@@ -171,15 +171,20 @@ public class PROJ : NetworkBehaviour
                 {
                     if (Space != crew.Space && OtherSpace.Drifter != null) return; // Direct damage not possible if not in same space and the target is in a drifter
                 }
-                if (crew is Module) crew.TakeDamage(AttackDamage * ModuleDamageModifier, transform.position, DamageType);
+                if (crew is Module)
+                {
+                    float damageDealt = crew.TakeDamage(AttackDamage * ModuleDamageModifier, transform.position, DamageType);
+                    if (CrewOwner) CrewOwner.GainCredit_ModuleDamage(damageDealt);
+                }
                 else
                 {
-                    crew.TakeDamage(AttackDamage * CrewDamageModifierDirect, transform.position, DamageType);
+                    float damageDealt = crew.TakeDamage(AttackDamage * CrewDamageModifierDirect, transform.position, DamageType);
+                    if (CrewOwner) CrewOwner.GainCredit_CrewDamage(damageDealt);
                     if (crew is CREW)
                     {
                         if (ApplyBuff)
                         {
-                            ((CREW)crew).AddBuff(ApplyBuff);
+                            ((CREW)crew).AddBuff(ApplyBuff, CrewOwner);
                         }
                         if (CrewOwner)
                         {

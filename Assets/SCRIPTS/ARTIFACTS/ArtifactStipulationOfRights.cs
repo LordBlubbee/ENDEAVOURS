@@ -18,7 +18,7 @@ public class ArtifactStipulationOfRights : ArtifactAbility
         buff.MaxStacks = 1;
         buff.Duration = 10;
         buff.TemporaryHitpoints = 30f + User.GetATT_COMMAND()*10f;
-        User.AddBuff(buff);
+        User.AddBuff(buff, User);
 
         User.StartCoroutine(Cooldown());
     }

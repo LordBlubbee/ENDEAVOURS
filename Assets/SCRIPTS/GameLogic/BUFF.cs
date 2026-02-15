@@ -10,6 +10,9 @@ public class BUFF
     private float Duration;
     public CO_SPAWNER.BuffParticles BuffParticles;
     public string DebuffTex;
+    public float HealthChangePerSecond;
+
+    public CREW BuffOwner;
     public int GetStacks()
     {
         return Stacks;
@@ -20,21 +23,21 @@ public class BUFF
     {
         return buff;
     }
-    public BUFF(ScriptableBuff buf, CREW crew)
+    public BUFF(ScriptableBuff buf, CREW crew, CREW Owner)
     {
-        Name = buf.name;
         buff = buf;
         BuffParticles = buf.BuffParticles;
-        AddBuff(buf, crew);
+        BuffOwner = Owner;
+        AddBuff(buf, crew, Owner);
     }
-    public void AddBuff(ScriptableBuff buf, CREW crew)
+    public void AddBuff(ScriptableBuff buf, CREW crew, CREW Owner)
     {
         Name = buf.name;
         Duration = buf.Duration;
         if (Stacks >= buf.MaxStacks) return;
         Stacks = Mathf.Clamp(Stacks + 1, 1, buf.MaxStacks);
 
-        crew.HealthChangePerSecond += buff.HealthChangePerSecond;
+        HealthChangePerSecond += buff.HealthChangePerSecond;
 
         crew.ModifyHealthMax.Value += buff.ModifyHealthMax;
         crew.ModifyHealthRegen += buff.ModifyHealthRegen;
@@ -56,7 +59,7 @@ public class BUFF
     {
         for (int i = 0; i < Stacks;i++)
         {
-            crew.HealthChangePerSecond -= buff.HealthChangePerSecond;
+            HealthChangePerSecond -= buff.HealthChangePerSecond;
 
             crew.ModifyHealthMax.Value -= buff.ModifyHealthMax;
             crew.ModifyHealthRegen -= buff.ModifyHealthRegen;

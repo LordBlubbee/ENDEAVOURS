@@ -13,11 +13,11 @@ public class ArtifactTokenOfVengeance : ArtifactAbility
             if ((User.transform.position - enemies.transform.position).magnitude > 20f) continue;
             ScriptableBuff buff = new();
             buff.name = "TokenOfVengeance";
-            buff.MaxStacks = 5;
+            buff.MaxStacks = 3;
             buff.BuffParticles = CO_SPAWNER.BuffParticles.VENGEANCE;
             buff.Duration = 7;
             buff.ModifyDamageTaken += 0.2f+User.GetATT_ALCHEMY()*0.04f;
-            enemies.AddBuff(buff);
+            enemies.AddBuff(buff, User);
         }
 
     }

@@ -17,10 +17,11 @@ public class LOCALCO : NetworkBehaviour
     [NonSerialized] public NetworkVariable<int> CurrentDialogVote = new NetworkVariable<int>(-1);
     [NonSerialized] public NetworkVariable<int> CurrentMapVote = new NetworkVariable<int>(-1);
 
-    //[NonSerialized] public NetworkVariable<float> Stats_CrewDamage = new();
-    //[NonSerialized] public NetworkVariable<float> Stats_ModuleDamage = new();
-    //[NonSerialized] public NetworkVariable<float> Stats_DamageTaken = new();
-    //[NonSerialized] public NetworkVariable<float> Stats_Healed = new();
+    [NonSerialized] public NetworkVariable<float> Stats_CrewDamage = new();
+    [NonSerialized] public NetworkVariable<float> Stats_ModuleDamage = new();
+    [NonSerialized] public NetworkVariable<float> Stats_DamageTaken = new();
+    [NonSerialized] public NetworkVariable<float> Stats_Healed = new();
+    [NonSerialized] public NetworkVariable<float> Stats_Repaired = new();
 
     private CREW Player;
     private DRIFTER Drifter;

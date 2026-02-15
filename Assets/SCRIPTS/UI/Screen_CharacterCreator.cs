@@ -100,7 +100,7 @@ public class Screen_CharacterCreator : MonoBehaviour
             AUDCO.aud.PlaySFX(AUDCO.aud.Fail);
             return;
         }
-        AUDCO.aud.PlaySFX(AUDCO.aud.Upgrade);
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         SkillPoints -= LevelNeed;
         SkillPower[ID]++;
         SkillRefresh();

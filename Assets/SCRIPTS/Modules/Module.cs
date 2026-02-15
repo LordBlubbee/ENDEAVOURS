@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Linq;
+using System.Security.Cryptography;
 using Unity.Netcode;
 using UnityEngine;
 using static CO;
@@ -327,9 +328,10 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         CurHealth.Value = MaxHealth;
         ActivateModule();
     }
-    public virtual void Heal(float fl)
+    public virtual float Heal(float fl)
     {
-        if (IsDisabledForever()) return;
+        if (IsDisabledForever()) return 0f;
+        float Old = CurHealth.Value;
         CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
         if (CurHealth.Value > 99)
         {
@@ -337,16 +339,17 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
             ActivateModule();
         }
         if (fl > 1) CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
+        return CurHealth.Value - Old;
     }
-    public virtual void TakeDamage(float fl, Vector3 src, DamageType type)
+    public virtual float TakeDamage(float fl, Vector3 src, DamageType type)
     {
-        if (MaxHealth < 1) return;
+        if (MaxHealth < 1) return 0;
         if (type == DamageType.BOMBARDMENT) fl *= OutsideDamageResistance;
         else
         {
             fl /= 1f + (ModuleLevel.Value * 0.2f);
         }
-        if (fl < 0) return;
+        if (fl < 0) return 0;
             CurHealth.Value -= fl;
         if (CurHealth.Value < 0.1f)
         {
@@ -354,6 +357,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
             Die();
         }
         if (fl > 1 && fl < 1000) CO_SPAWNER.co.SpawnDMGRpc(fl, src);
+        return fl;
     }
 
     public void Die(bool Permanent = false)

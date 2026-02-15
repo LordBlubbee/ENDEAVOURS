@@ -52,9 +52,10 @@ public class ModuleArmor : Module
         CurArmor.Value = Mathf.Clamp(CurArmor.Value + fl, 0, max);
         //CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
     }
-    public override void Heal(float fl)
+    public override float Heal(float fl)
     {
-        if (IsDisabledForever()) return;
+        if (IsDisabledForever()) return 0f;
+        float Old = CurHealth.Value;
         CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
         if (CurHealth.Value > 99) isDisabled.Value = false;
         if (GetHealthRelative() > 0.9f)
@@ -62,6 +63,7 @@ public class ModuleArmor : Module
             CurArmor.Value = Mathf.Clamp(CurArmor.Value + fl, 0, GetMaxArmor());
         }
         if (fl > 1) CO_SPAWNER.co.SpawnHealRpc(fl, transform.position);
+        return CurHealth.Value - Old;
     }
     public bool CanAbsorbArmor()
     {

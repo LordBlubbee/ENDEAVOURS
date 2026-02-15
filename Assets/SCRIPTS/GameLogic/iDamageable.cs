@@ -10,8 +10,8 @@ public interface iDamageable
 
     public float GetMaxHealth();
     public float GetHealthRelative();
-    public void Heal(float fl);
-    public void TakeDamage(float fl, Vector3 src, DamageType type);
+    public float Heal(float fl);
+    public float TakeDamage(float fl, Vector3 src, DamageType type);
     public enum DamageType
     {
         TRUE,

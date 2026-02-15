@@ -12,6 +12,7 @@ public class Screen_Talk : MonoBehaviour
     public GameObject NextButton;
     public GameObject PreviousButton;
     public TextMeshProUGUI NextButtonTex;
+    public TextMeshProUGUI SkipButtonTex;
     public TextMeshProUGUI PreviousButtonTex;
     public TextMeshProUGUI[] ChoiceButtonVotes;
     public TextMeshProUGUI[] ChoiceTex;
@@ -99,11 +100,13 @@ public class Screen_Talk : MonoBehaviour
                 ChoiceButton[i].gameObject.SetActive(false);
             }
             NextButtonTex.color = Color.white;
+            SkipButtonTex.color = Color.yellow;
             PreviousButtonTex.color = (CurrentPage > 0) ? Color.white : Color.gray;
         }
         else
         {
             NextButtonTex.color = Color.gray;
+            SkipButtonTex.color = Color.gray;
             PreviousButtonTex.color = Color.white;
             for (int i = 0; i < ChoiceTex.Length; i++)
             {

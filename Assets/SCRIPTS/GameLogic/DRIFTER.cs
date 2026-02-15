@@ -315,18 +315,20 @@ public class DRIFTER : NetworkBehaviour, iDamageable
         float dyf = Mathf.Sin(rot);
         return new Vector3(dxf, dyf, 0);
     }
-    public void Heal(float fl)
+    public float Heal(float fl)
     {
+        float Old = CurHealth.Value;
         CurHealth.Value = Mathf.Min(GetMaxHealth(), CurHealth.Value + fl);
+        return CurHealth.Value - Old;
     }
 
     public void SetHealth(float health)
     {
         CurHealth.Value = health;
     }
-    public void TakeDamage(float fl, Vector3 ImpactArea, DamageType type)
+    public float TakeDamage(float fl, Vector3 ImpactArea, DamageType type)
     {
-        if (isDead()) return;
+        if (isDead()) return 0;
         CurHealth.Value -= fl;
         if (CurHealth.Value < 0.1f)
         {
@@ -343,6 +345,7 @@ public class DRIFTER : NetworkBehaviour, iDamageable
             }
         }
         if (fl > 1) CO_SPAWNER.co.SpawnDMGRpc(fl, ImpactArea);
+        return fl;
     }
 
     public void Die()

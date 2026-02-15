@@ -50,4 +50,10 @@ public class ScriptableEquippableArtifact : ScriptableEquippable
     public float ModifyMeleeDamage;
     public float ModifyRangedDamage;
     public float ModifySpellDamage;
+
+    public float ModifyMeleeRes;
+    public float ModifyRangedRes;
+    public float ModifySpellRes;
+    public float ModifyFireRes;
+    public float ModifyMistRes;
 }

@@ -181,7 +181,7 @@ MonoBehaviour:
   - {fileID: 5158618258877860477}
   Blockers:
   - {fileID: 7437231586876515039}
-  AI: 0
+  AI: 2
   isConsumable: 0
   DashResetsCooldown: 0
   CrosshairSprite: {fileID: 21300000, guid: b2087bbfc192e8041bd4924a70def55c, type: 3}

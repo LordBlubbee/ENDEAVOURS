@@ -416,7 +416,7 @@ public class CO_SPAWNER : NetworkBehaviour
             {
                 Offset = UnityEngine.Random.insideUnitCircle.normalized * Dist;
                 Spawn = CO.co.PlayerMainDrifter.transform.position + Offset;
-                CrewWorthPoints = CO.co.GetEncounterSizeModifier() * gr.CrewAmountLevel / SpawnAmount;
+                CrewWorthPoints = CO.co.GetNebulaEncounterSizeModifier() * gr.CrewAmountLevel / SpawnAmount;
                 while (CrewWorthPoints > 0)
                 {
                     Vector3 tryPos = Spawn + new Vector3(UnityEngine.Random.Range(-Radius, Radius), UnityEngine.Random.Range(-Radius, Radius));
@@ -944,6 +944,13 @@ public class CO_SPAWNER : NetworkBehaviour
         DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
         dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
         dmg.InitNumber(dm, 0.5f, new Color(0.9f,0,0));
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnDMGBlockedRpc(float dm, Vector3 pos)
+    {
+        DMG dmg = Instantiate(PrefabDMG, pos, Quaternion.identity);
+        dmg.transform.SetParent(CO.co.GetTransformAtPoint(pos));
+        dmg.InitNumber(dm, 0.4f, new Color(0.5f, 0.4f, 0.4f));
     }
 
     [Rpc(SendTo.ClientsAndHost)]

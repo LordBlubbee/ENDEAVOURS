@@ -9,9 +9,9 @@ public class Vault : Module
     {
         return base.IsDisabled() && CanBeDisabled;
     }
-    public override void TakeDamage(float fl, Vector3 src, DamageType type)
+    public override float TakeDamage(float fl, Vector3 src, DamageType type)
     {
-        if (!CanBeDamagedWhenFull && GetHealthRelative() >= 1f && type != DamageType.TRUE) return;
-        base.TakeDamage(fl, src, type);
+        if (!CanBeDamagedWhenFull && GetHealthRelative() >= 1f && type != DamageType.TRUE) return 0f;
+        return base.TakeDamage(fl, src, type);
     }
 }

@@ -16,10 +16,12 @@ public class GamerTag : MonoBehaviour
     public void SetPlayerAndName(CREW trans, string str, Color col)
     {
         //
-        Name.text = str;
-        Name.color = col;
-        if (trans.GetFaction() != 1) Name.text = "";
-
+        
+        if (trans.IsPlayer())
+        {
+            Name.text = str;
+            Name.color = col;
+        }
         if (Crew) return;
 
         Crew = trans;
