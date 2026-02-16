@@ -8,25 +8,28 @@ public class CinematicPlayer : MonoBehaviour
     public SceneObject PrefabSceneObject;
     public Image MainScreen;
     public Image FadeScreen;
-    List<SceneObject> SceneObjects;
+    float TransitionSpeed;
+    List<SceneObject> SceneObjects = new();
     ScriptableScene TargetScene;
     ScriptableScene CurrentScene;
-    public void SetScene(ScriptableScene scene)
+    public void SetScene(ScriptableScene scene, float Transition)
     {
         TargetScene = scene;
+        TransitionSpeed = Transition;
+        if (TransitionSpeed <= 0) ChangeScene();
     }
     private void Update()
     {
         if (TargetScene != CurrentScene)
         {
-            FadeScreen.color = new Color(0,0,0, Mathf.Clamp01(FadeScreen.color.a + Time.deltaTime * 2f));
+            FadeScreen.color = new Color(0,0,0, Mathf.Clamp01(FadeScreen.color.a + Time.deltaTime * TransitionSpeed));
             if (FadeScreen.color.a >= 1)
             {
                 ChangeScene();
             }
         } else
         {
-            FadeScreen.color = new Color(0, 0, 0, Mathf.Clamp01(FadeScreen.color.a - Time.deltaTime * 2f));
+            FadeScreen.color = new Color(0, 0, 0, Mathf.Clamp01(FadeScreen.color.a - Time.deltaTime * TransitionSpeed));
         }
     }
     private void ChangeScene()
@@ -35,10 +38,16 @@ public class CinematicPlayer : MonoBehaviour
         {
             Destroy(ob.gameObject);
         }
+        SceneObjects = new();
         CurrentScene = TargetScene;
-        foreach (ScriptableSceneObject ob in TargetScene.Objects)
+        if (TargetScene != null)
         {
-            Instantiate(PrefabSceneObject, MainScreen.transform).Init(ob);
+            foreach (ScriptableSceneObject ob in TargetScene.Objects)
+            {
+                SceneObject newOb = Instantiate(PrefabSceneObject, MainScreen.transform);
+                newOb.Init(ob);
+                SceneObjects.Add(newOb);
+            }
         }
     }
 }

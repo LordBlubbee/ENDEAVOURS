@@ -8,10 +8,27 @@ public class SceneObject : MonoBehaviour
     private ScriptableSceneObject ObjectType;
     float AnimationTime = 0f;
     float SwitchTime = 0f;
+    float WantScale = 1f;
     Vector3 CurrentMovement = Vector3.zero;
-    Vector3 CurrentScaling = Vector3.zero;
+    float CurrentScaling = 0;
     int CurrentScaleKeyframe = 0;
     int CurrentMovementKeyframe = 0;
+
+    public void AddScale(float amn)
+    {
+        SetScale(WantScale + amn);
+    }
+    public void SetScale(float scale)
+    {
+        WantScale = scale;
+        // Size of one pixel in scale space
+        float pixelStep = 1f / (320 * 6);
+
+        // Snap scale to nearest pixel step
+        float snappedScale = Mathf.Round(WantScale / pixelStep) * pixelStep;
+
+        transform.localScale = new Vector3(snappedScale, snappedScale, 1f);
+    }
     public float GetAnimationSpeed()
     {
         return 0.1f;
@@ -19,11 +36,16 @@ public class SceneObject : MonoBehaviour
     public void Init(ScriptableSceneObject ob) {
         ObjectType = ob;
         img = GetComponent<Image>();
+        img.sprite = ObjectType.SpriteList[CurrentImageFrame];
+
+        img.rectTransform.sizeDelta = img.sprite.rect.size * 6f;
 
         if (ObjectType.ScaleKeyframes.Count > CurrentScaleKeyframe)
-            transform.localScale = ObjectType.PositionKeyframes[CurrentMovementKeyframe].Vector;
+            SetScale(ObjectType.ScaleKeyframes[CurrentMovementKeyframe].Vector.x);
+        else SetScale(1);
         if (ObjectType.PositionKeyframes.Count > CurrentMovementKeyframe)
             transform.position = GetPos(ObjectType.PositionKeyframes[CurrentMovementKeyframe].Vector);
+        else transform.position = GetPos(0, 0);
     }
     private void Update()
     {
@@ -45,7 +67,7 @@ public class SceneObject : MonoBehaviour
                 {
                     Vector3 Difference = ObjectType.ScaleKeyframes[CurrentScaleKeyframe].Vector - transform.localScale;
                     float TimeDiff = ObjectType.ScaleKeyframes[CurrentScaleKeyframe].Time - AnimationTime;
-                    CurrentScaling = Difference / TimeDiff;
+                    CurrentScaling = Difference.x / TimeDiff;
                 }
             }
         }
@@ -62,7 +84,7 @@ public class SceneObject : MonoBehaviour
                 }
             }
         }
-        transform.localScale += CurrentScaling * Time.deltaTime;
+        AddScale(CurrentScaling * Time.deltaTime);
         transform.position += CurrentMovement * Time.deltaTime;
     }
 

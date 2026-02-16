@@ -163,9 +163,12 @@ public class UI : MonoBehaviour
 
     public void GoBackToPreviousScreen()
     {
+        PressSelectScreen(PreviousScreen);
+    }
+    public void GoBackToPreviousScreenNoPress()
+    {
         SelectScreen(PreviousScreen);
     }
-
     private void Awake()
     {
         ui = this;
