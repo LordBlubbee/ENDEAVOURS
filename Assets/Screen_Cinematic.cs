@@ -2,16 +2,20 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public class Screen_Cinematic : MonoBehaviour
 {
     [Header("REFERENCES")]
     public CinematicPlayer Cinematic;
-    public TextMeshProUGUI CinematicTex;
+    public TextMeshProUGUI TalkTex;
+    public TextMeshProUGUI TitleTex;
+    public TextMeshProUGUI SubtitleTex;
     public TextMeshProUGUI SkipTex;
 
     [Header("IMAGES")]
     public AudioClip Intro_OST;
+    public AudioClip[] Voices;
     public ScriptableScene[] Scenes;
 
     bool isRunningCinematic = false;
@@ -19,9 +23,9 @@ public class Screen_Cinematic : MonoBehaviour
     public void PlayIntroCinematic()
     {
         UI.ui.SelectScreen(gameObject);
-        if (!isRunningCinematic) StartCoroutine(PlayIntro());
+        if (!isRunningCinematic) StartCoroutine(PlayIntroOld());
     }
-    IEnumerator PlayIntro()
+    IEnumerator PlayIntroOld()
     {
         canSkip = false;
         isRunningCinematic = true;
@@ -139,37 +143,95 @@ public class Screen_Cinematic : MonoBehaviour
         isRunningCinematic = false;
         UI.ui.GoBackToPreviousScreen();
     }
-
-    private void SetText(string tex)
+    private void SetText(string tex, AudioClip Speak = null)
     {
-        StartCoroutine(SwitchTextRoutine(tex));
+        StartCoroutine(SwitchTextRoutine(tex, Speak));
     }
     bool isSwitchingText = false;
     int TextID = 0;
-    IEnumerator SwitchTextRoutine(string tex)
+    IEnumerator SwitchTextRoutine(string tex, AudioClip Speak)
     {
         // while (isSwitchingText) yield return null;
         TextID++;
         int ID = TextID;
         
         isSwitchingText = true;
-        while (CinematicTex.color.a > 0)
+        while (TalkTex.color.a > 0)
         {
-            CinematicTex.color = new Color(1, 1, 1, Mathf.Clamp01(CinematicTex.color.a - Time.deltaTime));
+            TalkTex.color = new Color(1, 1, 1, Mathf.Clamp01(TalkTex.color.a - Time.deltaTime));
             yield return null;
             if (ID != TextID) yield break;
         }
-        CinematicTex.text = tex;
-        if (tex.Length > 0)
+        TalkTex.text = tex;
+        TalkTex.maxVisibleCharacters = 0;
+
+        int totalChars = TalkTex.text.Length;
+        int visibleCount = 0;
+        int speakLetter = 0;
+
+        float Timer = 0f;
+
+        while (visibleCount < totalChars)
         {
-            while (CinematicTex.color.a < 1)
+            while (Timer > 0f)
             {
-                CinematicTex.color = new Color(1, 1, 1, Mathf.Clamp01(CinematicTex.color.a + Time.deltaTime * 1.4f));
+                Timer -= Time.deltaTime;
                 yield return null;
-                if (ID != TextID) yield break;
+            }
+            Timer += 0.015f;
+            visibleCount++;
+            TalkTex.maxVisibleCharacters = visibleCount;
+
+            if (Speak)
+            {
+                char c = TalkTex.text[Mathf.Clamp(visibleCount - 1, 0, totalChars - 1)];
+                if (char.IsLetterOrDigit(c))
+                {
+                    speakLetter--;
+                    if (speakLetter < 0)
+                    {
+                        speakLetter = Random.Range(2, 4);
+                        AUDCO.aud.PlaySFX(Speak);
+                    }
+                }
             }
         }
         isSwitchingText = false;
+    }
+
+    private void SetTitle(string title, string subtitle)
+    {
+        TitleTex.text = title;
+        SubtitleTex.text = subtitle;
+        StartCoroutine(SwitchTitleRoutine());
+    }
+
+    IEnumerator SwitchTitleRoutine()
+    {
+        TitleTex.color = new Color(1, 1, 1, 0);
+        SubtitleTex.color = new Color(0.8f, 0.8f, 0.8f, 0);
+        while (TitleTex.color.a < 1)
+        {
+            TitleTex.color = new Color(1, 1, 1, TitleTex.color.a + Time.deltaTime * 0.5f);
+            yield return null;
+        }
+        yield return new WaitForSeconds(2f);
+        while (SubtitleTex.color.a < 1)
+        {
+            SubtitleTex.color = new Color(1, 1, 1, SubtitleTex.color.a + Time.deltaTime * 0.5f);
+            yield return null;
+        }
+        yield return new WaitForSeconds(5f);
+        while (SubtitleTex.maxVisibleCharacters > 0)
+        {
+            SubtitleTex.maxVisibleCharacters--;
+            yield return new WaitForSeconds(0.05f);
+        }
+        while (TitleTex.maxVisibleCharacters > 0)
+        {
+            TitleTex.maxVisibleCharacters--;
+            yield return new WaitForSeconds(0.05f);
+        }
     }
     IEnumerator SkipTextRoutine()
     {
