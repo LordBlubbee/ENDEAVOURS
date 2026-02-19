@@ -22,7 +22,7 @@ public class SpriteKeyframe
 [Serializable]
 public class ScaleKeyframe
 {
-    public float Scale;
+    public float Scale = 1;
     public bool StartIntense = false;
     public bool EndIntense = false;
     public float Time;

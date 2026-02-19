@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_5_Fleet1
+  m_EditorClassIdentifier: 
+  SpriteList:
+  - {fileID: 21300000, guid: 3d752a8331b4cc541ad9dae7185ae173, type: 3}
+  - {fileID: 21300000, guid: c72d26a847a08124f8473c4515cb5f03, type: 3}
+  - {fileID: 21300000, guid: c3cf52bcc55ada448bef5834e37a090b, type: 3}
+  SpriteKeyframes: []
+  ScaleKeyframes:
+  - Scale: 1
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 1.06
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  PositionKeyframes:
+  - Vector: {x: 0.3, y: 0, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Vector: {x: -0.2, y: 0, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 12
+  RotationKeyframes: []

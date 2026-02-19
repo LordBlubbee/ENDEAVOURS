@@ -10,13 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
-  m_Name: Intro_3_Back
+  m_Name: Intro_1_Guys
   m_EditorClassIdentifier: 
   SpriteList:
-  - {fileID: 21300000, guid: a7fceffb99146b64e8ec9ffb69cff153, type: 3}
+  - {fileID: 21300000, guid: 1311313c60de9fe4499cff59d3671d85, type: 3}
+  SpriteKeyframes: []
   ScaleKeyframes:
-  - Vector: {x: 1, y: 1, z: 1}
+  - Scale: 1
+    StartIntense: 0
+    EndIntense: 0
     Time: 0
-  - Vector: {x: 1.05, y: 1.05, z: 1.05}
+  - Scale: 1.05
+    StartIntense: 0
+    EndIntense: 0
     Time: 10
   PositionKeyframes: []
+  RotationKeyframes: []

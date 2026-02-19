@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Intro_5_Back
   m_EditorClassIdentifier: 
   SpriteList:
-  - {fileID: 21300000, guid: 5743031ccb6f5f3449456ab3c2d3a032, type: 3}
-  ScaleKeyframes:
-  - Vector: {x: 1, y: 1, z: 1}
-    Time: 0
-  - Vector: {x: 1.05, y: 1.05, z: 1.05}
-    Time: 10
+  - {fileID: 21300000, guid: 63e473c4e5a11a54aab28f58e5156e6b, type: 3}
+  SpriteKeyframes: []
+  ScaleKeyframes: []
   PositionKeyframes: []
+  RotationKeyframes: []

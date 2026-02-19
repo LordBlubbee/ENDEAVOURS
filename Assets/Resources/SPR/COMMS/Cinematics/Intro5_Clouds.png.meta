@@ -1,0 +1,494 @@
+fileFormatVersion: 2
+guid: 7714e816d4186434d9f55d276d551b33
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5069557102009778305
+    second: Intro5_Clouds_0
+  - first:
+      213: -1785366985185036660
+    second: Intro5_Clouds_1
+  - first:
+      213: -2988457621050218349
+    second: Intro5_Clouds_2
+  - first:
+      213: -461787724333223382
+    second: Intro5_Clouds_3
+  - first:
+      213: -2264792648041104734
+    second: Intro5_Clouds_4
+  - first:
+      213: -4530068576406640276
+    second: Intro5_Clouds_5
+  - first:
+      213: -3558258453855248913
+    second: Intro5_Clouds_6
+  - first:
+      213: -7571983137596091361
+    second: Intro5_Clouds_7
+  - first:
+      213: -2733242359818639870
+    second: Intro5_Clouds_8
+  - first:
+      213: -6563599326492896702
+    second: Intro5_Clouds_9
+  - first:
+      213: -8828427845842876261
+    second: Intro5_Clouds_10
+  - first:
+      213: 5529903354175254243
+    second: Intro5_Clouds_11
+  - first:
+      213: -6237188773896303180
+    second: Intro5_Clouds_12
+  - first:
+      213: -5129389197360705087
+    second: Intro5_Clouds_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 10
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Intro5_Clouds_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 170
+        width: 82
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7ff526eca055a9b0800000000000000
+      internalID: -5069557102009778305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro5_Clouds_1
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 169
+        width: 88
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c86f55eaf2a1937e0800000000000000
+      internalID: -1785366985185036660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro5_Clouds_2
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 145
+        width: 136
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3982efe80add686d0800000000000000
+      internalID: -2988457621050218349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro5_Clouds_3
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 169
+        width: 69
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a227b79e2866799f0800000000000000
+      internalID: -461787724333223382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro5_Clouds_4
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 173
+        width: 90
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2aaf7930617d190e0800000000000000
+      internalID: -2264792648041104734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro5_Clouds_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 141
+        width: 80
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c696f1f81a6f121c0800000000000000
+      internalID: -4530068576406640276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro5_Clouds_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 119
+        width: 220
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fed5de6e9c68e9ec0800000000000000
+      internalID: -3558258453855248913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro5_Clouds_7
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 152
+        width: 85
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1456565479eae690800000000000000
+      internalID: -7571983137596091361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro5_Clouds_8
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 101
+        width: 59
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 206a5f91e82911ad0800000000000000
+      internalID: -2733242359818639870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro5_Clouds_9
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 109
+        width: 270
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 242d560203969e4a0800000000000000
+      internalID: -6563599326492896702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro5_Clouds_10
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 92
+        width: 108
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b984e5336af1b7580800000000000000
+      internalID: -8828427845842876261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro5_Clouds_11
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 76
+        width: 177
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ee6bdb4dc92ebc40800000000000000
+      internalID: 5529903354175254243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro5_Clouds_12
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 64
+        width: 147
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bd4bde2bdd0179a0800000000000000
+      internalID: -6237188773896303180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro5_Clouds_13
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 88
+        width: 80
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c1d690a3bfb0d8b0800000000000000
+      internalID: -5129389197360705087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Intro5_Clouds_0: -5069557102009778305
+      Intro5_Clouds_1: -1785366985185036660
+      Intro5_Clouds_10: -8828427845842876261
+      Intro5_Clouds_11: 5529903354175254243
+      Intro5_Clouds_12: -6237188773896303180
+      Intro5_Clouds_13: -5129389197360705087
+      Intro5_Clouds_2: -2988457621050218349
+      Intro5_Clouds_3: -461787724333223382
+      Intro5_Clouds_4: -2264792648041104734
+      Intro5_Clouds_5: -4530068576406640276
+      Intro5_Clouds_6: -3558258453855248913
+      Intro5_Clouds_7: -7571983137596091361
+      Intro5_Clouds_8: -2733242359818639870
+      Intro5_Clouds_9: -6563599326492896702
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

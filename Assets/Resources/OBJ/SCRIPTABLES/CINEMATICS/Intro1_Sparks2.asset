@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro1_Sparks2
+  m_EditorClassIdentifier: 
+  SpriteList:
+  - {fileID: 0}
+  SpriteKeyframes:
+  - List:
+    - {fileID: 21300000, guid: 2925c200cb5ea8441b323cc03fcd0895, type: 3}
+    - {fileID: 21300000, guid: 01c41325f9ea177478d1d240c3a78fc2, type: 3}
+    - {fileID: 21300000, guid: cd512ee37c1d41345853b1317bb69199, type: 3}
+    - {fileID: 21300000, guid: 94e7a8c5c77cecb4eb0509e1449d534f, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    Time: 2
+  ScaleKeyframes:
+  - Scale: 1
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 1.05
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  PositionKeyframes: []
+  RotationKeyframes: []

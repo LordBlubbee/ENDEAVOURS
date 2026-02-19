@@ -23,7 +23,65 @@ public class Screen_Cinematic : MonoBehaviour
     public void PlayIntroCinematic()
     {
         UI.ui.SelectScreen(gameObject);
-        if (!isRunningCinematic) StartCoroutine(PlayIntroOld());
+        if (!isRunningCinematic) StartCoroutine(PlayIntro());
+    }
+
+    IEnumerator PlayIntro()
+    {
+        canSkip = false;
+        isRunningCinematic = true;
+
+        //SetSceneInstant
+        SetScene(null, true);
+
+        yield return new WaitForSeconds(1f);
+
+        StartCoroutine(SkipTextRoutine());
+        canSkip = true;
+        if (Intro_OST) AUDCO.aud.setOST(Intro_OST);
+        yield return new WaitForSeconds(2f);
+
+
+        SetScene(Scenes[1], false); //Capitolis
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[2], false); //Cliffs
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[0], false); //Driftyards
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[3], false); //Driftyards 2
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[4], false); //Underway
+
+        yield return new WaitForSeconds(4f);
+        SetTitle("STARLIGHT ENDEAVOUR EXPEDITION", "121 AD NEBULA - SOUTHERN REACHES");
+        yield return new WaitForSeconds(6f);
+
+        /*
+         FULL PLANNED DIALOGUE
+        [30 seconds of Mistworld scenes]
+        ROLL TITLE SCREEN - ENDEAVOUR FLEET.
+        
+        In response to the disastrous Fluctus Nebulae, the Republic has finally authorized the launch of a unified expedition force.
+        The mission of the fleet is to trace the origin of the rising Nebula, and investigate it using new sub-nebulan diving technology. 
+        Our Gubernators are reporting unusual Flux signatures below.
+        Sub-nebulan drives engaged. Monitoring buoyancy...
+        Engineering reports stable. Fleet advancing.
+
+        Thirty-three days after the launch of the Endeavour, we found the wreckage of a massive Drifter.
+        The metals that surround its hull are resistant to the Nebula, and of unknown composition.
+        No known technology has been found. However, on the main bridge deck, writings in old Catali have been located.
+        It's some sort of map, relaying coordinates by relativizing position to the largest known mountain peaks of Unitas.
+
+        Whoever left this here for us, must know...
+
+        The fleet is under attack. Contact with Rigid One lost. Contact with Ephemeral Command lost. Contact with the Coalition's flag-rigid lost.
+        The Map must be protected at all costs.
+        The coordinate lies to the far north.
+        You must find it, captain.
+        The Expedition must succeed.
+        
+         
+         */
     }
     IEnumerator PlayIntroOld()
     {
@@ -237,13 +295,13 @@ public class Screen_Cinematic : MonoBehaviour
     {
         while (SkipTex.color.a < 1)
         {
-            SkipTex.color = new Color(1, 0, 0, Mathf.Clamp01(SkipTex.color.a - Time.deltaTime));
+            SkipTex.color = new Color(1, 0, 0, Mathf.Clamp01(SkipTex.color.a + Time.deltaTime));
             yield return null;
         }
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(4f);
         while (SkipTex.color.a > 0)
         {
-            SkipTex.color = new Color(1, 0, 0, Mathf.Clamp01(SkipTex.color.a + Time.deltaTime));
+            SkipTex.color = new Color(1, 0, 0, Mathf.Clamp01(SkipTex.color.a - Time.deltaTime));
             yield return null;
         }
     }

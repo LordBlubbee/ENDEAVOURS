@@ -1,0 +1,572 @@
+fileFormatVersion: 2
+guid: b592f6b4df4bdb5429fd46a999e0328c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3983836613180185513
+    second: Intro3_Buildings1_0
+  - first:
+      213: -2531841599822094382
+    second: Intro3_Buildings1_1
+  - first:
+      213: 3172070823523582598
+    second: Intro3_Buildings1_2
+  - first:
+      213: 1908488689146096309
+    second: Intro3_Buildings1_3
+  - first:
+      213: 7790418246311620300
+    second: Intro3_Buildings1_4
+  - first:
+      213: 8421193000153090358
+    second: Intro3_Buildings1_5
+  - first:
+      213: 8728026778832928592
+    second: Intro3_Buildings1_6
+  - first:
+      213: 5131043086080576664
+    second: Intro3_Buildings1_7
+  - first:
+      213: -7716854642061921202
+    second: Intro3_Buildings1_8
+  - first:
+      213: -3631804380629667381
+    second: Intro3_Buildings1_9
+  - first:
+      213: 401355952171405352
+    second: Intro3_Buildings1_10
+  - first:
+      213: -5179158358571484725
+    second: Intro3_Buildings1_11
+  - first:
+      213: 1538560553001665198
+    second: Intro3_Buildings1_12
+  - first:
+      213: 7963929485289334949
+    second: Intro3_Buildings1_13
+  - first:
+      213: -6939245828714054014
+    second: Intro3_Buildings1_14
+  - first:
+      213: 4101439368596485855
+    second: Intro3_Buildings1_15
+  - first:
+      213: -2430284534478892782
+    second: Intro3_Buildings1_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 10
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Intro3_Buildings1_0
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 171
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9abdccbda4e694730800000000000000
+      internalID: 3983836613180185513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 136
+        width: 11
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2df1c0faa771ddcd0800000000000000
+      internalID: -2531841599822094382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_2
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 174
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 682018e8b95750c20800000000000000
+      internalID: 3172070823523582598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_3
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 168
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ba6766e9505c7a10800000000000000
+      internalID: 1908488689146096309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_4
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 163
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cce202f9e102d1c60800000000000000
+      internalID: 7790418246311620300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_5
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 170
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 639812f8a661ed470800000000000000
+      internalID: 8421193000153090358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_6
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 133
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05ffe6ebc1e202970800000000000000
+      internalID: 8728026778832928592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_7
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 132
+        width: 18
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89c8e095080253740800000000000000
+      internalID: 5131043086080576664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_8
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 135
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e443394b69938e490800000000000000
+      internalID: -7716854642061921202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_9
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 133
+        width: 21
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc17cde682d399dc0800000000000000
+      internalID: -3631804380629667381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_10
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 132
+        width: 17
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8205aadac17e19500800000000000000
+      internalID: 401355952171405352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_11
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 136
+        width: 10
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc9f9d9c9eeef18b0800000000000000
+      internalID: -5179158358571484725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_12
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 135
+        width: 14
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea2c71bdba01a5510800000000000000
+      internalID: 1538560553001665198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_13
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 137
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a82ee21caf858e60800000000000000
+      internalID: 7963929485289334949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_14
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 131
+        width: 23
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28e336a3fa8d2bf90800000000000000
+      internalID: -6939245828714054014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_15
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 104
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd6fef8106d3be830800000000000000
+      internalID: 4101439368596485855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings1_16
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 86
+        width: 18
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21192439715e54ed0800000000000000
+      internalID: -2430284534478892782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Intro3_Buildings1_0: 3983836613180185513
+      Intro3_Buildings1_1: -2531841599822094382
+      Intro3_Buildings1_10: 401355952171405352
+      Intro3_Buildings1_11: -5179158358571484725
+      Intro3_Buildings1_12: 1538560553001665198
+      Intro3_Buildings1_13: 7963929485289334949
+      Intro3_Buildings1_14: -6939245828714054014
+      Intro3_Buildings1_15: 4101439368596485855
+      Intro3_Buildings1_16: -2430284534478892782
+      Intro3_Buildings1_2: 3172070823523582598
+      Intro3_Buildings1_3: 1908488689146096309
+      Intro3_Buildings1_4: 7790418246311620300
+      Intro3_Buildings1_5: 8421193000153090358
+      Intro3_Buildings1_6: 8728026778832928592
+      Intro3_Buildings1_7: 5131043086080576664
+      Intro3_Buildings1_8: -7716854642061921202
+      Intro3_Buildings1_9: -3631804380629667381
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

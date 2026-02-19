@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,15 +40,15 @@ public class SceneObject : MonoBehaviour
     }
     public float GetAnimationSpeed()
     {
-        return 0.1f;
+        return 0.2f;
     }
     public void Init(ScriptableSceneObject ob) {
         ObjectType = ob;
         Sprites = ob.SpriteList;
         img = GetComponent<Image>();
         img.sprite = ObjectType.SpriteList[CurrentImageFrame];
-
-        img.rectTransform.sizeDelta = img.sprite.rect.size * 6f;
+        if (img.sprite != null) img.rectTransform.sizeDelta = img.sprite.rect.size * 6f;
+        else img.rectTransform.sizeDelta = Vector2.zero;
 
         if (ObjectType.ScaleKeyframes.Count > CurrentScaleKeyframe)
             SetScale(ObjectType.ScaleKeyframes[CurrentMovementKeyframe].Scale);
@@ -89,7 +90,7 @@ public class SceneObject : MonoBehaviour
                 CurrentMovementKeyframe++;
                 if (ObjectType.PositionKeyframes.Count > CurrentMovementKeyframe)
                 {
-                    Vector3 Difference = ObjectType.PositionKeyframes[CurrentMovementKeyframe].Vector - transform.position;
+                    Vector3 Difference = GetPos(ObjectType.PositionKeyframes[CurrentMovementKeyframe].Vector) - transform.position;
                     float TimeDiff = ObjectType.PositionKeyframes[CurrentMovementKeyframe].Time - AnimationTime;
                     CurrentMovement = Difference / TimeDiff;
                 }
@@ -127,8 +128,10 @@ public class SceneObject : MonoBehaviour
         {
             SwitchTime -= GetAnimationSpeed();
             CurrentImageFrame++;
-            if (CurrentImageFrame >= ObjectType.SpriteList.Count) CurrentImageFrame = 0;
-            img.sprite = ObjectType.SpriteList[CurrentImageFrame];
+            if (CurrentImageFrame >= Sprites.Count) CurrentImageFrame = 0;
+            img.sprite = Sprites[CurrentImageFrame];
+            if (img.sprite != null) img.rectTransform.sizeDelta = img.sprite.rect.size * 6f;
+            else img.rectTransform.sizeDelta = Vector2.zero;
         }
     }
 
@@ -139,8 +142,17 @@ public class SceneObject : MonoBehaviour
     private Vector3 GetPos(float x, float y)
     {
         //Takes a value from -1 to 1
+        //x = (x / 320f) * 2f - 1f;
+       // y = (y / 180f) * 2f - 1f;
         Vector3 vec = Camera.main.ScreenToWorldPoint(new Vector3((x * Screen.width + Screen.width * 0.5f), (y * Screen.height + Screen.height * 0.5f)));
         //My Canvas projects in World coordinates
         return new Vector3(vec.x * 0.5f, vec.y * 0.5f, 0);
+    }
+    public static Vector2 ConvertToScreenSpace(float x, float y)
+    {
+        float screenX = (x + 1f) * 0.5f * 320f;
+        float screenY = (y + 1f) * 0.5f * 180f;
+
+        return new Vector2(screenX, screenY);
     }
 }

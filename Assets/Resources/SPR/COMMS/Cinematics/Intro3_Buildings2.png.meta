@@ -1,0 +1,598 @@
+fileFormatVersion: 2
+guid: 145ec6953c44ed04b80e8ce9abb6c4f1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3505455141801457080
+    second: Intro3_Buildings2_0
+  - first:
+      213: -4572513055097650620
+    second: Intro3_Buildings2_1
+  - first:
+      213: -5319283921554578608
+    second: Intro3_Buildings2_2
+  - first:
+      213: -6242189592395270384
+    second: Intro3_Buildings2_3
+  - first:
+      213: -6601894973335350542
+    second: Intro3_Buildings2_4
+  - first:
+      213: 2297635616506167651
+    second: Intro3_Buildings2_5
+  - first:
+      213: -8494569802427007700
+    second: Intro3_Buildings2_6
+  - first:
+      213: -8746922837737201114
+    second: Intro3_Buildings2_7
+  - first:
+      213: -870193973931221464
+    second: Intro3_Buildings2_8
+  - first:
+      213: 2441613769078778419
+    second: Intro3_Buildings2_9
+  - first:
+      213: 7102547409044796086
+    second: Intro3_Buildings2_10
+  - first:
+      213: 3686662367397897555
+    second: Intro3_Buildings2_11
+  - first:
+      213: 3634845652228921726
+    second: Intro3_Buildings2_12
+  - first:
+      213: -7469578861210050518
+    second: Intro3_Buildings2_13
+  - first:
+      213: -8596479685704100765
+    second: Intro3_Buildings2_14
+  - first:
+      213: 3586577921633407021
+    second: Intro3_Buildings2_15
+  - first:
+      213: -2142767151896119937
+    second: Intro3_Buildings2_16
+  - first:
+      213: -5981787598599991628
+    second: Intro3_Buildings2_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 10
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Intro3_Buildings2_0
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 132
+        width: 18
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84a8bd80f1f1a5fc0800000000000000
+      internalID: -3505455141801457080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_1
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 173
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44281144a9b2b80c0800000000000000
+      internalID: -4572513055097650620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_2
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 166
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 053ea44c47b1e26b0800000000000000
+      internalID: -5319283921554578608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_3
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 171
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 017b3a463a94f59a0800000000000000
+      internalID: -6242189592395270384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_4
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 163
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f2d8e5008b5164a0800000000000000
+      internalID: -6601894973335350542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_5
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 165
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 361c2297b67d2ef10800000000000000
+      internalID: 2297635616506167651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_6
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 166
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2df39655c93d1a80800000000000000
+      internalID: -8494569802427007700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_7
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 131
+        width: 23
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6222ce2b500bc9680800000000000000
+      internalID: -8746922837737201114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_8
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 133
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82ed422f0337ce3f0800000000000000
+      internalID: -870193973931221464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_9
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 136
+        width: 9
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33aa4a869ca52e120800000000000000
+      internalID: 2441613769078778419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_10
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 135
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b27c74dc31519260800000000000000
+      internalID: 7102547409044796086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_11
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 133
+        width: 16
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3556d8fe3e7a92330800000000000000
+      internalID: 3686662367397897555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_12
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 132
+        width: 17
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e795a7accd0917230800000000000000
+      internalID: 3634845652228921726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_13
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 136
+        width: 11
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a20eecbe999b65890800000000000000
+      internalID: -7469578861210050518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_14
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 135
+        width: 13
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 364debe954b23b880800000000000000
+      internalID: -8596479685704100765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_15
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 137
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d20d7320e9516c130800000000000000
+      internalID: 3586577921633407021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_16
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 104
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f753bd2d0ac5342e0800000000000000
+      internalID: -2142767151896119937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro3_Buildings2_17
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 86
+        width: 18
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4be4c973fdb6cfca0800000000000000
+      internalID: -5981787598599991628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Intro3_Buildings2_0: -3505455141801457080
+      Intro3_Buildings2_1: -4572513055097650620
+      Intro3_Buildings2_10: 7102547409044796086
+      Intro3_Buildings2_11: 3686662367397897555
+      Intro3_Buildings2_12: 3634845652228921726
+      Intro3_Buildings2_13: -7469578861210050518
+      Intro3_Buildings2_14: -8596479685704100765
+      Intro3_Buildings2_15: 3586577921633407021
+      Intro3_Buildings2_16: -2142767151896119937
+      Intro3_Buildings2_17: -5981787598599991628
+      Intro3_Buildings2_2: -5319283921554578608
+      Intro3_Buildings2_3: -6242189592395270384
+      Intro3_Buildings2_4: -6601894973335350542
+      Intro3_Buildings2_5: 2297635616506167651
+      Intro3_Buildings2_6: -8494569802427007700
+      Intro3_Buildings2_7: -8746922837737201114
+      Intro3_Buildings2_8: -870193973931221464
+      Intro3_Buildings2_9: 2441613769078778419
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

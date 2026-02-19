@@ -35856,7 +35856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &932261645
 RectTransform:
   m_ObjectHideFlags: 0
@@ -98548,7 +98548,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1982274211
 RectTransform:
   m_ObjectHideFlags: 0
@@ -98587,9 +98587,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cinematic: {fileID: 1755202086}
-  CinematicTex: {fileID: 1985514534}
+  TalkTex: {fileID: 1985514534}
+  TitleTex: {fileID: 1012057989}
+  SubtitleTex: {fileID: 2024213910}
   SkipTex: {fileID: 1699512718}
   Intro_OST: {fileID: 8300000, guid: f949bbf965fb93943b346a9000fdeb87, type: 3}
+  Voices: []
   Scenes:
   - {fileID: 11400000, guid: a69106c2750d6514e8a3eb3034867029, type: 2}
   - {fileID: 11400000, guid: 47843c59dc15c0b44bf454670172a1a9, type: 2}
