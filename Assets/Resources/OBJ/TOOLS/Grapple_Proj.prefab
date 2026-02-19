@@ -211,4 +211,4 @@ MonoBehaviour:
   ApplyBuff: {fileID: 0}
   ZoneImpact: {fileID: 0}
   ZoneChance: 0
-  CreateLinePrefab: {fileID: 1300799118010467197, guid: 57d3563438c720741afc3f232e364989, type: 3}
+  CreateLinePrefab: {fileID: 0}
