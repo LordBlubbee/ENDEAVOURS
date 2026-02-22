@@ -266,29 +266,44 @@ public class Screen_Cinematic : MonoBehaviour
 
     IEnumerator SwitchTitleRoutine()
     {
-        TitleTex.color = new Color(1, 1, 1, 0);
-        SubtitleTex.color = new Color(0.8f, 0.8f, 0.8f, 0);
-        while (TitleTex.color.a < 1)
+        TitleTex.color = new Color(0, 1, 1, 1);
+        SubtitleTex.color = new Color(0f, 0.8f, 0.8f, 1);
+        /*while (TitleTex.color.a < 1)
         {
-            TitleTex.color = new Color(1, 1, 1, TitleTex.color.a + Time.deltaTime * 0.5f);
+            TitleTex.color = new Color(0, 1, 1, TitleTex.color.a + Time.deltaTime * 0.5f);
             yield return null;
         }
         yield return new WaitForSeconds(2f);
         while (SubtitleTex.color.a < 1)
         {
-            SubtitleTex.color = new Color(1, 1, 1, SubtitleTex.color.a + Time.deltaTime * 0.5f);
+            SubtitleTex.color = new Color(0, 0.8f, 0.8f, SubtitleTex.color.a + Time.deltaTime * 0.5f);
             yield return null;
+        }*/
+        SubtitleTex.maxVisibleCharacters = 0;
+        TitleTex.maxVisibleCharacters = 0;
+        while (TitleTex.maxVisibleCharacters < TitleTex.text.Length)
+        {
+            TitleTex.maxVisibleCharacters++;
+            yield return new WaitForSeconds(0.05f);
         }
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
+        while (SubtitleTex.maxVisibleCharacters < SubtitleTex.text.Length)
+        {
+            SubtitleTex.maxVisibleCharacters++;
+            yield return new WaitForSeconds(0.05f);
+        }
+        yield return new WaitForSeconds(7f);
+        SubtitleTex.maxVisibleCharacters = SubtitleTex.text.Length;
         while (SubtitleTex.maxVisibleCharacters > 0)
         {
             SubtitleTex.maxVisibleCharacters--;
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
         }
+        TitleTex.maxVisibleCharacters = TitleTex.text.Length;
         while (TitleTex.maxVisibleCharacters > 0)
         {
             TitleTex.maxVisibleCharacters--;
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
         }
     }
     IEnumerator SkipTextRoutine()

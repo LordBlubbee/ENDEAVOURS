@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
   m_Name: Intro_1_Scaffolding
   m_EditorClassIdentifier: 
+  AnimationSpeed: 0.2
   SpriteList:
   - {fileID: 21300000, guid: e7826035025f3354fad4305bd1b298ae, type: 3}
   SpriteKeyframes: []
   ScaleKeyframes:
-  - Scale: 1.3
+  - Scale: 1.1
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Scale: 1.1
+  - Scale: 1.3
     StartIntense: 0
     EndIntense: 0
     Time: 10
   PositionKeyframes:
-  - Vector: {x: 0, y: 0, z: 0}
+  - Vector: {x: -0.1, y: 0.1, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 0

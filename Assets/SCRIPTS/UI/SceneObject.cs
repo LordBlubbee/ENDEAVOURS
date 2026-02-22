@@ -40,7 +40,7 @@ public class SceneObject : MonoBehaviour
     }
     public float GetAnimationSpeed()
     {
-        return 0.2f;
+        return ObjectType.AnimationSpeed;
     }
     public void Init(ScriptableSceneObject ob) {
         ObjectType = ob;
@@ -79,7 +79,19 @@ public class SceneObject : MonoBehaviour
                 {
                     Vector3 Difference = new Vector3(ObjectType.ScaleKeyframes[CurrentScaleKeyframe].Scale, ObjectType.ScaleKeyframes[CurrentScaleKeyframe].Scale,1) - transform.localScale;
                     float TimeDiff = ObjectType.ScaleKeyframes[CurrentScaleKeyframe].Time - AnimationTime;
-                    CurrentScaling = Difference.x / TimeDiff;
+                    if (ObjectType.ScaleKeyframes[CurrentScaleKeyframe].EndIntense) {
+                        CurrentScaling = 0;
+                        CurrentScalingAccel = 2f * Difference.x / (TimeDiff * TimeDiff);
+                    }
+                    else if (ObjectType.ScaleKeyframes[CurrentScaleKeyframe].StartIntense)
+                    {
+                        CurrentScaling = 2f*Difference.x / TimeDiff;
+                        CurrentScalingAccel = -2f * Difference.x / (TimeDiff * TimeDiff);
+                    } else
+                    {
+                        CurrentScaling = Difference.x / TimeDiff;
+                    }
+                       
                 }
             }
         }
@@ -92,7 +104,20 @@ public class SceneObject : MonoBehaviour
                 {
                     Vector3 Difference = GetPos(ObjectType.PositionKeyframes[CurrentMovementKeyframe].Vector) - transform.position;
                     float TimeDiff = ObjectType.PositionKeyframes[CurrentMovementKeyframe].Time - AnimationTime;
-                    CurrentMovement = Difference / TimeDiff;
+                    if (ObjectType.PositionKeyframes[CurrentScaleKeyframe].EndIntense)
+                    {
+                        CurrentMovement = Vector3.zero;
+                        CurrentMovementAccel = 2f * Difference / (TimeDiff * TimeDiff);
+                    }
+                    else if (ObjectType.PositionKeyframes[CurrentScaleKeyframe].StartIntense)
+                    {
+                        CurrentMovement = 2f * Difference / TimeDiff;
+                        CurrentMovementAccel = -2f * Difference / (TimeDiff * TimeDiff);
+                    }
+                    else
+                    {
+                        CurrentMovement = Difference / TimeDiff;
+                    }
                 }
             }
         }
@@ -119,8 +144,11 @@ public class SceneObject : MonoBehaviour
                 CurrentSpriteKeyframe++;
             }
         }
+        CurrentScaling += CurrentScalingAccel * Time.deltaTime;
         AddScale(CurrentScaling * Time.deltaTime);
         transform.Rotate(Vector3.forward, CurrentRotation * Time.deltaTime);
+
+        CurrentMovement += CurrentMovementAccel * Time.deltaTime;
         transform.position += CurrentMovement * Time.deltaTime;
 
         SwitchTime += Time.deltaTime;

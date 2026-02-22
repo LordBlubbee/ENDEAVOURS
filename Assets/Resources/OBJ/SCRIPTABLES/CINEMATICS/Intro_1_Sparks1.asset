@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
-  m_Name: Intro1_Sparks1
+  m_Name: Intro_1_Sparks1
   m_EditorClassIdentifier: 
   SpriteList:
   - {fileID: 0}

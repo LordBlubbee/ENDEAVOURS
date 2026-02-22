@@ -7,6 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/CinematicSceneObject", order = 1)]
 public class ScriptableSceneObject : ScriptableObject
 {
+    public float AnimationSpeed = 0.2f;
     public List<Sprite> SpriteList;
     public List<SpriteKeyframe> SpriteKeyframes;
     public List<ScaleKeyframe> ScaleKeyframes;
