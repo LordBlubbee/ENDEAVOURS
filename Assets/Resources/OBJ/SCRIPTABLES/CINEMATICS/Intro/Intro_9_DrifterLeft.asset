@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_9_DrifterLeft
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.1
+  SpriteList:
+  - {fileID: 21300000, guid: 2246cb2b851022844a154905980eaec5, type: 3}
+  - {fileID: 21300000, guid: a748b8daf09a7a041bfe13198bffe042, type: 3}
+  - {fileID: 21300000, guid: b667e649c9aa3024ab9eb15ac85f3201, type: 3}
+  SpriteKeyframes: []
+  ScaleKeyframes:
+  - Scale: 0.9
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 0.94
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  PositionKeyframes:
+  - Vector: {x: -0.04, y: -0.2, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Vector: {x: 0, y: 0, z: 0}
+    StartIntense: 1
+    EndIntense: 0
+    Time: 4
+  - Vector: {x: 0.01, y: 0.05, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  RotationKeyframes: []

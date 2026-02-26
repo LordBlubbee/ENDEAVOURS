@@ -42,19 +42,39 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
 
-        SetScene(Scenes[1], false); //Capitolis
-        yield return new WaitForSeconds(10f);
+        //SetScene(Scenes[1], false); //Capitolis
+       // yield return new WaitForSeconds(10f);
         SetScene(Scenes[2], false); //Cliffs
+        yield return new WaitForSeconds(15f);
+        SetScene(Scenes[0], true); //Driftyards
         yield return new WaitForSeconds(10f);
-        SetScene(Scenes[0], false); //Driftyards
+        SetScene(Scenes[3], true); //Driftyards 2
         yield return new WaitForSeconds(10f);
-        SetScene(Scenes[3], false); //Driftyards 2
-        yield return new WaitForSeconds(10f);
-        SetScene(Scenes[4], false); //Underway
 
-        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[8], true); //8 = Frontal View Travel
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[4], true); //4 = Underway
+        yield return new WaitForSeconds(3f);
         SetTitle("STARLIGHT ENDEAVOUR EXPEDITION", "121 AD NEBULA - SOUTHERN REACHES");
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(7f);
+        SetScene(Scenes[5], true); //5 = Underway Night
+        yield return new WaitForSeconds(5f);
+        SetScene(Scenes[6], true); //6 = Underway Forests
+        yield return new WaitForSeconds(5f);
+        SetScene(Scenes[7], true); //7 = Gubernator
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[10], true); //10 = Underway Cave
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[13], true); //13 = Drifter finds Wreck
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[9], true); //9 = Cave Wreck Captain's View
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[11], true);  //11 = Catali ground team finds Wreck
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[12], true); //12 = The Fragmentum
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[14], true); //14 = The Map to Nexus Point
+
 
         /*
          FULL PLANNED DIALOGUE
@@ -323,7 +343,7 @@ public class Screen_Cinematic : MonoBehaviour
 
     private void SetScene(ScriptableScene ob, bool Instant = false)
     {
-        Cinematic.SetScene(ob, Instant ? -1 : 1.5f);
+        Cinematic.SetScene(ob, Instant ? 4f : 1.5f);
     }
     /*private void SetImage(Sprite spr)
     {

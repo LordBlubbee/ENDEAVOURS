@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_8_Machine
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.15
+  SpriteList:
+  - {fileID: 21300000, guid: 01967b8407ab5594dbf7c2f2be75a97e, type: 3}
+  - {fileID: 21300000, guid: 08aa438526867b74e8cfd66aad22b5e3, type: 3}
+  - {fileID: 21300000, guid: 51e0ce35045bf5f43bf777bd0c3190da, type: 3}
+  - {fileID: 21300000, guid: 53a5a5a37c7cf4146bd2ddcd180a558d, type: 3}
+  - {fileID: 21300000, guid: 1223911fe1e12e7459d23aaf65a125a3, type: 3}
+  SpriteKeyframes: []
+  ScaleKeyframes:
+  - Scale: 1.05
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 1
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  PositionKeyframes: []
+  RotationKeyframes: []

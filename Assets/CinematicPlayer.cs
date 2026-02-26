@@ -16,7 +16,11 @@ public class CinematicPlayer : MonoBehaviour
     {
         TargetScene = scene;
         TransitionSpeed = Transition;
-        if (TransitionSpeed <= 0) ChangeScene();
+        if (TransitionSpeed <= 0)
+        {
+            ChangeScene();
+            FadeScreen.color = new Color(0, 0, 0, 0);
+        }
     }
     private void Update()
     {
