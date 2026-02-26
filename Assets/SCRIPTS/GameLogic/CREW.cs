@@ -1522,7 +1522,7 @@ public class CREW : NetworkBehaviour, iDamageable
                         }
                         else
                         {
-                            CO_SPAWNER.co.SpawnDMGRpc(0, checkHit);
+                            CO_SPAWNER.co.SpawnDMGBlockedRpc(0, checkHit);
                             CO_SPAWNER.co.SpawnImpactRpc(checkHit);
                         }
                         canStrikeMelee = false;

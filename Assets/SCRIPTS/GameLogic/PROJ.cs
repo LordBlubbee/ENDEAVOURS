@@ -285,7 +285,7 @@ public class PROJ : NetworkBehaviour
                     }
                     else
                     {
-                        CO_SPAWNER.co.SpawnDMGRpc(0, transform.position);
+                        CO_SPAWNER.co.SpawnDMGBlockedRpc(0, transform.position);
                     }
                     BulletImpact();
                 }
