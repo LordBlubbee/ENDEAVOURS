@@ -6291,7 +6291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beeba98a4bce9ec44946c4c233afae99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SFX: {fileID: 8300000, guid: 495918dd49237ef43937939db15742eb, type: 3}
 --- !u!1001 &253764181
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16893,7 +16892,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beeba98a4bce9ec44946c4c233afae99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SFX: {fileID: 8300000, guid: 495918dd49237ef43937939db15742eb, type: 3}
 --- !u!1 &463534543 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 41965778097786568, guid: dc993a57125018541967e846e88e280c, type: 3}
@@ -34932,7 +34930,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beeba98a4bce9ec44946c4c233afae99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SFX: {fileID: 8300000, guid: 495918dd49237ef43937939db15742eb, type: 3}
 --- !u!1 &903526211
 GameObject:
   m_ObjectHideFlags: 0
@@ -56966,6 +56963,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AUDCO
       objectReference: {fileID: 0}
+    - target: {fileID: 1069857574425807700, guid: 7a66cd78fd421a44ab8cdf00340340ac, type: 3}
+      propertyPath: Hover
+      value: 
+      objectReference: {fileID: 8300000, guid: 7c90d73b729418742a004c4cf4ddf847, type: 3}
     - target: {fileID: 1072235945412336780, guid: 7a66cd78fd421a44ab8cdf00340340ac, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -95916,7 +95917,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beeba98a4bce9ec44946c4c233afae99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SFX: {fileID: 8300000, guid: 495918dd49237ef43937939db15742eb, type: 3}
 --- !u!1001 &1891688388
 PrefabInstance:
   m_ObjectHideFlags: 0

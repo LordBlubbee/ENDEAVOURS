@@ -189,6 +189,7 @@ public class AUDCO : MonoBehaviour
     public AudioClip EquipItem;
     public AudioClip Salvage;
     public AudioClip Press;
+    public AudioClip Hover;
     public AudioClip Fail;
     public AudioClip IncendiaryFireAttack;
 }
