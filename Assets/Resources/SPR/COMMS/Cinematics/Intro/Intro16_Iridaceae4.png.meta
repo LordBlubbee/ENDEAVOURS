@@ -1,0 +1,494 @@
+fileFormatVersion: 2
+guid: 1a07ef023005b0f469c55fd6d6840ace
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3714737951142121597
+    second: Intro16_Iridaceae4_0
+  - first:
+      213: 4604389711298180570
+    second: Intro16_Iridaceae4_1
+  - first:
+      213: -4115340794205825273
+    second: Intro16_Iridaceae4_2
+  - first:
+      213: 4665589803727987817
+    second: Intro16_Iridaceae4_3
+  - first:
+      213: 7434737515922361299
+    second: Intro16_Iridaceae4_4
+  - first:
+      213: -440743076347336740
+    second: Intro16_Iridaceae4_5
+  - first:
+      213: -2375916525934549254
+    second: Intro16_Iridaceae4_6
+  - first:
+      213: 2209997269848602406
+    second: Intro16_Iridaceae4_7
+  - first:
+      213: -5597987587327707792
+    second: Intro16_Iridaceae4_8
+  - first:
+      213: -1327975028968386365
+    second: Intro16_Iridaceae4_9
+  - first:
+      213: 7140551391861106305
+    second: Intro16_Iridaceae4_10
+  - first:
+      213: 4426026466097997702
+    second: Intro16_Iridaceae4_11
+  - first:
+      213: 2911577349838157986
+    second: Intro16_Iridaceae4_12
+  - first:
+      213: -5594887720258026489
+    second: Intro16_Iridaceae4_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 10
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_0
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 54
+        width: 185
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38fe284d389927cc0800000000000000
+      internalID: -3714737951142121597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_1
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 144
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad5346d1c0416ef30800000000000000
+      internalID: 4604389711298180570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_2
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 143
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70710b70a5f53e6c0800000000000000
+      internalID: -4115340794205825273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_3
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 100
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96424e605318fb040800000000000000
+      internalID: 4665589803727987817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_4
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 100
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3db82da316e7d2760800000000000000
+      internalID: 7434737515922361299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_5
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd7aa19d18a22e9f0800000000000000
+      internalID: -440743076347336740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_6
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 64
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af6e0bff18c070fd0800000000000000
+      internalID: -2375916525934549254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_7
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 69
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 627b8efcecc7bae10800000000000000
+      internalID: 2209997269848602406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_8
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 64
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0753940e2f3ff42b0800000000000000
+      internalID: -5597987587327707792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_9
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 54
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c010cf3fb5129de0800000000000000
+      internalID: -1327975028968386365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_10
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 37
+        width: 40
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1866d4c98a5581360800000000000000
+      internalID: 7140551391861106305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_11
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 47
+        width: 14
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 687af3eee976c6d30800000000000000
+      internalID: 4426026466097997702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_12
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 47
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a83d296c20086820800000000000000
+      internalID: 2911577349838157986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro16_Iridaceae4_13
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 46
+        width: 15
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70443dbe247fa52b0800000000000000
+      internalID: -5594887720258026489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Intro16_Iridaceae4_0: -3714737951142121597
+      Intro16_Iridaceae4_1: 4604389711298180570
+      Intro16_Iridaceae4_10: 7140551391861106305
+      Intro16_Iridaceae4_11: 4426026466097997702
+      Intro16_Iridaceae4_12: 2911577349838157986
+      Intro16_Iridaceae4_13: -5594887720258026489
+      Intro16_Iridaceae4_2: -4115340794205825273
+      Intro16_Iridaceae4_3: 4665589803727987817
+      Intro16_Iridaceae4_4: 7434737515922361299
+      Intro16_Iridaceae4_5: -440743076347336740
+      Intro16_Iridaceae4_6: -2375916525934549254
+      Intro16_Iridaceae4_7: 2209997269848602406
+      Intro16_Iridaceae4_8: -5597987587327707792
+      Intro16_Iridaceae4_9: -1327975028968386365
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

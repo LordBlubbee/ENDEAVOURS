@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_23_Main
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.2
+  SpriteList:
+  - {fileID: 21300000, guid: 2cdd3484c8fc27a41b2183f12ff04048, type: 3}
+  - {fileID: 21300000, guid: da2a066814da32c48b5144487c76a1b9, type: 3}
+  - {fileID: 21300000, guid: a24a1b095a394294e8f1f2b49cb942d7, type: 3}
+  - {fileID: 21300000, guid: c0c800620465a144cb8e01e541abd04f, type: 3}
+  - {fileID: 21300000, guid: c79d6a20b24118b459a5164f796566c8, type: 3}
+  SpriteKeyframes: []
+  ScaleKeyframes:
+  - Scale: 1.2
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 1.1
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  PositionKeyframes:
+  - Vector: {x: -0.03, y: 0.05, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Vector: {x: 0, y: 0, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  RotationKeyframes: []
