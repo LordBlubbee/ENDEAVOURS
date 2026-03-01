@@ -12,4 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f251af17509e5b4695fe6ecc890a441, type: 3}
   m_Name: Intro_19_Discussions
   m_EditorClassIdentifier: 
-  Objects: []
+  Objects:
+  - {fileID: 11400000, guid: 88f6250d3682e444b92fab458e8c2809, type: 2}
+  - {fileID: 11400000, guid: c2a04df4caa32c140a7a2b0caa82d048, type: 2}
+  - {fileID: 11400000, guid: 2c67692d2fcca4149b7fc99fdbeb8005, type: 2}
+  - {fileID: 11400000, guid: fb81f38058aab9b418c6a33ddc7d985c, type: 2}
+  - {fileID: 11400000, guid: d66a8792d84b3ee40999208568919a50, type: 2}
+  - {fileID: 11400000, guid: ff6b10b9ea3c20b45b24dd03da2b19d6, type: 2}
+  - {fileID: 11400000, guid: 769c5b1f51260db45949057725e60dfe, type: 2}
+  - {fileID: 11400000, guid: db3f2523f99ec56419da85917652366e, type: 2}
+  - {fileID: 11400000, guid: c903800f6c4893049b73aeb9b8f18ca6, type: 2}
+  - {fileID: 11400000, guid: 7c9d7ba64ec636d45916bf72463deab2, type: 2}
+  - {fileID: 11400000, guid: 6b2d8a75aaf549f4ca59e24b177620cd, type: 2}

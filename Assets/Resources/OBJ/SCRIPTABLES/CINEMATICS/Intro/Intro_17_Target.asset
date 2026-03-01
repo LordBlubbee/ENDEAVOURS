@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_17_Target
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.15
+  SpriteList:
+  - {fileID: 0}
+  SpriteKeyframes:
+  - List:
+    - {fileID: 21300000, guid: e83f15913190c0041831e17e5338110c, type: 3}
+    - {fileID: 21300000, guid: 0ba5ba49cb29a754a94f569aa23075f3, type: 3}
+    - {fileID: 21300000, guid: 128db258e677e8448986cebea01bb4c4, type: 3}
+    - {fileID: 21300000, guid: a444f36dc4a87d34eaa33e1287d2c9f9, type: 3}
+    - {fileID: 21300000, guid: e310776f1fe42a34695facb1878ac3e0, type: 3}
+    - {fileID: 21300000, guid: e310776f1fe42a34695facb1878ac3e0, type: 3}
+    Time: 10
+  ScaleKeyframes:
+  - Scale: 0.5
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 0.53
+    StartIntense: 0
+    EndIntense: 0
+    Time: 16
+  PositionKeyframes: []
+  RotationKeyframes: []

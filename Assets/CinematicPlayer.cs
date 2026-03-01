@@ -1,5 +1,7 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +16,7 @@ public class CinematicPlayer : MonoBehaviour
     ScriptableScene CurrentScene;
     public void SetScene(ScriptableScene scene, float Transition)
     {
+        if (TargetScene == CurrentScene) CurrentScene = null;
         TargetScene = scene;
         TransitionSpeed = Transition;
         if (TransitionSpeed <= 0)
@@ -53,5 +56,28 @@ public class CinematicPlayer : MonoBehaviour
                 SceneObjects.Add(newOb);
             }
         }
+    }
+
+    Vector3 CameraShake;
+    bool isShaking = false;
+    float ShakePower = 0f;
+    public void ShakeCamera(float power)
+    {
+        ShakePower = power;
+        if (!isShaking) StartCoroutine(ShakingCamera());
+    }
+    IEnumerator ShakingCamera()
+    {
+        while (ShakePower > 0f)
+        {
+            ShakePower -= Time.deltaTime * 1.5f * Mathf.Max((ShakePower - 1f), 1f);
+            float Shake = Mathf.Clamp(ShakePower, 0, 4);
+            if (ShakePower > 4f) Shake += (ShakePower - 4f) * 0.2f;
+            CameraShake = new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-1f, 1f)) * Shake * 0.7f;
+            transform.position = CameraShake;
+            yield return null;
+        }
+        CameraShake = Vector3.zero;
+        transform.position = Vector3.zero;
     }
 }

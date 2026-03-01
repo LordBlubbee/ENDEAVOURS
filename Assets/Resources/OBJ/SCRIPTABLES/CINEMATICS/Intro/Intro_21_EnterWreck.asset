@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f251af17509e5b4695fe6ecc890a441, type: 3}
   m_Name: Intro_21_EnterWreck
   m_EditorClassIdentifier: 
-  Objects: []
+  Objects:
+  - {fileID: 11400000, guid: 9b072d033b09368409f470f24d55afb3, type: 2}
+  - {fileID: 11400000, guid: b3457c64f152a36489d28eb228007401, type: 2}
+  - {fileID: 11400000, guid: da826f406443b0345b302ff55ccca6fe, type: 2}
+  - {fileID: 11400000, guid: 61096f202de24ac46a7093145247b079, type: 2}
+  - {fileID: 11400000, guid: dd381e3b096c80542aeab6af7e39d5a5, type: 2}

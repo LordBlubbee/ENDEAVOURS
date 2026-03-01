@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_21_Pragmatice
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.2
+  SpriteList:
+  - {fileID: 21300000, guid: 34727f223c1e3f845863f1746d4cc0ec, type: 3}
+  SpriteKeyframes:
+  - List:
+    - {fileID: 21300000, guid: 30ba7138c297df444a04f0b72bf573aa, type: 3}
+    Time: 5.4
+  - List:
+    - {fileID: 21300000, guid: 34727f223c1e3f845863f1746d4cc0ec, type: 3}
+    Time: 6.9
+  - List:
+    - {fileID: 21300000, guid: 52f3ec3d5cfbcd04799d8c8c1eb2e8be, type: 3}
+    Time: 7.6
+  - List:
+    - {fileID: 21300000, guid: 00546e909d4f01d4188ea564fb11d3de, type: 3}
+    Time: 7.8
+  - List:
+    - {fileID: 21300000, guid: ec2fb98f62a846445864fc69ef84b49c, type: 3}
+    Time: 8
+  ScaleKeyframes:
+  - Scale: 1
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 1.05
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  PositionKeyframes:
+  - Vector: {x: -0.25, y: -0.02, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 1.5
+  - Vector: {x: -0.01, y: -0.02, z: 0}
+    StartIntense: 1
+    EndIntense: 0
+    Time: 3.2
+  - Vector: {x: -0.01, y: -0.01, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 7.4
+  - Vector: {x: -0.01, y: -0.02, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 7.5
+  - Vector: {x: -0.01, y: -0.01, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 7.6
+  RotationKeyframes: []

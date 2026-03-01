@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f251af17509e5b4695fe6ecc890a441, type: 3}
   m_Name: Intro_17_SignalMap
   m_EditorClassIdentifier: 
-  Objects: []
+  Objects:
+  - {fileID: 11400000, guid: 463c9c93251bb874db40340d5b6c9636, type: 2}
+  - {fileID: 11400000, guid: cf78ae2da1687544f9c80e6a8bca449f, type: 2}
+  - {fileID: 11400000, guid: 6b2ab58a95c1969418e226efd7a3a96b, type: 2}
+  - {fileID: 11400000, guid: 35aa8259205a090498f1d788a6d72d23, type: 2}
+  - {fileID: 11400000, guid: 86d55385b8d6adb47be12e1b846d0685, type: 2}

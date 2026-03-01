@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f251af17509e5b4695fe6ecc890a441, type: 3}
   m_Name: Intro_20_LootTubes
   m_EditorClassIdentifier: 
-  Objects: []
+  Objects:
+  - {fileID: 11400000, guid: 645f88ad5f8d37149baedaf1ebbbc6a7, type: 2}
+  - {fileID: 11400000, guid: f21f62df98c177441b7e4ebbf33be2ec, type: 2}
+  - {fileID: 11400000, guid: e0967b5ed3a677c41ad8b53398c59d58, type: 2}
+  - {fileID: 11400000, guid: 616a34c62ef72ca4b9d9ab8f1b6d7db7, type: 2}

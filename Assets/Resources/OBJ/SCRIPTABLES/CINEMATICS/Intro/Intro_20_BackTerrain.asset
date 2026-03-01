@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_20_BackTerrain
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.2
+  SpriteList:
+  - {fileID: 21300000, guid: 2465ce9769fb30e4586e27f736708cb3, type: 3}
+  SpriteKeyframes: []
+  ScaleKeyframes:
+  - Scale: 1
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 1.04
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  PositionKeyframes: []
+  RotationKeyframes: []

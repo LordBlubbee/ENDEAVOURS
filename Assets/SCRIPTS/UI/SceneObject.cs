@@ -68,7 +68,6 @@ public class SceneObject : MonoBehaviour
     }
     private void Update()
     {
-        
         AnimationTime += Time.deltaTime;
         if (ObjectType.ScaleKeyframes.Count > CurrentScaleKeyframe)
         {
@@ -90,8 +89,12 @@ public class SceneObject : MonoBehaviour
                     } else
                     {
                         CurrentScaling = Difference.x / TimeDiff;
+                        CurrentScalingAccel = 0;
                     }
-                       
+                } else
+                {
+                    CurrentScaling = 0;
+                    CurrentScalingAccel = 0;
                 }
             }
         }
@@ -117,7 +120,13 @@ public class SceneObject : MonoBehaviour
                     else
                     {
                         CurrentMovement = Difference / TimeDiff;
+                        CurrentMovementAccel = Vector3.zero;
                     }
+                }
+                else
+                {
+                    CurrentMovement = Vector3.zero;
+                    CurrentMovementAccel = Vector3.zero;
                 }
             }
         }
@@ -131,6 +140,9 @@ public class SceneObject : MonoBehaviour
                     float Difference = ObjectType.RotationKeyframes[CurrentRotKeyframe].Rotation - transform.rotation.eulerAngles.z;
                     float TimeDiff = ObjectType.RotationKeyframes[CurrentRotKeyframe].Time - AnimationTime;
                     CurrentRotation = Difference / TimeDiff;
+                } else
+                {
+                    CurrentRotation = 0;
                 }
             }
         }
@@ -140,7 +152,7 @@ public class SceneObject : MonoBehaviour
             {
                 Sprites = ObjectType.SpriteKeyframes[CurrentSpriteKeyframe].List;
                 CurrentImageFrame = -1;
-                SwitchTime = 99;
+                SwitchTime = GetAnimationSpeed();
                 CurrentSpriteKeyframe++;
             }
         }
@@ -152,7 +164,7 @@ public class SceneObject : MonoBehaviour
         transform.position += CurrentMovement * Time.deltaTime;
 
         SwitchTime += Time.deltaTime;
-        if (SwitchTime > GetAnimationSpeed())
+        if (SwitchTime >= GetAnimationSpeed())
         {
             SwitchTime -= GetAnimationSpeed();
             CurrentImageFrame++;

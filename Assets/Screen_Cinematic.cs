@@ -41,9 +41,43 @@ public class Screen_Cinematic : MonoBehaviour
         if (Intro_OST) AUDCO.aud.setOST(Intro_OST);
         yield return new WaitForSeconds(2f);
 
+        //TESTS
+        SetScene(Scenes[14], true); //14 = The Map to Nexus Point
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[15], true); //15 = Iridaceae Sketch
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[16], true); //16 = Map with Signals
+        /*
+         0 - Zoomed out
+         2 - Zoom in on fleet
+         4 - Receive signal
+         6 - Zoom in on target vector
+         8 - Vector is pulsing
+         10 - Target identified
+         12 - Zoom back out
+         */
+        yield return new WaitForSeconds(16f);
+        SetScene(Scenes[17], true); //17 = Scout Drifter goes on
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[18], true); //18 = Discussions + Explosion
+
+        yield return new WaitForSeconds(5.9f);
+        Cinematic.ShakeCamera(1.2f);
+        yield return new WaitForSeconds(0.8f);
+        Cinematic.ShakeCamera(1.6f);
+        yield return new WaitForSeconds(3.3f);
+        SetScene(Scenes[19], true); //19 = Looting the Tubes
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[20], true); //20 = Enter the Wreck
+        yield return new WaitForSeconds(10f);
+        for (int i = 0; i < 99; i++)
+        {
+            SetScene(Scenes[18], true); //18 = Discussions + Explosion
+            yield return new WaitForSeconds(10f);
+        }
 
         //SetScene(Scenes[1], false); //Capitolis
-       // yield return new WaitForSeconds(10f);
+        // yield return new WaitForSeconds(10f);
         SetScene(Scenes[2], false); //Cliffs
         yield return new WaitForSeconds(15f);
         SetScene(Scenes[0], true); //Driftyards
@@ -72,8 +106,7 @@ public class Screen_Cinematic : MonoBehaviour
         SetScene(Scenes[11], true);  //11 = Catali ground team finds Wreck
         yield return new WaitForSeconds(10f);
         SetScene(Scenes[12], true); //12 = The Fragmentum
-        yield return new WaitForSeconds(10f);
-        SetScene(Scenes[14], true); //14 = The Map to Nexus Point
+       
 
 
         /*
@@ -343,7 +376,7 @@ public class Screen_Cinematic : MonoBehaviour
 
     private void SetScene(ScriptableScene ob, bool Instant = false)
     {
-        Cinematic.SetScene(ob, Instant ? 4f : 1.5f);
+        Cinematic.SetScene(ob, Instant ? 0f : 1.5f);
     }
     /*private void SetImage(Sprite spr)
     {

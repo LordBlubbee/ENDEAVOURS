@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_21_Crystal
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.15
+  SpriteList:
+  - {fileID: 0}
+  SpriteKeyframes:
+  - List:
+    - {fileID: 21300000, guid: 832c12664affdda4c98d978fa23c9cc5, type: 3}
+    - {fileID: 21300000, guid: fa297c16e7aa69d479f9878e71bbb52c, type: 3}
+    - {fileID: 21300000, guid: 6757182d05528c04f9e09cc137c6823b, type: 3}
+    - {fileID: 21300000, guid: c8fda40a4cfcbd9469fd609affc23f99, type: 3}
+    - {fileID: 21300000, guid: 954e987b3e10c9644a851df1089b4d09, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    Time: 3.4
+  - List:
+    - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
+    Time: 4.6
+  ScaleKeyframes:
+  - Scale: 1
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 1.05
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  PositionKeyframes:
+  - Vector: {x: 0, y: 0, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 3.4
+  - Vector: {x: 0, y: 0.02, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 3.6
+  - Vector: {x: 0, y: 0, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 3.9
+  RotationKeyframes: []
