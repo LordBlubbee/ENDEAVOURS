@@ -145,6 +145,7 @@ MonoBehaviour:
   Blockers: []
   AI: 1
   isConsumable: 0
+  DashResetsCooldown: 0
   CrosshairSprite: {fileID: 21300000, guid: 75cb877007f86484a8c71b17c5b6bc57, type: 3}
   CrosshairMaxRange: 0
   CrosshairMinRange: 0

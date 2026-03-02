@@ -979,28 +979,34 @@ public class AI_UNIT : NetworkBehaviour
                 if (CO.co.IsSafe())
                 {
                     ClosestAlly = GetClosestAlly();
-                    if (ClosestAlly.IsPlayer())
+                    if (ClosestAlly)
                     {
-                        if (HasToReportVictory || HasToReportHardVictory)
+                        if (ClosestAlly.IsPlayer())
                         {
-                            if (GetVoiceSilenceLevel() > 2f && Dist(ClosestAlly.transform.position) < 7f) AddWeights(4, 60);
-                        } else
-                        {
-                            if (Dist(ClosestAlly.transform.position) < 7f)
+                            if (HasToReportVictory || HasToReportHardVictory)
                             {
-                                if (GetVoiceSilenceLevel() > 5f)
-                                    AddWeights(4, 15);
-                                else if (GetVoiceSilenceLevel() > 15f)
-                                    AddWeights(4, 40);
+                                if (GetVoiceSilenceLevel() > 2f && Dist(ClosestAlly.transform.position) < 7f) AddWeights(4, 60);
+                            }
+                            else
+                            {
+                                if (Dist(ClosestAlly.transform.position) < 7f)
+                                {
+                                    if (GetVoiceSilenceLevel() > 5f)
+                                        AddWeights(4, 15);
+                                    else if (GetVoiceSilenceLevel() > 15f)
+                                        AddWeights(4, 40);
+                                }
                             }
                         }
-                    } else if (ClosestAlly.GetVoiceHandler() != null)
-                    {
-                        if (GetVoiceSilenceLevel() > 15f && Dist(ClosestAlly.transform.position) < 7f)
+                        else if (ClosestAlly.GetVoiceHandler() != null)
                         {
-                            AddWeights(5, 15);
+                            if (GetVoiceSilenceLevel() > 15f && Dist(ClosestAlly.transform.position) < 7f)
+                            {
+                                AddWeights(5, 15);
+                            }
                         }
                     }
+                   
                 }
                 switch (GetWeight())
                 {
