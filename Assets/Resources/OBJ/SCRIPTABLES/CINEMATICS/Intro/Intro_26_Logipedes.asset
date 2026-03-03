@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_26_Logipedes
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.1
+  SpriteList:
+  - {fileID: 21300000, guid: 50ce6c21328780c4aaa435b10be39655, type: 3}
+  - {fileID: 21300000, guid: 6b73fabe69894a24c9e98998ab2949f4, type: 3}
+  - {fileID: 21300000, guid: 2978612c62c98864c940b9647001a59b, type: 3}
+  SpriteKeyframes:
+  - List:
+    - {fileID: 21300000, guid: 12444161142666c4f8ffc725df065c41, type: 3}
+    - {fileID: 21300000, guid: b8e584c6e6e89de4db977a04b0486d4e, type: 3}
+    - {fileID: 21300000, guid: 82d8e25d69673e2488a51e93f5a2a427, type: 3}
+    Time: 1.6
+  ScaleKeyframes:
+  - Scale: 1.12
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 1
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  PositionKeyframes:
+  - Vector: {x: 0.03, y: 0.03, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Vector: {x: -0.02, y: -0.02, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  RotationKeyframes: []

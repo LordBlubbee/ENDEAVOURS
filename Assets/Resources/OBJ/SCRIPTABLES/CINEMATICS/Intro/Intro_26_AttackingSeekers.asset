@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f251af17509e5b4695fe6ecc890a441, type: 3}
+  m_Name: Intro_26_AttackingSeekers
+  m_EditorClassIdentifier: 
+  Objects:
+  - {fileID: 11400000, guid: 6d71d8a4c57d8044aa96278cc0a15cf1, type: 2}
+  - {fileID: 11400000, guid: aee1ac872ed9f13499cf21820f05b721, type: 2}
+  - {fileID: 11400000, guid: d62599fd75cb18541871d9e052d5ab8d, type: 2}
+  - {fileID: 11400000, guid: f3976c3569ab31041b0bf724b32eefd5, type: 2}
+  - {fileID: 11400000, guid: e916d61e618945a4f9f158f202457caf, type: 2}
+  - {fileID: 11400000, guid: a8dc54f35c6f35349a84d2eb109b24a2, type: 2}
+  - {fileID: 11400000, guid: 6fe24d97cbbe0264ebd4aaf12a9cc66b, type: 2}
+  - {fileID: 11400000, guid: 38e596e7a304cb74e951b5c7101ec187, type: 2}

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f251af17509e5b4695fe6ecc890a441, type: 3}
+  m_Name: Intro_22_RisingUp
+  m_EditorClassIdentifier: 
+  Objects:
+  - {fileID: 11400000, guid: 69a1b30548cdc0545b4fe0e0bf6e3de8, type: 2}
+  - {fileID: 11400000, guid: eea9fe631c5f5024c8e16137d2d2dbc2, type: 2}
+  - {fileID: 11400000, guid: 948024f3e809e01479ce0d10be979064, type: 2}
+  - {fileID: 11400000, guid: 0847aa68193e4ba4b94d8c97f125e307, type: 2}
+  - {fileID: 11400000, guid: 1c3f4f1518ea2cc459153d47eca200a6, type: 2}
+  - {fileID: 11400000, guid: e297dc726d47dc34ea15c71c3b0c8301, type: 2}
