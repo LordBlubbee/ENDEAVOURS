@@ -43,12 +43,20 @@ public class Screen_Cinematic : MonoBehaviour
 
         //TESTS
 
-        for (int i = 0; i < 99; i++)
-        {
-            if (Input.GetKey(KeyCode.A)) break;
-            SetScene(Scenes[18], true); //18 = Discussions + Explosion
-            yield return new WaitForSeconds(10f);
-        }
+        SetScene(Scenes[21], true); //21 = RisingUp
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[22], true); //22 = RED ALERT
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[23], true); //23 = EphemeralDying
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[24], true); //24 = Engine Room
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[25], true); //25 = Attacking Seekers
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[14], true); //14 = Map1
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[26], true); //26 = Map2
+        yield return new WaitForSeconds(10f);
 
 
         //SetScene(Scenes[1], false); //Capitolis

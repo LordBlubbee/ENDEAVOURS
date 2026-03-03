@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Intro_26_LogiipedesAttack1
   m_EditorClassIdentifier: 
   AnimationSpeed: 0.1
-  SpriteList: []
+  SpriteList:
+  - {fileID: 0}
   SpriteKeyframes:
   - List:
     - {fileID: 21300000, guid: ab10a005edf2c134988f5f9546f991e0, type: 3}
