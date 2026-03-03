@@ -59,12 +59,8 @@ public class SceneObject : MonoBehaviour
         if (ObjectType.RotationKeyframes.Count > CurrentRotKeyframe)
         {
             float zRot = ObjectType.RotationKeyframes[CurrentRotKeyframe].Rotation;
-            transform.rotation = Quaternion.Euler(
-                transform.rotation.eulerAngles.x,
-                transform.rotation.eulerAngles.y,
-                zRot
-            );
-        }
+            transform.Rotate(Vector3.forward, zRot);
+;        }
     }
     private void Update()
     {
@@ -137,7 +133,9 @@ public class SceneObject : MonoBehaviour
                 CurrentRotKeyframe++;
                 if (ObjectType.RotationKeyframes.Count > CurrentRotKeyframe)
                 {
-                    float Difference = ObjectType.RotationKeyframes[CurrentRotKeyframe].Rotation - transform.rotation.eulerAngles.z;
+                    float curAng = transform.rotation.eulerAngles.z;
+                    if (curAng > 180f) curAng -= 360f;
+                    float Difference = ObjectType.RotationKeyframes[CurrentRotKeyframe].Rotation - curAng;
                     float TimeDiff = ObjectType.RotationKeyframes[CurrentRotKeyframe].Time - AnimationTime;
                     CurrentRotation = Difference / TimeDiff;
                 } else
