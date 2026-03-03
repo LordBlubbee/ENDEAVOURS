@@ -12,7 +12,7 @@ public class UI_OpenBackground : MonoBehaviour
     public ScriptableBackground Background;
     private void OnEnable()
     {
-        Icon.sprite = Background.MainIcon;
+        Icon.sprite = Background.Sprite_Player;
         ShortDesc.text = Background.ShortDesc;
         Title.text = Background.BackgroundName;
         Title.color = Background.BackgroundColor;

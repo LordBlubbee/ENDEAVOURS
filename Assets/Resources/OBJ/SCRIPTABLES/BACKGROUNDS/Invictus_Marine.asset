@@ -17,9 +17,7 @@ MonoBehaviour:
   MainIcon: {fileID: 21300000, guid: 97f4b0d3c4d14f7449f47c9cafe439c5, type: 3}
   Sprite_Player: {fileID: 21300000, guid: 6dcc73ea065e8b649a99b9affad328eb, type: 3}
   Sprite_Stripes: {fileID: 21300000, guid: faadbe7a69dfa1649b5cbe429338c6c3, type: 3}
-  ShortDesc: The Logipedes military trains its troops with cohesion and extreme teamwork
-    in mind, relying on defensive formations and volley fire strategies to eliminate
-    threats to the Republic.
+  ShortDesc: CROSSBOW - ARMS - PHYS - MED
   LongDesc: 'The Logipedes military trains its troops with cohesion and extreme teamwork
     in mind, relying on defensive formations and volley fire strategies to eliminate
     threats to the Republic.

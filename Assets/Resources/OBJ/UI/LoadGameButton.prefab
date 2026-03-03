@@ -227,6 +227,7 @@ GameObject:
   - component: {fileID: 7929509341084840696}
   - component: {fileID: 2531430841357154905}
   - component: {fileID: 2055083360747469111}
+  - component: {fileID: 2110987577056396602}
   m_Layer: 5
   m_Name: LoadGameButton
   m_TagString: Untagged
@@ -315,7 +316,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -363,6 +364,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoadText: {fileID: 8261450803713924119}
   DeleteButton: {fileID: 8798516569134938956}
+--- !u!114 &2110987577056396602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3054346432598684815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beeba98a4bce9ec44946c4c233afae99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4724528559988704086
 GameObject:
   m_ObjectHideFlags: 0

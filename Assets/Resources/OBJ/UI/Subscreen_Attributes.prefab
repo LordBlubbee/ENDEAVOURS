@@ -376,7 +376,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5114176000495578669, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
-      insertIndex: -1
+      insertIndex: 5
       addedObject: {fileID: 6584698664532132015}
   m_SourcePrefab: {fileID: 100100000, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
 --- !u!224 &1038520914637017696 stripped
@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}

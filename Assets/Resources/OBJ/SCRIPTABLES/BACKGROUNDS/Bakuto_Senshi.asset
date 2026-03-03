@@ -17,9 +17,7 @@ MonoBehaviour:
   MainIcon: {fileID: 21300000, guid: f846970e705a9964fbd326697d781bf0, type: 3}
   Sprite_Player: {fileID: 21300000, guid: c7a7a1070fee0a640a0724e690d8719f, type: 3}
   Sprite_Stripes: {fileID: 21300000, guid: be25f65adb0c1a94292c89bbd1392d33, type: 3}
-  ShortDesc: The Bakuto Clan is a criminal syndicate that has a history dating far
-    beyond even the Mist. These warriors fear not the spilling of blood and will
-    burn down the world with themselves if they must.
+  ShortDesc: DUAL KATANA - DEX - PHYS - ARM
   LongDesc: 'The Bakuto Clan is a criminal syndicate that has a history dating far
     beyond even the Mist. These warriors fear not the spilling of blood and will
     burn down the world with themselves if they must.

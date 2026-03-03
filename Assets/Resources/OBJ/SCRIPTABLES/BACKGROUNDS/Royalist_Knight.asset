@@ -17,8 +17,7 @@ MonoBehaviour:
   MainIcon: {fileID: 21300000, guid: 30ef98a79feb67f4b91391f25a3c4bef, type: 3}
   Sprite_Player: {fileID: 21300000, guid: a3ee2a063b2adc7478887168fe201999, type: 3}
   Sprite_Stripes: {fileID: 21300000, guid: 66e3689aba42c484d87e913e153f3d52, type: 3}
-  ShortDesc: The Order of the Storm's Knights have served for centuries. Paladins
-    of justice, duty, and all that is good in the world.
+  ShortDesc: SWORD & SHIELD - PHYS - COM - ALC
   LongDesc: 'The Order of the Storm''s Knights have served for centuries. Paladins
     of justice, duty, and all that is good in the world.
 

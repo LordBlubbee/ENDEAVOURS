@@ -17,8 +17,7 @@ MonoBehaviour:
   MainIcon: {fileID: 21300000, guid: 293a29ca2bc1d1d4b8cf13c46fd24855, type: 3}
   Sprite_Player: {fileID: 21300000, guid: b260ac191d3e36d40a889de36cbe84a6, type: 3}
   Sprite_Stripes: {fileID: 21300000, guid: 4d8ef81f05d5ad54e8c0bbf661fd1f2d, type: 3}
-  ShortDesc: 'What each of the Clan''s many religions have in common is the faith
-    in their people, their ancestors, and the spirit of nature. '
+  ShortDesc: BLADE - FLORAL HEAL - MED - ALC - CMD
   LongDesc: 'What each of the Clan''s many religions have in common is the faith
     in their people, their ancestors, and the spirit of nature. As a shaman, you
     are capable of communing with it, healing your allies from a distance and striking

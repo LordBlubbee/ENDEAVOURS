@@ -17,9 +17,7 @@ MonoBehaviour:
   MainIcon: {fileID: 21300000, guid: dc34b7f7fe82db8468037fd392493744, type: 3}
   Sprite_Player: {fileID: 21300000, guid: 81e66b9831e4c9343aea72674e0fddf7, type: 3}
   Sprite_Stripes: {fileID: 21300000, guid: 0810b318df3d8f94cbb69453f455a041, type: 3}
-  ShortDesc: The Revenants are reformed Insurrectionists of the House of Winter.
-    Seeking to reform the barbarism of many Nomaden clans, they now fight to protect
-    all from the coming Winter.
+  ShortDesc: FROSTBLADE - PHYS - ALC - CMD
   LongDesc: 'The Revenants are reformed Insurrectionists of the House of Winter.
     Seeking to reform the barbarism of many Nomaden clans, they now fight to protect
     all from the coming Winter.
@@ -32,9 +30,9 @@ MonoBehaviour:
     ALC
     +1
 
-    MED +1'
+    CMD +1'
   BackgroundColor: {r: 0.35684407, g: 0.764151, b: 0.68535465, a: 1}
-  Background_ATT_BONUS: 0200000000000000000000000000000000000000000000000100000001000000
+  Background_ATT_BONUS: 0200000000000000000000000000000001000000000000000100000000000000
   Background_StartingWeapon: {fileID: 11400000, guid: 0f59758b37777cf48a10cda5079f3b24, type: 2}
   Background_StartingWeapon2: {fileID: 0}
   Background_StartingArtifact: {fileID: 0}
