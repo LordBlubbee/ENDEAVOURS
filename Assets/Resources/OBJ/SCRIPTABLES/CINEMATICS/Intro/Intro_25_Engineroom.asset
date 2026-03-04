@@ -23,6 +23,8 @@ MonoBehaviour:
   AudioKeyframes: []
   ShakeKeyframes:
   - Intensity: 0.6
-    Time: 2.1
+    Time: 1.1
   - Intensity: 1
-    Time: 2.9
+    Time: 1.9
+  - Intensity: 1
+    Time: 4.5

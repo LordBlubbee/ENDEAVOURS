@@ -142,6 +142,7 @@ public class Screen_Cinematic : MonoBehaviour
         SetScene(Scenes[23], true); //23 = EphemeralDying
         yield return new WaitForSeconds(4f);
         SetScene(Scenes[22], true); //22 = RED ALERT
+        SetText("<color=red>ALERT LEVEL NINE. THE EXPEDITION IS UNDER ATTACK.</color>", VCX_Narrator);
         yield return new WaitForSeconds(4f);
 
         SetScene(Scenes[24], true); //24 = Engine Room
