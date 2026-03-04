@@ -10,30 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
-  m_Name: Intro_22_SeekersRising
+  m_Name: Intro_2_Planet
   m_EditorClassIdentifier: 
-  AnimationSpeed: 0.3
+  AnimationSpeed: 0.4
   SpriteList:
-  - {fileID: 21300000, guid: 0b724f16bd356fb4099c9f92f549125b, type: 3}
-  - {fileID: 21300000, guid: 6032ecdacf4e1e04380cf12960a591df, type: 3}
-  - {fileID: 21300000, guid: 75891178ffc8f7b428f468c9e05062bf, type: 3}
+  - {fileID: 21300000, guid: c36806618904d65498fd48e0b1f8745d, type: 3}
   SpriteKeyframes: []
   ScaleKeyframes:
-  - Scale: 1.05
-    StartIntense: 0
-    EndIntense: 0
-    Time: 0
   - Scale: 1
     StartIntense: 0
     EndIntense: 0
-    Time: 10
+    Time: 0
+  - Scale: 1.2
+    StartIntense: 0
+    EndIntense: 0
+    Time: 20
   PositionKeyframes:
-  - Vector: {x: 0, y: -0.25, z: 0}
+  - Vector: {x: 0, y: -0.1, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Vector: {x: 0, y: -0.15, z: 0}
-    StartIntense: 0
+  - Vector: {x: 0, y: 0, z: 0}
+    StartIntense: 1
     EndIntense: 0
-    Time: 10
+    Time: 20
   RotationKeyframes: []

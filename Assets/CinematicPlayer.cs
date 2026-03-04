@@ -27,6 +27,7 @@ public class CinematicPlayer : MonoBehaviour
     }
     private void Update()
     {
+        SceneDuration += Time.deltaTime;
         if (TargetScene != CurrentScene)
         {
             FadeScreen.color = new Color(0,0,0, Mathf.Clamp01(FadeScreen.color.a + Time.deltaTime * TransitionSpeed));
@@ -38,6 +39,32 @@ public class CinematicPlayer : MonoBehaviour
         {
             FadeScreen.color = new Color(0, 0, 0, Mathf.Clamp01(FadeScreen.color.a - Time.deltaTime * TransitionSpeed));
         }
+        if (CurrentScene)
+        {
+            if (CurrentScene.ShakeKeyframes != null)
+            {
+                if (CurrentScene.ShakeKeyframes.Count > CurrentShakeFrame)
+                {
+                    if (SceneDuration >= CurrentScene.ShakeKeyframes[CurrentShakeFrame].Time)
+                    {
+                        ShakeCamera(CurrentScene.ShakeKeyframes[CurrentShakeFrame].Intensity);
+                        CurrentShakeFrame++;
+                    }
+                }
+            }
+            if (CurrentScene.AudioKeyframes != null)
+            {
+                if (CurrentScene.AudioKeyframes.Count > CurrentSFXFrame)
+                {
+                    if (SceneDuration >= CurrentScene.AudioKeyframes[CurrentSFXFrame].Time)
+                    {
+                        AUDCO.aud.PlaySFX(CurrentScene.AudioKeyframes[CurrentSFXFrame].Clip, Vector3.zero);
+                        CurrentSFXFrame++;
+                    }
+                }
+            }
+                
+        }
     }
     private void ChangeScene()
     {
@@ -47,6 +74,9 @@ public class CinematicPlayer : MonoBehaviour
         }
         SceneObjects = new();
         CurrentScene = TargetScene;
+        SceneDuration = 0f;
+        CurrentShakeFrame = 0;
+        CurrentSFXFrame = 0;
         if (TargetScene != null)
         {
             foreach (ScriptableSceneObject ob in TargetScene.Objects)
@@ -57,6 +87,10 @@ public class CinematicPlayer : MonoBehaviour
             }
         }
     }
+
+    int CurrentShakeFrame = 0;
+    int CurrentSFXFrame = 0;
+    float SceneDuration = 0f;
 
     Vector3 CameraShake;
     bool isShaking = false;

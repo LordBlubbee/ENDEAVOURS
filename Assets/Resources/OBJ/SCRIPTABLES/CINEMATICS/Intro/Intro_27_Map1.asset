@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_27_Map1
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.1
+  SpriteList:
+  - {fileID: 0}
+  SpriteKeyframes:
+  - List:
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    - {fileID: 0}
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    - {fileID: 0}
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    Time: 3
+  - List:
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    Time: 4
+  - List:
+    - {fileID: 21300000, guid: 6f71b8ba0a45f5d429d737b2465ed550, type: 3}
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    - {fileID: 21300000, guid: 6f71b8ba0a45f5d429d737b2465ed550, type: 3}
+    - {fileID: 21300000, guid: b8777a8e97fbbb64498f73df52af497e, type: 3}
+    - {fileID: 21300000, guid: 6f71b8ba0a45f5d429d737b2465ed550, type: 3}
+    - {fileID: 21300000, guid: 6f71b8ba0a45f5d429d737b2465ed550, type: 3}
+    - {fileID: 21300000, guid: 6f71b8ba0a45f5d429d737b2465ed550, type: 3}
+    - {fileID: 21300000, guid: 6f71b8ba0a45f5d429d737b2465ed550, type: 3}
+    - {fileID: 21300000, guid: 6f71b8ba0a45f5d429d737b2465ed550, type: 3}
+    - {fileID: 21300000, guid: 6f71b8ba0a45f5d429d737b2465ed550, type: 3}
+    - {fileID: 21300000, guid: 6f71b8ba0a45f5d429d737b2465ed550, type: 3}
+    - {fileID: 21300000, guid: 6f71b8ba0a45f5d429d737b2465ed550, type: 3}
+    Time: 8
+  - List:
+    - {fileID: 21300000, guid: 6f71b8ba0a45f5d429d737b2465ed550, type: 3}
+    Time: 9
+  ScaleKeyframes:
+  - Scale: 0.5
+    StartIntense: 0
+    EndIntense: 0
+    Time: 3
+  - Scale: 1
+    StartIntense: 1
+    EndIntense: 0
+    Time: 4
+  PositionKeyframes: []
+  RotationKeyframes: []

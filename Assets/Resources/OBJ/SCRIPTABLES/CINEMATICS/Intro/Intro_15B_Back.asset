@@ -14,26 +14,107 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AnimationSpeed: 0.2
   SpriteList:
-  - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+  - {fileID: 21300000, guid: ec81112ca6579f642b157338e1768c1c, type: 3}
   SpriteKeyframes:
   - List:
     - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: ec81112ca6579f642b157338e1768c1c, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: ec81112ca6579f642b157338e1768c1c, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    Time: 8
+  - List:
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    Time: 9
+  - List:
+    - {fileID: 21300000, guid: b53fb958569d62646890733bba0f4b52, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: b53fb958569d62646890733bba0f4b52, type: 3}
+    - {fileID: 21300000, guid: c541cce7503094b479b11fd093b189cf, type: 3}
+    - {fileID: 21300000, guid: b53fb958569d62646890733bba0f4b52, type: 3}
+    - {fileID: 21300000, guid: b53fb958569d62646890733bba0f4b52, type: 3}
+    - {fileID: 21300000, guid: b53fb958569d62646890733bba0f4b52, type: 3}
+    - {fileID: 21300000, guid: b53fb958569d62646890733bba0f4b52, type: 3}
+    - {fileID: 21300000, guid: b53fb958569d62646890733bba0f4b52, type: 3}
+    - {fileID: 21300000, guid: b53fb958569d62646890733bba0f4b52, type: 3}
+    - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
+    - {fileID: 21300000, guid: b53fb958569d62646890733bba0f4b52, type: 3}
+    - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
     - {fileID: 21300000, guid: b53fb958569d62646890733bba0f4b52, type: 3}
     - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
     - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
     - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
-    Time: 6
+    - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
+    - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
+    - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
+    - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
+    - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
+    - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
+    - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
+    - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
+    - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
+    Time: 14
   - List:
     - {fileID: 21300000, guid: e7527ec43f6254b48bda12fb32518ba7, type: 3}
-    Time: 12
+    Time: 18
   ScaleKeyframes:
-  - Scale: 0.5
+  - Scale: 0.7
     StartIntense: 0
     EndIntense: 0
     Time: 0
   - Scale: 0.5
+    StartIntense: 1
+    EndIntense: 0
+    Time: 2
+  - Scale: 0.5
     StartIntense: 0
     EndIntense: 0
-    Time: 10
-  PositionKeyframes: []
+    Time: 33
+  - Scale: 0.7
+    StartIntense: 1
+    EndIntense: 0
+    Time: 35
+  PositionKeyframes:
+  - Vector: {x: 0, y: 0.5, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Vector: {x: 0, y: -0.1, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 4
+  - Vector: {x: 0, y: -0.1, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 19
+  - Vector: {x: 0, y: 0.5, z: 0}
+    StartIntense: 1
+    EndIntense: 0
+    Time: 23
+  - Vector: {x: 0, y: 0.5, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 27
+  - Vector: {x: 0, y: -0.5, z: 0}
+    StartIntense: 1
+    EndIntense: 0
+    Time: 31
+  - Vector: {x: 0, y: -0.5, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 33
+  - Vector: {x: 0.3, y: -1.1, z: 0}
+    StartIntense: 1
+    EndIntense: 0
+    Time: 35
   RotationKeyframes: []

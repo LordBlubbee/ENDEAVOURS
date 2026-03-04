@@ -98096,7 +98096,7 @@ MonoBehaviour:
   SubtitleTex: {fileID: 2024213910}
   SkipTex: {fileID: 1699512718}
   Intro_OST: {fileID: 8300000, guid: f949bbf965fb93943b346a9000fdeb87, type: 3}
-  Voices: []
+  VCX_Narrator: {fileID: 8300000, guid: a2f587f085eb3634eab0238d8fbb47ce, type: 3}
   Scenes:
   - {fileID: 11400000, guid: a69106c2750d6514e8a3eb3034867029, type: 2}
   - {fileID: 11400000, guid: 47843c59dc15c0b44bf454670172a1a9, type: 2}
@@ -98125,6 +98125,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 20d46ac6442c28f4ca7b982b348be171, type: 2}
   - {fileID: 11400000, guid: ba1c682481c28f949997dead0122b5a9, type: 2}
   - {fileID: 11400000, guid: c4a5e43100d87ec41932d26f4f3ac971, type: 2}
+  - {fileID: 11400000, guid: aa5db874e6aab1f459285fe174588c02, type: 2}
 --- !u!114 &1982274213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98295,7 +98296,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Long ago, in a galaxy far, far away...
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b8eed4cd0e1f2b34e9dba2f7967ec74a, type: 2}
   m_sharedMaterial: {fileID: -8257588341390531809, guid: b8eed4cd0e1f2b34e9dba2f7967ec74a, type: 2}
@@ -98305,7 +98306,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 16777215
-  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

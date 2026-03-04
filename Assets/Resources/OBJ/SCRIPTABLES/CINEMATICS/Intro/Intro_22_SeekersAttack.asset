@@ -33,10 +33,10 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    Time: 6.4
+    Time: 3.4
   - List:
     - {fileID: 0}
-    Time: 7.4
+    Time: 4.4
   ScaleKeyframes:
   - Scale: 1.05
     StartIntense: 0
@@ -47,11 +47,11 @@ MonoBehaviour:
     EndIntense: 0
     Time: 10
   PositionKeyframes:
-  - Vector: {x: 0, y: -0.1, z: 0}
+  - Vector: {x: 0, y: -0.25, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Vector: {x: 0, y: 0.02, z: 0}
+  - Vector: {x: 0, y: -0.15, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 10

@@ -15,7 +15,7 @@ public class Screen_Cinematic : MonoBehaviour
 
     [Header("IMAGES")]
     public AudioClip Intro_OST;
-    public AudioClip[] Voices;
+    public AudioClip VCX_Narrator;
     public ScriptableScene[] Scenes;
 
     bool isRunningCinematic = false;
@@ -43,27 +43,15 @@ public class Screen_Cinematic : MonoBehaviour
 
         //TESTS
 
-        SetScene(Scenes[21], true); //21 = RisingUp
-        yield return new WaitForSeconds(10f);
-        SetScene(Scenes[22], true); //22 = RED ALERT
-        yield return new WaitForSeconds(10f);
-        SetScene(Scenes[23], true); //23 = EphemeralDying
-        yield return new WaitForSeconds(10f);
-        SetScene(Scenes[24], true); //24 = Engine Room
-        yield return new WaitForSeconds(10f);
-        SetScene(Scenes[25], true); //25 = Attacking Seekers
-        yield return new WaitForSeconds(10f);
-        SetScene(Scenes[14], true); //14 = Map1
-        yield return new WaitForSeconds(10f);
-        SetScene(Scenes[26], true); //26 = Map2
-        yield return new WaitForSeconds(10f);
 
 
-        //SetScene(Scenes[1], false); //Capitolis
+        //SetScene(Scenes[1], false); //Cliffs
         // yield return new WaitForSeconds(10f);
-        SetScene(Scenes[2], false); //Cliffs
-        yield return new WaitForSeconds(15f);
-        SetScene(Scenes[0], true); //Driftyards
+        SetScene(Scenes[1], false); //Planet
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[2], false); //Capitolis
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[0], false); //Driftyards
         yield return new WaitForSeconds(10f);
         SetScene(Scenes[3], true); //Driftyards 2
         yield return new WaitForSeconds(10f);
@@ -77,11 +65,28 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(5f);
         SetScene(Scenes[6], true); //6 = Underway Forests
         yield return new WaitForSeconds(5f);
-        SetScene(Scenes[7], true); //7 = Gubernator
-        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[14], false); //14 = Map1
+        //30 SECONDS IN TOTAL
+        yield return new WaitForSeconds(2f);
+        SetText("The <color=#FF00FF>Endeavour</color> has successfully gathered and launched from Capitolis.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetText("One year ago, the <color=#FF00FF>Fluctus Nebulae</color> destroyed at least ten percent of all known settlements on Unitas.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetText("The source has been triangulated to a location deep past the Nomaden Reaches, to a mountain in the far south-east.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetText("We are armed against Nebuloid and pirate threats, and have many supply bases built along parts of our route. We are to maintain level four secrecy.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
         SetScene(Scenes[17], true); //17 = Scout Drifter goes on
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(2f);
+        SetText("Twelve days into the <color=#FF00FF>Endeavour</color>, Stellae Frontier Scouting Blimp 07-10 maintains an eight-hour distance from the core fleet.", VCX_Narrator);
+      
+        yield return new WaitForSeconds(8f);
+        SetText("Its Gubernator has detected unusual distortions in the Flux. The effects are similar to recorded characteristics of the <color=#FF00FF>Fluctus Nebulae</color>.", VCX_Narrator);
+        SetScene(Scenes[7], false); //7 = Gubernator
+        yield return new WaitForSeconds(4f);
         SetScene(Scenes[16], true); //16 = Map with Signals
+        yield return new WaitForSeconds(4f);
+        SetText("We are to rendezvous with our scouting Drifter to investigate the possible source area, which lies inside a vast cave network.", VCX_Narrator);
         yield return new WaitForSeconds(10f);
         SetScene(Scenes[10], true); //10 = Underway Cave
         yield return new WaitForSeconds(10f);
@@ -95,30 +100,55 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(10f);
         SetScene(Scenes[19], true); //19 = Looting the Tubes
         yield return new WaitForSeconds(10f);
-        SetScene(Scenes[15], true); //15 = Iridaceae Sketch
-        yield return new WaitForSeconds(10f);
         SetScene(Scenes[12], true); //12 = The Fragmentum
         yield return new WaitForSeconds(10f);
-        SetScene(Scenes[14], true); //14 = The Map to Nexus Point
-      
-        /*
-         0 - Zoomed out
-         2 - Zoom in on fleet
-         4 - Receive signal
-         6 - Zoom in on target vector
-         8 - Vector is pulsing
-         10 - Target identified
-         12 - Zoom back out
-         */
-        yield return new WaitForSeconds(16f);
-      
+        SetScene(Scenes[15], true); //15 = Iridaceae Sketch
+        yield return new WaitForSeconds(2f);
+        SetText("The object of origin is a highly advanced Drifter of unknown affiliation, design, or purpose.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetText("The cause of its rupture is unknown and there are no traces of a crew.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetText("The Rigid was heavily armed. Yet, we believe it to have been a research Drifter.", VCX_Narrator);
+
+        yield return new WaitForSeconds(7f);
+        SetScene(Scenes[27], true); //27 = Nexus Sketch
+        yield return new WaitForSeconds(2f);
+        SetText("The <color=#00AAFF>Catali</color> salvaging team believes the texts inside are an ancient form of their language.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetText("This map uses the mountain peaks of Unitas to describe a location known as <color=#00FFFF>NEXUS POINT</color>. The fleet must set course to learn more.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetScene(Scenes[26], false); //26 = Map2
+        SetText("Our last courier from <color=yellow>Capitolis</color> has informed us that the situation in Unitas is deteriorating.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetText("The <color=#00AAFF>Catali</color> have been fractured in two, an internal war causing it to split into the <color=#0022FF>Democrats</color> and <color=#00AAFF>Royals</color>, the latter of which were banished from Valley.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetText("A group of Nomaden known as the <color=red>Bakuto Clan</color> have acquired a massive war fleet, and declared the <color=red>Insurrection</color>.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetText("All while the Nebula rises, and emergency services fail to cope with the rising humanitarian needs.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetText("Yet, there is hope. We believe the map must lead us to more answers about the true nature of the Nebula.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetText("We have plotted a new course, avoiding the Insurrectionist fleets. We will refuel at <color=#FF00FF>Starlight Point One</color> and make way for the <color=#00FFFF>NEXUS POINT</color>.", VCX_Narrator);
+ 
+        yield return new WaitForSeconds(9f); //44 TOTAL
+
         SetScene(Scenes[18], true); //18 = Discussions + Explosion
 
-        yield return new WaitForSeconds(5.9f);
-        Cinematic.ShakeCamera(1.2f);
-        yield return new WaitForSeconds(0.8f);
-        Cinematic.ShakeCamera(1.6f);
-        yield return new WaitForSeconds(3.3f);
+        yield return new WaitForSeconds(10f);
+
+        SetScene(Scenes[21], true); //21 = RisingUp
+        yield return new WaitForSeconds(8f);
+
+        SetScene(Scenes[23], true); //23 = EphemeralDying
+        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[22], true); //22 = RED ALERT
+        yield return new WaitForSeconds(4f);
+
+        SetScene(Scenes[24], true); //24 = Engine Room
+        yield return new WaitForSeconds(6f);
+        SetScene(Scenes[25], true); //25 = Attacking Seekers
+        yield return new WaitForSeconds(8f);
+
 
 
         /*
@@ -279,12 +309,6 @@ public class Screen_Cinematic : MonoBehaviour
         int ID = TextID;
         
         isSwitchingText = true;
-        while (TalkTex.color.a > 0)
-        {
-            TalkTex.color = new Color(1, 1, 1, Mathf.Clamp01(TalkTex.color.a - Time.deltaTime));
-            yield return null;
-            if (ID != TextID) yield break;
-        }
         TalkTex.text = tex;
         TalkTex.maxVisibleCharacters = 0;
 
@@ -300,6 +324,7 @@ public class Screen_Cinematic : MonoBehaviour
             {
                 Timer -= Time.deltaTime;
                 yield return null;
+                if (ID != TextID) yield break;
             }
             Timer += 0.015f;
             visibleCount++;
@@ -319,6 +344,27 @@ public class Screen_Cinematic : MonoBehaviour
                 }
             }
         }
+        yield return new WaitForSeconds(7f);
+        if (ID != TextID) yield break;
+        while (visibleCount > 0)
+        {
+            while (Timer > 0f)
+            {
+                Timer -= Time.deltaTime;
+                yield return null;
+                if (ID != TextID) yield break;
+            }
+            Timer += 0.005f;
+            visibleCount--;
+            TalkTex.maxVisibleCharacters = visibleCount;
+        }
+
+        /*while (TalkTex.color.a > 0)
+        {
+            TalkTex.color = new Color(1, 1, 1, Mathf.Clamp01(TalkTex.color.a - Time.deltaTime));
+            yield return null;
+            if (ID != TextID) yield break;
+        }*/
         isSwitchingText = false;
     }
 

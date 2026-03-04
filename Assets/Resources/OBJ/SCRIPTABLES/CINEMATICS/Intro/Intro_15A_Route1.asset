@@ -33,18 +33,34 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 05a582a0028da0c45891ec5e7114b8f4, type: 3}
     - {fileID: 21300000, guid: 05a582a0028da0c45891ec5e7114b8f4, type: 3}
     - {fileID: 21300000, guid: 05a582a0028da0c45891ec5e7114b8f4, type: 3}
-    Time: 6
+    Time: 18
   - List:
     - {fileID: 21300000, guid: 05a582a0028da0c45891ec5e7114b8f4, type: 3}
-    Time: 7
+    Time: 19
   ScaleKeyframes:
-  - Scale: 0.5
+  - Scale: 0.6
     StartIntense: 0
     EndIntense: 0
     Time: 0
   - Scale: 0.5
+    StartIntense: 1
+    EndIntense: 0
+    Time: 2
+  PositionKeyframes:
+  - Vector: {x: 0, y: -0.6, z: 0}
     StartIntense: 0
     EndIntense: 0
-    Time: 10
-  PositionKeyframes: []
+    Time: 0
+  - Vector: {x: 0, y: -0.15, z: 0}
+    StartIntense: 1
+    EndIntense: 0
+    Time: 4
+  - Vector: {x: 0, y: -0.15, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 16
+  - Vector: {x: 0, y: 0.5, z: 0}
+    StartIntense: 1
+    EndIntense: 0
+    Time: 20
   RotationKeyframes: []

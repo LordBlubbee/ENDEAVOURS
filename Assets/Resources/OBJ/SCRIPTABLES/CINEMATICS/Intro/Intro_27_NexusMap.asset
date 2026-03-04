@@ -10,15 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f251af17509e5b4695fe6ecc890a441, type: 3}
-  m_Name: Intro_23_Alert
+  m_Name: Intro_27_NexusMap
   m_EditorClassIdentifier: 
   Objects:
-  - {fileID: 11400000, guid: 270d65218450b094c8d4a3298d44def5, type: 2}
-  AudioKeyframes: []
-  ShakeKeyframes:
-  - Intensity: 1.2
-    Time: 0
-  - Intensity: 0.3
-    Time: 1.6
-  - Intensity: 0.3
-    Time: 3.2
+  - {fileID: 11400000, guid: 6932204c7a573ed4aa6ed50037ff6c30, type: 2}
+  - {fileID: 11400000, guid: 0f2f9f456e5bacc47ba85acfdfcccf83, type: 2}
+  - {fileID: 11400000, guid: 31f559b805b92704ab505da64a63de76, type: 2}
+  - {fileID: 11400000, guid: 0811a909819282943ad0f5be0482f1ee, type: 2}
