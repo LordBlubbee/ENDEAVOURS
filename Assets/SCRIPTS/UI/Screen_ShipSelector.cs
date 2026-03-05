@@ -51,6 +51,7 @@ public class Screen_ShipSelector : MonoBehaviour
     public void PressLaunch()
     {
         if (CO.co == null) return;
+        if (LOCALCO.local == null) return;
         if (CO.co.HasShipBeenLaunched.Value) return;
         if (SelectedShip == null) return;
         for (int i = 0; i < SpawnableShips.Count; i++)

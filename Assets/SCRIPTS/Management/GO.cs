@@ -113,19 +113,19 @@ public class GO : MonoBehaviour
     }
 
     public DateTime LastSaveTime = DateTime.MinValue;
-    public void saveGame()
+    public void saveGame(bool dialogCompleted)
     {
         LastSaveTime = DateTime.Now;
-        saveGame(currentSaveSlot);
+        saveGame(dialogCompleted, currentSaveSlot);
     }
-    public void saveGame(int slot)
+    public void saveGame(bool dialogCompleted, int slot)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/Mistworld" + slot;
 
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        dataStructure saveData = new dataStructure(); //Save dataStructure with copies GO variables
+        dataStructure saveData = new dataStructure(dialogCompleted); //Save dataStructure with copies GO variables
 
         formatter.Serialize(stream, saveData);
         stream.Close();
@@ -227,6 +227,7 @@ public class dataStructure
     public int BiomeProgress;
     public string BiomeName;
     public int SavedDifficulty;
+    public bool DialogCompleted;
 
     int Resources_Materials;
     int Resources_Supplies;
@@ -329,13 +330,14 @@ public class dataStructure
             CO.co.AddInventoryItem(scr);
         }
 
-        CO.co.StartLoadedGame();
+        CO.co.StartLoadedGame(DialogCompleted);
     }
-    public dataStructure()
+    public dataStructure(bool dialogCompleted)
     {
         if (CO.co == null) return;
         //Save game
         saveTime = DateTime.Now;
+        DialogCompleted = dialogCompleted;
         BiomeProgress = CO.co.GetBiomeProgress();
         SavedDifficulty = CO.co.GetDifficulty();
 
@@ -377,7 +379,8 @@ public class dataStructure
             {
                 CO.co.SavePlayer(crew);
                 //DrifterPlayers.Add(play);
-            } else
+            }
+            else
             {
                 dataNonPlayerCrew play = new dataNonPlayerCrew();
                 play.PlayerName = crew.CharacterName.Value.ToString();
@@ -404,6 +407,8 @@ public class dataStructure
             MapPointList.Add(point);
             i++;
         }
+
+        DialogCompleted = dialogCompleted;
     }
 }
 

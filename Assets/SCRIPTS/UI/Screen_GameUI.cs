@@ -74,7 +74,7 @@ public class Screen_GameUI : MonoBehaviour
     public void PressSaveGame()
     {
         //No longer used
-        GO.g.saveGame();
+        //GO.g.saveGame();
         AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         DateTime time = DateTime.Now;
         SaveButtonTex.text = $"LAST SAVE: {time.Hour.ToString("00")}:{time.Minute.ToString("00")}";
@@ -280,7 +280,8 @@ public class Screen_GameUI : MonoBehaviour
                 {
                     DateTime time = GO.g.LastSaveTime;
                     SaveButtonTex.text = $"LAST SAVE: {time.Hour.ToString("00")}:{time.Minute.ToString("00")}";
-                    if ((DateTime.Now-time).TotalSeconds > 180) SaveButtonTex.color = Color.yellow;
+                    if ((DateTime.Now - time).TotalSeconds > 240) SaveButtonTex.color = Color.red;
+                    else if ((DateTime.Now-time).TotalSeconds > 120) SaveButtonTex.color = Color.yellow;
                     else SaveButtonTex.color = Color.green;
                 }
             }

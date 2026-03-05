@@ -28,11 +28,12 @@ public class CO : NetworkBehaviour
 
     private bool ShouldDriftersMove = false;
     private bool isServerSided = false;
+    [NonSerialized] public bool EventCompleted = false;
     private void OnApplicationQuit()
     {
         if (isServerSided)
         {
-            GO.g.saveGame();
+            GO.g.saveGame(EventCompleted);
         }
         NetworkManager.Singleton.Shutdown();
     }
@@ -902,11 +903,11 @@ public class CO : NetworkBehaviour
         CO_STORY.co.SetStory(GetPlayerMapPoint().AssociatedPoint.GetInitialDialog());
         SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
     }
-    public void StartLoadedGame()
+    public void StartLoadedGame(bool dialogCompleted)
     {
         HostControlMode.Value = GO.g.preferredHostControl;
         CO_SPAWNER.co.CreateLandscape(GetPlayerMapPoint().AssociatedPoint.BackgroundType);
-        CO_STORY.co.SetStory(GetPlayerMapPoint().AssociatedPoint.GetInitialDialog());
+        if (!dialogCompleted) CO_STORY.co.SetStory(GetPlayerMapPoint().AssociatedPoint.GetInitialDialog());
         SetCurrentSoundtrack(GetPlayerMapPoint().AssociatedPoint.InitialSoundtrack);
     }
 
@@ -1251,7 +1252,8 @@ public class CO : NetworkBehaviour
         }
         //Generate Area here
 
-        GO.g.saveGame();
+        EventCompleted = false;
+        GO.g.saveGame(EventCompleted);
         UI.ui.DisplaySaveTex();
 
         yield return new WaitForSeconds(1f);
@@ -1831,17 +1833,29 @@ public class CO : NetworkBehaviour
         {
             case "ShowLoot":
                 ForceOpenRewardScreenRpc();
+
+                EventCompleted = true;
+                GO.g.saveGame(EventCompleted);
                 break;
             case "ShowMap":
                 ForceOpenMapScreenRpc();
+
+                EventCompleted = true;
+                GO.g.saveGame(EventCompleted);
                 break;
             case "GenericRest":
                 StartCoroutine(Event_GenericRest());
                 ForceOpenRestScreenRpc();
+
+                EventCompleted = true;
+                GO.g.saveGame(EventCompleted);
                 break;
             case "GenericLoot":
                 StartCoroutine(Event_GenericLoot());
                 ForceOpenRewardScreenRpc();
+
+                EventCompleted = true;
+                GO.g.saveGame(EventCompleted);
                 break;
             case "GenericBattle":
                 StartCoroutine(Event_GenericBattle());
