@@ -149,6 +149,12 @@ MonoBehaviour:
   NextBiomePoints:
   - {fileID: 11400000, guid: c5c1a9e590b5bb44dbfa78fa871eb545, type: 2}
   Test_StartingLoot: {fileID: 0}
+  TutorialEvents:
+  - {fileID: 11400000, guid: 1368495436dc411459397ad0eb0ddc0f, type: 2}
+  - {fileID: 11400000, guid: ba5534032e713064d8638d714c5fc18f, type: 2}
+  - {fileID: 11400000, guid: 34f000166cecfa84b8dfc2377e1d4cf8, type: 2}
+  - {fileID: 11400000, guid: 832cbd77a6a517047a565c65942cce58, type: 2}
+  - {fileID: 11400000, guid: 0f9f76391a7007b478b062fccf522aa4, type: 2}
   CurrentSoundtrackID:
     m_InternalValue: -1
 --- !u!114 &5031945110435053922

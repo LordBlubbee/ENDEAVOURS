@@ -217,6 +217,85 @@ public class Screen_CharacterCreator : MonoBehaviour
     {
         UpdateCompletionStatus();
         PlayerListButton.gameObject.SetActive(CO.co.GetLOCALCO().Count > 1);
+
+        if (CO.co.IsTutorial())
+        {
+            UI.ui.TutorialManager.OpenTutorial();
+            LOCALCO.local.CreatePlayerRpc(RandomNameGen(), new Color(UnityEngine.Random.Range(0.4f,1f), UnityEngine.Random.Range(0.4f, 1f), UnityEngine.Random.Range(0f, 0.5f)), new int[] { 3,5,2,1,1,3,1,3 }, "Invictus_Marine");
+            UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
+        }
+    }
+
+    private string RandomNameGen()
+    {
+        string str = "";
+        switch (UnityEngine.Random.Range(0, 10))
+        {
+            case 0:
+                str += "Red";
+                break;
+            case 1:
+                str += "Blue";
+                break;
+            case 2:
+                str += "Green";
+                break;
+            case 3:
+                str += "Yellow";
+                break;
+            case 4:
+                str += "Purple";
+                break;
+            case 5:
+                str += "Orange";
+                break;
+            case 6:
+                str += "Pink";
+                break;
+            case 7:
+                str += "White";
+                break;
+            case 8:
+                str += "Black";
+                break;
+            default:
+                str += "Gray";
+                break;
+        }
+        switch (UnityEngine.Random.Range(0, 10))
+        {
+            case 0:
+                str += " Soldier";
+                break;
+            case 1:
+                str += " Star";
+                break;
+            case 2:
+                str += " Warrior";
+                break;
+            case 3:
+                str += " Marine";
+                break;
+            case 4:
+                str += " Officer";
+                break;
+            case 5:
+                str += " Leader";
+                break;
+            case 6:
+                str += " Champion";
+                break;
+            case 7:
+                str += " Ranger";
+                break;
+            case 8:
+                str += " Lancer";
+                break;
+            default:
+                str += " Captain";
+                break;
+        }
+                return str;
     }
 
     private void UpdateCompletionStatus()

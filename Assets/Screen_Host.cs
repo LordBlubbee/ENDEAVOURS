@@ -21,7 +21,6 @@ public class Screen_Host : MonoBehaviour
         LobbyNameTagObject.SetActive(!AloneGame);
         HostControlObject.SetActive(!AloneGame);
     }
-
     public void PressPlay()
     {
         AUDCO.aud.PlaySFX(AUDCO.aud.Press);
@@ -99,7 +98,7 @@ public class Screen_Host : MonoBehaviour
     {
         AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         GO.g.preferredGameDifficulty++;
-        if (GO.g.preferredGameDifficulty > 4) GO.g.preferredGameDifficulty = 0;
+        if (GO.g.preferredGameDifficulty > 5) GO.g.preferredGameDifficulty = 0;
         GO.g.saveSettings();
         RefreshPlayerGameDifficulty();
 
@@ -109,26 +108,31 @@ public class Screen_Host : MonoBehaviour
         switch (GO.g.preferredGameDifficulty)
         {
             case 0:
+                DifficultyTex.text = "TUTORIAL";
+                DifficultyTex.color = Color.magenta;
+                DifficultyTooltip.Tooltip = "This simulation mission will teach you how to lead your crew in the Starlight Endeavour.";
+                break;
+            case 1:
                 DifficultyTex.text = "ADVANTAGED";
                 DifficultyTex.color = Color.green;
                 DifficultyTooltip.Tooltip = "Difficulty is slightly reduced, though the Endeavour is still challenging. \n\nEnemy Drifter strength -15% \nEnemy crew- and creature strength -20% \nEnemy crew- and creature count -10%";
                 break;
-            case 1:
+            case 2:
                 DifficultyTex.text = "MEDIUM";
                 DifficultyTex.color = Color.yellow;
                 DifficultyTooltip.Tooltip = "The base Endeavour experience is a challenge to complete. Prepare yourselves.";
                 break;
-            case 2:
+            case 3:
                 DifficultyTex.text = "HARD";
                 DifficultyTex.color = new Color(1,0.6f,0.1f);
                 DifficultyTooltip.Tooltip = "The Endeavour was launched late, and your enemies have become stronger. Very challenging. \n\nEnemy Drifter strength +15% \nEnemy crew- and creature strength +20% \nEnemy crew- and creature count +10% \nLoot -10%";
                 break;
-            case 3:
+            case 4:
                 DifficultyTex.text = "INSANE";
                 DifficultyTex.color = Color.red;
                 DifficultyTooltip.Tooltip = "All odds seem to be stacked against you. Extremely challenging. \n\nEnemy Drifter strength +25% \nEnemy crew- and creature strength +40% \nEnemy crew- and creature count +15% \nLoot -10%";
                 break;
-            case 4:
+            case 5:
                 DifficultyTex.text = "IMPOSSIBLE";
                 DifficultyTex.color = new Color(0.5f,0,0);
                 DifficultyTooltip.Tooltip = "Everything seems lost. It is unknown whether the Endeavour can be completed this way. \n\nEnemy Drifter strength +40% \nEnemy crew- and creature strength +80% \nEnemy crew- and creature count +25% \nLoot -20%";

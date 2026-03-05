@@ -68,7 +68,7 @@ public class GO : MonoBehaviour
         VCX_Vol = 0.8f;
         SFX_Vol = 0.8f;
         preferredHostControl = 0;
-        preferredGameDifficulty = 1;
+        preferredGameDifficulty = 0;
         preferredLobbyName = "Lobby";
     }
     public void loadSettings()

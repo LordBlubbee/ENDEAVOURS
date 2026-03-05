@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Tutorial2_Dialog
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: One threat has been eliminated. However, you have now gone towards
+      a NO DATA area. Often, these areas are empty.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
+    Alternatives: []
+  - BaseText: Empty areas are advantageous when your Drifter is heavily damaged and
+      incapable of engagement. However, Flux-silent enemies can sometimes lurk in
+      these areas.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 7741419c82c169f4a991e856fb530463, type: 2}
+    Alternatives: []
+  - BaseText: Nomaden Fog Raiders are approaching your vessel. The time for Drifter-to-Drifter
+      combat has come.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: c40c04091c58e3741991105df408e96f, type: 2}
+    Alternatives: []
+  - BaseText: To defeat an enemy Drifter, it is imperative that you focus the fire
+      of your Drifter's main weapons upon their most critical systems.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: c40c04091c58e3741991105df408e96f, type: 2}
+    Alternatives: []
+  - BaseText: Armor modules cannot easily be destroyed from the outside. A common
+      tactic is to fight off enemies boarders, and then board the enemy Drifter to
+      eliminate an armor module.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: c40c04091c58e3741991105df408e96f, type: 2}
+    Alternatives: []
+  - BaseText: We recommend this strategy in your first Drifter-to-Drifter engagement.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: c40c04091c58e3741991105df408e96f, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Prepare for battle.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: bcc16abe4c7aba847af3c9df349b527d, type: 2}

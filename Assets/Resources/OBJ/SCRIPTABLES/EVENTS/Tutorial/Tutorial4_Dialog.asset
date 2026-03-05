@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cc7d0c0c139b946aecbf9c43b324e5, type: 3}
+  m_Name: Tutorial4_Dialog
+  m_EditorClassIdentifier: 
+  StoryTexts:
+  - BaseText: You have completed all scripted situations and likely obtained a good
+      amount of loot. Spend your resources well.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: 9d5807a3bec7ac546807c3709018eaf7, type: 2}
+    Alternatives: []
+  - BaseText: Soon, you will officially begin your first Endeavour expedition towards
+      the <color=#00FFFF>Nexus Point</color>. The difficulty has been returned to
+      <color=yellow>NORMAL</color>.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ecf24d1c9d9e4044a9a4e6db46968ce7, type: 2}
+    Alternatives: []
+  - BaseText: You will fail many times. But you will become stronger and smarter
+      every time, unlocking new Drifters and Characters as you go.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ecf24d1c9d9e4044a9a4e6db46968ce7, type: 2}
+    Alternatives: []
+  - BaseText: Perhaps, you will find the truth behind the <color=#FF00FF>MISTWORLD</color>.
+      Only time will tell.
+    VariantTexts: []
+    Speaker: {fileID: 11400000, guid: ecf24d1c9d9e4044a9a4e6db46968ce7, type: 2}
+    Alternatives: []
+  ChoicePathDialogs:
+  - ChoiceText:
+      BaseText: Our journey continues.
+      VariantTexts: []
+      Speaker: {fileID: 0}
+      Alternatives: []
+    Prerequisites: []
+    DialogResult: {fileID: 0}
+    AlternativeResults: []
+    TriggerEvent: {fileID: 11400000, guid: cbd8b5cc701a7a24ca0d291ae1ccae28, type: 2}

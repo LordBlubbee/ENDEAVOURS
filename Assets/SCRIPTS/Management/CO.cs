@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static AUDCO;
 
@@ -211,12 +212,18 @@ public class CO : NetworkBehaviour
     {
         Difficulty = (GameDifficulties)ID;
     }
+
+    public bool IsTutorial()
+    {
+        return Difficulty == GameDifficulties.TUTORIAL;
+    }
     public int GetDifficulty()
     {
         return (int)Difficulty;
     }
     public enum GameDifficulties
     {
+        TUTORIAL,
         ADVANTAGED,
         MEDIUM,
         HARD,
@@ -385,6 +392,9 @@ public class CO : NetworkBehaviour
         }
         switch (Difficulty)
         {
+            case GameDifficulties.TUTORIAL:
+                ProgressDiff *= 0.8f;
+                break;
             case GameDifficulties.ADVANTAGED:
                 ProgressDiff *= 0.8f;
                 break;
@@ -557,6 +567,9 @@ public class CO : NetworkBehaviour
         }
         switch (Difficulty)
         {
+            case GameDifficulties.TUTORIAL:
+                ProgressDiff *= 0.85f;
+                break;
             case GameDifficulties.ADVANTAGED:
                 ProgressDiff *= 0.85f;
                 break;
@@ -637,6 +650,9 @@ public class CO : NetworkBehaviour
         }
         switch (Difficulty)
         {
+            case GameDifficulties.TUTORIAL:
+                ProgressDiff *= 0.9f;
+                break;
             case GameDifficulties.ADVANTAGED:
                 ProgressDiff *= 0.9f;
                 break;
@@ -717,6 +733,9 @@ public class CO : NetworkBehaviour
         }
         switch (Difficulty)
         {
+            case GameDifficulties.TUTORIAL:
+                ProgressDiff *= 0.9f;
+                break;
             case GameDifficulties.ADVANTAGED:
                 ProgressDiff *= 0.9f;
                 break;
@@ -869,7 +888,8 @@ public class CO : NetworkBehaviour
         Resource_Supplies.Value = 50;
         Resource_Ammo.Value = 50;
         Resource_Tech.Value = 0;
-        BiomeName.Value = "Far South";
+        if (Difficulty == GameDifficulties.TUTORIAL) BiomeName.Value = "Simulated Space";
+        else BiomeName.Value = "Far South";
 
         if (Test_StartingLoot != null)
         {
@@ -1210,7 +1230,13 @@ public class CO : NetworkBehaviour
         {
             CurrentBiome = destination.AssociatedPoint.GateToBiome;
             BiomeName.Value = destination.AssociatedPoint.UniqueName;
-            BiomeProgress.Value++;
+            if (Difficulty == GameDifficulties.TUTORIAL)
+            {
+                EndTutorialWorld();
+            } else
+            {
+                BiomeProgress.Value++;
+            }
             GenerateMap();
             destination = RegisteredMapPoints[0];
         }
@@ -1232,6 +1258,10 @@ public class CO : NetworkBehaviour
         PlayerMainDrifter.SetCanReceiveInput(true);
     }
 
+    private void EndTutorialWorld()
+    {
+        Difficulty = GameDifficulties.MEDIUM;
+    }
     private void GenerateLevel()
     {
         PlayerMainDrifter.transform.position = Vector3.zero;
@@ -1387,9 +1417,39 @@ public class CO : NetworkBehaviour
         }
         UpdateMapConnections();
     }
+
+    public List<ScriptablePoint> TutorialEvents;
+    private void GenerateTutorialMap()
+    {
+        float mapSize = CurrentBiome.GetBiomeSize();
+        RegisteredMapPoints = new();
+        //StartPoint
+        PlayerMapPointID.Value = 0;
+        float MapWidth = GetMapWidth();
+        MapPoint mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3(-GetPointStep(), MapWidth * 0.5f));
+        RegisterMapPoint(mapPoint);
+        mapPoint.Init(TutorialEvents[0]);
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3(0, MapWidth * 0.5f));
+        RegisterMapPoint(mapPoint);
+        mapPoint.Init(TutorialEvents[1]);
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3(GetPointStep(), MapWidth * 0.5f));
+        RegisterMapPoint(mapPoint);
+        mapPoint.Init(TutorialEvents[2]);
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3(GetPointStep() * 2, MapWidth * 0.5f));
+        RegisterMapPoint(mapPoint);
+        mapPoint.Init(TutorialEvents[3]);
+        mapPoint = CO_SPAWNER.co.CreateMapPoint(new Vector3(GetPointStep() * 3, MapWidth * 0.5f));
+        RegisterMapPoint(mapPoint);
+        mapPoint.Init(TutorialEvents[4]);
+    }
     public void GenerateMap()
     {
         WipeMap();
+        if (Difficulty == GameDifficulties.TUTORIAL)
+        {
+            GenerateTutorialMap();
+            return;
+        }
         float mapSize = CurrentBiome.GetBiomeSize();
         RegisteredMapPoints = new();
         List<MapPoint> MustBeInitialized = new();

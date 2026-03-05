@@ -19315,6 +19315,7 @@ MonoBehaviour:
   screenShakeLevel: 0
   resolutionConfig: 0
   enableTutorial: 0
+  enableLargeTutorial: 0
   currentSaveSlot: 0
   preferredHostControl: 0
   preferredGameDifficulty: 0

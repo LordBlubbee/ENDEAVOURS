@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4fc65e7be402ef41b3a849a94b12e47, type: 3}
-  m_Name: StartingSouth
+  m_Name: StartingSouthTutorial
   m_EditorClassIdentifier: 
   BiomeName: Far South
   BiomeDescription: 
   BiomeBaseDifficulty: 1
   BiomeCalmRatio: 0.3
   BiomeHostileRatio: 0.4
-  BiomeSize: 6
+  BiomeSize: 3
   PossiblePointsCalm:
   - {fileID: 11400000, guid: 0e3ec5f71bdffec408503e0ab7c62634, type: 2}
   - {fileID: 11400000, guid: affd20759cceaa044a39629fff2b413c, type: 2}

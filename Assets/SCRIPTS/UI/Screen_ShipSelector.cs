@@ -30,6 +30,12 @@ public class Screen_ShipSelector : MonoBehaviour
         if (CO.co.HasShipBeenLaunched.Value)
         {
             UI.ui.SelectScreen(UI.ui.CharacterCreationUI.gameObject);
+        } else
+        {
+            if (CO.co.IsServer && CO.co.IsTutorial())
+            {
+                PressLaunch();
+            }
         }
     }
     public void PressShipButton(SpawnableShip ship)
