@@ -22,7 +22,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 12444161142666c4f8ffc725df065c41, type: 3}
     - {fileID: 21300000, guid: b8e584c6e6e89de4db977a04b0486d4e, type: 3}
     - {fileID: 21300000, guid: 82d8e25d69673e2488a51e93f5a2a427, type: 3}
-    Time: 1.6
+    Time: 0.4
   - List:
     - {fileID: 21300000, guid: 50ce6c21328780c4aaa435b10be39655, type: 3}
     - {fileID: 21300000, guid: 6b73fabe69894a24c9e98998ab2949f4, type: 3}

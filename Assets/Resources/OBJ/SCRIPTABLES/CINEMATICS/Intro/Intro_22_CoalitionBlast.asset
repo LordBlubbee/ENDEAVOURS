@@ -28,10 +28,26 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    Time: 6.8
+    Time: 1.6
   - List:
     - {fileID: 0}
-    Time: 7.8
+    Time: 2.6
+  - List:
+    - {fileID: 21300000, guid: 0344a96c531a32f458d0c66bbb9ea31b, type: 3}
+    - {fileID: 21300000, guid: 04ade02231f0243499a16bc582dc5cbf, type: 3}
+    - {fileID: 21300000, guid: 99962037ed0571c4d8bab61e66b2471c, type: 3}
+    - {fileID: 21300000, guid: 003b4ff25675e254192192ff5da55fc2, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    Time: 3.9
+  - List:
+    - {fileID: 0}
+    Time: 2.6
   ScaleKeyframes:
   - Scale: 1.02
     StartIntense: 0
@@ -42,12 +58,28 @@ MonoBehaviour:
     EndIntense: 0
     Time: 10
   PositionKeyframes:
-  - Vector: {x: 0.04, y: 0, z: 0}
+  - Vector: {x: 0, y: 0, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Vector: {x: -0.06, y: -0.01, z: 0}
+  - Vector: {x: 0.04, y: -0.27, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 3.6
+  - Vector: {x: 0.02, y: -0.04, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 3.7
+  - Vector: {x: 0.01, y: -0.23, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 13
+  RotationKeyframes:
+  - Rotation: -8
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Rotation: -15
     StartIntense: 0
     EndIntense: 0
     Time: 10
-  RotationKeyframes: []

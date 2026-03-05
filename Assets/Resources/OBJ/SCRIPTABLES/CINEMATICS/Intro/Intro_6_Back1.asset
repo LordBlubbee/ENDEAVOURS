@@ -17,13 +17,21 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d5fbba1e66e157f499aefba6a7ad488d, type: 3}
   SpriteKeyframes: []
   ScaleKeyframes:
-  - Scale: 1
+  - Scale: 1.05
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Scale: 1.03
+  - Scale: 1.09
     StartIntense: 0
     EndIntense: 0
     Time: 10
-  PositionKeyframes: []
+  PositionKeyframes:
+  - Vector: {x: -0.04, y: 0, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Vector: {x: 0, y: 0, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
   RotationKeyframes: []

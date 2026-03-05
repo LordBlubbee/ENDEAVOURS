@@ -17,7 +17,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b23809175cfc806499839ab7bcbf88bd, type: 2}
   - {fileID: 11400000, guid: ced03550868fb0c4e9a6522e16bdecf8, type: 2}
   - {fileID: 11400000, guid: 0208781db5f84044480c508f006a2430, type: 2}
-  - {fileID: 11400000, guid: 635c5cce061862b4b96a084f5a6505a0, type: 2}
-  - {fileID: 11400000, guid: 92d1acb3c1438a0458d4200081c63a28, type: 2}
-  - {fileID: 11400000, guid: e633f332d669e41429e587cbc3dd31a0, type: 2}
-  - {fileID: 11400000, guid: 12cf80b8843a9fd40ac5dc0c27acfc91, type: 2}
+  - {fileID: 11400000, guid: 8e870eb6f4bd02848a4bc4e02ddd9cb6, type: 2}
+  - {fileID: 11400000, guid: 5686dbc8db1bfef4f8ed42683b9a82d8, type: 2}
+  - {fileID: 11400000, guid: 169de690115583c44b8e43c713820fe2, type: 2}
+  - {fileID: 11400000, guid: 1e40bc68d02ecea4eb95d127a1e015a4, type: 2}
+  AudioKeyframes: []
+  ShakeKeyframes: []

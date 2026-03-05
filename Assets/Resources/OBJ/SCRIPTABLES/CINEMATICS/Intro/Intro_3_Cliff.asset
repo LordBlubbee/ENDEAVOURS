@@ -26,11 +26,11 @@ MonoBehaviour:
     EndIntense: 0
     Time: 10
   PositionKeyframes:
-  - Vector: {x: 0, y: -0.22, z: 0}
+  - Vector: {x: 0, y: -0.26, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Vector: {x: 0, y: -0.35, z: 0}
+  - Vector: {x: 0, y: -0.37, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 15

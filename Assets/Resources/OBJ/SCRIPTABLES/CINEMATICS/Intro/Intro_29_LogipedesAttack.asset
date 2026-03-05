@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f251af17509e5b4695fe6ecc890a441, type: 3}
+  m_Name: Intro_29_LogipedesAttack
+  m_EditorClassIdentifier: 
+  Objects:
+  - {fileID: 11400000, guid: c4a0f5dbcd131a349a6635b4af5936db, type: 2}
+  - {fileID: 11400000, guid: 9e9b9e50239881347a648020240800bb, type: 2}
+  - {fileID: 11400000, guid: 7048d7a40aff0bb4a85e3373dcf4e317, type: 2}
+  - {fileID: 11400000, guid: 4c685d56fb32534419a4b263de09d8a8, type: 2}
+  - {fileID: 11400000, guid: 8f665de2e08f6b7499a47117483b4968, type: 2}
+  - {fileID: 11400000, guid: e61e07a2edb65ed45af513559dcf91eb, type: 2}
+  - {fileID: 11400000, guid: 062fa3fd100a8e24db4200bb58001edc, type: 2}
+  - {fileID: 11400000, guid: a9a8aee9899bc724ab8c72e08211b161, type: 2}
+  - {fileID: 11400000, guid: 58054e9a485f55640aa240e780046b8e, type: 2}
+  - {fileID: 11400000, guid: 03902472012b91d4a88841f31eea9784, type: 2}
+  AudioKeyframes:
+  - Clip: {fileID: 8300000, guid: 9e9dd386944e2cb4390ea93b9afab6d1, type: 3}
+    Time: 2.3
+  - Clip: {fileID: 8300000, guid: 84e54f64f3f8e9e40829a1ac68afbe5a, type: 3}
+    Time: 3
+  - Clip: {fileID: 8300000, guid: 9dc3212dc1148b44ab55cef301872c60, type: 3}
+    Time: 3.5
+  - Clip: {fileID: 8300000, guid: dc98d35753a89c040904c73f02f92e9a, type: 3}
+    Time: 4.4
+  ShakeKeyframes:
+  - Intensity: 0.4
+    Time: 2.3
+  - Intensity: 0.3
+    Time: 3
+  - Intensity: 0.3
+    Time: 3.5
+  - Intensity: 1.1
+    Time: 4.4

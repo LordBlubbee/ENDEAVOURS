@@ -35722,7 +35722,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &932261645
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35755,7 +35755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -47217,7 +47217,7 @@ MonoBehaviour:
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b8eed4cd0e1f2b34e9dba2f7967ec74a, type: 2}
-  m_sharedMaterial: {fileID: -8257588341390531809, guid: ae1c7c9a342696144a6ec39964526f66, type: 2}
+  m_sharedMaterial: {fileID: -8257588341390531809, guid: b8eed4cd0e1f2b34e9dba2f7967ec74a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -98092,6 +98092,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cinematic: {fileID: 1755202086}
   TalkTex: {fileID: 1985514534}
+  TalkBack: {fileID: 932261646}
   TitleTex: {fileID: 1012057989}
   SubtitleTex: {fileID: 2024213910}
   SkipTex: {fileID: 1699512718}
@@ -98126,6 +98127,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ba1c682481c28f949997dead0122b5a9, type: 2}
   - {fileID: 11400000, guid: c4a5e43100d87ec41932d26f4f3ac971, type: 2}
   - {fileID: 11400000, guid: aa5db874e6aab1f459285fe174588c02, type: 2}
+  - {fileID: 11400000, guid: a1df39b3a7ba2bb42947886ac908b134, type: 2}
+  - {fileID: 11400000, guid: 3b96c9cab441c4145bd9ee112b2c0406, type: 2}
+  - {fileID: 11400000, guid: ac4368e09a6e8e34b8a094c0e736ab76, type: 2}
 --- !u!114 &1982274213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99497,7 +99501,7 @@ MonoBehaviour:
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b8eed4cd0e1f2b34e9dba2f7967ec74a, type: 2}
-  m_sharedMaterial: {fileID: -2665110194855471181, guid: 0e9d0616e484a47409d0b732828ca151, type: 2}
+  m_sharedMaterial: {fileID: -8257588341390531809, guid: b8eed4cd0e1f2b34e9dba2f7967ec74a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

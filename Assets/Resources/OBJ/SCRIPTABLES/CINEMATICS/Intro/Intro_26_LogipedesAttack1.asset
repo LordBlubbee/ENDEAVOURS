@@ -34,10 +34,10 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    Time: 1.5
+    Time: 0.4
   - List:
     - {fileID: 0}
-    Time: 2.5
+    Time: 1.4
   - List:
     - {fileID: 21300000, guid: ab10a005edf2c134988f5f9546f991e0, type: 3}
     - {fileID: 21300000, guid: 531b87db91e121e438cf653985c050f9, type: 3}

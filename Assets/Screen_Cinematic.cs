@@ -2,13 +2,13 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static System.Net.Mime.MediaTypeNames;
 
 public class Screen_Cinematic : MonoBehaviour
 {
     [Header("REFERENCES")]
     public CinematicPlayer Cinematic;
     public TextMeshProUGUI TalkTex;
+    public Image TalkBack;
     public TextMeshProUGUI TitleTex;
     public TextMeshProUGUI SubtitleTex;
     public TextMeshProUGUI SkipTex;
@@ -41,9 +41,28 @@ public class Screen_Cinematic : MonoBehaviour
         if (Intro_OST) AUDCO.aud.setOST(Intro_OST);
         yield return new WaitForSeconds(2f);
 
-        //TESTS
+        //TESTS sdfd
+        SetScene(Scenes[23], true); //23 = EphemeralDying
+        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[22], true); //22 = RED ALERT
+        SetText("<color=red>ALERT LEVEL NINE. THE EXPEDITION IS UNDER ATTACK.</color>", VCX_Narrator);
+        yield return new WaitForSeconds(4f);
 
-
+        SetScene(Scenes[24], true); //24 = Engine Room
+        yield return new WaitForSeconds(2f);
+        SetText("<color=red>ALL PERSONNEL, PREPARE TO ENGAGE HOSTILE ID 01.</color>", VCX_Narrator);
+        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[29], true); //28 = Logipedes Attack!!
+        yield return new WaitForSeconds(5f);
+        SetScene(Scenes[25], true); //25 = Attacking Seekers
+        yield return new WaitForSeconds(6f);
+        SetScene(Scenes[30], true); //28 = Explosion
+        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[28], true); //28 = Death1
+        yield return new WaitForSeconds(2f);
+        SetScene(Scenes[29], true); //28 = Logipedes Attack!!
+        yield return new WaitForSeconds(6f);
+        //END OF TESTS
 
         //SetScene(Scenes[1], false); //Cliffs
         // yield return new WaitForSeconds(10f);
@@ -57,6 +76,7 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(10f);
         SetScene(Scenes[8], true); //8 = Frontal View Travel
         yield return new WaitForSeconds(10f);
+        //TO DRAW: EXTRA LAUNCH SCENE, WITH THE FLEET LAUNCHING FROM THE DRIFTYARDS, AND THE PLANET IN THE BACKGROUND. MAYBE SOME SHOTS OF THE CITY TOO.
         SetScene(Scenes[4], true); //4 = Underway
         yield return new WaitForSeconds(3f);
         SetTitle("STARLIGHT ENDEAVOUR EXPEDITION", "121 AD NEBULA - SOUTHERN REACHES");
@@ -91,26 +111,23 @@ public class Screen_Cinematic : MonoBehaviour
         SetScene(Scenes[10], true); //10 = Underway Cave
         yield return new WaitForSeconds(10f);
         SetScene(Scenes[13], true); //13 = Drifter finds Wreck
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
         SetScene(Scenes[9], true); //9 = Cave Wreck Captain's View
         yield return new WaitForSeconds(10f);
         SetScene(Scenes[11], true);  //11 = Catali ground team finds Wreck
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
         SetScene(Scenes[20], true); //20 = Enter the Wreck
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
         SetScene(Scenes[19], true); //19 = Looting the Tubes
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(6f);
         SetScene(Scenes[12], true); //12 = The Fragmentum
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
         SetScene(Scenes[15], true); //15 = Iridaceae Sketch
         yield return new WaitForSeconds(2f);
-        SetText("The object of origin is a highly advanced Drifter of unknown affiliation, design, or purpose.", VCX_Narrator);
-        yield return new WaitForSeconds(7f);
+        SetText("The object of origin is a massive, highly advanced Drifter of unknown affiliation, design, or purpose.", VCX_Narrator);
+        yield return new WaitForSeconds(8f);
         SetText("The cause of its rupture is unknown and there are no traces of a crew.", VCX_Narrator);
-        yield return new WaitForSeconds(7f);
-        SetText("The Rigid was heavily armed. Yet, we believe it to have been a research Drifter.", VCX_Narrator);
-
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(8f);
         SetScene(Scenes[27], true); //27 = Nexus Sketch
         yield return new WaitForSeconds(2f);
         SetText("The <color=#00AAFF>Catali</color> salvaging team believes the texts inside are an ancient form of their language.", VCX_Narrator);
@@ -137,7 +154,7 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(10f);
 
         SetScene(Scenes[21], true); //21 = RisingUp
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(6f);
 
         SetScene(Scenes[23], true); //23 = EphemeralDying
         yield return new WaitForSeconds(4f);
@@ -146,9 +163,18 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(4f);
 
         SetScene(Scenes[24], true); //24 = Engine Room
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(2f);
+        SetText("<color=red>ALL PERSONNEL, PREPARE TO ENGAGE HOSTILE ID 01.</color>", VCX_Narrator);
+        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[29], true); //28 = Logipedes Attack!!
+        yield return new WaitForSeconds(5f);
         SetScene(Scenes[25], true); //25 = Attacking Seekers
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(6f);
+        SetScene(Scenes[30], true); //28 = Explosion
+        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[28], true); //28 = Death1
+        yield return new WaitForSeconds(2f);
+     
 
 
 
@@ -461,6 +487,13 @@ public class Screen_Cinematic : MonoBehaviour
         {
             if (canSkip) UI.ui.GoBackToPreviousScreenNoPress();
             //AUDCO.aud.setOST(null);
+        }
+        if (TalkTex.text.Length > 0 && TalkTex.maxVisibleCharacters > 5)
+        {
+            TalkBack.color = new Color(0, 0, 0, Mathf.Clamp(TalkBack.color.a + Time.deltaTime, 0, 0.8f));
+        } else
+        {
+            TalkBack.color = new Color(0, 0, 0, Mathf.Clamp(TalkBack.color.a - Time.deltaTime,0,0.8f));
         }
     }
 }
