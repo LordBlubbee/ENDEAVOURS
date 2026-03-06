@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f251af17509e5b4695fe6ecc890a441, type: 3}
+  m_Name: Intro_33_MCannon
+  m_EditorClassIdentifier: 
+  Objects:
+  - {fileID: 11400000, guid: b2bcfe01d7a2ccb4fb197ce2fc54a555, type: 2}
+  - {fileID: 11400000, guid: d3a44d50e683bd746b83cb78752c7091, type: 2}
+  - {fileID: 11400000, guid: 5d9314653efd9cd46b569fe71587b803, type: 2}
+  - {fileID: 11400000, guid: 6bc5cec1c9260c34fb93dd8e7684d787, type: 2}
+  - {fileID: 11400000, guid: ad0d5fbfe8d629b44ae0acdc4e595800, type: 2}
+  - {fileID: 11400000, guid: 042b35e0252a63f48ae3fd5969580e4f, type: 2}
+  - {fileID: 11400000, guid: 32b0932f01544c24db50af003c5aa416, type: 2}
+  - {fileID: 11400000, guid: d7e72b74e3048204ca1fe6846688cac7, type: 2}
+  - {fileID: 11400000, guid: 1a724fd7f774f6d448fb04a5e76e105a, type: 2}
+  AudioKeyframes:
+  - Clip: {fileID: 8300000, guid: b23e4b506b7fb8142bbf43b83e95fb39, type: 3}
+    Time: 0.7
+  - Clip: {fileID: 8300000, guid: b23e4b506b7fb8142bbf43b83e95fb39, type: 3}
+    Time: 2.2
+  - Clip: {fileID: 8300000, guid: b23e4b506b7fb8142bbf43b83e95fb39, type: 3}
+    Time: 2.9
+  ShakeKeyframes:
+  - Intensity: 0.6
+    Time: 0.7
+  - Intensity: 0.5
+    Time: 2.2
+  - Intensity: 1.2
+    Time: 2.9

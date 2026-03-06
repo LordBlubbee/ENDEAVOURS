@@ -55,7 +55,8 @@ public class Screen_Talk : MonoBehaviour
             if (ChoiceButton[i].gameObject.activeSelf)
             {
                 int Votes = CO_STORY.co.VoteResultAmount(i);
-                ChoiceButtonVotes[i].text = Votes.ToString();
+                if (Votes == 0) ChoiceButtonVotes[i].text = "";
+                else ChoiceButtonVotes[i].text = $"[{Votes.ToString()}]";
                 ChoiceButtonVotes[i].color = (LOCALCO.local.CurrentDialogVote.Value == i) ? Color.cyan : Color.white;
             }
         }

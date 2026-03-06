@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_26_LogipedesAttack2
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.1
+  SpriteList:
+  - {fileID: 0}
+  SpriteKeyframes:
+  - List:
+    - {fileID: 21300000, guid: ab10a005edf2c134988f5f9546f991e0, type: 3}
+    - {fileID: 21300000, guid: 531b87db91e121e438cf653985c050f9, type: 3}
+    - {fileID: 21300000, guid: 67912be5d4f0cfe4db78179eb24309b9, type: 3}
+    - {fileID: 21300000, guid: 1e6aa2e02df98ec4a90075a4b60d1a6b, type: 3}
+    - {fileID: 21300000, guid: 4ab879563c8e0874ba115a01a0299307, type: 3}
+    - {fileID: 21300000, guid: 189c3f0716a091c4ba5997d806671fca, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    Time: 2.6
+  - List:
+    - {fileID: 0}
+    Time: 3.6
+  - List:
+    - {fileID: 21300000, guid: ab10a005edf2c134988f5f9546f991e0, type: 3}
+    - {fileID: 21300000, guid: 531b87db91e121e438cf653985c050f9, type: 3}
+    - {fileID: 21300000, guid: 67912be5d4f0cfe4db78179eb24309b9, type: 3}
+    - {fileID: 21300000, guid: 1e6aa2e02df98ec4a90075a4b60d1a6b, type: 3}
+    - {fileID: 21300000, guid: 4ab879563c8e0874ba115a01a0299307, type: 3}
+    - {fileID: 21300000, guid: 189c3f0716a091c4ba5997d806671fca, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    Time: 4.6
+  - List:
+    - {fileID: 0}
+    Time: 5.6
+  ScaleKeyframes:
+  - Scale: 1.12
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 1
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  PositionKeyframes:
+  - Vector: {x: 0.03, y: 0.03, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Vector: {x: -0.02, y: -0.02, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  RotationKeyframes: []

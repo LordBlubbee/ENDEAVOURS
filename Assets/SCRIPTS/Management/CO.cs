@@ -1263,6 +1263,8 @@ public class CO : NetworkBehaviour
     private void EndTutorialWorld()
     {
         Difficulty = GameDifficulties.MEDIUM;
+        GO.g.preferredGameDifficulty = (int)Difficulty;
+        GO.g.saveSettings();
     }
     private void GenerateLevel()
     {

@@ -24,6 +24,6 @@ MonoBehaviour:
   - Scale: 1
     StartIntense: 0
     EndIntense: 0
-    Time: 10
+    Time: 13
   PositionKeyframes: []
   RotationKeyframes: []

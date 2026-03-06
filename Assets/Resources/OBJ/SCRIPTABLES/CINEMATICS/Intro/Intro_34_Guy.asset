@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_34_Guy
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.2
+  SpriteList:
+  - {fileID: 21300000, guid: a675e16505d2c6148869626f5e673f23, type: 3}
+  SpriteKeyframes:
+  - List:
+    - {fileID: 21300000, guid: 2a632ded84589984ba76c3c609acd8bf, type: 3}
+    - {fileID: 21300000, guid: 777196bdf1efb1245a1d947a52f27083, type: 3}
+    - {fileID: 21300000, guid: 2a632ded84589984ba76c3c609acd8bf, type: 3}
+    - {fileID: 21300000, guid: 2a632ded84589984ba76c3c609acd8bf, type: 3}
+    - {fileID: 21300000, guid: 777196bdf1efb1245a1d947a52f27083, type: 3}
+    - {fileID: 21300000, guid: 777196bdf1efb1245a1d947a52f27083, type: 3}
+    - {fileID: 21300000, guid: 2a632ded84589984ba76c3c609acd8bf, type: 3}
+    - {fileID: 21300000, guid: a675e16505d2c6148869626f5e673f23, type: 3}
+    - {fileID: 21300000, guid: a675e16505d2c6148869626f5e673f23, type: 3}
+    - {fileID: 21300000, guid: a675e16505d2c6148869626f5e673f23, type: 3}
+    - {fileID: 21300000, guid: 2a632ded84589984ba76c3c609acd8bf, type: 3}
+    - {fileID: 21300000, guid: 2a632ded84589984ba76c3c609acd8bf, type: 3}
+    - {fileID: 21300000, guid: 777196bdf1efb1245a1d947a52f27083, type: 3}
+    - {fileID: 21300000, guid: 2a632ded84589984ba76c3c609acd8bf, type: 3}
+    - {fileID: 21300000, guid: 777196bdf1efb1245a1d947a52f27083, type: 3}
+    - {fileID: 21300000, guid: a675e16505d2c6148869626f5e673f23, type: 3}
+    - {fileID: 21300000, guid: 2a632ded84589984ba76c3c609acd8bf, type: 3}
+    - {fileID: 21300000, guid: 777196bdf1efb1245a1d947a52f27083, type: 3}
+    - {fileID: 21300000, guid: 2a632ded84589984ba76c3c609acd8bf, type: 3}
+    - {fileID: 21300000, guid: a675e16505d2c6148869626f5e673f23, type: 3}
+    - {fileID: 21300000, guid: 777196bdf1efb1245a1d947a52f27083, type: 3}
+    - {fileID: 21300000, guid: 777196bdf1efb1245a1d947a52f27083, type: 3}
+    - {fileID: 21300000, guid: 2a632ded84589984ba76c3c609acd8bf, type: 3}
+    - {fileID: 21300000, guid: a675e16505d2c6148869626f5e673f23, type: 3}
+    Time: 2
+  ScaleKeyframes:
+  - Scale: 1
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 1.05
+    StartIntense: 0
+    EndIntense: 0
+    Time: 12
+  PositionKeyframes:
+  - Vector: {x: -0.2, y: -0.07, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Vector: {x: -0.04, y: -0.02, z: 0}
+    StartIntense: 1
+    EndIntense: 0
+    Time: 1.9
+  - Vector: {x: 0, y: 0.01, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 2.6
+  - Vector: {x: -0.015, y: -0.01, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 3.5
+  - Vector: {x: 0.01, y: 0, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 4.3
+  - Vector: {x: -0.005, y: 0.005, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 6
+  - Vector: {x: 0.01, y: -0.005, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 7.3
+  RotationKeyframes: []

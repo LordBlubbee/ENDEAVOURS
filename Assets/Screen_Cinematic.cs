@@ -41,7 +41,9 @@ public class Screen_Cinematic : MonoBehaviour
         if (Intro_OST) AUDCO.aud.setOST(Intro_OST);
         yield return new WaitForSeconds(2f);
 
-        //TESTS sdfd
+        SetScene(Scenes[21], true); //21 = RisingUp
+        yield return new WaitForSeconds(6f);
+
         SetScene(Scenes[23], true); //23 = EphemeralDying
         yield return new WaitForSeconds(4f);
         SetScene(Scenes[22], true); //22 = RED ALERT
@@ -56,35 +58,51 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(5f);
         SetScene(Scenes[25], true); //25 = Attacking Seekers
         yield return new WaitForSeconds(6f);
+        SetScene(Scenes[33], true); //33 = Cannonfire
+        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[36], true); //36 = Attacking Seekers and we're dying
+        yield return new WaitForSeconds(4f);
         SetScene(Scenes[30], true); //28 = Explosion
         yield return new WaitForSeconds(4f);
         SetScene(Scenes[28], true); //28 = Death1
         yield return new WaitForSeconds(2f);
-        SetScene(Scenes[29], true); //28 = Logipedes Attack!!
-        yield return new WaitForSeconds(6f);
-        //END OF TESTS
+        SetScene(Scenes[32], true); //32 = Lightning
+        yield return new WaitForSeconds(4f);
+        //SetScene(Scenes[28], true); //28 = Death1
+        // yield return new WaitForSeconds(2f);
+        SetScene(Scenes[34], true); //34 = Last Communication
+        yield return new WaitForSeconds(2f);
+        SetText("Vessel ID 14. Please acknowledge. You are the last remaining Endeavour vessel.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetText("Find the <color=#00FFFF>Nexus Point</color>. May All Be United ---", VCX_Narrator);
+        yield return new WaitForSeconds(3f);
+        SetScene(Scenes[35], true); //35 = Map of our escape
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[31], true); //31 = End Shot
+        yield return new WaitForSeconds(16f);
+        SetScene(Scenes[1], true); //Planet
+        yield return new WaitForSeconds(8f);
 
         //SetScene(Scenes[1], false); //Cliffs
         // yield return new WaitForSeconds(10f);
         SetScene(Scenes[1], false); //Planet
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
         SetScene(Scenes[2], false); //Capitolis
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
         SetScene(Scenes[0], false); //Driftyards
         yield return new WaitForSeconds(10f);
         SetScene(Scenes[3], true); //Driftyards 2
         yield return new WaitForSeconds(10f);
         SetScene(Scenes[8], true); //8 = Frontal View Travel
-        yield return new WaitForSeconds(10f);
-        //TO DRAW: EXTRA LAUNCH SCENE, WITH THE FLEET LAUNCHING FROM THE DRIFTYARDS, AND THE PLANET IN THE BACKGROUND. MAYBE SOME SHOTS OF THE CITY TOO.
+        yield return new WaitForSeconds(12f);
         SetScene(Scenes[4], true); //4 = Underway
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         SetTitle("STARLIGHT ENDEAVOUR EXPEDITION", "121 AD NEBULA - SOUTHERN REACHES");
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(8f);
         SetScene(Scenes[5], true); //5 = Underway Night
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         SetScene(Scenes[6], true); //6 = Underway Forests
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         SetScene(Scenes[14], false); //14 = Map1
         //30 SECONDS IN TOTAL
         yield return new WaitForSeconds(2f);
@@ -101,7 +119,7 @@ public class Screen_Cinematic : MonoBehaviour
         SetText("Twelve days into the <color=#FF00FF>Endeavour</color>, Stellae Frontier Scouting Blimp 07-10 maintains an eight-hour distance from the core fleet.", VCX_Narrator);
       
         yield return new WaitForSeconds(8f);
-        SetText("Its Gubernator has detected unusual distortions in the Flux. The effects are similar to recorded characteristics of the <color=#FF00FF>Fluctus Nebulae</color>.", VCX_Narrator);
+        SetText("Its Gubernator feels unusual distortions in the Flux. The effects are similar to recorded characteristics of the <color=#FF00FF>Fluctus Nebulae</color>.", VCX_Narrator);
         SetScene(Scenes[7], false); //7 = Gubernator
         yield return new WaitForSeconds(4f);
         SetScene(Scenes[16], true); //16 = Map with Signals
@@ -170,13 +188,30 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(5f);
         SetScene(Scenes[25], true); //25 = Attacking Seekers
         yield return new WaitForSeconds(6f);
+        SetScene(Scenes[33], true); //33 = Cannonfire
+        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[36], true); //36 = Attacking Seekers and we're dying
+        yield return new WaitForSeconds(4f);
         SetScene(Scenes[30], true); //28 = Explosion
         yield return new WaitForSeconds(4f);
         SetScene(Scenes[28], true); //28 = Death1
         yield return new WaitForSeconds(2f);
-     
-
-
+        SetScene(Scenes[32], true); //32 = Lightning
+        yield return new WaitForSeconds(4f);
+        //SetScene(Scenes[28], true); //28 = Death1
+        // yield return new WaitForSeconds(2f);
+        SetScene(Scenes[34], true); //34 = Last Communication
+        yield return new WaitForSeconds(2f);
+        SetText("Vessel ID 14. Please acknowledge. You are the last remaining Endeavour vessel.", VCX_Narrator);
+        yield return new WaitForSeconds(7f);
+        SetText("Find the <color=#00FFFF>Nexus Point</color>. May All Be United ---", VCX_Narrator);
+        yield return new WaitForSeconds(3f);
+        SetScene(Scenes[35], true); //35 = Map of our escape
+        yield return new WaitForSeconds(10f);
+        SetScene(Scenes[31], true); //31 = End Shot
+        yield return new WaitForSeconds(16f);
+        SetScene(Scenes[1], true); //Planet
+        yield return new WaitForSeconds(8f);
 
         /*
          FULL PLANNED DIALOGUE

@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_31_Drifter
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.1
+  SpriteList:
+  - {fileID: 21300000, guid: 33b1f0a9635c3a24cac5907338b2df1f, type: 3}
+  SpriteKeyframes:
+  - List:
+    - {fileID: 21300000, guid: d76214ad781019548be32e3c77209159, type: 3}
+    - {fileID: 21300000, guid: 33b1f0a9635c3a24cac5907338b2df1f, type: 3}
+    - {fileID: 21300000, guid: d76214ad781019548be32e3c77209159, type: 3}
+    - {fileID: 21300000, guid: 33b1f0a9635c3a24cac5907338b2df1f, type: 3}
+    - {fileID: 21300000, guid: d76214ad781019548be32e3c77209159, type: 3}
+    - {fileID: 21300000, guid: d76214ad781019548be32e3c77209159, type: 3}
+    - {fileID: 21300000, guid: d76214ad781019548be32e3c77209159, type: 3}
+    - {fileID: 21300000, guid: d76214ad781019548be32e3c77209159, type: 3}
+    - {fileID: 21300000, guid: d76214ad781019548be32e3c77209159, type: 3}
+    - {fileID: 21300000, guid: d76214ad781019548be32e3c77209159, type: 3}
+    - {fileID: 21300000, guid: d76214ad781019548be32e3c77209159, type: 3}
+    - {fileID: 21300000, guid: d76214ad781019548be32e3c77209159, type: 3}
+    - {fileID: 21300000, guid: d76214ad781019548be32e3c77209159, type: 3}
+    Time: 8
+  - List:
+    - {fileID: 21300000, guid: d76214ad781019548be32e3c77209159, type: 3}
+    Time: 9
+  ScaleKeyframes:
+  - Scale: 1.05
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 1
+    StartIntense: 0
+    EndIntense: 0
+    Time: 20
+  PositionKeyframes:
+  - Vector: {x: -0.1, y: -0.05, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Vector: {x: 0.28, y: 0.18, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 22
+  RotationKeyframes: []

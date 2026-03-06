@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GamerTag : MonoBehaviour
 {
@@ -13,14 +14,18 @@ public class GamerTag : MonoBehaviour
     private ModuleArmor Armor;
     private GameObject FollowObjectRef;
     private bool UseFarIcon;
+    private LOCALCO LocalController;
+    private string MainText = "";
     public void SetPlayerAndName(CREW trans, string str, Color col)
     {
         //
         
         if (trans.IsPlayer())
         {
+            MainText = str;
             Name.text = str;
             Name.color = col;
+            LocalController = CO.co.GetLOCALCO(trans.GetPlayerController());
         }
         if (Crew) return;
 
@@ -94,6 +99,15 @@ public class GamerTag : MonoBehaviour
                     Health.color = new Color(0.7f, 0, 0.8f);
                     return;
             }
+            Name.text = MainText;
+            if (LocalController != null)
+            {
+                if (CO.co.IsSafe() && (LocalController.CurrentMapVote.Value > -1 || LocalController.CurrentDialogVote.Value > -1))
+                {
+                    Name.text += " <color=green>[READY]</color>";
+                }
+            }
+            
             Health.text = $"{FollowObject.GetHealth().ToString("0")}/{FollowObject.GetMaxHealth().ToString("0")}";
             Health.color = col;
             return;

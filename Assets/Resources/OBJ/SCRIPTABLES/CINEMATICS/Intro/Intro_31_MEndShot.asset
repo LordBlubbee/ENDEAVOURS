@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f251af17509e5b4695fe6ecc890a441, type: 3}
+  m_Name: Intro_31_MEndShot
+  m_EditorClassIdentifier: 
+  Objects:
+  - {fileID: 11400000, guid: ca9a29b538e8b3349b11c2b10ccf8859, type: 2}
+  - {fileID: 11400000, guid: f80b8ec72a69dc94b84be97510b87eb6, type: 2}
+  - {fileID: 11400000, guid: 9e4986e4c4344284887b65169f4b43aa, type: 2}
+  - {fileID: 11400000, guid: 8be97dad48fb2b2439604dd57206b79d, type: 2}
+  - {fileID: 11400000, guid: 96228a8018ab0d34f9551a2e5f9a2642, type: 2}
+  AudioKeyframes: []
+  ShakeKeyframes: []

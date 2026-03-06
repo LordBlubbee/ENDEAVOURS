@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_33_SecCannonfireOne
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.15
+  SpriteList:
+  - {fileID: 0}
+  SpriteKeyframes:
+  - List:
+    - {fileID: 21300000, guid: 391a101fc0c5dbd4697b20ba4a5e1e73, type: 3}
+    - {fileID: 21300000, guid: 66907355c0bac034e8bbf36dd8e44e66, type: 3}
+    - {fileID: 21300000, guid: 93bbddc589dc5824bb6284163458ca8e, type: 3}
+    - {fileID: 21300000, guid: d2e0abaa9954c6c418f6eba952861c2a, type: 3}
+    - {fileID: 21300000, guid: 68e09d8cf76401c4da7149674e9ed1e0, type: 3}
+    - {fileID: 21300000, guid: 82ac5d99cd8d868428f2dd0bd6214f67, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    Time: 0.7
+  - List:
+    - {fileID: 0}
+    Time: 1.9
+  ScaleKeyframes: []
+  PositionKeyframes:
+  - Vector: {x: 0.08, y: 0.04, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Vector: {x: -0.04, y: -0.02, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  RotationKeyframes: []

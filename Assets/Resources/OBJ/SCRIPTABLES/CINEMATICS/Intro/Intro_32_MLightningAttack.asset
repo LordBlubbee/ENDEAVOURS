@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f251af17509e5b4695fe6ecc890a441, type: 3}
+  m_Name: Intro_32_MLightningAttack
+  m_EditorClassIdentifier: 
+  Objects:
+  - {fileID: 11400000, guid: 903250b6005356d429907382c125d0fb, type: 2}
+  - {fileID: 11400000, guid: 24b942922ea0dbb4a93d42d8a928fed4, type: 2}
+  - {fileID: 11400000, guid: a11e9270a5314ce4aa34cd99b66547a1, type: 2}
+  - {fileID: 11400000, guid: 52a691757c1b340408a3d92e325e3301, type: 2}
+  AudioKeyframes:
+  - Clip: {fileID: 8300000, guid: 574a3b72b5dc67c4bb48715e5de6c86f, type: 3}
+    Time: 2
+  ShakeKeyframes:
+  - Intensity: 0.8
+    Time: 2

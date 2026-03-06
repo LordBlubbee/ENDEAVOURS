@@ -36,7 +36,8 @@ public class Screen_Map : MonoBehaviour
             if (ChoiceButton[i].gameObject.activeSelf)
             {
                 int Votes = CO.co.VoteResultAmount(i);
-                ChoiceButtonVotes[i].text = Votes.ToString();
+                if (Votes == 0) ChoiceButtonVotes[i].text = "";
+                else ChoiceButtonVotes[i].text = $"[{Votes.ToString()}]";
                 ChoiceButtonVotes[i].color = (LOCALCO.local.CurrentMapVote.Value == i) ? Color.cyan : Color.white;
             }
         }

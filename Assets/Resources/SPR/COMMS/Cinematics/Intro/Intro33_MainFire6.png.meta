@@ -1,0 +1,936 @@
+fileFormatVersion: 2
+guid: 9e6ed6cdcc7625d4f8d8b929f69a4201
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1557071963333271534
+    second: Intro33_MainFire6_0
+  - first:
+      213: 4837708566342932593
+    second: Intro33_MainFire6_1
+  - first:
+      213: 1940201305607185055
+    second: Intro33_MainFire6_2
+  - first:
+      213: 8185353013719625654
+    second: Intro33_MainFire6_3
+  - first:
+      213: 2600959307257738907
+    second: Intro33_MainFire6_4
+  - first:
+      213: -1597075735066797217
+    second: Intro33_MainFire6_5
+  - first:
+      213: -9049643001497019900
+    second: Intro33_MainFire6_6
+  - first:
+      213: 8379450826083146276
+    second: Intro33_MainFire6_7
+  - first:
+      213: -5800535915953800650
+    second: Intro33_MainFire6_8
+  - first:
+      213: 1469941427601505523
+    second: Intro33_MainFire6_9
+  - first:
+      213: 9034535532123919067
+    second: Intro33_MainFire6_10
+  - first:
+      213: -5095428559104733292
+    second: Intro33_MainFire6_11
+  - first:
+      213: -400875836979788569
+    second: Intro33_MainFire6_12
+  - first:
+      213: -6851069283407240704
+    second: Intro33_MainFire6_13
+  - first:
+      213: 841128336280718249
+    second: Intro33_MainFire6_14
+  - first:
+      213: -9171399361845062728
+    second: Intro33_MainFire6_15
+  - first:
+      213: -7267203943065363571
+    second: Intro33_MainFire6_16
+  - first:
+      213: 3057940839623028323
+    second: Intro33_MainFire6_17
+  - first:
+      213: -5900930310201540882
+    second: Intro33_MainFire6_18
+  - first:
+      213: 2280027218099728777
+    second: Intro33_MainFire6_19
+  - first:
+      213: 4690550674024859645
+    second: Intro33_MainFire6_20
+  - first:
+      213: 2698625397445976588
+    second: Intro33_MainFire6_21
+  - first:
+      213: 6259046782013673657
+    second: Intro33_MainFire6_22
+  - first:
+      213: 4971597041869696185
+    second: Intro33_MainFire6_23
+  - first:
+      213: -407385640071488435
+    second: Intro33_MainFire6_24
+  - first:
+      213: -2510687113032530192
+    second: Intro33_MainFire6_25
+  - first:
+      213: 8789516420799042279
+    second: Intro33_MainFire6_26
+  - first:
+      213: -6846359002564226289
+    second: Intro33_MainFire6_27
+  - first:
+      213: -7333890008147454352
+    second: Intro33_MainFire6_28
+  - first:
+      213: 5186863399919736695
+    second: Intro33_MainFire6_29
+  - first:
+      213: -8544066549357134408
+    second: Intro33_MainFire6_30
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 10
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Intro33_MainFire6_0
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 102
+        width: 37
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 210eccf8c4b246ae0800000000000000
+      internalID: -1557071963333271534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_1
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 107
+        width: 45
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1781cbf4f4ef22340800000000000000
+      internalID: 4837708566342932593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_2
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 100
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f92277dcecafcea10800000000000000
+      internalID: 1940201305607185055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_3
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 94
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bf6ee7b237389170800000000000000
+      internalID: 8185353013719625654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_4
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 79
+        width: 28
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b96f750a5b6781420800000000000000
+      internalID: 2600959307257738907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_5
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 89
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5b92f3a41c06d9e0800000000000000
+      internalID: -1597075735066797217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_6
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 96
+        width: 27
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40a9baf13a5396280800000000000000
+      internalID: -9049643001497019900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_7
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 84
+        width: 25
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42a1a8d412ac94470800000000000000
+      internalID: 8379450826083146276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_8
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 76
+        width: 23
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63abda6215b508fa0800000000000000
+      internalID: -5800535915953800650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_9
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 84
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fc71d8b0f7466410800000000000000
+      internalID: 1469941427601505523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_10
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 66
+        width: 35
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd214ee033e116d70800000000000000
+      internalID: 9034535532123919067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_11
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 85
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49f8e24e8b66949b0800000000000000
+      internalID: -5095428559104733292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_12
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 73
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e448c9dc8dcf6af0800000000000000
+      internalID: -400875836979788569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_13
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 58
+        width: 26
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 002ebe609cc1ce0a0800000000000000
+      internalID: -6851069283407240704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_14
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 63
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ab078ee3c94cab00800000000000000
+      internalID: 841128336280718249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_15
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 50
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b31bff5fd4a8b080800000000000000
+      internalID: -9171399361845062728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_16
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 48
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8b554f5484b52b90800000000000000
+      internalID: -7267203943065363571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_17
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 38
+        width: 30
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36ee3e1fdfcff6a20800000000000000
+      internalID: 3057940839623028323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_18
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 40
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeef918b52fab1ea0800000000000000
+      internalID: -5900930310201540882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_19
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 40
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9817e0dbca844af10800000000000000
+      internalID: 2280027218099728777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_20
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 25
+        width: 21
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df788368cfe281140800000000000000
+      internalID: 4690550674024859645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_21
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 29
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c026d944081737520800000000000000
+      internalID: 2698625397445976588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_22
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 17
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b01a7ae2e99cd650800000000000000
+      internalID: 6259046782013673657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_23
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 5
+        width: 80
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bca60f3b29aef440800000000000000
+      internalID: 4971597041869696185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_24
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 32
+        width: 19
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4c91f43beca85af0800000000000000
+      internalID: -407385640071488435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_25
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 4
+        width: 57
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f68b857f5f382dd0800000000000000
+      internalID: -2510687113032530192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_26
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 21
+        width: 21
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e29039ad92aaf970800000000000000
+      internalID: 8789516420799042279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_27
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 11
+        width: 33
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f039c5fb2c8dcf0a0800000000000000
+      internalID: -6846359002564226289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_28
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 2
+        width: 37
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 076959ae4e9c83a90800000000000000
+      internalID: -7333890008147454352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_29
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 5
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 777d0b2f7c07bf740800000000000000
+      internalID: 5186863399919736695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro33_MainFire6_30
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 0
+        width: 52
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bd3544edb06d6980800000000000000
+      internalID: -8544066549357134408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Intro33_MainFire6_0: -1557071963333271534
+      Intro33_MainFire6_1: 4837708566342932593
+      Intro33_MainFire6_10: 9034535532123919067
+      Intro33_MainFire6_11: -5095428559104733292
+      Intro33_MainFire6_12: -400875836979788569
+      Intro33_MainFire6_13: -6851069283407240704
+      Intro33_MainFire6_14: 841128336280718249
+      Intro33_MainFire6_15: -9171399361845062728
+      Intro33_MainFire6_16: -7267203943065363571
+      Intro33_MainFire6_17: 3057940839623028323
+      Intro33_MainFire6_18: -5900930310201540882
+      Intro33_MainFire6_19: 2280027218099728777
+      Intro33_MainFire6_2: 1940201305607185055
+      Intro33_MainFire6_20: 4690550674024859645
+      Intro33_MainFire6_21: 2698625397445976588
+      Intro33_MainFire6_22: 6259046782013673657
+      Intro33_MainFire6_23: 4971597041869696185
+      Intro33_MainFire6_24: -407385640071488435
+      Intro33_MainFire6_25: -2510687113032530192
+      Intro33_MainFire6_26: 8789516420799042279
+      Intro33_MainFire6_27: -6846359002564226289
+      Intro33_MainFire6_28: -7333890008147454352
+      Intro33_MainFire6_29: 5186863399919736695
+      Intro33_MainFire6_3: 8185353013719625654
+      Intro33_MainFire6_30: -8544066549357134408
+      Intro33_MainFire6_4: 2600959307257738907
+      Intro33_MainFire6_5: -1597075735066797217
+      Intro33_MainFire6_6: -9049643001497019900
+      Intro33_MainFire6_7: 8379450826083146276
+      Intro33_MainFire6_8: -5800535915953800650
+      Intro33_MainFire6_9: 1469941427601505523
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

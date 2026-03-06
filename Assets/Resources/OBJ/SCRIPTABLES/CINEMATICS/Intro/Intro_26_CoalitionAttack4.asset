@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_26_CoalitionAttack4
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.1
+  SpriteList:
+  - {fileID: 0}
+  SpriteKeyframes:
+  - List:
+    - {fileID: 21300000, guid: 9b5a24cee1cfbfc4e87c25da9967eb56, type: 3}
+    - {fileID: 21300000, guid: 70680b3e01af95745aee98a459778d4e, type: 3}
+    - {fileID: 21300000, guid: 8e4a8715aacc8674683f11092516c857, type: 3}
+    - {fileID: 21300000, guid: 3d6646d0343290348a5737e326d15966, type: 3}
+    - {fileID: 21300000, guid: a7fafc2c2f30f09478e9f0b74ff9afe6, type: 3}
+    - {fileID: 21300000, guid: 0b141998c70c5d347b29bff4ba0dba94, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    Time: 0.2
+  - List:
+    - {fileID: 0}
+    Time: 1.2
+  ScaleKeyframes:
+  - Scale: 1.09
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 1
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  PositionKeyframes:
+  - Vector: {x: 0.03, y: 0.04, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Vector: {x: -0.02, y: -0.01, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 10
+  RotationKeyframes: []
