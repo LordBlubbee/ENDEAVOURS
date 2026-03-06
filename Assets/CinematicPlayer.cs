@@ -14,6 +14,7 @@ public class CinematicPlayer : MonoBehaviour
     List<SceneObject> SceneObjects = new();
     ScriptableScene TargetScene;
     ScriptableScene CurrentScene;
+    public bool IsMuted = false;
     public void SetScene(ScriptableScene scene, float Transition)
     {
         if (TargetScene == CurrentScene) CurrentScene = null;
@@ -58,7 +59,7 @@ public class CinematicPlayer : MonoBehaviour
                 {
                     if (SceneDuration >= CurrentScene.AudioKeyframes[CurrentSFXFrame].Time)
                     {
-                        AUDCO.aud.PlaySFX(CurrentScene.AudioKeyframes[CurrentSFXFrame].Clip, Vector3.zero);
+                        if (!IsMuted) AUDCO.aud.PlaySFX(CurrentScene.AudioKeyframes[CurrentSFXFrame].Clip, Vector3.zero);
                         CurrentSFXFrame++;
                     }
                 }

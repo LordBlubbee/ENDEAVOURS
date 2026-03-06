@@ -4,6 +4,11 @@ using UnityEngine;
 public class Screen_Loading : MonoBehaviour
 {
     private bool Loaded = false;
+
+    private void OnEnable()
+    {
+        UI.ui.CinematicUI.gameObject.SetActive(false);
+    }
     private void Update()
     {
         if (CO.co == null) return;

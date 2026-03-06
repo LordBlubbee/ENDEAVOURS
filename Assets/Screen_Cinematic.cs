@@ -22,14 +22,21 @@ public class Screen_Cinematic : MonoBehaviour
     bool canSkip = false;
     public void PlayIntroCinematic()
     {
-        UI.ui.SelectScreen(gameObject);
+        //UI.ui.SelectScreen(gameObject);
+        gameObject.SetActive(true);
         if (!isRunningCinematic) StartCoroutine(PlayIntro());
     }
-
+    public void OnDisable()
+    {
+        canSkip = false;
+        isRunningCinematic = false;
+        Cinematic.IsMuted = true;
+    }
     IEnumerator PlayIntro()
     {
         canSkip = false;
         isRunningCinematic = true;
+      
 
         //SetSceneInstant
         SetScene(null, true);
@@ -39,49 +46,6 @@ public class Screen_Cinematic : MonoBehaviour
         StartCoroutine(SkipTextRoutine());
         canSkip = true;
         if (Intro_OST) AUDCO.aud.setOST(Intro_OST);
-        yield return new WaitForSeconds(2f);
-
-        SetScene(Scenes[21], true); //21 = RisingUp
-        yield return new WaitForSeconds(6f);
-
-        SetScene(Scenes[23], true); //23 = EphemeralDying
-        yield return new WaitForSeconds(4f);
-        SetScene(Scenes[22], true); //22 = RED ALERT
-        SetText("<color=red>ALERT LEVEL NINE. THE EXPEDITION IS UNDER ATTACK.</color>", VCX_Narrator);
-        yield return new WaitForSeconds(4f);
-
-        SetScene(Scenes[24], true); //24 = Engine Room
-        yield return new WaitForSeconds(2f);
-        SetText("<color=red>ALL PERSONNEL, PREPARE TO ENGAGE HOSTILE ID 01.</color>", VCX_Narrator);
-        yield return new WaitForSeconds(4f);
-        SetScene(Scenes[29], true); //28 = Logipedes Attack!!
-        yield return new WaitForSeconds(5f);
-        SetScene(Scenes[25], true); //25 = Attacking Seekers
-        yield return new WaitForSeconds(6f);
-        SetScene(Scenes[33], true); //33 = Cannonfire
-        yield return new WaitForSeconds(4f);
-        SetScene(Scenes[36], true); //36 = Attacking Seekers and we're dying
-        yield return new WaitForSeconds(4f);
-        SetScene(Scenes[30], true); //28 = Explosion
-        yield return new WaitForSeconds(4f);
-        SetScene(Scenes[28], true); //28 = Death1
-        yield return new WaitForSeconds(2f);
-        SetScene(Scenes[32], true); //32 = Lightning
-        yield return new WaitForSeconds(4f);
-        //SetScene(Scenes[28], true); //28 = Death1
-        // yield return new WaitForSeconds(2f);
-        SetScene(Scenes[34], true); //34 = Last Communication
-        yield return new WaitForSeconds(2f);
-        SetText("Vessel ID 14. Please acknowledge. You are the last remaining Endeavour vessel.", VCX_Narrator);
-        yield return new WaitForSeconds(7f);
-        SetText("Find the <color=#00FFFF>Nexus Point</color>. May All Be United ---", VCX_Narrator);
-        yield return new WaitForSeconds(3f);
-        SetScene(Scenes[35], true); //35 = Map of our escape
-        yield return new WaitForSeconds(10f);
-        SetScene(Scenes[31], true); //31 = End Shot
-        yield return new WaitForSeconds(16f);
-        SetScene(Scenes[1], true); //Planet
-        yield return new WaitForSeconds(8f);
 
         //SetScene(Scenes[1], false); //Cliffs
         // yield return new WaitForSeconds(10f);
@@ -127,7 +91,7 @@ public class Screen_Cinematic : MonoBehaviour
         SetText("We are to rendezvous with our scouting Drifter to investigate the possible source area, which lies inside a vast cave network.", VCX_Narrator);
         yield return new WaitForSeconds(10f);
         SetScene(Scenes[10], true); //10 = Underway Cave
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
         SetScene(Scenes[13], true); //13 = Drifter finds Wreck
         yield return new WaitForSeconds(8f);
         SetScene(Scenes[9], true); //9 = Cave Wreck Captain's View
@@ -213,6 +177,8 @@ public class Screen_Cinematic : MonoBehaviour
         SetScene(Scenes[1], true); //Planet
         yield return new WaitForSeconds(8f);
 
+        UI.ui.MainMenuUI.EnableMainMenu(true);
+        canSkip = false;
         /*
          FULL PLANNED DIALOGUE
         [30 seconds of Mistworld scenes]
@@ -401,7 +367,7 @@ public class Screen_Cinematic : MonoBehaviour
                     if (speakLetter < 0)
                     {
                         speakLetter = Random.Range(2, 4);
-                        AUDCO.aud.PlaySFX(Speak);
+                        if (!Cinematic.IsMuted) AUDCO.aud.PlaySFX(Speak);
                     }
                 }
             }
@@ -520,7 +486,12 @@ public class Screen_Cinematic : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space))
         {
-            if (canSkip) UI.ui.GoBackToPreviousScreenNoPress();
+            if (canSkip)
+            {
+                UI.ui.MainMenuUI.EnableMainMenu(true);
+                canSkip = false;
+                Cinematic.IsMuted = true;
+            }
             //AUDCO.aud.setOST(null);
         }
         if (TalkTex.text.Length > 0 && TalkTex.maxVisibleCharacters > 5)

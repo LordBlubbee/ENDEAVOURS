@@ -103,12 +103,12 @@ public class SceneObject : MonoBehaviour
                 {
                     Vector3 Difference = GetPos(ObjectType.PositionKeyframes[CurrentMovementKeyframe].Vector) - transform.position;
                     float TimeDiff = ObjectType.PositionKeyframes[CurrentMovementKeyframe].Time - AnimationTime;
-                    if (ObjectType.PositionKeyframes[CurrentScaleKeyframe].EndIntense)
+                    if (ObjectType.PositionKeyframes[CurrentMovementKeyframe].EndIntense)
                     {
                         CurrentMovement = Vector3.zero;
                         CurrentMovementAccel = 2f * Difference / (TimeDiff * TimeDiff);
                     }
-                    else if (ObjectType.PositionKeyframes[CurrentScaleKeyframe].StartIntense)
+                    else if (ObjectType.PositionKeyframes[CurrentMovementKeyframe].StartIntense)
                     {
                         CurrentMovement = 2f * Difference / TimeDiff;
                         CurrentMovementAccel = -2f * Difference / (TimeDiff * TimeDiff);
