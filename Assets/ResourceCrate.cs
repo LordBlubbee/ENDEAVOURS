@@ -69,6 +69,7 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
     {
         Instantiate(DestructionParticles, transform.position, Quaternion.identity);
         AUDCO.aud.PlaySFX(DestructionSFX, transform.position, 0.2f);
+        gameObject.SetActive(false);
     }
     public void GainMaterials()
     {
@@ -137,13 +138,14 @@ public class ResourceCrate : NetworkBehaviour, iDamageable
 
     public void RemoveCrate()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        /*for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
             NetworkObject ob = child.GetComponent<NetworkObject>();
             if (ob) ob.Despawn();
         }
-        NetworkObject.Despawn();
+        NetworkObject.Despawn();*/
+        gameObject.SetActive(false);
     }
 
     public override void OnNetworkDespawn()

@@ -40,10 +40,10 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    Time: 6.5
+    Time: 6.3
   - List:
     - {fileID: 0}
-    Time: 8
+    Time: 7.7
   ScaleKeyframes:
   - Scale: 1
     StartIntense: 0

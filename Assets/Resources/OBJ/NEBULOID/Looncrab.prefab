@@ -336,6 +336,11 @@ MonoBehaviour:
   RotationBaseSpeed: 45
   BleedOut: 0
   Radius: 1.3
+  MeleeRes: 1
+  RangedRes: 1
+  SpellRes: 1
+  FireRes: 0.5
+  MistRes: 4
   ATT_PHYSIQUE:
     m_InternalValue: 2
   ATT_ARMS:

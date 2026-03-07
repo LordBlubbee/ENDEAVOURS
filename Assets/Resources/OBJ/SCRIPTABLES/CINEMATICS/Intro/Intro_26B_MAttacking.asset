@@ -26,7 +26,9 @@ MonoBehaviour:
     Time: 0.2
   - Clip: {fileID: 8300000, guid: 4b07ae0e15c3af04eaaf763a1580761d, type: 3}
     Time: 2.6
-  - Clip: {fileID: 8300000, guid: a5bcddae087aadf4291d2958fdc27c39, type: 3}
+  - Clip: {fileID: 8300000, guid: ac11a9976adb2e043bbef0edfc168653, type: 3}
+    Time: 2.7
+  - Clip: {fileID: 8300000, guid: 45a743f315e521f40945670d25e5b129, type: 3}
     Time: 3.6
   ShakeKeyframes:
   - Intensity: 0.5

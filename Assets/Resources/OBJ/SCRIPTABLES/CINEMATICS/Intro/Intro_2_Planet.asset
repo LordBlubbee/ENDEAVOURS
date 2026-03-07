@@ -21,17 +21,17 @@ MonoBehaviour:
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Scale: 1.2
+  - Scale: 1.6
     StartIntense: 0
     EndIntense: 0
-    Time: 20
+    Time: 120
   PositionKeyframes:
-  - Vector: {x: 0, y: -0.1, z: 0}
+  - Vector: {x: 0, y: -0.15, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Vector: {x: 0, y: 0, z: 0}
+  - Vector: {x: 0, y: 0.05, z: 0}
     StartIntense: 1
     EndIntense: 0
-    Time: 20
+    Time: 120
   RotationKeyframes: []

@@ -52,8 +52,8 @@ public class TooltipController : MonoBehaviour
         // Clamp to screen horizontally
         targetPos.x = Mathf.Clamp(targetPos.x, halfW + margin, Screen.width - halfW - margin);
         // Clamp vertically
-        targetPos.y = Mathf.Clamp(targetPos.y, halfH + margin, Screen.height - halfH - margin);
-
+        //targetPos.y = Mathf.Clamp(targetPos.y, halfH + margin, Screen.height - halfH - margin);
+        targetPos.y = Mathf.Clamp(targetPos.y, tooltipSize.y + margin, Screen.height - margin);
         // Convert to world
         Camera cam = Camera.main;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(

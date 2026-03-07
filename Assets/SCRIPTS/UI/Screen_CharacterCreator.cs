@@ -50,6 +50,7 @@ public class Screen_CharacterCreator : MonoBehaviour
     }
     public void PressLoadCharacter()
     {
+        if (!LoadCharacterScreen.gameObject.activeSelf) return;
         AUDCO.aud.PlaySFX(AUDCO.aud.Press);
         LoadCharacterScreen.SetActive(false);
         UI.ui.TutorialManager.OpenTutorial();

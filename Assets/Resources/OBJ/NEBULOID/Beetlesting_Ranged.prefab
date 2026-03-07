@@ -193,6 +193,12 @@ MonoBehaviour:
   RotationDistanceFactor: 6
   RotationBaseSpeed: 180
   BleedOut: 0
+  Radius: 0.8
+  MeleeRes: 1
+  RangedRes: 1
+  SpellRes: 1
+  FireRes: 0.5
+  MistRes: 4
   ATT_PHYSIQUE:
     m_InternalValue: 2
   ATT_ARMS:
@@ -235,6 +241,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   Unit: {fileID: 5867427934140877094}
   AI_Unit_Type: 1
+  AI_Tactic_Type: 0
 --- !u!58 &2777461695614414478
 CircleCollider2D:
   m_ObjectHideFlags: 0

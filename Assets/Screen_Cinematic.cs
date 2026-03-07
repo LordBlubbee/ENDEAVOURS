@@ -69,14 +69,13 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(4f);
         SetScene(Scenes[14], false); //14 = Map1
         //30 SECONDS IN TOTAL
-        yield return new WaitForSeconds(2f);
         SetText("The <color=#FF00FF>Endeavour</color> has successfully gathered and launched from Capitolis.", VCX_Narrator);
         yield return new WaitForSeconds(7f);
         SetText("One year ago, the <color=#FF00FF>Fluctus Nebulae</color> destroyed at least ten percent of all known settlements on Unitas.", VCX_Narrator);
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(8f);
         SetText("The source has been triangulated to a location deep past the Nomaden Reaches, to a mountain in the far south-east.", VCX_Narrator);
-        yield return new WaitForSeconds(7f);
-        SetText("We are armed against Nebuloid and pirate threats, and have many supply bases built along parts of our route. We are to maintain level four secrecy.", VCX_Narrator);
+        yield return new WaitForSeconds(8f);
+        SetText("The mission is to maintain level four secrecy. Supply bases will provide us with all that we require.", VCX_Narrator);
         yield return new WaitForSeconds(7f);
         SetScene(Scenes[17], true); //17 = Scout Drifter goes on
         yield return new WaitForSeconds(2f);
@@ -85,9 +84,9 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(8f);
         SetText("Its Gubernator feels unusual distortions in the Flux. The effects are similar to recorded characteristics of the <color=#FF00FF>Fluctus Nebulae</color>.", VCX_Narrator);
         SetScene(Scenes[7], false); //7 = Gubernator
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(6f);
         SetScene(Scenes[16], true); //16 = Map with Signals
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         SetText("We are to rendezvous with our scouting Drifter to investigate the possible source area, which lies inside a vast cave network.", VCX_Narrator);
         yield return new WaitForSeconds(10f);
         SetScene(Scenes[10], true); //10 = Underway Cave
@@ -119,11 +118,11 @@ public class Screen_Cinematic : MonoBehaviour
         SetScene(Scenes[26], false); //26 = Map2
         SetText("Our last courier from <color=yellow>Capitolis</color> has informed us that the situation in Unitas is deteriorating.", VCX_Narrator);
         yield return new WaitForSeconds(7f);
-        SetText("The <color=#00AAFF>Catali</color> have been fractured in two, an internal war causing it to split into the <color=#0022FF>Democrats</color> and <color=#00AAFF>Royals</color>, the latter of which were banished from Valley.", VCX_Narrator);
+        SetText("The <color=#00AAFF>Catali</color> have been fractured in two, into the <color=#0022FF>Democrats</color> and <color=#00AAFF>Royals</color>, the latter of which were banished from Valley.", VCX_Narrator);
         yield return new WaitForSeconds(7f);
-        SetText("A group of Nomaden known as the <color=red>Bakuto Clan</color> have acquired a massive war fleet, and declared the <color=red>Insurrection</color>.", VCX_Narrator);
+        SetText("Nomaden known as the <color=red>Bakuto Clan</color> have acquired a massive war fleet, and declared the <color=red>Insurrection</color>.", VCX_Narrator);
         yield return new WaitForSeconds(7f);
-        SetText("All while the Nebula rises, and emergency services fail to cope with the rising humanitarian needs.", VCX_Narrator);
+        SetText("Their Drifters battle the Republic, all while the rising Nebula devastates lower-altitude settlements.", VCX_Narrator);
         yield return new WaitForSeconds(7f);
         SetText("Yet, there is hope. We believe the map must lead us to more answers about the true nature of the Nebula.", VCX_Narrator);
         yield return new WaitForSeconds(7f);
@@ -149,7 +148,7 @@ public class Screen_Cinematic : MonoBehaviour
         SetText("<color=red>ALL PERSONNEL, PREPARE TO ENGAGE HOSTILE ID 01.</color>", VCX_Narrator);
         yield return new WaitForSeconds(4f);
         SetScene(Scenes[29], true); //28 = Logipedes Attack!!
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(6f);
         SetScene(Scenes[25], true); //25 = Attacking Seekers
         yield return new WaitForSeconds(6f);
         SetScene(Scenes[33], true); //33 = Cannonfire
@@ -162,16 +161,32 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(2f);
         SetScene(Scenes[32], true); //32 = Lightning
         yield return new WaitForSeconds(4f);
-        //SetScene(Scenes[28], true); //28 = Death1
-        // yield return new WaitForSeconds(2f);
+        SetScene(Scenes[37], true); //37 = EphemeralAttack
+        yield return new WaitForSeconds(4f);
+        //Scene - Pragmaticus Boarding [4]
+        //Scene - Pragmaticus attempt to enter the Rigid [4]
+        //Scene - Something's not right here [4]
+        //Scene - Pragmaticus attempt escape, get blown up [4]
+        //Scene - Map displays death [2]
+        //Scene - Catali try to defend, get blown up [4]
+        //Scene - Map displays death [2]
+        //Scene - Coalition captain orders final charge [4]
+        //Scene - Coalition drifter charges forward [4]
+        //Scene - Coalition ramming impact deals damage to the enemy [6]
+        //Scene - Map displays death [2]
+        //Scene - Invictus One is hit, but survives, amongst the storm and fire everywhere.
+        // The Ephemerals are blown up in the background and the Castle is on fire. [12]
+
+
+        //LAST PART
         SetScene(Scenes[34], true); //34 = Last Communication
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         SetText("Vessel ID 14. Please acknowledge. You are the last remaining Endeavour vessel.", VCX_Narrator);
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(8f);
         SetText("Find the <color=#00FFFF>Nexus Point</color>. May All Be United ---", VCX_Narrator);
         yield return new WaitForSeconds(3f);
         SetScene(Scenes[35], true); //35 = Map of our escape
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
         SetScene(Scenes[31], true); //31 = End Shot
         yield return new WaitForSeconds(16f);
         SetScene(Scenes[1], true); //Planet

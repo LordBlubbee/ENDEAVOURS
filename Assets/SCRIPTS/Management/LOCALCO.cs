@@ -312,22 +312,25 @@ public class LOCALCO : NetworkBehaviour
         //Automatically obtain items from the inventory of the Drifter
         for (int i = 0; i < 3; i++)
         {
-            if (LoadedCharacter.PlayerWeapons[i] != "")
+            if (LoadedCharacter.PlayerWeapons[i] != null)
             {
                 ScriptableEquippable item = Resources.Load<ScriptableEquippable>($"{LoadedCharacter.PlayerWeapons[i]}");
+                Debug.Log($"Checking item {LoadedCharacter.PlayerWeapons[i]}");
                 if (FindAndRemoveItemInInventory(item)) crew.EquipWeapon(i, (ScriptableEquippableWeapon)item);
             }
         }
         for (int i = 0; i < 3; i++)
         {
-            if (LoadedCharacter.PlayerArtifacts[i] != "")
+            if (LoadedCharacter.PlayerArtifacts[i] != null)
             {
+                Debug.Log($"Checking item {LoadedCharacter.PlayerArtifacts[i]}");
                 ScriptableEquippable item = Resources.Load<ScriptableEquippable>($"{LoadedCharacter.PlayerArtifacts[i]}");
                 if (FindAndRemoveItemInInventory(item)) crew.EquipArtifact(i, (ScriptableEquippableArtifact)item);
             }
         }
-        if (LoadedCharacter.PlayerArmor!= "")
+        if (LoadedCharacter.PlayerArmor!= null)
         {
+            Debug.Log($"Checking item {LoadedCharacter.PlayerArmor}");
             ScriptableEquippable item = Resources.Load<ScriptableEquippable>($"{LoadedCharacter.PlayerArmor}");
             if (FindAndRemoveItemInInventory(item)) crew.EquipArmor((ScriptableEquippableArtifact)item);
         }

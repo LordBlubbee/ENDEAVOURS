@@ -1253,8 +1253,7 @@ public class CO : NetworkBehaviour
         //Generate Area here
 
         EventCompleted = false;
-        GO.g.saveGame(EventCompleted);
-        UI.ui.DisplaySaveTex();
+        SaveGame();
 
         yield return new WaitForSeconds(1f);
         PlayerMainDrifter.SetCanReceiveInput(true);
@@ -1826,6 +1825,11 @@ public class CO : NetworkBehaviour
         UI.ui.MainGameplayUI.OpenAllRewardScreens();
     }
 
+    public void SaveGame()
+    {
+        GO.g.saveGame(EventCompleted);
+        UI.ui.DisplaySaveTex();
+    }
     public void PerformEvent(ScriptableEvent even)
     {
         //LOOOOOOOOOOOOOOOOOOOOOOOOONG LIST
@@ -1837,27 +1841,27 @@ public class CO : NetworkBehaviour
                 ForceOpenRewardScreenRpc();
 
                 EventCompleted = true;
-                GO.g.saveGame(EventCompleted);
+                SaveGame();
                 break;
             case "ShowMap":
                 ForceOpenMapScreenRpc();
 
                 EventCompleted = true;
-                GO.g.saveGame(EventCompleted);
+                SaveGame();
                 break;
             case "GenericRest":
                 StartCoroutine(Event_GenericRest());
                 ForceOpenRestScreenRpc();
 
                 EventCompleted = true;
-                GO.g.saveGame(EventCompleted);
+                SaveGame();
                 break;
             case "GenericLoot":
                 StartCoroutine(Event_GenericLoot());
                 ForceOpenRewardScreenRpc();
 
                 EventCompleted = true;
-                GO.g.saveGame(EventCompleted);
+                SaveGame();
                 break;
             case "GenericBattle":
                 StartCoroutine(Event_GenericBattle());
@@ -1973,7 +1977,6 @@ public class CO : NetworkBehaviour
                 Reporter.GetAI().SetReportVictory();
             }
         }
-       
 
         yield return new WaitForSeconds(3f);
         EndEvent();
@@ -2346,7 +2349,14 @@ public class CO : NetworkBehaviour
     private void EndEvent(bool giveLoot = true)
     {
         AlternativeDebriefDialog Debrief = CurrentEvent.GetDebrief();
-        if (CurrentEvent.HasDebrief()) CO_STORY.co.SetStory(Debrief.ReplaceDialog);
+        if (CurrentEvent.HasDebrief())
+        {
+            CO_STORY.co.SetStory(Debrief.ReplaceDialog);
+        } else
+        {
+            EventCompleted = true;
+            SaveGame();
+        }
         AreWeInDanger.Value = false;
         if (giveLoot) ProcessLootTable(Debrief.AlternativeLoot, 1f);
     }
