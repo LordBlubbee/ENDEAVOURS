@@ -37,6 +37,24 @@ MonoBehaviour:
   - List:
     - {fileID: 0}
     Time: 3.2
+  - List:
+    - {fileID: 21300000, guid: 8ea903befcb205347af3b272ae4f3498, type: 3}
+    - {fileID: 21300000, guid: aeaa01daaef350f498fac584c1ca900e, type: 3}
+    - {fileID: 21300000, guid: c0ff796904a0d4e4dbb4c722cbfa1ae5, type: 3}
+    - {fileID: 21300000, guid: e24ab412fcd51044089942aed7f9e05b, type: 3}
+    - {fileID: 21300000, guid: 6f422add16f4a194fa95668919056608, type: 3}
+    - {fileID: 21300000, guid: 8a05735330a2c714599c706eec4f7fa4, type: 3}
+    - {fileID: 21300000, guid: cb58a642cbb6a044f8d28026d29967cc, type: 3}
+    - {fileID: 21300000, guid: b3079518ab09a8e4d942ac6882d8f6c8, type: 3}
+    - {fileID: 21300000, guid: fd1a9a085408a9541869cbfd8ed8e850, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    Time: 3.2
   ScaleKeyframes: []
   PositionKeyframes: []
   RotationKeyframes: []

@@ -43,6 +43,24 @@ public class Screen_Cinematic : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        //TESTING
+        for (int i = 0; i < 99; i++)
+        {
+            SetScene(Scenes[32], true); //32 = Lightning
+            yield return new WaitForSeconds(4f);
+            SetScene(Scenes[37], true); //37 = EphemeralAttack
+            yield return new WaitForSeconds(4f);
+            //Scene - Pragmaticus Boarding [4]
+            //Scene - Pragmaticus attempt to enter the Rigid [4]
+            //Scene - Something's not right here [4]
+            //Scene - Pragmaticus attempt escape, get blown up [4]
+            //Scene - Map displays death [2]
+            SetScene(Scenes[38], true); //38 = Catali Death   //Scene - Catali try to defend, get blown up [4]
+            yield return new WaitForSeconds(4f);
+        }
+      
+        //END OF TESTING
+
         StartCoroutine(SkipTextRoutine());
         canSkip = true;
         if (Intro_OST) AUDCO.aud.setOST(Intro_OST);
@@ -155,7 +173,7 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(4f);
         SetScene(Scenes[36], true); //36 = Attacking Seekers and we're dying
         yield return new WaitForSeconds(4f);
-        SetScene(Scenes[30], true); //28 = Explosion
+        SetScene(Scenes[30], true); //30 = Explosion
         yield return new WaitForSeconds(4f);
         SetScene(Scenes[28], true); //28 = Death1
         yield return new WaitForSeconds(2f);
@@ -168,15 +186,18 @@ public class Screen_Cinematic : MonoBehaviour
         //Scene - Something's not right here [4]
         //Scene - Pragmaticus attempt escape, get blown up [4]
         //Scene - Map displays death [2]
-        //Scene - Catali try to defend, get blown up [4]
-        //Scene - Map displays death [2]
+        SetScene(Scenes[38], true); //38 = Catali Death   //Scene - Catali try to defend, get blown up [4]
+        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[39], true); //39 = Catali Death Map //Scene - Map displays death [2]
+        yield return new WaitForSeconds(2f);
+      
         //Scene - Coalition captain orders final charge [4]
         //Scene - Coalition drifter charges forward [4]
         //Scene - Coalition ramming impact deals damage to the enemy [6]
         //Scene - Map displays death [2]
         //Scene - Invictus One is hit, but survives, amongst the storm and fire everywhere.
         // The Ephemerals are blown up in the background and the Castle is on fire. [12]
-
+        yield return new WaitForSeconds(52f);
 
         //LAST PART
         SetScene(Scenes[34], true); //34 = Last Communication
