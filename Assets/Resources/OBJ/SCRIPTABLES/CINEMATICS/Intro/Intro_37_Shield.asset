@@ -27,15 +27,11 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    Time: 3.4
-  ScaleKeyframes:
-  - Scale: 1
-    StartIntense: 0
-    EndIntense: 0
-    Time: 2.9
-  - Scale: 0
-    StartIntense: 0
-    EndIntense: 1
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     Time: 3.2
+  ScaleKeyframes: []
   PositionKeyframes: []
   RotationKeyframes: []

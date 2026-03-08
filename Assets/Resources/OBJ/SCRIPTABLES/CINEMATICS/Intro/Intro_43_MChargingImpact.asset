@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f251af17509e5b4695fe6ecc890a441, type: 3}
+  m_Name: Intro_43_MChargingImpact
+  m_EditorClassIdentifier: 
+  Objects:
+  - {fileID: 11400000, guid: 65e54c7946af72a40b949fb45c83eeee, type: 2}
+  - {fileID: 11400000, guid: dd3f9df6d3c62ee4e990efa9c07e23cc, type: 2}
+  - {fileID: 11400000, guid: 064e63a2478af6145ac486023d55a58f, type: 2}
+  - {fileID: 11400000, guid: e7767a9edce475147a56aa83caa913b8, type: 2}
+  - {fileID: 11400000, guid: 9197eecb8f0469d419fd7b6f86b7a7ab, type: 2}
+  AudioKeyframes:
+  - Clip: {fileID: 8300000, guid: 791d688e44ca4b14facf4d4048a26112, type: 3}
+    Time: 3
+  - Clip: {fileID: 8300000, guid: c06c3617dab4ca640b6bd2e134846a7e, type: 3}
+    Time: 3.2
+  ShakeKeyframes:
+  - Intensity: 1
+    Time: 2.7
+  - Intensity: 2
+    Time: 3.3

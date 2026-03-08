@@ -92426,6 +92426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1755202085}
   - component: {fileID: 1755202086}
+  - component: {fileID: 1755202087}
   m_Layer: 5
   m_Name: CinematicPlayer
   m_TagString: Untagged
@@ -92470,6 +92471,20 @@ MonoBehaviour:
   MainScreen: {fileID: 762586006}
   FadeScreen: {fileID: 557660874}
   IsMuted: 0
+--- !u!114 &1755202087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755202084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
 --- !u!1 &1757381811
 GameObject:
   m_ObjectHideFlags: 0
@@ -98200,6 +98215,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cd9f7dee7fd954848a68248e0a933051, type: 2}
   - {fileID: 11400000, guid: 6a19db07d330d264f991ce33bd51eba9, type: 2}
   - {fileID: 11400000, guid: f1c4436b956f86b40b2de3dae32ef294, type: 2}
+  - {fileID: 11400000, guid: 8c3316cfca477b04e922a9fe832732ab, type: 2}
+  - {fileID: 11400000, guid: 57d019f996905684b92cc2734bd40b85, type: 2}
+  - {fileID: 11400000, guid: 0f97c477076f9844d94fe8b05c0f7f82, type: 2}
+  - {fileID: 11400000, guid: d9985e38de1490643af035be32231d07, type: 2}
+  - {fileID: 11400000, guid: ae1c0ee1ad40c4347b2019bf40a2a58e, type: 2}
+  - {fileID: 11400000, guid: 53998544a6cec10449f91f70a1d5bb05, type: 2}
+  - {fileID: 11400000, guid: 716819d92f20e164e94ea76661d09d31, type: 2}
+  - {fileID: 11400000, guid: 667a955b402afa84e89ac8b8b2d085b1, type: 2}
+  - {fileID: 11400000, guid: 21fab450783c47f48b4476c10b146c71, type: 2}
+  - {fileID: 11400000, guid: 37827de91bfe2be4f8d7f2e0583e2d8c, type: 2}
 --- !u!114 &1982274213
 MonoBehaviour:
   m_ObjectHideFlags: 0

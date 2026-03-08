@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f251af17509e5b4695fe6ecc890a441, type: 3}
+  m_Name: Intro_42_MChargingEngine
+  m_EditorClassIdentifier: 
+  Objects:
+  - {fileID: 11400000, guid: c3dd675fde96283488a151fdbf4d627b, type: 2}
+  - {fileID: 11400000, guid: 20854d59e6fe9da458797d441469fbeb, type: 2}
+  AudioKeyframes: []
+  ShakeKeyframes:
+  - Intensity: 0.2
+    Time: 0.5
+  - Intensity: 0.25
+    Time: 1
+  - Intensity: 0.3
+    Time: 1.5
+  - Intensity: 0.3
+    Time: 2
+  - Intensity: 0.35
+    Time: 2.5
+  - Intensity: 0.4
+    Time: 3
+  - Intensity: 0.45
+    Time: 3.5
+  - Intensity: 0.5
+    Time: 4
+  - Intensity: 0.55
+    Time: 4.5
+  - Intensity: 0.6
+    Time: 5
+  - Intensity: 0.7
+    Time: 5

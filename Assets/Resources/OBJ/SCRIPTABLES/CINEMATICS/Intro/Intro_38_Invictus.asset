@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_38_Invictus
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.1
+  SpriteList:
+  - {fileID: 21300000, guid: 4ed37ce50a39cb641a9cac27c1f3990c, type: 3}
+  - {fileID: 21300000, guid: e06889f2adf8fa34e83f5a6f01826bb9, type: 3}
+  - {fileID: 21300000, guid: 9f3db945c6f573a479441269cd17657e, type: 3}
+  SpriteKeyframes: []
+  ScaleKeyframes:
+  - Scale: 0.75
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Scale: 1.2
+    StartIntense: 0
+    EndIntense: 0
+    Time: 12
+  PositionKeyframes: []
+  RotationKeyframes: []

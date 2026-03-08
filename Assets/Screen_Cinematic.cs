@@ -46,17 +46,25 @@ public class Screen_Cinematic : MonoBehaviour
         //TESTING
         for (int i = 0; i < 99; i++)
         {
-            SetScene(Scenes[32], true); //32 = Lightning
-            yield return new WaitForSeconds(4f);
-            SetScene(Scenes[37], true); //37 = EphemeralAttack
-            yield return new WaitForSeconds(4f);
-            //Scene - Pragmaticus Boarding [4]
-            //Scene - Pragmaticus attempt to enter the Rigid [4]
-            //Scene - Something's not right here [4]
-            //Scene - Pragmaticus attempt escape, get blown up [4]
-            //Scene - Map displays death [2]
             SetScene(Scenes[38], true); //38 = Catali Death   //Scene - Catali try to defend, get blown up [4]
             yield return new WaitForSeconds(4f);
+            SetScene(Scenes[39], true); //39 = Catali Death Map //Scene - Map displays death [2] TO DO
+            yield return new WaitForSeconds(2f);
+            SetScene(Scenes[41], true); //41 = Look At Ocean
+            yield return new WaitForSeconds(4f);
+            SetScene(Scenes[42], true); //42 = Captain Looking
+            yield return new WaitForSeconds(4f);
+            SetScene(Scenes[43], true); //43 = Captain Orders Charge
+            yield return new WaitForSeconds(4f);
+            SetScene(Scenes[44], true); //44 = We are charging forward
+            yield return new WaitForSeconds(6f);
+            SetScene(Scenes[45], true); //45 = Charge from the side impact
+            yield return new WaitForSeconds(4f);
+            //Scene - Map displays death [2]
+            //Scene - Invictus One is hit, but survives, amongst the storm and fire everywhere.
+            // The Ephemerals are blown up in the background and the Castle is on fire. [12]
+            SetScene(Scenes[40], true); //40 = Everything Burns
+            yield return new WaitForSeconds(12f);
         }
       
         //END OF TESTING
@@ -188,21 +196,29 @@ public class Screen_Cinematic : MonoBehaviour
         //Scene - Map displays death [2]
         SetScene(Scenes[38], true); //38 = Catali Death   //Scene - Catali try to defend, get blown up [4]
         yield return new WaitForSeconds(4f);
-        SetScene(Scenes[39], true); //39 = Catali Death Map //Scene - Map displays death [2]
+        SetScene(Scenes[39], true); //39 = Catali Death Map //Scene - Map displays death [2] TO DO
         yield return new WaitForSeconds(2f);
-      
-        //Scene - Coalition captain orders final charge [4]
-        //Scene - Coalition drifter charges forward [4]
-        //Scene - Coalition ramming impact deals damage to the enemy [6]
+        SetScene(Scenes[41], true); //41 = Look At Ocean
+        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[42], true); //42 = Captain Looking
+        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[43], true); //43 = Captain Orders Charge
+        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[44], true); //44 = We are charging forward
+        yield return new WaitForSeconds(6f);
+        SetScene(Scenes[45], true); //45 = Charge from the side impact
+        yield return new WaitForSeconds(4f);
         //Scene - Map displays death [2]
         //Scene - Invictus One is hit, but survives, amongst the storm and fire everywhere.
         // The Ephemerals are blown up in the background and the Castle is on fire. [12]
-        yield return new WaitForSeconds(52f);
+        SetScene(Scenes[40], true); //40 = Everything Burns
+        yield return new WaitForSeconds(12f);
+        yield return new WaitForSeconds(18f);
 
         //LAST PART
         SetScene(Scenes[34], true); //34 = Last Communication
         yield return new WaitForSeconds(1f);
-        SetText("Vessel ID 14. Please acknowledge. You are the last remaining Endeavour vessel.", VCX_Narrator);
+        SetText("Drifter ID 14. Please acknowledge. You are the last remaining Endeavour vessel.", VCX_Narrator);
         yield return new WaitForSeconds(8f);
         SetText("Find the <color=#00FFFF>Nexus Point</color>. May All Be United ---", VCX_Narrator);
         yield return new WaitForSeconds(3f);

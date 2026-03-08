@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f88f4b2564c57a47a18aa839df29575, type: 3}
+  m_Name: Intro_43_Explosion
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 0.18
+  SpriteList:
+  - {fileID: 0}
+  SpriteKeyframes:
+  - List:
+    - {fileID: 21300000, guid: ba54cb44742252a48b5d45d4bd1b53a2, type: 3}
+    - {fileID: 21300000, guid: f4d9595fc5329a54eb4f9c98e4269fd9, type: 3}
+    - {fileID: 21300000, guid: ff49e9a46b82bf54ba35ca095ab270fe, type: 3}
+    - {fileID: 21300000, guid: bcce95185f2436a4c8003a039b61ce43, type: 3}
+    - {fileID: 21300000, guid: c0ef72a7611a4d847bbbcbc6a336623d, type: 3}
+    - {fileID: 21300000, guid: be9fa719fe2175047a51d425df07c29c, type: 3}
+    - {fileID: 21300000, guid: 5fc15906e5149fc4c8df61614b228ac1, type: 3}
+    - {fileID: 21300000, guid: 5fc15906e5149fc4c8df61614b228ac1, type: 3}
+    - {fileID: 21300000, guid: 5fc15906e5149fc4c8df61614b228ac1, type: 3}
+    - {fileID: 21300000, guid: 5fc15906e5149fc4c8df61614b228ac1, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    Time: 2.7
+  ScaleKeyframes:
+  - Scale: 1
+    StartIntense: 0
+    EndIntense: 0
+    Time: 1
+  - Scale: 1.2
+    StartIntense: 0
+    EndIntense: 0
+    Time: 4
+  PositionKeyframes:
+  - Vector: {x: -0.02, y: 0.04, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 0
+  - Vector: {x: 0, y: 0, z: 0}
+    StartIntense: 0
+    EndIntense: 0
+    Time: 4
+  RotationKeyframes: []
