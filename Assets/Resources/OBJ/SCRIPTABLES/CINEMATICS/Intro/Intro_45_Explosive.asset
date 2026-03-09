@@ -33,5 +33,5 @@ MonoBehaviour:
   - Vector: {x: -0.01, y: 0, z: 0}
     StartIntense: 1
     EndIntense: 0
-    Time: 3
+    Time: 2.5
   RotationKeyframes: []

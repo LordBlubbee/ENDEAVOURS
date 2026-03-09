@@ -24,6 +24,11 @@ public class Screen_Host : MonoBehaviour
     public void PressPlay()
     {
         AUDCO.aud.PlaySFX(AUDCO.aud.Press);
+        if (GO.g.preferredGameDifficulty == 0)
+        {
+            GO.g.enableTutorial = true;
+            GO.g.saveSettings();
+        }
         if (AloneGame)
         {
             LOBBY.lobby.PressPlayAlone();
@@ -110,7 +115,7 @@ public class Screen_Host : MonoBehaviour
             case 0:
                 DifficultyTex.text = "TUTORIAL";
                 DifficultyTex.color = Color.magenta;
-                DifficultyTooltip.Tooltip = "This simulation mission will teach you how to lead your crew in the Starlight Endeavour.";
+                DifficultyTooltip.Tooltip = "This mission leads you through an alternative set of initial levels to show you how to lead the Starlight Endeavour. Highly recommended.";
                 break;
             case 1:
                 DifficultyTex.text = "ADVANTAGED";

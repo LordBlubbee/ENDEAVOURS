@@ -18,9 +18,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ad5916b4807d7df4e8c931aa70eca8c4, type: 2}
   - {fileID: 11400000, guid: 2815d605a6e701546ae0edf3ec283644, type: 2}
   - {fileID: 11400000, guid: 7bd9a460deeb41c4ea43255f852cd663, type: 2}
-  AudioKeyframes:
-  - Clip: {fileID: 8300000, guid: 6000c5f5141c8c54484abe9da5261b0f, type: 3}
-    Time: 0
+  AudioKeyframes: []
   ShakeKeyframes:
-  - Intensity: 0.2
-    Time: 3
+  - Intensity: 0.3
+    Time: 2.5
