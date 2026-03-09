@@ -13,6 +13,23 @@ MonoBehaviour:
   m_Name: Intro_47_MPragmaticusBlimpDown
   m_EditorClassIdentifier: 
   Objects:
-  - {fileID: 11400000, guid: ee1cf2ddb918f2a4a9553e06eeb19238, type: 2}
-  AudioKeyframes: []
-  ShakeKeyframes: []
+  - {fileID: 11400000, guid: 27faae6d74cfe4f46bee2ca5d999a9fd, type: 2}
+  - {fileID: 11400000, guid: 07d54fd32580078419e9c1981c25d518, type: 2}
+  - {fileID: 11400000, guid: 0d7888d858812a74b8cea38876345673, type: 2}
+  - {fileID: 11400000, guid: 579a645e0458795429a9a0a818ef5b28, type: 2}
+  - {fileID: 11400000, guid: 20404d4b3d3eccc48a4c329d59020c95, type: 2}
+  - {fileID: 11400000, guid: a3a5c9fe4f950ae40af91f085bc59c11, type: 2}
+  AudioKeyframes:
+  - Clip: {fileID: 8300000, guid: a4b5efb3828b6c54fae8a3e1a128c8c6, type: 3}
+    Time: 0.7
+  - Clip: {fileID: 8300000, guid: a4b5efb3828b6c54fae8a3e1a128c8c6, type: 3}
+    Time: 1.5
+  - Clip: {fileID: 8300000, guid: ac11a9976adb2e043bbef0edfc168653, type: 3}
+    Time: 2.3
+  ShakeKeyframes:
+  - Intensity: 0.7
+    Time: 0.7
+  - Intensity: 0.6
+    Time: 1.5
+  - Intensity: 1.8
+    Time: 2.8

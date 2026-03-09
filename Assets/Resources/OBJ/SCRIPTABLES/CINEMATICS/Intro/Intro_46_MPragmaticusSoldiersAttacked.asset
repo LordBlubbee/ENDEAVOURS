@@ -13,6 +13,14 @@ MonoBehaviour:
   m_Name: Intro_46_MPragmaticusSoldiersAttacked
   m_EditorClassIdentifier: 
   Objects:
-  - {fileID: 11400000, guid: ee1cf2ddb918f2a4a9553e06eeb19238, type: 2}
-  AudioKeyframes: []
-  ShakeKeyframes: []
+  - {fileID: 11400000, guid: bd07dd8136c5404488204bcf026105a3, type: 2}
+  - {fileID: 11400000, guid: 942b365d515da4549b7a62d3df7da164, type: 2}
+  - {fileID: 11400000, guid: 1dee8f8f361a87e4bbc7f201983142d7, type: 2}
+  - {fileID: 11400000, guid: 9629e859cc7038b4494138680412b478, type: 2}
+  - {fileID: 11400000, guid: ab82f4bbeb1cca140b7b5893834505c6, type: 2}
+  AudioKeyframes:
+  - Clip: {fileID: 8300000, guid: a5bcddae087aadf4291d2958fdc27c39, type: 3}
+    Time: 0
+  ShakeKeyframes:
+  - Intensity: 1
+    Time: 0

@@ -36,10 +36,10 @@ MonoBehaviour:
     - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
     - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
     - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
-    Time: 3.4
+    Time: 2.4
   - List:
     - {fileID: 21300000, guid: e7f533de3a0e3c743963182e066f4eff, type: 3}
-    Time: 4.6
+    Time: 3.6
   ScaleKeyframes:
   - Scale: 1
     StartIntense: 0

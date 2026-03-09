@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Intro_28B_Death
   m_EditorClassIdentifier: 
   Objects:
-  - {fileID: 11400000, guid: 3d781c74757548345bc43f41ce53a83f, type: 2}
+  - {fileID: 11400000, guid: b0f7bec227d5fd44b82335de7b0450bc, type: 2}
   AudioKeyframes: []
   ShakeKeyframes: []

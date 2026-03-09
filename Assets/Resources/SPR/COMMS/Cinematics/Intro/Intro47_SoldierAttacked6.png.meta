@@ -1,0 +1,572 @@
+fileFormatVersion: 2
+guid: 7ada5cbb0cae5344c9b1f774f2062fd3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1974461854379503056
+    second: Intro47_SoldierAttacked6_0
+  - first:
+      213: -3268511671889078893
+    second: Intro47_SoldierAttacked6_1
+  - first:
+      213: -4809632452761679172
+    second: Intro47_SoldierAttacked6_2
+  - first:
+      213: -2604963062810116367
+    second: Intro47_SoldierAttacked6_3
+  - first:
+      213: 1639162169305515191
+    second: Intro47_SoldierAttacked6_4
+  - first:
+      213: 2225297568832097431
+    second: Intro47_SoldierAttacked6_5
+  - first:
+      213: 6798977523448288182
+    second: Intro47_SoldierAttacked6_6
+  - first:
+      213: 6103417258618986475
+    second: Intro47_SoldierAttacked6_7
+  - first:
+      213: 7518973729349326947
+    second: Intro47_SoldierAttacked6_8
+  - first:
+      213: -6274290005806067600
+    second: Intro47_SoldierAttacked6_9
+  - first:
+      213: 3347735694271753693
+    second: Intro47_SoldierAttacked6_10
+  - first:
+      213: 6193518476378424969
+    second: Intro47_SoldierAttacked6_11
+  - first:
+      213: 7798404612511274823
+    second: Intro47_SoldierAttacked6_12
+  - first:
+      213: 7077590614530953701
+    second: Intro47_SoldierAttacked6_13
+  - first:
+      213: 6777011225523959873
+    second: Intro47_SoldierAttacked6_14
+  - first:
+      213: -1983342778255563689
+    second: Intro47_SoldierAttacked6_15
+  - first:
+      213: 4148427503077864225
+    second: Intro47_SoldierAttacked6_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 10
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_0
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 24
+        width: 43
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dd69dc6892b66b10800000000000000
+      internalID: 1974461854379503056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 96
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39555d4a3f9e3a2d0800000000000000
+      internalID: -3268511671889078893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_2
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 75
+        width: 9
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cba03f844c0c04db0800000000000000
+      internalID: -4809632452761679172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_3
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 97
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fe703465ef49dbd0800000000000000
+      internalID: -2604963062810116367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_4
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 92
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b4c6beee497fb610800000000000000
+      internalID: 1639162169305515191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_5
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 70
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79c07c54958d1ee10800000000000000
+      internalID: 2225297568832097431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_6
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 80
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b31009f802da5e50800000000000000
+      internalID: 6798977523448288182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_7
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 67
+        width: 24
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bef19ffc8a1b3b450800000000000000
+      internalID: 6103417258618986475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_8
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 67
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3685c5505c2c85860800000000000000
+      internalID: 7518973729349326947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_9
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 39
+        width: 29
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 070552a7b7e3de8a0800000000000000
+      internalID: -6274290005806067600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_10
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 56
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddda6fa70eb857e20800000000000000
+      internalID: 3347735694271753693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_11
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 44
+        width: 19
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 986ca565d3cc3f550800000000000000
+      internalID: 6193518476378424969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_12
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74790876daf793c60800000000000000
+      internalID: 7798404612511274823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_13
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 33
+        width: 14
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e191cc4a27a83260800000000000000
+      internalID: 7077590614530953701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_14
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 3
+        width: 18
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 148b030bdc7cc0e50800000000000000
+      internalID: 6777011225523959873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_15
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 1
+        width: 29
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 754ad3a5040c974e0800000000000000
+      internalID: -1983342778255563689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_SoldierAttacked6_16
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 17
+        width: 21
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 123ba61b5dc229930800000000000000
+      internalID: 4148427503077864225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Intro47_SoldierAttacked6_0: 1974461854379503056
+      Intro47_SoldierAttacked6_1: -3268511671889078893
+      Intro47_SoldierAttacked6_10: 3347735694271753693
+      Intro47_SoldierAttacked6_11: 6193518476378424969
+      Intro47_SoldierAttacked6_12: 7798404612511274823
+      Intro47_SoldierAttacked6_13: 7077590614530953701
+      Intro47_SoldierAttacked6_14: 6777011225523959873
+      Intro47_SoldierAttacked6_15: -1983342778255563689
+      Intro47_SoldierAttacked6_16: 4148427503077864225
+      Intro47_SoldierAttacked6_2: -4809632452761679172
+      Intro47_SoldierAttacked6_3: -2604963062810116367
+      Intro47_SoldierAttacked6_4: 1639162169305515191
+      Intro47_SoldierAttacked6_5: 2225297568832097431
+      Intro47_SoldierAttacked6_6: 6798977523448288182
+      Intro47_SoldierAttacked6_7: 6103417258618986475
+      Intro47_SoldierAttacked6_8: 7518973729349326947
+      Intro47_SoldierAttacked6_9: -6274290005806067600
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

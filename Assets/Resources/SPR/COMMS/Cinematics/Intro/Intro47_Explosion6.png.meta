@@ -1,0 +1,494 @@
+fileFormatVersion: 2
+guid: 6bce03e9d3d0bda43b35be3201503b4c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6827234307929802627
+    second: Intro47_Explosion6_0
+  - first:
+      213: -3481054656025226777
+    second: Intro47_Explosion6_1
+  - first:
+      213: -2160268461109319394
+    second: Intro47_Explosion6_2
+  - first:
+      213: -1159653935468562816
+    second: Intro47_Explosion6_3
+  - first:
+      213: -6207924721294665249
+    second: Intro47_Explosion6_4
+  - first:
+      213: -2908994168217328222
+    second: Intro47_Explosion6_5
+  - first:
+      213: 8373963211530346625
+    second: Intro47_Explosion6_6
+  - first:
+      213: 286313407695355307
+    second: Intro47_Explosion6_7
+  - first:
+      213: 1994663763279475776
+    second: Intro47_Explosion6_8
+  - first:
+      213: -1204028393365494223
+    second: Intro47_Explosion6_9
+  - first:
+      213: -6684317242818237544
+    second: Intro47_Explosion6_10
+  - first:
+      213: -3703197026532493776
+    second: Intro47_Explosion6_11
+  - first:
+      213: -4984198284309467964
+    second: Intro47_Explosion6_12
+  - first:
+      213: -2434582469659404291
+    second: Intro47_Explosion6_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 10
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Intro47_Explosion6_0
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 147
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 387048a4e653fbe50800000000000000
+      internalID: 6827234307929802627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_Explosion6_1
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 139
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e195e7db3fc0bfc0800000000000000
+      internalID: -3481054656025226777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_Explosion6_2
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 160
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e19691cb74f2502e0800000000000000
+      internalID: -2160268461109319394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_Explosion6_3
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 160
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 086330ac3e418efe0800000000000000
+      internalID: -1159653935468562816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_Explosion6_4
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 159
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd99dd26b5509d9a0800000000000000
+      internalID: -6207924721294665249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_Explosion6_5
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 130
+        width: 24
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a529bd673d21a7d0800000000000000
+      internalID: -2908994168217328222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_Explosion6_6
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 114
+        width: 31
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 180a4797c2b463470800000000000000
+      internalID: 8373963211530346625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_Explosion6_7
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 111
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: badfc10078039f300800000000000000
+      internalID: 286313407695355307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_Explosion6_8
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 102
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 044fd90ef187eab10800000000000000
+      internalID: 1994663763279475776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_Explosion6_9
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 92
+        width: 26
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13627f13e8e6a4fe0800000000000000
+      internalID: -1204028393365494223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_Explosion6_10
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 95
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89becc7f1e88c33a0800000000000000
+      internalID: -6684317242818237544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_Explosion6_11
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 99
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0367f3cbce99b9cc0800000000000000
+      internalID: -3703197026532493776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_Explosion6_12
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 93
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cc6f9d511294dab0800000000000000
+      internalID: -4984198284309467964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Intro47_Explosion6_13
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 86
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df7de8f8420a63ed0800000000000000
+      internalID: -2434582469659404291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Intro47_Explosion6_0: 6827234307929802627
+      Intro47_Explosion6_1: -3481054656025226777
+      Intro47_Explosion6_10: -6684317242818237544
+      Intro47_Explosion6_11: -3703197026532493776
+      Intro47_Explosion6_12: -4984198284309467964
+      Intro47_Explosion6_13: -2434582469659404291
+      Intro47_Explosion6_2: -2160268461109319394
+      Intro47_Explosion6_3: -1159653935468562816
+      Intro47_Explosion6_4: -6207924721294665249
+      Intro47_Explosion6_5: -2908994168217328222
+      Intro47_Explosion6_6: 8373963211530346625
+      Intro47_Explosion6_7: 286313407695355307
+      Intro47_Explosion6_8: 1994663763279475776
+      Intro47_Explosion6_9: -1204028393365494223
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -47,70 +47,63 @@ public class Screen_Cinematic : MonoBehaviour
         for (int i = 0; i < 99; i++)
         {
             canSkip = true;
+            SetScene(Scenes[23], true); //23 = EphemeralDying
+            yield return new WaitForSeconds(4f);
             SetScene(Scenes[22], true); //22 = RED ALERT
             SetText("<color=red>ALERT LEVEL NINE. THE EXPEDITION IS UNDER ATTACK.</color>", VCX_Narrator);
             yield return new WaitForSeconds(4f);
 
+            /*The following part was planned to last 112 seconds, but the FL studio was only 76 seconds long. It will now last 96 seconds.*/
+            /*Current version is */
+
             SetScene(Scenes[24], true); //24 = Engine Room
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2f); //2
             SetText("<color=red>ALL PERSONNEL, PREPARE TO ENGAGE HOSTILE ID 01.</color>", VCX_Narrator);
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(4f); //6
             SetScene(Scenes[29], true); //28 = Logipedes Attack!!
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(4f); //10
             SetScene(Scenes[25], true); //25 = Attacking Seekers
-            yield return new WaitForSeconds(6f);
+            yield return new WaitForSeconds(6f); //16
             SetScene(Scenes[33], true); //33 = Cannonfire
+            yield return new WaitForSeconds(4f); //20
+            SetScene(Scenes[32], true); //32 = Lightning
+            yield return new WaitForSeconds(4f); //24
+            SetScene(Scenes[37], true); //37 = EphemeralAttack
+            yield return new WaitForSeconds(4f); //28
+            SetScene(Scenes[46], true); //46 = Pragmaticus Boarding
+            yield return new WaitForSeconds(4f); //32
+            SetScene(Scenes[47], true); //47 = Pragmaticus Blowing Up
             yield return new WaitForSeconds(4f);
+            SetScene(Scenes[48], true); //48 = Pragmaticus What the fuck is that orb
+            yield return new WaitForSeconds(4f);
+            SetScene(Scenes[49], true); //49 = Pragmaticus AAAAAAAAAA
+            yield return new WaitForSeconds(4f); //44
+            SetScene(Scenes[28], true); //50 = Pragmaticus Pragmaticus death map 1
+            yield return new WaitForSeconds(2f);
             SetScene(Scenes[36], true); //36 = Attacking Seekers and we're dying
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(4f); //50
             SetScene(Scenes[30], true); //30 = Explosion
             yield return new WaitForSeconds(4f);
-            SetScene(Scenes[28], true); //28 = Death1
+            SetScene(Scenes[39], true); //28 = Death2
             yield return new WaitForSeconds(2f);
-            SetScene(Scenes[32], true); //32 = Lightning
-            yield return new WaitForSeconds(4f);
-            SetScene(Scenes[37], true); //37 = EphemeralAttack
-            yield return new WaitForSeconds(4f);
-            SetScene(Scenes[46], true); //46 = Pragmaticus Boarding
-            yield return new WaitForSeconds(4f);
-            //Scene - Pragmaticus attempt to enter the Rigid [4]
-            //Scene - Something's not right here [4]
-            //Scene - Pragmaticus attempt escape, get blown up [4]
-            //Scene - Map displays death [2]
             SetScene(Scenes[38], true); //38 = Catali Death   //Scene - Catali try to defend, get blown up [4]
-            yield return new WaitForSeconds(4f);
-            SetScene(Scenes[39], true); //39 = Catali Death Map //Scene - Map displays death [2] TO DO
+            yield return new WaitForSeconds(4f); //60
+            SetScene(Scenes[50], true); //39 = Catali Death Map3 //Scene - Map displays death [2] TO DO (Death3)
             yield return new WaitForSeconds(2f);
             SetScene(Scenes[41], true); //41 = Look At Ocean
             yield return new WaitForSeconds(4f);
             SetScene(Scenes[42], true); //42 = Captain Looking
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(4f); //70
             SetScene(Scenes[43], true); //43 = Captain Orders Charge
             yield return new WaitForSeconds(4f);
             SetScene(Scenes[44], true); //44 = We are charging forward
-            yield return new WaitForSeconds(6f);
+            yield return new WaitForSeconds(6f); //80
             SetScene(Scenes[45], true); //45 = Charge from the side impact
-            yield return new WaitForSeconds(4f);
-            //Scene - Map displays death [2]
-            //Scene - Invictus One is hit, but survives, amongst the storm and fire everywhere.
-            // The Ephemerals are blown up in the background and the Castle is on fire. [12]
+            yield return new WaitForSeconds(4f); //84
+            SetScene(Scenes[51], true); //51 = Last Death
+            yield return new WaitForSeconds(2f); //86
             SetScene(Scenes[40], true); //40 = Everything Burns
-            yield return new WaitForSeconds(12f);
-            yield return new WaitForSeconds(14f);
-
-            //LAST PART
-            SetScene(Scenes[34], true); //34 = Last Communication
-            yield return new WaitForSeconds(1f);
-            SetText("Drifter ID 14. Please acknowledge. You are the last remaining Endeavour vessel.", VCX_Narrator);
-            yield return new WaitForSeconds(8f);
-            SetText("Find the <color=#00FFFF>Nexus Point</color>. May All Be United ---", VCX_Narrator);
-            yield return new WaitForSeconds(3f);
-            SetScene(Scenes[35], true); //35 = Map of our escape
-            yield return new WaitForSeconds(8f);
-            SetScene(Scenes[31], true); //31 = End Shot
-            yield return new WaitForSeconds(16f);
-            SetScene(Scenes[1], true); //Planet
-            yield return new WaitForSeconds(8f);
+            yield return new WaitForSeconds(12f); //98
         }
       
         //END OF TESTING
@@ -179,7 +172,7 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(2f);
         SetText("The object of origin is a massive, highly advanced Drifter of unknown affiliation, design, or purpose.", VCX_Narrator);
         yield return new WaitForSeconds(8f);
-        SetText("The cause of its rupture is unknown and there are no traces of a crew.", VCX_Narrator);
+        SetText("There are no traces of a crew, and we do not know what destroyed it. Stipulation 80-28-91 advises further investigation.", VCX_Narrator);
         yield return new WaitForSeconds(8f);
         SetScene(Scenes[27], true); //27 = Nexus Sketch
         yield return new WaitForSeconds(2f);
@@ -215,54 +208,57 @@ public class Screen_Cinematic : MonoBehaviour
         SetText("<color=red>ALERT LEVEL NINE. THE EXPEDITION IS UNDER ATTACK.</color>", VCX_Narrator);
         yield return new WaitForSeconds(4f);
 
-        /*The following part was planned to last 112 seconds, but the FL studio was only 76 seconds long*/
+        /*The following part was planned to last 112 seconds, but the FL studio was only 76 seconds long. It will now last 96 seconds.*/
+        /*Current version is */
 
         SetScene(Scenes[24], true); //24 = Engine Room
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f); //2
         SetText("<color=red>ALL PERSONNEL, PREPARE TO ENGAGE HOSTILE ID 01.</color>", VCX_Narrator);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(4f); //6
         SetScene(Scenes[29], true); //28 = Logipedes Attack!!
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(4f); //10
         SetScene(Scenes[25], true); //25 = Attacking Seekers
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(6f); //16
         SetScene(Scenes[33], true); //33 = Cannonfire
+        yield return new WaitForSeconds(4f); //20
+        SetScene(Scenes[32], true); //32 = Lightning
+        yield return new WaitForSeconds(4f); //24
+        SetScene(Scenes[37], true); //37 = EphemeralAttack
+        yield return new WaitForSeconds(4f); //28
+        SetScene(Scenes[46], true); //46 = Pragmaticus Boarding
+        yield return new WaitForSeconds(4f); //32
+        SetScene(Scenes[47], true); //47 = Pragmaticus Blowing Up
         yield return new WaitForSeconds(4f);
+        SetScene(Scenes[48], true); //48 = Pragmaticus What the fuck is that orb
+        yield return new WaitForSeconds(4f);
+        SetScene(Scenes[49], true); //49 = Pragmaticus AAAAAAAAAA
+        yield return new WaitForSeconds(4f); //44
+        SetScene(Scenes[28], true); //50 = Pragmaticus Pragmaticus death map 1
+        yield return new WaitForSeconds(2f);
         SetScene(Scenes[36], true); //36 = Attacking Seekers and we're dying
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(4f); //50
         SetScene(Scenes[30], true); //30 = Explosion
         yield return new WaitForSeconds(4f);
-        SetScene(Scenes[28], true); //28 = Death1
+        SetScene(Scenes[39], true); //28 = Death2
         yield return new WaitForSeconds(2f);
-        SetScene(Scenes[32], true); //32 = Lightning
-        yield return new WaitForSeconds(4f);
-        SetScene(Scenes[37], true); //37 = EphemeralAttack
-        yield return new WaitForSeconds(4f);
-        SetScene(Scenes[46], true); //46 = Pragmaticus Boarding
-        yield return new WaitForSeconds(4f);
-        //Scene - Pragmaticus attempt to enter the Rigid [4]
-        //Scene - Something's not right here [4]
-        //Scene - Pragmaticus attempt escape, get blown up [4]
-        //Scene - Map displays death [2]
         SetScene(Scenes[38], true); //38 = Catali Death   //Scene - Catali try to defend, get blown up [4]
-        yield return new WaitForSeconds(4f);
-        SetScene(Scenes[39], true); //39 = Catali Death Map //Scene - Map displays death [2] TO DO
+        yield return new WaitForSeconds(4f); //60
+        SetScene(Scenes[50], true); //39 = Catali Death Map3 //Scene - Map displays death [2] TO DO (Death3)
         yield return new WaitForSeconds(2f);
         SetScene(Scenes[41], true); //41 = Look At Ocean
         yield return new WaitForSeconds(4f);
         SetScene(Scenes[42], true); //42 = Captain Looking
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(4f); //70
         SetScene(Scenes[43], true); //43 = Captain Orders Charge
         yield return new WaitForSeconds(4f);
         SetScene(Scenes[44], true); //44 = We are charging forward
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(6f); //80
         SetScene(Scenes[45], true); //45 = Charge from the side impact
-        yield return new WaitForSeconds(4f);
-        //Scene - Map displays death [2]
-        //Scene - Invictus One is hit, but survives, amongst the storm and fire everywhere.
-        // The Ephemerals are blown up in the background and the Castle is on fire. [12]
+        yield return new WaitForSeconds(4f); //84
+        SetScene(Scenes[51], true); //51 = Last Death
+        yield return new WaitForSeconds(2f); //86
         SetScene(Scenes[40], true); //40 = Everything Burns
-        yield return new WaitForSeconds(12f);
-        yield return new WaitForSeconds(14f);
+        yield return new WaitForSeconds(12f); //98
 
         //LAST PART
         SetScene(Scenes[34], true); //34 = Last Communication

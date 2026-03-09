@@ -13,6 +13,14 @@ MonoBehaviour:
   m_Name: Intro_45_MPragmaticusEnter
   m_EditorClassIdentifier: 
   Objects:
-  - {fileID: 11400000, guid: ee1cf2ddb918f2a4a9553e06eeb19238, type: 2}
-  AudioKeyframes: []
-  ShakeKeyframes: []
+  - {fileID: 11400000, guid: 20ea026d8218f1f4db3d4563d34fe83f, type: 2}
+  - {fileID: 11400000, guid: 9473a899d10f1c942a5cd71b2848aaf1, type: 2}
+  - {fileID: 11400000, guid: ad5916b4807d7df4e8c931aa70eca8c4, type: 2}
+  - {fileID: 11400000, guid: 2815d605a6e701546ae0edf3ec283644, type: 2}
+  - {fileID: 11400000, guid: 7bd9a460deeb41c4ea43255f852cd663, type: 2}
+  AudioKeyframes:
+  - Clip: {fileID: 8300000, guid: 6000c5f5141c8c54484abe9da5261b0f, type: 3}
+    Time: 0
+  ShakeKeyframes:
+  - Intensity: 0.2
+    Time: 3
