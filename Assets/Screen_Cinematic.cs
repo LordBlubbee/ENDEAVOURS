@@ -527,16 +527,13 @@ public class Screen_Cinematic : MonoBehaviour
                 canSkip = false;
                 Cinematic.IsMuted = true;
             }
-            //AUDCO.aud.setOST(null);
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (Cinematic.IsMuted && !canSkip)
+            else if (Cinematic.IsMuted && Input.GetKeyDown(KeyCode.Space))
             {
                 UI.ui.MainMenuUI.EnableMainMenu(false);
                 canSkip = true;
                 Cinematic.IsMuted = false;
             }
+            //AUDCO.aud.setOST(null);
         }
         if (TalkTex.text.Length > 0 && TalkTex.maxVisibleCharacters > 1)
         {
