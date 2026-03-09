@@ -212,6 +212,13 @@ public class Screen_CharacterCreator : MonoBehaviour
         }
         SkillRefresh();
         UpdateCompletionStatus();
+
+        if (CO.co.IsTutorial())
+        {
+            UI.ui.TutorialManager.OpenTutorial();
+            LOCALCO.local.CreatePlayerRpc(RandomNameGen(), new Color(UnityEngine.Random.Range(0.4f, 1f), UnityEngine.Random.Range(0.4f, 1f), UnityEngine.Random.Range(0f, 0.5f)), new int[] { 3, 5, 2, 1, 1, 3, 1, 3 }, "Invictus_Marine");
+            UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
+        }
     }
 
     private void Update()

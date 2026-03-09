@@ -36,7 +36,7 @@ public class UI_PlayerCrewButton : MonoBehaviour
         str += $"<color=#{hex}>{Crew.CharacterName.Value}</color>";
         hex = ColorUtility.ToHtmlStringRGB(Crew.CharacterBackground.BackgroundColor);
         str += $"\n<color=#{hex}>{Crew.CharacterBackground.BackgroundName}</color>";
-        int[] stats = new int[7];
+        int[] stats = new int[8];
         stats[0] = cre.GetATT_PHYSIQUE();
         stats[1] = cre.GetATT_ARMS();
         stats[2] = cre.GetATT_DEXTERITY();

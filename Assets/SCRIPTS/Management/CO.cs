@@ -207,11 +207,18 @@ public class CO : NetworkBehaviour
     }
 
     private NetworkVariable<int> HostControlMode = new();
-    private GameDifficulties Difficulty;
+    private NetworkVariable<int> DifficultyVar = new();
+    private GameDifficulties Difficulty
+    {
+        get
+        {
+            return (GameDifficulties)DifficultyVar.Value;
+        }
+    }
 
     public void LoadDifficulty(int ID)
     {
-        Difficulty = (GameDifficulties)ID;
+        DifficultyVar.Value = ID;
     }
 
     public bool IsTutorial()
@@ -879,7 +886,7 @@ public class CO : NetworkBehaviour
     public ScriptableLootItemList Test_StartingLoot;
     public void StartGame()
     {
-        Difficulty = (GameDifficulties)GO.g.preferredGameDifficulty;
+        DifficultyVar.Value = GO.g.preferredGameDifficulty;
         HostControlMode.Value = GO.g.preferredHostControl;
         GenerateMap();
         //CO_SPAWNER.co.CreateLandscape(CO_SPAWNER.BackgroundType.BARREN);
@@ -1261,7 +1268,7 @@ public class CO : NetworkBehaviour
 
     private void EndTutorialWorld()
     {
-        Difficulty = GameDifficulties.MEDIUM;
+        DifficultyVar.Value = (int)GameDifficulties.MEDIUM;
         GO.g.preferredGameDifficulty = (int)Difficulty;
         GO.g.saveSettings();
     }

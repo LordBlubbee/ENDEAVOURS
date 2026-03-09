@@ -24,6 +24,10 @@ public class Screen_ShipSelector : MonoBehaviour
         {
             Instantiate(SpawnShipButton, ShipList).Init(ship);
         }
+        if (CO.co.IsServer && CO.co.IsTutorial())
+        {
+            PressLaunch();
+        }
     }
     private void Update()
     {
