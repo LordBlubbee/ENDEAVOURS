@@ -65,8 +65,8 @@ public class GO : MonoBehaviour
         currentSaveSlot = 0;
         enableTutorial = true;
         OST_Vol = 0.5f;
-        VCX_Vol = 0.8f;
-        SFX_Vol = 0.8f;
+        VCX_Vol = 0.5f;
+        SFX_Vol = 0.5f;
         preferredHostControl = 0;
         preferredGameDifficulty = 0;
         preferredLobbyName = "Lobby";

@@ -629,8 +629,8 @@ public class AI_UNIT : NetworkBehaviour
                             AI_TacticTimer = 0f;
                             break;
                         }
-                        if (Unit.HasLineOfSight(EnemyTarget.transform.position) && (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) < 12))
-                        {
+                        if (Unit.HasLineOfSight(EnemyTarget.transform.position)) // && (Unit.GetHealthRelative() < 0.8f || Dist(EnemyTarget.transform.position) < 12)
+                    {
                             AI_TacticTimer = 0f;
                             break;
                         }

@@ -26,6 +26,14 @@ public class Screen_Settings : MonoBehaviour
         RefreshTutorial();
         Refresh();
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UI.ui.GoBackToPreviousScreenNoPress();
+        }
+    }
     private void Refresh()
     {
         VCX_Tex.text = $"Volume Voices\n{(VCX_Vol.value * 20f - 10f).ToString("0.0")}dB";

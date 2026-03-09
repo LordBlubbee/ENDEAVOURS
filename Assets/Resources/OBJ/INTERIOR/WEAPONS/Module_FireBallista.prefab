@@ -294,7 +294,7 @@ MonoBehaviour:
   ModuleUpgradeMaterials: 320000004600000046000000
   ModuleUpgradeTechs: 00000000000000001e000000
   CenterPos: {fileID: 0}
-  WeaponName: HEAVY BALLISTA
+  WeaponName: FIRE BALLISTA
   WeaponTransform: {fileID: 1101510134941141221}
   Platform: {fileID: 6031975965002184304}
   FirePoint: {fileID: 3676994766029858991}

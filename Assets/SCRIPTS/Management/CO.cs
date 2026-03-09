@@ -87,7 +87,7 @@ public class CO : NetworkBehaviour
     {
         if (PlayerMainDrifter.GetHealthRelative() < 1)
         {
-            if (Resource_Materials.Value > GetDrifterRepairCost())
+            if (Resource_Materials.Value >= GetDrifterRepairCost())
             {
                 Resource_Materials.Value -= GetDrifterRepairCost();
                 PlayerMainDrifter.Heal(100);
