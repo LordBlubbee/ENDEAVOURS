@@ -38,7 +38,7 @@ MonoBehaviour:
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Scale: 1.02
+  - Scale: 1.08
     StartIntense: 0
     EndIntense: 0
     Time: 5
@@ -47,7 +47,7 @@ MonoBehaviour:
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Vector: {x: -0.04, y: 0, z: 0}
+  - Vector: {x: -0.04, y: -0.03, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 8

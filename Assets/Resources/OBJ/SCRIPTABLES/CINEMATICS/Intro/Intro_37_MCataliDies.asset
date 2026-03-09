@@ -31,5 +31,5 @@ MonoBehaviour:
   ShakeKeyframes:
   - Intensity: 0.9
     Time: 2.8
-  - Intensity: 1.8
+  - Intensity: 1.6
     Time: 3.7

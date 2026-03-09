@@ -35,13 +35,13 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    Time: 2.7
+    Time: 2.5
   ScaleKeyframes:
   - Scale: 1
     StartIntense: 0
     EndIntense: 0
     Time: 1
-  - Scale: 1.2
+  - Scale: 1.3
     StartIntense: 0
     EndIntense: 0
     Time: 4

@@ -47,7 +47,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: bd7e4798c3d88174691c2cdb4a66a3e1, type: 3}
     - {fileID: 21300000, guid: bd7e4798c3d88174691c2cdb4a66a3e1, type: 3}
     - {fileID: 21300000, guid: bd7e4798c3d88174691c2cdb4a66a3e1, type: 3}
-    Time: 2
+    Time: 1
   ScaleKeyframes:
   - Scale: 1.05
     StartIntense: 0

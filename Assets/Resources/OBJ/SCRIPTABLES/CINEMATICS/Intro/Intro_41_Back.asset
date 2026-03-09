@@ -17,14 +17,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: cd5c173894f72fb48ab7daa4a7178d96, type: 3}
   SpriteKeyframes: []
   ScaleKeyframes:
-  - Scale: 1.25
+  - Scale: 1.4
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Scale: 1.22
+  - Scale: 1.35
     StartIntense: 0
     EndIntense: 0
-    Time: 1
+    Time: 0.5
+  - Scale: 1.05
+    StartIntense: 1
+    EndIntense: 0
+    Time: 2
   - Scale: 1.02
     StartIntense: 0
     EndIntense: 0

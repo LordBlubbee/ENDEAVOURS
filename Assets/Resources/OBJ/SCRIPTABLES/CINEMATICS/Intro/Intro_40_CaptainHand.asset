@@ -29,9 +29,9 @@ MonoBehaviour:
   - Vector: {x: 0, y: 0, z: 0}
     StartIntense: 0
     EndIntense: 0
-    Time: 1.2
-  - Vector: {x: 0, y: -1.5, z: 0}
+    Time: 1.4
+  - Vector: {x: 0, y: -2.1, z: 0}
     StartIntense: 0
-    EndIntense: 0
-    Time: 3.2
+    EndIntense: 1
+    Time: 2.1
   RotationKeyframes: []

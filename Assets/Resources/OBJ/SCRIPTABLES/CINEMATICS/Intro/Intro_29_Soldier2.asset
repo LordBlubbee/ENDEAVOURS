@@ -18,7 +18,7 @@ MonoBehaviour:
   SpriteKeyframes:
   - List:
     - {fileID: 21300000, guid: 186a61e5422a8e74e914a9286fbb1503, type: 3}
-    Time: 2.9
+    Time: 2.4
   ScaleKeyframes:
   - Scale: 1.1
     StartIntense: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
   - Vector: {x: -0.03, y: 0.04, z: 0}
     StartIntense: 1
     EndIntense: 0
-    Time: 1.7
+    Time: 1.1
   - Vector: {x: 0, y: 0, z: 0}
     StartIntense: 0
     EndIntense: 0

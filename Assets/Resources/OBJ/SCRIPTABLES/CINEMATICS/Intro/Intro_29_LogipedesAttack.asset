@@ -25,13 +25,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 03902472012b91d4a88841f31eea9784, type: 2}
   AudioKeyframes:
   - Clip: {fileID: 8300000, guid: 9e9dd386944e2cb4390ea93b9afab6d1, type: 3}
-    Time: 2.3
+    Time: 1.8
   - Clip: {fileID: 8300000, guid: 84e54f64f3f8e9e40829a1ac68afbe5a, type: 3}
-    Time: 3
+    Time: 2.5
   - Clip: {fileID: 8300000, guid: 9dc3212dc1148b44ab55cef301872c60, type: 3}
-    Time: 3.5
+    Time: 3
   - Clip: {fileID: 8300000, guid: dc98d35753a89c040904c73f02f92e9a, type: 3}
-    Time: 4.4
+    Time: 3.5
   ShakeKeyframes:
   - Intensity: 0.4
     Time: 2.3

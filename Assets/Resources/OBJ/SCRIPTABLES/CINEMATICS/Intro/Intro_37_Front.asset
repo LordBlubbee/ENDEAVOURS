@@ -21,7 +21,7 @@ MonoBehaviour:
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Scale: 1.08
+  - Scale: 1.14
     StartIntense: 0
     EndIntense: 0
     Time: 5

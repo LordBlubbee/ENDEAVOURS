@@ -32,7 +32,7 @@ MonoBehaviour:
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Vector: {x: 0.04, y: -0.14, z: 0}
+  - Vector: {x: -0.16, y: -0.18, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 12

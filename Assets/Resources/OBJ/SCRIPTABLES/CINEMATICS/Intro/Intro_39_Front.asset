@@ -30,20 +30,20 @@ MonoBehaviour:
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Vector: {x: 0.04, y: -0.1, z: 0}
+  - Vector: {x: 0.02, y: -0.04, z: 0}
     StartIntense: 1
     EndIntense: 0
-    Time: 3
+    Time: 2
   - Vector: {x: 0, y: 0, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 4
   RotationKeyframes:
-  - Rotation: -24
-    StartIntense: 1
+  - Rotation: -6
+    StartIntense: 0
     EndIntense: 0
     Time: 0
   - Rotation: 0
-    StartIntense: 1
+    StartIntense: 0
     EndIntense: 0
-    Time: 1.5
+    Time: 0.6

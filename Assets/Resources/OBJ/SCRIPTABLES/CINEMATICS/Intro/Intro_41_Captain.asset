@@ -20,18 +20,22 @@ MonoBehaviour:
   - List:
     - {fileID: 21300000, guid: 7173e0b4c6c744544b9253404ea1394b, type: 3}
     - {fileID: 21300000, guid: 26da01fe1efb25b45872ecf9dbcf6831, type: 3}
-    Time: 1.2
+    Time: 1.1
   ScaleKeyframes:
-  - Scale: 1.25
+  - Scale: 1.4
     StartIntense: 0
     EndIntense: 0
     Time: 0
-  - Scale: 1.22
+  - Scale: 1.35
     StartIntense: 0
     EndIntense: 0
-    Time: 1
-  - Scale: 1.02
+    Time: 0.5
+  - Scale: 1.05
     StartIntense: 1
+    EndIntense: 0
+    Time: 2
+  - Scale: 1.02
+    StartIntense: 0
     EndIntense: 0
     Time: 4
   PositionKeyframes:
