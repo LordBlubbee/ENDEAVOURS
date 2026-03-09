@@ -207,7 +207,7 @@ public class CO : NetworkBehaviour
     }
 
     private NetworkVariable<int> HostControlMode = new();
-    private NetworkVariable<int> DifficultyVar = new();
+    private NetworkVariable<int> DifficultyVar = new(1);
     private GameDifficulties Difficulty
     {
         get
