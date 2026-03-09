@@ -43,69 +43,6 @@ public class Screen_Cinematic : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        //TESTING
-        for (int i = 0; i < 99; i++)
-        {
-            canSkip = true;
-            SetScene(Scenes[23], true); //23 = EphemeralDying
-            yield return new WaitForSeconds(4f);
-            SetScene(Scenes[22], true); //22 = RED ALERT
-            SetText("<color=red>ALERT LEVEL NINE. THE EXPEDITION IS UNDER ATTACK.</color>", VCX_Narrator);
-            yield return new WaitForSeconds(4f);
-
-            /*The following part was planned to last 112 seconds, but the FL studio was only 76 seconds long. It will now last 96 seconds.*/
-            /*Current version is */
-
-            SetScene(Scenes[24], true); //24 = Engine Room
-            yield return new WaitForSeconds(2f); //2
-            SetText("<color=red>ALL PERSONNEL, PREPARE TO ENGAGE HOSTILE ID 01.</color>", VCX_Narrator);
-            yield return new WaitForSeconds(4f); //6
-            SetScene(Scenes[29], true); //28 = Logipedes Attack!!
-            yield return new WaitForSeconds(4f); //10
-            SetScene(Scenes[25], true); //25 = Attacking Seekers
-            yield return new WaitForSeconds(6f); //16
-            SetScene(Scenes[33], true); //33 = Cannonfire
-            yield return new WaitForSeconds(4f); //20
-            SetScene(Scenes[32], true); //32 = Lightning
-            yield return new WaitForSeconds(4f); //24
-            SetScene(Scenes[37], true); //37 = EphemeralAttack
-            yield return new WaitForSeconds(4f); //28
-            SetScene(Scenes[46], true); //46 = Pragmaticus Boarding
-            yield return new WaitForSeconds(4f); //32
-            SetScene(Scenes[47], true); //47 = Pragmaticus Blowing Up
-            yield return new WaitForSeconds(4f);
-            SetScene(Scenes[48], true); //48 = Pragmaticus What the fuck is that orb
-            yield return new WaitForSeconds(4f);
-            SetScene(Scenes[49], true); //49 = Pragmaticus AAAAAAAAAA
-            yield return new WaitForSeconds(4f); //44
-            SetScene(Scenes[28], true); //50 = Pragmaticus Pragmaticus death map 1
-            yield return new WaitForSeconds(2f);
-            SetScene(Scenes[36], true); //36 = Attacking Seekers and we're dying
-            yield return new WaitForSeconds(4f); //50
-            SetScene(Scenes[30], true); //30 = Explosion
-            yield return new WaitForSeconds(4f);
-            SetScene(Scenes[39], true); //28 = Death2
-            yield return new WaitForSeconds(2f);
-            SetScene(Scenes[38], true); //38 = Catali Death   //Scene - Catali try to defend, get blown up [4]
-            yield return new WaitForSeconds(4f); //60
-            SetScene(Scenes[50], true); //39 = Catali Death Map3 //Scene - Map displays death [2] TO DO (Death3)
-            yield return new WaitForSeconds(2f);
-            SetScene(Scenes[41], true); //41 = Look At Ocean
-            yield return new WaitForSeconds(4f);
-            SetScene(Scenes[42], true); //42 = Captain Looking
-            yield return new WaitForSeconds(4f); //70
-            SetScene(Scenes[43], true); //43 = Captain Orders Charge
-            yield return new WaitForSeconds(4f);
-            SetScene(Scenes[44], true); //44 = We are charging forward
-            yield return new WaitForSeconds(6f); //80
-            SetScene(Scenes[45], true); //45 = Charge from the side impact
-            yield return new WaitForSeconds(4f); //84
-            SetScene(Scenes[51], true); //51 = Last Death
-            yield return new WaitForSeconds(2f); //86
-            SetScene(Scenes[40], true); //40 = Everything Burns
-            yield return new WaitForSeconds(12f); //98
-        }
-      
         //END OF TESTING
 
         StartCoroutine(SkipTextRoutine());
@@ -134,7 +71,7 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(4f);
         SetScene(Scenes[14], false); //14 = Map1
         //30 SECONDS IN TOTAL
-        SetText("The <color=#FF00FF>Endeavour</color> has successfully gathered and launched from Capitolis.", VCX_Narrator);
+        SetText("The <color=#FF00FF>Starlight Endeavour</color> has successfully gathered and launched from Capitolis.", VCX_Narrator);
         yield return new WaitForSeconds(7f);
         SetText("One year ago, the <color=#FF00FF>Fluctus Nebulae</color> destroyed at least ten percent of all known settlements on Unitas.", VCX_Narrator);
         yield return new WaitForSeconds(8f);
@@ -172,7 +109,7 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(2f);
         SetText("The object of origin is a massive, highly advanced Drifter of unknown affiliation, design, or purpose.", VCX_Narrator);
         yield return new WaitForSeconds(8f);
-        SetText("There are no traces of a crew, and we do not know what destroyed it. Stipulation 80-28-91 advises further investigation.", VCX_Narrator);
+        SetText("There are no traces of a crew, or explanations for its deteriorated state. Stipulation 80-28-91 advises further investigation.", VCX_Narrator);
         yield return new WaitForSeconds(8f);
         SetScene(Scenes[27], true); //27 = Nexus Sketch
         yield return new WaitForSeconds(2f);
@@ -246,11 +183,11 @@ public class Screen_Cinematic : MonoBehaviour
         SetScene(Scenes[50], true); //39 = Catali Death Map3 //Scene - Map displays death [2] TO DO (Death3)
         yield return new WaitForSeconds(2f);
         SetScene(Scenes[41], true); //41 = Look At Ocean
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
         SetScene(Scenes[42], true); //42 = Captain Looking
         yield return new WaitForSeconds(4f); //70
         SetScene(Scenes[43], true); //43 = Captain Orders Charge
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
         SetScene(Scenes[44], true); //44 = We are charging forward
         yield return new WaitForSeconds(6f); //80
         SetScene(Scenes[45], true); //45 = Charge from the side impact

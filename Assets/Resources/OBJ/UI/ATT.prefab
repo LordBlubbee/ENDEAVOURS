@@ -288,8 +288,6 @@ GameObject:
   - component: {fileID: 8476928887752571800}
   - component: {fileID: 3122298621352156620}
   - component: {fileID: 7340077361975633824}
-  - component: {fileID: 7043465560352624449}
-  - component: {fileID: 8698684456278101211}
   - component: {fileID: 3966690714661740557}
   m_Layer: 5
   m_Name: AmountButton
@@ -356,30 +354,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7043465560352624449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5114176000495578669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beeba98a4bce9ec44946c4c233afae99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8698684456278101211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5114176000495578669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beeba98a4bce9ec44946c4c233afae99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3966690714661740557
 MonoBehaviour:
   m_ObjectHideFlags: 0

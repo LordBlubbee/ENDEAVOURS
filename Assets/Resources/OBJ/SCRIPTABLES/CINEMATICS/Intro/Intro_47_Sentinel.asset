@@ -31,7 +31,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    Time: 0.6
+    Time: 0.5
   - List:
     - {fileID: 21300000, guid: f8932d0244d977943a805d95b2bd7d3b, type: 3}
     - {fileID: 21300000, guid: a6eee02a1a6a42e4696480bdf754bab9, type: 3}
@@ -47,10 +47,10 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    Time: 0.6
+    Time: 0.5
   - List:
     - {fileID: 0}
-    Time: 2.6
+    Time: 2.5
   ScaleKeyframes:
   - Scale: 1
     StartIntense: 0
@@ -61,11 +61,11 @@ MonoBehaviour:
     EndIntense: 0
     Time: 4
   PositionKeyframes:
-  - Vector: {x: 0, y: 0, z: 0}
+  - Vector: {x: -0.1, y: 0, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 1.5
-  - Vector: {x: -0.15, y: 0.2, z: 0}
+  - Vector: {x: -0.25, y: 0.2, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 1.5
