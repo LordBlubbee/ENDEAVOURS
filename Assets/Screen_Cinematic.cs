@@ -529,7 +529,16 @@ public class Screen_Cinematic : MonoBehaviour
             }
             //AUDCO.aud.setOST(null);
         }
-        if (TalkTex.text.Length > 0 && TalkTex.maxVisibleCharacters > 5)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (Cinematic.IsMuted && !canSkip)
+            {
+                UI.ui.MainMenuUI.EnableMainMenu(false);
+                canSkip = true;
+                Cinematic.IsMuted = false;
+            }
+        }
+        if (TalkTex.text.Length > 0 && TalkTex.maxVisibleCharacters > 1)
         {
             TalkBack.color = new Color(0, 0, 0, Mathf.Clamp(TalkBack.color.a + Time.deltaTime, 0, 0.8f));
         } else
