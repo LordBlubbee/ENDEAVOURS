@@ -31,10 +31,10 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    Time: 3.2
+    Time: 2.2
   - List:
     - {fileID: 0}
-    Time: 4.2
+    Time: 3.2
   ScaleKeyframes:
   - Scale: 1.09
     StartIntense: 0

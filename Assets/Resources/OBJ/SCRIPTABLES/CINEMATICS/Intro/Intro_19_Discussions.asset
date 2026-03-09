@@ -25,7 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7c9d7ba64ec636d45916bf72463deab2, type: 2}
   - {fileID: 11400000, guid: 6b2d8a75aaf549f4ca59e24b177620cd, type: 2}
   AudioKeyframes:
-  - Clip: {fileID: 8300000, guid: ac11a9976adb2e043bbef0edfc168653, type: 3}
+  - Clip: {fileID: 8300000, guid: fea6dc471ee70d64684fd4e65b262d6f, type: 3}
     Time: 4.7
   - Clip: {fileID: 8300000, guid: d89565b01c2c0474682ce2250e0bd46a, type: 3}
     Time: 6.3

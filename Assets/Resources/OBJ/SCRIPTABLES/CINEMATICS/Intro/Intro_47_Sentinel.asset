@@ -47,7 +47,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    Time: 0.5
+    Time: 1.6
   - List:
     - {fileID: 0}
     Time: 2.5
@@ -61,12 +61,12 @@ MonoBehaviour:
     EndIntense: 0
     Time: 4
   PositionKeyframes:
-  - Vector: {x: -0.1, y: 0, z: 0}
+  - Vector: {x: 0, y: 0, z: 0}
     StartIntense: 0
     EndIntense: 0
     Time: 1.5
-  - Vector: {x: -0.25, y: 0.2, z: 0}
+  - Vector: {x: -0.08, y: -0.03, z: 0}
     StartIntense: 0
     EndIntense: 0
-    Time: 1.5
+    Time: 1.6
   RotationKeyframes: []

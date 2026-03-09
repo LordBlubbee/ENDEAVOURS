@@ -25,17 +25,17 @@ MonoBehaviour:
   - Clip: {fileID: 8300000, guid: 4b07ae0e15c3af04eaaf763a1580761d, type: 3}
     Time: 0.4
   - Clip: {fileID: 8300000, guid: 3acb48c68b05b29438e3ef27bd3b012d, type: 3}
-    Time: 3.2
+    Time: 2.2
   - Clip: {fileID: 8300000, guid: b23e4b506b7fb8142bbf43b83e95fb39, type: 3}
-    Time: 4.2
+    Time: 3.6
   - Clip: {fileID: 8300000, guid: dc98d35753a89c040904c73f02f92e9a, type: 3}
     Time: 4.7
   ShakeKeyframes:
   - Intensity: 0.5
     Time: 0.4
   - Intensity: 0.4
-    Time: 3.2
+    Time: 2.2
   - Intensity: 0.7
-    Time: 4.2
+    Time: 3.6
   - Intensity: 0.4
     Time: 4.7

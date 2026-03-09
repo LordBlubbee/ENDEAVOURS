@@ -24,7 +24,7 @@ public class Screen_ShipSelector : MonoBehaviour
         {
             Instantiate(SpawnShipButton, ShipList).Init(ship);
         }
-        if (CO.co.IsServer && CO.co.IsTutorial())
+        if (CO.co.IsServer && GO.g.preferredGameDifficulty == 1)
         {
             PressLaunch();
         }
@@ -36,7 +36,7 @@ public class Screen_ShipSelector : MonoBehaviour
             UI.ui.SelectScreen(UI.ui.CharacterCreationUI.gameObject);
         } else
         {
-            if (CO.co.IsServer && CO.co.IsTutorial())
+            if (CO.co.IsServer && GO.g.preferredGameDifficulty == 1)
             {
                 PressLaunch();
             }

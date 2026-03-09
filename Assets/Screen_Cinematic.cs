@@ -75,9 +75,9 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(7f);
         SetText("One year ago, the <color=#FF00FF>Fluctus Nebulae</color> destroyed at least ten percent of all known settlements on Unitas.", VCX_Narrator);
         yield return new WaitForSeconds(8f);
-        SetText("The source has been triangulated to a location deep past the Nomaden Reaches, to a mountain in the far south-east.", VCX_Narrator);
+        SetText("The source has been traced to a location deep past the Nomaden Reaches, to a mountain in the far south-east.", VCX_Narrator);
         yield return new WaitForSeconds(8f);
-        SetText("The mission is to maintain level four secrecy. Supply bases will provide us with all that we require.", VCX_Narrator);
+        SetText("The expedition is to maintain level four secrecy. Supply bases will provide us with all that we require.", VCX_Narrator);
         yield return new WaitForSeconds(7f);
         SetScene(Scenes[17], true); //17 = Scout Drifter goes on
         yield return new WaitForSeconds(2f);
@@ -89,7 +89,7 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(6f);
         SetScene(Scenes[16], true); //16 = Map with Signals
         yield return new WaitForSeconds(2f);
-        SetText("We are to rendezvous with our scouting Drifter to investigate the possible source area, which lies inside a vast cave network.", VCX_Narrator);
+        SetText("We are to rendezvous with our scouting Drifter to investigate the source, which might lie inside a vast cave network.", VCX_Narrator);
         yield return new WaitForSeconds(10f);
         SetScene(Scenes[10], true); //10 = Underway Cave
         yield return new WaitForSeconds(8f);
@@ -124,11 +124,11 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(7f);
         SetText("Nomaden known as the <color=red>Bakuto Clan</color> have acquired a massive war fleet, and declared the <color=red>Insurrection</color>.", VCX_Narrator);
         yield return new WaitForSeconds(7f);
-        SetText("Their Drifters battle the Republic, all while the rising Nebula devastates lower-altitude settlements.", VCX_Narrator);
+        SetText("Their Drifters battle the <color=yellow>Republic</color>, all while the rising Nebula devastates lower-altitude settlements.", VCX_Narrator);
         yield return new WaitForSeconds(7f);
         SetText("Yet, there is hope. We believe the map must lead us to more answers about the true nature of the Nebula.", VCX_Narrator);
         yield return new WaitForSeconds(7f);
-        SetText("We have plotted a new course, avoiding the Insurrectionist fleets. We will refuel at <color=#FF00FF>Starlight Point One</color> and make way for the <color=#00FFFF>NEXUS POINT</color>.", VCX_Narrator);
+        SetText("We have plotted a new course, avoiding the <color=red>Insurrectionist</color> fleets. We will refuel at <color=#FF00FF>Starlight Point One</color> and make way for the <color=#00FFFF>NEXUS POINT</color>.", VCX_Narrator);
  
         yield return new WaitForSeconds(9f); //44 TOTAL
 
@@ -149,9 +149,9 @@ public class Screen_Cinematic : MonoBehaviour
         /*Current version is */
 
         SetScene(Scenes[24], true); //24 = Engine Room
-        yield return new WaitForSeconds(2f); //2
+        yield return new WaitForSeconds(4f); //2
         SetText("<color=red>ALL PERSONNEL, PREPARE TO ENGAGE HOSTILE ID 01.</color>", VCX_Narrator);
-        yield return new WaitForSeconds(4f); //6
+        yield return new WaitForSeconds(2f); //6
         SetScene(Scenes[29], true); //28 = Logipedes Attack!!
         yield return new WaitForSeconds(4f); //10
         SetScene(Scenes[25], true); //25 = Attacking Seekers
@@ -202,7 +202,7 @@ public class Screen_Cinematic : MonoBehaviour
         yield return new WaitForSeconds(1f);
         SetText("Drifter ID 14. Please acknowledge. You are the last remaining Endeavour vessel.", VCX_Narrator);
         yield return new WaitForSeconds(8f);
-        SetText("Find the <color=#00FFFF>Nexus Point</color>. May All Be United ---", VCX_Narrator);
+        SetText("Find the <color=#00FFFF>Nexus Point</color>. May All Be United---", VCX_Narrator);
         yield return new WaitForSeconds(3f);
         SetScene(Scenes[35], true); //35 = Map of our escape
         yield return new WaitForSeconds(8f);
@@ -360,6 +360,7 @@ public class Screen_Cinematic : MonoBehaviour
     }
     private void SetText(string tex, AudioClip Speak = null)
     {
+        if (Cinematic.IsMuted) return;
         StartCoroutine(SwitchTextRoutine(tex, Speak));
     }
     bool isSwitchingText = false;

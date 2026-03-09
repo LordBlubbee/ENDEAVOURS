@@ -30,10 +30,10 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    Time: 0.7
+    Time: 0.2
   - List:
     - {fileID: 0}
-    Time: 1.9
+    Time: 1.4
   ScaleKeyframes: []
   PositionKeyframes:
   - Vector: {x: 0.08, y: 0.04, z: 0}
