@@ -31,6 +31,8 @@ public class UI : MonoBehaviour
     public Image LossScreenImage;
     public GameObject LossScreenContents;
     public TextMeshProUGUI LossScreenTex;
+    public TextMeshProUGUI LossScreenScore;
+    public GameObject LossScreenLeaveButton;
     public CanvasGroup LossScreen;
 
     public TextMeshProUGUI SaveTex;
@@ -38,6 +40,7 @@ public class UI : MonoBehaviour
     public void OpenLossScreen()
     {
         if (LossScreen.gameObject.activeSelf) return;
+        LossScreenLeaveButton.SetActive(false);
         StartCoroutine(OpenLossScreenNum());
     }
 
@@ -46,6 +49,8 @@ public class UI : MonoBehaviour
         LossScreen.gameObject.SetActive(true);
         LossScreenImage.color = Color.white;
         LossScreen.alpha = 0;
+        LossScreenTex.alpha = 0;
+        LossScreenScore.alpha = 0;
         while (LossScreen.alpha < 1)
         {
             LossScreen.alpha += Time.deltaTime * 0.35f;
@@ -54,12 +59,18 @@ public class UI : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         LossScreenImage.color = Color.black;
         LossScreenContents.gameObject.SetActive(true);
-        LossScreenTex.alpha = 0;
         while (LossScreenTex.alpha < 1)
         {
-            LossScreenTex.alpha += Time.deltaTime * 0.5f;
+            LossScreenTex.alpha += Time.deltaTime * 1f;
             yield return null;
         }
+        LossScreenScore.text = $"A power known as the Provisio stirs. \nPROVISIO: {CO.co.Resource_TotalXP.Value}";
+        while (LossScreenScore.alpha < 1)
+        {
+            LossScreenScore.alpha += Time.deltaTime * 1f;
+            yield return null;
+        }
+        LossScreenLeaveButton.SetActive(true);
 
     }
 
