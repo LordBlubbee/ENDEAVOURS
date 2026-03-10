@@ -29,6 +29,7 @@ public class Screen_ShipSelector : MonoBehaviour
             PressLaunch();
         }
     }
+    public GameObject PauseMenu;
     private void Update()
     {
         if (CO.co.HasShipBeenLaunched.Value)
@@ -40,6 +41,10 @@ public class Screen_ShipSelector : MonoBehaviour
             {
                 PressLaunch();
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseMenu.SetActive(!PauseMenu.activeSelf);
         }
     }
     public void PressShipButton(SpawnableShip ship)

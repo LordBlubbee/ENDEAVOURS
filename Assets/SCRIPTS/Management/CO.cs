@@ -1607,15 +1607,20 @@ public class CO : NetworkBehaviour
         }
         return RegisteredLOCALCO;
     }
-
+    public bool IsGamePaused()
+    {
+        if (CommunicationGamePaused.Value) return true;
+        if (UI.ui.MainGameplayUI.PauseMenu.activeSelf) return true;
+        return false;
+    }
     public float GetWorldSpeedDelta()
     {
-        if (CommunicationGamePaused.Value) return 0f;
+        if (IsGamePaused()) return 0f;
         return Time.deltaTime;
     }
     public float GetWorldSpeedDeltaFixed()
     {
-        if (CommunicationGamePaused.Value) return 0f;
+        if (IsGamePaused()) return 0f;
         return Time.fixedDeltaTime;
     }
 

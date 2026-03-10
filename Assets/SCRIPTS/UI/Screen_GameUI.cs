@@ -114,7 +114,27 @@ public class Screen_GameUI : MonoBehaviour
         {
             return;
         }
-        PauseScreen.SetActive(CO.co.CommunicationGamePaused.Value);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseMenu.SetActive(!PauseMenu.activeSelf);
+            if (PauseMenu.activeSelf)
+            {
+                if (GO.g.LastSaveTime == DateTime.MinValue)
+                {
+                    SaveButtonTex.text = "NOT YET SAVED";
+                    SaveButtonTex.color = Color.gray;
+                }
+                else
+                {
+                    DateTime time = GO.g.LastSaveTime;
+                    SaveButtonTex.text = $"LAST SAVE: {time.Hour.ToString("00")}:{time.Minute.ToString("00")}";
+                    if ((DateTime.Now - time).TotalSeconds > 240) SaveButtonTex.color = Color.red;
+                    else if ((DateTime.Now - time).TotalSeconds > 120) SaveButtonTex.color = Color.yellow;
+                    else SaveButtonTex.color = Color.green;
+                }
+            }
+        }
+        PauseScreen.SetActive(CO.co.IsGamePaused());
         PlayerScreen.SetActive(Input.GetKey(KeyCode.Tab));
         CREW player = LOCALCO.local.GetPlayer();
         if (!player)
@@ -265,27 +285,7 @@ public class Screen_GameUI : MonoBehaviour
         {
             BleedingOutScreen.gameObject.SetActive(false);
         }
-
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            PauseMenu.SetActive(!PauseMenu.activeSelf);
-            if (PauseMenu.activeSelf)
-            {
-                if (GO.g.LastSaveTime == DateTime.MinValue)
-                {
-                    SaveButtonTex.text = "NOT YET SAVED";
-                    SaveButtonTex.color = Color.gray;
-                } else
-                {
-                    DateTime time = GO.g.LastSaveTime;
-                    SaveButtonTex.text = $"LAST SAVE: {time.Hour.ToString("00")}:{time.Minute.ToString("00")}";
-                    if ((DateTime.Now - time).TotalSeconds > 240) SaveButtonTex.color = Color.red;
-                    else if ((DateTime.Now-time).TotalSeconds > 120) SaveButtonTex.color = Color.yellow;
-                    else SaveButtonTex.color = Color.green;
-                }
-            }
-        }
+        
     }
 
 
