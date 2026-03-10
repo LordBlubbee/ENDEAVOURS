@@ -1420,7 +1420,6 @@ public class AI_UNIT : NetworkBehaviour
                         Unit.UseItem1Rpc();
                     }
                 }
-              
                 return true;
                 //Unit.UseGrapple(boarding);
             }
