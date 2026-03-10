@@ -1257,7 +1257,7 @@ public class AI_UNIT : NetworkBehaviour
             }
             if (EnemyTarget)
             {
-                AttemptBoard(EnemyTarget.Space);
+                if (AttemptBoard(EnemyTarget.Space)) return;
 
                 if (AI_TacticTimer < 0) SwitchTacticsLooncrab();
 
@@ -1425,10 +1425,6 @@ public class AI_UNIT : NetworkBehaviour
             }
         }
         return false;
-    }
-    private void AttemptBoard(CREW trt)
-    {
-        AttemptBoard(trt.Space);
     }
 
     /*
