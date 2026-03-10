@@ -344,6 +344,19 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public virtual float TakeDamage(float fl, Vector3 src, DamageType type)
     {
         if (MaxHealth < 1) return 0;
+        bool isCrit = false;
+        switch (type)
+        {
+            case DamageType.MELEE_CRIT:
+                isCrit = true;
+                break;
+            case DamageType.RANGED_CRIT:
+                isCrit = true;
+                break;
+            case DamageType.SPELL_CRIT:
+                isCrit = true;
+                break;
+        }
         if (type == DamageType.BOMBARDMENT) fl *= OutsideDamageResistance;
         else
         {
@@ -356,7 +369,11 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
             //Death
             Die();
         }
-        if (fl > 1 && fl < 1000) CO_SPAWNER.co.SpawnDMGRpc(fl, src);
+        if (fl > 1 && fl < 1000)
+        {
+            if (isCrit) CO_SPAWNER.co.SpawnDMGCriticalRpc(fl, src);
+            else CO_SPAWNER.co.SpawnDMGRpc(fl, src);
+        }
         return fl;
     }
 
