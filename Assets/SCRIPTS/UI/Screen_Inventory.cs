@@ -205,7 +205,7 @@ public class Screen_Inventory : MonoBehaviour
         {
             SkillPointTex.text = "";
         }
-        LevelTex.text = $"LEVEL {LOCALCO.local.GetPlayer().UpgradeLevel.Value}";
+        LevelTex.text = $"LEVEL {LOCALCO.local.GetPlayer().XPLevel.Value}";
         ExperienceTex.text = $"XP: ({LOCALCO.local.GetPlayer().XPPoints.Value}/100)";
         ExperienceSlider.value = (float)LOCALCO.local.GetPlayer().XPPoints.Value / 100f;
         for (int i = 0; i < 8; i++)

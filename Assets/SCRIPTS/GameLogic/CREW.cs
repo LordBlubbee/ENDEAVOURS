@@ -146,7 +146,7 @@ public class CREW : NetworkBehaviour, iDamageable
     [Header("ATTRIBUTES")]
     [NonSerialized] public NetworkVariable<int> SkillPoints = new NetworkVariable<int>(0); //Not used in initial character creation
     [NonSerialized] public NetworkVariable<int> XPPoints = new NetworkVariable<int>(0); //Not used in initial character creation
-    [NonSerialized] public NetworkVariable<int> XPLevel = new NetworkVariable<int>(0); //Not used in initial character creation
+    [NonSerialized] public NetworkVariable<int> XPLevel = new NetworkVariable<int>(1); //Not used in initial character creation
     [NonSerialized] public NetworkVariable<Vector3> OrderPoint = new();
 
     private DRIFTER HomeDrifter;
