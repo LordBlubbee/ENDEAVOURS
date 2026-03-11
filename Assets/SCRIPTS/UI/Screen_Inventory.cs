@@ -147,6 +147,7 @@ public class Screen_Inventory : MonoBehaviour
 
     [Header("Skills")]
     public TextMeshProUGUI SkillPointTex;
+    public TextMeshProUGUI LevelTex;
     public TextMeshProUGUI ExperienceTex;
     public Slider ExperienceSlider;
     public string[] SkillName;
@@ -196,8 +197,15 @@ public class Screen_Inventory : MonoBehaviour
     }
     public void SkillRefresh()
     {
-        SkillPointTex.text = $"SKILL POINTS: ({LOCALCO.local.GetPlayer().SkillPoints.Value})";
-        SkillPointTex.color = (LOCALCO.local.GetPlayer().SkillPoints.Value > 0) ? Color.cyan : Color.white;
+        if (LOCALCO.local.GetPlayer().SkillPoints.Value > 0)
+        {
+            SkillPointTex.text = $"SKILL POINTS: ({LOCALCO.local.GetPlayer().SkillPoints.Value})";
+            SkillPointTex.color = Color.cyan;
+        } else
+        {
+            SkillPointTex.text = "";
+        }
+        LevelTex.text = $"LEVEL {LOCALCO.local.GetPlayer().UpgradeLevel.Value}";
         ExperienceTex.text = $"XP: ({LOCALCO.local.GetPlayer().XPPoints.Value}/100)";
         ExperienceSlider.value = (float)LOCALCO.local.GetPlayer().XPPoints.Value / 100f;
         for (int i = 0; i < 8; i++)

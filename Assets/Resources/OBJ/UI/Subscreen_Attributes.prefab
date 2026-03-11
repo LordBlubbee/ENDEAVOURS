@@ -78,7 +78,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 80}
+  m_AnchoredPosition: {x: 0, y: 30}
   m_SizeDelta: {x: 600, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &814581561441930349
@@ -354,7 +354,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356777915098846576, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: 'Health and melee weapon damage.
+      value: 'Maximum health.
+
+        Melee weapon damage.
 
 '
       objectReference: {fileID: 0}
@@ -376,7 +378,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5114176000495578669, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
-      insertIndex: 5
+      insertIndex: -1
       addedObject: {fileID: 6584698664532132015}
   m_SourcePrefab: {fileID: 100100000, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
 --- !u!224 &1038520914637017696 stripped
@@ -764,7 +766,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356777915098846576, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: Efficiency in healing self and others.
+      value: 'Maximum health and stamina.
+
+        Efficiency in healing self and
+        others.'
       objectReference: {fileID: 0}
     - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: Tooltip
@@ -1577,10 +1582,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356777915098846576, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: 'Ability to efficiently craft and create items.
+      value: 'Team crafting efficiency.
 
-        Usage of advanced
-        potions and consumables.'
+        Usage of advanced items and spells.'
       objectReference: {fileID: 0}
     - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: Tooltip
@@ -1777,10 +1781,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356777915098846576, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: 'Learning speed and aura that buffs allies.
+      value: 'Team experience gain.
 
-        Usage of advanced
-        gadgets.'
+        Aura that buffs allies.'
       objectReference: {fileID: 0}
     - target: {fileID: 6533569227050209211, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_IsActive

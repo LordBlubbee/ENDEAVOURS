@@ -305,6 +305,12 @@ public class LOCALCO : NetworkBehaviour
         if (LoadedCharacter == null) return;
         ScriptableBackground back = Resources.Load<ScriptableBackground>($"OBJ/SCRIPTABLES/BACKGROUNDS/{LoadedCharacter.PlayerBackground}");
         CREW crew = CreatePlayer(LoadedCharacter.PlayerName, LoadedCharacter.getColor(), LoadedCharacter.PlayerAttributes, back);
+        int XPTotal = LoadedCharacter.PlayerXPTotal;
+        while (XPTotal >= 100)
+        {
+            crew.XPLevel.Value++;
+            XPTotal -= 100;
+        }
         crew.AddXP(CO.co.Resource_TotalXP.Value - LoadedCharacter.PlayerXPTotal);
         crew.AddXP(LoadedCharacter.PlayerXP);
         crew.SkillPoints.Value += LoadedCharacter.PlayerSkillPoints;
