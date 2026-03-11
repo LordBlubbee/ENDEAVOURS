@@ -48,23 +48,23 @@ public class CREW : NetworkBehaviour, iDamageable
             case -1:
                 return 20;
             case 0:
-                return 30;
+                return 25;
             case 1:
-                return 40;
+                return 30;
             case 2:
-                return 50;
+                return 40;
             case 3:
-                return 60;
+                return 50;
             case 4:
-                return 70;
+                return 60;
             case 5:
-                return 85;
+                return 70;
             case 6:
-                return 100;
+                return 80;
             case 7:
-                return 120;
+                return 90;
         }
-        return 150;
+        return 100;
     }
     public void AddUpgradeLevel(int Levels)
     {
@@ -205,12 +205,7 @@ public class CREW : NetworkBehaviour, iDamageable
         }
     }
     //Modified attributes from equipment and buffs
-    [Header("Resistances")]
-    public float MeleeRes = 1;
-    public float RangedRes = 1;
-    public float SpellRes = 1;
-    public float FireRes = 1;
-    public float MistRes = 1;
+   
     public float GetMeleeResFactor()
     {
         if (MeleeRes >= 1) return 1f / MeleeRes; //If meleeres is 2, you will take half damage
@@ -237,6 +232,13 @@ public class CREW : NetworkBehaviour, iDamageable
         return 1f - (MistRes - 1); //If meleeres is 0.7, you will take 1.3x damage
     }
 
+    [Header("Resistances")]
+    public float MeleeRes = 1;
+    public float RangedRes = 1;
+    public float SpellRes = 1;
+    public float FireRes = 1;
+    public float MistRes = 1;
+
     [NonSerialized] public int[] ModifyAttributes = new int[8];
     [NonSerialized] public NetworkVariable<float> ModifyHealthMax = new();
     [NonSerialized] public float ModifyHealthRegen;
@@ -250,7 +252,6 @@ public class CREW : NetworkBehaviour, iDamageable
     [NonSerialized] public float ModifyMeleeDamage;
     [NonSerialized] public float ModifyRangedDamage;
     [NonSerialized] public float ModifySpellDamage;
-
 
     [NonSerialized] public float ModifyDamageTaken;
 
@@ -2607,10 +2608,20 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetSpeed()
     {
+        float DexFactor = GetATT_DEXTERITY() * 0.08f;
+        if (DexFactor > 0.7f)
+        {
+            DexFactor -= (DexFactor - 0.7f) * 0.5f; //Diminishing returns
+        }
         return GetMasterMovement() * (0.8f+GetATT_DEXTERITY()*0.08f) * (1f+ ModifyMovementSpeed) / (1f + ModifyMovementSlow);
     }
     public float GetDashSpeed()
     {
+        float DexFactor = GetATT_DEXTERITY() * 0.08f;
+        if (DexFactor > 0.6f)
+        {
+            DexFactor -= (DexFactor - 0.6f) * 0.5f; //Diminishing returns
+        }
         return GetMasterMovement() * (0.9f + GetATT_DEXTERITY() * 0.02f) * (1f + ModifyMovementSpeed) / (1f + ModifyMovementSlow);
     }
     public float GetCurrentSpeed()
