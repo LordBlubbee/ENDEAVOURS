@@ -56057,7 +56057,7 @@ MonoBehaviour:
   DrifterTexAmmunition: {fileID: 932881879}
   DrifterTexTechnology: {fileID: 1713813587}
   SkillPointTex: {fileID: 485837405}
-  LevelTex: {fileID: 0}
+  LevelTex: {fileID: 549856231}
   ExperienceTex: {fileID: 279234384}
   ExperienceSlider: {fileID: 339888827}
   SkillName:
