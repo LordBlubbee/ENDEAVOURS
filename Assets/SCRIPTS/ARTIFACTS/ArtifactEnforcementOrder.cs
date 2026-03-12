@@ -6,11 +6,11 @@ public class ArtifactEnforcementOrder : ArtifactAbility
     public ArtifactEnforcementOrder(CREW crew) : base(crew)
     {
     }
-    public override void OnEnemyHitRanged(CREW crew)
+    public override void OnEnemyHitRanged(CREW crew, float damageDone)
     {
         Hit(crew);
     }
-    public override void OnEnemyHitMelee(CREW crew)
+    public override void OnEnemyHitMelee(CREW crew, float damageDone)
     {
         Hit(crew);
     }

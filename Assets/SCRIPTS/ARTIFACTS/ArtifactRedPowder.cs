@@ -18,7 +18,7 @@ public class ArtifactRedPowder : ArtifactAbility
             yield return null;
         }
     }
-    public override void OnEnemyHitRanged(CREW crew)
+    public override void OnEnemyHitRanged(CREW crew, float damageDone)
     {
         if (CooldownTimer > 0) return;
         foreach (Collider2D col in Physics2D.OverlapCircleAll(crew.transform.position, 4f))

@@ -6,7 +6,7 @@ public class ArtifactSkirmishOrder : ArtifactAbility
     public ArtifactSkirmishOrder(CREW crew) : base(crew)
     {
     }
-    public override void OnEnemyHitMelee(CREW crew)
+    public override void OnEnemyHitMelee(CREW crew, float damageDone)
     {
         Hit(crew);
     }

@@ -17,7 +17,7 @@ public class ArtifactTraditionsPromise : ArtifactAbility
             if ((User.transform.position - allies.transform.position).magnitude > 16f) continue;
             if (allies.GetHealthRelative() > 0.5f) continue;
             CO_SPAWNER.co.SpawnFloralImpactRpc(allies.transform.position);
-            allies.Heal(20f + User.GetATT_MEDICAL() * 4f);
+            User.GainCredit_Healing(allies.Heal(20f + User.GetATT_MEDICAL() * 4f * User.GetHealingFactor()));
             User.StartCoroutine(Cooldown());
         }
     }

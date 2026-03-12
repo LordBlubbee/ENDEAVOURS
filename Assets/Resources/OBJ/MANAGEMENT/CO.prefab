@@ -251,6 +251,7 @@ MonoBehaviour:
   WaywardConsumptionVFX: {fileID: 7178822272740056672, guid: f7d18939f0f1fdf439fbb6f7ae79e76a, type: 3}
   PragmaticusRestrainImpactVFX: {fileID: 7178822272740056672, guid: 3ac2e8a470396ba40a521c3686a6b2e0, type: 3}
   PragmaticusShieldImpactVFX: {fileID: 7178822272740056672, guid: cdfa88dff6565394a9d7441cf332fca9, type: 3}
+  ShockwaveFlashVFX: {fileID: 7178822272740056672, guid: c85c3dea491dc4046ab5fcca2bc6617c, type: 3}
 --- !u!114 &794797818192831452
 MonoBehaviour:
   m_ObjectHideFlags: 0

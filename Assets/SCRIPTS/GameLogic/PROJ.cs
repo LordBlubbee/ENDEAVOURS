@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class PROJ : NetworkBehaviour
 {
@@ -14,6 +15,7 @@ public class PROJ : NetworkBehaviour
     public float AccelMaximum;
     public float InaccuracyDegrees;
     public float MaximumRange = -1;
+    public int Penetrate = 1;
     public bool StickToWalls;
 
     [Header("ALTITUDE")]
@@ -191,10 +193,10 @@ public class PROJ : NetworkBehaviour
                             switch (DamageType)
                             {
                                 case iDamageable.DamageType.RANGED:
-                                    CrewOwner.ArtifactOnRangedTarget((CREW)crew);
+                                    CrewOwner.ArtifactOnRangedTarget((CREW)crew, damageDealt);
                                     break;
                                 case iDamageable.DamageType.SPELL:
-                                    CrewOwner.ArtifactOnSpellTarget((CREW)crew);
+                                    CrewOwner.ArtifactOnSpellTarget((CREW)crew, damageDealt);
                                     break;
                             }
                             if (((CREW)crew).isDead())
@@ -222,8 +224,12 @@ public class PROJ : NetworkBehaviour
                 return;
             }
             if (ImpactSFX.Length > 0) ImpactSFXRpc();
-            isActive = false;
-            BulletImpact();
+            Penetrate--;
+            if (Penetrate < 1)
+            {
+                isActive = false;
+                BulletImpact();
+            }
             return;
         } else if (UseAltitude)
         {
@@ -287,7 +293,12 @@ public class PROJ : NetworkBehaviour
                     {
                         CO_SPAWNER.co.SpawnDMGBlockedRpc(0, transform.position);
                     }
-                    BulletImpact();
+                    Penetrate--;
+                    if (Penetrate < 1)
+                    {
+                        isActive = false;
+                        BulletImpact();
+                    }
                 }
             }
         }

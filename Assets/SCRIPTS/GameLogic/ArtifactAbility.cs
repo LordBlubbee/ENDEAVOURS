@@ -50,15 +50,15 @@ public class ArtifactAbility
     {
         return dam;
     }
-    public virtual void OnEnemyHitMelee(CREW crew)
+    public virtual void OnEnemyHitMelee(CREW crew, float damageDone)
     {
 
     }
-    public virtual void OnEnemyHitRanged(CREW crew)
+    public virtual void OnEnemyHitRanged(CREW crew, float damageDone)
     {
 
     }
-    public virtual void OnEnemyHitSpell(CREW crew)
+    public virtual void OnEnemyHitSpell(CREW crew, float damageDone)
     {
 
     }

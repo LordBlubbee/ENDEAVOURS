@@ -10,7 +10,7 @@ public class SpellFloralWave : UniqueSpell
         {
             if (Caster == allies) continue;
             if ((AimTowards - allies.transform.position).magnitude > 7f) continue;
-            TotalHealing += allies.Heal(10f + Caster.GetATT_COMMUNOPATHY() * 2f + Caster.GetATT_MEDICAL() * 2f);
+            TotalHealing += allies.Heal((10f + Caster.GetATT_COMMUNOPATHY() * 2f + Caster.GetATT_MEDICAL() * 2f) * Caster.GetHealingFactor());
         }
         Caster.GainCredit_Healing(TotalHealing);
     }

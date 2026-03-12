@@ -1076,10 +1076,18 @@ public class CO_SPAWNER : NetworkBehaviour
     public GameObject WaywardConsumptionVFX;
     public GameObject PragmaticusRestrainImpactVFX;
     public GameObject PragmaticusShieldImpactVFX;
+    public GameObject ShockwaveFlashVFX;
     public void SpawnCommandVFX(CREW crew)
     {
         GameObject ob = Instantiate(CommandVFX, crew.transform.position, Quaternion.identity);
         Transform trans = crew.transform;
+        if (trans) ob.transform.SetParent(trans);
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnShockwaveImpactRpc(Vector3 pos)
+    {
+        GameObject ob = Instantiate(ShockwaveFlashVFX, pos, Quaternion.identity);
+        Transform trans = CO.co.GetTransformAtPoint(pos);
         if (trans) ob.transform.SetParent(trans);
     }
 

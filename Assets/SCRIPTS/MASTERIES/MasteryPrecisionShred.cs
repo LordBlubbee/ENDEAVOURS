@@ -6,15 +6,15 @@ public class MasteryPrecisionShred : ArtifactAbility
     public MasteryPrecisionShred(CREW crew) : base(crew)
     {
     }
-    public override void OnEnemyHitMelee(CREW crew)
+    public override void OnEnemyHitMelee(CREW crew, float damageDone)
     {
         Hit(crew);
     }
-    public override void OnEnemyHitRanged(CREW crew)
+    public override void OnEnemyHitRanged(CREW crew, float damageDone)
     {
         Hit(crew);
     }
-    public override void OnEnemyHitSpell(CREW crew)
+    public override void OnEnemyHitSpell(CREW crew, float damageDone)
     {
         Hit(crew);
     }

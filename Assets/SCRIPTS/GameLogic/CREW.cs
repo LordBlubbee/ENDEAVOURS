@@ -528,6 +528,24 @@ public class CREW : NetworkBehaviour, iDamageable
                 return new MasteryMedicineRevive(this);
             case "MedicineStim":
                 return new MasteryMedicineStim(this);
+            case "DeterminationSecondWind":
+                return new MasteryDeterminationSecondWind(this);
+            case "DeterminationChallenge":
+                return new MasteryDeterminationChallenge(this);
+            case "DeterminationVictory":
+                return new MasteryDeterminationVictory(this);
+            case "DestructionSlash":
+                return new MasteryDestructionSlash(this, item);
+            case "DestructionShockwave":
+                return new MasteryDestructionShockwave(this);
+            case "DestructionRampage":
+                return new MasteryDestructionRampage(this);
+            case "DevotionEscape":
+                return new MasteryDevotionEscape(this);
+            case "DevotionSapEnergy":
+                return new MasteryDevotionSapEnergy(this);
+            case "DevotionVigor":
+                return new MasteryDevotionVigor(this);
         }
     }
     private void AddArtifactAbility(ArtifactAbility ability)
@@ -564,25 +582,25 @@ public class CREW : NetworkBehaviour, iDamageable
             ability.OnMelee();
         }
     }
-    public void ArtifactOnMeleeTarget(CREW crew)
+    public void ArtifactOnMeleeTarget(CREW crew, float damageDone)
     {
         foreach (ArtifactAbility ability in ArtifactAbilities)
         {
-            ability.OnEnemyHitMelee(crew);
+            ability.OnEnemyHitMelee(crew, damageDone);
         }
     }
-    public void ArtifactOnRangedTarget(CREW crew)
+    public void ArtifactOnRangedTarget(CREW crew, float damageDone)
     {
         foreach (ArtifactAbility ability in ArtifactAbilities)
         {
-            ability.OnEnemyHitRanged(crew);
+            ability.OnEnemyHitRanged(crew, damageDone);
         }
     }
-    public void ArtifactOnSpellTarget(CREW crew)
+    public void ArtifactOnSpellTarget(CREW crew, float damageDone)
     {
         foreach (ArtifactAbility ability in ArtifactAbilities)
         {
-            ability.OnEnemyHitSpell(crew);
+            ability.OnEnemyHitSpell(crew, damageDone);
         }
     }
     private float ArtifactOnPreventDamageMelee(float dam)
@@ -1713,7 +1731,7 @@ public class CREW : NetworkBehaviour, iDamageable
                 {
                     ((CREW)crew).AddBuff(EquippedToolObject.ApplyBuff, this);
                 }
-                ArtifactOnMeleeTarget((CREW)crew);
+                ArtifactOnMeleeTarget((CREW)crew, damageDealt);
                 if (((CREW)crew).isDead())
                 {
                     ArtifactOnKill((CREW)crew);

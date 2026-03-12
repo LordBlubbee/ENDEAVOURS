@@ -121,7 +121,7 @@ public class VCX : MonoBehaviour
         float scale = Scale * 0.6f + CAM.cam.camob.orthographicSize * 0.04f;
         transform.localScale = new Vector3(scale, scale, 1);
         Offset += MovementSpeed * MovementDir * scale * CO.co.GetWorldSpeedDelta();
-        transform.position = Follow.position + Offset + Shake;
+        if (Follow != null) transform.position = Follow.position + Offset + Shake;
 
         MovementSpeed = Mathf.Max(0,MovementSpeed- 1f * CO.co.GetWorldSpeedDelta());
         if (Duration < 0f)
