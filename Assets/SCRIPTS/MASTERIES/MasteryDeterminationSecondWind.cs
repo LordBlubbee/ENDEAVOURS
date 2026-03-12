@@ -16,7 +16,7 @@ public class MasteryDeterminationSecondWind : ArtifactAbility
         buff.BuffParticles = CO_SPAWNER.BuffParticles.PRAGMATICUS_SHIELD;
         buff.MaxStacks = 1;
         buff.Duration = 4;
-        buff.HealthChangePerSecond = 4f + User.GetATT_PHYSIQUE() * 2f;
+        buff.HealthChangePerSecond = 8f + User.GetATT_PHYSIQUE() * 2f;
         buff.ModifyDamageResEnv = 1f;
         buff.ModifyDamageResMelee = 1f;
         buff.ModifyDamageResRanged = 1f;

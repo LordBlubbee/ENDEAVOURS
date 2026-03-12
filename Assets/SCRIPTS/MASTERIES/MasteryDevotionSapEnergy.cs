@@ -14,10 +14,9 @@ public class MasteryDevotionSapEnergy : ArtifactAbility
             User.GainCredit_Healing(User.Heal(Heal));
             foreach (CREW allies in CO.co.GetAlliedCrew(User.GetFaction()))
             {
-                if (User == allies) continue;
                 if ((User.transform.position - allies.transform.position).magnitude > 16f) continue;
                 if (allies.isDead()) continue;
-                allies.AddStamina(Heal * 0.3f);
+                allies.AddStamina(Heal);
             }
         }
     }

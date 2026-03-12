@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc6a50aeedfe35848a61b49796b41f3f, type: 3}
+  m_Name: DETERMINATION_SecondWind
+  m_EditorClassIdentifier: 
+  ItemName: Heal and gain massive resistance when low
+  ItemDesc: When you are damaged and under 30% health, you gain 100% resistance to
+    all combat damage and heal for 32 (+8 per PHYSICAL) health over a period of 4
+    seconds. Then, this ability enters a long cooldown that scales off your MEDICAL.
+  AbilityID: DeterminationSecondWind
+  AbilityPrefab1: {fileID: 0}
+  ModifyAttributes: 
+  ModifyHealthMax: 0
+  ModifyHealthRegen: 0
+  ModifyStaminaMax: 0
+  ModifyStaminaRegen: 0
+  ModifyMovementSpeed: 0
+  ModifyHealingDone: 0
+  ModifyRepairDone: 0
+  ModifyMeleeDamage: 0
+  ModifyRangedDamage: 0
+  ModifySpellDamage: 0
+  ModifyMeleeRes: 0
+  ModifyRangedRes: 0
+  ModifySpellRes: 0
+  ModifyFireRes: 0
+  ModifyMistRes: 0

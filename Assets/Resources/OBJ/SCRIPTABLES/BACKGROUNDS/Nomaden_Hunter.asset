@@ -34,7 +34,7 @@ MonoBehaviour:
   BackgroundColor: {r: 0.53795713, g: 0.7264151, b: 0.099368125, a: 1}
   Background_ATT_BONUS: 0000000001000000020000000000000000000000000000000100000000000000
   MasteryTrees:
-  - {fileID: 11400000, guid: e110ff0a293817542820b47baa72a4e3, type: 2}
+  - {fileID: 11400000, guid: 598211c0cd126974a85e2669bdca305b, type: 2}
   - {fileID: 11400000, guid: 6785f119c25e0644380c1442a1acba34, type: 2}
   - {fileID: 11400000, guid: d2d1757e85c8bd340bbb82744e8cc3f8, type: 2}
   Background_StartingWeapon: {fileID: 11400000, guid: e59a1c2997ccefe469aab1d66e0ff5a3, type: 2}

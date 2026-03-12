@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14682add775d03b4480fcfe1bf0af99e, type: 3}
+  m_Name: DESTRUCTION
+  m_EditorClassIdentifier: 
+  ItemName: DESTRUCTION
+  ItemTagline: Melee splash damage
+  ThemeColor: {r: 0.8396226, g: 0.09719984, b: 0, a: 1}
+  ItemDesc: This character uses an aggressive playstyle, being capable of charging
+    into the fray on their own and obliterating forces even when completely outnumbered.
+  ItemIcon: {fileID: 21300000, guid: df56ed5324108304390a9abbd2d4e6e6, type: 3}
+  MasteryItems:
+  - {fileID: 11400000, guid: 05336a021fb97c74c9d2711c1dd3d593, type: 2}
+  - {fileID: 11400000, guid: a268da89a2411884ba552ab8b724d939, type: 2}
+  - {fileID: 11400000, guid: 8ea7d3b0fd41b0f4abf9300e884b5284, type: 2}
+  - {fileID: 11400000, guid: a833e02ad07cb364ba416a46e9843671, type: 2}
+  - {fileID: 11400000, guid: e433475351e9a48489e6226d4a045edf, type: 2}
+  - {fileID: 11400000, guid: 16b787b5088af3147bfccdadf65e27e3, type: 2}
+  - {fileID: 11400000, guid: a833e02ad07cb364ba416a46e9843671, type: 2}
+  - {fileID: 11400000, guid: ed8a32dae558e8849b84e3608a30011f, type: 2}
+  - {fileID: 11400000, guid: 28f4fea26dd4b7e459ff8ec648d05cb2, type: 2}
+  - {fileID: 11400000, guid: 360dc9495c614e0488a25e949ae63ce5, type: 2}
