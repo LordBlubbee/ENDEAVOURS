@@ -763,50 +763,13 @@ public class AI_UNIT : NetworkBehaviour
                 return;
             }
             //Repair behavior
-            mod = GetClosestFriendlyModule();
-            if (mod)
-            {
-                if (mod.GetHealthRelative() < 1)
-                {
-                    if (DistToObjective(mod.transform.position) < 16)
-                    {
-                        SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
-                        SetLookTowards(mod.GetTargetPos(), ObjectiveSpace);
-                        if (Dist(mod.transform.position) < 4f)
-                        {
-                            Unit.EquipWrenchRpc();
-                            Unit.UseItem1Rpc();
-                            PlayVCX(ScriptableVoicelist.VoicelineTypes.REPAIRING, VoiceHandler.PriorityTypes.IDLE, 0.1f);
-                        } else
-                        {
-                            PlayVCX(ScriptableVoicelist.VoicelineTypes.REPAIRING, VoiceHandler.PriorityTypes.NORMAL, 0.7f);
-                        }
-                        return;
-                    }
-                    return;
-                }
-                if (mod is ModuleWeapon)
-                {
-                    if (((ModuleWeapon)mod).EligibleForReload())
-                    {
-                        if (DistToObjective(mod.transform.position) < 8)
-                        {
-                            SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
-                            SetLookTowards(mod.GetTargetPos(), ObjectiveSpace);
-                            if (Dist(mod.transform.position) < 4f)
-                            {
-                                ((ModuleWeapon)mod).ReloadAmmoRpc();
-                            }
-                            return;
-                        }
-                    }
-                }
-            }
-            
+            PotentiallyRepairNearbyFriendlyModule();
+
             return;
         }
+        PotentiallyRepairNearbyFriendlyModule();
         //We are boarding an enemy vessel!!
-      
+
         SetAIMoveTowardsIfDistant(GetObjectiveTarget(), ObjectiveSpace);
         if (DistToObjective(transform.position) > 16)
         {
@@ -814,6 +777,50 @@ public class AI_UNIT : NetworkBehaviour
             //SetLookTowards(GetObjectiveTarget(), ObjectiveSpace);
             Unit.EquipWeapon1Rpc();
             return;
+        }
+    }
+
+    private void PotentiallyRepairNearbyFriendlyModule()
+    {
+        Module mod = GetClosestFriendlyModule();
+        if (mod)
+        {
+            if (mod.GetHealthRelative() < 1)
+            {
+                if (DistToObjective(mod.transform.position) < 16)
+                {
+                    SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+                    SetLookTowards(mod.GetTargetPos(), ObjectiveSpace);
+                    if (Dist(mod.transform.position) < 4f)
+                    {
+                        Unit.EquipWrenchRpc();
+                        Unit.UseItem1Rpc();
+                        PlayVCX(ScriptableVoicelist.VoicelineTypes.REPAIRING, VoiceHandler.PriorityTypes.IDLE, 0.1f);
+                    }
+                    else
+                    {
+                        PlayVCX(ScriptableVoicelist.VoicelineTypes.REPAIRING, VoiceHandler.PriorityTypes.NORMAL, 0.7f);
+                    }
+                    return;
+                }
+                return;
+            }
+            if (mod is ModuleWeapon)
+            {
+                if (((ModuleWeapon)mod).EligibleForReload())
+                {
+                    if (DistToObjective(mod.transform.position) < 8)
+                    {
+                        SetAIMoveTowards(GetPointAwayFromPoint(mod.GetTargetPos(), 2f), mod.Space);
+                        SetLookTowards(mod.GetTargetPos(), ObjectiveSpace);
+                        if (Dist(mod.transform.position) < 4f)
+                        {
+                            ((ModuleWeapon)mod).ReloadAmmoRpc();
+                        }
+                        return;
+                    }
+                }
+            }
         }
     }
 

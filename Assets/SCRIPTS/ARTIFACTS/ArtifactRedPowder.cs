@@ -11,11 +11,11 @@ public class ArtifactRedPowder : ArtifactAbility
 
     IEnumerator Cooldown()
     {
-        CooldownTimer = 8f / (0.9f + User.GetATT_ALCHEMY() * 0.1f);
+        CooldownTimer = 10f / (0.9f + User.GetATT_ALCHEMY() * 0.1f);
         while (CooldownTimer > 0f)
         {
-            yield return new WaitForSeconds(1);
-            CooldownTimer -= 1;
+            CooldownTimer -= CO.co.GetWorldSpeedDelta();
+            yield return null;
         }
     }
     public override void OnEnemyHitRanged(CREW crew)
@@ -29,7 +29,7 @@ public class ArtifactRedPowder : ArtifactAbility
                 if (!hit.CanBeTargeted(crew.Space)) continue;
                 if (hit.GetFaction() == crew.GetFaction())
                 {
-                    hit.TakeDamage(30f * (0.6f + User.GetATT_ALCHEMY() * 0.2f), hit.transform.position, iDamageable.DamageType.TRUE);
+                    hit.TakeDamage(20f * (1f + User.GetATT_ALCHEMY() * 0.2f), hit.transform.position, iDamageable.DamageType.SPELL_CRIT);
                 }
             }
         }

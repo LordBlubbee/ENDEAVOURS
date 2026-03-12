@@ -21,7 +21,7 @@ MonoBehaviour:
     <color=green>Melee damage +2
 
     <color=green>Whenever
-    you hit an enemy with a melee attack, you have a base chance of 5% to instantly
+    you hit an enemy with a melee attack, you have a base chance of 10% to instantly
     gain 50 Stamina. The chance scales with ALCHEMY.'
   ItemIcon: {fileID: 21300000, guid: fc09d1c7e97457240baf81de7c444f20, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Artifacts/Uncommon_SteelInscription
@@ -43,3 +43,8 @@ MonoBehaviour:
   ModifyMeleeDamage: 2
   ModifyRangedDamage: 0
   ModifySpellDamage: 0
+  ModifyMeleeRes: 0
+  ModifyRangedRes: 0
+  ModifySpellRes: 0
+  ModifyFireRes: 0
+  ModifyMistRes: 0

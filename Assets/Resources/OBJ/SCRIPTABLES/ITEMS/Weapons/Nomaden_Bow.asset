@@ -18,12 +18,10 @@ MonoBehaviour:
     making them more efficient with a lower Dexterity.
 
 
-    Skill: ARMS
+    Base damage: 14 (+1.68
+    per ARMAMENTS)
 
-    Base
-    damage: 14
-
-    Base Cooldown: 1.0'
+    Base Cooldown: 1.0 (Reduced by ARMAMENTS and ALCHEMY)'
   ItemIcon: {fileID: -275687926064039405, guid: a4c00467f6c88ad489576d4daa3d5601, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Nomaden_Bow
   ItemResourceIDShort: Nomaden_Bow

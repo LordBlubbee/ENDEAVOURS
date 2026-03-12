@@ -209,7 +209,7 @@ public class TutorialManager : MonoBehaviour
                 break;
             case TutorialProgressLevels.X_ACCESSWEAPONS_TARGET:
                 TutorialTitle.text = "TARGETING ENEMIES";
-                TutorialDescription.text = $"Here, you can use the NUMBER KEYS to select a weapon. When you have a weapon selected, use LEFT MOUSE BUTTON to manually select a target.\n\n<color=yellow>Aim Weapon 1: ({TutorialEngagementProgress}/1)";
+                TutorialDescription.text = $"Here, you can use the NUMBER KEYS to select a weapon. When you have a weapon selected, use LEFT MOUSE BUTTON to manually select a target. For this exercise, we will aim at our own Drifter. Your weapons will never shoot your own Drifter. \n\n<color=yellow>Aim Weapon 1: ({TutorialEngagementProgress}/1)";
                 break;
             case TutorialProgressLevels.X_ACCESSWEAPONS_CANCEL:
                 TutorialTitle.text = "TARGETING ENEMIES";
@@ -478,7 +478,7 @@ public class TutorialManager : MonoBehaviour
                     }
                     break;
                 case TutorialProgressLevels.UPGRADE_ENGINES:
-                    if (CO.co.Resource_Materials.Value < 50)
+                    if (CO.co.Resource_Materials.Value != 50)
                     {
                         ContinueEngagement(1);
                     }

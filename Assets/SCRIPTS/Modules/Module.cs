@@ -343,10 +343,19 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     }
     public virtual float TakeDamage(float fl, Vector3 src, DamageType type)
     {
-        if (MaxHealth < 1) return 0;
+        if (MaxHealth < 1 || IsDisabled()) return 0;
         bool isCrit = false;
         switch (type)
         {
+            case DamageType.MELEE:
+                fl *= 0.9f;
+                break;
+            case DamageType.RANGED:
+                fl *= 0.8f;
+                break;
+            case DamageType.SPELL:
+                fl *= 0.8f;
+                break;
             case DamageType.MELEE_CRIT:
                 isCrit = true;
                 break;

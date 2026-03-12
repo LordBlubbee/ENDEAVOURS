@@ -37,12 +37,12 @@ public class ModuleIncendiaryCrates : ModuleEffector
         //EXPLOSION
         if (!IsDisabled()) return;
         CO_SPAWNER.co.SpawnExplosionLargeRpc(transform.position);
-        foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position,16f))
+        foreach (Collider2D col in Physics2D.OverlapCircleAll(transform.position,24f))
         {
             CREW crew = col.GetComponent<CREW>();
             if (!crew) continue;
             float Dis = (crew.transform.position - transform.position).magnitude;
-            crew.TakeDamage(40f + (16f / Dis) * 5f,crew.transform.position, iDamageable.DamageType.ENVIRONMENT_FIRE);
+            crew.TakeDamage((60f + (1f - (Dis / 16f)) * 60f) * (1f+ModuleLevel.Value*0.5f),crew.transform.position, iDamageable.DamageType.ENVIRONMENT_FIRE);
         }
     }
 }

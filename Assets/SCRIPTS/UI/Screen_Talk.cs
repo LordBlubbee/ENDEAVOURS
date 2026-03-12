@@ -60,7 +60,7 @@ public class Screen_Talk : MonoBehaviour
                 ChoiceButtonVotes[i].color = (LOCALCO.local.CurrentDialogVote.Value == i) ? Color.cyan : Color.white;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.U) || Input.GetKeyDown(KeyCode.I))
         {
             UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
         }

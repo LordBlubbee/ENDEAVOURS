@@ -35,8 +35,7 @@ public class SpellBakutoSwords : UniqueSpell
                 PROJ proj = Instantiate(BakutoSwordPrefab, GetBakutoStrikePoint(), Caster.transform.rotation);
                 float dmg = 20f;
                 dmg += Caster.ModifySpellDamage;
-                dmg *= 0.7f + 0.1f * Caster.GetATT_COMMUNOPATHY() + 0.02f * Caster.GetCurrentCommanderLevel();
-                if (Caster.GetATT_COMMUNOPATHY() < 4) dmg *= 0.25f * Caster.GetATT_COMMUNOPATHY();
+                dmg *= 1f + 0.12f * Caster.GetATT_COMMUNOPATHY() + 0.02f * Caster.GetCurrentCommanderLevel();
                 proj.NetworkObject.Spawn();
                 proj.Init(dmg, Caster.GetFaction(), Caster.Space, Vector3.zero);
                 proj.CrewOwner = Caster;

@@ -101,7 +101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4af8441bd33cbf54196ce825168d3493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsObjectUnder: 0
   localX: 0
   localY: 0
   localRot: 0
@@ -136,7 +135,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c6a5ec4416bf6ce4fb7d5093feea6b94, type: 3}
   - {fileID: 8300000, guid: a50b10eb73e96634bbc7cc6e13105e8d, type: 3}
   Action1_SFX_Hit: []
-  attackDamage1: 50
+  attackDamage1: 45
   RangedPrefab1: {fileID: 0}
   UniqueSpell1: {fileID: 0}
   Reload1: 0.3

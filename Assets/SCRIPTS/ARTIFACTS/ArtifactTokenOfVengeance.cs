@@ -16,7 +16,7 @@ public class ArtifactTokenOfVengeance : ArtifactAbility
             buff.MaxStacks = 3;
             buff.BuffParticles = CO_SPAWNER.BuffParticles.VENGEANCE;
             buff.Duration = 7;
-            buff.ModifyDamageTaken += 0.2f+User.GetATT_ALCHEMY()*0.04f;
+            buff.ModifyDamageTaken += 0.2f+User.GetATT_ALCHEMY()*0.02f;
             enemies.AddBuff(buff, User);
         }
 

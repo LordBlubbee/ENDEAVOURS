@@ -17,10 +17,8 @@ MonoBehaviour:
     the people with, using their massive shield to block incoming attacks.
 
 
-    Skill:
-    PHYSICAL
-
-    Base damage: 9
+    Base
+    damage: 10 (+1.2 per PHYSICAL)
 
 
     SECONDARY: BLOCK'
@@ -28,8 +26,8 @@ MonoBehaviour:
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/CataliSwordShield
   ItemResourceIDShort: CataliSwordShield
   SellMaterials: 4
-  SellSupplies: 4
+  SellSupplies: 8
   SellTech: 0
-  ItemRarity: 0
+  ItemRarity: 1
   MinimumAttributes: 
   ToolPrefab: {fileID: 8311341897716400573, guid: 358a0ce823730524ba79a24db6688a34, type: 3}

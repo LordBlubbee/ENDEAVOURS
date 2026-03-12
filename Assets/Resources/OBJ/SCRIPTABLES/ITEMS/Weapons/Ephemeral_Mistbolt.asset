@@ -18,12 +18,10 @@ MonoBehaviour:
     to deal splash damage.
 
 
-    Skill: COMMUNOPATHY
-
-    Base damage: 24
+    Base damage: 20 (+2.4 per COMMUNOPATHY)
 
     Base
-    Cooldown: 3.0'
+    Cooldown: 3.0 (Lowered by COMMUNOPATHY and ALCHEMY)'
   ItemIcon: {fileID: 21300000, guid: b76ea5d9b24b73a4597737cc454793d0, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Ephemeral_Mistbolt
   ItemResourceIDShort: Ephemeral_Mistbolt

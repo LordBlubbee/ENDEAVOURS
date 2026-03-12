@@ -24,6 +24,10 @@ public class Screen_Inventory : MonoBehaviour
     public TextMeshProUGUI DrifterHealthTex;
     public TextMeshProUGUI DrifterRepairTex;
     public GameObject PlayerCrewButton;
+    public GameObject MasteryScreen;
+    public UI_MasteryTree[] MasteryTrees;
+    public TextMeshProUGUI MasteryPointsTex_AttributeScreen;
+    public TextMeshProUGUI MasteryPointsTex_MasteryScreen;
     private void OnEnable()
     {
         SkillRefresh(); 
@@ -35,9 +39,10 @@ public class Screen_Inventory : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || (Input.GetKeyDown(KeyCode.I) && !UI.ui.ChatUI.ChatScreen.activeSelf))
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.U) || Input.GetKeyDown(KeyCode.I)) && !UI.ui.ChatUI.ChatScreen.activeSelf)
         {
-            UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
+            if (MasteryScreen.activeSelf) MasteryScreen.SetActive(false);
+            else UI.ui.SelectScreen(UI.ui.MainGameplayUI.gameObject);
         }
         if (HoldingItemTile)
         {
@@ -81,6 +86,10 @@ public class Screen_Inventory : MonoBehaviour
         {
             UpdateCrewScreen();
         }
+        if (MasteryScreen.activeSelf)
+        {
+            UpdateMasteryScreen();
+        }
         RefreshDrifterStats();
     }
 
@@ -90,6 +99,38 @@ public class Screen_Inventory : MonoBehaviour
         if (CO.co.Resource_Ammo.Value < 10) return;
         CO.co.PlayerMainDrifter.CreateAmmoCrateRpc(LOCALCO.local.GetPlayer().transform.position);
     }*/
+
+    public void UpdateMasteryScreen()
+    {
+        UpdateMasteryItems();
+        MasteryPointsTex_MasteryScreen.text = $"MASTERY POINTS: {LOCALCO.local.GetPlayer().MasteryPoints.Value}";
+    }
+    public void PressMasteryScreen()
+    {
+        AUDCO.aud.PlaySFX(AUDCO.aud.Press);
+        MasteryScreen.SetActive(!MasteryScreen.activeSelf);
+        if (MasteryScreen.activeSelf) UpdateMasteryScreen();
+    }
+    public void SetMasteryItems(CREW Play)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            MasteryTrees[i].InitMastery(Play.CharacterBackground.MasteryTrees[i]);
+        }
+    }
+    List<int> MasteriesList = new();
+    public void SetMasteryList(List<int> list)
+    {
+        MasteriesList = list;
+        UpdateMasteryItems();
+    }
+    public void UpdateMasteryItems()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            MasteryTrees[i].SetUnlockStatus(MasteriesList);
+        }
+    }
 
     void RefreshPlayerEquipment()
     {
@@ -129,7 +170,7 @@ public class Screen_Inventory : MonoBehaviour
         DrifterTexAmmunition.text = $"AMMUNITION: {CO.co.Resource_Ammo.Value}";
         DrifterTexTechnology.text = $"TECHNOLOGY: {CO.co.Resource_Tech.Value}";
 
-        if (LOCALCO.local.GetPlayer().SkillPoints.Value > 2)
+        if (LOCALCO.local.GetPlayer().MasteryPoints.Value > 0)
         {
             SubscreenCharacterButtonTex.text = "LEVEL UP";
             SubscreenCharacterButtonTex.color = Color.cyan;
@@ -204,6 +245,15 @@ public class Screen_Inventory : MonoBehaviour
         } else
         {
             SkillPointTex.text = "";
+        }
+        if (LOCALCO.local.GetPlayer().MasteryPoints.Value > 0)
+        {
+            MasteryPointsTex_AttributeScreen.text = $"MASTERY: {LOCALCO.local.GetPlayer().MasteryPoints.Value}";
+            MasteryPointsTex_AttributeScreen.color = Color.cyan;
+        }
+        else
+        {
+            MasteryPointsTex_AttributeScreen.text = "MASTERY";
         }
         LevelTex.text = $"LEVEL {LOCALCO.local.GetPlayer().XPLevel.Value}";
         ExperienceTex.text = $"XP: ({LOCALCO.local.GetPlayer().XPPoints.Value}/100)";
@@ -336,7 +386,7 @@ public class Screen_Inventory : MonoBehaviour
                     return;
                 }
             }
-            if (HoldingItem is ScriptableEquippableModule)
+            if (HoldingItem is ScriptableEquippableModule && CurrentDraggingSlot.DefaultEquipState != InventorySlot.EquipStates.INVENTORY_SWITCH)
             {
                 ScriptableEquippableModule module = (ScriptableEquippableModule)HoldingItem;
                 if (module.EquipType == ScriptableEquippableModule.EquipTypes.WEAPON)
@@ -364,7 +414,7 @@ public class Screen_Inventory : MonoBehaviour
             Debug.Log($"We moved FROM {CurrentDraggingSlot} item: {CurrentDraggingSlot.GetEquippedItem()} (Supposed to be {slotSwap})");
             Debug.Log($"We moved TO {slot} item: {slot.GetEquippedItem()} (Supposed to be {HoldingItem})");
 
-            if (HoldingItem is ScriptableEquippableModule)
+            if (HoldingItem is ScriptableEquippableModule && CurrentDraggingSlot.DefaultEquipState != InventorySlot.EquipStates.INVENTORY_SWITCH)
             {
                 AUDCO.aud.PlaySFX(AUDCO.aud.Upgrade);
                 CO.co.PlayerMainDrifter.Interior.AddModuleRpc(HoldingItem.GetItemResourceIDFull());
@@ -726,9 +776,9 @@ public class Screen_Inventory : MonoBehaviour
                 case Module.ModuleTypes.INCENDIARY_STORAGE:
                     ModuleIncendiaryCrates incin = (ModuleIncendiaryCrates)SelectedDrifterSlot.ModuleLink;
                     Data += $"\nDURATION: {incin.GetEffectDuration().ToString("0.0")}";
-                    Data += $"<color=green> (+{incin.EffectDurationPerLevel})</color>)";
+                    Data += $"<color=green> (+{incin.EffectDurationPerLevel})</color>";
                     Data += $"\nCOOLDOWN: {incin.GetEffectCooldownMax().ToString("0.0")}";
-                    Data += $"<color=green> ({incin.EffectCooldownReductionPerLevel})</color>)";
+                    Data += $"<color=green> ({incin.EffectCooldownReductionPerLevel})</color>";
 
                     //Unique
                     Data += $"\nDAMAGE BOOST: +{((incin.GetDamageBonusMod()-1f)*100f).ToString("0")}%";

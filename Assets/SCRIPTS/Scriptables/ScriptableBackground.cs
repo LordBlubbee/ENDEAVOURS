@@ -19,6 +19,7 @@ public class ScriptableBackground : ScriptableObject
     public Color BackgroundColor;
     [Header("PHYS, ARM, DEX, COM, CMD, ENG, ALC, MED")]
     public int[] Background_ATT_BONUS = new int[8];
+    public List<ScriptableMasteryTree> MasteryTrees;
     public ScriptableEquippableWeapon Background_StartingWeapon;
     public ScriptableEquippableWeapon Background_StartingWeapon2;
     public ScriptableEquippableWeapon Background_StartingArtifact;

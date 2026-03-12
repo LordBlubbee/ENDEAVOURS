@@ -16,10 +16,8 @@ MonoBehaviour:
   ItemDesc: 'Standard-issue heavy melee weapon with a good reach.
 
 
-    Skill: PHYSICAL
-
-    Base
-    damage: 15
+    Base damage:
+    13 (+1.56 per PHYSICAL)
 
 
     SECONDARY: BLOCK'

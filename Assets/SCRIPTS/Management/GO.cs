@@ -469,6 +469,8 @@ public class dataPlayer
     public int PlayerSkillPoints;
     public int PlayerXPTotal;
     public int[] PlayerAttributes;
+    public int PlayerMasteryPoints;
+    public int[] PlayerMasteries;
 
     public string[] PlayerWeapons;
     public string PlayerArmor;

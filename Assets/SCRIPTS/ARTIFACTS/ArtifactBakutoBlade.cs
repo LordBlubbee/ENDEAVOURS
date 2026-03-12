@@ -12,7 +12,7 @@ public class ArtifactBakutoBlade : ArtifactAbility
     }
     private void Hit(CREW crew)
     {
-        if (Random.Range(0f, 1f) > 0.05f + User.GetATT_ALCHEMY() * 0.01f) return;
+        if (Random.Range(0f, 1f) > 0.1f + User.GetATT_ALCHEMY() * 0.01f) return;
 
         User.AddStamina(50);
     }

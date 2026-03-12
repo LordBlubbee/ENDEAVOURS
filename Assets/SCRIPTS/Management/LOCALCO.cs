@@ -95,6 +95,17 @@ public class LOCALCO : NetworkBehaviour
         }
     }
 
+    public void SendMasteryTreeUpdate()
+    {
+        UpdateMasteryTreeRpc(GetPlayer().UnlockedMasteries.ToArray());
+    }
+
+    [Rpc(SendTo.Owner)]
+    public void UpdateMasteryTreeRpc(int[] Tree)
+    {
+        GetPlayer().UnlockedMasteries = new List<int>(Tree);
+        UI.ui.InventoryUI.SetMasteryList(new List<int>(Tree));
+    }
     public override void OnNetworkSpawn()
     {
         StartCoroutine(Register());
@@ -314,7 +325,12 @@ public class LOCALCO : NetworkBehaviour
         crew.AddXP(CO.co.Resource_TotalXP.Value - LoadedCharacter.PlayerXPTotal);
         crew.AddXP(LoadedCharacter.PlayerXP);
         crew.SkillPoints.Value += LoadedCharacter.PlayerSkillPoints;
-
+        crew.MasteryPoints.Value += LoadedCharacter.PlayerMasteryPoints;
+        crew.UnlockedMasteries = new List<int>(LoadedCharacter.PlayerMasteries);
+        foreach (int ID in LoadedCharacter.PlayerMasteries)
+        {
+            crew.UnlockMastery(ID);
+        }
         //Automatically obtain items from the inventory of the Drifter
         for (int i = 0; i < 3; i++)
         {
@@ -393,7 +409,9 @@ public class LOCALCO : NetworkBehaviour
         crew.Init();
         crew.SetHomeDrifter(CO.co.PlayerMainDrifter);
         crew.RegisterPlayerOnLOCALCORpc();
-       
+
+        if (CO.co.Test_StartingLoot != null) crew.AddXP(1000);
+
         CO.co.PlayerMainDrifter.Interior.AddCrew(crew);
         return crew;
     }

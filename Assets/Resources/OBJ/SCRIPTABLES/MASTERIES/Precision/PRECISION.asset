@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14682add775d03b4480fcfe1bf0af99e, type: 3}
+  m_Name: PRECISION
+  m_EditorClassIdentifier: 
+  ItemName: PRECISION
+  ItemTagline: Long-range accurate destruction
+  ThemeColor: {r: 0.9528302, g: 0.78891075, b: 0.20225172, a: 1}
+  ItemDesc: This combat doctrine maintains long distances over everything, vastly
+    improving your ranged combat damage against single targets.
+  ItemIcon: {fileID: 21300000, guid: bcca99b011c993e41805f0373a3a6a20, type: 3}
+  MasteryItems:
+  - {fileID: 11400000, guid: a6bb140816ac78a488fcc9d6d7a183e3, type: 2}
+  - {fileID: 11400000, guid: a6bb140816ac78a488fcc9d6d7a183e3, type: 2}
+  - {fileID: 11400000, guid: cc39155851446e94bad961548807d843, type: 2}
+  - {fileID: 11400000, guid: a268da89a2411884ba552ab8b724d939, type: 2}
+  - {fileID: 11400000, guid: a6bb140816ac78a488fcc9d6d7a183e3, type: 2}
+  - {fileID: 11400000, guid: 5de96b43d2a256b4a9d521dcb8ffa7bb, type: 2}
+  - {fileID: 11400000, guid: 05336a021fb97c74c9d2711c1dd3d593, type: 2}
+  - {fileID: 11400000, guid: 4c6f64a49ac423f4f850398be53dfd42, type: 2}
+  - {fileID: 11400000, guid: ed8a32dae558e8849b84e3608a30011f, type: 2}
+  - {fileID: 11400000, guid: 733e91aab8938bb41a451032a8d371f1, type: 2}

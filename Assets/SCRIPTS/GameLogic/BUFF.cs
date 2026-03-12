@@ -5,7 +5,7 @@ using static CO_SPAWNER;
 public class BUFF
 {
     private ScriptableBuff buff;
-    private string Name;
+    public string Name;
     private int Stacks;
     private float Duration;
     public CO_SPAWNER.BuffParticles BuffParticles;
@@ -17,6 +17,10 @@ public class BUFF
     {
         return Stacks;
     }
+    public int GetMaxStacks()
+    {
+        return buff.MaxStacks;
+    }
 
     public float TemporaryHitpoints = 0;
     public ScriptableBuff GetScriptable()
@@ -25,6 +29,7 @@ public class BUFF
     }
     public BUFF(ScriptableBuff buf, CREW crew, CREW Owner)
     {
+        Name = buf.name;
         buff = buf;
         BuffParticles = buf.BuffParticles;
         BuffOwner = Owner;
@@ -34,7 +39,11 @@ public class BUFF
     {
         Name = buf.name;
         Duration = buf.Duration;
-        if (Stacks >= buf.MaxStacks) return;
+        buff = buf;
+        if (Stacks >= buf.MaxStacks)
+        {
+            LoseStack(crew);
+        }
         Stacks = Mathf.Clamp(Stacks + 1, 1, buf.MaxStacks);
 
         HealthChangePerSecond += buff.HealthChangePerSecond;
@@ -52,30 +61,54 @@ public class BUFF
         crew.ModifyRangedDamage += buff.ModifyRangedDamage;
         crew.ModifySpellDamage += buff.ModifySpellDamage;
 
+        crew.ModifyHealingDone += buff.ModifyHealingDone;
+        crew.ModifyRepairDone += buff.ModifyRepairDone;
+
         crew.ModifyDamageTaken += buff.ModifyDamageTaken;
+        crew.FireRes += buff.ModifyDamageResEnv;
+        crew.MistRes += buff.ModifyDamageResEnv;
+        crew.MeleeRes += buff.ModifyDamageResMelee;
+        crew.RangedRes += buff.ModifyDamageResRanged;
+        crew.SpellRes += buff.ModifyDamageResSpell;
+
         TemporaryHitpoints = buff.TemporaryHitpoints;
     }
     public void RemoveBuff(CREW crew)
     {
-        for (int i = 0; i < Stacks;i++)
+        while (Stacks > 0)
         {
-            HealthChangePerSecond -= buff.HealthChangePerSecond;
-
-            crew.ModifyHealthMax.Value -= buff.ModifyHealthMax;
-            crew.ModifyHealthRegen -= buff.ModifyHealthRegen;
-            crew.ModifyStaminaMax -= buff.ModifyStaminaMax;
-            crew.ModifyStaminaRegen -= buff.ModifyStaminaRegen;
-            crew.ModifyMovementSpeed -= buff.ModifyMovementSpeed;
-            crew.ModifyMovementSlow -= buff.ModifyMovementSlow;
-            crew.ModifyAnimationSpeed -= buff.ModifyAnimationSpeed;
-            crew.ModifyAnimationSlow -= buff.ModifyAnimationSlow;
-
-            crew.ModifyMeleeDamage -= buff.ModifyMeleeDamage;
-            crew.ModifyRangedDamage -= buff.ModifyRangedDamage;
-            crew.ModifySpellDamage -= buff.ModifySpellDamage;
-
-            crew.ModifyDamageTaken -= buff.ModifyDamageTaken;
+            LoseStack(crew);
         }
+    }
+
+    public void LoseStack(CREW crew)
+    {
+        Stacks--;
+
+        HealthChangePerSecond -= buff.HealthChangePerSecond;
+
+        crew.ModifyHealthMax.Value -= buff.ModifyHealthMax;
+        crew.ModifyHealthRegen -= buff.ModifyHealthRegen;
+        crew.ModifyStaminaMax -= buff.ModifyStaminaMax;
+        crew.ModifyStaminaRegen -= buff.ModifyStaminaRegen;
+        crew.ModifyMovementSpeed -= buff.ModifyMovementSpeed;
+        crew.ModifyMovementSlow -= buff.ModifyMovementSlow;
+        crew.ModifyAnimationSpeed -= buff.ModifyAnimationSpeed;
+        crew.ModifyAnimationSlow -= buff.ModifyAnimationSlow;
+
+        crew.ModifyMeleeDamage -= buff.ModifyMeleeDamage;
+        crew.ModifyRangedDamage -= buff.ModifyRangedDamage;
+        crew.ModifySpellDamage -= buff.ModifySpellDamage;
+
+        crew.ModifyHealingDone -= buff.ModifyHealingDone;
+        crew.ModifyRepairDone -= buff.ModifyRepairDone;
+
+        crew.ModifyDamageTaken -= buff.ModifyDamageTaken;
+        crew.FireRes -= buff.ModifyDamageResEnv;
+        crew.MistRes -= buff.ModifyDamageResEnv;
+        crew.MeleeRes -= buff.ModifyDamageResMelee;
+        crew.RangedRes -= buff.ModifyDamageResRanged;
+        crew.SpellRes -= buff.ModifyDamageResSpell;
     }
     public bool IsExpired()
     {

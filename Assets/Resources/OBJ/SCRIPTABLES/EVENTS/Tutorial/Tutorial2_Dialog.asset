@@ -30,7 +30,8 @@ MonoBehaviour:
     Speaker: {fileID: 11400000, guid: c40c04091c58e3741991105df408e96f, type: 2}
     Alternatives: []
   - BaseText: To defeat an enemy Drifter, it is imperative that you focus the fire
-      of your Drifter's main weapons upon their most critical systems.
+      of your Drifter's main weapons to target the same area, preferably at their
+      most important systems, such as the enemy's weapons.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: c40c04091c58e3741991105df408e96f, type: 2}
     Alternatives: []

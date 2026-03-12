@@ -27,8 +27,8 @@ public class ArtifactTraditionsPromise : ArtifactAbility
         CooldownTimer = 25f / (0.9f + User.GetATT_ALCHEMY() * 0.1f);
         while (CooldownTimer > 0f)
         {
-            yield return new WaitForSeconds(1);
-            CooldownTimer -= 1;
+            CooldownTimer -= CO.co.GetWorldSpeedDelta();
+            yield return null;
         }
     }
 }

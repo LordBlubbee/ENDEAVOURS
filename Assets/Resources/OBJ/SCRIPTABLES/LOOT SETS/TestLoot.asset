@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: TestLoot
   m_EditorClassIdentifier: 
   CommonDrops:
-  - Item: {fileID: 11400000, guid: 166787dba1c508641bd72e4fd51e46e0, type: 2}
+  - Item: {fileID: 11400000, guid: 449c5f8a53605c64782d3d0d9101d75f, type: 2}
     Weight: 0
   - Item: {fileID: 11400000, guid: 94331255bdf77974a95e9aa0ff10aa02, type: 2}
     Weight: 0
   - Item: {fileID: 11400000, guid: 3b837c639764cda47bf40d0913f5a4e7, type: 2}
     Weight: 0
-  - Item: {fileID: 11400000, guid: acdc84f7aedc49344a581b4ed33a3453, type: 2}
+  - Item: {fileID: 11400000, guid: 6399eb3ea7b4a6f4a95f39db417a8f4b, type: 2}
+    Weight: 0
+  - Item: {fileID: 11400000, guid: 767ff06a4e8942d46a6a26b1f5bde4c2, type: 2}
     Weight: 0
   UncommonDrops: []
   RareDrops: []

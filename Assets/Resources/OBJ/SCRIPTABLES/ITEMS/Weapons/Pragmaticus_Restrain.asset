@@ -14,16 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: 'Command: Restrain'
   ItemDesc: 'The unwavering believe in the Stipulations'' Truth allows you to command
-    an opponent to restrain themselves, preventing their movement and allowing you
-    to strike them freely.
+    an opponent to restrain themselves, preventing their movement, reducing their
+    melee damage, and allowing you to strike them freely.
 
 
-    Skill: COMMUNOPATHY
+    Melee damage reduction:
+    -10
 
-    Base Stun: 3 seconds
+    Base Stun: 3.0 (+0.4 per COMMUNOPATHY)
 
-    Base
-    Cooldown: 12.0'
+    Base Cooldown: 12.0 (Reduced
+    by COMMUNOPATHY and ALCHEMY)'
   ItemIcon: {fileID: 2322184774791884214, guid: c32c198a28f111446a4679e951112cc6, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Pragmaticus_Restrain
   ItemResourceIDShort: Pragmaticus_Restrain

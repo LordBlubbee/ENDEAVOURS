@@ -64,12 +64,14 @@ public class UI : MonoBehaviour
             LossScreenTex.alpha += Time.deltaTime * 1f;
             yield return null;
         }
+        yield return new WaitForSeconds(1f);
         LossScreenScore.text = $"A power known as the Provisio stirs. \nPROVISIO: {CO.co.Resource_TotalXP.Value}";
         while (LossScreenScore.alpha < 1)
         {
             LossScreenScore.alpha += Time.deltaTime * 1f;
             yield return null;
         }
+        yield return new WaitForSeconds(1f);
         LossScreenLeaveButton.SetActive(true);
 
     }

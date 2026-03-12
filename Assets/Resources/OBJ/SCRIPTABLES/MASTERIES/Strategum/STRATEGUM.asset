@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14682add775d03b4480fcfe1bf0af99e, type: 3}
+  m_Name: STRATEGUM
+  m_EditorClassIdentifier: 
+  ItemName: STRATEGUM
+  ItemTagline: Logipedes group strategy
+  ThemeColor: {r: 0.9339623, g: 0.89791745, b: 0.73571557, a: 1}
+  ItemDesc: Stipulation-based combat strategy grants you massively increased performance
+    in healing, repairing, and fighting alongside your crew. May All Be United.
+  ItemIcon: {fileID: 21300000, guid: cd36851d0d64b404780835aaea5a355a, type: 3}
+  MasteryItems:
+  - {fileID: 11400000, guid: af6add03b40e97048bd4787f72006132, type: 2}
+  - {fileID: 11400000, guid: 83232465370a09a439b269d57f5be11b, type: 2}
+  - {fileID: 11400000, guid: caeccedea20807f49856a23903e0e06f, type: 2}
+  - {fileID: 11400000, guid: b4e0f3cc8c6f1044ba164b3822243c92, type: 2}
+  - {fileID: 11400000, guid: 05336a021fb97c74c9d2711c1dd3d593, type: 2}
+  - {fileID: 11400000, guid: 382ee512e1032964aa34cc0bdc664337, type: 2}
+  - {fileID: 11400000, guid: 28f4fea26dd4b7e459ff8ec648d05cb2, type: 2}
+  - {fileID: 11400000, guid: 6a56c7d14a0b60344bbe1997d0cfef5f, type: 2}
+  - {fileID: 11400000, guid: 28f4fea26dd4b7e459ff8ec648d05cb2, type: 2}
+  - {fileID: 11400000, guid: 561a586d5dc9da648804a0a4ca8526b8, type: 2}

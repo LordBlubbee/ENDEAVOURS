@@ -17,9 +17,7 @@ MonoBehaviour:
     combat.
 
 
-    Skill: PHYSICAL
-
-    Base damage: 12
+    Base damage: 10 (+1.2 per PHYSICAL)
 
 
     SECONDARY: BLOCK'

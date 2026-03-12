@@ -367,7 +367,7 @@ public class CO : NetworkBehaviour
         switch (GetLOCALCO().Count)
         {
             case 1:
-                PlayerDiff = 0.9f;
+                PlayerDiff = 0.85f;
                 break;
             case 2:
                 PlayerDiff = 1.1f;
@@ -542,19 +542,19 @@ public class CO : NetworkBehaviour
         switch (GetLOCALCO().Count)
         {
             case 1:
-                PlayerDiff = 1f;
+                PlayerDiff = 0.94f;
                 break;
             case 2:
-                PlayerDiff = 1.06f;
+                PlayerDiff = 1.0f;
                 break;
             case 3:
-                PlayerDiff = 1.12f;
+                PlayerDiff = 1.07f;
                 break;
             case 4:
-                PlayerDiff = 1.18f;
+                PlayerDiff = 1.14f;
                 break;
             case 5:
-                PlayerDiff = 1.24f;
+                PlayerDiff = 1.21f;
                 break;
             case 6:
                 PlayerDiff = 1.28f;
@@ -563,7 +563,7 @@ public class CO : NetworkBehaviour
                 PlayerDiff = 1.32f;
                 break;
             case 8:
-                PlayerDiff = 1.35f;
+                PlayerDiff = 1.37f;
                 break;
             case 9:
                 PlayerDiff = 1.42f;
@@ -625,7 +625,7 @@ public class CO : NetworkBehaviour
         switch (GetLOCALCO().Count)
         {
             case 1:
-                PlayerDiff = 0.75f;
+                PlayerDiff = 0.7f;
                 break;
             case 2:
                 PlayerDiff = 0.95f;
@@ -816,9 +816,11 @@ public class CO : NetworkBehaviour
                         local.GetPlayer().EquipWeaponLocallyRpc(i, local.GetPlayer().EquippedWeapons[i] ? local.GetPlayer().EquippedWeapons[i].GetItemResourceIDShort() : null);
                         local.GetPlayer().EquipArtifactLocallyRpc(i, local.GetPlayer().EquippedArtifacts[i] ? local.GetPlayer().EquippedArtifacts[i].GetItemResourceIDShort() : null);
                     }
+                    local.SendMasteryTreeUpdate();
                 }
-                SendPeriodicInventoryUpdate();
+                //SendPeriodicInventoryUpdate();
             }
+            SendPeriodicInventoryUpdate();
             CheckLossCondition();
             yield return new WaitForSeconds(2f);
         }
@@ -2079,7 +2081,7 @@ public class CO : NetworkBehaviour
 
             EnemyBarRelative.Value = 1f - Death;
             if (Vaults.Count == 0) EnemyBarString.Value = $"<color=green>OBJECTIVE COMPLETE";
-            else EnemyBarString.Value = $"FIND {Vaults.Count} VAULTS";
+            else EnemyBarString.Value = $"REPAIR {Vaults.Count}/{TotalVaults} VAULTS";
             if (AreCrewAwayFromHome())
             {
                 AreWeInDanger.Value = true;
@@ -2176,7 +2178,7 @@ public class CO : NetworkBehaviour
             else
             {
                 if (HasStartedDefense) EnemyBarString.Value = $"REPULSOR PROGRESS: {((1f-DefenseProgress)*100f).ToString("0")}%";
-                else EnemyBarString.Value = $"FIND REPULSORS";
+                else EnemyBarString.Value = $"REPAIR REPULSORS";
             }
             if (AreCrewAwayFromHome())
             {
@@ -2221,7 +2223,7 @@ public class CO : NetworkBehaviour
                             PossibleUnits.Add(unit);
                         }
                     }
-                    int Amount = Mathf.RoundToInt(CurrentDungeon.AI.GetUnits().Count * UnityEngine.Random.Range(0.15f,0.25f));
+                    int Amount = Mathf.RoundToInt(CurrentDungeon.AI.GetUnits().Count * UnityEngine.Random.Range(0.15f,0.2f));
                     for (i = 0; i < Amount; i++)
                     {
                         if (PossibleUnits.Count == 0) break;
@@ -2642,6 +2644,8 @@ public class CO : NetworkBehaviour
         play.PlayerXP = crew.XPPoints.Value;
         play.PlayerXPTotal = CO.co.Resource_TotalXP.Value;
         play.PlayerSkillPoints = crew.SkillPoints.Value;
+        play.PlayerMasteryPoints = crew.MasteryPoints.Value;
+        play.PlayerMasteries = crew.UnlockedMasteries.ToArray();
         play.PlayerAttributes = crew.GetAttributes();
         play.PlayerWeapons = new string[3];
         if (crew.EquippedWeapons[0] != null) play.PlayerWeapons[0] = crew.EquippedWeapons[0].GetItemResourceIDFull();

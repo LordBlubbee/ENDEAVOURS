@@ -29,7 +29,7 @@ MonoBehaviour:
     Speaker: {fileID: 11400000, guid: b7316e420e6b33e41999ba092b1fe073, type: 2}
     Alternatives: []
   - BaseText: In this particular Dungeon, your objective is to find and loot a number
-      of Vaults by repairing them.
+      of Vaults by repairing them, using your wrench.
     VariantTexts: []
     Speaker: {fileID: 11400000, guid: e063144cf422eff408c7e1329f403e15, type: 2}
     Alternatives: []

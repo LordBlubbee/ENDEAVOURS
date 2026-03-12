@@ -18,9 +18,7 @@ MonoBehaviour:
     to sustain all hits.
 
 
-    Skill: PHYSICAL
-
-    Base damage: 12
+    Base damage: 11 (+1.32 per PHYSICAL)
 
 
     SECONDARY:

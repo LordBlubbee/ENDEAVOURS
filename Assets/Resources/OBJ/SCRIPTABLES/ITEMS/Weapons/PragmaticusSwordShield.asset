@@ -18,9 +18,7 @@ MonoBehaviour:
     assault.
 
 
-    Skill: PHYSICAL
-
-    Base damage: 9
+    Base damage: 9 (+1.08 per PHYSICAL)
 
 
     SECONDARY: BLOCK'

@@ -28,8 +28,8 @@ public class ArtifactStipulationOfRights : ArtifactAbility
         CooldownTimer = 60f / (0.9f + User.GetATT_COMMAND() * 0.1f);
         while (CooldownTimer > 0f)
         {
-            yield return new WaitForSeconds(1);
-            CooldownTimer -= 1;
+            CooldownTimer -= CO.co.GetWorldSpeedDelta();
+            yield return null;
         }
     }
 }

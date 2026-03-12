@@ -4,6 +4,7 @@ public class ArtifactAbility
 {
     protected CREW User;
     protected ScriptableEquippableArtifact Artifact;
+    protected ScriptableMasteryItem Mastery;
     public ArtifactAbility(CREW crew)
     {
         User = crew;
@@ -22,6 +23,10 @@ public class ArtifactAbility
 
     }
     public virtual void OnSpell()
+    {
+
+    }
+    public virtual void OnMedkit(CREW crew)
     {
 
     }

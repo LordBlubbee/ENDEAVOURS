@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AI_Type: 0
   AI_Group: 0
-  CrewAmountLevel: 1900
+  CrewAmountLevel: 1700
   CrewQualityLevel: 120
   GuaranteedCrewList: []
   SpawnCrewList:

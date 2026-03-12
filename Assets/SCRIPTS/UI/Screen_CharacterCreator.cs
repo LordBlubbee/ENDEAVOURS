@@ -273,7 +273,7 @@ public class Screen_CharacterCreator : MonoBehaviour
                 str += "Black";
                 break;
             default:
-                str += "Gray";
+                str += "Grey";
                 break;
         }
         switch (UnityEngine.Random.Range(0, 10))
@@ -418,17 +418,41 @@ public class Screen_CharacterCreator : MonoBehaviour
     public Image SelectedBackgroundScreenImageOuter;
     public TextMeshProUGUI SelectedBackgroundScreenTitle;
     public TextMeshProUGUI SelectedBackgroundScreenDesc;
+    public Image SelectedPrimaryWeapon;
+    public TooltipObject SelectedPrimaryWeaponTool;
+    public Image[] SelectedMasteryBorders;
+    public Image[] SelectedMasteryIcons;
+    public TooltipObject[] SelectedMasteryTools;
     UI_OpenBackground CurrentlySelectedBackground;
     public void OpenExactBackground(UI_OpenBackground back)
     {
         CurrentlySelectedBackground = back;
-        SelectedBackgroundScreenImage.sprite = back.Background.MainIcon;
-        SelectedBackgroundScreenImageOuter.color = back.Background.BackgroundColor;
+        SelectedBackgroundScreenImage.sprite = back.Background.Sprite_Player;
+        SelectedBackgroundScreenImageOuter.color = Color.black;
         SelectedBackgroundScreenTitle.text = back.Background.BackgroundName;
+        SelectedBackgroundScreenTitle.color = back.Background.BackgroundColor;
         SelectedBackgroundScreenDesc.text = back.Background.LongDesc;
+        SelectedPrimaryWeapon.sprite = back.Background.Background_StartingWeapon.ItemIcon;
+        SelectedPrimaryWeaponTool.Tooltip = $"{back.Background.Background_StartingWeapon.ItemName}\n\n{back.Background.Background_StartingWeapon.ItemDesc}";
 
         AppearanceSprite.sprite = back.Background.Sprite_Player;
         AppearanceStripes.sprite = back.Background.Sprite_Stripes;
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (i < back.Background.MasteryTrees.Count)
+            {
+                SelectedMasteryBorders[i].gameObject.SetActive(true);
+                SelectedMasteryBorders[i].color = back.Background.MasteryTrees[i].ThemeColor;
+                SelectedMasteryIcons[i].sprite = back.Background.MasteryTrees[i].ItemIcon;
+                SelectedMasteryTools[i].Tooltip = back.Background.MasteryTrees[i].ItemName + "\n" + back.Background.MasteryTrees[i].ItemTagline + "\n\n" + back.Background.MasteryTrees[i].ItemDesc;
+            }
+            else
+            {
+                SelectedMasteryBorders[i].gameObject.SetActive(false);
+            }
+        }
+
         OpenSubscreen(SelectedBackgroundScreen);
     }
     public void ChooseBackgroundExact(Image ob)

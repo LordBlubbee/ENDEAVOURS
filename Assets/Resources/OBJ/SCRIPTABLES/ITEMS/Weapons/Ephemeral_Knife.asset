@@ -18,15 +18,13 @@ MonoBehaviour:
     damage over time.
 
 
-    Skill: DEXTERITY
-
-    Base damage: 7
+    Base damage: 6 (+0.72 per PHYSICAL)
 
     Mist damage:
     40
 
 
-    SECONDARY: Power strike'
+    SECONDARY: None'
   ItemIcon: {fileID: -2604675264708228931, guid: 12e90a27133eb0d44ba30ce1aeab6840, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Ephemeral_Knife
   ItemResourceIDShort: Ephemeral_Knife

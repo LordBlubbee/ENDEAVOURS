@@ -501,7 +501,9 @@ public class CO_SPAWNER : NetworkBehaviour
             WalkableTile SelectedTile = ObjectivePositions[UnityEngine.Random.Range(0, ObjectivePositions.Count)];
             ObjectivePositions.Remove(SelectedTile);
             Vault vault = Instantiate(VaultObjectiveObject, SelectedTile.transform.position+ GetRandomOnTile(), SelectedTile.transform.rotation);
-            vault.ExtraMaxHealth.Value = ((50 + CO.co.GetLOCALCO().Count * 100) / Vaults) -50;
+          
+            if (CO.co.GetLOCALCO().Count == 1) vault.ExtraMaxHealth.Value = 100f / Vaults - 50f;
+            else vault.ExtraMaxHealth.Value = ((50f + CO.co.GetLOCALCO().Count * 100f) / Vaults) - 50f;
             vault.NetworkObject.Spawn();
             vault.transform.SetParent(Dungeon.Space.transform);
             vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;
@@ -544,7 +546,8 @@ public class CO_SPAWNER : NetworkBehaviour
             NearbyTiles.Remove(SelectedNearbyTile);
             Vault vault = Instantiate(RepulsorObjectiveObject, SelectedNearbyTile.transform.position + GetRandomOnTile(), Quaternion.identity);
             vault.transform.Rotate(Vector3.forward, UnityEngine.Random.Range(0f, 360f));
-            vault.ExtraMaxHealth.Value = 50f * CO.co.GetEncounterDifficultyModifier() - 50;
+            if (CO.co.GetLOCALCO().Count == 1) vault.ExtraMaxHealth.Value = 40f * CO.co.GetEncounterDifficultyModifier() - 40;
+            else vault.ExtraMaxHealth.Value = 50f * CO.co.GetEncounterDifficultyModifier() - 50;
             vault.NetworkObject.Spawn();
             vault.transform.SetParent(Dungeon.Space.transform);
             vault.SpaceID.Value = Dungeon.Space.SpaceID.Value;

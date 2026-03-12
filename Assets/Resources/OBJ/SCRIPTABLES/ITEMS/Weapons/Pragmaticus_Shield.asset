@@ -17,12 +17,13 @@ MonoBehaviour:
     an ally from incoming damage.
 
 
-    Skill: COMMUNOPATHY
-
-    Base Stun: 10 seconds
+    Base Protection: 20 (+5 per COMMUNOPATHY)
 
     Base
-    Cooldown: 10.0'
+    Duration: 10 seconds (Reduced by COMMUNOPATHY and ALCHEMY)
+
+    Base Cooldown:
+    10.0'
   ItemIcon: {fileID: -8202198960766395539, guid: 515226711d579dd4d9cff0a6a04be3ff, type: 3}
   ItemResourceIDFull: OBJ/SCRIPTABLES/ITEMS/Weapons/Pragmaticus_Shield
   ItemResourceIDShort: Pragmaticus_Shield
