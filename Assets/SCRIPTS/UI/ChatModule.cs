@@ -62,6 +62,12 @@ public class ChatModule : MonoBehaviour
                     CreateChatMessage(MessageForSelf);
                     string MessageForOthers = MessageForSelf;
                     LOCALCO.local.SetChatMessageToEveryoneElseRpc(MessageForOthers);
+                    switch (ChatInputField.text)
+                    {
+                        case "/cheat_xp":
+                            LOCALCO.local.GetPlayer().AddXP(1000);
+                            break;
+                    }
                 }
                 ChatInputField.text = "";
                 ChatScreen.SetActive(false);
