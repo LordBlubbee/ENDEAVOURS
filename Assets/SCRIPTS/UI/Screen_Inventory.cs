@@ -771,7 +771,7 @@ public class Screen_Inventory : MonoBehaviour
                     Data += $"\nDODGE BOOST: +{(steam.GetDodgeBoost()*100f).ToString("0")}%";
                     Data += $"<color=green> (+5%)</color>";
                     Data += $"\nARMOR REGEN: +{steam.GetArmorBoost().ToString("0")}/s";
-                    Data += $"<color=green> (+5/s)</color>";
+                    Data += $"<color=green> (+4/s)</color>";
                     break;
                 case Module.ModuleTypes.INCENDIARY_STORAGE:
                     ModuleIncendiaryCrates incin = (ModuleIncendiaryCrates)SelectedDrifterSlot.ModuleLink;

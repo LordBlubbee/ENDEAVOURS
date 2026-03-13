@@ -367,7 +367,7 @@ public class CO : NetworkBehaviour
         switch (GetLOCALCO().Count)
         {
             case 1:
-                PlayerDiff = 0.85f;
+                PlayerDiff = 0.9f;
                 break;
             case 2:
                 PlayerDiff = 1.1f;

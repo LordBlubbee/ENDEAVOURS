@@ -839,7 +839,6 @@ public class AI_UNIT : NetworkBehaviour
                 }
                 break;
             case AI_TACTICS.RETREAT:
-                Unit.EquipMedkitRpc();
                 if (Unit.GetHealthRelative() > 0.9f)
                 {
                     AI_TacticTimer = 0f;
@@ -865,9 +864,6 @@ public class AI_UNIT : NetworkBehaviour
                             SetAIMoveTowards(point, Group.HomeSpace);
                             SetLookTowards(point, Group.HomeSpace);
                         }
-                    } else
-                    {
-
                     }
                 }
              
@@ -878,6 +874,7 @@ public class AI_UNIT : NetworkBehaviour
                     Unit.UseItem1Rpc();
                     break;
                 }
+                Unit.EquipMedkitRpc();
                 Unit.UseItem2Rpc();
                 return true;
             case AI_TACTICS.HEAL_ALLIES:

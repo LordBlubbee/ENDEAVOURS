@@ -9,7 +9,7 @@ public class MasteryDevotionEscape : ArtifactAbility
     public override void OnDamaged()
     {
         if (CooldownTimer > 0) return;
-        if (User.GetHealthRelative() > 0.1f) return;
+        if (User.GetHealthRelative() > 0.2f) return;
        
 
         User.StartCoroutine(Cooldown());
@@ -23,12 +23,15 @@ public class MasteryDevotionEscape : ArtifactAbility
             CooldownTimer -= CO.co.GetWorldSpeedDelta();
             yield return null;
         }
-        User.Heal(50f);
-        if (User.GetHomeDrifter() != null)
+        if (!User.isDead())
         {
-            User.TeleportCrewMember(User.GetHomeDrifter().Space.GetRandomGrid().transform.position, User.GetHomeDrifter().Space);
+            User.Heal(50f);
+            if (User.GetHomeDrifter() != null)
+            {
+                User.TeleportCrewMember(User.GetHomeDrifter().Space.GetRandomGrid().transform.position, User.GetHomeDrifter().Space);
+            }
         }
-        CooldownTimer = 90f / (0.9f + User.GetATT_ALCHEMY() * 0.1f);
+        CooldownTimer = 180f / (0.9f + User.GetATT_ALCHEMY() * 0.1f);
         while (CooldownTimer > 0f)
         {
             CooldownTimer -= CO.co.GetWorldSpeedDelta();

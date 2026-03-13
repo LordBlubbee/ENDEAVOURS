@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttachedParticles: []
-  FullFadeDuration: 0.4
-  FadeChange: -1.5
-  ScaleChange: 3
+  FullFadeDuration: 0.25
+  FadeChange: -2.5
+  ScaleChange: 5
   RandomMovement: 0

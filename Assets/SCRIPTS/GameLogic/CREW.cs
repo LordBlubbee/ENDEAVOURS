@@ -1416,6 +1416,11 @@ public class CREW : NetworkBehaviour, iDamageable
         MeleeHits = new();
         ConsumeStamina(EquippedToolObject.UsageStamina1);
         AnimationComboWeapon1++;
+
+        if (EquippedToolObject.ActionUse1 == TOOL.ToolActionType.MELEE_ATTACK || EquippedToolObject.ActionUse1 == TOOL.ToolActionType.MELEE_AND_BLOCK)
+        {
+            ArtifactOnMelee();
+        }
     }
 
     [Rpc(SendTo.ClientsAndHost)]
@@ -1483,6 +1488,11 @@ public class CREW : NetworkBehaviour, iDamageable
         MeleeHits = new();
         ConsumeStamina(EquippedToolObject.UsageStamina2);
         AnimationComboWeapon2++;
+
+        if (EquippedToolObject.ActionUse2 == TOOL.ToolActionType.MELEE_ATTACK || EquippedToolObject.ActionUse2 == TOOL.ToolActionType.MELEE_AND_BLOCK)
+        {
+            ArtifactOnMelee();
+        }
     }
 
     private float LastStaminaUsed = 0f;
@@ -1519,7 +1529,6 @@ public class CREW : NetworkBehaviour, iDamageable
                 {
                     case TOOL.ToolActionType.MELEE_ATTACK:
                         if (!canStrikeMelee) return;
-                        ArtifactOnMelee();
                         StrikeMelee();
                         break;
                     case TOOL.ToolActionType.RANGED_ATTACK:
@@ -1558,7 +1567,6 @@ public class CREW : NetworkBehaviour, iDamageable
                             blocker.SetActive(true);
                         }
                         if (!canStrikeMelee) return;
-                        ArtifactOnMelee();
                         StrikeMelee();
                         break;
                 }

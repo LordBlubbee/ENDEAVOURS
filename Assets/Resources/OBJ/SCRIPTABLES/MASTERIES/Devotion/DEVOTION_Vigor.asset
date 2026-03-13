@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6a50aeedfe35848a61b49796b41f3f, type: 3}
   m_Name: DEVOTION_Vigor
   m_EditorClassIdentifier: 
-  ItemName: Every 20 hits deal knockback and damage
-  ItemDesc: Whenever you hit an enemy for the twentieth time, your attack deals 20
-    (+2 per COMMUNOPATHY) extra damage and knocks the target back.
+  ItemName: Every 8 hits deal knockback and damage
+  ItemDesc: Whenever you hit an enemy for the 8th time, your attack deals 10 (+2
+    per COMMUNOPATHY) extra damage and knocks the target back.
   AbilityID: DevotionVigor
   AbilityPrefab1: {fileID: 0}
   ModifyAttributes: 

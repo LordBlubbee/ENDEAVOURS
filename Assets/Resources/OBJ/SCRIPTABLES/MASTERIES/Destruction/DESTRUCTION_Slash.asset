@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Melee attacks generate splash damage slashes
   ItemDesc: Whenever you attack with a melee weapon, there is a 15% (+1% per ALCHEMY)
-    chance to generate a shockwave that deals 10 (+1 per PHYSICAL) melee damage.
+    chance to generate a shockwave that deals 5 (+1 per PHYSICAL) melee damage.
   AbilityID: DestructionSlash
-  AbilityPrefab1: {fileID: 0}
+  AbilityPrefab1: {fileID: 3001503892985889442, guid: 6da6bba0f712d4d44bca08f269d44e38, type: 3}
   ModifyAttributes: 
   ModifyHealthMax: 0
   ModifyHealthRegen: 0

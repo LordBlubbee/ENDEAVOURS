@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: DEVOTION_Escape
   m_EditorClassIdentifier: 
   ItemName: Near-fatal damage teleports you to safety
-  ItemDesc: Whenever you take damage that is fatal or leaves you under 10% of your
-    health, you immediately gather your powers to teleport to a random room on your
-    Drifter. You also restore 50 health.
+  ItemDesc: Whenever you take nonfatal damage that leaves you under 20% of your health,
+    you immediately gather your powers to teleport to a random room on your Drifter.
+    You also restore 50 health. This effect has a very long cooldown that decreases
+    with your ALCHEMY.
   AbilityID: DevotionEscape
   AbilityPrefab1: {fileID: 0}
   ModifyAttributes: 
