@@ -5,6 +5,9 @@ using Unity.Netcode;
 using UnityEngine;
 public class CO_SPAWNER : NetworkBehaviour
 {
+    public Material MatDefaultSprite;
+    public Material MatFlashSprite;
+
     public GamerTag PrefabGamerTag;
     public CrewAura PrefabCrewAura;
     public Sprite DefaultInventorySprite;
@@ -12,7 +15,7 @@ public class CO_SPAWNER : NetworkBehaviour
     public TOOL PrefabMedkitLogipedes;
     public TOOL PrefabGrappleLogipedes;
     public TOOL PrefabGrappleSilent;
-    public Sprite GrappleCursor; 
+    public Sprite GrappleCursor;
   
     public ShopItem PrefabShopItem;
     public Sprite ShopItemMaterialDeal;

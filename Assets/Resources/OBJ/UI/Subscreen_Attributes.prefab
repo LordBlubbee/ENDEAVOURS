@@ -367,11 +367,7 @@ PrefabInstance:
         -Your melee weapon damage
         by approximately 12%
 
-        -Your health by 10%
-
-
-        Some powerful
-        melee weapons require a certain amount of PHYSICAL to be used.'
+        -Your health by 10'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -560,9 +556,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356777915098846576, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: 'Sight range and magical efficiency.
+      value: 'Spell damage and magical efficiency.
 
-        Ability to perceive threats.'
+        Sight range.'
       objectReference: {fileID: 0}
     - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: Tooltip
@@ -775,13 +771,12 @@ PrefabInstance:
       propertyPath: Tooltip
       value: 'Each point in MEDICAL increases:
 
-        -Your healing speed by approximately
-        20%
+        -Your medkit healing by 40%
 
-        -Your maximum health by approximately 5%
+        -Your
+        maximum health by 5
 
-        -Your maximum
-        stamina by 5'
+        -Your maximum stamina by 5'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -970,7 +965,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356777915098846576, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: Ranged weapon reload and damage.
+      value: 'Ranged weapon damage.
+
+        Reload speed.'
       objectReference: {fileID: 0}
     - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: Tooltip
@@ -980,11 +977,7 @@ PrefabInstance:
         by approximately 12%
 
         -Your weapon reload speed by approximately
-        4%
-
-
-        Some powerful ranged weapons require a certain amount of ARMAMENTS
-        to be used.'
+        4%'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1184,10 +1177,10 @@ PrefabInstance:
         -Your maximum stamina by
         5.
 
-        -Your stamina regeneration by approximately 10%
+        -Your stamina regeneration by 10%.
 
-        -Your
-        movement speed by approximately 8%'
+        -Your movement speed
+        by approximately 8% (Diminishing returns after 7 points)'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1386,14 +1379,13 @@ PrefabInstance:
       value: 'Each point in ENGINEERING increases:
 
         -Your repair speed by
-        approximately 20%
+        approximately 40%
 
-        -Your resistance to environmental damage by approximately
-        5%
+        -Your resistance to environmental damage by 20%
 
 
-        Some powerful Armor items require a certain amount of ENGINEERING
-        to be used.'
+        Some
+        powerful Armor items require a certain amount of ENGINEERING to be used.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1588,11 +1580,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: Tooltip
-      value: "Each point in ALCHEMY increases:\n-The team's efficiency in crafting
-        by 2%\n-The reloading of ranged arms and spells by approximately 4%\n-The
-        capabilities of most magic items \n\nSome powerful consumables like potions,
-        explosives, and scrolls require a certain amount of ALCHEMY to be used. Most
-        crafting recipes for useful consumables are locked behind ALCHEMY."
+      value: 'Each point in ALCHEMY increases:
+
+        -The team''s efficiency in
+        crafting by 2%
+
+        -The reloading of ranged arms and spells by approximately
+        4%
+
+        -The capabilities of most magic items and masteries'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1781,9 +1777,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356777915098846576, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_text
-      value: 'Team experience gain.
+      value: ' Aura that buffs allies'' damage,
 
-        Aura that buffs allies.'
+        repair, healing, and stamina.'
       objectReference: {fileID: 0}
     - target: {fileID: 6533569227050209211, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: m_IsActive
@@ -1791,22 +1787,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7056466155884174038, guid: e34965ed84d7d0d4d901f10504f69bda, type: 3}
       propertyPath: Tooltip
-      value: 'If you have at least (3) Command, you gain an aura. Only the highest
-        Command aura can buff your team.
+      value: 'If you have at least (3) Command, you gain an aura that buffs nearby
+        team members, but not yourself. Only the highest Command aura counts.
 
-        -Your team gains 5% XP gain per
-        Command.
-
-        -Buffed team members gain a 3% increase to damage.
 
         -Buffed
-        team members gain a 5% increase to repairs and healing.
+        team members gain a 10% increase to stamina regeneration per COMMAND.
 
+        -Buffed
+        team members gain a 3% increase to damage per COMMAND.
 
-        Some powerful
-        Artifacts require a certain amount of COMMAND to be used. COMMAND also represents
-        your charisma and can be helpful  in certain encounters, allowing you to
-        find diplomatic solutions more easily.'
+        -Buffed team
+        members gain a 5% increase to repairs and healing per COMMAND.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -18,6 +18,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     public float OutsideDamageResistance = 1f;
     private Vector3 OrderPointLocal;
     private SPACE OrderTransform;
+    private SpriteRenderer Spr;
     public Vector3 GetOrderPoint()
     {
         return OrderPoint.Value;
@@ -204,6 +205,7 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
     }
     private void Start()
     {
+        Spr = GetComponent<SpriteRenderer>();
         if (MaxHealth > 0)
         {
             GamerTag CharacterNameTag = Instantiate(CO_SPAWNER.co.PrefabGamerTag);
@@ -382,8 +384,23 @@ public class Module : NetworkBehaviour, iDamageable, iInteractable
         {
             if (isCrit) CO_SPAWNER.co.SpawnDMGCriticalRpc(fl, src);
             else CO_SPAWNER.co.SpawnDMGRpc(fl, src);
+            if (Spr) DamageFlashRpc();
         }
         return fl;
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    public void DamageFlashRpc()
+    {
+        if (!isFlashingDamage) StartCoroutine(FlashDamage());
+    }
+    bool isFlashingDamage = false;
+    IEnumerator FlashDamage()
+    {
+        isFlashingDamage = true;
+        Spr.material = new Material(CO_SPAWNER.co.MatFlashSprite);
+        yield return new WaitForSeconds(0.05f);
+        Spr.material = new Material(CO_SPAWNER.co.MatDefaultSprite);
+        isFlashingDamage = false;
     }
 
     public void Die(bool Permanent = false)

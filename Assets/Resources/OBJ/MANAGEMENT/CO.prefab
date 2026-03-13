@@ -170,6 +170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  MatDefaultSprite: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  MatFlashSprite: {fileID: 2100000, guid: 562708b71f0d6de41a2d7c6250908b0a, type: 2}
   PrefabGamerTag: {fileID: 7664399197578832526, guid: 13763fc837ffb9840b9462900a539937, type: 3}
   PrefabCrewAura: {fileID: 7963668381503795396, guid: 567ffc40dd56da843b21af89f175dc5e, type: 3}
   DefaultInventorySprite: {fileID: 2347656569888133005, guid: f23f2b3fa89b0774e9b2ad1ceda60890, type: 3}

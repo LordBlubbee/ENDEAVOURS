@@ -1004,7 +1004,7 @@ public class AI_UNIT : NetworkBehaviour
                         }
                         else if (ClosestAlly.GetVoiceHandler() != null)
                         {
-                            if (GetVoiceSilenceLevel() > 15f && Dist(ClosestAlly.transform.position) < 7f)
+                            if (GetVoiceSilenceLevel() > 25f && Dist(ClosestAlly.transform.position) < 7f)
                             {
                                 AddWeights(5, 15);
                             }

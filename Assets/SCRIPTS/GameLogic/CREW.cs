@@ -859,7 +859,7 @@ public class CREW : NetworkBehaviour, iDamageable
     private NetworkVariable<float> CurHealth = new();
     private NetworkVariable<float> CurStamina = new();
 
-    private NetworkVariable<bool> Alive = new();
+    private NetworkVariable<bool> Alive = new(true);
     private NetworkVariable<bool> DeadForever = new();
 
     [NonSerialized] public NetworkVariable<float> SlotGrappleCooldown = new();
@@ -1838,15 +1838,10 @@ public class CREW : NetworkBehaviour, iDamageable
                     float dmg = SelectedWeaponAbility == 0 ? EquippedToolObject.attackDamage1 : EquippedToolObject.attackDamage2;
                     dmg *= AnimationController.CurrentStrikePower();
 
-                    float RepairMod = 0.2f;
-                    if (GetATT_ENGINEERING() > 3 && IsPlayer())
-                    {
-                        RepairMod += (GetATT_ENGINEERING()-2) * 0.03f;
-                    }
-
                     dmg *= 1f + 0.4f * GetATT_ENGINEERING();
                     dmg *= 1f + 0.05f * GetCurrentCommanderLevel();
                     dmg *= GetRepairFactor();
+                    dmg = Mathf.RoundToInt(dmg);
                     if (CO.co.IsSafe()) dmg *= 5;
                     float Healed = crew.Heal(dmg);
                     GainCredit_Repairs(Healed);
@@ -2122,6 +2117,23 @@ public class CREW : NetworkBehaviour, iDamageable
     private void UpdateColorBasedOnLife()
     {
         Spr.color = isDead() ? new Color(0.5f,0.3f,0.3f) : Color.white;
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void DamageFlashRpc()
+    {
+        if (!isFlashingDamage) StartCoroutine(FlashDamage());
+    }
+    bool isFlashingDamage = false;
+    IEnumerator FlashDamage()
+    {
+        isFlashingDamage = true;
+        Spr.material = new Material(CO_SPAWNER.co.MatFlashSprite);
+        if (Stripes) Stripes.material = new Material(CO_SPAWNER.co.MatFlashSprite);
+        yield return new WaitForSeconds(0.05f);
+        Spr.material = new Material(CO_SPAWNER.co.MatDefaultSprite);
+        if (Stripes) Stripes.material = new Material(CO_SPAWNER.co.MatDefaultSprite);
+        isFlashingDamage = false;
     }
 
     [Rpc(SendTo.ClientsAndHost)]
@@ -2431,7 +2443,7 @@ public class CREW : NetworkBehaviour, iDamageable
     }
     public float GetHealingSkill()
     {
-        return (1f + 0.4f * GetATT_MEDICAL() + 0.05f * GetCurrentCommanderLevel());
+        return (1f + 0.3f * GetATT_MEDICAL() + 0.05f * GetCurrentCommanderLevel());
     }
     public float GetStaminaRegen()
     {
@@ -2573,6 +2585,7 @@ public class CREW : NetworkBehaviour, iDamageable
         if (fl < 1 || DashingDamageBuff > 0f) CO_SPAWNER.co.SpawnDMGBlockedRpc(fl, src);
         else if (isCrit) CO_SPAWNER.co.SpawnDMGCriticalRpc(fl, src);
         else CO_SPAWNER.co.SpawnDMGRpc(fl, src);
+        if (fl >= 1) DamageFlashRpc();
         ArtifactOnDamaged();
         GainCredit_DamageTaken(fl);
         return fl;
@@ -2792,16 +2805,16 @@ public class CREW : NetworkBehaviour, iDamageable
         {
             DexFactor -= (DexFactor - 0.7f) * 0.5f; //Diminishing returns
         }
-        return GetMasterMovement() * (0.8f+GetATT_DEXTERITY()*0.08f) * (1f+ ModifyMovementSpeed) / (1f + ModifyMovementSlow);
+        return GetMasterMovement() * (0.8f+ DexFactor) * (1f+ ModifyMovementSpeed) / (1f + ModifyMovementSlow);
     }
     public float GetDashSpeed()
     {
-        float DexFactor = GetATT_DEXTERITY() * 0.08f;
-        if (DexFactor > 0.6f)
+        float DexFactor = GetATT_DEXTERITY() * 0.02f;
+        if (DexFactor > 0.15f)
         {
-            DexFactor -= (DexFactor - 0.6f) * 0.5f; //Diminishing returns
+            DexFactor -= (DexFactor - 0.15f) * 0.5f; //Diminishing returns
         }
-        return GetMasterMovement() * (0.9f + GetATT_DEXTERITY() * 0.02f) * (1f + ModifyMovementSpeed) / (1f + ModifyMovementSlow);
+        return GetMasterMovement() * (0.9f + DexFactor) * (1f + ModifyMovementSpeed) / (1f + ModifyMovementSlow);
     }
     public float GetCurrentSpeed()
     {

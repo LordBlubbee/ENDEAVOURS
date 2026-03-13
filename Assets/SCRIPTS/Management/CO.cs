@@ -2386,11 +2386,12 @@ public class CO : NetworkBehaviour
 
     public float GetCommanderExperienceFactor()
     {
-        float ExperienceMod = 1f;
-        foreach (CREW crew in GetAlliedCrew())
+        float ExperienceMod = 1.2f;
+        ExperienceMod += GetBiomeProgress() * 0.1f;
+        /*foreach (CREW crew in GetAlliedCrew())
         {
             ExperienceMod = Mathf.Max(ExperienceMod, crew.GetATT_COMMAND() * 0.05f + 1f);
-        }
+        }*/
         return ExperienceMod;
     }
 
@@ -2468,7 +2469,7 @@ public class CO : NetworkBehaviour
             ChangeSupplies += Mathf.RoundToInt(item.Resource_Supplies * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * TotalLootMod);
             ChangeTech += Mathf.RoundToInt(item.Resource_Technology * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * TotalLootMod);
             ChangeHP += Mathf.RoundToInt(item.Resource_Repairs * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * TotalLootMod);
-            ChangeXP += Mathf.RoundToInt(item.Resource_XP * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * TotalLootMod * GetCommanderExperienceFactor());
+            ChangeXP += Mathf.RoundToInt(item.Resource_XP * UnityEngine.Random.Range(1f - item.Randomness, 1f + item.Randomness) * TotalLootMod);
             if (item.ItemDrop && UnityEngine.Random.Range(0f,1f) < LootLevelMod)
             {
                 ResetWeights();
@@ -2578,6 +2579,7 @@ public class CO : NetworkBehaviour
 
     private void AddXP(int amn)
     {
+        amn = Mathf.RoundToInt(amn*GetCommanderExperienceFactor());
         Resource_TotalXP.Value += amn;
         foreach (CREW crew in GetAlliedCrew())
         {

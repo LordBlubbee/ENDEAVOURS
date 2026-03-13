@@ -16008,10 +16008,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A common and trustworthy military vessel, the light Assault Blimp was commissioned
-    for the Legislatus Invictus' mainstay fleets, and has been in service for half
-    a century. Though it is of small size, the Assault Blimp is armored and suited
-    for both heavy firepower and coordinated boarding action.
+  m_text: A
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0e9d0616e484a47409d0b732828ca151, type: 2}
   m_sharedMaterial: {fileID: -2665110194855471181, guid: 0e9d0616e484a47409d0b732828ca151, type: 2}
@@ -17445,20 +17442,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'HULL: 250
-
-    SPEED: 7
-
-    MAINTENANCE: 20
-
-    ARMOR: 50
-
-    HARDPOINT:
-    HEAVY ARMOR x2
-
-    HARDPOINT: HEAVY BALLISTA x2
-
-    ASSAULT LOON x2'
+  m_text: A
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0e9d0616e484a47409d0b732828ca151, type: 2}
   m_sharedMaterial: {fileID: -2665110194855471181, guid: 0e9d0616e484a47409d0b732828ca151, type: 2}
@@ -21186,10 +21170,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1939252953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -250, y: 0}
-  m_SizeDelta: {x: -500, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000015259, y: 109}
+  m_SizeDelta: {x: 512, y: 512}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &575933686
 MonoBehaviour:
@@ -21211,7 +21195,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8368428287633120824, guid: 38a90df82c05fd24e866802229d41a30, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1543e1c0369f846469433cd29f1a5cd6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -80526,7 +80510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1511807173
 RectTransform:
   m_ObjectHideFlags: 0
@@ -92794,7 +92778,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278255360
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -93200,7 +93184,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278255360
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -94377,11 +94361,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 150
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -98696,14 +98680,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnableShips:
   - Prefab: {fileID: 1453653842865150193, guid: 1d55362534822774798b77d3aa561eca, type: 3}
-    Icon: {fileID: 21300000, guid: 38a90df82c05fd24e866802229d41a30, type: 3}
-    Background: {fileID: 21300000, guid: 38a90df82c05fd24e866802229d41a30, type: 3}
+    Icon: {fileID: 21300000, guid: 1543e1c0369f846469433cd29f1a5cd6, type: 3}
+    Background: {fileID: 21300000, guid: 1543e1c0369f846469433cd29f1a5cd6, type: 3}
     Name: Assault Blimp
-    Faction: Logipedes Republic
+    Faction: Legislatus Invictus
     Desc: A common and trustworthy military vessel, the light Assault Blimp was commissioned
       for the Legislatus Invictus' mainstay fleets, and has been in service for half
-      a century. Though it is of small size, the Assault Blimp is armored and suited
-      for both heavy firepower and coordinated boarding action.
+      a century. Though it is of small size, the Assault Blimp is well-armored and
+      suited for both heavy firepower and coordinated boarding action.
     Data: 'HULL: 3000
 
       HEAVY ARMOR x3
@@ -98711,13 +98695,16 @@ MonoBehaviour:
       STEAM REACTOR x1
 
 
-      HEAVY
+      DUAL
       BALLISTA
 
-      DUAL BALLISTA
+      HEAVY BALLISTA
 
 
-      CREW: x3 INVICTUS SOLDIERS'
+      CREW: x3 INVICTUS SOLDIERS
+
+      MAXIMUM
+      CREW: 8'
   SpawnShipButton: {fileID: 7138139254657096576, guid: 881cc0b48813c6b4da5cc18d3d21fe27, type: 3}
   ShipList: {fileID: 454403149}
   Background: {fileID: 575933686}
@@ -102753,7 +102740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0.19607843, a: 1}
+  m_Color: {r: 0.019607844, g: 0.019607844, b: 0.039215688, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -112014,11 +112001,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 150
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
       propertyPath: m_LocalPosition.x

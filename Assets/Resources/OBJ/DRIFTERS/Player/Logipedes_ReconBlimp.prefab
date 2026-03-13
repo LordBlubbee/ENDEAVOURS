@@ -595,7 +595,7 @@ MonoBehaviour:
   MovementSpeed: 8
   AccelerationSpeedMod: 0.3
   RotationBaseSpeed: 15
-  MaximumCrew: 9
+  MaximumCrew: 8
   DeathExplosionsFrequency: 0.2
   DeathTime: 5
 --- !u!114 &8365398891127652454
