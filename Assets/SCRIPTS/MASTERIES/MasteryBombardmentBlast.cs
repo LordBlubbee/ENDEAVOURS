@@ -5,7 +5,6 @@ public class MasteryBombardmentBlast : ArtifactAbility
 {
     public MasteryBombardmentBlast(CREW crew) : base(crew)
     {
-        Mastery = item;
     }
     public override void OnEnemyHitRanged(CREW crew, float damageDone)
     {
