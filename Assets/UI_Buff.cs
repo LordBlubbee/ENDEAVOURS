@@ -30,18 +30,18 @@ public class UI_Buff : MonoBehaviour
         gameObject.SetActive(true);
         if (Stacks < 2) StackCount.text = "";
         else StackCount.text = Stacks.ToString();
-        MaxCooldown = buff.ExpectedDuration;
-        Cooldownleft = buff.ExpectedDuration;
+        //MaxCooldown = buff.ExpectedDuration;
+        //Cooldownleft = buff.ExpectedDuration;
         Cooldown.color = buff.BuffColor;
         Cooldown.fillAmount = 1;
         BuffIcon.sprite = buff.BuffIcon;
         BuffDesc.Tooltip = buff.BuffDesc;
     }
-    private void Update()
+    /*private void Update()
     {
         if (MaxCooldown < 0) return;
         Cooldownleft -= Time.time - LastUpdate;
         Cooldown.fillAmount = Cooldownleft/MaxCooldown;
         LastUpdate = Time.time;
-    }
+    }*/
 }

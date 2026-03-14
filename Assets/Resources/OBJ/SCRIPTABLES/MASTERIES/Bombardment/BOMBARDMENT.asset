@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14682add775d03b4480fcfe1bf0af99e, type: 3}
+  m_Name: BOMBARDMENT
+  m_EditorClassIdentifier: 
+  ItemName: BOMBARDMENT
+  ItemTagline: Long-range splash damage
+  ThemeColor: {r: 0.8584906, g: 0.49263096, b: 0.07694017, a: 1}
+  ItemDesc: A mastery over ranged- and spell damage attacks make this character especially
+    deadly against huge groups when they are able to support the allied advance from
+    afar.
+  ItemIcon: {fileID: 21300000, guid: 46c678f792f11014d81bd5f3b575c13b, type: 3}
+  MasteryItems:
+  - {fileID: 11400000, guid: b56a7a8975b08d64a939af8f4bd83e45, type: 2}
+  - {fileID: 11400000, guid: 28f4fea26dd4b7e459ff8ec648d05cb2, type: 2}
+  - {fileID: 11400000, guid: b56f81a7f34523045856337b17d22da8, type: 2}
+  - {fileID: 11400000, guid: ebacbd9e5d844d444a2536838d4c53ce, type: 2}
+  - {fileID: 11400000, guid: a6bb140816ac78a488fcc9d6d7a183e3, type: 2}
+  - {fileID: 11400000, guid: 799918b9da41aa449adef4597d5a9dbb, type: 2}
+  - {fileID: 11400000, guid: a6bb140816ac78a488fcc9d6d7a183e3, type: 2}
+  - {fileID: 11400000, guid: b56a7a8975b08d64a939af8f4bd83e45, type: 2}
+  - {fileID: 11400000, guid: a6bb140816ac78a488fcc9d6d7a183e3, type: 2}
+  - {fileID: 11400000, guid: e03b742d6b8c88149b28d91f7c358144, type: 2}

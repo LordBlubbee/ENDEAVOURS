@@ -30,6 +30,10 @@ public class ArtifactAbility
     {
 
     }
+    public virtual void OnRepair(Module module, float amount)
+    {
+
+    }
     public virtual void OnDash()
     {
 
@@ -59,6 +63,10 @@ public class ArtifactAbility
 
     }
     public virtual void OnEnemyHitSpell(CREW crew, float damageDone)
+    {
+
+    }
+    public virtual void OnEnemyHitModule(Module mod, float damageDone)
     {
 
     }

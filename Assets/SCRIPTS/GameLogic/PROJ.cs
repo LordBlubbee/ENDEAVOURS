@@ -176,7 +176,11 @@ public class PROJ : NetworkBehaviour
                 if (crew is Module)
                 {
                     float damageDealt = crew.TakeDamage(AttackDamage * ModuleDamageModifier, transform.position, DamageType);
-                    if (CrewOwner) CrewOwner.GainCredit_ModuleDamage(damageDealt);
+                    if (CrewOwner)
+                    {
+                        CrewOwner.GainCredit_ModuleDamage(damageDealt);
+                        CrewOwner.ArtifactOnModuleTarget((Module)crew, damageDealt);
+                    }
                 }
                 else
                 {

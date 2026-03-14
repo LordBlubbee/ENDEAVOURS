@@ -52,7 +52,12 @@ public class CO_SPAWNER : NetworkBehaviour
         SKIRMISH_BUFF,
         SPEAKER_PRAGMATICUS,
         SPEAKER_INVICTUS,
-        SPEAKER_STELLAE
+        SPEAKER_STELLAE,
+        DEFAULT_SPEED,
+        DEFAULT_DEFENSE,
+        DEFAULT_HEALING,
+        DEFAULT_OFFENSE,
+        DEFAULT_DEBILITATING
     }
 
     [Header("BACKGROUND")]

@@ -603,6 +603,13 @@ public class CREW : NetworkBehaviour, iDamageable
             ability.OnEnemyHitSpell(crew, damageDone);
         }
     }
+    public void ArtifactOnModuleTarget(Module mod, float damageDone)
+    {
+        foreach (ArtifactAbility ability in ArtifactAbilities)
+        {
+            ability.OnEnemyHitModule(mod, damageDone);
+        }
+    }
     private float ArtifactOnPreventDamageMelee(float dam)
     {
         foreach (ArtifactAbility ability in ArtifactAbilities)
@@ -632,6 +639,13 @@ public class CREW : NetworkBehaviour, iDamageable
         foreach (ArtifactAbility ability in ArtifactAbilities)
         {
             ability.OnMedkit(crew);
+        }
+    }
+    private void ArtifactOnRepair(Module mod, float amount)
+    {
+        foreach (ArtifactAbility ability in ArtifactAbilities)
+        {
+            ability.OnRepair(mod, amount);
         }
     }
     private void ArtifactOnRanged()
@@ -1845,6 +1859,7 @@ public class CREW : NetworkBehaviour, iDamageable
                     if (CO.co.IsSafe()) dmg *= 5;
                     float Healed = crew.Heal(dmg);
                     GainCredit_Repairs(Healed);
+                    ArtifactOnRepair((Module)crew, Healed);
                     canStrikeMelee = false; //Turn off until animation ends
                     return;
                 }
