@@ -550,6 +550,24 @@ public class CREW : NetworkBehaviour, iDamageable
                 return new MasteryDevotionSapEnergy(this);
             case "DevotionVigor":
                 return new MasteryDevotionVigor(this);
+            case "BombardmentAnnihilation":
+                return new MasteryBombardmentAnnihilation(this);
+            case "BombardmentBlast":
+                return new MasteryBombardmentBlast(this);
+            case "BombardmentPushback":
+                return new MasteryBombardmentPushback(this);
+            case "SabotageElectricity":
+                return new MasterySabotageElectricity(this);
+            case "SabotageRansack":
+                return new MasterySabotageRansack(this);
+            case "SabotageRestoration":
+                return new MasterySabotageRestoration(this);
+            case "VanguardRepair":
+                return new MasteryVanguardRepair(this);
+            case "VanguardShield":
+                return new MasteryVanguardShield(this);
+            case "VanguardSpeed":
+                return new MasteryVanguardSpeed(this);
         }
     }
     private void AddArtifactAbility(ArtifactAbility ability)

@@ -26,6 +26,10 @@ public class ScriptableLootTable : ScriptableObject
 
     [Header("SHOP DROPS")]
     public List<ShopDrop> ShopDrops = new();
+
+    [Header("RARE UNLOCKS")]
+    public string UnlockDrifter;
+    public string UnlockBackground;
 }
 
 [Serializable]

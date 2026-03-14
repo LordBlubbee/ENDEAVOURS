@@ -272,6 +272,8 @@ public class dataStructure
 
     List<int> FactionKeys = new();
     List<int> FactionValues = new();
+    List<string> StoryKeys = new();
+    List<int> StoryValues = new();
 
     string DrifterType;
     string BiomeType;
@@ -298,6 +300,11 @@ public class dataStructure
         for (int i = 0; i < n.FactionKeys.Count; i++)
         {
             CO.co.Resource_Reputation.Add((CO.Faction)n.FactionKeys[i], n.FactionValues[i]);
+        }
+        CO.co.Story_Keys = new();
+        for (int i = 0; i < n.StoryKeys.Count; i++)
+        {
+            CO.co.Story_Keys.Add(n.StoryKeys[i], n.StoryValues[i]);
         }
         CO.co.SetLoadedPlayers(n.DrifterPlayers);
 
@@ -380,6 +387,11 @@ public class dataStructure
             // Enum -> int
             FactionKeys.Add((int)kvp.Key);
             FactionValues.Add(kvp.Value);
+        }
+        foreach (var kvp in CO.co.Story_Keys)
+        {
+            StoryKeys.Add(kvp.Key);
+            StoryValues.Add(kvp.Value);
         }
 
         Resources_Materials = CO.co.Resource_Materials.Value;

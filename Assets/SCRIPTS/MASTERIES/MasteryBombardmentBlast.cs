@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MasteryBombardmentBlast : ArtifactAbility
 {
-    public MasteryBombardmentBlast(CREW crew, ScriptableMasteryItem item) : base(crew)
+    public MasteryBombardmentBlast(CREW crew) : base(crew)
     {
         Mastery = item;
     }

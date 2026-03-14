@@ -156,6 +156,7 @@ public class CO : NetworkBehaviour
     [NonSerialized] public NetworkVariable<int> Resource_Tech = new();
     [NonSerialized] public NetworkVariable<int> Resource_TotalXP = new();
     [NonSerialized] public Dictionary<Faction, int> Resource_Reputation = new();
+    [NonSerialized] public Dictionary<string, int> Story_Keys = new();
     public enum Faction
     {
         INVICTUS,
