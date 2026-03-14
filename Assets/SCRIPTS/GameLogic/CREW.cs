@@ -195,6 +195,10 @@ public class CREW : NetworkBehaviour, iDamageable
             OrderTransform = null;
             OrderPointLocal = Vector3.zero;
             OrderPoint.Value = Vector3.zero;
+            if (GetAI())
+            {
+                GetAI().ClearObjective();
+            }
             return;
         }
         foreach (Collider2D col in Physics2D.OverlapCircleAll(vec, 0.1f))
