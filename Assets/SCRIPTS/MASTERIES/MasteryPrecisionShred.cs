@@ -23,7 +23,7 @@ public class MasteryPrecisionShred : ArtifactAbility
         ScriptableBuff buff = new();
         buff.name = "PrecisionShred";
         buff.MaxStacks = 1;
-        buff.BuffParticles = CO_SPAWNER.BuffParticles.VENGEANCE;
+        buff.BuffParticles = CO_SPAWNER.BuffParticles.DEFAULT_DEBILITATING;
         buff.Duration = 7;
         buff.ModifyDamageResRanged -= 0.25f + User.GetATT_ALCHEMY() * 0.02f;
         Crew.AddBuff(buff, User);

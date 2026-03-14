@@ -17,6 +17,15 @@ public class Screen_ShipSelector : MonoBehaviour
     public TextMeshProUGUI Data;
     public TextMeshProUGUI Desc;
     SpawnableShip SelectedShip;
+
+    public SpawnableShip GetSpawnableShip(string str)
+    {
+        foreach (SpawnableShip ship in SpawnableShips)
+        {
+            if (ship.ID == str) return ship;
+        }
+        return null;
+    }
     private void Start()
     {
         PressShipButton(SpawnableShips[0]);
@@ -52,6 +61,7 @@ public class Screen_ShipSelector : MonoBehaviour
         SelectedShip = ship;
         Background.sprite = ship.Background;
         Title.text = ship.Name;
+        Title.color = ship.Color;
         Faction.text = ship.Faction;
         Data.text = ship.Data;
         Desc.text = ship.Desc;
@@ -78,6 +88,7 @@ public class SpawnableShip
     public DRIFTER Prefab;
     public Sprite Icon;
     public Sprite Background;
+    public Color Color;
     public string Name;
     public string Faction;
     [TextArea(8, 16)]

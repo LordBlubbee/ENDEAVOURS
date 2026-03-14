@@ -2576,6 +2576,27 @@ public class CO : NetworkBehaviour
                 }
             }
         }
+        if (table.UnlockDrifter != "")
+        {
+            UnlockDrifterRpc(table.UnlockDrifter);
+        }
+        if (table.UnlockBackground != "")
+        {
+            UnlockBackgroundRpc(table.UnlockBackground);
+        }
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    private void UnlockDrifterRpc(string str)
+    {
+        GO.g.UnlockNewDrifter(str);
+        UI.ui.Popup.SetUnlockDrifter(UI.ui.ShipSelectionUI.GetSpawnableShip(str));
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void UnlockBackgroundRpc(string str)
+    {
+        GO.g.UnlockNewBackground(str);
+        UI.ui.Popup.SetUnlockBackground(Resources.Load<ScriptableBackground>($"OBJ/SCRIPTABLES/BACKGROUNDS/{str}"));
     }
 
     private void AddXP(int amn)

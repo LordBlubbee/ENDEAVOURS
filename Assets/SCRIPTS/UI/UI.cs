@@ -22,6 +22,7 @@ public class UI : MonoBehaviour
     public TutorialManager TutorialManager;
     public Image Crosshair;
     public ChatModule ChatUI;
+    public UI_UnlockPopup Popup;
     private GameObject PreviousScreen;
 
     public TextMeshProUGUI CinematicTex;

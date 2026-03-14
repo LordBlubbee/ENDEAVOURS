@@ -386,7 +386,7 @@ public class Screen_Inventory : MonoBehaviour
                     return;
                 }
             }
-            if (HoldingItem is ScriptableEquippableModule && CurrentDraggingSlot.DefaultEquipState != InventorySlot.EquipStates.INVENTORY_SWITCH)
+            if (HoldingItem is ScriptableEquippableModule && slot.DefaultEquipState == InventorySlot.EquipStates.INVENTORY_MODULE)
             {
                 ScriptableEquippableModule module = (ScriptableEquippableModule)HoldingItem;
                 if (module.EquipType == ScriptableEquippableModule.EquipTypes.WEAPON)
@@ -414,7 +414,7 @@ public class Screen_Inventory : MonoBehaviour
             Debug.Log($"We moved FROM {CurrentDraggingSlot} item: {CurrentDraggingSlot.GetEquippedItem()} (Supposed to be {slotSwap})");
             Debug.Log($"We moved TO {slot} item: {slot.GetEquippedItem()} (Supposed to be {HoldingItem})");
 
-            if (HoldingItem is ScriptableEquippableModule && CurrentDraggingSlot.DefaultEquipState != InventorySlot.EquipStates.INVENTORY_SWITCH)
+            if (HoldingItem is ScriptableEquippableModule && slot.DefaultEquipState == InventorySlot.EquipStates.INVENTORY_MODULE)
             {
                 AUDCO.aud.PlaySFX(AUDCO.aud.Upgrade);
                 CO.co.PlayerMainDrifter.Interior.AddModuleRpc(HoldingItem.GetItemResourceIDFull());

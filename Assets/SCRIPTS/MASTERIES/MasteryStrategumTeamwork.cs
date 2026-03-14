@@ -22,6 +22,7 @@ public class MasteryStrategumTeamwork : ArtifactAbility
         if (Allies == 0) return;
         ScriptableBuff buff = new();
         buff.name = "StrategumTeamwork";
+        buff.BuffParticles = CO_SPAWNER.BuffParticles.DEFAULT_HEALING;
         buff.MaxStacks = Allies;
         buff.Duration = 2;
         buff.ModifyRepairDone = 0.15f;

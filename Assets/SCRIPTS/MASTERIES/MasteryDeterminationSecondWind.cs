@@ -13,7 +13,7 @@ public class MasteryDeterminationSecondWind : ArtifactAbility
         if (User.GetHealthRelative() > 0.3f) return;
         ScriptableBuff buff = new();
         buff.name = "DeterminationSecondWind";
-        buff.BuffParticles = CO_SPAWNER.BuffParticles.PRAGMATICUS_SHIELD;
+        buff.BuffParticles = CO_SPAWNER.BuffParticles.DEFAULT_HEALING;
         buff.MaxStacks = 1;
         buff.Duration = 4;
         buff.HealthChangePerSecond = 8f + User.GetATT_PHYSIQUE() * 2f;

@@ -12,6 +12,7 @@ public class SelectShip : MonoBehaviour
     {
         Ship = ship;
         Title.text = ship.Name;
+        Title.color = ship.Color;
         Icon.sprite = ship.Icon;
 
         if (GO.g.UnlockedDrifters.Contains(ship.ID))

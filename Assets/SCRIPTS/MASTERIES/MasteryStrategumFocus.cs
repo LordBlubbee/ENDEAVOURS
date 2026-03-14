@@ -20,6 +20,7 @@ public class MasteryStrategumFocus : ArtifactAbility
         if (Allies == 0) return;
         ScriptableBuff buff = new();
         buff.name = "StrategumFocus";
+        buff.BuffParticles = CO_SPAWNER.BuffParticles.DEFAULT_OFFENSE;
         buff.MaxStacks = Allies;
         buff.Duration = 2;
         buff.ModifyMeleeDamage = 3;
