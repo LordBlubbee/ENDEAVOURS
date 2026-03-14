@@ -19,11 +19,12 @@ MonoBehaviour:
   Sprite_Stripes: {fileID: 21300000, guid: 66e3689aba42c484d87e913e153f3d52, type: 3}
   ShortDesc: SWORD & SHIELD - PHYS - COM - ALC
   LongDesc: 'The Order of the Storm''s Knights have served for centuries. Paladins
-    of justice, duty, and all that is good in the world.
+    of justice, duty, and all that is good in the world. In the recent civil war,
+    many of them have stayed loyal to the King and royalty.
 
 
-    STARTING ITEMS: SWORD
-    & SHIELD
+    STARTING ITEMS:
+    SWORD & SHIELD
 
     PHYS +2
 
@@ -35,7 +36,7 @@ MonoBehaviour:
   MasteryTrees:
   - {fileID: 11400000, guid: 34ff2b4bacf448c4dbfdaedae762c25c, type: 2}
   - {fileID: 11400000, guid: 280ef62507bec1a4682f0c5e79e08f1a, type: 2}
-  - {fileID: 11400000, guid: 6785f119c25e0644380c1442a1acba34, type: 2}
+  - {fileID: 11400000, guid: 8d5ba916c56a7b74988cf9c969985f0c, type: 2}
   Background_StartingWeapon: {fileID: 11400000, guid: c0293a265d4a0a749a48e766974a888b, type: 2}
   Background_StartingWeapon2: {fileID: 0}
   Background_StartingArtifact: {fileID: 0}

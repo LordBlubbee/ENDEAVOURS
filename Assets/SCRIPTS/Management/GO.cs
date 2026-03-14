@@ -18,6 +18,9 @@ public class GO : MonoBehaviour
     [Header("Public Saves")]
     public string SaveID;
 
+    public List<string> UnlockedDrifters = new();
+    public List<string> UnlockedBackgrounds = new();
+
     public float OST_Vol;
     public float VCX_Vol;
     public float SFX_Vol;
@@ -45,6 +48,29 @@ public class GO : MonoBehaviour
         DontDestroyOnLoad(this);
         loadSettings();
     }
+    public void UnlockNewBackground(string str)
+    {
+        UnlockedBackgrounds.Add(str);
+        saveSettings();
+    }
+    public void UnlockNewDrifter(string str)
+    {
+        UnlockedDrifters.Add(str);
+        saveSettings();
+    }
+
+    public void SetupMinimumUnlocks()
+    {
+        if (UnlockedDrifters == null) UnlockedDrifters = new();
+        if (UnlockedBackgrounds == null) UnlockedBackgrounds = new();
+        if (!UnlockedDrifters.Contains("Invictus1")) UnlockedDrifters.Add("Invictus1");
+        if (!UnlockedBackgrounds.Contains("Invictus_Marine")) UnlockedBackgrounds.Add("Invictus_Marine");
+        if (!UnlockedBackgrounds.Contains("Pragmaticus_Enforcer")) UnlockedBackgrounds.Add("Pragmaticus_Enforcer");
+        if (!UnlockedBackgrounds.Contains("Stellae_Engineer")) UnlockedBackgrounds.Add("Stellae_Engineer");
+        if (!UnlockedBackgrounds.Contains("Coalition_Warrior")) UnlockedBackgrounds.Add("Coalition_Warrior");
+        if (!UnlockedBackgrounds.Contains("Coalition_Archer")) UnlockedBackgrounds.Add("Coalition_Archer");
+        if (!UnlockedBackgrounds.Contains("Coalition_Shaman")) UnlockedBackgrounds.Add("Coalition_Shaman");
+    }
     public void firstSettings()
     {
         //Initialize important global preferences variables
@@ -57,6 +83,7 @@ public class GO : MonoBehaviour
             }
             Debug.Log($"Created new settings and set SaveID to {SaveID}");
         }
+        SetupMinimumUnlocks();
         localColor = Color.white;
         screenShakeLevel = 2; //0 = none, 1 = cinematic, 2 = all
         resolutionConfig = 0; //0 = full screen, 1 = 2560x1600, 2 = 2560x1440, 3 = 1920x1200, 4 = 1920x1080, 5 = 1280x720
@@ -158,6 +185,8 @@ public class dataSettings
 {
     //SETTINGS
     public string SaveID;
+    public List<string> UnlockedDrifters = new();
+    public List<string> UnlockedBackgrounds = new();
 
     public string localUsername;
     public float localColorR;
@@ -180,6 +209,9 @@ public class dataSettings
     public void loadSettings()
     {
         GO.g.SaveID = SaveID;
+        GO.g.UnlockedDrifters = UnlockedDrifters;
+        GO.g.UnlockedBackgrounds = UnlockedBackgrounds;
+        GO.g.SetupMinimumUnlocks();
         GO.g.localUsername = localUsername;
         GO.g.localColor = new Color(localColorR, localColorG, localColorB);
         GO.g.currentSaveSlot = currentSaveSlot;
@@ -200,6 +232,8 @@ public class dataSettings
     {
         //Set local variables to GO variables
         SaveID = GO.g.SaveID;
+        UnlockedDrifters = GO.g.UnlockedDrifters;
+        UnlockedBackgrounds = GO.g.UnlockedBackgrounds;
         localUsername = GO.g.localUsername;
         localColorR = GO.g.localColor.r;
         localColorG = GO.g.localColor.g;

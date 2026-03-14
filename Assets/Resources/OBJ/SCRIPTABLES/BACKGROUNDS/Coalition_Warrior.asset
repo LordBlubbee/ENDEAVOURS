@@ -10,35 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7e2d111c92f9ac4584f40d8399107e1, type: 3}
-  m_Name: Coalition_Archer
+  m_Name: Coalition_Warrior
   m_EditorClassIdentifier: 
-  BackgroundName: Coalition Archer
-  ResourcePath: Coalition_Archer
+  BackgroundName: Coalition Warrior
+  ResourcePath: Coalition_Warrior
   MainIcon: {fileID: 21300000, guid: 293a29ca2bc1d1d4b8cf13c46fd24855, type: 3}
   Sprite_Player: {fileID: 21300000, guid: b260ac191d3e36d40a889de36cbe84a6, type: 3}
   Sprite_Stripes: {fileID: 21300000, guid: 4d8ef81f05d5ad54e8c0bbf661fd1f2d, type: 3}
-  ShortDesc: BOW - ARM - MED - ALC
-  LongDesc: 'The Coalition''s different Clans produce many great warriors that have
-    spent years perfecting their art- and many of them have chosen the bow. You are
-    one that fights for the Coalition- for hope of a better world, in which the traditions
-    of old can survive.
+  ShortDesc: BLADE - PHYS - DEX - ALC
+  LongDesc: 'These brave warriors are a disorderly bunch- thrown together to form
+    an army from different backgrounds, loose training routines, and a hatred for
+    hierarchy. But their differences make the Coalition military strong and determined
+    to prove the world otherwise. With good survival skills forged in their harsh
+    environments, these versatile warriors stand ready to fight.
 
 
-    STARTING ITEMS: BOW
+    STARTING ITEMS:
+    BLADE
 
-    ARM +2
+    PHYS +2
 
-    MED +1
+    DEX +1
 
-    ALC
-    +1'
+    ALC +1'
   BackgroundColor: {r: 0.26782268, g: 0.7924528, b: 0.16820934, a: 1}
-  Background_ATT_BONUS: 0000000002000000000000000000000000000000000000000100000001000000
+  Background_ATT_BONUS: 0200000000000000010000000000000000000000000000000100000000000000
   MasteryTrees:
   - {fileID: 11400000, guid: 598211c0cd126974a85e2669bdca305b, type: 2}
-  - {fileID: 11400000, guid: 6785f119c25e0644380c1442a1acba34, type: 2}
-  - {fileID: 11400000, guid: c46dd85c3775292448ada0f013e24953, type: 2}
-  Background_StartingWeapon: {fileID: 11400000, guid: 166787dba1c508641bd72e4fd51e46e0, type: 2}
+  - {fileID: 11400000, guid: 67d08fd33b88a994380ed2ca2cb279d2, type: 2}
+  - {fileID: 11400000, guid: 34ff2b4bacf448c4dbfdaedae762c25c, type: 2}
+  Background_StartingWeapon: {fileID: 11400000, guid: 35b663fc985b5524981ef0bb6a7b3620, type: 2}
   Background_StartingWeapon2: {fileID: 0}
   Background_StartingArtifact: {fileID: 0}
   Background_StartingArmor: {fileID: 0}

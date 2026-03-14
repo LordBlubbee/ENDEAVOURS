@@ -20639,6 +20639,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SaveID: 
+  UnlockedDrifters: []
+  UnlockedBackgrounds: []
   OST_Vol: 0
   VCX_Vol: 0
   SFX_Vol: 0
@@ -22741,6 +22743,120 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
   m_PrefabInstance: {fileID: 608278429}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &610075768
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1905920196}
+    m_Modifications:
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -245
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433362761231302304, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -8257588341390531809, guid: ae1c7c9a342696144a6ec39964526f66, type: 2}
+    - target: {fileID: 6799832693722919355, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: Background
+      value: 
+      objectReference: {fileID: 11400000, guid: b76e14d5eae318f408ff4fb00fca4f9e, type: 2}
+    - target: {fileID: 7099684982833304926, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_Name
+      value: OpenBackground (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8839537456474488902, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2665110194855471181, guid: 0e9d0616e484a47409d0b732828ca151, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+--- !u!224 &610075769 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+  m_PrefabInstance: {fileID: 610075768}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -24536,7 +24652,7 @@ PrefabInstance:
     - target: {fileID: 6799832693722919355, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
       propertyPath: Background
       value: 
-      objectReference: {fileID: 11400000, guid: 1c52ac47a63eaf740af0e891be4e96ab, type: 2}
+      objectReference: {fileID: 11400000, guid: 0ad632c3aadbff2439c5159ae4847385, type: 2}
     - target: {fileID: 7099684982833304926, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
       propertyPath: m_Name
       value: OpenBackground
@@ -26854,9 +26970,9 @@ RectTransform:
   m_Children:
   - {fileID: 3266488963189386913}
   - {fileID: 3266488963886262815}
+  - {fileID: 3266488964070770394}
   - {fileID: 3266488962247818079}
   - {fileID: 3266488962921823981}
-  - {fileID: 3266488964070770394}
   - {fileID: 3266488962553136507}
   m_Father: {fileID: 671229834}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -26884,7 +27000,7 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
-  m_StartAxis: 1
+  m_StartAxis: 0
   m_CellSize: {x: 450, y: 450}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 0
@@ -33750,13 +33866,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
@@ -34670,6 +34786,112 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f0210c3b9d01024e9f4718370351eb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &844219071
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1136157682}
+    m_Modifications:
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -415
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799832693722919355, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: Background
+      value: 
+      objectReference: {fileID: 11400000, guid: 2ecc52428c217d64fabb3128630782ed, type: 2}
+    - target: {fileID: 7099684982833304926, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+      propertyPath: m_Name
+      value: OpenBackground (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+--- !u!224 &844219072 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4059290615782537911, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
+  m_PrefabInstance: {fileID: 844219071}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &850242898
 GameObject:
   m_ObjectHideFlags: 0
@@ -43072,8 +43294,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -4.999939}
-  m_SizeDelta: {x: -40, y: -130}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: -40, y: -150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &997200214
 MonoBehaviour:
@@ -55851,6 +56073,7 @@ RectTransform:
   - {fileID: 668306664}
   - {fileID: 1615594877}
   - {fileID: 1374171226}
+  - {fileID: 844219072}
   m_Father: {fileID: 717387292}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -69400,8 +69623,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 70}
-  m_SizeDelta: {x: 120, y: 40}
+  m_AnchoredPosition: {x: -90, y: 45}
+  m_SizeDelta: {x: 180, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1273730949
 MonoBehaviour:
@@ -70453,13 +70676,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
@@ -72443,7 +72666,7 @@ PrefabInstance:
     - target: {fileID: 6799832693722919355, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
       propertyPath: Background
       value: 
-      objectReference: {fileID: 11400000, guid: 2ecc52428c217d64fabb3128630782ed, type: 2}
+      objectReference: {fileID: 11400000, guid: 69e02be970b70454f8c9cbf8bd4545e9, type: 2}
     - target: {fileID: 7099684982833304926, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
       propertyPath: m_Name
       value: OpenBackground (2)
@@ -81148,7 +81371,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: RESPEC
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f8075f664abd4eb438ae0d737e6d7c82, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ae1c7c9a342696144a6ec39964526f66, type: 2}
   m_sharedMaterial: {fileID: -360070313367260889, guid: f8075f664abd4eb438ae0d737e6d7c82, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -81214,7 +81437,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1531825694
@@ -84424,7 +84647,7 @@ PrefabInstance:
     - target: {fileID: 6799832693722919355, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
       propertyPath: Background
       value: 
-      objectReference: {fileID: 11400000, guid: 69e02be970b70454f8c9cbf8bd4545e9, type: 2}
+      objectReference: {fileID: 11400000, guid: 1c52ac47a63eaf740af0e891be4e96ab, type: 2}
     - target: {fileID: 7099684982833304926, guid: cbb57abdf05929540b066f8edca003cc, type: 3}
       propertyPath: m_Name
       value: OpenBackground (1)
@@ -97495,6 +97718,7 @@ RectTransform:
   m_Children:
   - {fileID: 3266488963321765971}
   - {fileID: 1790802798}
+  - {fileID: 610075769}
   m_Father: {fileID: 855964069}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -98679,7 +98903,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnableShips:
-  - Prefab: {fileID: 1453653842865150193, guid: 1d55362534822774798b77d3aa561eca, type: 3}
+  - ID: Invictus1
+    Prefab: {fileID: 1453653842865150193, guid: 1d55362534822774798b77d3aa561eca, type: 3}
     Icon: {fileID: 21300000, guid: 1543e1c0369f846469433cd29f1a5cd6, type: 3}
     Background: {fileID: 21300000, guid: 1543e1c0369f846469433cd29f1a5cd6, type: 3}
     Name: Assault Blimp
@@ -100282,8 +100507,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 30}
-  m_SizeDelta: {x: 120, y: 40}
+  m_AnchoredPosition: {x: 90, y: 45}
+  m_SizeDelta: {x: 180, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1995101188
 MonoBehaviour:
@@ -107753,7 +107978,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 695, y: -225}
+  m_AnchoredPosition: {x: 225, y: -695}
   m_SizeDelta: {x: 450, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3266488962553136507
@@ -107846,7 +108071,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 225, y: -695}
+  m_AnchoredPosition: {x: 695, y: -225}
   m_SizeDelta: {x: 450, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3266488964070770394
@@ -109238,25 +109463,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 765344000}
-        m_TargetAssemblyTypeName: Screen_CharacterCreator, Assembly-CSharp
-        m_MethodName: ChooseBackgroundFaction
-        m_Mode: 2
+      - m_Target: {fileID: 7527886408191163239}
+        m_TargetAssemblyTypeName: BackgroundCategory, Assembly-CSharp
+        m_MethodName: WhenPressed
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 4908567808245694375}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 765344000}
-        m_TargetAssemblyTypeName: Screen_CharacterCreator, Assembly-CSharp
-        m_MethodName: OpenSubscreen
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 833669643}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -109306,25 +109519,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 765344000}
-        m_TargetAssemblyTypeName: Screen_CharacterCreator, Assembly-CSharp
-        m_MethodName: ChooseBackgroundFaction
-        m_Mode: 2
+      - m_Target: {fileID: 7527886409027061059}
+        m_TargetAssemblyTypeName: BackgroundCategory, Assembly-CSharp
+        m_MethodName: WhenPressed
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 4908567807405572483}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 765344000}
-        m_TargetAssemblyTypeName: Screen_CharacterCreator, Assembly-CSharp
-        m_MethodName: OpenSubscreen
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 754381798}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -109374,25 +109575,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 765344000}
-        m_TargetAssemblyTypeName: Screen_CharacterCreator, Assembly-CSharp
-        m_MethodName: ChooseBackgroundFaction
-        m_Mode: 2
+      - m_Target: {fileID: 7527886408859139801}
+        m_TargetAssemblyTypeName: BackgroundCategory, Assembly-CSharp
+        m_MethodName: WhenPressed
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 4908567807841892885}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 765344000}
-        m_TargetAssemblyTypeName: Screen_CharacterCreator, Assembly-CSharp
-        m_MethodName: OpenSubscreen
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1476665886}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -109442,25 +109631,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 765344000}
-        m_TargetAssemblyTypeName: Screen_CharacterCreator, Assembly-CSharp
-        m_MethodName: ChooseBackgroundFaction
-        m_Mode: 2
+      - m_Target: {fileID: 7527886407517957789}
+        m_TargetAssemblyTypeName: BackgroundCategory, Assembly-CSharp
+        m_MethodName: WhenPressed
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 4908567809183066713}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 765344000}
-        m_TargetAssemblyTypeName: Screen_CharacterCreator, Assembly-CSharp
-        m_MethodName: OpenSubscreen
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 855964065}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -109510,25 +109687,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 765344000}
-        m_TargetAssemblyTypeName: Screen_CharacterCreator, Assembly-CSharp
-        m_MethodName: ChooseBackgroundFaction
-        m_Mode: 2
+      - m_Target: {fileID: 7527886407677176359}
+        m_TargetAssemblyTypeName: BackgroundCategory, Assembly-CSharp
+        m_MethodName: WhenPressed
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 4908567808755478247}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 765344000}
-        m_TargetAssemblyTypeName: Screen_CharacterCreator, Assembly-CSharp
-        m_MethodName: OpenSubscreen
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 717387288}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -109578,25 +109743,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 765344000}
-        m_TargetAssemblyTypeName: Screen_CharacterCreator, Assembly-CSharp
-        m_MethodName: ChooseBackgroundFaction
-        m_Mode: 2
+      - m_Target: {fileID: 7527886407727466212}
+        m_TargetAssemblyTypeName: BackgroundCategory, Assembly-CSharp
+        m_MethodName: WhenPressed
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 4908567808839320098}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 765344000}
-        m_TargetAssemblyTypeName: Screen_CharacterCreator, Assembly-CSharp
-        m_MethodName: OpenSubscreen
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 779543844}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -112354,8 +112507,9 @@ GameObject:
   - component: {fileID: 5182198156415233517}
   - component: {fileID: 7527886407517957788}
   - component: {fileID: 7527886407517957787}
+  - component: {fileID: 7527886407517957789}
   m_Layer: 5
-  m_Name: ChooseBackground
+  m_Name: ChooseBackgroundLogipedes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112397,6 +112551,22 @@ MonoBehaviour:
     have seen increasing stagnation in the past decades. The rise of the Insurrection
     has created many stigmas, and the Republic has mostly retreated towards consolidating
     their territory.'
+--- !u!114 &7527886407517957789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527886407517957786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7fa35855bacb74191d92c74839e21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackgroundsInside: []
+  OpenSubscreen: {fileID: 855964065}
+  Border: {fileID: 4908567809183066713}
+  Sprite: {fileID: 2748993679129071323}
 --- !u!1 &7527886407677176356
 GameObject:
   m_ObjectHideFlags: 0
@@ -112411,8 +112581,9 @@ GameObject:
   - component: {fileID: 5182198157112502611}
   - component: {fileID: 7527886407677176358}
   - component: {fileID: 7527886407677176357}
+  - component: {fileID: 7527886407677176359}
   m_Layer: 5
-  m_Name: ChooseBackground (1)
+  m_Name: ChooseBackgroundCoalition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112453,6 +112624,22 @@ MonoBehaviour:
     Still, the Clans fight to hold onto their ideals of a better
     world. Traditional, honest, and fighting for the rights of their people, the
     Coalition''s people have vowed to See The Ocean Once More.'
+--- !u!114 &7527886407677176359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527886407677176356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7fa35855bacb74191d92c74839e21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackgroundsInside: []
+  OpenSubscreen: {fileID: 717387288}
+  Border: {fileID: 4908567808755478247}
+  Sprite: {fileID: 2748993678432782949}
 --- !u!1 &7527886407727466209
 GameObject:
   m_ObjectHideFlags: 0
@@ -112467,8 +112654,9 @@ GameObject:
   - component: {fileID: 5182198157196346774}
   - component: {fileID: 7527886407727466211}
   - component: {fileID: 7527886407727466210}
+  - component: {fileID: 7527886407727466212}
   m_Layer: 5
-  m_Name: ChooseBackground (4)
+  m_Name: ChooseBackgroundSurvivor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112510,6 +112698,23 @@ MonoBehaviour:
     barbaric clans, and with the advent of the Insurrection formed from many discontentious
     Nomaden, the Legislatus Pragmaticus has led a campaign against the \"Peregrini\"-
     \"Outsiders\"- resulting in ever-increasing tensions."
+--- !u!114 &7527886407727466212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527886407727466209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7fa35855bacb74191d92c74839e21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackgroundsInside:
+  - {fileID: 11400000, guid: ccf425a6572612149808e2c5b75d3ae0, type: 2}
+  OpenSubscreen: {fileID: 779543844}
+  Border: {fileID: 4908567808839320098}
+  Sprite: {fileID: 2748993678248208032}
 --- !u!1 &7527886408191163236
 GameObject:
   m_ObjectHideFlags: 0
@@ -112524,8 +112729,9 @@ GameObject:
   - component: {fileID: 5182198155477825555}
   - component: {fileID: 7527886408191163238}
   - component: {fileID: 7527886408191163237}
+  - component: {fileID: 7527886408191163239}
   m_Layer: 5
-  m_Name: ChooseBackground (2)
+  m_Name: ChooseBackgroundCatali
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112572,6 +112778,23 @@ MonoBehaviour:
     Minister-President in the last elections, and her plans for independence have
     led her into many wars, fracturing the Order into the self-righteous Democrats
     and the pacifist Royals.'
+--- !u!114 &7527886408191163239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527886408191163236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7fa35855bacb74191d92c74839e21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackgroundsInside:
+  - {fileID: 11400000, guid: 199d9cb960379c0478466a6df286b9c3, type: 2}
+  OpenSubscreen: {fileID: 833669643}
+  Border: {fileID: 4908567808245694375}
+  Sprite: {fileID: 2748993680070712101}
 --- !u!1 &7527886408859139798
 GameObject:
   m_ObjectHideFlags: 0
@@ -112586,8 +112809,9 @@ GameObject:
   - component: {fileID: 5182198156145933729}
   - component: {fileID: 7527886408859139800}
   - component: {fileID: 7527886408859139799}
+  - component: {fileID: 7527886408859139801}
   m_Layer: 5
-  m_Name: ChooseBackground (3)
+  m_Name: ChooseBackgroundEphemeral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112630,6 +112854,23 @@ MonoBehaviour:
     of secrecy. Their reverance for the Nebula has always brought them at odds with
     the Coalition and now, especially the Democratic Order of the Storm. What could
     the Eye''s Council be hiding?'
+--- !u!114 &7527886408859139801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527886408859139798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7fa35855bacb74191d92c74839e21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackgroundsInside:
+  - {fileID: 11400000, guid: 3e786dcdaa982bc4681c61a002616ec9, type: 2}
+  OpenSubscreen: {fileID: 1476665886}
+  Border: {fileID: 4908567807841892885}
+  Sprite: {fileID: 2748993679398739607}
 --- !u!1 &7527886409027061056
 GameObject:
   m_ObjectHideFlags: 0
@@ -112644,8 +112885,9 @@ GameObject:
   - component: {fileID: 5182198155776984631}
   - component: {fileID: 7527886409027061058}
   - component: {fileID: 7527886409027061057}
+  - component: {fileID: 7527886409027061059}
   m_Layer: 5
-  m_Name: ChooseBackground (5)
+  m_Name: ChooseBackgroundBakuto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112691,6 +112933,23 @@ MonoBehaviour:
     came just after the Fluctus Nebulae, almost as if they were prepared for it.
     Their knowledge of the existence of the top-secret Starlight Endeavour and their
     attempt to stop it raise many, many questions.'
+--- !u!114 &7527886409027061059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527886409027061056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7fa35855bacb74191d92c74839e21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackgroundsInside:
+  - {fileID: 11400000, guid: 0050b1d483cd0724ca143e78a8ffebf3, type: 2}
+  OpenSubscreen: {fileID: 754381798}
+  Border: {fileID: 4908567807405572483}
+  Sprite: {fileID: 2748993679768003841}
 --- !u!224 &7574322294502237001
 RectTransform:
   m_ObjectHideFlags: 0

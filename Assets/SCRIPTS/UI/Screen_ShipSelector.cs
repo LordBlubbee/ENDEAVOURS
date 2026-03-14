@@ -74,6 +74,7 @@ public class Screen_ShipSelector : MonoBehaviour
 [Serializable]
 public class SpawnableShip
 {
+    public string ID;
     public DRIFTER Prefab;
     public Sprite Icon;
     public Sprite Background;

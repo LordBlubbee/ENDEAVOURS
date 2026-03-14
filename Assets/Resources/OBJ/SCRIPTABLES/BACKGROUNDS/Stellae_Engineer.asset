@@ -10,34 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7e2d111c92f9ac4584f40d8399107e1, type: 3}
-  m_Name: Invictus_Marine
+  m_Name: Stellae_Engineer
   m_EditorClassIdentifier: 
-  BackgroundName: Invictus Marine
-  ResourcePath: Invictus_Marine
+  BackgroundName: Stellae Engineer
+  ResourcePath: Stellae_Engineer
   MainIcon: {fileID: 21300000, guid: 97f4b0d3c4d14f7449f47c9cafe439c5, type: 3}
   Sprite_Player: {fileID: 21300000, guid: 6dcc73ea065e8b649a99b9affad328eb, type: 3}
   Sprite_Stripes: {fileID: 21300000, guid: faadbe7a69dfa1649b5cbe429338c6c3, type: 3}
-  ShortDesc: CROSSBOW - ARMS - PHYS - MED
-  LongDesc: 'The Logipedes military trains its troops with cohesion and extreme teamwork
-    in mind, relying on defensive formations and volley fire strategies to eliminate
-    threats to the Republic.
-
-
-    STARTING ITEMS: CROSSBOW
-
-    ARMS +2
-
-    PHYS
-    +1
-
-    MED +1'
-  BackgroundColor: {r: 0.8867924, g: 0.30681467, b: 0.24679601, a: 1}
-  Background_ATT_BONUS: 0100000002000000000000000000000000000000000000000000000001000000
+  ShortDesc: HALBERD - ENG - COM - PHYS
+  LongDesc: "The Stellae are at the forefront of exploration and cultural discovery.
+    To fill their grand museums and archives, their expeditions reach far, and must
+    be defended against pirate and Nebuloid threats. These engineers are trained
+    in combat maintenance against these many threats. \n\nSTARTING ITEMS: HALBERD\nENG
+    +2\nCOM +1\nPHYS +1"
+  BackgroundColor: {r: 1, g: 0.6850692, b: 0, a: 1}
+  Background_ATT_BONUS: 0100000000000000000000000100000000000000020000000000000000000000
   MasteryTrees:
   - {fileID: 11400000, guid: e110ff0a293817542820b47baa72a4e3, type: 2}
-  - {fileID: 11400000, guid: 6785f119c25e0644380c1442a1acba34, type: 2}
-  - {fileID: 11400000, guid: d2d1757e85c8bd340bbb82744e8cc3f8, type: 2}
-  Background_StartingWeapon: {fileID: 11400000, guid: 1a5ba66db25aae94794c0a02ba54b3d2, type: 2}
+  - {fileID: 11400000, guid: 67d08fd33b88a994380ed2ca2cb279d2, type: 2}
+  - {fileID: 11400000, guid: 8d5ba916c56a7b74988cf9c969985f0c, type: 2}
+  Background_StartingWeapon: {fileID: 11400000, guid: 06439ec68f11da34fbafc00241024dca, type: 2}
   Background_StartingWeapon2: {fileID: 0}
   Background_StartingArtifact: {fileID: 0}
   Background_StartingArmor: {fileID: 0}

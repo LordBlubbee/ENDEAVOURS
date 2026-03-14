@@ -31,6 +31,7 @@ MonoBehaviour:
     +1
 
     CMD +1'
+  HowToUnlockDesc: Unlock this mighty warrior by begging Blubbee to grant it to you...
   BackgroundColor: {r: 0.35684407, g: 0.764151, b: 0.68535465, a: 1}
   Background_ATT_BONUS: 0200000000000000000000000000000001000000000000000100000000000000
   MasteryTrees:

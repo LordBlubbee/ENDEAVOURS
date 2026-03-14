@@ -404,14 +404,6 @@ public class Screen_CharacterCreator : MonoBehaviour
         }
         ob.SetActive(true);
     }
-    public void ChooseBackgroundFaction(Image ob)
-    {
-        foreach (Image sub in BackgroundCategories)
-        {
-            sub.color = Color.gray;
-        }
-        ob.color = Color.cyan;
-    }
 
     public GameObject SelectedBackgroundScreen;
     public Image SelectedBackgroundScreenImage;

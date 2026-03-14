@@ -16,6 +16,8 @@ public class ScriptableBackground : ScriptableObject
     public string ShortDesc;
     [TextArea(5, 10)]
     public string LongDesc;
+    [TextArea(5, 10)]
+    public string HowToUnlockDesc;
     public Color BackgroundColor;
     [Header("PHYS, ARM, DEX, COM, CMD, ENG, ALC, MED")]
     public int[] Background_ATT_BONUS = new int[8];

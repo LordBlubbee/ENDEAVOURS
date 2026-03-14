@@ -36,7 +36,7 @@ MonoBehaviour:
   MasteryTrees:
   - {fileID: 11400000, guid: e110ff0a293817542820b47baa72a4e3, type: 2}
   - {fileID: 11400000, guid: 34ff2b4bacf448c4dbfdaedae762c25c, type: 2}
-  - {fileID: 11400000, guid: d2d1757e85c8bd340bbb82744e8cc3f8, type: 2}
+  - {fileID: 11400000, guid: 8d5ba916c56a7b74988cf9c969985f0c, type: 2}
   Background_StartingWeapon: {fileID: 11400000, guid: f93f9a53850981a46845218ec6c85ca3, type: 2}
   Background_StartingWeapon2: {fileID: 0}
   Background_StartingArtifact: {fileID: 0}
